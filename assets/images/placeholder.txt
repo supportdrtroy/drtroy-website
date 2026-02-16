@@ -1,0 +1,7 @@
+# Image Placeholders
+
+This folder will contain all the website images.
+
+Required images are listed in IMAGES_NEEDED.md in the root directory.
+
+The website is fully functional and will work with placeholder images or stock photos until professional images are ready.

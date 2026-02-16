@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 350">
+  <rect width="800" height="350" fill="white"/>
+  
+  <text x="400" y="30" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="#1a365d">Pain Mechanism Classification</text>
+  
+  <!-- Box 1: Nociceptive -->
+  <rect x="30" y="50" width="230" height="240" rx="8" fill="#fee2e2" stroke="#dc2626" stroke-width="2"/>
+  <text x="145" y="80" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#991b1b">NOCICEPTIVE</text>
+  <text x="145" y="105" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#666">Tissue Damage Pain</text>
+  
+  <text x="45" y="135" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#333">Characteristics:</text>
+  <text x="45" y="155" font-family="Arial, sans-serif" font-size="10" fill="#333">• Clear injury/mechanism</text>
+  <text x="45" y="172" font-family="Arial, sans-serif" font-size="10" fill="#333">• Localized pain</text>
+  <text x="45" y="189" font-family="Arial, sans-serif" font-size="10" fill="#333">• Aggravated by movement</text>
+  <text x="45" y="206" font-family="Arial, sans-serif" font-size="10" fill="#333">• Relieved by rest</text>
+  <text x="45" y="223" font-family="Arial, sans-serif" font-size="10" fill="#333">• Predictable pattern</text>
+  
+  <text x="45" y="250" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#333">Examples:</text>
+  <text x="45" y="268" font-family="Arial, sans-serif" font-size="10" fill="#333">Sprain, strain, fracture,</text>
+  <text x="45" y="283" font-family="Arial, sans-serif" font-size="10" fill="#333">postsurgical pain</text>
+  
+  <!-- Box 2: Neuropathic -->
+  <rect x="285" y="50" width="230" height="240" rx="8" fill="#dbeafe" stroke="#2563eb" stroke-width="2"/>
+  <text x="400" y="80" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#1e40af">NEUROPATHIC</text>
+  <text x="400" y="105" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#666">Nerve Injury Pain</text>
+  
+  <text x="300" y="135" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#333">Characteristics:</text>
+  <text x="300" y="155" font-family="Arial, sans-serif" font-size="10" fill="#333">• Burning/electric quality</text>
+  <text x="300" y="172" font-family="Arial, sans-serif" font-size="10" fill="#333">• Radiating pattern</text>
+  <text x="300" y="189" font-family="Arial, sans-serif" font-size="10" fill="#333">• Allodynia (pain to touch)</text>
+  <text x="300" y="206" font-family="Arial, sans-serif" font-size="10" fill="#333">• Numbness/tingling</text>
+  <text x="300" y="223" font-family="Arial, sans-serif" font-size="10" fill="#333">• Positive neuro signs</text>
+  
+  <text x="300" y="250" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#333">Examples:</text>
+  <text x="300" y="268" font-family="Arial, sans-serif" font-size="10" fill="#333">Sciatica, radiculopathy,</text>
+  <text x="300" y="283" font-family="Arial, sans-serif" font-size="10" fill="#333">CRPS, peripheral neuropathy</text>
+  
+  <!-- Box 3: Nociplastic -->
+  <rect x="540" y="50" width="230" height="240" rx="8" fill="#f3e8ff" stroke="#9333ea" stroke-width="2"/>
+  <text x="655" y="80" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#6b21a8">NOCIPLASTIC</text>
+  <text x="655" y="105" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#666">Sensitization Pain</text>
+  
+  <text x="555" y="135" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#333">Characteristics:</text>
+  <text x="555" y="155" font-family="Arial, sans-serif" font-size="10" fill="#333">• Widespread pain</text>
+  <text x="555" y="172" font-family="Arial, sans-serif" font-size="10" fill="#333">• Disproportionate to injury</text>
+  <text x="555" y="189" font-family="Arial, sans-serif" font-size="10" fill="#333">• Hyperalgesia</text>
+  <text x="555" y="206" font-family="Arial, sans-serif" font-size="10" fill="#333">• Associated conditions</text>
+  <text x="555" y="223" font-family="Arial, sans-serif" font-size="10" fill="#333">• Psychological factors</text>
+  
+  <text x="555" y="250" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#333">Examples:</text>
+  <text x="555" y="268" font-family="Arial, sans-serif" font-size="10" fill="#333">Fibromyalgia, chronic LBP,</text>
+  <text x="555" y="283" font-family="Arial, sans-serif" font-size="10" fill="#333">IBS, chronic fatigue</text>
+  
+  <!-- Bottom note -->
+  <text x="400" y="320" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#666" font-style="italic">Mechanisms can coexist. Treatment approach should address dominant mechanism(s).</text>
+</svg>

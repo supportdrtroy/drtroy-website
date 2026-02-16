@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clear Account Data</title>
+    <style>
+        body { 
+            font-family: Arial, sans-serif; 
+            padding: 2rem; 
+            background: #f8f9fa; 
+            text-align: center; 
+        }
+        .container { 
+            max-width: 500px; 
+            margin: 0 auto; 
+            background: white; 
+            padding: 2rem; 
+            border-radius: 8px; 
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1); 
+        }
+        button { 
+            background: #dc3545; 
+            color: white; 
+            border: none; 
+            padding: 1rem 2rem; 
+            border-radius: 6px; 
+            font-size: 1rem; 
+            cursor: pointer; 
+            margin: 1rem; 
+        }
+        button:hover { background: #c82333; }
+        .success { 
+            color: #28a745; 
+            font-weight: bold; 
+            margin: 1rem 0; 
+            display: none; 
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Clear Account Data</h1>
+        <p>This will log you out and delete all account data from this browser.</p>
+        
+        <button onclick="clearAllData()">Clear Account & Log Out</button>
+        
+        <div id="success" class="success">
+            ✅ Account data cleared! You can now create a new account.
+        </div>
+        
+        <p style="margin-top: 2rem; font-size: 0.9rem; color: #666;">
+            <a href="index.html">← Return to DrTroy.com</a>
+        </p>
+    </div>
+
+    <script>
+        function clearAllData() {
+            // Clear all DrTroy-related data
+            localStorage.removeItem('drtroyAccount');
+            localStorage.removeItem('userSession'); 
+            localStorage.removeItem('selectedPackage');
+            localStorage.removeItem('packagePrice');
+            localStorage.removeItem('selectedPackageCode');
+            localStorage.removeItem('customerName');
+            localStorage.removeItem('customerEmail');
+            localStorage.removeItem('customerDiscipline');
+            localStorage.removeItem('account_attempts');
+            
+            // Clear any other stored data
+            const keys = Object.keys(localStorage);
+            keys.forEach(key => {
+                if (key.toLowerCase().includes('drtroy') || 
+                    key.toLowerCase().includes('account') || 
+                    key.toLowerCase().includes('user') ||
+                    key.toLowerCase().includes('customer') ||
+                    key.toLowerCase().includes('session')) {
+                    localStorage.removeItem(key);
+                }
+            });
+            
+            // Show success message
+            document.getElementById('success').style.display = 'block';
+            
+            // Redirect after 2 seconds
+            setTimeout(() => {
+                window.location.href = 'index.html';
+            }, 2000);
+        }
+    </script>
+</body>
+</html>

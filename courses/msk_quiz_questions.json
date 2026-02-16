@@ -1,0 +1,52 @@
+{
+  "module1": [
+    {
+      "question": "Which component should be completed FIRST in a systematic MSK evaluation?",
+      "options": [
+        "Range of motion testing",
+        "Special tests",
+        "Subjective history and red flag screening",
+        "Manual muscle testing"
+      ],
+      "correct": 2,
+      "explanation": "Red flag screening through subjective history must be completed first to identify serious pathology requiring immediate referral."
+    }
+  ],
+  "module4_lumbar": [
+    {
+      "question": "A positive straight leg raise test at 30 degrees with reproduction of leg pain is MOST indicative of:",
+      "options": [
+        "Lumbar facet dysfunction",
+        "Hip flexor tightness",
+        "Nerve root irritation/disc herniation",
+        "Sacroiliac joint dysfunction"
+      ],
+      "correct": 2,
+      "explanation": "SLR positive at 30 degrees strongly suggests nerve root tension, particularly with disc herniation. Normal hamstring tension doesn't occur until 60-70 degrees."
+    },
+    {
+      "question": "According to Flynn's lumbar manipulation CPR, how many positive factors predict successful outcomes?",
+      "options": [
+        "2 or more",
+        "3 or more", 
+        "4 or more",
+        "All 5 factors must be positive"
+      ],
+      "correct": 2,
+      "explanation": "Flynn's CPR requires 4 or more of the 5 factors for high likelihood of success with spinal manipulation."
+    }
+  ],
+  "module6_shoulder": [
+    {
+      "question": "Which test finding is MOST specific for a full-thickness rotator cuff tear?",
+      "options": [
+        "Positive Hawkins-Kennedy test",
+        "Positive external rotation lag sign",
+        "Positive empty can test",
+        "Limited passive range of motion"
+      ],
+      "correct": 1,
+      "explanation": "External rotation lag sign has 100% specificity for infraspinatus tears. A positive lag sign is pathognomonic for full-thickness rotator cuff tear."
+    }
+  ]
+}

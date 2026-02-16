@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 600">
+  <rect width="500" height="600" fill="white"/>
+  
+  <text x="250" y="25" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#1a365d">Cervical Dermatomes</text>
+  <text x="250" y="42" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#666">Upper Extremity Sensory Distribution</text>
+  
+  <!-- Arm outline - anterior view -->
+  <ellipse cx="180" cy="80" rx="25" ry="20" fill="#f5f5f5" stroke="#999" stroke-width="2"/>
+  <rect x="155" y="95" width="50" height="120" rx="15" fill="#f5f5f5" stroke="#999" stroke-width="2"/>
+  <rect x="160" y="210" width="40" height="100" rx="12" fill="#f5f5f5" stroke="#999" stroke-width="2"/>
+  <ellipse cx="180" cy="330" rx="20" ry="35" fill="#f5f5f5" stroke="#999" stroke-width="2"/>
+  
+  <!-- Hand outline -->
+  <ellipse cx="180" cy="380" rx="25" ry="15" fill="#f5f5f5" stroke="#999" stroke-width="2"/>
+  <rect x="160" y="390" width="8" height="30" rx="4" fill="#f5f5f5" stroke="#999" stroke-width="1"/>
+  <rect x="172" y="390" width="8" height="35" rx="4" fill="#f5f5f5" stroke="#999" stroke-width="1"/>
+  <rect x="184" y="390" width="8" height="35" rx="4" fill="#f5f5f5" stroke="#999" stroke-width="1"/>
+  <rect x="196" y="390" width="8" height="30" rx="4" fill="#f5f5f5" stroke="#999" stroke-width="1"/>
+  <rect x="175" y="370" width="10" height="20" rx="5" fill="#f5f5f5" stroke="#999" stroke-width="1"/>
+  
+  <!-- C5 - Lateral arm -->
+  <path d="M 140 120 Q 130 160 140 200" fill="none" stroke="#22c55e" stroke-width="20" opacity="0.5"/>
+  <text x="80" y="160" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#15803d">C5</text>
+  <text x="80" y="178" font-family="Arial, sans-serif" font-size="10" fill="#333">Lateral arm</text>
+  <text x="80" y="192" font-family="Arial, sans-serif" font-size="10" fill="#333">(deltoid)</text>
+  <line x1="110" y1="165" x2="130" y2="165" stroke="#15803d" stroke-width="1"/>
+  
+  <!-- C6 - Thumb/Index -->
+  <path d="M 150 250 Q 145 300 165 390" fill="none" stroke="#3b82f6" stroke-width="15" opacity="0.5"/>
+  <rect x="158" y="390" width="12" height="35" fill="#3b82f6" opacity="0.5"/>
+  <text x="80" y="300" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#1d4ed8">C6</text>
+  <text x="80" y="318" font-family="Arial, sans-serif" font-size="10" fill="#333">Lateral forearm</text>
+  <text x="80" y="332" font-family="Arial, sans-serif" font-size="10" fill="#333">Thumb & Index</text>
+  <line x1="110" y1="315" x2="145" y2="315" stroke="#1d4ed8" stroke-width="1"/>
+  
+  <!-- C7 - Middle finger -->
+  <rect x="172" y="390" width="8" height="35" fill="#a855f7" opacity="0.5"/>
+  <text x="80" y="400" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#7e22ce">C7</text>
+  <text x="80" y="418" font-family="Arial, sans-serif" font-size="10" fill="#333">Middle finger</text>
+  <text x="80" y="432" font-family="Arial, sans-serif" font-size="10" fill="#333">(no arm region)</text>
+  <line x1="110" y1="410" x2="170" y2="410" stroke="#7e22ce" stroke-width="1"/>
+  
+  <!-- C8 - Ring/Little finger -->
+  <rect x="184" y="390" width="8" height="35" fill="#f97316" opacity="0.5"/>
+  <rect x="196" y="390" width="8" height="30" fill="#f97316" opacity="0.5"/>
+  <text x="240" y="450" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#c2410c">C8</text>
+  <text x="240" y="468" font-family="Arial, sans-serif" font-size="10" fill="#333">Medial forearm</text>
+  <text x="240" y="482" font-family="Arial, sans-serif" font-size="10" fill="#333">Ring & Little</text>
+  <line x1="235" y1="465" x2="205" y2="410" stroke="#c2410c" stroke-width="1"/>
+  
+  <!-- T1 - Medial arm -->
+  <path d="M 220 130 Q 230 170 220 210" fill="none" stroke="#ec4899" stroke-width="18" opacity="0.5"/>
+  <text x="260" y="170" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#be185d">T1</text>
+  <text x="260" y="188" font-family="Arial, sans-serif" font-size="10" fill="#333">Medial arm</text>
+  <text x="260" y="202" font-family="Arial, sans-serif" font-size="10" fill="#333">(axilla)</text>
+  <line x1="255" y1="180" x2="235" y2="175" stroke="#be185d" stroke-width="1"/>
+  
+  <!-- Legend -->
+  <rect x="320" y="80" width="160" height="200" rx="8" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1"/>
+  <text x="400" y="105" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#1a365d">Legend</text>
+  
+  <rect x="335" y="120" width="20" height="12" fill="#22c55e" opacity="0.5"/>
+  <text x="365" y="130" font-family="Arial, sans-serif" font-size="11" fill="#333">C5 - Lateral arm</text>
+  
+  <rect x="335" y="140" width="20" height="12" fill="#3b82f6" opacity="0.5"/>
+  <text x="365" y="150" font-family="Arial, sans-serif" font-size="11" fill="#333">C6 - Thumb/index</text>
+  
+  <rect x="335" y="160" width="20" height="12" fill="#a855f7" opacity="0.5"/>
+  <text x="365" y="170" font-family="Arial, sans-serif" font-size="11" fill="#333">C7 - Middle finger</text>
+  
+  <rect x="335" y="180" width="20" height="12" fill="#f97316" opacity="0.5"/>
+  <text x="365" y="190" font-family="Arial, sans-serif" font-size="11" fill="#333">C8 - Ring/little</text>
+  
+  <rect x="335" y="200" width="20" height="12" fill="#ec4899" opacity="0.5"/>
+  <text x="365" y="210" font-family="Arial, sans-serif" font-size="11" fill="#333">T1 - Medial arm</text>
+  
+  <!-- Clinical note -->
+  <rect x="30" y="520" width="440" height="70" rx="8" fill="#f0f9ff" stroke="#0ea5e9" stroke-width="1"/>
+  <text x="250" y="545" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#0369a1">Clinical Pearl</text>
+  <text x="250" y="565" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#333">C6 radiculopathy: thumb/index numbness, biceps weakness, diminished brachioradialis reflex</text>
+  <text x="250" y="580" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#333">C7 radiculopathy: middle finger numbness, triceps weakness, diminished triceps reflex</text>
+</svg>

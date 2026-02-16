@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 650">
+  <rect width="400" height="650" fill="white"/>
+  
+  <!-- Title -->
+  <text x="200" y="30" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#333">Cervical Spine — Lateral View</text>
+  
+  <!-- Skull base -->
+  <path d="M 175 55 Q 200 45 225 55 Q 230 70 225 85 L 215 90 Q 200 95 185 90 L 175 85 Q 170 70 175 55" 
+        fill="#f0ebe0" stroke="#4a4a4a" stroke-width="1.5"/>
+  
+  <!-- C1 Atlas -->
+  <path d="M 180 100 L 220 100 L 218 115 L 182 115 Z" fill="#f0ebe0" stroke="#4a4a4a" stroke-width="1.5"/>
+  <path d="M 185 107 L 215 107" stroke="#4a4a4a" stroke-width="1"/>
+  <text x="235" y="110" font-family="Arial, sans-serif" font-size="12" fill="#333">C1</text>
+  
+  <!-- C2 Axis -->
+  <!-- Body -->
+  <path d="M 185 125 L 215 125 L 213 150 L 187 150 Z" fill="#f0ebe0" stroke="#4a4a4a" stroke-width="1.5"/>
+  <!-- Dens -->
+  <rect x="197" y="115" width="6" height="15" fill="#f0ebe0" stroke="#4a4a4a" stroke-width="1"/>
+  <!-- Spinous process -->
+  <path d="M 200 150 L 198 170" stroke="#4a4a4a" stroke-width="2"/>
+  <text x="235" y="140" font-family="Arial, sans-serif" font-size="12" fill="#333">C2</text>
+  
+  <!-- Disc -->
+  <rect x="185" y="150" width="30" height="6" fill="#ffb6c1" stroke="#c08080" stroke-width="1"/>
+  
+  <!-- C3 -->
+  <path d="M 185 156 L 215 156 L 213 180 L 187 180 Z" fill="#f0ebe0" stroke="#4a4a4a" stroke-width="1.5"/>
+  <path d="M 200 180 L 198 200" stroke="#4a4a4a" stroke-width="1.5"/>
+  <path d="M 195 200 L 205 200" stroke="#4a4a4a" stroke-width="1"/>
+  <text x="235" y="170" font-family="Arial, sans-serif" font-size="12" fill="#333">C3</text>
+  
+  <!-- Disc -->
+  <rect x="185" y="180" width="30" height="6" fill="#ffb6c1" stroke="#c08080" stroke-width="1"/>
+  
+  <!-- C4 -->
+  <path d="M 185 186 L 215 186 L 213 210 L 187 210 Z" fill="#f0ebe0" stroke="#4a4a4a" stroke-width="1.5"/>
+  <path d="M 200 210 L 198 230" stroke="#4a4a4a" stroke-width="1.5"/>
+  <path d="M 195 230 L 205 230" stroke="#4a4a4a" stroke-width="1"/>
+  <text x="235" y="200" font-family="Arial, sans-serif" font-size="12" fill="#333">C4</text>
+  
+  <!-- Disc -->
+  <rect x="185" y="210" width="30" height="6" fill="#ffb6c1" stroke="#c08080" stroke-width="1"/>
+  
+  <!-- C5 -->
+  <path d="M 185 216 L 215 216 L 213 240 L 187 240 Z" fill="#f0ebe0" stroke="#4a4a4a" stroke-width="1.5"/>
+  <path d="M 200 240 L 198 260" stroke="#4a4a4a" stroke-width="1.5"/>
+  <path d="M 195 260 L 205 260" stroke="#4a4a4a" stroke-width="1"/>
+  <text x="235" y="230" font-family="Arial, sans-serif" font-size="12" fill="#333">C5</text>
+  
+  <!-- Disc -->
+  <rect x="185" y="240" width="30" height="6" fill="#ffb6c1" stroke="#c08080" stroke-width="1"/>
+  
+  <!-- C6 -->
+  <path d="M 185 246 L 215 246 L 213 270 L 187 270 Z" fill="#f0ebe0" stroke="#4a4a4a" stroke-width="1.5"/>
+  <path d="M 200 270 L 198 290" stroke="#4a4a4a" stroke-width="1.5"/>
+  <path d="M 195 290 L 205 290" stroke="#4a4a4a" stroke-width="1"/>
+  <text x="235" y="260" font-family="Arial, sans-serif" font-size="12" fill="#333">C6</text>
+  
+  <!-- Disc -->
+  <rect x="185" y="270" width="30" height="6" fill="#ffb6c1" stroke="#c08080" stroke-width="1"/>
+  
+  <!-- C7 Vertebra Prominens -->
+  <path d="M 185 276 L 215 276 L 213 300 L 187 300 Z" fill="#f0ebe0" stroke="#4a4a4a" stroke-width="1.5"/>
+  <!-- Long spinous process -->
+  <path d="M 200 300 L 196 340" stroke="#4a4a4a" stroke-width="2.5"/>
+  <path d="M 193 340 L 207 340" stroke="#4a4a4a" stroke-width="1.5"/>
+  <text x="235" y="290" font-family="Arial, sans-serif" font-size="12" fill="#333">C7</text>
+  
+  <!-- Spinal canal (subtle) -->
+  <path d="M 190 95 L 190 350" stroke="#ffdddd" stroke-width="6" opacity="0.3"/>
+  
+  <!-- Labels box -->
+  <rect x="50" y="380" width="300" height="80" rx="5" fill="#f8f9fa" stroke="#ddd" stroke-width="1"/>
+  <text x="200" y="405" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#333">Key Features</text>
+  <text x="60" y="425" font-family="Arial, sans-serif" font-size="10" fill="#333">• Vertebral bodies C1-C7</text>
+  <text x="60" y="442" font-family="Arial, sans-serif" font-size="10" fill="#333">• Intervertebral discs (pink)</text>
+  <text x="200" y="425" font-family="Arial, sans-serif" font-size="10" fill="#333">• Spinous processes</text>
+  <text x="200" y="442" font-family="Arial, sans-serif" font-size="10" fill="#333">• C7: vertebra prominens</text>
+</svg>

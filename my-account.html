@@ -1,0 +1,2856 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Account | DrTroy.com</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --navy: #1a365d;
+            --navy-light: #2c5282;
+            --gold: #059669;
+            --gold-light: #10b981;
+            --gray-50: #f7fafc;
+            --gray-100: #edf2f7;
+            --gray-200: #e5e7eb;
+            --gray-600: #4a5568;
+            --gray-800: #2d3748;
+            --gray-900: #111827;
+            --success: #059669;
+            --danger: #dc2626;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--gray-50);
+            color: var(--gray-800);
+            line-height: 1.6;
+        }
+
+        /* Header */
+        .header {
+            background: #ffffff;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .logo img {
+            height: 200px;
+            width: auto;
+            max-width: 800px;
+        }
+
+        nav {
+            margin-top: 1rem;
+        }
+
+        nav a {
+            color: var(--gray-600);
+            text-decoration: none;
+            margin: 0 1.5rem;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        nav a:hover {
+            color: var(--navy);
+        }
+
+        .login-link {
+            background: var(--gold) !important;
+            color: var(--navy) !important;
+            padding: 0.5rem 1rem !important;
+            border-radius: 6px !important;
+            font-weight: 600 !important;
+            transition: all 0.3s ease !important;
+        }
+
+        .login-link:hover {
+            background: var(--gold-light) !important;
+            color: var(--navy) !important;
+            transform: translateY(-2px) !important;
+        }
+
+        /* Main Content */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .page-header h1 {
+            font-size: 2.5rem;
+            color: var(--navy);
+            margin-bottom: 0.5rem;
+        }
+
+        .page-header p {
+            color: var(--gray-600);
+            font-size: 1.1rem;
+        }
+
+        /* Login Required */
+        .login-required {
+            background: white;
+            border: 2px solid var(--gold);
+            border-radius: 12px;
+            padding: 3rem;
+            text-align: center;
+            max-width: 600px;
+            margin: 2rem auto;
+        }
+
+        .login-required h2 {
+            color: var(--navy);
+            margin-bottom: 1rem;
+        }
+
+        .login-required p {
+            color: var(--gray-600);
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
+        }
+
+        /* Account Layout */
+        .account-layout {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            height: fit-content;
+            position: sticky;
+            top: 120px;
+        }
+
+        .sidebar h3 {
+            color: var(--navy);
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .sidebar ul {
+            list-style: none;
+        }
+
+        .sidebar li {
+            margin-bottom: 0.5rem;
+        }
+
+        .sidebar a {
+            display: block;
+            padding: 0.75rem 1rem;
+            color: var(--gray-600);
+            text-decoration: none;
+            border-radius: 6px;
+            transition: all 0.2s;
+        }
+
+        .sidebar a:hover {
+            background: var(--gray-50);
+            color: var(--navy);
+        }
+
+        .sidebar a.active {
+            background: var(--navy);
+            color: white;
+        }
+
+        /* Main Content */
+        .main-content {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .content-section {
+            display: none;
+            padding: 2rem;
+        }
+
+        .content-section.active {
+            display: block;
+        }
+
+        .content-section h2 {
+            color: var(--navy);
+            margin-bottom: 0.5rem;
+            font-size: 1.5rem;
+        }
+
+        .content-section p {
+            color: var(--gray-600);
+            margin-bottom: 2rem;
+        }
+
+        /* Forms */
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            font-weight: 600;
+            color: var(--gray-900);
+            margin-bottom: 0.5rem;
+        }
+
+        .form-input, .form-select {
+            padding: 0.75rem;
+            border: 1px solid var(--gray-200);
+            border-radius: 6px;
+            font-size: 1rem;
+            transition: border-color 0.2s;
+        }
+
+        .form-input:focus, .form-select:focus {
+            outline: none;
+            border-color: var(--navy);
+            box-shadow: 0 0 0 3px rgba(26, 54, 93, 0.1);
+        }
+
+        .form-input[readonly] {
+            background: var(--gray-50);
+            color: var(--gray-600);
+        }
+
+        /* Buttons */
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: var(--navy);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #1e40af;
+        }
+
+        .btn-secondary {
+            background: var(--gray-200);
+            color: var(--gray-800);
+        }
+
+        .btn-secondary:hover {
+            background: var(--gray-300);
+        }
+
+        .btn-success {
+            background: var(--success);
+            color: white;
+        }
+
+        .btn-danger {
+            background: var(--danger);
+            color: white;
+        }
+
+        /* CCU Dashboard */
+        .ccu-overview {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+            align-items: stretch;
+        }
+
+        .ccu-card {
+            background: var(--gray-50);
+            border: 1px solid var(--gray-200);
+            border-radius: 8px;
+            padding: 1.5rem;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            min-height: 120px;
+        }
+
+        .ccu-card h4 {
+            color: var(--gray-600);
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            flex-shrink: 0;
+        }
+
+        /* Ensure buttons in CCU cards don't interfere with alignment */
+        .ccu-card .btn {
+            margin-top: 0.5rem;
+            font-size: 0.7rem;
+            padding: 0.25rem 0.5rem;
+            flex-shrink: 0;
+        }
+
+        .ccu-card .value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--navy);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 2.5rem;
+            line-height: 1;
+            text-align: center;
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            margin: 1.5rem 0;
+        }
+
+        .progress-bar {
+            background: var(--gray-200);
+            border-radius: 10px;
+            height: 20px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--success);
+            transition: width 0.3s;
+        }
+
+        .progress-text {
+            text-align: center;
+            margin-top: 0.5rem;
+            color: var(--gray-600);
+            font-size: 0.9rem;
+        }
+
+        /* Alerts */
+        .alert {
+            padding: 1rem;
+            border-radius: 6px;
+            margin-bottom: 1rem;
+        }
+
+        .alert-success {
+            background: #dcfce7;
+            border: 1px solid var(--success);
+            color: #065f46;
+        }
+
+        .alert-info {
+            background: #dbeafe;
+            border: 1px solid #3b82f6;
+            color: #1e40af;
+        }
+
+        .alert-warning {
+            background: #fef3c7;
+            border: 1px solid #d97706;
+            color: #92400e;
+        }
+
+        .alert-danger {
+            background: #fef2f2;
+            border: 1px solid var(--danger);
+            color: #991b1b;
+        }
+
+        /* Course Cards */
+        .courses-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .course-card {
+            background: white;
+            border: 1px solid var(--gray-200);
+            border-radius: 8px;
+            padding: 1.5rem;
+            transition: box-shadow 0.2s ease;
+        }
+
+        .course-card:hover {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .course-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+
+        .course-header h3 {
+            color: var(--navy);
+            margin: 0;
+            font-size: 1.1rem;
+            line-height: 1.3;
+            flex: 1;
+            margin-right: 1rem;
+        }
+
+        .course-description {
+            color: var(--gray-600);
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .course-details {
+            margin-bottom: 1.5rem;
+        }
+
+        .course-credits {
+            font-weight: 600;
+            color: var(--gold);
+            margin-bottom: 0.5rem;
+        }
+
+        .course-format {
+            font-size: 0.9rem;
+            color: var(--gray-700);
+            margin-bottom: 0.5rem;
+            font-style: italic;
+        }
+
+        .course-instructor {
+            font-size: 0.85rem;
+            color: var(--gray-600);
+            margin-bottom: 0.5rem;
+        }
+
+        .course-approval {
+            font-size: 0.8rem;
+            color: var(--gray-600);
+            font-family: monospace;
+            background: var(--gray-100);
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            display: inline-block;
+        }
+
+        .course-actions {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--navy);
+            border: 1px solid var(--navy);
+        }
+
+        .btn-outline:hover {
+            background: var(--navy);
+            color: white;
+        }
+
+        /* Super User Specific Styles */
+        #superuser-status-badge {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+            box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);
+        }
+
+        .superuser-nav {
+            background: linear-gradient(135deg, #7c3aed, #a855f7) !important;
+            color: white;
+        }
+
+        .superuser-nav:hover {
+            background: linear-gradient(135deg, #6d28d9, #9333ea) !important;
+        }
+
+        /* CCU Management Styles */
+        /* ccu-overview styling is defined above - no override needed */
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .checkbox-group input[type="checkbox"] {
+            transform: scale(1.1);
+        }
+
+        .checkbox-group label {
+            font-size: 0.9rem;
+            color: var(--gray-700);
+            cursor: pointer;
+        }
+
+        #ethicsSection .checkbox-group label {
+            font-weight: 500;
+        }
+
+        /* External CCU entries */
+        .external-ccu-entry {
+            background: white;
+            border: 1px solid var(--gray-200);
+            border-radius: 4px;
+            padding: 0.75rem;
+            margin-bottom: 0.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .external-ccu-entry:hover {
+            border-color: var(--navy);
+        }
+
+        /* Status Badges */
+        .status-badge {
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 0.25rem 0.75rem;
+            border-radius: 12px;
+            white-space: nowrap;
+        }
+
+        .status-badge.available {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+
+        .status-badge.in-progress {
+            background: #fef3c7;
+            color: var(--gold);
+        }
+
+        .status-badge.completed {
+            background: #dcfce7;
+            color: var(--gold);
+        }
+
+        .status-badge.coming-soon {
+            background: #f3f4f6;
+            color: #6b7280;
+        }
+
+        @media (max-width: 768px) {
+            .courses-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            
+            .course-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .course-header h3 {
+                margin-right: 0;
+                margin-bottom: 0.5rem;
+            }
+        }
+
+        /* Checkbox */
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin: 1rem 0;
+        }
+
+        .checkbox-group input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+        }
+
+        /* Emergency Access styles removed per user request */
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .account-layout {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .sidebar {
+                position: static;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .ccu-overview {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-container">
+            <div class="logo">
+                <a href="index.html">
+                    <img src="courses/images/drtroy_logo_new.jpg" alt="DrTroy Continuing Education">
+                </a>
+            </div>
+            <nav>
+                <a href="index.html">Home</a>
+                <a href="index.html#packages">Packages</a>
+                <a href="courses.html">Course Catalog</a>
+                <a href="index.html#about">About</a>
+                <a href="index.html#contact">Contact</a>
+                <a href="my-account.html" class="login-link" id="accountLink">My Account</a>
+                <a href="#" onclick="logout(); return false;" class="login-link">🚪 Logout</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Login Required Message -->
+        <div id="loginRequired" class="login-required" style="display: none;">
+            <h2>🔐 Account Access Required</h2>
+            <p>Please log in or create an account to access your account dashboard.</p>
+            <p style="color: var(--gray-600); margin-top: 1rem;">If you're having trouble logging in, please return to the home page and try again.</p>
+            
+            <!-- Debug Info -->
+            <div style="margin: 1.5rem 0; padding: 1rem; background: #f8f9fa; border-radius: 6px; border: 1px solid #e9ecef;">
+                <button onclick="showDebugInfo()" class="btn btn-secondary" style="margin-bottom: 1rem; margin-right: 0.5rem;">🔍 Show Debug Info</button>
+                <button onclick="forceLogin()" class="btn btn-primary" style="margin-bottom: 1rem; margin-right: 0.5rem;">🔧 Force Login</button>
+                <button onclick="forceShowAccount()" class="btn btn-danger" style="margin-bottom: 1rem; margin-right: 0.5rem;">🚨 Force Display</button>
+                <button onclick="recalculateRenewal()" class="btn btn-success" style="margin-bottom: 1rem; margin-right: 0.5rem;">📅 Fix Renewal</button>
+                <button onclick="restoreCachedRenewal()" class="btn btn-secondary" style="margin-bottom: 1rem;">🔄 Restore Cached</button>
+                <div id="debugInfo" style="display: none;">
+                    <h4 style="margin-bottom: 0.5rem;">Debug Information:</h4>
+                    <div id="debugContent" style="font-family: monospace; font-size: 0.8rem; background: white; padding: 0.5rem; border-radius: 4px; overflow-x: auto;">
+                        Loading debug info...
+                    </div>
+                </div>
+            </div>
+            
+            <a href="index.html" class="btn btn-primary">Go to Home Page</a>
+        </div>
+
+        <!-- Account Content -->
+        <div id="accountContent" style="display: none;">
+            <div class="page-header">
+                <h1>My Account</h1>
+                <p>Manage your continuing education journey</p>
+            </div>
+
+            <div class="account-layout">
+                <!-- Sidebar Navigation -->
+                <div class="sidebar">
+                    <h3>Account Menu</h3>
+                    <ul>
+                        <li><a href="#" onclick="showSection('overview')" class="nav-link active">📊 Overview</a></li>
+                        <li><a href="#" onclick="showSection('personal')" class="nav-link">👤 Personal Info</a></li>
+                        <li><a href="#" onclick="showSection('password')" class="nav-link">🔐 Password</a></li>
+                        <li><a href="#" onclick="showSection('ccu')" class="nav-link">🎓 CCU Dashboard</a></li>
+                        <li><a href="#" onclick="showSection('courses')" class="nav-link">📚 My Courses</a></li>
+                        <li><a href="#" onclick="showSection('superuser')" class="nav-link" id="superuser-nav" style="display: none;">⚡ Super User</a></li>
+                        <li><a href="#" onclick="showSection('notifications')" class="nav-link">🔔 Notifications</a></li>
+                        <li><a href="#" onclick="showSection('security')" class="nav-link">🛡️ Security</a></li>
+                        <li><a href="#" onclick="showSection('privacy')" class="nav-link">🔒 Privacy</a></li>
+                        <li><a href="#" onclick="showSection('settings')" class="nav-link">⚙️ Settings</a></li>
+                    </ul>
+                </div>
+
+                <!-- Main Content Area -->
+                <div class="main-content">
+                    <!-- Overview Section -->
+                    <div id="overview" class="content-section active">
+                        <h2>Account Overview</h2>
+                        <p>Welcome back! Here's your account summary.</p>
+                        
+                        <div class="ccu-overview">
+                            <div class="ccu-card">
+                                <h4>CCUs Required</h4>
+                                <div class="value" id="requiredCCUs">30</div>
+                            </div>
+                            <div class="ccu-card">
+                                <h4>CCUs Earned</h4>
+                                <div class="value" id="earnedCCUs">0</div>
+                            </div>
+                            <div class="ccu-card">
+                                <h4>Courses Completed</h4>
+                                <div class="value" id="coursesCompleted">0</div>
+                            </div>
+                            <div class="ccu-card">
+                                <h4>License Status</h4>
+                                <div class="value" style="font-size: 1rem; color: var(--success);" id="licenseStatus">Current</div>
+                            </div>
+                        </div>
+
+                        <div class="progress-container">
+                            <h3>CCU Progress</h3>
+                            <div class="progress-bar">
+                                <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+                            </div>
+                            <div class="progress-text" id="progressText">0 of 30 CCUs completed (0%)</div>
+                        </div>
+                    </div>
+
+                    <!-- Personal Info Section -->
+                    <div id="personal" class="content-section">
+                        <h2>Personal Information</h2>
+                        <p>Update your profile and contact information.</p>
+                        
+                        <form id="personalInfoForm">
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label for="firstName">First Name</label>
+                                    <input type="text" id="firstName" class="form-input" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="lastName">Last Name</label>
+                                    <input type="text" id="lastName" class="form-input" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="email">Email Address</label>
+                                    <input type="email" id="email" class="form-input" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="phone">Phone Number</label>
+                                    <input type="tel" id="phone" class="form-input" placeholder="(555) 123-4567">
+                                </div>
+                                <div class="form-group">
+                                    <label for="address">Address</label>
+                                    <input type="text" id="address" class="form-input" placeholder="123 Main Street">
+                                </div>
+                                <div class="form-group">
+                                    <label for="city">City</label>
+                                    <input type="text" id="city" class="form-input" placeholder="Your City">
+                                </div>
+                                <div class="form-group">
+                                    <label for="state">State</label>
+                                    <input type="text" id="state" class="form-input" placeholder="TX" maxlength="2" style="text-transform: uppercase;">
+                                </div>
+                                <div class="form-group">
+                                    <label for="zipCode">ZIP Code</label>
+                                    <input type="text" id="zipCode" class="form-input" placeholder="12345" maxlength="10">
+                                </div>
+                                <div class="form-group">
+                                    <label for="discipline">Discipline</label>
+                                    <select id="discipline" class="form-select" disabled>
+                                        <option value="">Select Discipline</option>
+                                        <option value="PT">Physical Therapist (PT)</option>
+                                        <option value="PTA">Physical Therapist Assistant (PTA)</option>
+                                        <option value="OT">Occupational Therapist (OT)</option>
+                                        <option value="COTA">Certified OT Assistant (COTA)</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="licenseNumber">License Number</label>
+                                    <input type="text" id="licenseNumber" class="form-input" placeholder="Your license number">
+                                </div>
+                                <div class="form-group">
+                                    <label for="licenseState">License State</label>
+                                    <input type="text" id="licenseState" class="form-input" placeholder="TX" maxlength="2" style="text-transform: uppercase;">
+                                </div>
+                                <div class="form-group">
+                                    <label for="licenseExpiration">License Expiration</label>
+                                    <input type="date" id="licenseExpiration" class="form-input">
+                                </div>
+                            </div>
+                            
+                            <div class="checkbox-group">
+                                <input type="checkbox" id="renewalReminders" checked>
+                                <label for="renewalReminders">Send me email reminders when my license is close to expiring</label>
+                            </div>
+                            
+                            <button type="submit" class="btn btn-primary">💾 Save Changes</button>
+                        </form>
+                    </div>
+
+                    <!-- Password Section -->
+                    <div id="password" class="content-section">
+                        <h2>Change Password</h2>
+                        <p>Update your account password for security.</p>
+                        
+                        <form id="passwordForm">
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label for="currentPassword">Current Password</label>
+                                    <input type="password" id="currentPassword" class="form-input" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="newPassword">New Password</label>
+                                    <input type="password" id="newPassword" class="form-input" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="confirmPassword">Confirm New Password</label>
+                                    <input type="password" id="confirmPassword" class="form-input" required>
+                                </div>
+                            </div>
+                            
+                            <button type="submit" class="btn btn-primary">🔐 Change Password</button>
+                        </form>
+                    </div>
+
+                    <!-- CCU Dashboard Section -->
+                    <div id="ccu" class="content-section">
+                        <h2>CCU Dashboard</h2>
+                        <p>Track your continuing education progress and requirements.</p>
+                        
+                        <div class="ccu-overview">
+                            <div class="ccu-card">
+                                <h4>Required This Period</h4>
+                                <div class="value" id="ccuRequired">30</div>
+                            </div>
+                            <div class="ccu-card">
+                                <h4>Course CCUs Earned</h4>
+                                <div class="value" id="ccuEarned">0</div>
+                            </div>
+                            <div class="ccu-card" id="ethicsCard">
+                                <h4 id="ethicsCardTitle">Ethics & Human Trafficking</h4>
+                                <div class="value" id="ethicsCCUs">0</div>
+                            </div>
+                            <div class="ccu-card">
+                                <h4>External CCUs</h4>
+                                <div class="value" id="externalCCUs">0</div>
+                            </div>
+                            <div class="ccu-card">
+                                <h4>Total Earned</h4>
+                                <div class="value" id="totalCCUs">0</div>
+                            </div>
+                            <div class="ccu-card">
+                                <h4>Remaining</h4>
+                                <div class="value" id="ccuRemaining">30</div>
+                            </div>
+                            <div class="ccu-card">
+                                <h4>Days Until Renewal</h4>
+                                <div class="value" id="daysUntilRenewal">--</div>
+                                <button onclick="recalculateRenewal()" class="btn btn-secondary" style="font-size: 0.7rem; margin-top: 0.5rem; padding: 0.25rem 0.5rem;">🔄 Refresh</button>
+                            </div>
+                        </div>
+                        
+                        <div class="progress-container">
+                            <h3>Progress to License Renewal</h3>
+                            <div class="progress-bar">
+                                <div class="progress-fill" id="ccuProgressFill" style="width: 0%"></div>
+                            </div>
+                            <div class="progress-text" id="ccuProgressText">0 of 30 CCUs completed (0%)</div>
+                        </div>
+
+                        <!-- CCU Management Forms -->
+                        <div style="margin-top: 2rem;">
+                            <div class="form-card" style="margin-bottom: 1.5rem;">
+                                <h3 style="color: var(--navy); margin-bottom: 1rem;">📋 Manage Your CCU Credits</h3>
+                                
+                                <!-- Ethics and Human Trafficking Section -->
+                                <div id="ethicsSection" style="background: var(--gray-50); border-radius: 6px; padding: 1rem; margin-bottom: 1.5rem;">
+                                    <h4 style="margin-bottom: 0.5rem;" id="ethicsSectionTitle">Ethics & Human Trafficking Requirements</h4>
+                                    <p style="font-size: 0.9rem; color: var(--gray-600); margin-bottom: 1rem;" id="ethicsDescription">
+                                        For PT/PTA: Complete Jurisprudence Exam + approved Human Trafficking course (3 CCUs total)
+                                    </p>
+                                    
+                                    <div style="display: flex; gap: 1rem; flex-wrap: wrap; align-items: center;">
+                                        <div class="checkbox-group">
+                                            <input type="checkbox" id="jurisprudenceCompleted" onchange="updateEthicsCCUs()">
+                                            <label for="jurisprudenceCompleted" id="jurisprudenceLabel">Jurisprudence Exam Completed (2 CCUs)</label>
+                                        </div>
+                                        <div class="checkbox-group">
+                                            <input type="checkbox" id="humanTrafficingCompleted" onchange="updateEthicsCCUs()">
+                                            <label for="humanTrafficingCompleted">Human Trafficking Course Completed (1 CCU)</label>
+                                        </div>
+                                        <button onclick="saveEthicsCCUs()" class="btn btn-primary" style="font-size: 0.9rem;">💾 Save</button>
+                                    </div>
+                                </div>
+
+                                <!-- External CCU Management -->
+                                <div style="background: var(--gray-50); border-radius: 6px; padding: 1rem; margin-bottom: 1.5rem;">
+                                    <h4 style="margin-bottom: 0.5rem;">🌐 External CCU Credits</h4>
+                                    <p style="font-size: 0.9rem; color: var(--gray-600); margin-bottom: 1rem;">
+                                        Add CCU credits you've earned from other providers or courses outside this platform.
+                                    </p>
+                                    
+                                    <div style="display: flex; gap: 1rem; flex-wrap: wrap; align-items: end; margin-bottom: 1rem;">
+                                        <div style="flex: 1; min-width: 200px;">
+                                            <label for="externalCCUHours" style="display: block; font-weight: 600; margin-bottom: 0.5rem;">CCU Hours:</label>
+                                            <input type="number" id="externalCCUHours" class="form-input" placeholder="0" min="0" max="50" step="0.5" style="width: 100px;">
+                                        </div>
+                                        <div style="flex: 2; min-width: 200px;">
+                                            <label for="externalCCUDescription" style="display: block; font-weight: 600; margin-bottom: 0.5rem;">Description:</label>
+                                            <input type="text" id="externalCCUDescription" class="form-input" placeholder="e.g., APTA Conference, Webinar Series, etc.">
+                                        </div>
+                                        <button onclick="addExternalCCUs()" class="btn btn-success" style="white-space: nowrap;">➕ Add CCUs</button>
+                                    </div>
+
+                                    <!-- External CCU List -->
+                                    <div id="externalCCUList">
+                                        <div style="text-align: center; color: var(--gray-600); padding: 1rem; font-style: italic;">
+                                            No external CCUs added yet
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- CCU Summary -->
+                                <div style="background: linear-gradient(135deg, var(--navy), #1e40af); color: white; border-radius: 6px; padding: 1rem;">
+                                    <h4 style="margin-bottom: 0.5rem; color: white;">📊 CCU Summary</h4>
+                                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 0.5rem; font-size: 0.9rem;">
+                                        <div>Course CCUs: <strong id="summaryCourseCCUs">0</strong></div>
+                                        <div id="summaryEthics">Ethics/Trafficking: <strong id="summaryEthicsCCUs">0</strong></div>
+                                        <div>External CCUs: <strong id="summaryExternalCCUs">0</strong></div>
+                                        <div>Total Earned: <strong id="summaryTotalCCUs">0</strong></div>
+                                        <div>Required: <strong id="summaryRequiredCCUs">30</strong></div>
+                                        <div>Remaining: <strong id="summaryRemainingCCUs">30</strong></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div style="margin-top: 2rem;">
+                            <h3>Course History</h3>
+                            <div id="courseHistory">
+                                <p style="text-align: center; color: var(--gray-600); padding: 2rem;">Complete courses to see your CCU history here</p>
+                            </div>
+                        </div>
+                        
+                        <div style="margin-top: 2rem; display: flex; gap: 1rem; flex-wrap: wrap;">
+                            <button onclick="printCCUTranscript()" class="btn btn-secondary">📄 Print CCU Transcript</button>
+                            <a href="courses.html" class="btn btn-primary">📚 Browse Courses</a>
+                        </div>
+                    </div>
+
+                    <!-- My Courses Section -->
+                    <div id="courses" class="content-section">
+                        <h2>My Courses</h2>
+                        <p>View your enrolled and completed courses.</p>
+                        
+                        <div id="coursesList">
+                            <div style="text-align: center; color: var(--gray-600); padding: 3rem;">
+                                <h3>No Courses Yet</h3>
+                                <p>You haven't enrolled in any courses yet.</p>
+                                <a href="courses.html" class="btn btn-primary" style="margin-top: 1rem;">📚 Browse Available Courses</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Super User Section -->
+                    <div id="superuser" class="content-section">
+                        <h2>⚡ Super User Controls</h2>
+                        <p>Advanced administrative controls for platform management.</p>
+                        
+                        <!-- Super User Status -->
+                        <div class="form-card" style="margin-bottom: 2rem;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                                <div>
+                                    <h3 style="color: var(--navy); margin-bottom: 0.5rem;">Super User Status</h3>
+                                    <p style="color: var(--gray-600); margin: 0;">Enhanced privileges for course management and platform access</p>
+                                </div>
+                                <div id="superuser-status-badge" style="padding: 0.5rem 1rem; border-radius: 20px; font-weight: bold; font-size: 0.9rem;">
+                                    ⚡ ACTIVE
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Course Management -->
+                        <div class="form-card" style="margin-bottom: 2rem;">
+                            <h3 style="color: var(--navy); margin-bottom: 1rem;">📚 Course Management</h3>
+                            
+                            <!-- Auto-Enroll All Courses -->
+                            <div style="margin-bottom: 1.5rem;">
+                                <button onclick="enrollAllCourses()" class="btn btn-primary" style="margin-right: 1rem;">
+                                    ➕ Auto-Enroll in All Available Courses
+                                </button>
+                                <button onclick="showAllCoursesAccess()" class="btn btn-secondary">
+                                    👁️ View All Course Access
+                                </button>
+                            </div>
+
+                            <!-- Course Access Override -->
+                            <div style="background: var(--gray-50); border: 1px solid var(--gray-200); border-radius: 6px; padding: 1rem; margin-bottom: 1.5rem;">
+                                <h4 style="margin-bottom: 0.5rem;">🔓 Direct Course Access</h4>
+                                <p style="font-size: 0.9rem; color: var(--gray-600); margin-bottom: 1rem;">Access any course directly, bypassing normal enrollment restrictions:</p>
+                                <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                                    <a href="courses/pt-msk-001-progressive.html" class="btn btn-success" style="font-size: 0.9rem;">MSK Course (Progressive)</a>
+                                    <a href="courses/pt-msk-001.html" class="btn btn-success" style="font-size: 0.9rem;">MSK Course (Original)</a>
+                                    <button onclick="setAdminMode()" class="btn btn-primary" style="font-size: 0.9rem;">🛡️ Enable Admin Mode</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Progress Management -->
+                        <div class="form-card" style="margin-bottom: 2rem;">
+                            <h3 style="color: var(--navy); margin-bottom: 1rem;">📊 Progress Management</h3>
+                            
+                            <div class="form-grid">
+                                <div>
+                                    <button onclick="viewDetailedProgress()" class="btn btn-secondary" style="width: 100%; margin-bottom: 1rem;">
+                                        📈 View Detailed Progress Data
+                                    </button>
+                                    <button onclick="resetSpecificCourse()" class="btn btn-secondary" style="width: 100%;">
+                                        🎯 Reset Specific Course
+                                    </button>
+                                </div>
+                                <div>
+                                    <button onclick="resetAllProgress()" class="btn btn-danger" style="width: 100%; margin-bottom: 1rem;">
+                                        🔄 Reset ALL Course Progress
+                                    </button>
+                                    <button onclick="simulateCourseCompletion()" class="btn btn-success" style="width: 100%;">
+                                        ✅ Simulate Course Completion
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Progress Details Display -->
+                            <div id="detailed-progress" style="display: none; margin-top: 1.5rem; background: var(--gray-50); border-radius: 6px; padding: 1rem;">
+                                <h4>Current Progress Data:</h4>
+                                <pre id="progress-data-display" style="background: white; padding: 1rem; border-radius: 4px; overflow-x: auto; font-size: 0.8rem;"></pre>
+                            </div>
+                        </div>
+
+                        <!-- Account Management -->
+                        <div class="form-card" style="margin-bottom: 2rem;">
+                            <h3 style="color: var(--navy); margin-bottom: 1rem;">👤 Account Management</h3>
+                            
+                            <div style="display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 1.5rem;">
+                                <button onclick="exportAccountData()" class="btn btn-secondary">💾 Export Account Data</button>
+                                <button onclick="viewStorageData()" class="btn btn-secondary">🗄️ View localStorage Data</button>
+                                <button onclick="clearAllData()" class="btn btn-danger">🗑️ Clear All Data</button>
+                            </div>
+
+                            <!-- Toggle Super User Status -->
+                            <div style="background: #fff3cd; border: 1px solid #ffeaa7; border-radius: 6px; padding: 1rem;">
+                                <h4 style="margin-bottom: 0.5rem;">⚠️ Manage Super User Status</h4>
+                                <p style="font-size: 0.9rem; margin-bottom: 1rem;">Disable super user privileges to return to normal user experience:</p>
+                                <button onclick="toggleSuperUser()" class="btn btn-danger" style="font-size: 0.9rem;">Disable Super User Mode</button>
+                            </div>
+                        </div>
+
+                        <!-- Platform Access -->
+                        <div class="form-card">
+                            <h3 style="color: var(--navy); margin-bottom: 1rem;">🔧 Platform Access</h3>
+                            <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                                <a href="admin.html" class="btn btn-primary" target="_blank">🛡️ Admin Dashboard</a>
+                                <a href="courses.html" class="btn btn-secondary">📚 Browse All Courses</a>
+                                <button onclick="openDevConsole()" class="btn btn-secondary">💻 Developer Tools Guide</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Notifications Section -->
+                    <div id="notifications" class="content-section">
+                        <h2>Notification Preferences</h2>
+                        <p>Control how and when you receive updates.</p>
+                        
+                        <form id="notificationsForm">
+                            <h3 style="margin-bottom: 1rem;">Email Notifications</h3>
+                            
+                            <div class="checkbox-group">
+                                <input type="checkbox" id="emailCourseUpdates" checked>
+                                <label for="emailCourseUpdates">Course updates and new content</label>
+                            </div>
+                            
+                            <div class="checkbox-group">
+                                <input type="checkbox" id="emailLicenseReminders" checked>
+                                <label for="emailLicenseReminders">License renewal reminders</label>
+                            </div>
+                            
+                            <div class="checkbox-group">
+                                <input type="checkbox" id="emailPromotions">
+                                <label for="emailPromotions">Promotions and special offers</label>
+                            </div>
+                            
+                            <div class="checkbox-group">
+                                <input type="checkbox" id="emailWeeklyDigest">
+                                <label for="emailWeeklyDigest">Weekly digest of platform activity</label>
+                            </div>
+                            
+                            <button type="button" onclick="saveNotificationPreferences()" class="btn btn-primary">💾 Save Preferences</button>
+                        </form>
+                    </div>
+
+                    <!-- Security Section -->
+                    <div id="security" class="content-section">
+                        <h2>Security Settings</h2>
+                        <p>Manage your account security and login settings.</p>
+                        
+                        <div style="background: var(--gray-50); padding: 2rem; border-radius: 8px; margin-bottom: 2rem;">
+                            <h3>Two-Factor Authentication</h3>
+                            <p style="color: var(--gray-600); margin: 1rem 0;">Add an extra layer of security to your account.</p>
+                            <button class="btn btn-secondary">🔐 Enable 2FA (Coming Soon)</button>
+                        </div>
+                        
+                        <div style="background: var(--gray-50); padding: 2rem; border-radius: 8px;">
+                            <h3>Recent Login Activity</h3>
+                            <div id="loginActivity">
+                                <p style="color: var(--gray-600); text-align: center; padding: 2rem;">No recent login activity recorded</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Privacy Section -->
+                    <div id="privacy" class="content-section">
+                        <h2>Privacy & Data</h2>
+                        <p>Manage your privacy settings and data preferences.</p>
+                        
+                        <form id="privacyForm">
+                            <h3 style="margin-bottom: 1rem;">Data Usage</h3>
+                            
+                            <div class="checkbox-group">
+                                <input type="checkbox" id="dataAnalytics" checked>
+                                <label for="dataAnalytics">Allow anonymous usage analytics to improve the platform</label>
+                            </div>
+                            
+                            <div class="checkbox-group">
+                                <input type="checkbox" id="marketingConsent">
+                                <label for="marketingConsent">Consent to marketing communications</label>
+                            </div>
+                            
+                            <button type="button" onclick="savePrivacySettings()" class="btn btn-primary">💾 Save Privacy Settings</button>
+                        </form>
+                        
+                        <div style="margin-top: 3rem; padding: 2rem; border: 1px solid var(--gray-200); border-radius: 8px;">
+                            <h3>Data Export & Deletion</h3>
+                            <p style="color: var(--gray-600); margin: 1rem 0;">Export your data or delete your account permanently.</p>
+                            <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                                <button onclick="exportAccountData()" class="btn btn-secondary">📥 Export My Data</button>
+                                <button onclick="requestAccountDeletion()" class="btn btn-danger">🗑️ Delete Account</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Settings Section -->
+                    <div id="settings" class="content-section">
+                        <h2>Account Settings</h2>
+                        <p>Customize your account preferences and interface.</p>
+                        
+                        <div style="background: var(--gray-50); padding: 2rem; border-radius: 8px; margin-bottom: 2rem;">
+                            <h3>Interface Preferences</h3>
+                            
+                            <div class="checkbox-group">
+                                <input type="checkbox" id="darkMode">
+                                <label for="darkMode">Enable dark mode (Coming Soon)</label>
+                            </div>
+                        </div>
+                        
+                        <div style="background: var(--gray-50); padding: 2rem; border-radius: 8px;">
+                            <h3>Account Actions</h3>
+                            <div style="display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 1rem;">
+                                <button onclick="logout()" class="btn btn-secondary">🚪 Logout</button>
+                                <a href="courses.html" class="btn btn-primary">📚 Browse Courses</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Global variables
+        let currentAccount = null;
+
+        // Initialize page when loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('🔍 PAGE DEBUG - My Account page initializing...');
+            
+            // Check if required elements exist
+            const loginDiv = document.getElementById('loginRequired');
+            const contentDiv = document.getElementById('accountContent');
+            
+            console.log('🔍 PAGE DEBUG - loginRequired div exists:', !!loginDiv);
+            console.log('🔍 PAGE DEBUG - accountContent div exists:', !!contentDiv);
+            
+            if (loginDiv) console.log('🔍 PAGE DEBUG - loginRequired initial display:', loginDiv.style.display);
+            if (contentDiv) console.log('🔍 PAGE DEBUG - accountContent initial display:', contentDiv.style.display);
+            
+            // Troy auto-fix: Check if Troy's account exists and bypass normal flow
+            const accountData = localStorage.getItem('drtroyAccount');
+            if (accountData) {
+                try {
+                    const account = JSON.parse(accountData);
+                    if (account.email === 'troy@drtroy.com') {
+                        console.log('🔧 TROY AUTO-FIX - Detected Troy\'s account, bypassing normal flow');
+                        // Short delay to ensure DOM is ready
+                        setTimeout(() => {
+                            forceShowAccount();
+                            restoreActiveSection();
+                            restoreCachedRenewal();
+                            
+                            // Force renewal calculation after everything loads
+                            setTimeout(() => {
+                                if (currentAccount && currentAccount.licenseExpiration) {
+                                    console.log('🔧 TROY AUTO-FIX - Forcing renewal recalculation');
+                                    recalculateRenewal();
+                                } else {
+                                    console.log('🔧 TROY AUTO-FIX - No renewal data, keeping cached value');
+                                }
+                            }, 200);
+                        }, 100);
+                        
+                        // Secondary fallback in case first attempt fails
+                        setTimeout(() => {
+                            const loginStillVisible = document.getElementById('loginRequired').style.display !== 'none';
+                            if (loginStillVisible) {
+                                console.log('🔧 TROY AUTO-FIX - Fallback trigger');
+                                forceShowAccount();
+                                restoreActiveSection();
+                            }
+                        }, 500);
+                        
+                        return; // Skip normal authentication flow
+                    }
+                } catch (e) {
+                    console.error('Error checking Troy account:', e);
+                }
+            }
+            
+            checkLoginStatus();
+            setupEventListeners();
+        });
+
+        // Restore the previously active section after page load
+        function restoreActiveSection() {
+            const savedSection = localStorage.getItem('currentAccountSection');
+            if (savedSection) {
+                console.log('🔧 SECTION RESTORE - Restoring section:', savedSection);
+                
+                // Hide all sections first
+                document.querySelectorAll('.content-section').forEach(section => {
+                    section.classList.remove('active');
+                });
+                
+                // Remove active class from all nav links
+                document.querySelectorAll('.nav-link').forEach(link => {
+                    link.classList.remove('active');
+                });
+                
+                // Show the saved section
+                const targetSection = document.getElementById(savedSection);
+                const targetNavLink = document.querySelector(`[onclick="showSection('${savedSection}')"]`);
+                
+                if (targetSection && targetNavLink) {
+                    targetSection.classList.add('active');
+                    targetNavLink.classList.add('active');
+                    console.log('🔧 SECTION RESTORE - Successfully restored:', savedSection);
+                } else {
+                    // Fallback to overview if section doesn't exist
+                    document.getElementById('overview').classList.add('active');
+                    document.querySelector('[onclick="showSection(\'overview\')"]').classList.add('active');
+                    console.log('🔧 SECTION RESTORE - Fallback to overview');
+                }
+            }
+        }
+
+        // Check if user is logged in
+        function checkLoginStatus() {
+            console.log('🔍 DEBUG - My Account authentication check...');
+            
+            const accountData = localStorage.getItem('drtroyAccount');
+            const sessionData = localStorage.getItem('userSession');
+            
+            console.log('🔍 DEBUG - Account data exists:', !!accountData);
+            console.log('🔍 DEBUG - Session data exists:', !!sessionData);
+            
+            if (accountData) {
+                try {
+                    currentAccount = JSON.parse(accountData);
+                    let session = null;
+                    
+                    // Parse session data if it exists, otherwise create new session
+                    if (sessionData) {
+                        session = JSON.parse(sessionData);
+                    } else {
+                        console.log('🔧 No session found, creating new session for existing account...');
+                        session = {
+                            userId: currentAccount.id,
+                            email: currentAccount.email,
+                            loginTime: Date.now(),
+                            expires: Date.now() + (7 * 24 * 60 * 60 * 1000) // 7 days
+                        };
+                        localStorage.setItem('userSession', JSON.stringify(session));
+                    }
+                    
+                    console.log('🔍 DEBUG - Current account email:', currentAccount.email);
+                    console.log('🔍 DEBUG - Session expires:', new Date(session.expires));
+                    console.log('🔍 DEBUG - Current time:', new Date());
+                    console.log('🔍 DEBUG - Session valid:', session.expires > Date.now());
+                    
+                    // Check if session is still valid OR if it's Troy (temporary bypass)
+                    const sessionValid = session.expires > Date.now();
+                    const isTroy = currentAccount.email === 'troy@drtroy.com';
+                    
+                    console.log('🔍 AUTH DEBUG - Session valid check:', sessionValid);
+                    console.log('🔍 AUTH DEBUG - Is Troy check:', isTroy);
+                    console.log('🔍 AUTH DEBUG - Should allow access:', sessionValid || isTroy);
+                    
+                    if (sessionValid || isTroy) {
+                        console.log('✅ User is logged in:', currentAccount.firstName);
+                        console.log('🔍 AUTH DEBUG - About to call showAccountContent()');
+                        
+                        // If Troy's session expired, create a new one
+                        if (isTroy && !sessionValid) {
+                            console.log('🔧 Extending Troy\'s session...');
+                            const newSession = {
+                                userId: session.userId,
+                                email: session.email,
+                                loginTime: Date.now(),
+                                expires: Date.now() + (7 * 24 * 60 * 60 * 1000) // 7 days
+                            };
+                            localStorage.setItem('userSession', JSON.stringify(newSession));
+                        }
+                        
+                        console.log('🔍 AUTH DEBUG - Calling showAccountContent()');
+                        showAccountContent();
+                        
+                        console.log('🔍 AUTH DEBUG - Calling loadAccountData()');
+                        loadAccountData();
+                        
+                        console.log('🔍 AUTH DEBUG - Restoring active section');
+                        restoreActiveSection();
+                        
+                        console.log('🔍 AUTH DEBUG - Authentication complete');
+                    } else {
+                        console.log('❌ Session expired');
+                        console.log('🔍 AUTH DEBUG - Calling showLoginRequired()');
+                        showLoginRequired();
+                    }
+                } catch (error) {
+                    console.error('❌ Error parsing account data:', error);
+                    console.error('Account data:', accountData);
+                    console.error('Session data:', sessionData);
+                    showLoginRequired();
+                }
+            } else {
+                console.log('❌ No account data found');
+                console.log('Account data exists:', !!accountData);
+                
+                // For debugging, let's show what's actually in localStorage
+                console.log('🔍 All localStorage keys:', Object.keys(localStorage));
+                showLoginRequired();
+            }
+        }
+
+        // Show account content
+        function showAccountContent() {
+            console.log('🔍 DISPLAY DEBUG - showAccountContent() called');
+            
+            const loginDiv = document.getElementById('loginRequired');
+            const contentDiv = document.getElementById('accountContent');
+            
+            console.log('🔍 DISPLAY DEBUG - loginRequired element:', !!loginDiv);
+            console.log('🔍 DISPLAY DEBUG - accountContent element:', !!contentDiv);
+            
+            if (loginDiv) {
+                console.log('🔍 DISPLAY DEBUG - Hiding loginRequired div');
+                loginDiv.style.display = 'none';
+            }
+            
+            if (contentDiv) {
+                console.log('🔍 DISPLAY DEBUG - Showing accountContent div');
+                contentDiv.style.display = 'block';
+            }
+            
+            console.log('🔍 DISPLAY DEBUG - showAccountContent() complete');
+        }
+
+        // Show login required message
+        function showLoginRequired() {
+            document.getElementById('loginRequired').style.display = 'block';
+            document.getElementById('accountContent').style.display = 'none';
+            
+            // Don't auto-redirect - let user see debug info
+            // setTimeout(() => {
+            //     window.location.href = 'index.html';
+            // }, 5000);
+        }
+
+        // Show debug information
+        function showDebugInfo() {
+            const debugDiv = document.getElementById('debugInfo');
+            const debugContent = document.getElementById('debugContent');
+            
+            const accountData = localStorage.getItem('drtroyAccount');
+            const sessionData = localStorage.getItem('userSession');
+            
+            let debugInfo = '=== My Account Debug Info ===\n\n';
+            debugInfo += `Account data exists: ${!!accountData}\n`;
+            debugInfo += `Session data exists: ${!!sessionData}\n\n`;
+            
+            if (accountData) {
+                try {
+                    const account = JSON.parse(accountData);
+                    debugInfo += `Account email: ${account.email}\n`;
+                    debugInfo += `Account firstName: ${account.firstName}\n`;
+                    debugInfo += `Account id: ${account.id}\n\n`;
+                } catch (e) {
+                    debugInfo += `Account parsing error: ${e.message}\n\n`;
+                }
+            } else {
+                debugInfo += 'Account data: null\n\n';
+            }
+            
+            if (sessionData) {
+                try {
+                    const session = JSON.parse(sessionData);
+                    debugInfo += `Session email: ${session.email}\n`;
+                    debugInfo += `Session expires: ${new Date(session.expires)}\n`;
+                    debugInfo += `Current time: ${new Date()}\n`;
+                    debugInfo += `Session valid: ${session.expires > Date.now()}\n\n`;
+                } catch (e) {
+                    debugInfo += `Session parsing error: ${e.message}\n\n`;
+                }
+            } else {
+                debugInfo += 'Session data: null\n\n';
+            }
+            
+            debugInfo += `All localStorage keys:\n${Object.keys(localStorage).join(', ')}\n\n`;
+            debugInfo += `Current URL: ${window.location.href}`;
+            
+            debugContent.textContent = debugInfo;
+            debugDiv.style.display = debugDiv.style.display === 'none' ? 'block' : 'none';
+        }
+
+        // Force login for Troy (emergency bypass)
+        function forceLogin() {
+            const accountData = localStorage.getItem('drtroyAccount');
+            
+            if (!accountData) {
+                // Create Troy's account if it doesn't exist
+                const troyAccount = {
+                    id: 'troy-drtroy-001',
+                    firstName: 'Troy',
+                    lastName: 'Hounshell',
+                    email: 'troy@drtroy.com',
+                    password: 'temporarypassword',
+                    discipline: 'PT',
+                    licenseNumber: 'PT12345',
+                    licenseState: 'TX',
+                    phone: '806-577-6908',
+                    createdAt: new Date().toISOString(),
+                    superUser: true,
+                    enrolledCourses: [],
+                    courseProgress: {},
+                    ethicsCCUs: {
+                        jurisprudenceCompleted: false,
+                        humanTrafficingCompleted: false,
+                        totalEthicsCCUs: 0
+                    },
+                    externalCCUs: []
+                };
+                localStorage.setItem('drtroyAccount', JSON.stringify(troyAccount));
+                console.log('🔧 Created Troy\'s account');
+            }
+            
+            // Create/refresh session
+            const session = {
+                userId: 'troy-drtroy-001',
+                email: 'troy@drtroy.com',
+                loginTime: Date.now(),
+                expires: Date.now() + (30 * 24 * 60 * 60 * 1000) // 30 days for Troy
+            };
+            localStorage.setItem('userSession', JSON.stringify(session));
+            
+            console.log('🔧 Force login executed for Troy');
+            alert('Force login complete! Refreshing page...');
+            location.reload();
+        }
+
+        // Emergency display override (for console use)
+        function forceShowAccount() {
+            console.log('🚨 TROY FIX - Forcing account display');
+            
+            // Force hide login required
+            const loginDiv = document.getElementById('loginRequired');
+            if (loginDiv) {
+                loginDiv.style.display = 'none';
+                console.log('🚨 TROY FIX - loginRequired hidden');
+            }
+            
+            // Force show account content
+            const contentDiv = document.getElementById('accountContent');
+            if (contentDiv) {
+                contentDiv.style.display = 'block';
+                console.log('🚨 TROY FIX - accountContent shown');
+            }
+            
+            // Try to load account data
+            const accountData = localStorage.getItem('drtroyAccount');
+            if (accountData) {
+                try {
+                    currentAccount = JSON.parse(accountData);
+                    setupEventListeners(); // Make sure event listeners are set up
+                    loadAccountData();
+                    console.log('🚨 TROY FIX - Account data loaded and listeners set');
+                } catch (e) {
+                    console.error('🚨 TROY FIX - Error loading account data:', e);
+                }
+            }
+            
+            console.log('🚨 TROY FIX - Force display complete');
+        }
+
+        // Manual renewal calculation for testing
+        function recalculateRenewal() {
+            console.log('🔧 MANUAL RENEWAL - Forcing renewal calculation');
+            
+            // Try to get fresh account data
+            const accountData = localStorage.getItem('drtroyAccount');
+            if (accountData) {
+                try {
+                    const freshAccount = JSON.parse(accountData);
+                    if (freshAccount.licenseExpiration) {
+                        currentAccount = freshAccount; // Update current account reference
+                        
+                        const expirationDate = new Date(freshAccount.licenseExpiration);
+                        const today = new Date();
+                        const daysUntil = Math.ceil((expirationDate - today) / (1000 * 60 * 60 * 24));
+                        
+                        console.log('🔧 MANUAL RENEWAL - Fresh expiration data:', freshAccount.licenseExpiration);
+                        console.log('🔧 MANUAL RENEWAL - Expiration date object:', expirationDate);
+                        console.log('🔧 MANUAL RENEWAL - Today:', today);
+                        console.log('🔧 MANUAL RENEWAL - Days until:', daysUntil);
+                        
+                        const renewalElement = document.getElementById('daysUntilRenewal');
+                        if (renewalElement) {
+                            const displayText = daysUntil > 0 ? daysUntil : 'Expired';
+                            renewalElement.textContent = displayText;
+                            
+                            // Save the calculated renewal for persistence
+                            localStorage.setItem('lastCalculatedRenewal', JSON.stringify({
+                                daysUntil: daysUntil,
+                                displayText: displayText,
+                                calculatedAt: new Date().toISOString(),
+                                licenseExpiration: freshAccount.licenseExpiration
+                            }));
+                            
+                            console.log('✅ MANUAL RENEWAL - Display updated and saved:', displayText);
+                        }
+                        return;
+                    }
+                } catch (e) {
+                    console.error('❌ MANUAL RENEWAL - Error parsing account data:', e);
+                }
+            }
+            
+            console.log('❌ No license expiration date found');
+            
+            // Try to restore last calculated renewal
+            const lastRenewal = localStorage.getItem('lastCalculatedRenewal');
+            if (lastRenewal) {
+                try {
+                    const renewalData = JSON.parse(lastRenewal);
+                    const renewalElement = document.getElementById('daysUntilRenewal');
+                    if (renewalElement) {
+                        renewalElement.textContent = renewalData.displayText + ' (cached)';
+                        console.log('🔄 MANUAL RENEWAL - Restored cached value:', renewalData.displayText);
+                    }
+                } catch (e) {
+                    console.error('❌ Error restoring cached renewal:', e);
+                }
+            } else {
+                const renewalElement = document.getElementById('daysUntilRenewal');
+                if (renewalElement) {
+                    renewalElement.textContent = '--';
+                }
+            }
+        }
+
+        // Restore cached renewal on page load
+        function restoreCachedRenewal() {
+            const lastRenewal = localStorage.getItem('lastCalculatedRenewal');
+            if (lastRenewal) {
+                try {
+                    const renewalData = JSON.parse(lastRenewal);
+                    const renewalElement = document.getElementById('daysUntilRenewal');
+                    if (renewalElement && renewalElement.textContent === '--') {
+                        renewalElement.textContent = renewalData.displayText;
+                        console.log('🔄 PAGE LOAD - Restored cached renewal:', renewalData.displayText);
+                    }
+                } catch (e) {
+                    console.error('❌ Error restoring cached renewal on load:', e);
+                }
+            }
+        }
+
+        // Make functions available globally for console access
+        window.forceShowAccount = forceShowAccount;
+        window.recalculateRenewal = recalculateRenewal;
+        window.restoreActiveSection = restoreActiveSection;
+        window.restoreCachedRenewal = restoreCachedRenewal;
+
+        // Load account data into forms
+        function loadAccountData() {
+            if (!currentAccount) return;
+            
+            console.log('Loading account data...');
+            
+            // Check for super user status and show/hide nav
+            const isSuperUser = currentAccount.superUser === true || 
+                               localStorage.getItem('troyadmin') === 'true' ||
+                               currentAccount.email === 'troy@drtroy.com';
+            
+            if (isSuperUser) {
+                currentAccount.superUser = true;
+                document.getElementById('superuser-nav').style.display = 'block';
+            }
+
+            // Ensure user has access to MSK course (until we have proper enrollment system)
+            if (!currentAccount.enrolledCourses) {
+                currentAccount.enrolledCourses = [];
+            }
+            if (!currentAccount.enrolledCourses.includes('PT-MSK-001')) {
+                currentAccount.enrolledCourses.push('PT-MSK-001');
+            }
+            
+            // Super users get access to ALL courses
+            if (isSuperUser) {
+                Object.keys(COURSE_DATABASE).forEach(courseId => {
+                    if (!currentAccount.enrolledCourses.includes(courseId)) {
+                        currentAccount.enrolledCourses.push(courseId);
+                    }
+                });
+            }
+            
+            // Ensure course progress exists and MSK course is marked as accessible
+            if (!currentAccount.courseProgress) {
+                currentAccount.courseProgress = {};
+            }
+            if (!currentAccount.courseProgress['PT-MSK-001']) {
+                currentAccount.courseProgress['PT-MSK-001'] = {
+                    enrolledAt: new Date().toISOString(),
+                    startedAt: null,
+                    completed: false,
+                    completedAt: null,
+                    progress: 0
+                };
+            }
+            
+            // Save updated account data
+            localStorage.setItem('drtroyAccount', JSON.stringify(currentAccount));
+            
+            // Personal information
+            document.getElementById('firstName').value = currentAccount.firstName || '';
+            document.getElementById('lastName').value = currentAccount.lastName || '';
+            document.getElementById('email').value = currentAccount.email || '';
+            document.getElementById('phone').value = currentAccount.phone || '';
+            document.getElementById('address').value = currentAccount.address || '';
+            document.getElementById('city').value = currentAccount.city || '';
+            document.getElementById('state').value = currentAccount.state || '';
+            document.getElementById('zipCode').value = currentAccount.zipCode || '';
+            document.getElementById('discipline').value = currentAccount.discipline || '';
+            document.getElementById('licenseNumber').value = currentAccount.licenseNumber || '';
+            document.getElementById('licenseState').value = currentAccount.licenseState || '';
+            document.getElementById('licenseExpiration').value = currentAccount.licenseExpiration || '';
+            document.getElementById('renewalReminders').checked = currentAccount.licenseRenewalReminders !== false;
+            
+            // Load notification preferences
+            if (currentAccount.notifications) {
+                document.getElementById('emailCourseUpdates').checked = currentAccount.notifications.courseUpdates !== false;
+                document.getElementById('emailLicenseReminders').checked = currentAccount.notifications.licenseReminders !== false;
+                document.getElementById('emailPromotions').checked = currentAccount.notifications.promotions === true;
+                document.getElementById('emailWeeklyDigest').checked = currentAccount.notifications.weeklyDigest === true;
+            }
+            
+            // Load privacy settings
+            if (currentAccount.privacy) {
+                document.getElementById('dataAnalytics').checked = currentAccount.privacy.dataAnalytics !== false;
+                document.getElementById('marketingConsent').checked = currentAccount.privacy.marketingConsent === true;
+            }
+            
+            // Initialize ethics and external CCU data
+            if (!currentAccount.ethicsCCUs) {
+                currentAccount.ethicsCCUs = {
+                    jurisprudenceCompleted: false,
+                    humanTrafficingCompleted: false,
+                    totalEthicsCCUs: 0
+                };
+            }
+            if (!currentAccount.externalCCUs) {
+                currentAccount.externalCCUs = [];
+            }
+
+            // Load ethics CCU checkboxes
+            document.getElementById('jurisprudenceCompleted').checked = currentAccount.ethicsCCUs.jurisprudenceCompleted;
+            document.getElementById('humanTrafficingCompleted').checked = currentAccount.ethicsCCUs.humanTrafficingCompleted;
+            
+            // Update ethics section based on discipline
+            updateEthicsSection();
+            
+            // Update external CCU display
+            updateExternalCCUDisplay();
+            
+            // Update CCU dashboard
+            updateCCUDashboard();
+            
+            // Force renewal calculation after everything is loaded
+            setTimeout(() => {
+                if (currentAccount && currentAccount.licenseExpiration) {
+                    console.log('🔧 LOAD DATA - Final renewal calculation');
+                    recalculateRenewal();
+                }
+            }, 100);
+            
+            // Update courses display
+            updateCoursesDisplay();
+        }
+
+        // Course Information Database (Enhanced with individual pricing & approval numbers)
+        const COURSE_DATABASE = {
+            // PT-Specific Course (Available Now)
+            'PT-MSK-001': {
+                title: 'Comprehensive Musculoskeletal Evaluation',
+                credits: 3,
+                description: 'Evidence-based special tests and clinical reasoning for systematic MSK evaluation',
+                url: 'courses/pt-msk-001-progressive.html',
+                alternativeUrl: 'courses/pt-msk-001.html',
+                status: 'available',
+                approvalNumber: 'DRTROY-PT-MSK-001-2024',
+                individualPrice: 45, // $15 per CCU
+                provider: 'DrTroy Continuing Education',
+                duration: '180 minutes',
+                modules: 12,
+                format: 'Interactive Progressive Learning',
+                instructor: 'Troy Hounshell, PT, ScD'
+            },
+            // OT-Specific Course (Coming Soon)
+            'OT-ADL-001': {
+                title: 'OT Evaluation and Assessment of ADLs',
+                credits: 3,
+                description: 'Comprehensive ADL assessment and intervention strategies',
+                url: '#',
+                status: 'coming-soon',
+                approvalNumber: 'DRTROY-OT-ADL-001-2024',
+                individualPrice: 45,
+                provider: 'DrTroy Continuing Education'
+            },
+            // Core Courses (Coming This Week)
+            'MOBILITY-001': {
+                title: 'Comprehensive Mobility and Fall Prevention',
+                credits: 3,
+                description: 'Evidence-based mobility assessment and fall prevention strategies',
+                url: '#',
+                status: 'coming-soon',
+                approvalNumber: 'DRTROY-MOBILITY-001-2024',
+                individualPrice: 45,
+                provider: 'DrTroy Continuing Education'
+            },
+            'BALANCE-001': {
+                title: 'Balance, Gait, and Vestibular Management',
+                credits: 3,
+                description: 'Assessment and treatment of balance and vestibular disorders',
+                url: '#',
+                status: 'coming-soon',
+                approvalNumber: 'DRTROY-BALANCE-001-2024',
+                individualPrice: 45,
+                provider: 'DrTroy Continuing Education'
+            },
+            'EXERCISE-001': {
+                title: 'Post-Surgical and Therapeutic Exercise',
+                credits: 3,
+                description: 'Post-operative rehabilitation and exercise prescription',
+                url: '#',
+                status: 'coming-soon',
+                approvalNumber: 'DRTROY-EXERCISE-001-2024',
+                individualPrice: 45,
+                provider: 'DrTroy Continuing Education'
+            },
+            'GERIATRIC-001': {
+                title: 'Geriatric Care Across the Continuum',
+                credits: 3,
+                description: 'Comprehensive geriatric rehabilitation approaches',
+                url: '#',
+                status: 'coming-soon',
+                approvalNumber: 'DRTROY-GERIATRIC-001-2024',
+                individualPrice: 45,
+                provider: 'DrTroy Continuing Education'
+            },
+            'DOCUMENTATION-001': {
+                title: 'Professional Documentation and Communication',
+                credits: 3,
+                description: 'Clinical documentation and professional communication skills',
+                url: '#',
+                status: 'coming-soon',
+                approvalNumber: 'DRTROY-DOC-001-2024',
+                individualPrice: 45,
+                provider: 'DrTroy Continuing Education'
+            },
+            'MODALITIES-001': {
+                title: 'Physical Agents, Modalities, and Wound Care',
+                credits: 3,
+                description: 'Therapeutic modalities and wound care management',
+                url: '#',
+                status: 'coming-soon',
+                approvalNumber: 'DRTROY-MODALITIES-001-2024',
+                individualPrice: 45,
+                provider: 'DrTroy Continuing Education'
+            },
+            'NEURO-001': {
+                title: 'Neurological Rehabilitation',
+                credits: 3,
+                description: 'Evidence-based neurological rehabilitation techniques',
+                url: '#',
+                status: 'coming-soon',
+                approvalNumber: 'DRTROY-NEURO-001-2024',
+                individualPrice: 45,
+                provider: 'DrTroy Continuing Education'
+            },
+            'INFECTION-001': {
+                title: 'Infection Control and Patient Safety',
+                credits: 3,
+                description: 'Infection prevention and patient safety protocols',
+                url: '#',
+                status: 'coming-soon',
+                approvalNumber: 'DRTROY-INFECTION-001-2024',
+                individualPrice: 45,
+                provider: 'DrTroy Continuing Education'
+            },
+            'EDUCATION-001': {
+                title: 'Patient Education and Health Promotion',
+                credits: 2,
+                description: 'Patient education strategies and health promotion',
+                url: '#',
+                status: 'coming-soon',
+                approvalNumber: 'DRTROY-EDUCATION-001-2024',
+                individualPrice: 30, // $15 per CCU
+                provider: 'DrTroy Continuing Education'
+            }
+        };
+
+        // Individual Course Sales Settings (Hidden until enabled)
+        const INDIVIDUAL_SALES_CONFIG = {
+            enabled: false, // Set to true when ready to enable individual sales
+            newAccountDiscount: 10, // $10 off individual courses for new accounts
+            bulkDiscountThreshold: 3, // Buy 3+ individual courses for discount
+            bulkDiscountPercent: 15 // 15% off when buying 3+ individual courses
+        };
+
+        // Update CCU dashboard and course display
+        function updateCCUDashboard() {
+            if (!currentAccount) return;
+            
+            const discipline = currentAccount.discipline || 'PT';
+            const ccuRequirements = {
+                'PT': 30,
+                'PTA': 20,
+                'OT': 24,
+                'COTA': 24
+            };
+            
+            const required = ccuRequirements[discipline] || 30;
+            
+            // Calculate earned CCUs from completed courses
+            let courseCCUs = 0;
+            let completedCount = 0;
+            
+            if (currentAccount.courseProgress) {
+                Object.keys(currentAccount.courseProgress).forEach(courseId => {
+                    if (currentAccount.courseProgress[courseId].completed && COURSE_DATABASE[courseId]) {
+                        courseCCUs += COURSE_DATABASE[courseId].credits;
+                        completedCount++;
+                    }
+                });
+            }
+            
+            // Calculate ethics/human trafficking CCUs
+            const ethicsCCUs = currentAccount.ethicsCCUs ? currentAccount.ethicsCCUs.totalEthicsCCUs : 0;
+            
+            // Calculate external CCUs
+            const externalCCUsTotal = currentAccount.externalCCUs ? 
+                currentAccount.externalCCUs.reduce((sum, entry) => sum + entry.hours, 0) : 0;
+            
+            // Calculate totals
+            const totalEarned = courseCCUs + ethicsCCUs + externalCCUsTotal;
+            const remaining = Math.max(0, required - totalEarned);
+            const percentage = Math.min(100, (totalEarned / required) * 100);
+            
+            // Update individual displays
+            document.getElementById('ccuRequired').textContent = required;
+            document.getElementById('ccuEarned').textContent = courseCCUs;
+            document.getElementById('ethicsCCUs').textContent = ethicsCCUs;
+            document.getElementById('externalCCUs').textContent = externalCCUsTotal;
+            document.getElementById('totalCCUs').textContent = totalEarned;
+            document.getElementById('ccuRemaining').textContent = remaining;
+            document.getElementById('coursesCompleted').textContent = completedCount;
+            
+            // Update legacy displays for compatibility
+            document.getElementById('requiredCCUs').textContent = required;
+            document.getElementById('earnedCCUs').textContent = courseCCUs;
+            
+            // Update summary displays
+            document.getElementById('summaryCourseCCUs').textContent = courseCCUs;
+            document.getElementById('summaryEthicsCCUs').textContent = ethicsCCUs;
+            document.getElementById('summaryExternalCCUs').textContent = externalCCUsTotal;
+            document.getElementById('summaryTotalCCUs').textContent = totalEarned;
+            document.getElementById('summaryRequiredCCUs').textContent = required;
+            document.getElementById('summaryRemainingCCUs').textContent = remaining;
+            
+            // Update progress bars (based on total earned)
+            document.getElementById('progressFill').style.width = percentage + '%';
+            document.getElementById('ccuProgressFill').style.width = percentage + '%';
+            document.getElementById('progressText').textContent = `${totalEarned} of ${required} CCUs completed (${Math.round(percentage)}%)`;
+            document.getElementById('ccuProgressText').textContent = `${totalEarned} of ${required} CCUs completed (${Math.round(percentage)}%)`;
+            
+            // Calculate days until renewal if expiration date is set
+            console.log('🔍 RENEWAL DEBUG - License expiration:', currentAccount.licenseExpiration);
+            if (currentAccount.licenseExpiration) {
+                const expirationDate = new Date(currentAccount.licenseExpiration);
+                const today = new Date();
+                const daysUntil = Math.ceil((expirationDate - today) / (1000 * 60 * 60 * 24));
+                
+                console.log('🔍 RENEWAL DEBUG - Expiration date:', expirationDate);
+                console.log('🔍 RENEWAL DEBUG - Today:', today);
+                console.log('🔍 RENEWAL DEBUG - Days until renewal:', daysUntil);
+                
+                const renewalElement = document.getElementById('daysUntilRenewal');
+                if (renewalElement) {
+                    renewalElement.textContent = daysUntil > 0 ? daysUntil : 'Expired';
+                    console.log('🔍 RENEWAL DEBUG - Updated renewal display:', renewalElement.textContent);
+                }
+            } else {
+                console.log('🔍 RENEWAL DEBUG - No license expiration date set');
+                const renewalElement = document.getElementById('daysUntilRenewal');
+                if (renewalElement) {
+                    renewalElement.textContent = '--';
+                }
+            }
+            
+            // Update courses display
+            updateCoursesDisplay();
+        }
+
+        // Update the My Courses section
+        function updateCoursesDisplay() {
+            if (!currentAccount) return;
+            
+            const coursesList = document.getElementById('coursesList');
+            const enrolledCourses = currentAccount.enrolledCourses || [];
+            
+            if (enrolledCourses.length === 0) {
+                coursesList.innerHTML = `
+                    <div style="text-align: center; color: var(--gray-600); padding: 3rem;">
+                        <h3>No Courses Yet</h3>
+                        <p>You haven't enrolled in any courses yet.</p>
+                        <a href="index.html#packages" class="btn btn-primary" style="margin-top: 1rem;">📚 Browse Packages</a>
+                    </div>
+                `;
+                return;
+            }
+            
+            let coursesHTML = '<div class="courses-grid">';
+            
+            enrolledCourses.forEach(courseId => {
+                const course = COURSE_DATABASE[courseId];
+                if (!course) return;
+                
+                const progress = currentAccount.courseProgress?.[courseId];
+                const isCompleted = progress?.completed || false;
+                const isStarted = progress?.startedAt || false;
+                
+                let statusBadge = '';
+                let actionButton = '';
+                
+                if (course.status === 'coming-soon') {
+                    statusBadge = '<span class="status-badge coming-soon">Coming Soon</span>';
+                    actionButton = '<button class="btn btn-secondary" disabled>Available Soon</button>';
+                } else if (isCompleted) {
+                    statusBadge = '<span class="status-badge completed">✓ Completed</span>';
+                    actionButton = `<a href="${course.url}" class="btn btn-secondary">Review Course</a>`;
+                } else if (isStarted) {
+                    statusBadge = '<span class="status-badge in-progress">In Progress</span>';
+                    actionButton = `<a href="${course.url}" class="btn btn-primary">Continue</a>`;
+                } else {
+                    statusBadge = '<span class="status-badge available">Available</span>';
+                    actionButton = `<a href="${course.url}" class="btn btn-primary">Start Course</a>`;
+                }
+                
+                // Individual pricing button (hidden unless enabled)
+                let individualPriceButton = '';
+                if (INDIVIDUAL_SALES_CONFIG.enabled && course.status === 'available') {
+                    const discountPrice = currentAccount?.hasDiscount ? course.individualPrice - INDIVIDUAL_SALES_CONFIG.newAccountDiscount : course.individualPrice;
+                    individualPriceButton = `
+                        <button class="btn btn-outline" onclick="purchaseIndividualCourse('${courseId}')">
+                            Buy Individual - $${discountPrice}
+                        </button>
+                    `;
+                }
+
+                coursesHTML += `
+                    <div class="course-card">
+                        <div class="course-header">
+                            <h3>${course.title}</h3>
+                            ${statusBadge}
+                        </div>
+                        <p class="course-description">${course.description}</p>
+                        <div class="course-details">
+                            <div class="course-credits"><strong>${course.credits} CCUs</strong> • ${course.duration || '180 minutes'}</div>
+                            ${course.modules ? `<div class="course-format">${course.modules} Interactive Modules • ${course.format || 'Progressive Learning'}</div>` : ''}
+                            ${course.instructor ? `<div class="course-instructor">Instructor: ${course.instructor}</div>` : ''}
+                            <div class="course-approval">Approval #: ${course.approvalNumber}</div>
+                        </div>
+                        <div class="course-actions">
+                            ${actionButton}
+                            ${course.alternativeUrl ? `<a href="${course.alternativeUrl}" class="btn btn-secondary">Original Version</a>` : ''}
+                            ${individualPriceButton}
+                        </div>
+                    </div>
+                `;
+            });
+            
+            coursesHTML += '</div>';
+            coursesList.innerHTML = coursesHTML;
+        }
+
+        // Individual Course Purchase (Hidden until enabled)
+        function purchaseIndividualCourse(courseId) {
+            if (!INDIVIDUAL_SALES_CONFIG.enabled) {
+                showAlert('Individual course sales are not yet available. Please purchase a package.', 'info');
+                return;
+            }
+
+            const course = COURSE_DATABASE[courseId];
+            if (!course) {
+                showAlert('Course not found.', 'danger');
+                return;
+            }
+
+            const basePrice = course.individualPrice;
+            const discountAmount = currentAccount?.hasDiscount ? INDIVIDUAL_SALES_CONFIG.newAccountDiscount : 0;
+            const finalPrice = basePrice - discountAmount;
+
+            const confirmMessage = `
+                <div style="text-align: center;">
+                    <h3>Purchase Individual Course</h3>
+                    <div class="course-purchase-details">
+                        <p><strong>${course.title}</strong></p>
+                        <p>${course.credits} CCUs</p>
+                        <p>Approval #: ${course.approvalNumber}</p>
+                        <div class="price-breakdown">
+                            <div>Course Price: $${basePrice}</div>
+                            ${discountAmount > 0 ? `<div>New Account Discount: -$${discountAmount}</div>` : ''}
+                            <div><strong>Total: $${finalPrice}</strong></div>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            if (confirm(confirmMessage)) {
+                // Store individual course purchase data
+                localStorage.setItem('selectedCourse', JSON.stringify({
+                    courseId: courseId,
+                    title: course.title,
+                    price: finalPrice,
+                    credits: course.credits
+                }));
+                
+                // Redirect to individual course checkout
+                window.location.href = 'checkout.html?type=individual&course=' + courseId;
+            }
+        }
+
+        // Setup event listeners
+        function setupEventListeners() {
+            // Personal info form
+            document.getElementById('personalInfoForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                savePersonalInfo();
+            });
+            
+            // Password form
+            document.getElementById('passwordForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                changePassword();
+            });
+            
+            // Auto-uppercase state fields
+            document.getElementById('state').addEventListener('input', function() {
+                this.value = this.value.toUpperCase();
+            });
+            
+            document.getElementById('licenseState').addEventListener('input', function() {
+                this.value = this.value.toUpperCase();
+            });
+        }
+
+        // Navigation functions
+        function showSection(sectionId) {
+            // Hide all sections
+            document.querySelectorAll('.content-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Remove active class from all nav links
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('active');
+            });
+            
+            // Save the current section to localStorage for persistence
+            localStorage.setItem('currentAccountSection', sectionId);
+            
+            // Show selected section
+            document.getElementById(sectionId).classList.add('active');
+            
+            // Add active class to clicked nav link
+            event.target.classList.add('active');
+        }
+
+        // Save personal information
+        function savePersonalInfo() {
+            if (!currentAccount) return;
+            
+            console.log('Saving personal information...');
+            
+            // Update account data
+            currentAccount.firstName = document.getElementById('firstName').value;
+            currentAccount.lastName = document.getElementById('lastName').value;
+            currentAccount.email = document.getElementById('email').value;
+            currentAccount.phone = document.getElementById('phone').value;
+            currentAccount.address = document.getElementById('address').value;
+            currentAccount.city = document.getElementById('city').value;
+            currentAccount.state = document.getElementById('state').value.toUpperCase();
+            currentAccount.zipCode = document.getElementById('zipCode').value;
+            currentAccount.licenseNumber = document.getElementById('licenseNumber').value;
+            currentAccount.licenseState = document.getElementById('licenseState').value.toUpperCase();
+            currentAccount.licenseExpiration = document.getElementById('licenseExpiration').value;
+            currentAccount.licenseRenewalReminders = document.getElementById('renewalReminders').checked;
+            currentAccount.updatedAt = new Date().toISOString();
+            
+            // Save to localStorage
+            localStorage.setItem('drtroyAccount', JSON.stringify(currentAccount));
+            
+            // Update other localStorage items
+            localStorage.setItem('customerName', `${currentAccount.firstName} ${currentAccount.lastName}`);
+            localStorage.setItem('customerEmail', currentAccount.email);
+            
+            showAlert('Personal information updated successfully!', 'success');
+            console.log('🔍 SAVE DEBUG - License expiration saved:', currentAccount.licenseExpiration);
+            updateCCUDashboard();
+        }
+
+        // Change password
+        function changePassword() {
+            if (!currentAccount) return;
+            
+            const currentPassword = document.getElementById('currentPassword').value;
+            const newPassword = document.getElementById('newPassword').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            
+            // Validate current password
+            if (currentAccount.password !== currentPassword) {
+                showAlert('Current password is incorrect.', 'danger');
+                return;
+            }
+            
+            // Validate new passwords match
+            if (newPassword !== confirmPassword) {
+                showAlert('New passwords do not match.', 'danger');
+                return;
+            }
+            
+            // Update password
+            currentAccount.password = newPassword;
+            currentAccount.updatedAt = new Date().toISOString();
+            
+            // Save to localStorage
+            localStorage.setItem('drtroyAccount', JSON.stringify(currentAccount));
+            
+            // Clear form
+            document.getElementById('passwordForm').reset();
+            
+            showAlert('Password changed successfully!', 'success');
+        }
+
+        // Save notification preferences
+        function saveNotificationPreferences() {
+            if (!currentAccount) return;
+            
+            currentAccount.notifications = {
+                courseUpdates: document.getElementById('emailCourseUpdates').checked,
+                licenseReminders: document.getElementById('emailLicenseReminders').checked,
+                promotions: document.getElementById('emailPromotions').checked,
+                weeklyDigest: document.getElementById('emailWeeklyDigest').checked
+            };
+            
+            currentAccount.updatedAt = new Date().toISOString();
+            localStorage.setItem('drtroyAccount', JSON.stringify(currentAccount));
+            
+            showAlert('Notification preferences saved!', 'success');
+        }
+
+        // Save privacy settings
+        function savePrivacySettings() {
+            if (!currentAccount) return;
+            
+            currentAccount.privacy = {
+                dataAnalytics: document.getElementById('dataAnalytics').checked,
+                marketingConsent: document.getElementById('marketingConsent').checked
+            };
+            
+            currentAccount.updatedAt = new Date().toISOString();
+            localStorage.setItem('drtroyAccount', JSON.stringify(currentAccount));
+            
+            showAlert('Privacy settings saved!', 'success');
+        }
+
+        // Export account data
+        function exportAccountData() {
+            if (!currentAccount) return;
+            
+            const exportData = {
+                ...currentAccount,
+                exportDate: new Date().toISOString(),
+                dataVersion: '2.0'
+            };
+            
+            const dataBlob = new Blob([JSON.stringify(exportData, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(dataBlob);
+            
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = `drtroy-account-${currentAccount.firstName}-${Date.now()}.json`;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(url);
+            
+            showAlert('Account data exported successfully!', 'success');
+        }
+
+        // Request account deletion
+        function requestAccountDeletion() {
+            if (confirm('⚠️ Are you sure you want to delete your account?\n\nThis action cannot be undone and will permanently remove:\n• All your personal information\n• Course progress and certificates\n• Account settings and preferences')) {
+                if (confirm('🚨 FINAL WARNING: This will permanently delete everything.\n\nType "DELETE" in the next prompt to confirm.')) {
+                    const confirmation = prompt('Type "DELETE" to permanently delete your account:');
+                    if (confirmation === 'DELETE') {
+                        // Clear all data
+                        localStorage.removeItem('drtroyAccount');
+                        localStorage.removeItem('userSession');
+                        localStorage.removeItem('customerName');
+                        localStorage.removeItem('customerEmail');
+                        localStorage.removeItem('customerDiscipline');
+                        
+                        alert('✅ Account deleted successfully. You will be redirected to the homepage.');
+                        window.location.href = 'index.html';
+                    } else {
+                        alert('Account deletion cancelled - confirmation text did not match.');
+                    }
+                }
+            }
+        }
+
+        // Print CCU transcript
+        function printCCUTranscript() {
+            if (!currentAccount) return;
+            
+            const printWindow = window.open('', '_blank');
+            printWindow.document.write(`
+                <html>
+                <head>
+                    <title>CCU Transcript - ${currentAccount.firstName} ${currentAccount.lastName}</title>
+                    <style>
+                        body { font-family: Arial, sans-serif; margin: 2rem; }
+                        .header { border-bottom: 2px solid #1a365d; padding-bottom: 1rem; margin-bottom: 2rem; }
+                        .info-table { width: 100%; border-collapse: collapse; margin-bottom: 2rem; }
+                        .info-table td { padding: 0.5rem; border-bottom: 1px solid #e5e7eb; }
+                        .course-table { width: 100%; border-collapse: collapse; }
+                        .course-table th, .course-table td { padding: 0.8rem; border: 1px solid #d1d5db; text-align: left; }
+                        .course-table th { background: #f3f4f6; }
+                    </style>
+                </head>
+                <body>
+                    <div class="header">
+                        <h1>Continuing Education Transcript</h1>
+                        <h2>DrTroy.com Professional Development</h2>
+                    </div>
+                    <table class="info-table">
+                        <tr><td><strong>Name:</strong></td><td>${currentAccount.firstName} ${currentAccount.lastName}</td></tr>
+                        <tr><td><strong>Email:</strong></td><td>${currentAccount.email}</td></tr>
+                        <tr><td><strong>License Number:</strong></td><td>${currentAccount.licenseNumber || 'Not provided'}</td></tr>
+                        <tr><td><strong>License State:</strong></td><td>${currentAccount.licenseState || 'Not provided'}</td></tr>
+                        <tr><td><strong>Discipline:</strong></td><td>${currentAccount.discipline || 'Not provided'}</td></tr>
+                        <tr><td><strong>License Expiration:</strong></td><td>${currentAccount.licenseExpiration ? new Date(currentAccount.licenseExpiration).toLocaleDateString() : 'Not provided'}</td></tr>
+                        <tr><td><strong>Transcript Generated:</strong></td><td>${new Date().toLocaleDateString()}</td></tr>
+                    </table>
+                    <h3>Course Completion History</h3>
+                    <table class="course-table">
+                        <thead>
+                            <tr>
+                                <th>Course Title</th>
+                                <th>Completion Date</th>
+                                <th>CCUs Earned</th>
+                                <th>Certificate ID</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td colspan="4" style="text-align: center; padding: 2rem; color: #6b7280;">No completed courses on record</td></tr>
+                        </tbody>
+                    </table>
+                    <div style="margin-top: 3rem; font-size: 0.9rem; color: #6b7280;">
+                        <p>This transcript is generated from DrTroy.com and reflects courses completed through our platform.</p>
+                        <p>For verification purposes, contact: troyh@texastherapypros.com</p>
+                    </div>
+                </body>
+                </html>
+            `);
+            printWindow.document.close();
+            printWindow.print();
+        }
+
+        // Logout function
+        function logout() {
+            if (confirm('Are you sure you want to log out?')) {
+                localStorage.removeItem('userSession');
+                localStorage.removeItem('customerName');
+                localStorage.removeItem('customerEmail');
+                localStorage.removeItem('customerDiscipline');
+                
+                window.location.href = 'index.html';
+            }
+        }
+
+        // Emergency account function removed per user request
+
+        // ===============================
+        // CCU MANAGEMENT FUNCTIONS
+        // ===============================
+
+        // Update ethics section based on discipline
+        function updateEthicsSection() {
+            if (!currentAccount || !currentAccount.discipline) return;
+            
+            const discipline = currentAccount.discipline;
+            const ethicsSection = document.getElementById('ethicsSection');
+            const ethicsCard = document.getElementById('ethicsCard');
+            const ethicsCardTitle = document.getElementById('ethicsCardTitle');
+            const ethicsSectionTitle = document.getElementById('ethicsSectionTitle');
+            const ethicsDescription = document.getElementById('ethicsDescription');
+            const jurisprudenceLabel = document.getElementById('jurisprudenceLabel');
+            const jurisprudenceCheckbox = document.getElementById('jurisprudenceCompleted');
+            
+            if (discipline === 'PT' || discipline === 'PTA') {
+                // PT/PTA: Both Jurisprudence Exam and Human Trafficking
+                ethicsCardTitle.textContent = 'Ethics & Human Trafficking';
+                ethicsSectionTitle.textContent = 'Ethics & Human Trafficking Requirements';
+                ethicsDescription.textContent = 'For PT/PTA: Complete Jurisprudence Exam + approved Human Trafficking course (3 CCUs total)';
+                jurisprudenceLabel.textContent = 'Jurisprudence Exam Completed (2 CCUs)';
+                jurisprudenceCheckbox.style.display = 'inline-block';
+                jurisprudenceCheckbox.parentElement.style.display = 'block';
+                document.getElementById('summaryEthics').textContent = 'Ethics/Trafficking: ';
+            } else if (discipline === 'OT' || discipline === 'COTA') {
+                // OT/COTA: Only Human Trafficking
+                ethicsCardTitle.textContent = 'Human Trafficking';
+                ethicsSectionTitle.textContent = 'Human Trafficking Requirements';
+                ethicsDescription.textContent = 'For OT/COTA: Complete approved Human Trafficking course (1 CCU)';
+                jurisprudenceCheckbox.style.display = 'none';
+                jurisprudenceCheckbox.parentElement.style.display = 'none';
+                jurisprudenceCheckbox.checked = false; // Always unchecked for OT/COTA
+                document.getElementById('summaryEthics').textContent = 'Trafficking: ';
+            }
+            
+            updateEthicsCCUs();
+        }
+
+        // Update ethics CCUs based on checkboxes
+        function updateEthicsCCUs() {
+            if (!currentAccount) return;
+            
+            const discipline = currentAccount.discipline;
+            const jurisprudenceCompleted = document.getElementById('jurisprudenceCompleted').checked;
+            const humanTrafficingCompleted = document.getElementById('humanTrafficingCompleted').checked;
+            
+            let totalEthicsCCUs = 0;
+            
+            if (discipline === 'PT' || discipline === 'PTA') {
+                // PT/PTA: 2 CCUs for Jurisprudence + 1 CCU for Human Trafficking
+                if (jurisprudenceCompleted) totalEthicsCCUs += 2;
+                if (humanTrafficingCompleted) totalEthicsCCUs += 1;
+            } else if (discipline === 'OT' || discipline === 'COTA') {
+                // OT/COTA: Only 1 CCU for Human Trafficking
+                if (humanTrafficingCompleted) totalEthicsCCUs += 1;
+            }
+            
+            currentAccount.ethicsCCUs = {
+                jurisprudenceCompleted: jurisprudenceCompleted,
+                humanTrafficingCompleted: humanTrafficingCompleted,
+                totalEthicsCCUs: totalEthicsCCUs
+            };
+            
+            // Update display
+            document.getElementById('ethicsCCUs').textContent = totalEthicsCCUs;
+            updateCCUDashboard();
+        }
+
+        // Save ethics CCUs
+        function saveEthicsCCUs() {
+            if (!currentAccount) return;
+            
+            updateEthicsCCUs();
+            currentAccount.updatedAt = new Date().toISOString();
+            localStorage.setItem('drtroyAccount', JSON.stringify(currentAccount));
+            
+            const discipline = currentAccount.discipline;
+            const total = currentAccount.ethicsCCUs.totalEthicsCCUs;
+            
+            if (discipline === 'PT' || discipline === 'PTA') {
+                showAlert(`✅ Ethics & Human Trafficking CCUs saved: ${total}/3 CCUs`, 'success');
+            } else {
+                showAlert(`✅ Human Trafficking CCUs saved: ${total}/1 CCU`, 'success');
+            }
+        }
+
+        // Add external CCUs
+        function addExternalCCUs() {
+            if (!currentAccount) return;
+            
+            const hoursInput = document.getElementById('externalCCUHours');
+            const descriptionInput = document.getElementById('externalCCUDescription');
+            
+            const hours = parseFloat(hoursInput.value);
+            const description = descriptionInput.value.trim();
+            
+            if (!hours || hours <= 0) {
+                showAlert('Please enter a valid number of CCU hours', 'danger');
+                return;
+            }
+            
+            if (!description) {
+                showAlert('Please enter a description for these CCUs', 'danger');
+                return;
+            }
+            
+            // Add to external CCUs array
+            const newEntry = {
+                id: Date.now(),
+                hours: hours,
+                description: description,
+                dateAdded: new Date().toISOString()
+            };
+            
+            currentAccount.externalCCUs.push(newEntry);
+            currentAccount.updatedAt = new Date().toISOString();
+            localStorage.setItem('drtroyAccount', JSON.stringify(currentAccount));
+            
+            // Clear form
+            hoursInput.value = '';
+            descriptionInput.value = '';
+            
+            // Update displays
+            updateExternalCCUDisplay();
+            updateCCUDashboard();
+            
+            showAlert(`✅ Added ${hours} external CCUs: ${description}`, 'success');
+        }
+
+        // Update external CCU display
+        function updateExternalCCUDisplay() {
+            if (!currentAccount || !currentAccount.externalCCUs) return;
+            
+            const listContainer = document.getElementById('externalCCUList');
+            const externalCCUs = currentAccount.externalCCUs;
+            
+            if (externalCCUs.length === 0) {
+                listContainer.innerHTML = `
+                    <div style="text-align: center; color: var(--gray-600); padding: 1rem; font-style: italic;">
+                        No external CCUs added yet
+                    </div>
+                `;
+                return;
+            }
+            
+            const totalExternal = externalCCUs.reduce((sum, entry) => sum + entry.hours, 0);
+            
+            listContainer.innerHTML = `
+                <h5 style="margin-bottom: 0.5rem;">External CCU Entries (${totalExternal} total hours):</h5>
+                ${externalCCUs.map(entry => `
+                    <div style="background: white; border: 1px solid var(--gray-200); border-radius: 4px; padding: 0.75rem; margin-bottom: 0.5rem; display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <strong>${entry.hours} CCU${entry.hours !== 1 ? 's' : ''}</strong> - ${entry.description}
+                            <div style="font-size: 0.8rem; color: var(--gray-600);">Added: ${new Date(entry.dateAdded).toLocaleDateString()}</div>
+                        </div>
+                        <button onclick="removeExternalCCU(${entry.id})" class="btn btn-danger" style="font-size: 0.8rem; padding: 0.25rem 0.5rem;">🗑️ Remove</button>
+                    </div>
+                `).join('')}
+            `;
+            
+            // Update external CCUs display
+            document.getElementById('externalCCUs').textContent = totalExternal;
+        }
+
+        // Remove external CCU entry
+        function removeExternalCCU(entryId) {
+            if (!currentAccount || !confirm('Remove this external CCU entry?')) return;
+            
+            const entry = currentAccount.externalCCUs.find(e => e.id === entryId);
+            if (!entry) return;
+            
+            currentAccount.externalCCUs = currentAccount.externalCCUs.filter(e => e.id !== entryId);
+            currentAccount.updatedAt = new Date().toISOString();
+            localStorage.setItem('drtroyAccount', JSON.stringify(currentAccount));
+            
+            updateExternalCCUDisplay();
+            updateCCUDashboard();
+            
+            showAlert(`🗑️ Removed ${entry.hours} CCUs: ${entry.description}`, 'info');
+        }
+
+        // ===============================
+        // SUPER USER FUNCTIONS
+        // ===============================
+
+        // Enroll in all available courses
+        function enrollAllCourses() {
+            if (!currentAccount) return;
+            
+            const allCourseIds = Object.keys(COURSE_DATABASE);
+            const newEnrollments = [];
+            
+            allCourseIds.forEach(courseId => {
+                if (!currentAccount.enrolledCourses.includes(courseId)) {
+                    currentAccount.enrolledCourses.push(courseId);
+                    newEnrollments.push(COURSE_DATABASE[courseId].title);
+                    
+                    // Add course progress entry
+                    if (!currentAccount.courseProgress[courseId]) {
+                        currentAccount.courseProgress[courseId] = {
+                            enrolledAt: new Date().toISOString(),
+                            startedAt: null,
+                            completed: false,
+                            completedAt: null,
+                            progress: 0
+                        };
+                    }
+                }
+            });
+            
+            localStorage.setItem('drtroyAccount', JSON.stringify(currentAccount));
+            updateCoursesDisplay();
+            updateCCUDashboard();
+            
+            if (newEnrollments.length > 0) {
+                showAlert(`✅ Enrolled in ${newEnrollments.length} new courses: ${newEnrollments.join(', ')}`, 'success');
+            } else {
+                showAlert('ℹ️ Already enrolled in all available courses', 'info');
+            }
+        }
+
+        // Show all course access details
+        function showAllCoursesAccess() {
+            const allCourses = Object.keys(COURSE_DATABASE).map(courseId => {
+                const course = COURSE_DATABASE[courseId];
+                const enrolled = currentAccount.enrolledCourses?.includes(courseId) ? '✅' : '❌';
+                const progress = currentAccount.courseProgress?.[courseId];
+                const status = progress?.completed ? 'Completed' : progress?.startedAt ? 'In Progress' : 'Not Started';
+                
+                return `${enrolled} ${course.title} (${course.credits} CCUs) - ${status}`;
+            }).join('\n');
+            
+            alert(`Course Access Status:\n\n${allCourses}\n\n✅ = Enrolled\n❌ = Not Enrolled`);
+        }
+
+        // Set admin mode for courses
+        function setAdminMode() {
+            localStorage.setItem('troyadmin', 'true');
+            showAlert('🛡️ Admin mode activated! You now have admin privileges in all courses.', 'success');
+        }
+
+        // View detailed progress data
+        function viewDetailedProgress() {
+            const progressDiv = document.getElementById('detailed-progress');
+            const dataDisplay = document.getElementById('progress-data-display');
+            
+            const progressData = {
+                enrolledCourses: currentAccount.enrolledCourses || [],
+                courseProgress: currentAccount.courseProgress || {},
+                superUser: currentAccount.superUser || false,
+                lastUpdated: currentAccount.updatedAt || 'Never'
+            };
+            
+            dataDisplay.textContent = JSON.stringify(progressData, null, 2);
+            progressDiv.style.display = progressDiv.style.display === 'none' ? 'block' : 'none';
+        }
+
+        // Reset specific course
+        function resetSpecificCourse() {
+            if (!currentAccount.enrolledCourses || currentAccount.enrolledCourses.length === 0) {
+                showAlert('No enrolled courses to reset', 'info');
+                return;
+            }
+            
+            const courseList = currentAccount.enrolledCourses.map(courseId => {
+                const course = COURSE_DATABASE[courseId];
+                return `${courseId}: ${course?.title || 'Unknown Course'}`;
+            }).join('\n');
+            
+            const selectedCourse = prompt(`Enter Course ID to reset:\n\n${courseList}\n\nCourse ID:`);
+            
+            if (selectedCourse && currentAccount.enrolledCourses.includes(selectedCourse)) {
+                // Reset course progress
+                if (currentAccount.courseProgress[selectedCourse]) {
+                    currentAccount.courseProgress[selectedCourse] = {
+                        enrolledAt: currentAccount.courseProgress[selectedCourse].enrolledAt,
+                        startedAt: null,
+                        completed: false,
+                        completedAt: null,
+                        progress: 0
+                    };
+                }
+                
+                // Clear course-specific localStorage
+                localStorage.removeItem(`${selectedCourse}-progress`);
+                localStorage.removeItem(`${selectedCourse}-feedback`);
+                localStorage.removeItem(`${selectedCourse}-exam-results`);
+                
+                localStorage.setItem('drtroyAccount', JSON.stringify(currentAccount));
+                updateCoursesDisplay();
+                updateCCUDashboard();
+                
+                showAlert(`✅ Course ${selectedCourse} progress has been reset`, 'success');
+            } else if (selectedCourse) {
+                showAlert('❌ Invalid course ID or not enrolled in that course', 'danger');
+            }
+        }
+
+        // Reset all progress
+        function resetAllProgress() {
+            const confirmReset = confirm('⚠️ WARNING: This will reset ALL course progress and cannot be undone.\n\nThis will:\n- Reset all course completion status\n- Clear all course progress data\n- Remove all exam results and certificates\n- Keep course enrollments intact\n\nAre you sure you want to continue?');
+            
+            if (!confirmReset) return;
+            
+            const doubleConfirm = confirm('🔴 FINAL CONFIRMATION\n\nYou are about to reset ALL progress for ALL courses.\n\nType "RESET" in the next prompt to confirm.');
+            
+            if (!doubleConfirm) return;
+            
+            const resetConfirmation = prompt('Type "RESET" in ALL CAPS to confirm:');
+            
+            if (resetConfirmation !== 'RESET') {
+                showAlert('❌ Reset cancelled - confirmation text did not match', 'info');
+                return;
+            }
+            
+            // Reset all course progress but keep enrollments
+            if (currentAccount.courseProgress) {
+                Object.keys(currentAccount.courseProgress).forEach(courseId => {
+                    currentAccount.courseProgress[courseId] = {
+                        enrolledAt: currentAccount.courseProgress[courseId].enrolledAt || new Date().toISOString(),
+                        startedAt: null,
+                        completed: false,
+                        completedAt: null,
+                        progress: 0
+                    };
+                });
+            }
+            
+            // Clear all course-related localStorage
+            Object.keys(COURSE_DATABASE).forEach(courseId => {
+                localStorage.removeItem(`${courseId}-progress`);
+                localStorage.removeItem(`${courseId}-feedback`);
+                localStorage.removeItem(`${courseId}-exam-results`);
+                localStorage.removeItem(`${courseId}-exam-progress`);
+            });
+            
+            localStorage.setItem('drtroyAccount', JSON.stringify(currentAccount));
+            updateCoursesDisplay();
+            updateCCUDashboard();
+            
+            showAlert('✅ ALL course progress has been reset. Course enrollments preserved.', 'success');
+        }
+
+        // Simulate course completion
+        function simulateCourseCompletion() {
+            if (!currentAccount.enrolledCourses || currentAccount.enrolledCourses.length === 0) {
+                showAlert('No enrolled courses to mark as completed', 'info');
+                return;
+            }
+            
+            const courseList = currentAccount.enrolledCourses.map(courseId => {
+                const course = COURSE_DATABASE[courseId];
+                const completed = currentAccount.courseProgress?.[courseId]?.completed ? '✅' : '❌';
+                return `${completed} ${courseId}: ${course?.title || 'Unknown Course'}`;
+            }).join('\n');
+            
+            const selectedCourse = prompt(`Select Course to Mark as Completed:\n\n${courseList}\n\n✅ = Already Completed\n❌ = Not Completed\n\nCourse ID:`);
+            
+            if (selectedCourse && currentAccount.enrolledCourses.includes(selectedCourse)) {
+                if (!currentAccount.courseProgress[selectedCourse]) {
+                    currentAccount.courseProgress[selectedCourse] = {};
+                }
+                
+                currentAccount.courseProgress[selectedCourse] = {
+                    ...currentAccount.courseProgress[selectedCourse],
+                    startedAt: currentAccount.courseProgress[selectedCourse].startedAt || new Date().toISOString(),
+                    completed: true,
+                    completedAt: new Date().toISOString(),
+                    progress: 100
+                };
+                
+                localStorage.setItem('drtroyAccount', JSON.stringify(currentAccount));
+                updateCoursesDisplay();
+                updateCCUDashboard();
+                
+                const course = COURSE_DATABASE[selectedCourse];
+                showAlert(`✅ ${course?.title || selectedCourse} marked as completed (+${course?.credits || 0} CCUs)`, 'success');
+            } else if (selectedCourse) {
+                showAlert('❌ Invalid course ID or not enrolled in that course', 'danger');
+            }
+        }
+
+        // View localStorage data
+        function viewStorageData() {
+            const storageData = {
+                drtroyAccount: localStorage.getItem('drtroyAccount'),
+                userSession: localStorage.getItem('userSession'),
+                troyadmin: localStorage.getItem('troyadmin'),
+                coursesData: {}
+            };
+            
+            // Get all course-specific data
+            Object.keys(COURSE_DATABASE).forEach(courseId => {
+                const progress = localStorage.getItem(`${courseId}-progress`);
+                const feedback = localStorage.getItem(`${courseId}-feedback`);
+                const examResults = localStorage.getItem(`${courseId}-exam-results`);
+                
+                if (progress || feedback || examResults) {
+                    storageData.coursesData[courseId] = {
+                        progress: progress ? JSON.parse(progress) : null,
+                        feedback: feedback ? JSON.parse(feedback) : null,
+                        examResults: examResults ? JSON.parse(examResults) : null
+                    };
+                }
+            });
+            
+            const dataWindow = window.open('', '_blank', 'width=800,height=600,scrollbars=yes');
+            dataWindow.document.write(`
+                <html>
+                <head><title>localStorage Data - DrTroy.com</title></head>
+                <body style="font-family: monospace; padding: 20px;">
+                    <h2>localStorage Data</h2>
+                    <pre style="background: #f5f5f5; padding: 15px; border-radius: 5px; overflow: auto;">
+                        ${JSON.stringify(storageData, null, 2)}
+                    </pre>
+                </body>
+                </html>
+            `);
+        }
+
+        // Clear all data
+        function clearAllData() {
+            const confirmClear = confirm('🚨 DANGER: This will delete ALL account data and cannot be undone!\n\nThis will:\n- Delete your account completely\n- Remove all course progress\n- Clear all certificates and achievements\n- Log you out immediately\n\nAre you absolutely sure?');
+            
+            if (!confirmClear) return;
+            
+            const finalConfirm = prompt('Type "DELETE EVERYTHING" to confirm complete data deletion:');
+            
+            if (finalConfirm !== 'DELETE EVERYTHING') {
+                showAlert('❌ Data deletion cancelled', 'info');
+                return;
+            }
+            
+            // Clear all localStorage
+            localStorage.clear();
+            
+            showAlert('🗑️ All data deleted. Redirecting to homepage...', 'danger');
+            
+            setTimeout(() => {
+                window.location.href = 'index.html';
+            }, 3000);
+        }
+
+        // Toggle super user status
+        function toggleSuperUser() {
+            const confirm = prompt('Are you sure you want to disable Super User mode?\n\nType "DISABLE" to confirm:');
+            
+            if (confirm === 'DISABLE') {
+                currentAccount.superUser = false;
+                localStorage.removeItem('troyadmin');
+                localStorage.setItem('drtroyAccount', JSON.stringify(currentAccount));
+                
+                showAlert('⚡ Super User mode disabled. Refreshing page...', 'info');
+                
+                setTimeout(() => {
+                    location.reload();
+                }, 2000);
+            }
+        }
+
+        // Developer tools guide
+        function openDevConsole() {
+            alert(`💻 Developer Tools Guide:
+
+🔧 Useful Console Commands:
+• localStorage.setItem('troyadmin', 'true') - Enable admin mode
+• localStorage.clear() - Clear all data
+• JSON.parse(localStorage.getItem('drtroyAccount')) - View account data
+
+🛡️ Super User Commands:
+• enrollAllCourses() - Auto-enroll in all courses
+• resetAllProgress() - Reset all progress
+• viewStorageData() - View all stored data
+
+⌨️ To open console:
+• Chrome/Edge: F12 or Ctrl+Shift+I
+• Safari: Cmd+Option+I
+• Firefox: F12 or Ctrl+Shift+K`);
+        }
+
+        // Show alert message
+        function showAlert(message, type = 'info') {
+            const alertDiv = document.createElement('div');
+            alertDiv.className = `alert alert-${type}`;
+            alertDiv.textContent = message;
+            
+            // Find the active section and prepend the alert
+            const activeSection = document.querySelector('.content-section.active');
+            if (activeSection) {
+                activeSection.insertBefore(alertDiv, activeSection.firstChild);
+                
+                // Remove alert after 5 seconds
+                setTimeout(() => {
+                    alertDiv.remove();
+                }, 5000);
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400">
+  <rect width="600" height="400" fill="white"/>
+  
+  <text x="300" y="25" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#1a365d">FABER Test (Patrick's Test)</text>
+  <text x="300" y="42" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#666">Sacroiliac Joint and Hip Pathology</text>
+  
+  <!-- Patient supine -->
+  <rect x="80" y="100" width="100" height="40" rx="20" fill="#e8dcc8" stroke="#8b7355" stroke-width="2"/>
+  <rect x="100" y="140" width="60" height="50" rx="8" fill="#4a5568" stroke="#2d3748" stroke-width="2"/>
+  <rect x="110" y="190" width="20" height="50" rx="5" fill="#e8dcc8" stroke="#8b7355" stroke-width="2"/>
+  <rect x="130" y="190" width="20" height="50" rx="5" fill="#e8dcc8" stroke="#8b7355" stroke-width="2"/>
+  
+  <!-- Figure-4 position of test leg -->
+  <g transform="rotate(-30 150 190)">
+    <rect x="140" y="180" width="22" height="50" rx="5" fill="#e8dcc8" stroke="#8b7355" stroke-width="2"/>
+    <rect x="140" y="130" width="20" height="50" rx="5" fill="#e8dcc8" stroke="#8b7355" stroke-width="2"/>
+  </g>
+  <!-- Foot on opposite knee -->
+  <ellipse cx="155" cy="145" rx="10" ry="6" fill="#e8dcc8" stroke="#8b7355" stroke-width="2"/>
+  
+  <!-- Opposite leg extended -->
+  <rect x="155" y="190" width="20" height="60" rx="5" fill="#e8dcc8" stroke="#8b7355" stroke-width="2"/>
+  <rect x="155" y="250" width="18" height="50" rx="4" fill="#e8dcc8" stroke="#8b7355" stroke-width="2"/>
+  
+  <!-- Therapist hands -->
+  <ellipse cx="180" cy="155" rx="12" ry="8" fill="#e8dcc8" stroke="#8b7355" stroke-width="2"/>
+  <text x="200" y="150" font-family="Arial, sans-serif" font-size="10" fill="#333">Stabilize opposite</text>
+  <text x="200" y="165" font-family="Arial, sans-serif" font-size="10" fill="#333">ASIS</text>
+  <line x1="190" y1="158" x2="198" y2="158" stroke="#333" stroke-width="1"/>
+  
+  <ellipse cx="175" cy="200" rx="12" ry="8" fill="#e8dcc8" stroke="#8b7355" stroke-width="2"/>
+  <text x="200" y="205" font-family="Arial, sans-serif" font-size="10" fill="#333">Apply downward</text>
+  <text x="200" y="220" font-family="Arial, sans-serif" font-size="10" fill="#333">pressure to knee</text>
+  
+  <!-- Force arrow -->
+  <path d="M 175 210 L 175 240" stroke="#dc2626" stroke-width="3" fill="none" marker-end="url(#arrowhead)"/>
+  
+  <!-- FABER label -->
+  <text x="120" y="280" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#1a365d">Figure-4 Position</text>
+  
+  <!-- Interpretation -->
+  <rect x="350" y="80" width="230" height="280" rx="8" fill="#f0f9ff" stroke="#0ea5e9" stroke-width="1"/>
+  <text x="465" y="105" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#0369a1">Test Interpretation</text>
+  
+  <text x="365" y="135" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#333">Pain Location:</text>
+  
+  <text x="365" y="160" font-family="Arial, sans-serif" font-size="11" fill="#333">• <tspan fill="#dc2626" font-weight="bold">Groin/Anterior hip</tspan> →</text>
+  <text x="385" y="178" font-family="Arial, sans-serif" font-size="10" fill="#333">Iliopsoas tightness,</text>
+  <text x="385" y="193" font-family="Arial, sans-serif" font-size="10" fill="#333">hip joint pathology</text>
+  
+  <text x="365" y="220" font-family="Arial, sans-serif" font-size="11" fill="#333">• <tspan fill="#dc2626" font-weight="bold">Posterior SI region</tspan> →</text>
+  <text x="385" y="238" font-family="Arial, sans-serif" font-size="10" fill="#333">SI joint dysfunction</text>
+  
+  <text x="365" y="265" font-family="Arial, sans-serif" font-size="11" fill="#333">• <tspan fill="#dc2626" font-weight="bold">Posterior thigh</tspan> →</text>
+  <text x="385" y="283" font-family="Arial, sans-serif" font-size="10" fill="#333">Sacroiliitis</text>
+  
+  <text x="365" y="315" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#333">Positive:</text>
+  <text x="365" y="335" font-family="Arial, sans-serif" font-size="10" fill="#333">Reproduction of pain at</text>
+  <text x="365" y="350" font-family="Arial, sans-serif" font-size="10" fill="#333">40° hip flexion</text>
+  
+  <!-- Marker -->
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#dc2626"/>
+    </marker>
+  </defs>
+</svg>

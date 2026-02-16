@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400">
+  <rect width="600" height="400" fill="white"/>
+  
+  <text x="300" y="25" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#1a365d">Lachman Test</text>
+  <text x="300" y="42" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#666">Anterior Cruciate Ligament (ACL)</text>
+  
+  <!-- Patient supine -->
+  <rect x="80" y="100" width="120" height="40" rx="20" fill="#e8dcc8" stroke="#8b7355" stroke-width="2"/>
+  <rect x="100" y="140" width="80" height="60" rx="10" fill="#4a5568" stroke="#2d3748" stroke-width="2"/>
+  <rect x="110" y="200" width="25" height="70" rx="8" fill="#e8dcc8" stroke="#8b7355" stroke-width="2"/>
+  <rect x="145" y="200" width="25" height="70" rx="8" fill="#e8dcc8" stroke="#8b7355" stroke-width="2"/>
+  
+  <!-- Test leg with knee flexed -->
+  <g transform="rotate(-20 180 240)">
+    <rect x="160" y="200" width="35" height="80" rx="8" fill="#e8dcc8" stroke="#8b7355" stroke-width="2"/>
+    <rect x="160" y="280" width="30" height="60" rx="6" fill="#e8dcc8" stroke="#8b7355" stroke-width="2"/>
+    <ellipse cx="175" cy="355" rx="15" ry="8" fill="#e8dcc8" stroke="#8b7355" stroke-width="2"/>
+  </g>
+  
+  <!-- Knee joint detail -->
+  <ellipse cx="200" cy="240" rx="20" ry="25" fill="#fff8dc" stroke="#daa520" stroke-width="2"/>
+  
+  <!-- Therapist hands -->
+  <ellipse cx="185" cy="215" rx="15" ry="10" fill="#e8dcc8" stroke="#8b7355" stroke-width="2"/>
+  <rect x="180" y="220" width="10" height="20" fill="#e8dcc8" stroke="#8b7355" stroke-width="2"/>
+  <text x="150" y="205" font-family="Arial, sans-serif" font-size="10" fill="#333">Stabilize femur</text>
+  
+  <ellipse cx="220" cy="265" rx="15" ry="10" fill="#e8dcc8" stroke="#8b7355" stroke-width="2"/>
+  <rect x="215" y="270" width="10" height="20" fill="#e8dcc8" stroke="#8b7355" stroke-width="2"/>
+  
+  <!-- Anterior pull arrow -->
+  <path d="M 235 275 L 280 275" stroke="#dc2626" stroke-width="4" fill="none" marker-end="url(#arrowhead)"/>
+  <text x="290" y="265" font-family="Arial, sans-serif" font-size="11" fill="#dc2626" font-weight="bold">ANTERIOR</text>
+  <text x="290" y="282" font-family="Arial, sans-serif" font-size="11" fill="#dc2626" font-weight="bold">PULL</text>
+  
+  <!-- Position labels -->
+  <text x="350" y="120" font-family="Arial, sans-serif" font-size="12" fill="#1a365d" font-weight="bold">Position:</text>
+  <text x="350" y="140" font-family="Arial, sans-serif" font-size="11" fill="#333">• Patient supine</text>
+  <text x="350" y="158" font-family="Arial, sans-serif" font-size="11" fill="#333">• Knee flexed 20-30°</text>
+  <text x="350" y="176" font-family="Arial, sans-serif" font-size="11" fill="#333">• Tibia in slight</text>
+  <text x="360" y="191" font-family="Arial, sans-serif" font-size="11" fill="#333">external rotation</text>
+  
+  <text x="350" y="215" font-family="Arial, sans-serif" font-size="12" fill="#1a365d" font-weight="bold">Technique:</text>
+  <text x="350" y="235" font-family="Arial, sans-serif" font-size="11" fill="#333">1. Stabilize distal femur</text>
+  <text x="360" y="250" font-family="Arial, sans-serif" font-size="11" fill="#333">with one hand</text>
+  <text x="350" y="268" font-family="Arial, sans-serif" font-size="11" fill="#333">2. Grasp proximal tibia</text>
+  <text x="360" y="283" font-family="Arial, sans-serif" font-size="11" fill="#333">with other hand</text>
+  <text x="350" y="301" font-family="Arial, sans-serif" font-size="11" fill="#333">3. Apply anterior force</text>
+  
+  <!-- Test info box -->
+  <rect x="30" y="300" width="280" height="90" rx="8" fill="#f0f9ff" stroke="#0ea5e9" stroke-width="1"/>
+  <text x="170" y="325" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#0369a1">Test Interpretation</text>
+  
+  <text x="45" y="350" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#333">Positive Test:</text>
+  <text x="45" y="368" font-family="Arial, sans-serif" font-size="10" fill="#333">Increased anterior translation of tibia</text>
+  <text x="45" y="383" font-family="Arial, sans-serif" font-size="10" fill="#333">compared to uninvolved side</text>
+  
+  <!-- Diagnostic accuracy -->
+  <rect x="320" y="320" width="260" height="70" rx="8" fill="#f0fdf4" stroke="#22c55e" stroke-width="1"/>
+  <text x="450" y="345" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#166534">Diagnostic Accuracy (Best ACL Test)</text>
+  
+  <text x="335" y="368" font-family="Arial, sans-serif" font-size="10" fill="#333">Sensitivity: 85-95% | Specificity: 90-98%</text>
+  <text x="335" y="383" font-family="Arial, sans-serif" font-size="10" fill="#333">+LR: 10-25 | -LR: 0.1-0.2</text>
+  
+  <!-- Marker -->
+  <defs>
+    <marker id="arrowhead" markerWidth="12" markerHeight="8" refX="11" refY="4" orient="auto">
+      <polygon points="0 0, 12 4, 0 8" fill="#dc2626"/>
+    </marker>
+  </defs>
+</svg>

@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive MSK Course - DrTroy CE</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Georgia', 'Times New Roman', serif;
+            font-size: 16px;
+            line-height: 1.7;
+            color: #333;
+            background: #f5f5f5;
+        }
+
+        .course-container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            min-height: 100vh;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .course-header {
+            background: linear-gradient(135deg, #1a365d 0%, #2c5282 100%);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .course-header h1 {
+            font-size: 2.2rem;
+            margin-bottom: 0.5rem;
+            line-height: 1.2;
+        }
+
+        .progress-bar {
+            background: #e2e8f0;
+            height: 8px;
+            margin: 0;
+        }
+
+        .progress-fill {
+            background: #d69e2e;
+            height: 100%;
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .course-nav {
+            background: #f8fafc;
+            border-bottom: 1px solid #e2e8f0;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-btn {
+            background: #1a365d;
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: background 0.3s;
+        }
+
+        .nav-btn:hover:not(:disabled) { background: #2c5282; }
+        .nav-btn:disabled { background: #cbd5e0; cursor: not-allowed; }
+
+        .module {
+            display: none;
+            padding: 2rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .module.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .cover-page {
+            text-align: center;
+            padding: 60px 20px;
+            background: white;
+            border-bottom: 2px solid #e2e8f0;
+            margin-bottom: 20px;
+        }
+
+        .cover-page h1 {
+            font-size: 28px;
+            color: #1a365d;
+            margin-bottom: 20px;
+            line-height: 1.3;
+        }
+
+        .subtitle {
+            font-size: 16px;
+            color: #d69e2e;
+            margin-bottom: 40px;
+        }
+
+        h1 {
+            font-size: 22px;
+            color: #1a365d;
+            border-bottom: 2px solid #d69e2e;
+            padding-bottom: 10px;
+            margin-top: 40px;
+        }
+
+        h2 {
+            font-size: 18px;
+            color: #2c5282;
+            margin-top: 30px;
+        }
+
+        h3 {
+            font-size: 16px;
+            color: #333;
+            font-weight: bold;
+            margin-top: 25px;
+        }
+
+        p { margin: 12px 0; }
+        ul, ol { margin: 12px 0; padding-left: 25px; }
+        li { margin: 8px 0; }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 14px;
+        }
+
+        th, td {
+            border: 1px solid #ccc;
+            padding: 12px;
+            text-align: left;
+        }
+
+        th {
+            background: #f0f4f8;
+            font-weight: bold;
+        }
+
+        .module-header {
+            margin-top: 60px;
+            background: linear-gradient(135deg, #1a365d 0%, #2c5282 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+
+        .module-header h1 {
+            margin: 0;
+            font-size: 1.8rem;
+            border: none;
+            color: white;
+        }
+
+        .test-box {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+
+        .clinical-pearl {
+            background: #f0f9ff;
+            border-left: 4px solid #0ea5e9;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 0 6px 6px 0;
+        }
+
+        .caution-box {
+            background: #fef2f2;
+            border-left: 4px solid #ef4444;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 0 6px 6px 0;
+        }
+
+        .figure-box {
+            text-align: center;
+            margin: 25px 0;
+            border: 1px solid #ddd;
+            padding: 20px;
+            background: #fafafa;
+            border-radius: 8px;
+        }
+
+        .figure-box img {
+            max-width: 100%;
+            max-height: 400px;
+            object-fit: contain;
+            height: auto;
+        }
+
+        .figure-caption {
+            font-size: 13px;
+            color: #555;
+            margin-top: 12px;
+            font-style: italic;
+        }
+
+        .figure-number {
+            font-weight: bold;
+            color: #1a365d;
+            font-size: 14px;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .important-box {
+            background: #fffbeb;
+            border: 1px solid #f59e0b;
+            border-left: 4px solid #f59e0b;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 6px;
+        }
+
+        .divider {
+            text-align: center;
+            margin: 40px 0;
+            color: #d69e2e;
+            font-size: 18px;
+        }
+
+        /* Quiz styles */
+        .quiz-container {
+            background: #f8fafc;
+            border-radius: 8px;
+            padding: 2rem;
+            margin-top: 2rem;
+        }
+
+        .quiz-question {
+            background: white;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            border-radius: 6px;
+            border-left: 4px solid #d69e2e;
+        }
+
+        .quiz-question h4 {
+            color: #1a365d;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .quiz-options {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .quiz-option {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .quiz-option:hover { background: #f1f5f9; }
+        .quiz-option input[type="radio"] { margin: 0; }
+
+        .quiz-results {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 6px;
+            margin-top: 1rem;
+            border-left: 4px solid #22c55e;
+        }
+
+        .certificate {
+            background: white;
+            padding: 3rem;
+            text-align: center;
+            border: 3px solid #d69e2e;
+            margin: 2rem 0;
+        }
+
+        .certificate h2 {
+            color: #1a365d;
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .participant-name {
+            font-size: 1.5rem;
+            color: #d69e2e;
+            font-weight: bold;
+            margin: 1rem 0;
+        }
+
+        .btn-primary {
+            background: #1a365d;
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 6px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .btn-primary:hover { background: #2c5282; }
+
+        .btn-success {
+            background: #22c55e;
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 6px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .btn-success:hover { background: #16a34a; }
+
+        @media (max-width: 768px) {
+            .module { padding: 1.5rem; }
+            .course-nav { padding: 1rem; flex-direction: column; gap: 1rem; }
+            .nav-btn { width: 100%; }
+        }
+    </style>
+</head>
+<body>
+    <div class="course-container">
+        <!-- Course Header -->
+        <div class="course-header">
+            <img src="images/drtroy_logo.png" alt="DrTroy Continuing Education" style="max-width: 200px; margin-bottom: 1rem;">
+            <h1>Comprehensive Musculoskeletal Evaluation and Treatment</h1>
+            <div style="color: #d69e2e; font-size: 1.1rem; margin-bottom: 1rem;">A Systematic Regional Approach to Clinical Assessment</div>
+            <div style="font-size: 0.9rem;">
+                <strong>DrTroy Continuing Education</strong> • Course #PT-MSK-001 • 3 CCUs
+            </div>
+        </div>
+
+        <!-- Progress Bar -->
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressFill"></div>
+        </div>
+
+        <!-- Navigation -->
+        <div class="course-nav">
+            <button class="nav-btn" id="prevBtn" onclick="previousModule()" disabled>Previous</button>
+            <span id="moduleCounter">Course Information</span>
+            <button class="nav-btn" id="nextBtn" onclick="nextModule()">Begin Course</button>
+        </div>
+
+        <!-- Course Information Module -->
+        <div class="module active" id="module0">
+            <div class="cover-page">
+                <img src="images/drtroy_logo.png" alt="DrTroy Continuing Education" style="max-width: 250px; margin-bottom: 30px;">
+                <h1>Comprehensive Musculoskeletal Evaluation and Treatment</h1>
+                <div class="subtitle">A Systematic Regional Approach to Clinical Assessment</div>
+                <div style="font-size: 14px; color: #666; margin-top: 60px;">
+                    <p><strong>DrTroy Continuing Education</strong></p>
+                    <p>Course #PT-MSK-001</p>
+                    <p>3 CCUs</p>
+                    <p style="margin-top: 40px;">
+                        Complete Coverage: Cervical • Thoracic • Lumbar • SI Joint • Shoulder • Elbow • Wrist • Hip • Knee • Ankle
+                    </p>
+                </div>
+            </div>
+
+            <div class="divider">***</div>
+
+            <h1>Course Information</h1>
+
+            <h2>Course Description</h2>
+            <p>This comprehensive continuing education course provides physical therapy professionals with systematic, evidence-based approaches to musculoskeletal evaluation and treatment across all major body regions. Participants will learn examination techniques, special tests with diagnostic accuracy metrics, differential diagnosis strategies, and evidence-informed interventions for the cervical spine, thoracic spine, lumbar spine, sacroiliac joint, shoulder, elbow, wrist/hand, hip, knee, and ankle/foot.</p>
+
+            <h2>Target Audience</h2>
+            <p>This course is designed for licensed physical therapists seeking to enhance their musculoskeletal examination skills and clinical decision-making abilities.</p>
+
+            <h2>Course Objectives</h2>
+            <p>Upon completion of this course, participants will be able to:</p>
+            <ol>
+                <li>Perform comprehensive regional musculoskeletal evaluations using systematic, evidence-based examination approaches</li>
+                <li>Apply and interpret special tests with knowledge of sensitivity, specificity, likelihood ratios, and clinical utility</li>
+                <li>Identify red flags and recognize when immediate physician referral is indicated</li>
+                <li>Develop differential diagnoses based on subjective history and objective examination findings</li>
+                <li>Design evidence-based, region-specific treatment plans tailored to specific pathologies</li>
+                <li>Integrate examination findings to formulate clinical diagnoses and prognoses</li>
+                <li>Document findings using appropriate clinical reasoning frameworks</li>
+            </ol>
+
+            <h2>Time Allocation</h2>
+            <table>
+                <tr><th>Module</th><th>Content</th><th>Time</th></tr>
+                <tr><td>1</td><td>Introduction to MSK Evaluation</td><td>20 min</td></tr>
+                <tr><td>2</td><td>Cervical Spine</td><td>18 min</td></tr>
+                <tr><td>3</td><td>Thoracic Spine</td><td>15 min</td></tr>
+                <tr><td>4</td><td>Lumbar Spine</td><td>20 min</td></tr>
+                <tr><td>5</td><td>SI Joint</td><td>12 min</td></tr>
+                <tr><td>6</td><td>Shoulder</td><td>20 min</td></tr>
+                <tr><td>7</td><td>Elbow</td><td>12 min</td></tr>
+                <tr><td>8</td><td>Wrist and Hand</td><td>12 min</td></tr>
+                <tr><td>9</td><td>Hip</td><td>15 min</td></tr>
+                <tr><td>10</td><td>Knee</td><td>18 min</td></tr>
+                <tr><td>11</td><td>Ankle and Foot</td><td>15 min</td></tr>
+                <tr><td>12</td><td>Clinical Reasoning</td><td>35 min</td></tr>
+            </table>
+            <p><strong>Total: 3 CCUs</strong></p>
+
+            <div class="important-box">
+                <strong>Important Note on Special Tests:</strong> This course presents selected special tests commonly used in musculoskeletal evaluation. It is not an exhaustive or comprehensive list of all available tests. Clinical judgment should always dictate which tests are performed for each individual patient. Consider the patient's presentation, contraindications, and the diagnostic utility of each test when making examination decisions. Special tests should be performed only when indicated by the patient's history and initial examination findings.
+            </div>
+        </div>
+
+        <!-- Module 1 -->
+        <div class="module" id="module1">
+            <div class="module-header">
+                <h1>Module 1: Introduction to MSK Evaluation (20 minutes)</h1>
+            </div>
+
+            <h2>1.1 Examination Model</h2>
+
+            <div class="figure-box">
+                <span class="figure-number">FIGURE 1: Examination Sequence Flowchart (SOAP Format)</span>
+                <img src="images/figure_1_examination_sequence.svg" alt="Flowchart showing SOAP examination sequence">
+                <div class="figure-caption">Illustration showing the systematic examination process: Subjective (patient history, pain assessment, functional limitations), Objective (observation, ROM, special tests, palpation), Assessment (diagnosis, impairments), and Plan (interventions, goals). Arrows indicate the cyclical nature of reassessment.</div>
+            </div>
+
+            <p>The systematic examination follows four phases: Subjective, Objective, Assessment, and Plan (SOAP).</p>
+
+            <h3>Subjective Examination Components</h3>
+            <ul>
+                <li>Chief complaint and history of present illness</li>
+                <li>Pain assessment (location, quality, intensity, aggravating/relieving factors)</li>
+                <li>Functional limitations and patient goals</li>
+                <li>Medical history, medications, social history</li>
+            </ul>
+
+            <h3>Objective Examination Components</h3>
+            <ul>
+                <li>Observation (posture, gait, functional movements)</li>
+                <li>Active and passive range of motion</li>
+                <li>Resisted isometric testing</li>
+                <li>Special tests</li>
+                <li>Palpation</li>
+                <li>Neurological examination when indicated</li>
+            </ul>
+
+            <h2>1.2 Red Flags Screening</h2>
+
+            <table>
+                <tr><th>Red Flag</th><th>Potential Pathology</th><th>Action</th></tr>
+                <tr><td>Bowel/bladder dysfunction with back pain</td><td>Cauda equina syndrome</td><td>EMERGENCY ED referral</td></tr>
+                <tr><td>Saddle anesthesia</td><td>Cauda equina syndrome</td><td>EMERGENCY ED referral</td></tr>
+                <tr><td>Progressive neurological deficits</td><td>Spinal cord compression</td><td>Urgent referral</td></tr>
+                <tr><td>Unexplained weight loss >10%</td><td>Malignancy</td><td>Immediate referral</td></tr>
+                <tr><td>Night pain unrelieved by position</td><td>Tumor, infection, fracture</td><td>Immediate imaging</td></tr>
+                <tr><td>Fever with musculoskeletal pain</td><td>Infection</td><td>Urgent evaluation</td></tr>
+                <tr><td>History of cancer with new pain</td><td>Metastatic disease</td><td>Immediate imaging</td></tr>
+                <tr><td>Trauma age >65</td><td>Fracture</td><td>Immediate imaging</td></tr>
+            </table>
+
+            <div class="caution-box">
+                <strong>Documentation:</strong> Always document red flag screening: "Patient screened for red flags including [list]. No red flags identified."
+            </div>
+
+            <h2>1.3 Pain Mechanisms</h2>
+
+            <h3>Nociceptive Pain</h3>
+            <p>From actual tissue damage. Localized, mechanical pattern, responds to treatment.</p>
+
+            <h3>Neuropathic Pain</h3>
+            <p>From nervous system lesion. Burning/shooting, dermatomal distribution, night symptoms.</p>
+
+            <h3>Nociplastic Pain</h3>
+            <p>Altered pain processing. Widespread, disproportionate, psychosocial factors.</p>
+        </div>
+
+        <!-- Quiz Module -->
+        <div class="module" id="quizModule">
+            <h1>Knowledge Check - 20 Questions</h1>
+            <p><strong>Instructions:</strong> Complete this assessment to demonstrate your understanding of the course material. You must score 70% or higher to receive your certificate.</p>
+            
+            <div class="quiz-container" id="quizContainer">
+                <!-- Quiz questions will be inserted here by JavaScript -->
+            </div>
+
+            <div style="text-align: center; margin-top: 2rem;">
+                <button class="btn-primary" onclick="submitQuiz()" id="submitBtn" style="display: none;">Submit Quiz</button>
+            </div>
+
+            <div id="quizResults" style="display: none;"></div>
+        </div>
+
+        <!-- Certificate Module -->
+        <div class="module" id="certificateModule">
+            <h1>Course Completion</h1>
+            
+            <div class="certificate">
+                <h2>Certificate of Completion</h2>
+                <p style="margin: 1rem 0;">This certifies that</p>
+                <div class="participant-name" id="participantName">Participant Name</div>
+                <p style="margin: 1rem 0;">has successfully completed</p>
+                <h3 style="color: #1a365d; margin: 1rem 0;">Comprehensive Musculoskeletal Evaluation and Treatment</h3>
+                <p>A Systematic Regional Approach to Clinical Assessment</p>
+                <p style="margin: 1rem 0;"><strong>3.0 Continuing Competency Units (CCUs)</strong></p>
+                <p style="margin-top: 2rem;">
+                    <strong>DrTroy Continuing Education</strong><br>
+                    Course #PT-MSK-001<br>
+                    Completion Date: <span id="completionDate"></span>
+                </p>
+            </div>
+
+            <div style="text-align: center; margin-top: 2rem;">
+                <input type="text" id="nameInput" placeholder="Enter your name for certificate" style="padding: 0.5rem; font-size: 1rem; margin-right: 1rem; border: 1px solid #ccc; border-radius: 4px;">
+                <button class="btn-success" onclick="generateCertificate()">Generate Certificate</button>
+            </div>
+
+            <div style="text-align: center; margin-top: 1rem;">
+                <button class="btn-primary" onclick="downloadCertificate()" id="downloadBtn" style="display: none;">Download Certificate (PDF)</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Course state management
+        let currentModule = 0;
+        const totalModules = 4; // 0=course info, 1=module1, 2=quiz, 3=certificate
+        let quizCompleted = false;
+        let quizPassed = false;
+
+        // Quiz questions
+        const quizQuestions = [
+            {
+                question: "A 45-year-old patient presents with neck pain radiating down the right arm. Which special test is most specific for cervical radiculopathy?",
+                options: [
+                    "Cervical distraction test",
+                    "Spurling's test",
+                    "Vertebral artery test",
+                    "Upper limb tension test"
+                ],
+                correct: 1,
+                explanation: "Spurling's test (93% specific) for cervical radiculopathy"
+            },
+            {
+                question: "Which red flag finding requires immediate emergency department referral?",
+                options: [
+                    "Chronic low back pain for 3 months",
+                    "Bowel and bladder dysfunction with low back pain",
+                    "Mild sciatica without weakness",
+                    "Recurrent episodes of low back pain"
+                ],
+                correct: 1,
+                explanation: "Cauda equina syndrome signs require emergency referral"
+            }
+        ];
+
+        // Initialize course
+        function initializeCourse() {
+            updateProgress();
+            updateNavigation();
+            loadQuiz();
+        }
+
+        // Navigation functions
+        function nextModule() {
+            console.log('nextModule called, currentModule:', currentModule, 'totalModules:', totalModules);
+            
+            if (currentModule < totalModules - 1) {
+                // Hide current module
+                document.querySelectorAll('.module').forEach(m => m.classList.remove('active'));
+                
+                currentModule++;
+                console.log('Moving to module:', currentModule);
+                
+                // Show next module
+                const nextModuleId = getModuleId(currentModule);
+                console.log('Looking for module ID:', nextModuleId);
+                
+                const nextMod = document.getElementById(nextModuleId);
+                if (nextMod) {
+                    nextMod.classList.add('active');
+                    console.log('Activated module:', nextModuleId);
+                } else {
+                    console.error('Module not found:', nextModuleId);
+                    currentModule--; // revert
+                    return;
+                }
+                
+                updateProgress();
+                updateNavigation();
+                window.scrollTo(0, 0);
+            }
+        }
+
+        function previousModule() {
+            if (currentModule > 0) {
+                // Hide current module
+                document.querySelectorAll('.module').forEach(m => m.classList.remove('active'));
+                
+                currentModule--;
+                
+                // Show previous module
+                const prevModuleId = getModuleId(currentModule);
+                const prevMod = document.getElementById(prevModuleId);
+                if (prevMod) {
+                    prevMod.classList.add('active');
+                }
+                
+                updateProgress();
+                updateNavigation();
+                window.scrollTo(0, 0);
+            }
+        }
+
+        function getModuleId(moduleIndex) {
+            if (moduleIndex === 0) return 'module0';
+            if (moduleIndex === 1) return 'module1';
+            if (moduleIndex === 2) return 'quizModule';
+            if (moduleIndex === 3) return 'certificateModule';
+            return null;
+        }
+
+        function updateProgress() {
+            const progress = (currentModule / (totalModules - 1)) * 100;
+            document.getElementById('progressFill').style.width = progress + '%';
+        }
+
+        function updateNavigation() {
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            const counter = document.getElementById('moduleCounter');
+            
+            prevBtn.disabled = currentModule === 0;
+            nextBtn.style.display = 'inline-block';
+            
+            if (currentModule === 0) {
+                counter.textContent = 'Course Information';
+                nextBtn.textContent = 'Begin Course';
+            } else if (currentModule === 1) {
+                counter.textContent = 'Module 1 of 12';
+                nextBtn.textContent = 'Take Quiz';
+                nextBtn.disabled = false;
+            } else if (currentModule === 2) {
+                counter.textContent = 'Knowledge Check';
+                nextBtn.textContent = 'View Certificate';
+                nextBtn.disabled = !quizPassed;
+            } else if (currentModule === 3) {
+                counter.textContent = 'Certificate';
+                nextBtn.style.display = 'none';
+            }
+        }
+
+        // Quiz functions
+        function loadQuiz() {
+            const container = document.getElementById('quizContainer');
+            let quizHTML = '';
+            
+            quizQuestions.forEach((q, index) => {
+                quizHTML += `
+                    <div class="quiz-question">
+                        <h4>Question ${index + 1}</h4>
+                        <p>${q.question}</p>
+                        <div class="quiz-options">
+                            ${q.options.map((option, i) => `
+                                <label class="quiz-option">
+                                    <input type="radio" name="q${index}" value="${i}">
+                                    <span>${String.fromCharCode(65 + i)}. ${option}</span>
+                                </label>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+            });
+            
+            container.innerHTML = quizHTML;
+            
+            // Show submit button when all questions answered
+            const inputs = container.querySelectorAll('input[type="radio"]');
+            inputs.forEach(input => {
+                input.addEventListener('change', checkQuizCompletion);
+            });
+        }
+
+        function checkQuizCompletion() {
+            const totalQuestions = quizQuestions.length;
+            let answeredQuestions = 0;
+            
+            for (let i = 0; i < totalQuestions; i++) {
+                const answered = document.querySelector(`input[name="q${i}"]:checked`);
+                if (answered) answeredQuestions++;
+            }
+            
+            const submitBtn = document.getElementById('submitBtn');
+            if (answeredQuestions === totalQuestions) {
+                submitBtn.style.display = 'inline-block';
+            } else {
+                submitBtn.style.display = 'none';
+            }
+        }
+
+        function submitQuiz() {
+            let correctAnswers = 0;
+            const totalQuestions = quizQuestions.length;
+            
+            quizQuestions.forEach((q, index) => {
+                const selected = document.querySelector(`input[name="q${index}"]:checked`);
+                if (selected && parseInt(selected.value) === q.correct) {
+                    correctAnswers++;
+                }
+            });
+            
+            const percentage = Math.round((correctAnswers / totalQuestions) * 100);
+            quizPassed = percentage >= 70;
+            
+            let resultsHTML = `
+                <div class="quiz-results">
+                    <h3>Quiz Results</h3>
+                    <p><strong>Score: ${correctAnswers}/${totalQuestions} (${percentage}%)</strong></p>
+                    <p>${quizPassed ? 
+                        '<strong style="color: #22c55e;">Congratulations! You passed.</strong>' : 
+                        '<strong style="color: #ef4444;">You need 70% or higher to pass.</strong>'
+                    }</p>
+                </div>
+            `;
+            
+            document.getElementById('quizResults').innerHTML = resultsHTML;
+            document.getElementById('quizResults').style.display = 'block';
+            document.getElementById('submitBtn').style.display = 'none';
+            
+            updateNavigation();
+        }
+
+        // Certificate functions
+        function generateCertificate() {
+            const name = document.getElementById('nameInput').value.trim();
+            if (!name) {
+                alert('Please enter your name for the certificate.');
+                return;
+            }
+            
+            document.getElementById('participantName').textContent = name;
+            document.getElementById('completionDate').textContent = new Date().toLocaleDateString();
+            document.getElementById('downloadBtn').style.display = 'inline-block';
+        }
+
+        function downloadCertificate() {
+            window.print();
+        }
+
+        // Initialize course when page loads
+        document.addEventListener('DOMContentLoaded', initializeCourse);
+    </script>
+</body>
+</html>

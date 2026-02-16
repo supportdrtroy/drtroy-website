@@ -1,0 +1,2961 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Musculoskeletal Evaluation and Treatment - Basic Level CE Course | DrTroy CE</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: #2d3748;
+            background: #f7fafc;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles */
+        .header {
+            background: linear-gradient(135deg, #1a365d 0%, #2c5282 100%);
+            color: white;
+            padding: 2rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #d69e2e;
+        }
+
+        .course-info {
+            text-align: right;
+        }
+
+        .course-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .course-meta {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        /* Navigation Styles */
+        .nav-container {
+            background: white;
+            border-bottom: 1px solid #e2e8f0;
+            position: sticky;
+            top: 104px;
+            z-index: 90;
+        }
+
+        .nav-tabs {
+            display: flex;
+            overflow-x: auto;
+            scrollbar-width: none;
+        }
+
+        .nav-tabs::-webkit-scrollbar {
+            display: none;
+        }
+
+        .nav-tab {
+            background: none;
+            border: none;
+            padding: 1rem 1.5rem;
+            cursor: pointer;
+            font-weight: 500;
+            color: #4a5568;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+            min-width: 200px;
+        }
+
+        .nav-tab:hover {
+            background: #f7fafc;
+            color: #1a365d;
+        }
+
+        .nav-tab.active {
+            color: #1a365d;
+            border-bottom-color: #d69e2e;
+            background: #f7fafc;
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            background: white;
+            padding: 1rem 0;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e2e8f0;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #d69e2e, #f6ad55);
+            transition: width 0.3s ease;
+            width: 25%;
+        }
+
+        .progress-text {
+            text-align: center;
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
+            color: #4a5568;
+        }
+
+        /* Content Styles */
+        .content {
+            background: white;
+            margin: 2rem 0;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .module {
+            display: none;
+            padding: 2rem;
+        }
+
+        .module.active {
+            display: block;
+        }
+
+        .module-header {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #e2e8f0;
+        }
+
+        .module-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #1a365d;
+            margin-bottom: 0.5rem;
+        }
+
+        .module-subtitle {
+            font-size: 1.25rem;
+            color: #4a5568;
+            margin-bottom: 1rem;
+        }
+
+        .reading-time {
+            background: #f0fff4;
+            color: #38a169;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            display: inline-block;
+        }
+
+        /* Section Styles */
+        .section {
+            margin: 2rem 0;
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: #1a365d;
+            margin-bottom: 1rem;
+            border-left: 4px solid #d69e2e;
+            padding-left: 1rem;
+        }
+
+        .subsection {
+            margin: 1.5rem 0;
+        }
+
+        .subsection-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 0.75rem;
+        }
+
+        .subheading {
+            font-size: 1.2rem;
+            font-weight: 500;
+            color: #2d3748;
+            margin: 1rem 0 0.5rem 0;
+        }
+
+        /* Text Styles */
+        p {
+            margin-bottom: 1rem;
+            text-align: justify;
+        }
+
+        ul, ol {
+            margin: 1rem 0;
+            padding-left: 2rem;
+        }
+
+        li {
+            margin-bottom: 0.5rem;
+        }
+
+        strong {
+            font-weight: 600;
+            color: #1a365d;
+        }
+
+        em {
+            color: #4a5568;
+            font-style: italic;
+        }
+
+        /* Table Styles */
+        .table-container {
+            overflow-x: auto;
+            margin: 1.5rem 0;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+        }
+
+        th {
+            background: #1a365d;
+            color: white;
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        td {
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        tr:hover {
+            background: #f7fafc;
+        }
+
+        /* Alert Boxes */
+        .alert {
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+            border-left: 4px solid;
+        }
+
+        .alert-info {
+            background: #ebf8ff;
+            border-color: #3182ce;
+            color: #2c5282;
+        }
+
+        .alert-warning {
+            background: #fffaf0;
+            border-color: #dd6b20;
+            color: #c05621;
+        }
+
+        .alert-success {
+            background: #f0fff4;
+            border-color: #38a169;
+            color: #2f855a;
+        }
+
+        .alert-danger {
+            background: #fed7d7;
+            border-color: #e53e3e;
+            color: #c53030;
+        }
+
+        /* Key Takeaways Box */
+        .key-takeaways {
+            background: linear-gradient(135deg, #f0fff4 0%, #c6f6d5 100%);
+            border: 2px solid #38a169;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .key-takeaways h3 {
+            color: #2f855a;
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .key-takeaways ul {
+            margin: 0;
+            padding-left: 1.5rem;
+        }
+
+        .key-takeaways li {
+            margin-bottom: 0.75rem;
+            font-weight: 500;
+        }
+
+        /* SVG Container */
+        .svg-container {
+            background: white;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 1rem;
+            margin: 1.5rem 0;
+            text-align: center;
+        }
+
+        .svg-title {
+            font-weight: 600;
+            color: #1a365d;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        /* Footer */
+        .footer {
+            background: #1a365d;
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 2rem;
+        }
+
+        .footer p {
+            margin-bottom: 0.5rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header-content {
+                text-align: center;
+            }
+
+            .course-info {
+                text-align: center;
+            }
+
+            .module-title {
+                font-size: 2rem;
+            }
+
+            .section-title {
+                font-size: 1.5rem;
+            }
+
+            .nav-tabs {
+                flex-direction: column;
+            }
+
+            .nav-tab {
+                text-align: left;
+                min-width: auto;
+            }
+
+            table {
+                font-size: 0.9rem;
+            }
+        }
+
+        /* Print Styles */
+        @media print {
+            .header, .nav-container, .progress-container, .footer {
+                display: none !important;
+            }
+
+            .content {
+                box-shadow: none;
+                margin: 0;
+            }
+
+            .module {
+                display: block !important;
+                page-break-before: always;
+            }
+
+            .module:first-child {
+                page-break-before: auto;
+            }
+        }
+
+        /* Smooth Scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">DrTroy CE</div>
+                <div class="course-info">
+                    <div class="course-title">Musculoskeletal Evaluation and Treatment</div>
+                    <div class="course-meta">Basic Level • 3.0 Contact Hours • Continuing Education for Physical Therapists</div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav class="nav-container">
+        <div class="container">
+            <div class="nav-tabs">
+                <button class="nav-tab active" onclick="showModule(1)">Module 1: Foundations</button>
+                <button class="nav-tab" onclick="showModule(2)">Module 2: Clinical Examination</button>
+                <button class="nav-tab" onclick="showModule(3)">Module 3: Clinical Decision Making</button>
+                <button class="nav-tab" onclick="showModule(4)">Module 4: Treatment Interventions</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Progress Bar -->
+    <div class="progress-container">
+        <div class="container">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+            <div class="progress-text" id="progressText">Module 1 of 4 - Foundations of Musculoskeletal Assessment</div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="container">
+        <div class="content">
+            <!-- Module 1: Foundations -->
+            <div class="module active" id="module1">
+                <div class="module-header">
+                    <h1 class="module-title">Module 1</h1>
+                    <h2 class="module-subtitle">Foundations of Musculoskeletal Assessment</h2>
+                    <span class="reading-time">⏱️ Estimated Reading Time: 45 minutes</span>
+                </div>
+
+                <div class="section">
+                    <h2 class="section-title">Anatomy Review: Key Musculoskeletal Structures</h2>
+                    
+                    <div class="subsection">
+                        <h3 class="subsection-title">Shoulder Complex</h3>
+                        
+                        <div class="svg-container">
+                            <div class="svg-title">Rotator Cuff Anatomy</div>
+                            <svg width="400" height="300" viewBox="0 0 400 300">
+                                <defs>
+                                    <linearGradient id="muscle1" x1="0%" y1="0%" x2="100%" y2="100%">
+                                        <stop offset="0%" style="stop-color:#e53e3e;stop-opacity:0.8"/>
+                                        <stop offset="100%" style="stop-color:#c53030;stop-opacity:0.8"/>
+                                    </linearGradient>
+                                    <linearGradient id="muscle2" x1="0%" y1="0%" x2="100%" y2="100%">
+                                        <stop offset="0%" style="stop-color:#3182ce;stop-opacity:0.8"/>
+                                        <stop offset="100%" style="stop-color:#2c5282;stop-opacity:0.8"/>
+                                    </linearGradient>
+                                    <linearGradient id="bone" x1="0%" y1="0%" x2="100%" y2="100%">
+                                        <stop offset="0%" style="stop-color:#f7fafc;stop-opacity:1"/>
+                                        <stop offset="100%" style="stop-color:#e2e8f0;stop-opacity:1"/>
+                                    </linearGradient>
+                                </defs>
+                                
+                                <!-- Scapula -->
+                                <path d="M50 80 Q80 60 120 80 L140 180 Q110 200 80 180 Z" fill="url(#bone)" stroke="#1a365d" stroke-width="2"/>
+                                
+                                <!-- Humerus -->
+                                <ellipse cx="200" cy="120" rx="15" ry="40" fill="url(#bone)" stroke="#1a365d" stroke-width="2"/>
+                                
+                                <!-- Supraspinatus -->
+                                <path d="M80 70 Q120 60 160 80 Q180 90 170 110 Q130 100 90 110 Z" fill="url(#muscle1)" stroke="#c53030" stroke-width="1"/>
+                                
+                                <!-- Infraspinatus -->
+                                <path d="M90 120 Q130 110 170 130 Q190 140 180 160 Q140 150 100 160 Z" fill="url(#muscle2)" stroke="#2c5282" stroke-width="1"/>
+                                
+                                <!-- Teres Minor -->
+                                <path d="M100 170 Q140 160 180 180 Q200 190 190 210 Q150 200 110 210 Z" fill="url(#muscle1)" stroke="#c53030" stroke-width="1"/>
+                                
+                                <!-- Subscapularis -->
+                                <path d="M60 100 Q100 90 140 110 Q160 120 150 140 Q110 130 70 140 Z" fill="url(#muscle2)" stroke="#2c5282" stroke-width="1" opacity="0.6"/>
+                                
+                                <!-- Labels -->
+                                <text x="120" y="85" font-family="Inter" font-size="12" font-weight="600" fill="#1a365d">Supraspinatus</text>
+                                <text x="130" y="135" font-family="Inter" font-size="12" font-weight="600" fill="#1a365d">Infraspinatus</text>
+                                <text x="140" y="195" font-family="Inter" font-size="12" font-weight="600" fill="#1a365d">Teres Minor</text>
+                                <text x="80" y="155" font-family="Inter" font-size="12" font-weight="600" fill="#1a365d">Subscapularis</text>
+                                <text x="250" y="130" font-family="Inter" font-size="14" font-weight="600" fill="#1a365d">Humerus</text>
+                                
+                                <!-- Function Labels -->
+                                <text x="50" y="250" font-family="Inter" font-size="11" fill="#4a5568">Functions:</text>
+                                <text x="50" y="265" font-family="Inter" font-size="10" fill="#4a5568">• Supraspinatus: Shoulder abduction initiation</text>
+                                <text x="50" y="278" font-family="Inter" font-size="10" fill="#4a5568">• Infraspinatus/Teres Minor: External rotation</text>
+                                <text x="50" y="291" font-family="Inter" font-size="10" fill="#4a5568">• Subscapularis: Internal rotation</text>
+                            </svg>
+                        </div>
+
+                        <p>The shoulder complex consists of four joints working together to provide the greatest range of motion of any joint complex in the human body. The <strong>rotator cuff</strong> muscles (supraspinatus, infraspinatus, teres minor, and subscapularis) provide dynamic stability while allowing for complex multi-planar movements.</p>
+
+                        <p>The <em>supraspinatus</em> initiates shoulder abduction and works with the deltoid to elevate the arm. The <em>infraspinatus</em> and <em>teres minor</em> provide external rotation and posterior stability, while the <em>subscapularis</em> produces internal rotation and anterior stability. Together, these muscles create a force couple that maintains humeral head centering during arm elevation.</p>
+                    </div>
+
+                    <div class="subsection">
+                        <h3 class="subsection-title">Knee Joint Complex</h3>
+                        
+                        <div class="svg-container">
+                            <div class="svg-title">Knee Anatomy - Ligaments and Menisci</div>
+                            <svg width="400" height="350" viewBox="0 0 400 350">
+                                <defs>
+                                    <linearGradient id="cartilage" x1="0%" y1="0%" x2="100%" y2="100%">
+                                        <stop offset="0%" style="stop-color:#63b3ed;stop-opacity:0.8"/>
+                                        <stop offset="100%" style="stop-color:#3182ce;stop-opacity:0.8"/>
+                                    </linearGradient>
+                                    <linearGradient id="ligament" x1="0%" y1="0%" x2="100%" y2="100%">
+                                        <stop offset="0%" style="stop-color:#f6ad55;stop-opacity:0.9"/>
+                                        <stop offset="100%" style="stop-color:#d69e2e;stop-opacity:0.9"/>
+                                    </linearGradient>
+                                </defs>
+                                
+                                <!-- Femur -->
+                                <ellipse cx="200" cy="80" rx="60" ry="30" fill="url(#bone)" stroke="#1a365d" stroke-width="2"/>
+                                
+                                <!-- Tibia -->
+                                <rect x="170" y="220" width="60" height="80" rx="10" fill="url(#bone)" stroke="#1a365d" stroke-width="2"/>
+                                
+                                <!-- Fibula -->
+                                <rect x="250" y="230" width="15" height="70" rx="7" fill="url(#bone)" stroke="#1a365d" stroke-width="2"/>
+                                
+                                <!-- ACL -->
+                                <line x1="180" y1="110" x2="210" y2="200" stroke="#e53e3e" stroke-width="4"/>
+                                
+                                <!-- PCL -->
+                                <line x1="220" y1="110" x2="190" y2="200" stroke="#3182ce" stroke-width="4"/>
+                                
+                                <!-- MCL -->
+                                <line x1="150" y1="130" x2="150" y2="210" stroke="#d69e2e" stroke-width="4"/>
+                                
+                                <!-- LCL -->
+                                <line x1="250" y1="130" x2="255" y2="210" stroke="#38a169" stroke-width="4"/>
+                                
+                                <!-- Medial Meniscus -->
+                                <path d="M170 150 Q200 140 230 150 Q200 170 170 150" fill="url(#cartilage)" stroke="#3182ce" stroke-width="2"/>
+                                
+                                <!-- Lateral Meniscus -->
+                                <path d="M170 180 Q200 170 230 180 Q200 200 170 180" fill="url(#cartilage)" stroke="#3182ce" stroke-width="2"/>
+                                
+                                <!-- Labels -->
+                                <text x="150" y="160" font-family="Inter" font-size="12" font-weight="600" fill="#e53e3e">ACL</text>
+                                <text x="220" y="160" font-family="Inter" font-size="12" font-weight="600" fill="#3182ce">PCL</text>
+                                <text x="100" y="170" font-family="Inter" font-size="12" font-weight="600" fill="#d69e2e">MCL</text>
+                                <text x="270" y="170" font-family="Inter" font-size="12" font-weight="600" fill="#38a169">LCL</text>
+                                <text x="130" y="140" font-family="Inter" font-size="11" font-weight="600" fill="#3182ce">Medial Meniscus</text>
+                                <text x="140" y="210" font-family="Inter" font-size="11" font-weight="600" fill="#3182ce">Lateral Meniscus</text>
+                                
+                                <!-- Function descriptions -->
+                                <text x="50" y="330" font-family="Inter" font-size="11" fill="#4a5568">Ligament Functions:</text>
+                                <text x="50" y="344" font-family="Inter" font-size="10" fill="#4a5568">• ACL: Prevents anterior tibial translation • PCL: Prevents posterior tibial translation</text>
+                                <text x="50" y="356" font-family="Inter" font-size="10" fill="#4a5568">• MCL: Prevents valgus stress • LCL: Prevents varus stress</text>
+                            </svg>
+                        </div>
+
+                        <p>The knee joint is the largest and most complex joint in the human body, functioning primarily as a hinge joint with some rotational capability. The <strong>anterior cruciate ligament (ACL)</strong> prevents anterior translation of the tibia on the femur and provides rotational stability, while the <strong>posterior cruciate ligament (PCL)</strong> prevents posterior tibial translation.</p>
+
+                        <p>The collateral ligaments provide valgus and varus stability, with the <em>medial collateral ligament (MCL)</em> being more commonly injured due to its attachment to the joint capsule and medial meniscus. The <strong>menisci</strong> serve as shock absorbers, distributing load across the articular surfaces and providing secondary stabilization to the joint.</p>
+                    </div>
+
+                    <div class="subsection">
+                        <h3 class="subsection-title">Lumbar Spine Structure</h3>
+                        
+                        <div class="svg-container">
+                            <div class="svg-title">Lumbar Spine - Vertebral Structure and Disc Anatomy</div>
+                            <svg width="400" height="300" viewBox="0 0 400 300">
+                                <!-- Vertebral Bodies -->
+                                <rect x="150" y="50" width="100" height="30" rx="5" fill="url(#bone)" stroke="#1a365d" stroke-width="2"/>
+                                <rect x="150" y="90" width="100" height="30" rx="5" fill="url(#bone)" stroke="#1a365d" stroke-width="2"/>
+                                <rect x="150" y="130" width="100" height="30" rx="5" fill="url(#bone)" stroke="#1a365d" stroke-width="2"/>
+                                <rect x="150" y="170" width="100" height="30" rx="5" fill="url(#bone)" stroke="#1a365d" stroke-width="2"/>
+                                
+                                <!-- Discs -->
+                                <ellipse cx="200" cy="85" rx="50" ry="5" fill="#63b3ed" stroke="#3182ce" stroke-width="1"/>
+                                <ellipse cx="200" cy="125" rx="50" ry="5" fill="#63b3ed" stroke="#3182ce" stroke-width="1"/>
+                                <ellipse cx="200" cy="165" rx="50" ry="5" fill="#63b3ed" stroke="#3182ce" stroke-width="1"/>
+                                
+                                <!-- Spinous Processes -->
+                                <rect x="195" y="50" width="10" height="40" fill="url(#bone)" stroke="#1a365d" stroke-width="1"/>
+                                <rect x="195" y="90" width="10" height="40" fill="url(#bone)" stroke="#1a365d" stroke-width="1"/>
+                                <rect x="195" y="130" width="10" height="40" fill="url(#bone)" stroke="#1a365d" stroke-width="1"/>
+                                <rect x="195" y="170" width="10" height="40" fill="url(#bone)" stroke="#1a365d" stroke-width="1"/>
+                                
+                                <!-- Transverse Processes -->
+                                <rect x="120" y="55" width="30" height="8" fill="url(#bone)" stroke="#1a365d" stroke-width="1"/>
+                                <rect x="250" y="55" width="30" height="8" fill="url(#bone)" stroke="#1a365d" stroke-width="1"/>
+                                <rect x="120" y="95" width="30" height="8" fill="url(#bone)" stroke="#1a365d" stroke-width="1"/>
+                                <rect x="250" y="95" width="30" height="8" fill="url(#bone)" stroke="#1a365d" stroke-width="1"/>
+                                
+                                <!-- Disc Detail -->
+                                <g transform="translate(300, 80)">
+                                    <circle cx="0" cy="0" r="40" fill="#e2e8f0" stroke="#1a365d" stroke-width="2"/>
+                                    <circle cx="0" cy="0" r="25" fill="#63b3ed" stroke="#3182ce" stroke-width="2"/>
+                                    <circle cx="0" cy="0" r="10" fill="#f6ad55" stroke="#d69e2e" stroke-width="2"/>
+                                    <text x="-35" y="-50" font-family="Inter" font-size="10" font-weight="600" fill="#1a365d">Annulus Fibrosus</text>
+                                    <text x="-30" y="60" font-family="Inter" font-size="10" font-weight="600" fill="#d69e2e">Nucleus Pulposus</text>
+                                </g>
+                                
+                                <!-- Labels -->
+                                <text x="80" y="70" font-family="Inter" font-size="12" font-weight="600" fill="#1a365d">L1</text>
+                                <text x="80" y="110" font-family="Inter" font-size="12" font-weight="600" fill="#1a365d">L2</text>
+                                <text x="80" y="150" font-family="Inter" font-size="12" font-weight="600" fill="#1a365d">L3</text>
+                                <text x="80" y="190" font-family="Inter" font-size="12" font-weight="600" fill="#1a365d">L4</text>
+                                
+                                <text x="50" y="240" font-family="Inter" font-size="11" fill="#4a5568">Key Features:</text>
+                                <text x="50" y="254" font-family="Inter" font-size="10" fill="#4a5568">• Large vertebral bodies for weight bearing</text>
+                                <text x="50" y="266" font-family="Inter" font-size="10" fill="#4a5568">• Thick intervertebral discs for shock absorption</text>
+                                <text x="50" y="278" font-family="Inter" font-size="10" fill="#4a5568">• Sagittally oriented facet joints for flexion/extension</text>
+                            </svg>
+                        </div>
+
+                        <p>The lumbar spine consists of five vertebrae (L1-L5) designed primarily for weight bearing and stability while allowing controlled movement in multiple planes. The <strong>intervertebral discs</strong> are thickest in the lumbar region, consisting of an outer <em>annulus fibrosus</em> (tough collagen fibers) and inner <em>nucleus pulposus</em> (gelatinous core).</p>
+
+                        <p>The lumbar vertebrae have large vertebral bodies to accommodate compressive loads, which can reach 3-5 times body weight during lifting activities. The facet joints are oriented in the sagittal plane, facilitating flexion and extension while limiting rotation - an important protective mechanism for the intervertebral discs.</p>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h2 class="section-title">Tissue Types and Healing Timeline</h2>
+                    
+                    <div class="svg-container">
+                        <div class="svg-title">Tissue Healing Timeline</div>
+                        <svg width="500" height="350" viewBox="0 0 500 350">
+                            <!-- Timeline axis -->
+                            <line x1="50" y1="300" x2="450" y2="300" stroke="#1a365d" stroke-width="2"/>
+                            
+                            <!-- Phase 1: Inflammatory -->
+                            <rect x="60" y="50" width="100" height="200" fill="#fed7d7" stroke="#e53e3e" stroke-width="2" opacity="0.7"/>
+                            <text x="110" y="40" font-family="Inter" font-size="12" font-weight="600" fill="#e53e3e" text-anchor="middle">Inflammatory</text>
+                            <text x="110" y="270" font-family="Inter" font-size="11" fill="#c53030" text-anchor="middle">0-6 Days</text>
+                            
+                            <!-- Phase 2: Proliferative -->
+                            <rect x="160" y="80" width="120" height="170" fill="#fef5e7" stroke="#d69e2e" stroke-width="2" opacity="0.7"/>
+                            <text x="220" y="70" font-family="Inter" font-size="12" font-weight="600" fill="#d69e2e" text-anchor="middle">Proliferative</text>
+                            <text x="220" y="270" font-family="Inter" font-size="11" fill="#c05621" text-anchor="middle">3-21 Days</text>
+                            
+                            <!-- Phase 3: Remodeling -->
+                            <rect x="280" y="100" width="150" height="150" fill="#f0fff4" stroke="#38a169" stroke-width="2" opacity="0.7"/>
+                            <text x="355" y="90" font-family="Inter" font-size="12" font-weight="600" fill="#38a169" text-anchor="middle">Remodeling</text>
+                            <text x="355" y="270" font-family="Inter" font-size="11" fill="#2f855a" text-anchor="middle">3 Weeks - 12+ Months</text>
+                            
+                            <!-- Key events -->
+                            <circle cx="80" cy="200" r="4" fill="#e53e3e"/>
+                            <text x="85" y="205" font-family="Inter" font-size="9" fill="#1a365d">Hemostasis</text>
+                            
+                            <circle cx="120" cy="180" r="4" fill="#e53e3e"/>
+                            <text x="85" y="185" font-family="Inter" font-size="9" fill="#1a365d">Inflammation</text>
+                            
+                            <circle cx="180" cy="160" r="4" fill="#d69e2e"/>
+                            <text x="150" y="155" font-family="Inter" font-size="9" fill="#1a365d">Fibroblast proliferation</text>
+                            
+                            <circle cx="220" cy="140" r="4" fill="#d69e2e"/>
+                            <text x="190" y="135" font-family="Inter" font-size="9" fill="#1a365d">Collagen synthesis</text>
+                            
+                            <circle cx="300" cy="120" r="4" fill="#38a169"/>
+                            <text x="270" y="115" font-family="Inter" font-size="9" fill="#1a365d">Tissue reorganization</text>
+                            
+                            <circle cx="380" cy="130" r="4" fill="#38a169"/>
+                            <text x="350" y="125" font-family="Inter" font-size="9" fill="#1a365d">Strength restoration</text>
+                            
+                            <!-- Timeline markers -->
+                            <text x="60" y="315" font-family="Inter" font-size="10" fill="#4a5568">0</text>
+                            <text x="160" y="315" font-family="Inter" font-size="10" fill="#4a5568">1 week</text>
+                            <text x="280" y="315" font-family="Inter" font-size="10" fill="#4a5568">3 weeks</text>
+                            <text x="420" y="315" font-family="Inter" font-size="10" fill="#4a5568">3+ months</text>
+                        </svg>
+                    </div>
+
+                    <div class="subsection">
+                        <h3 class="subsection-title">Inflammatory Phase (0-6 Days)</h3>
+                        <p>The inflammatory phase begins immediately following tissue injury and is characterized by the classic signs of inflammation: <strong>redness, heat, swelling, pain, and loss of function</strong>. This phase serves to protect the injured area and initiate the healing response.</p>
+
+                        <p><strong>Key processes include:</strong></p>
+                        <ul>
+                            <li><em>Hemostasis</em>: Vasoconstriction followed by vasodilation, platelet aggregation, and clot formation</li>
+                            <li><em>Inflammatory response</em>: Neutrophil infiltration (24-48 hours), followed by macrophage infiltration</li>
+                            <li><em>Chemical mediators</em>: Release of prostaglandins, cytokines, and growth factors</li>
+                            <li><em>Tissue protection</em>: Pain and muscle guarding limit further tissue damage</li>
+                        </ul>
+
+                        <div class="alert alert-info">
+                            <strong>Clinical Implications:</strong> During the inflammatory phase, treatment focuses on protection (POLICE principle), pain management, and gentle range of motion to prevent adhesions while respecting tissue healing.
+                        </div>
+                    </div>
+
+                    <div class="subsection">
+                        <h3 class="subsection-title">Proliferative Phase (3-21 Days)</h3>
+                        <p>The proliferative phase involves tissue repair and regeneration. Fibroblasts migrate to the injury site and begin synthesizing collagen, initially type III collagen which provides temporary strength but lacks organization.</p>
+
+                        <p><strong>Key characteristics:</strong></p>
+                        <ul>
+                            <li>Granulation tissue formation with high vascularity</li>
+                            <li>Random, disorganized collagen fiber arrangement</li>
+                            <li>Gradual increase in tensile strength</li>
+                            <li>Tissue remains vulnerable to reinjury</li>
+                        </ul>
+
+                        <div class="alert alert-warning">
+                            <strong>Clinical Note:</strong> Progressive loading during this phase stimulates proper collagen alignment, but excessive stress can disrupt healing and prolong recovery.
+                        </div>
+                    </div>
+
+                    <div class="subsection">
+                        <h3 class="subsection-title">Remodeling Phase (3 Weeks - 12+ Months)</h3>
+                        <p>The remodeling phase involves conversion of type III to type I collagen and reorganization of collagen fibers along lines of mechanical stress. This phase can continue for months to years depending on the tissue type.</p>
+
+                        <p><strong>Critical processes:</strong></p>
+                        <ul>
+                            <li>Collagen fiber realignment following Wolff's Law</li>
+                            <li>Increased collagen cross-linking for strength</li>
+                            <li>Gradual restoration of tissue properties</li>
+                            <li>Scar tissue maturation and contraction</li>
+                        </ul>
+                    </div>
+
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Tissue Type</th>
+                                    <th>Inflammatory Phase</th>
+                                    <th>Proliferative Phase</th>
+                                    <th>Remodeling Phase</th>
+                                    <th>Full Recovery</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>Muscle</strong></td>
+                                    <td>1-7 days</td>
+                                    <td>4-14 days</td>
+                                    <td>2 weeks-6 months</td>
+                                    <td>2-6 months</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Tendon</strong></td>
+                                    <td>3-7 days</td>
+                                    <td>4-21 days</td>
+                                    <td>3 weeks-12+ months</td>
+                                    <td>3-12 months</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Ligament</strong></td>
+                                    <td>2-7 days</td>
+                                    <td>3-21 days</td>
+                                    <td>3 weeks-12+ months</td>
+                                    <td>6-18 months</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Bone</strong></td>
+                                    <td>1-7 days</td>
+                                    <td>4-21 days</td>
+                                    <td>Weeks-2+ years</td>
+                                    <td>6 weeks-1 year</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Cartilage</strong></td>
+                                    <td>Variable</td>
+                                    <td>Weeks-months</td>
+                                    <td>Months-years</td>
+                                    <td>Limited healing</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h2 class="section-title">Patient History and OPQRST Assessment</h2>
+
+                    <div class="subsection">
+                        <h3 class="subsection-title">OPQRST Framework for Pain Assessment</h3>
+                        <p>The OPQRST acronym provides a systematic approach to pain assessment that ensures comprehensive characterization of the patient's primary complaint and guides clinical decision-making.</p>
+
+                        <div class="alert alert-info">
+                            <strong>OPQRST Components:</strong> Onset, Provocative/Palliative factors, Quality, Region/Radiation, Severity/Timing
+                        </div>
+
+                        <h4 class="subheading">O - Onset/Occurrence</h4>
+                        <p>Document the specific circumstances surrounding symptom onset with detailed information about:</p>
+                        <ul>
+                            <li><strong>Traumatic injuries:</strong> Exact mechanism, direction of force, immediate vs. delayed onset</li>
+                            <li><strong>Insidious onset:</strong> Approximate timeframe, initial characteristics, precipitating factors</li>
+                            <li><strong>Temporal patterns:</strong> Constant vs. episodic, progression over time</li>
+                        </ul>
+
+                        <h4 class="subheading">P - Provocative/Palliative Factors</h4>
+                        <p>Systematically identify all factors that influence symptom intensity:</p>
+                        <ul>
+                            <li><em>Provocative factors:</em> Specific movements, positions, activities, time of day</li>
+                            <li><em>Palliative factors:</em> Rest positions, interventions that provide relief</li>
+                            <li><em>Dose-response relationship:</em> Understanding tissue irritability levels</li>
+                        </ul>
+
+                        <h4 class="subheading">Q - Quality</h4>
+                        <p>Symptom quality provides insight into underlying pathophysiology:</p>
+                        <ul>
+                            <li><strong>Mechanical pain:</strong> Sharp, stabbing, aching, catching</li>
+                            <li><strong>Neurogenic pain:</strong> Burning, electrical, numbness, tingling</li>
+                            <li><strong>Vascular pain:</strong> Throbbing, cramping, color changes</li>
+                            <li><strong>Inflammatory pain:</strong> Hot, swollen, morning stiffness >30 minutes</li>
+                        </ul>
+
+                        <h4 class="subheading">R - Region/Radiation</h4>
+                        <p>Detailed symptom mapping is essential for identifying potential sources:</p>
+                        <ul>
+                            <li>Primary symptom location and anatomical boundaries</li>
+                            <li>Radiation patterns (dermatomal, myotomal, sclerotomal)</li>
+                            <li>Referral pattern recognition from spine, joints, and visceral structures</li>
+                        </ul>
+
+                        <h4 class="subheading">S - Severity/Timing</h4>
+                        <p>Quantify symptom intensity using validated assessment tools:</p>
+                        <ul>
+                            <li><strong>Numeric Pain Rating Scale (NPRS):</strong> 0-10 scale with current, best, worst, and average ratings</li>
+                            <li><strong>Functional impact:</strong> Activity interference, work productivity, sleep quality</li>
+                            <li><strong>Minimum clinically important difference:</strong> 2 points or 30% change on NPRS</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h2 class="section-title">Red Flags and Yellow Flags</h2>
+
+                    <div class="subsection">
+                        <h3 class="subsection-title">Red Flags: Serious Pathology Indicators</h3>
+                        <p>Red flags represent clinical indicators of serious underlying pathology requiring immediate medical attention or referral. Physical therapists must maintain high vigilance for these warning signs.</p>
+
+                        <div class="alert alert-danger">
+                            <strong>Critical Red Flags Requiring Immediate Referral:</strong>
+                            <ul style="margin: 0.5rem 0;">
+                                <li>Cauda equina syndrome (saddle anesthesia, bladder/bowel dysfunction)</li>
+                                <li>Progressive neurological deficits</li>
+                                <li>Signs of infection (fever, night sweats)</li>
+                                <li>History of cancer with new onset pain</li>
+                                <li>Cardiovascular symptoms (chest pain, shortness of breath)</li>
+                            </ul>
+                        </div>
+
+                        <h4 class="subheading">Spinal Red Flags by Region</h4>
+
+                        <div class="table-container">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Region</th>
+                                        <th>Red Flag Indicators</th>
+                                        <th>Associated Conditions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>Cervical Spine</strong></td>
+                                        <td>Drop attacks, diplopia, dysarthria, dizziness with neck movement</td>
+                                        <td>Vertebral artery insufficiency, myelopathy, fracture</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Thoracic Spine</strong></td>
+                                        <td>Chest pain, shortness of breath, hemoptysis</td>
+                                        <td>Cardiac conditions, pulmonary embolism, malignancy</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Lumbar Spine</strong></td>
+                                        <td>Saddle anesthesia, urinary retention, bilateral leg weakness</td>
+                                        <td>Cauda equina syndrome, spinal infection, AAA</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="subsection">
+                        <h3 class="subsection-title">Yellow Flags: Psychosocial Risk Factors</h3>
+                        <p>Yellow flags represent psychosocial factors that increase the risk of chronic pain, disability, and poor treatment outcomes. Early identification allows for appropriate intervention strategies.</p>
+
+                        <h4 class="subheading">Fear-Avoidance Beliefs</h4>
+                        <p>Fear-avoidance beliefs develop when patients associate movement with pain and potential harm, leading to protective behaviors that worsen outcomes:</p>
+                        <ul>
+                            <li>Belief that pain indicates tissue damage</li>
+                            <li>Fear that movement will cause harm</li>
+                            <li>Avoidance of specific activities or movements</li>
+                            <li>Excessive guarding behaviors</li>
+                        </ul>
+
+                        <h4 class="subheading">Catastrophizing</h4>
+                        <p>Catastrophizing involves excessive negative thinking characterized by:</p>
+                        <ul>
+                            <li><em>Rumination:</em> Inability to stop thinking about pain</li>
+                            <li><em>Magnification:</em> Exaggerating the threat value of pain</li>
+                            <li><em>Helplessness:</em> Perception of inability to cope with pain</li>
+                        </ul>
+
+                        <div class="alert alert-warning">
+                            <strong>Screening Questions for Yellow Flags:</strong>
+                            <ul style="margin: 0.5rem 0;">
+                                <li>"Do you think your pain indicates serious damage?"</li>
+                                <li>"Are you afraid movement might make it worse?"</li>
+                                <li>"How confident are you about returning to normal activities?"</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h2 class="section-title">Systems Review Approach</h2>
+
+                    <div class="subsection">
+                        <h3 class="subsection-title">Systematic Screening by Body System</h3>
+                        <p>A comprehensive systems review ensures screening for conditions that may impact physical therapy management or require medical referral.</p>
+
+                        <h4 class="subheading">Cardiovascular System</h4>
+                        <p><strong>Key screening questions:</strong></p>
+                        <ul>
+                            <li>Chest pain, pressure, or discomfort with activity</li>
+                            <li>Shortness of breath at rest or with exertion</li>
+                            <li>Palpitations or irregular heartbeat</li>
+                            <li>Leg pain with walking (claudication)</li>
+                            <li>Lower extremity edema</li>
+                        </ul>
+
+                        <h4 class="subheading">Neurological System</h4>
+                        <p><strong>Essential screening areas:</strong></p>
+                        <ul>
+                            <li>Headaches, dizziness, or balance problems</li>
+                            <li>Changes in memory, concentration, or thinking</li>
+                            <li>Numbness, tingling, or weakness</li>
+                            <li>Seizures or loss of consciousness</li>
+                            <li>Difficulty with speech or swallowing</li>
+                        </ul>
+
+                        <h4 class="subheading">Integumentary System</h4>
+                        <p><strong>Visual inspection for:</strong></p>
+                        <ul>
+                            <li>Open wounds, rashes, or skin lesions</li>
+                            <li>Unusual bruising or bleeding patterns</li>
+                            <li>Signs of infection (redness, warmth, drainage)</li>
+                            <li>Changes in skin color or temperature</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="key-takeaways">
+                    <h3>🎯 Module 1 Key Takeaways</h3>
+                    <ul>
+                        <li><strong>Anatomy Knowledge:</strong> Understanding key structures (rotator cuff, knee ligaments, spinal anatomy) is essential for effective assessment and treatment planning</li>
+                        <li><strong>Tissue Healing Timeline:</strong> Different tissues have specific healing phases with distinct treatment implications - inflammatory (0-6 days), proliferative (3-21 days), and remodeling (3 weeks-12+ months)</li>
+                        <li><strong>OPQRST Framework:</strong> Systematic pain assessment using Onset, Provocative/Palliative factors, Quality, Region/Radiation, and Severity/Timing guides clinical decision-making</li>
+                        <li><strong>Red Flag Recognition:</strong> Early identification of serious pathology indicators (cauda equina, progressive neurological deficits, infection signs) ensures patient safety</li>
+                        <li><strong>Yellow Flag Screening:</strong> Psychosocial risk factors (fear-avoidance, catastrophizing) significantly impact outcomes and require early intervention</li>
+                        <li><strong>Systems Review:</strong> Comprehensive screening of cardiovascular, neurological, and integumentary systems prevents missed diagnoses and ensures appropriate care</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Module 2: Clinical Examination -->
+            <div class="module" id="module2">
+                <div class="module-header">
+                    <h1 class="module-title">Module 2</h1>
+                    <h2 class="module-subtitle">Clinical Examination Techniques</h2>
+                    <span class="reading-time">⏱️ Estimated Reading Time: 50 minutes</span>
+                </div>
+
+                <div class="section">
+                    <h2 class="section-title">Observation and Posture Assessment</h2>
+                    
+                    <div class="subsection">
+                        <h3 class="subsection-title">Systematic Postural Analysis</h3>
+                        <p>Postural assessment provides insight into muscle imbalances, structural abnormalities, and potential sources of pain or dysfunction. A systematic approach using plumb line analysis ensures comprehensive evaluation.</p>
+
+                        <h4 class="subheading">Plumb Line Assessment</h4>
+                        <p><strong>Lateral View (Ideal Alignment):</strong></p>
+                        <ul>
+                            <li>Lobe of ear</li>
+                            <li>Acromion process</li>
+                            <li>Greater trochanter</li>
+                            <li>Anterior to midline of knee</li>
+                            <li>Slightly anterior to lateral malleolus</li>
+                        </ul>
+
+                        <p><strong>Anterior/Posterior View Assessment:</strong></p>
+                        <ul>
+                            <li>Head centered and level</li>
+                            <li>Shoulders level</li>
+                            <li>ASIS/PSIS level</li>
+                            <li>Patellae facing forward and level</li>
+                            <li>Feet in neutral position</li>
+                        </ul>
+                    </div>
+
+                    <div class="subsection">
+                        <h3 class="subsection-title">Common Postural Syndromes</h3>
+
+                        <h4 class="subheading">Upper Crossed Syndrome</h4>
+                        <p>Characterized by specific patterns of muscle imbalances affecting the cervical spine and shoulder girdle:</p>
+                        <ul>
+                            <li><strong>Tight muscles:</strong> Upper trapezius, levator scapulae, pectoralis major/minor</li>
+                            <li><strong>Weak muscles:</strong> Deep neck flexors, lower trapezius, serratus anterior</li>
+                            <li><strong>Presentation:</strong> Forward head posture, increased cervical lordosis, thoracic kyphosis, protracted shoulders</li>
+                        </ul>
+
+                        <h4 class="subheading">Lower Crossed Syndrome</h4>
+                        <p>Involves predictable patterns affecting the lumbo-pelvic region:</p>
+                        <ul>
+                            <li><strong>Tight muscles:</strong> Hip flexors, lumbar erector spinae</li>
+                            <li><strong>Weak muscles:</strong> Abdominals, gluteus maximus</li>
+                            <li><strong>Presentation:</strong> Anterior pelvic tilt, increased lumbar lordosis, prominent abdomen</li>
+                        </ul>
+
+                        <div class="alert alert-info">
+                            <strong>Clinical Application:</strong> These syndromes provide frameworks for understanding common patterns, but individual assessment remains essential as patients may present with variations of these patterns.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h2 class="section-title">Range of Motion Assessment</h2>
+
+                    <div class="subsection">
+                        <h3 class="subsection-title">Goniometry Basics</h3>
+                        
+                        <div class="svg-container">
+                            <div class="svg-title">Goniometric Measurement Principles</div>
+                            <svg width="400" height="300" viewBox="0 0 400 300">
+                                <!-- Goniometer -->
+                                <g transform="translate(200, 150)">
+                                    <!-- Protractor -->
+                                    <path d="M -80 0 A 80 80 0 0 1 80 0" fill="none" stroke="#1a365d" stroke-width="3"/>
+                                    <!-- Stationary arm -->
+                                    <line x1="0" y1="0" x2="80" y2="0" stroke="#3182ce" stroke-width="4"/>
+                                    <!-- Moveable arm -->
+                                    <line x1="0" y1="0" x2="56.57" y2="-56.57" stroke="#e53e3e" stroke-width="4"/>
+                                    <!-- Axis -->
+                                    <circle cx="0" cy="0" r="6" fill="#1a365d"/>
+                                    
+                                    <!-- Angle markings -->
+                                    <text x="40" y="5" font-family="Inter" font-size="10" fill="#3182ce" font-weight="600">Stationary Arm</text>
+                                    <text x="20" y="-40" font-family="Inter" font-size="10" fill="#e53e3e" font-weight="600">Moveable Arm</text>
+                                    <text x="-5" y="-10" font-family="Inter" font-size="10" fill="#1a365d" font-weight="600">Axis</text>
+                                    
+                                    <!-- Angle measurement -->
+                                    <path d="M 20 0 A 20 20 0 0 0 14.14 -14.14" fill="none" stroke="#d69e2e" stroke-width="2"/>
+                                    <text x="25" y="-8" font-family="Inter" font-size="12" fill="#d69e2e" font-weight="600">45°</text>
+                                </g>
+                                
+                                <!-- Instructions -->
+                                <text x="50" y="250" font-family="Inter" font-size="11" font-weight="600" fill="#1a365d">Goniometer Setup:</text>
+                                <text x="50" y="265" font-family="Inter" font-size="10" fill="#4a5568">1. Axis: Center over joint axis</text>
+                                <text x="50" y="277" font-family="Inter" font-size="10" fill="#4a5568">2. Stationary arm: Align with proximal segment</text>
+                                <text x="50" y="289" font-family="Inter" font-size="10" fill="#4a5568">3. Moveable arm: Align with distal segment</text>
+                            </svg>
+                        </div>
+
+                        <p>Goniometry provides objective measurement of joint range of motion using standardized techniques and anatomical landmarks. Proper goniometer positioning is critical for reliable measurements.</p>
+
+                        <h4 class="subheading">Three-Point Alignment System</h4>
+                        <ul>
+                            <li><strong>Axis:</strong> Center the fulcrum over the joint axis of rotation</li>
+                            <li><strong>Stationary arm:</strong> Align with the proximal body segment</li>
+                            <li><strong>Moveable arm:</strong> Align with the distal body segment</li>
+                        </ul>
+
+                        <div class="alert alert-warning">
+                            <strong>Measurement Considerations:</strong> Patient positioning, stabilization, and consistent landmarks are essential for reliable measurements. Document patient position and any deviations from standard procedures.
+                        </div>
+                    </div>
+
+                    <div class="subsection">
+                        <h3 class="subsection-title">Normal Range of Motion Values</h3>
+
+                        <div class="table-container">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Joint</th>
+                                        <th>Movement</th>
+                                        <th>Normal Range (degrees)</th>
+                                        <th>Functional Requirement</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td rowspan="4"><strong>Shoulder</strong></td>
+                                        <td>Flexion</td>
+                                        <td>180</td>
+                                        <td>Overhead reaching (140-160°)</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Extension</td>
+                                        <td>60</td>
+                                        <td>Behind back activities (45°)</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Abduction</td>
+                                        <td>180</td>
+                                        <td>Hair combing (120°)</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Internal Rotation</td>
+                                        <td>70</td>
+                                        <td>Toileting, dressing (50°)</td>
+                                    </tr>
+                                    <tr>
+                                        <td rowspan="2"><strong>Knee</strong></td>
+                                        <td>Flexion</td>
+                                        <td>135</td>
+                                        <td>Stair climbing (90°), squatting (120°)</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Extension</td>
+                                        <td>0</td>
+                                        <td>Normal walking (full extension)</td>
+                                    </tr>
+                                    <tr>
+                                        <td rowspan="2"><strong>Ankle</strong></td>
+                                        <td>Dorsiflexion</td>
+                                        <td>20</td>
+                                        <td>Stair descent (10°), squatting (15°)</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Plantarflexion</td>
+                                        <td>50</td>
+                                        <td>Normal walking (30°)</td>
+                                    </tr>
+                                    <tr>
+                                        <td rowspan="2"><strong>Hip</strong></td>
+                                        <td>Flexion</td>
+                                        <td>120</td>
+                                        <td>Sitting (90°), stair climbing (100°)</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Extension</td>
+                                        <td>30</td>
+                                        <td>Normal walking (10°)</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="alert alert-info">
+                            <strong>Functional vs. Full Range:</strong> While full range of motion is ideal, many functional activities require less than full range. Understanding functional requirements helps establish realistic treatment goals.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h2 class="section-title">Manual Muscle Testing</h2>
+
+                    <div class="subsection">
+                        <h3 class="subsection-title">Muscle Grading System (0-5 Scale)</h3>
+                        
+                        <div class="svg-container">
+                            <div class="svg-title">Manual Muscle Testing Positions</div>
+                            <svg width="500" height="250" viewBox="0 0 500 250">
+                                <!-- Grade 5 - Against Gravity + Resistance -->
+                                <g transform="translate(50, 50)">
+                                    <rect x="0" y="0" width="80" height="40" fill="#38a169" stroke="#2f855a" stroke-width="2" rx="5"/>
+                                    <text x="40" y="25" font-family="Inter" font-size="12" font-weight="600" fill="white" text-anchor="middle">Grade 5</text>
+                                    <text x="40" y="55" font-family="Inter" font-size="10" fill="#2f855a" text-anchor="middle">Normal</text>
+                                    <text x="40" y="70" font-family="Inter" font-size="9" fill="#4a5568" text-anchor="middle">Full ROM against</text>
+                                    <text x="40" y="82" font-family="Inter" font-size="9" fill="#4a5568" text-anchor="middle">gravity + resistance</text>
+                                </g>
+                                
+                                <!-- Grade 4 - Against Gravity + Some Resistance -->
+                                <g transform="translate(150, 50)">
+                                    <rect x="0" y="0" width="80" height="40" fill="#68d391" stroke="#38a169" stroke-width="2" rx="5"/>
+                                    <text x="40" y="25" font-family="Inter" font-size="12" font-weight="600" fill="white" text-anchor="middle">Grade 4</text>
+                                    <text x="40" y="55" font-family="Inter" font-size="10" fill="#38a169" text-anchor="middle">Good</text>
+                                    <text x="40" y="70" font-family="Inter" font-size="9" fill="#4a5568" text-anchor="middle">Full ROM against</text>
+                                    <text x="40" y="82" font-family="Inter" font-size="9" fill="#4a5568" text-anchor="middle">gravity + some resistance</text>
+                                </g>
+                                
+                                <!-- Grade 3 - Against Gravity Only -->
+                                <g transform="translate(250, 50)">
+                                    <rect x="0" y="0" width="80" height="40" fill="#f6ad55" stroke="#d69e2e" stroke-width="2" rx="5"/>
+                                    <text x="40" y="25" font-family="Inter" font-size="12" font-weight="600" fill="white" text-anchor="middle">Grade 3</text>
+                                    <text x="40" y="55" font-family="Inter" font-size="10" fill="#d69e2e" text-anchor="middle">Fair</text>
+                                    <text x="40" y="70" font-family="Inter" font-size="9" fill="#4a5568" text-anchor="middle">Full ROM against</text>
+                                    <text x="40" y="82" font-family="Inter" font-size="9" fill="#4a5568" text-anchor="middle">gravity only</text>
+                                </g>
+                                
+                                <!-- Grade 2 - Gravity Eliminated -->
+                                <g transform="translate(350, 50)">
+                                    <rect x="0" y="0" width="80" height="40" fill="#fc8181" stroke="#e53e3e" stroke-width="2" rx="5"/>
+                                    <text x="40" y="25" font-family="Inter" font-size="12" font-weight="600" fill="white" text-anchor="middle">Grade 2</text>
+                                    <text x="40" y="55" font-family="Inter" font-size="10" fill="#e53e3e" text-anchor="middle">Poor</text>
+                                    <text x="40" y="70" font-family="Inter" font-size="9" fill="#4a5568" text-anchor="middle">Full ROM with</text>
+                                    <text x="40" y="82" font-family="Inter" font-size="9" fill="#4a5568" text-anchor="middle">gravity eliminated</text>
+                                </g>
+                                
+                                <!-- Grade 1 & 0 -->
+                                <g transform="translate(200, 140)">
+                                    <rect x="0" y="0" width="80" height="40" fill="#a0aec0" stroke="#718096" stroke-width="2" rx="5"/>
+                                    <text x="40" y="20" font-family="Inter" font-size="12" font-weight="600" fill="white" text-anchor="middle">Grade 1</text>
+                                    <text x="40" y="32" font-family="Inter" font-size="10" fill="#718096" text-anchor="middle">Trace</text>
+                                    <text x="40" y="55" font-family="Inter" font-size="9" fill="#4a5568" text-anchor="middle">Muscle contraction</text>
+                                    <text x="40" y="67" font-family="Inter" font-size="9" fill="#4a5568" text-anchor="middle">palpable, no motion</text>
+                                    
+                                    <rect x="-100" y="0" width="80" height="40" fill="#718096" stroke="#4a5568" stroke-width="2" rx="5"/>
+                                    <text x="-60" y="20" font-family="Inter" font-size="12" font-weight="600" fill="white" text-anchor="middle">Grade 0</text>
+                                    <text x="-60" y="32" font-family="Inter" font-size="10" fill="#4a5568" text-anchor="middle">Zero</text>
+                                    <text x="-60" y="55" font-family="Inter" font-size="9" fill="#4a5568" text-anchor="middle">No muscle</text>
+                                    <text x="-60" y="67" font-family="Inter" font-size="9" fill="#4a5568" text-anchor="middle">contraction</text>
+                                </g>
+                            </svg>
+                        </div>
+
+                        <p>Manual muscle testing provides a standardized method for assessing muscle strength using a 0-5 grading scale. Understanding the specific criteria for each grade ensures consistent and reliable testing.</p>
+
+                        <div class="table-container">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Grade</th>
+                                        <th>Description</th>
+                                        <th>Test Criteria</th>
+                                        <th>Clinical Significance</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>5</strong></td>
+                                        <td>Normal</td>
+                                        <td>Full ROM against gravity with maximal resistance</td>
+                                        <td>Normal strength for age and gender</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>4</strong></td>
+                                        <td>Good</td>
+                                        <td>Full ROM against gravity with moderate resistance</td>
+                                        <td>Functional strength for most activities</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>3</strong></td>
+                                        <td>Fair</td>
+                                        <td>Full ROM against gravity only (no resistance)</td>
+                                        <td>Minimal functional strength</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>2</strong></td>
+                                        <td>Poor</td>
+                                        <td>Full ROM with gravity eliminated</td>
+                                        <td>Non-functional strength</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>1</strong></td>
+                                        <td>Trace</td>
+                                        <td>Palpable muscle contraction, no joint movement</td>
+                                        <td>Minimal innervation present</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>0</strong></td>
+                                        <td>Zero</td>
+                                        <td>No palpable muscle contraction</td>
+                                        <td>Complete paralysis</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="alert alert-warning">
+                            <strong>Testing Limitations:</strong> Manual muscle testing has limitations including examiner variability, difficulty distinguishing between grades 4 and 5, and inability to detect subtle strength deficits. Consider instrumented testing for precise measurements.
+                        </div>
+                    </div>
+
+                    <div class="subsection">
+                        <h3 class="subsection-title">Key Muscle Testing Techniques</h3>
+
+                        <h4 class="subheading">Shoulder Abduction (Deltoid/Supraspinatus)</h4>
+                        <ul>
+                            <li><strong>Position:</strong> Patient seated or standing, arm at side</li>
+                            <li><strong>Stabilization:</strong> Stabilize opposite shoulder and trunk</li>
+                            <li><strong>Test:</strong> Resist abduction in scapular plane (30° forward of frontal plane)</li>
+                            <li><strong>Palpation:</strong> Middle deltoid and supraspinatus (if accessible)</li>
+                        </ul>
+
+                        <h4 class="subheading">Knee Extension (Quadriceps)</h4>
+                        <ul>
+                            <li><strong>Position:</strong> Patient seated with knee flexed to 90°</li>
+                            <li><strong>Stabilization:</strong> Stabilize thigh and pelvis</li>
+                            <li><strong>Test:</strong> Resist knee extension, apply force at distal tibia</li>
+                            <li><strong>Palpation:</strong> Quadriceps muscle group</li>
+                        </ul>
+
+                        <h4 class="subheading">Hip Abduction (Gluteus Medius)</h4>
+                        <ul>
+                            <li><strong>Position:</strong> Patient side-lying with test leg uppermost</li>
+                            <li><strong>Stabilization:</strong> Stabilize pelvis</li>
+                            <li><strong>Test:</strong> Resist hip abduction with slight extension</li>
+                            <li><strong>Palpation:</strong> Gluteus medius proximal to greater trochanter</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h2 class="section-title">Palpation Techniques</h2>
+
+                    <div class="subsection">
+                        <h3 class="subsection-title">Systematic Palpation Approach</h3>
+                        <p>Palpation provides valuable information about tissue temperature, texture, moisture, mobility, and tenderness. A systematic approach ensures comprehensive assessment while maintaining patient comfort.</p>
+
+                        <h4 class="subheading">Palpation Principles</h4>
+                        <ul>
+                            <li><strong>Light touch first:</strong> Begin with gentle pressure to assess superficial structures</li>
+                            <li><strong>Progressive depth:</strong> Gradually increase pressure to reach deeper structures</li>
+                            <li><strong>Bilateral comparison:</strong> Compare findings to the uninvolved side</li>
+                            <li><strong>Patient feedback:</strong> Monitor patient responses and modify pressure accordingly</li>
+                        </ul>
+
+                        <h4 class="subheading">Tissue Characteristics to Assess</h4>
+
+                        <div class="table-container">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Characteristic</th>
+                                        <th>Normal Findings</th>
+                                        <th>Abnormal Findings</th>
+                                        <th>Possible Implications</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>Temperature</strong></td>
+                                        <td>Warm, consistent bilaterally</td>
+                                        <td>Cool, hot, asymmetrical</td>
+                                        <td>Vascular compromise, inflammation</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Texture</strong></td>
+                                        <td>Smooth, consistent</td>
+                                        <td>Rough, nodular, thickened</td>
+                                        <td>Scar tissue, fibrosis, pathology</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Mobility</strong></td>
+                                        <td>Mobile, gliding freely</td>
+                                        <td>Restricted, adherent</td>
+                                        <td>Adhesions, scar tissue</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Tenderness</strong></td>
+                                        <td>Non-tender to moderate pressure</td>
+                                        <td>Painful, hypersensitive</td>
+                                        <td>Inflammation, irritation</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Swelling</strong></td>
+                                        <td>No palpable swelling</td>
+                                        <td>Boggy, firm, fluctuant</td>
+                                        <td>Edema, effusion, hematoma</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="subsection">
+                        <h3 class="subsection-title">Region-Specific Palpation Landmarks</h3>
+
+                        <h4 class="subheading">Shoulder Region</h4>
+                        <ul>
+                            <li><strong>Bony landmarks:</strong> Acromion, coracoid process, greater tubercle, bicipital groove</li>
+                            <li><strong>Soft tissue:</strong> Rotator cuff tendons, deltoid muscle, biceps tendon</li>
+                            <li><strong>Clinical pearls:</strong> Palpate supraspinatus insertion just distal to acromion, biceps tendon in groove during arm rotation</li>
+                        </ul>
+
+                        <h4 class="subheading">Knee Region</h4>
+                        <ul>
+                            <li><strong>Bony landmarks:</strong> Patella, tibial tubercle, joint lines, fibular head</li>
+                            <li><strong>Soft tissue:</strong> Patellar tendon, collateral ligaments, menisci, bursa</li>
+                            <li><strong>Clinical pearls:</strong> Joint line tenderness may indicate meniscal pathology, patellar tendon thickness assessment</li>
+                        </ul>
+
+                        <h4 class="subheading">Lumbar Spine</h4>
+                        <ul>
+                            <li><strong>Bony landmarks:</strong> Spinous processes, PSIS, iliac crests, sacrum</li>
+                            <li><strong>Soft tissue:</strong> Paraspinal muscles, sacroiliac joints, gluteal muscles</li>
+                            <li><strong>Clinical pearls:</strong> L4-L5 at level of iliac crests, SI joint location medial to PSIS</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h2 class="section-title">Special Tests Overview</h2>
+
+                    <div class="subsection">
+                        <h3 class="subsection-title">Evidence-Based Test Selection</h3>
+                        <p>Modern physical therapy practice emphasizes evidence-based special test selection, understanding test performance characteristics, and using cluster testing approaches to improve diagnostic accuracy.</p>
+
+                        <div class="svg-container">
+                            <div class="svg-title">Joint Mobilization Grades Visual Guide</div>
+                            <svg width="500" height="200" viewBox="0 0 500 200">
+                                <!-- Range of motion bar -->
+                                <rect x="50" y="80" width="400" height="20" fill="#e2e8f0" stroke="#1a365d" stroke-width="2" rx="10"/>
+                                
+                                <!-- Grade markers -->
+                                <rect x="50" y="70" width="80" height="40" fill="#fed7d7" stroke="#e53e3e" stroke-width="2" rx="5"/>
+                                <text x="90" y="95" font-family="Inter" font-size="10" font-weight="600" fill="#c53030" text-anchor="middle">Grade I</text>
+                                <text x="90" y="125" font-family="Inter" font-size="8" fill="#4a5568" text-anchor="middle">Small amplitude</text>
+                                <text x="90" y="135" font-family="Inter" font-size="8" fill="#4a5568" text-anchor="middle">early range</text>
+                                
+                                <rect x="130" y="70" width="120" height="40" fill="#fef5e7" stroke="#d69e2e" stroke-width="2" rx="5"/>
+                                <text x="190" y="95" font-family="Inter" font-size="10" font-weight="600" fill="#c05621" text-anchor="middle">Grade II</text>
+                                <text x="190" y="125" font-family="Inter" font-size="8" fill="#4a5568" text-anchor="middle">Large amplitude</text>
+                                <text x="190" y="135" font-family="Inter" font-size="8" fill="#4a5568" text-anchor="middle">early range</text>
+                                
+                                <rect x="250" y="70" width="120" height="40" fill="#ebf8ff" stroke="#3182ce" stroke-width="2" rx="5"/>
+                                <text x="310" y="95" font-family="Inter" font-size="10" font-weight="600" fill="#2c5282" text-anchor="middle">Grade III</text>
+                                <text x="310" y="125" font-family="Inter" font-size="8" fill="#4a5568" text-anchor="middle">Large amplitude</text>
+                                <text x="310" y="135" font-family="Inter" font-size="8" fill="#4a5568" text-anchor="middle">into resistance</text>
+                                
+                                <rect x="370" y="70" width="80" height="40" fill="#f0fff4" stroke="#38a169" stroke-width="2" rx="5"/>
+                                <text x="410" y="95" font-family="Inter" font-size="10" font-weight="600" fill="#2f855a" text-anchor="middle">Grade IV</text>
+                                <text x="410" y="125" font-family="Inter" font-size="8" fill="#4a5568" text-anchor="middle">Small amplitude</text>
+                                <text x="410" y="135" font-family="Inter" font-size="8" fill="#4a5568" text-anchor="middle">end range</text>
+                                
+                                <!-- Range labels -->
+                                <text x="90" y="50" font-family="Inter" font-size="10" fill="#4a5568" text-anchor="middle">Beginning of Range</text>
+                                <text x="310" y="50" font-family="Inter" font-size="10" fill="#4a5568" text-anchor="middle">Point of Resistance</text>
+                                <text x="410" y="50" font-family="Inter" font-size="10" fill="#4a5568" text-anchor="middle">End of Range</text>
+                                
+                                <!-- Arrows -->
+                                <path d="M 90 60 L 90 70" stroke="#1a365d" stroke-width="1" marker-end="url(#arrowhead)"/>
+                                <path d="M 310 60 L 310 70" stroke="#1a365d" stroke-width="1" marker-end="url(#arrowhead)"/>
+                                <path d="M 410 60 L 410 70" stroke="#1a365d" stroke-width="1" marker-end="url(#arrowhead)"/>
+                                
+                                <defs>
+                                    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+                                        <polygon points="0 0, 10 3.5, 0 7" fill="#1a365d"/>
+                                    </marker>
+                                </defs>
+                                
+                                <!-- Purpose indicators -->
+                                <text x="250" y="170" font-family="Inter" font-size="11" font-weight="600" fill="#1a365d" text-anchor="middle">Clinical Applications:</text>
+                                <text x="130" y="185" font-family="Inter" font-size="10" fill="#4a5568" text-anchor="middle">Grades I-II: Pain relief</text>
+                                <text x="370" y="185" font-family="Inter" font-size="10" fill="#4a5568" text-anchor="middle">Grades III-IV: Increase mobility</text>
+                            </svg>
+                        </div>
+
+                        <h4 class="subheading">Understanding Likelihood Ratios</h4>
+                        <p>Likelihood ratios help interpret test results and update the probability of a condition being present:</p>
+                        <ul>
+                            <li><strong>Positive LR >10:</strong> Large increase in probability</li>
+                            <li><strong>Positive LR 5-10:</strong> Moderate increase in probability</li>
+                            <li><strong>Positive LR 2-5:</strong> Small increase in probability</li>
+                            <li><strong>Negative LR <0.1:</strong> Large decrease in probability</li>
+                        </ul>
+                    </div>
+
+                    <div class="subsection">
+                        <h3 class="subsection-title">Key Special Tests by Joint</h3>
+
+                        <h4 class="subheading">Shoulder Tests</h4>
+                        
+                        <div class="table-container">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Test</th>
+                                        <th>Purpose</th>
+                                        <th>Sensitivity</th>
+                                        <th>Specificity</th>
+                                        <th>Clinical Utility</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>Neer Impingement</strong></td>
+                                        <td>Subacromial impingement</td>
+                                        <td>79%</td>
+                                        <td>53%</td>
+                                        <td>Good screening test</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Hawkins-Kennedy</strong></td>
+                                        <td>Subacromial impingement</td>
+                                        <td>79%</td>
+                                        <td>59%</td>
+                                        <td>Combine with Neer for cluster</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Empty Can</strong></td>
+                                        <td>Supraspinatus pathology</td>
+                                        <td>86%</td>
+                                        <td>50%</td>
+                                        <td>Better for detecting tears</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Apprehension</strong></td>
+                                        <td>Anterior instability</td>
+                                        <td>68-92%</td>
+                                        <td>89-100%</td>
+                                        <td>Highly specific when positive</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <h4 class="subheading">Knee Tests</h4>
+
+                        <div class="table-container">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Test</th>
+                                        <th>Purpose</th>
+                                        <th>Sensitivity</th>
+                                        <th>Specificity</th>
+                                        <th>Clinical Utility</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>Lachman</strong></td>
+                                        <td>ACL integrity</td>
+                                        <td>85%</td>
+                                        <td>94%</td>
+                                        <td>Gold standard for ACL testing</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Anterior Drawer</strong></td>
+                                        <td>ACL integrity</td>
+                                        <td>48%</td>
+                                        <td>93%</td>
+                                        <td>Less sensitive than Lachman</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>McMurray</strong></td>
+                                        <td>Meniscal pathology</td>
+                                        <td>55%</td>
+                                        <td>77%</td>
+                                        <td>Moderate accuracy, use with cluster</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Thessaly</strong></td>
+                                        <td>Meniscal pathology</td>
+                                        <td>90%</td>
+                                        <td>97%</td>
+                                        <td>More accurate than McMurray</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <h4 class="subheading">Hip and Spine Tests</h4>
+
+                        <div class="table-container">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Test</th>
+                                        <th>Purpose</th>
+                                        <th>Key Finding</th>
+                                        <th>Clinical Application</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>FABER (Patrick's)</strong></td>
+                                        <td>Hip/SI joint pathology</td>
+                                        <td>Pain location differentiates hip vs SI</td>
+                                        <td>Groin pain = hip, posterior = SI</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>FADIR</strong></td>
+                                        <td>Hip impingement</td>
+                                        <td>Anterior groin pain</td>
+                                        <td>High sensitivity for screening</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Straight Leg Raise</strong></td>
+                                        <td>Lumbar radiculopathy</td>
+                                        <td>Radicular pain 30-70°</td>
+                                        <td>91% sensitive, 26% specific</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Slump Test</strong></td>
+                                        <td>Neurodynamic tension</td>
+                                        <td>Symptom reproduction/relief with neck</td>
+                                        <td>More sensitive for central disc herniation</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="key-takeaways">
+                    <h3>🎯 Module 2 Key Takeaways</h3>
+                    <ul>
+                        <li><strong>Systematic Observation:</strong> Postural assessment using plumb line analysis identifies muscle imbalances and potential dysfunction patterns (Upper/Lower Crossed Syndromes)</li>
+                        <li><strong>Goniometry Fundamentals:</strong> Three-point alignment system (axis, stationary arm, moveable arm) ensures reliable range of motion measurements with standardized techniques</li>
+                        <li><strong>Manual Muscle Testing:</strong> 0-5 grading scale provides standardized strength assessment, with Grade 3 representing minimal functional strength threshold</li>
+                        <li><strong>Palpation Skills:</strong> Systematic assessment of temperature, texture, mobility, tenderness, and swelling provides valuable diagnostic information</li>
+                        <li><strong>Evidence-Based Testing:</strong> Understanding sensitivity, specificity, and likelihood ratios improves test interpretation and clinical decision-making</li>
+                        <li><strong>Cluster Testing:</strong> Combining multiple tests (e.g., Neer + Hawkins-Kennedy for impingement) increases diagnostic accuracy beyond individual test performance</li>
+                        <li><strong>Test Selection:</strong> Match test selection to clinical hypothesis and understand limitations of individual special tests for optimal diagnostic utility</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Module 3: Clinical Decision Making -->
+            <div class="module" id="module3">
+                <div class="module-header">
+                    <h1 class="module-title">Module 3</h1>
+                    <h2 class="module-subtitle">Clinical Decision Making</h2>
+                    <span class="reading-time">⏱️ Estimated Reading Time: 45 minutes</span>
+                </div>
+
+                <div class="section">
+                    <h2 class="section-title">Integrating Examination Findings</h2>
+
+                    <div class="subsection">
+                        <h3 class="subsection-title">Clinical Reasoning Framework</h3>
+                        <p>Clinical reasoning involves the cognitive process of collecting, analyzing, and synthesizing examination findings to develop appropriate treatment strategies. Effective clinical reasoning combines pattern recognition with hypothesis testing to optimize patient outcomes.</p>
+
+                        <div class="svg-container">
+                            <div class="svg-title">Clinical Reasoning Process Flow</div>
+                            <svg width="500" height="400" viewBox="0 0 500 400">
+                                <!-- Patient History -->
+                                <rect x="50" y="30" width="120" height="50" fill="#e6fffa" stroke="#38b2ac" stroke-width="2" rx="8"/>
+                                <text x="110" y="50" font-family="Inter" font-size="11" font-weight="600" fill="#234e52" text-anchor="middle">Patient History</text>
+                                <text x="110" y="65" font-family="Inter" font-size="9" fill="#234e52" text-anchor="middle">(OPQRST, Red Flags)</text>
+                                
+                                <!-- Initial Hypothesis -->
+                                <rect x="220" y="30" width="120" height="50" fill="#fef5e7" stroke="#d69e2e" stroke-width="2" rx="8"/>
+                                <text x="280" y="50" font-family="Inter" font-size="11" font-weight="600" fill="#744210" text-anchor="middle">Initial Hypothesis</text>
+                                <text x="280" y="65" font-family="Inter" font-size="9" fill="#744210" text-anchor="middle">Formation</text>
+                                
+                                <!-- Physical Examination -->
+                                <rect x="50" y="120" width="120" height="50" fill="#ebf8ff" stroke="#3182ce" stroke-width="2" rx="8"/>
+                                <text x="110" y="140" font-family="Inter" font-size="11" font-weight="600" fill="#2c5282" text-anchor="middle">Physical</text>
+                                <text x="110" y="155" font-family="Inter" font-size="11" font-weight="600" fill="#2c5282" text-anchor="middle">Examination</text>
+                                
+                                <!-- Test Selection -->
+                                <rect x="220" y="120" width="120" height="50" fill="#f0fff4" stroke="#38a169" stroke-width="2" rx="8"/>
+                                <text x="280" y="140" font-family="Inter" font-size="11" font-weight="600" fill="#2f855a" text-anchor="middle">Targeted Testing</text>
+                                <text x="280" y="155" font-family="Inter" font-size="9" fill="#2f855a" text-anchor="middle">(Special Tests, Clusters)</text>
+                                
+                                <!-- Synthesis -->
+                                <rect x="135" y="210" width="120" height="50" fill="#fed7d7" stroke="#e53e3e" stroke-width="2" rx="8"/>
+                                <text x="195" y="230" font-family="Inter" font-size="11" font-weight="600" fill="#c53030" text-anchor="middle">Synthesis &</text>
+                                <text x="195" y="245" font-family="Inter" font-size="11" font-weight="600" fill="#c53030" text-anchor="middle">Integration</text>
+                                
+                                <!-- Clinical Diagnosis -->
+                                <rect x="350" y="210" width="120" height="50" fill="#e6fffa" stroke="#38b2ac" stroke-width="2" rx="8"/>
+                                <text x="410" y="230" font-family="Inter" font-size="11" font-weight="600" fill="#234e52" text-anchor="middle">Clinical</text>
+                                <text x="410" y="245" font-family="Inter" font-size="11" font-weight="600" fill="#234e52" text-anchor="middle">Diagnosis</text>
+                                
+                                <!-- Treatment Planning -->
+                                <rect x="135" y="300" width="120" height="50" fill="#faf5ff" stroke="#805ad5" stroke-width="2" rx="8"/>
+                                <text x="195" y="320" font-family="Inter" font-size="11" font-weight="600" fill="#553c9a" text-anchor="middle">Treatment</text>
+                                <text x="195" y="335" font-family="Inter" font-size="11" font-weight="600" fill="#553c9a" text-anchor="middle">Planning</text>
+                                
+                                <!-- Reassessment -->
+                                <rect x="350" y="300" width="120" height="50" fill="#fffaf0" stroke="#dd6b20" stroke-width="2" rx="8"/>
+                                <text x="410" y="320" font-family="Inter" font-size="11" font-weight="600" fill="#c05621" text-anchor="middle">Reassessment</text>
+                                <text x="410" y="335" font-family="Inter" font-size="9" fill="#c05621" text-anchor="middle">& Modification</text>
+                                
+                                <!-- Arrows -->
+                                <defs>
+                                    <marker id="arrowhead2" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+                                        <polygon points="0 0, 10 3.5, 0 7" fill="#1a365d"/>
+                                    </marker>
+                                </defs>
+                                
+                                <!-- Flow arrows -->
+                                <path d="M 170 55 L 210 55" stroke="#1a365d" stroke-width="2" marker-end="url(#arrowhead2)"/>
+                                <path d="M 110 80 L 110 110" stroke="#1a365d" stroke-width="2" marker-end="url(#arrowhead2)"/>
+                                <path d="M 170 145 L 210 145" stroke="#1a365d" stroke-width="2" marker-end="url(#arrowhead2)"/>
+                                <path d="M 195 170 L 195 200" stroke="#1a365d" stroke-width="2" marker-end="url(#arrowhead2)"/>
+                                <path d="M 255 235 L 340 235" stroke="#1a365d" stroke-width="2" marker-end="url(#arrowhead2)"/>
+                                <path d="M 195 260 L 195 290" stroke="#1a365d" stroke-width="2" marker-end="url(#arrowhead2)"/>
+                                <path d="M 255 325 L 340 325" stroke="#1a365d" stroke-width="2" marker-end="url(#arrowhead2)"/>
+                                
+                                <!-- Feedback loop -->
+                                <path d="M 410 300 Q 480 280 480 235 Q 480 190 410 170" stroke="#9f7aea" stroke-width="2" fill="none" stroke-dasharray="5,5" marker-end="url(#arrowhead2)"/>
+                                
+                                <text x="250" y="385" font-family="Inter" font-size="10" font-weight="600" fill="#1a365d" text-anchor="middle">Continuous Process with Reassessment</text>
+                            </svg>
+                        </div>
+
+                        <h4 class="subheading">Hypothesis-Oriented Approach</h4>
+                        <p>Effective clinical reasoning follows a systematic hypothesis-oriented approach:</p>
+                        <ol>
+                            <li><strong>Initial hypothesis formation</strong> based on patient history and chief complaint</li>
+                            <li><strong>Targeted examination</strong> to test specific hypotheses</li>
+                            <li><strong>Data synthesis</strong> and integration of all findings</li>
+                            <li><strong>Diagnostic conclusion</strong> and treatment planning</li>
+                            <li><strong>Ongoing reassessment</strong> and modification as needed</li>
+                        </ol>
+
+                        <div class="alert alert-info">
+                            <strong>Clinical Pearl:</strong> Strong clinical reasoning combines deductive reasoning (testing specific hypotheses) with inductive reasoning (pattern recognition from experience) to optimize diagnostic accuracy.
+                        </div>
+                    </div>
+
+                    <div class="subsection">
+                        <h3 class="subsection-title">Pattern Recognition in MSK Practice</h3>
+                        <p>Experienced clinicians develop pattern recognition skills that allow rapid identification of common presentation patterns. Understanding these patterns improves efficiency while maintaining diagnostic accuracy.</p>
+
+                        <h4 class="subheading">Common Clinical Patterns</h4>
+
+                        <div class="table-container">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Condition</th>
+                                        <th>Typical Age/Demographics</th>
+                                        <th>Key History Features</th>
+                                        <th>Physical Findings</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>Rotator Cuff Tendinopathy</strong></td>
+                                        <td>40+ years, overhead activities</td>
+                                        <td>Gradual onset, night pain, overhead difficulty</td>
+                                        <td>+ impingement tests, weakness in affected muscles</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>ACL Injury</strong></td>
+                                        <td>Athletes, 16-35 years</td>
+                                        <td>Non-contact mechanism, "pop", immediate swelling</td>
+                                        <td>+ Lachman, + pivot shift, hemarthrosis</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Lumbar Disc Herniation</strong></td>
+                                        <td>30-50 years, males > females</td>
+                                        <td>Acute onset with bending/lifting, leg pain > back pain</td>
+                                        <td>+ SLR, neurological deficits, centralization</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Hip Osteoarthritis</strong></td>
+                                        <td>50+ years, gradual progression</td>
+                                        <td>Morning stiffness <30 min, groin pain, activity limitations</td>
+                                        <td>Limited IR, + FADIR, antalgic gait</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="alert alert-warning">
+                            <strong>Important Caveat:</strong> While patterns are useful for efficiency, each patient requires individual assessment. Avoid premature closure and maintain diagnostic flexibility.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h2 class="section-title">When to Refer Out: Red Flag Review</h2>
+
+                    <div class="subsection">
+                        <h3 class="subsection-title">Systematic Red Flag Assessment</h3>
+                        <p>Physical therapists have a professional obligation to recognize and appropriately refer patients with serious underlying pathology. Systematic red flag screening ensures patient safety and optimal outcomes.</p>
+
+                        <h4 class="subheading">Immediate Referral Indications</h4>
+
+                        <div class="alert alert-danger">
+                            <strong>Emergency Referrals (Call 911 or Emergency Department):</strong>
+                            <ul style="margin: 0.5rem 0;">
+                                <li>Cauda equina syndrome symptoms</li>
+                                <li>Suspected cardiovascular emergency (chest pain, SOB)</li>
+                                <li>Severe neurological deterioration</li>
+                                <li>Signs of severe infection with systemic symptoms</li>
+                                <li>Suspected compartment syndrome</li>
+                            </ul>
+                        </div>
+
+                        <h4 class="subheading">Urgent Medical Referral (Same Day)</h4>
+                        <ul>
+                            <li>Progressive neurological deficits</li>
+                            <li>Signs of spinal infection (fever + back pain)</li>
+                            <li>Suspected fracture with instability</li>
+                            <li>Deep vein thrombosis symptoms</li>
+                            <li>New onset severe headache ("worst headache of my life")</li>
+                        </ul>
+
+                        <h4 class="subheading">Routine Referral (1-2 Weeks)</h4>
+                        <ul>
+                            <li>Suspected malignancy</li>
+                            <li>Chronic, unexplained systemic symptoms</li>
+                            <li>No improvement after appropriate trial of conservative care</li>
+                            <li>Complex medical comorbidities requiring coordination</li>
+                        </ul>
+                    </div>
+
+                    <div class="subsection">
+                        <h3 class="subsection-title">Cancer Screening Guidelines</h3>
+                        <p>Physical therapists must maintain vigilance for signs and symptoms suggestive of cancer, particularly in the musculoskeletal system where metastatic disease commonly presents.</p>
+
+                        <h4 class="subheading">General Cancer Warning Signs</h4>
+                        <ul>
+                            <li><strong>Constitutional symptoms:</strong> Unexplained weight loss >10 lbs, fever, night sweats, fatigue</li>
+                            <li><strong>Pain characteristics:</strong> Constant, progressive, unrelieved by rest, night pain</li>
+                            <li><strong>Age factors:</strong> New onset back pain in patients >50 years</li>
+                            <li><strong>Medical history:</strong> Previous cancer diagnosis, especially within 5 years</li>
+                        </ul>
+
+                        <h4 class="subheading">Site-Specific Cancer Red Flags</h4>
+
+                        <div class="table-container">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Primary Cancer</th>
+                                        <th>Common Metastatic Sites</th>
+                                        <th>MSK Presentation</th>
+                                        <th>Additional Signs</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>Breast Cancer</strong></td>
+                                        <td>Spine, ribs, pelvis</td>
+                                        <td>Thoracic spine pain, rib fractures</td>
+                                        <td>Lymph node enlargement, arm swelling</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Prostate Cancer</strong></td>
+                                        <td>Spine, pelvis</td>
+                                        <td>Low back pain, pelvic pain</td>
+                                        <td>Urinary symptoms, elevated PSA</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Lung Cancer</strong></td>
+                                        <td>Spine, ribs</td>
+                                        <td>Shoulder pain (Pancoast tumor)</td>
+                                        <td>Persistent cough, hemoptysis</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Multiple Myeloma</strong></td>
+                                        <td>Spine, skull, ribs</td>
+                                        <td>Back pain, pathological fractures</td>
+                                        <td>Anemia, recurrent infections</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h2 class="section-title">Outcome Measure Selection</h2>
+
+                    <div class="subsection">
+                        <h3 class="subsection-title">Fundamental Principles of Outcome Measurement</h3>
+                        <p>Outcome measures provide objective data to assess treatment effectiveness, guide clinical decision-making, and demonstrate value of physical therapy interventions. Selection should be based on psychometric properties and clinical utility.</p>
+
+                        <h4 class="subheading">Key Psychometric Properties</h4>
+                        <ul>
+                            <li><strong>Reliability:</strong> Consistency of measurements over time (test-retest) and between raters (inter-rater)</li>
+                            <li><strong>Validity:</strong> Measures what it purports to measure (construct, criterion, content validity)</li>
+                            <li><strong>Responsiveness:</strong> Ability to detect clinically meaningful change over time</li>
+                            <li><strong>Interpretability:</strong> Meaningful interpretation of scores (normative values, MCID)</li>
+                        </ul>
+
+                        <div class="alert alert-info">
+                            <strong>MCID (Minimal Clinically Important Difference):</strong> The smallest change in an outcome measure that patients perceive as beneficial and would mandate a change in management.
+                        </div>
+                    </div>
+
+                    <div class="subsection">
+                        <h3 class="subsection-title">Common MSK Outcome Measures</h3>
+
+                        <h4 class="subheading">Pain Assessment</h4>
+
+                        <div class="table-container">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Measure</th>
+                                        <th>Description</th>
+                                        <th>Scoring</th>
+                                        <th>MCID</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>Numeric Pain Rating Scale (NPRS)</strong></td>
+                                        <td>0-10 scale for current, best, worst, and average pain</td>
+                                        <td>0 = no pain, 10 = worst imaginable</td>
+                                        <td>2 points or 30% change</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Visual Analog Scale (VAS)</strong></td>
+                                        <td>100mm horizontal line with anchors</td>
+                                        <td>0-100mm continuous scale</td>
+                                        <td>20mm or 30% change</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <h4 class="subheading">Region-Specific Functional Measures</h4>
+
+                        <div class="table-container">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Region</th>
+                                        <th>Measure</th>
+                                        <th>Items</th>
+                                        <th>Scoring</th>
+                                        <th>MCID</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>Cervical Spine</strong></td>
+                                        <td>Neck Disability Index (NDI)</td>
+                                        <td>10 items</td>
+                                        <td>0-50 points (higher = worse)</td>
+                                        <td>5 points or 10%</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Lumbar Spine</strong></td>
+                                        <td>Oswestry Disability Index (ODI)</td>
+                                        <td>10 items</td>
+                                        <td>0-100% (higher = worse)</td>
+                                        <td>10-12% or 6 points</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Lower Extremity</strong></td>
+                                        <td>Lower Extremity Functional Scale (LEFS)</td>
+                                        <td>20 items</td>
+                                        <td>0-80 points (higher = better)</td>
+                                        <td>9 points</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Shoulder</strong></td>
+                                        <td>Disabilities of Arm, Shoulder, Hand (DASH)</td>
+                                        <td>30 items</td>
+                                        <td>0-100 points (higher = worse)</td>
+                                        <td>10-15 points</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="alert alert-success">
+                            <strong>Clinical Recommendation:</strong> Use condition-specific measures when available, as they typically demonstrate superior responsiveness compared to generic measures.
+                        </div>
+                    </div>
+
+                    <div class="subsection">
+                        <h3 class="subsection-title">Global Rating of Change</h3>
+                        <p>The Global Rating of Change (GRC) provides a simple method to assess patient-perceived improvement and validate other outcome measures.</p>
+
+                        <h4 class="subheading">15-Point GRC Scale</h4>
+                        <ul>
+                            <li><strong>+7:</strong> A very great deal better</li>
+                            <li><strong>+6:</strong> A great deal better</li>
+                            <li><strong>+5:</strong> Quite a bit better</li>
+                            <li><strong>+4:</strong> Moderately better</li>
+                            <li><strong>+3:</strong> Somewhat better</li>
+                            <li><strong>+2:</strong> A little bit better</li>
+                            <li><strong>+1:</strong> A tiny bit better</li>
+                            <li><strong>0:</strong> About the same</li>
+                            <li><strong>-1 to -7:</strong> Corresponding levels of worsening</li>
+                        </ul>
+
+                        <p><strong>Interpretation:</strong> Scores of +4 or higher typically correspond to clinically meaningful improvement and can help validate MCID values for other measures.</p>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h2 class="section-title">Evidence-Based Treatment Planning</h2>
+
+                    <div class="subsection">
+                        <h3 class="subsection-title">Evidence-Based Practice Framework</h3>
+                        <p>Evidence-based practice integrates the best research evidence with clinical expertise and patient values to optimize treatment outcomes. This framework ensures that interventions are both scientifically sound and individually appropriate.</p>
+
+                        <div class="svg-container">
+                            <div class="svg-title">Evidence-Based Practice Triangle</div>
+                            <svg width="400" height="350" viewBox="0 0 400 350">
+                                <!-- Triangle outline -->
+                                <path d="M 200 50 L 100 250 L 300 250 Z" fill="none" stroke="#1a365d" stroke-width="3"/>
+                                
+                                <!-- Best Research Evidence -->
+                                <circle cx="200" cy="80" r="40" fill="#e6fffa" stroke="#38b2ac" stroke-width="2"/>
+                                <text x="200" y="75" font-family="Inter" font-size="11" font-weight="600" fill="#234e52" text-anchor="middle">Best Research</text>
+                                <text x="200" y="90" font-family="Inter" font-size="11" font-weight="600" fill="#234e52" text-anchor="middle">Evidence</text>
+                                
+                                <!-- Clinical Expertise -->
+                                <circle cx="130" cy="220" r="40" fill="#fef5e7" stroke="#d69e2e" stroke-width="2"/>
+                                <text x="130" y="215" font-family="Inter" font-size="11" font-weight="600" fill="#744210" text-anchor="middle">Clinical</text>
+                                <text x="130" y="230" font-family="Inter" font-size="11" font-weight="600" fill="#744210" text-anchor="middle">Expertise</text>
+                                
+                                <!-- Patient Values -->
+                                <circle cx="270" cy="220" r="40" fill="#f0fff4" stroke="#38a169" stroke-width="2"/>
+                                <text x="270" y="215" font-family="Inter" font-size="11" font-weight="600" fill="#2f855a" text-anchor="middle">Patient</text>
+                                <text x="270" y="230" font-family="Inter" font-size="11" font-weight="600" fill="#2f855a" text-anchor="middle">Values</text>
+                                
+                                <!-- Center intersection -->
+                                <circle cx="200" cy="170" r="25" fill="#fed7d7" stroke="#e53e3e" stroke-width="2"/>
+                                <text x="200" y="170" font-family="Inter" font-size="10" font-weight="600" fill="#c53030" text-anchor="middle">Optimal</text>
+                                <text x="200" y="185" font-family="Inter" font-size="10" font-weight="600" fill="#c53030" text-anchor="middle">Decision</text>
+                                
+                                <!-- Component descriptions -->
+                                <text x="200" y="30" font-family="Inter" font-size="9" fill="#4a5568" text-anchor="middle">Systematic reviews, RCTs,</text>
+                                <text x="200" y="42" font-family="Inter" font-size="9" fill="#4a5568" text-anchor="middle">clinical practice guidelines</text>
+                                
+                                <text x="130" y="280" font-family="Inter" font-size="9" fill="#4a5568" text-anchor="middle">Clinical experience,</text>
+                                <text x="130" y="292" font-family="Inter" font-size="9" fill="#4a5568" text-anchor="middle">professional judgment</text>
+                                
+                                <text x="270" y="280" font-family="Inter" font-size="9" fill="#4a5568" text-anchor="middle">Preferences, goals,</text>
+                                <text x="270" y="292" font-family="Inter" font-size="9" fill="#4a5568" text-anchor="middle">cultural factors</text>
+                                
+                                <!-- Connecting lines -->
+                                <line x1="180" y1="100" x2="150" y2="200" stroke="#718096" stroke-width="1" stroke-dasharray="3,3"/>
+                                <line x1="220" y1="100" x2="250" y2="200" stroke="#718096" stroke-width="1" stroke-dasharray="3,3"/>
+                                <line x1="170" y1="220" x2="230" y2="220" stroke="#718096" stroke-width="1" stroke-dasharray="3,3"/>
+                            </svg>
+                        </div>
+
+                        <h4 class="subheading">Hierarchy of Evidence</h4>
+                        <p>Understanding the hierarchy of evidence helps prioritize research findings in clinical decision-making:</p>
+                        <ol>
+                            <li><strong>Systematic reviews and meta-analyses</strong> - Highest level of evidence</li>
+                            <li><strong>Randomized controlled trials (RCTs)</strong> - Strong evidence for intervention effectiveness</li>
+                            <li><strong>Cohort studies</strong> - Good evidence for prognosis and natural history</li>
+                            <li><strong>Case-control studies</strong> - Useful for rare conditions or risk factors</li>
+                            <li><strong>Case series and expert opinion</strong> - Lowest level of evidence</li>
+                        </ol>
+                    </div>
+
+                    <div class="subsection">
+                        <h3 class="subsection-title">Treatment Planning Framework</h3>
+
+                        <h4 class="subheading">SMART Goals Framework</h4>
+                        <p>Effective treatment planning uses SMART goals to ensure clear, measurable, and achievable objectives:</p>
+                        <ul>
+                            <li><strong>Specific:</strong> Clear and well-defined outcomes</li>
+                            <li><strong>Measurable:</strong> Quantifiable using objective measures</li>
+                            <li><strong>Achievable:</strong> Realistic given patient condition and resources</li>
+                            <li><strong>Relevant:</strong> Important to patient's functional goals</li>
+                            <li><strong>Time-bound:</strong> Specific timeframe for achievement</li>
+                        </ul>
+
+                        <div class="alert alert-success">
+                            <strong>Example SMART Goal:</strong> "Patient will demonstrate pain reduction from 7/10 to 4/10 on NPRS and increase shoulder flexion ROM from 120° to 160° within 4 weeks to enable return to recreational tennis."
+                        </div>
+
+                        <h4 class="subheading">ICF Framework Integration</h4>
+                        <p>The International Classification of Functioning, Disability and Health (ICF) provides a comprehensive framework for understanding patient presentation and planning interventions:</p>
+                        <ul>
+                            <li><strong>Body Functions/Structures:</strong> Impairments (pain, ROM, strength deficits)</li>
+                            <li><strong>Activities:</strong> Activity limitations (difficulty walking, reaching)</li>
+                            <li><strong>Participation:</strong> Participation restrictions (work limitations, sports)</li>
+                            <li><strong>Contextual Factors:</strong> Environmental and personal factors affecting function</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h2 class="section-title">Documentation Fundamentals</h2>
+
+                    <div class="subsection">
+                        <h3 class="subsection-title">SOAP Note Structure</h3>
+                        <p>The SOAP (Subjective, Objective, Assessment, Plan) format provides a systematic approach to clinical documentation that supports clinical reasoning and communication with other healthcare providers.</p>
+
+                        <h4 class="subheading">Subjective Section</h4>
+                        <p>Documents patient-reported information including:</p>
+                        <ul>
+                            <li>Chief complaint and history of present illness</li>
+                            <li>Pain description using OPQRST framework</li>
+                            <li>Functional limitations and activity restrictions</li>
+                            <li>Patient goals and expectations</li>
+                            <li>Response to previous treatments</li>
+                        </ul>
+
+                        <h4 class="subheading">Objective Section</h4>
+                        <p>Records measurable, observable findings including:</p>
+                        <ul>
+                            <li>Postural and movement observations</li>
+                            <li>Range of motion measurements</li>
+                            <li>Strength testing results</li>
+                            <li>Special test findings</li>
+                            <li>Functional assessment results</li>
+                            <li>Outcome measure scores</li>
+                        </ul>
+
+                        <h4 class="subheading">Assessment Section</h4>
+                        <p>Synthesizes subjective and objective findings into:</p>
+                        <ul>
+                            <li>Physical therapy diagnosis</li>
+                            <li>Impairments, activity limitations, and participation restrictions</li>
+                            <li>Contributing factors and prognosis</li>
+                            <li>Rehabilitation potential</li>
+                        </ul>
+
+                        <h4 class="subheading">Plan Section</h4>
+                        <p>Outlines the treatment approach including:</p>
+                        <ul>
+                            <li>Short-term and long-term goals</li>
+                            <li>Frequency and duration of treatment</li>
+                            <li>Specific interventions and techniques</li>
+                            <li>Patient education and home program</li>
+                            <li>Discharge planning considerations</li>
+                        </ul>
+
+                        <div class="alert alert-info">
+                            <strong>Documentation Tip:</strong> Use objective, measurable terms and avoid subjective interpretations. Document what you observe and measure, not what you think or feel.
+                        </div>
+                    </div>
+
+                    <div class="subsection">
+                        <h3 class="subsection-title">Goal Writing Best Practices</h3>
+
+                        <h4 class="subheading">Components of Well-Written Goals</h4>
+                        <ul>
+                            <li><strong>Who:</strong> The patient (usually implied)</li>
+                            <li><strong>Will do what:</strong> Specific functional activity or measurable outcome</li>
+                            <li><strong>Under what conditions:</strong> Environmental context or circumstances</li>
+                            <li><strong>How well:</strong> Criteria for success (quantitative when possible)</li>
+                            <li><strong>By when:</strong> Timeline for achievement</li>
+                        </ul>
+
+                        <div class="table-container">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Goal Type</th>
+                                        <th>Poor Example</th>
+                                        <th>Improved Example</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>ROM Goal</strong></td>
+                                        <td>Increase shoulder flexibility</td>
+                                        <td>Patient will demonstrate passive shoulder flexion ROM of 160° (currently 120°) within 3 weeks</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Strength Goal</strong></td>
+                                        <td>Improve quadriceps strength</td>
+                                        <td>Patient will demonstrate 4+/5 quadriceps strength on manual muscle testing (currently 3+/5) within 4 weeks</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Functional Goal</strong></td>
+                                        <td>Improve walking</td>
+                                        <td>Patient will ambulate 500 feet independently without assistive device (currently uses walker for 200 feet) within 6 weeks</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Pain Goal</strong></td>
+                                        <td>Reduce pain</td>
+                                        <td>Patient will report average daily pain of 3/10 on NPRS (currently 6/10) within 4 weeks</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="key-takeaways">
+                    <h3>🎯 Module 3 Key Takeaways</h3>
+                    <ul>
+                        <li><strong>Clinical Reasoning:</strong> Systematic hypothesis-oriented approach combining pattern recognition with targeted testing improves diagnostic accuracy and treatment efficiency</li>
+                        <li><strong>Red Flag Recognition:</strong> Understanding when to refer patients ensures safety - emergency (cauda equina), urgent (progressive deficits), and routine referrals require different timeframes</li>
+                        <li><strong>Cancer Screening:</strong> Constitutional symptoms, constant progressive pain, and age >50 with new onset back pain warrant cancer screening and potential referral</li>
+                        <li><strong>Outcome Measures:</strong> Select measures based on psychometric properties (reliability, validity, responsiveness) and clinical utility - MCID values guide meaningful change</li>
+                        <li><strong>Evidence-Based Practice:</strong> Integration of best research evidence, clinical expertise, and patient values optimizes treatment decisions using hierarchy of evidence</li>
+                        <li><strong>SOAP Documentation:</strong> Systematic documentation supports clinical reasoning and communication - measurable, objective findings in appropriate sections</li>
+                        <li><strong>SMART Goals:</strong> Specific, Measurable, Achievable, Relevant, Time-bound goals provide clear direction for treatment and outcome measurement</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Module 4: Treatment Interventions -->
+            <div class="module" id="module4">
+                <div class="module-header">
+                    <h1 class="module-title">Module 4</h1>
+                    <h2 class="module-subtitle">Foundational Treatment Interventions</h2>
+                    <span class="reading-time">⏱️ Estimated Reading Time: 50 minutes</span>
+                </div>
+
+                <div class="section">
+                    <h2 class="section-title">Therapeutic Exercise Principles</h2>
+
+                    <div class="subsection">
+                        <h3 class="subsection-title">FITT-VP Principle Framework</h3>
+                        <p>Therapeutic exercise prescription follows the systematic FITT-VP framework: <strong>Frequency, Intensity, Time, Type, Volume, and Progression</strong>. This evidence-based approach ensures safe and effective exercise dosing across all patient populations.</p>
+
+                        <div class="svg-container">
+                            <div class="svg-title">Therapeutic Exercise Progression Pyramid</div>
+                            <svg width="500" height="300" viewBox="0 0 500 300">
+                                <!-- Base Level - Stability/Motor Control -->
+                                <rect x="50" y="220" width="400" height="50" fill="#e6fffa" stroke="#38b2ac" stroke-width="2" rx="5"/>
+                                <text x="250" y="240" font-family="Inter" font-size="14" font-weight="600" fill="#234e52" text-anchor="middle">Foundation: Stability & Motor Control</text>
+                                <text x="250" y="255" font-family="Inter" font-size="11" fill="#234e52" text-anchor="middle">Joint protection, basic movement patterns, proprioception</text>
+                                
+                                <!-- Second Level - Strength -->
+                                <rect x="100" y="170" width="300" height="40" fill="#fef5e7" stroke="#d69e2e" stroke-width="2" rx="5"/>
+                                <text x="250" y="190" font-family="Inter" font-size="13" font-weight="600" fill="#744210" text-anchor="middle">Strength & Endurance</text>
+                                <text x="250" y="205" font-family="Inter" font-size="10" fill="#744210" text-anchor="middle">Progressive resistance, muscular endurance</text>
+                                
+                                <!-- Third Level - Power -->
+                                <rect x="150" y="120" width="200" height="40" fill="#ebf8ff" stroke="#3182ce" stroke-width="2" rx="5"/>
+                                <text x="250" y="140" font-family="Inter" font-size="12" font-weight="600" fill="#2c5282" text-anchor="middle">Power & Speed</text>
+                                <text x="250" y="155" font-family="Inter" font-size="10" fill="#2c5282" text-anchor="middle">Plyometrics, explosive movements</text>
+                                
+                                <!-- Fourth Level - Functional -->
+                                <rect x="175" y="70" width="150" height="40" fill="#f0fff4" stroke="#38a169" stroke-width="2" rx="5"/>
+                                <text x="250" y="90" font-family="Inter" font-size="12" font-weight="600" fill="#2f855a" text-anchor="middle">Functional/Sport-Specific</text>
+                                <text x="250" y="105" font-family="Inter" font-size="10" fill="#2f855a" text-anchor="middle">Return to activity</text>
+                                
+                                <!-- Arrows showing progression -->
+                                <defs>
+                                    <marker id="arrowhead3" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+                                        <polygon points="0 0, 10 3.5, 0 7" fill="#1a365d"/>
+                                    </marker>
+                                </defs>
+                                <path d="M 250 200 L 250 165" stroke="#1a365d" stroke-width="2" marker-end="url(#arrowhead3)"/>
+                                <path d="M 250 160 L 250 165" stroke="#1a365d" stroke-width="2" marker-end="url(#arrowhead3)"/>
+                                <path d="M 250 115 L 250 115" stroke="#1a365d" stroke-width="2" marker-end="url(#arrowhead3)"/>
+                                
+                                <!-- Phase descriptions -->
+                                <text x="380" y="235" font-family="Inter" font-size="9" fill="#4a5568" text-anchor="start">Phase 1</text>
+                                <text x="380" y="185" font-family="Inter" font-size="9" fill="#4a5568" text-anchor="start">Phase 2-3</text>
+                                <text x="380" y="135" font-family="Inter" font-size="9" fill="#4a5568" text-anchor="start">Phase 4</text>
+                                <text x="380" y="85" font-family="Inter" font-size="9" fill="#4a5568" text-anchor="start">Phase 5</text>
+                            </svg>
+                        </div>
+
+                        <h4 class="subheading">FITT-VP Components</h4>
+                        
+                        <div class="table-container">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Component</th>
+                                        <th>Definition</th>
+                                        <th>Example Parameters</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>Frequency</strong></td>
+                                        <td>How often exercise is performed</td>
+                                        <td>2-3 times/week (strength), daily (ROM), 5-7x/week (cardiovascular)</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Intensity</strong></td>
+                                        <td>Level of effort or exertion</td>
+                                        <td>RPE 11-13 (moderate), 40-60% 1RM (strength), 60-80% HRmax (cardio)</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Time</strong></td>
+                                        <td>Duration of exercise bout</td>
+                                        <td>10-30 minutes/session, hold stretches 30-60 seconds</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Type</strong></td>
+                                        <td>Mode or kind of exercise</td>
+                                        <td>Resistance, aerobic, flexibility, neuromuscular</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Volume</strong></td>
+                                        <td>Total amount of exercise (sets x reps x weight)</td>
+                                        <td>3 sets x 10-12 reps, 150 minutes/week moderate activity</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Progression</strong></td>
+                                        <td>Advancement of exercise parameters over time</td>
+                                        <td>2-10% increase weekly, advance when pain <3/10</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="subsection">
+                        <h3 class="subsection-title">Range of Motion Exercise Progressions</h3>
+                        <p>Restoring and maintaining range of motion is foundational to musculoskeletal rehabilitation. Different techniques address specific movement limitations and tissue restrictions.</p>
+
+                        <h4 class="subheading">Active vs. Passive vs. Active-Assisted ROM</h4>
+                        <ul>
+                            <li><strong>Passive ROM (PROM):</strong> Movement performed without muscle activation; therapist or external force moves the joint. Used when patient cannot actively move or when protection is required.</li>
+                            <li><strong>Active-Assisted ROM (AAROM):</strong> Patient initiates movement with external assistance; bridges gap between passive and active movement. Ideal for early recovery when strength is limited.</li>
+                            <li><strong>Active ROM (AROM):</strong> Patient performs movement independently without assistance; assesses functional capability and neuromuscular control.</li>
+                        </ul>
+
+                        <h4 class="subheading">Stretching Techniques</h4>
+                        <ul>
+                            <li><strong>Static Stretching:</strong> Sustained stretch held for 15-60 seconds; decreases muscle tension and improves flexibility. Most effective when tissues are warm.</li>
+                            <li><strong>Dynamic Stretching:</strong> Controlled movement through available range; prepares tissues for activity, improves coordination.</li>
+                            <li><strong>Proprioceptive Neuromuscular Facilitation (PNF):</strong> Contract-relax or contract-relax-antagonist-contract techniques; superior for rapidly increasing ROM through autogenic and reciprocal inhibition.</li>
+                            <li><strong>Joint Mobilization:</strong> Accessory glides to improve joint arthrokinematics; directly addresses capsular restrictions.</li>
+                        </ul>
+
+                        <div class="alert alert-info">
+                            <strong>Stretching Recommendations:</strong> Static stretching is most effective for flexibility gains when performed after activity when tissues are warm. Hold stretches 15-60 seconds, 2-4 repetitions, targeting major muscle groups.
+                        </div>
+                    </div>
+
+                    <div class="subsection">
+                        <h3 class="subsection-title">Strengthening Progression Principles</h3>
+
+                        <h4 class="subheading">Loading Parameters by Phase</h4>
+                        
+                        <div class="table-container">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Rehabilitation Phase</th>
+                                        <th>Load/Intensity</th>
+                                        <th>Sets x Reps</th>
+                                        <th>Rest Interval</th>
+                                        <th>Primary Goal</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>Phase 1: Protection</strong></td>
+                                        <td>Isometrics only</td>
+                                        <td>3-5 x 5-10 seconds</td>
+                                        <td>60 seconds</td>
+                                        <td>Prevent atrophy, manage pain</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Phase 2: Light Resistance</strong></td>
+                                        <td>20-40% 1RM</td>
+                                        <td>2-3 x 15-20</td>
+                                        <td>60 seconds</td>
+                                        <td>Endurance, tissue tolerance</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Phase 3: Moderate Resistance</strong></td>
+                                        <td>40-60% 1RM</td>
+                                        <td>2-3 x 10-15</td>
+                                        <td>90 seconds</td>
+                                        <td>Strength foundation</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Phase 4: High Resistance</strong></td>
+                                        <td>60-80% 1RM</td>
+                                        <td>3-4 x 6-10</td>
+                                        <td>2-3 minutes</td>
+                                        <td>Maximal strength</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Phase 5: Power</strong></td>
+                                        <td>30-60% 1RM (explosive)</td>
+                                        <td>3-5 x 3-6</td>
+                                        <td>3-5 minutes</td>
+                                        <td>Rate of force development</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <h4 class="subheading">Specificity and Overload Principles</h4>
+                        <ul>
+                            <li><strong>Specificity:</strong> Training adaptations are specific to the demands placed on the tissue. Match exercise selection to functional requirements.</li>
+                            <li><strong>Progressive Overload:</strong> Gradually increase training stress to stimulate continued adaptation. Progress one variable at a time (volume OR intensity).</li>
+                            <li><strong>Individualization:</strong> Exercise prescription must account for patient age, training history, tissue healing status, and goals.</li>
+                            <li><strong>Reversibility:</strong> Training gains diminish without continued stimulus. Maintain reduced training volumes during maintenance phases.</li>
+                        </ul>
+
+                        <div class="alert alert-success">
+                            <strong>Progression Guidelines:</strong> Increase load by 2-10% when patient can complete target repetitions with good form and pain <3/10. Monitor tissue response 24-48 hours post-exercise.
+                        </div>
+                    </div>
+
+                    <div class="subsection">
+                        <h3 class="subsection-title">Aerobic Conditioning Principles</h3>
+                        <p>Cardiovascular conditioning supports tissue healing, pain modulation, weight management, and overall health. Integration of aerobic exercise into rehabilitation programs improves outcomes across multiple domains.</p>
+
+                        <h4 class="subheading">Aerobic Exercise Prescription</h4>
+                        <ul>
+                            <li><strong>Frequency:</strong> 3-5 days per week for general health; daily for weight management</li>
+                            <li><strong>Intensity:</strong> Moderate (50-70% HRmax or RPE 11-13) for most patients; lower intensities initially post-injury</li>
+                            <li><strong>Time:</strong> 20-60 minutes per session; can be accumulated in 10-minute bouts</li>
+                            <li><strong>Type:</strong> Low-impact options (walking, cycling, swimming, elliptical) minimize joint stress</li>
+                        </ul>
+
+                        <h4 class="subheading">Heart Rate Training Zones</h4>
+                        <ul>
+                            <li><strong>Zone 1 (50-60% HRmax):</strong> Recovery and active rest</li>
+                            <li><strong>Zone 2 (60-70% HRmax):</strong> Aerobic base building, fat metabolism</li>
+                            <li><strong>Zone 3 (70-80% HRmax):</strong> Aerobic capacity, moderate intensity</li>
+                            <li><strong>Zone 4 (80-90% HRmax):</strong> Anaerobic threshold, interval training</li>
+                        </ul>
+
+                        <div class="alert alert-warning">
+                            <strong>Patient Considerations:</strong> For patients on beta-blockers, use RPE or METs instead of heart rate for intensity monitoring. Adjust parameters for patients with cardiovascular comorbidities.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h2 class="section-title">Basic Manual Therapy Concepts</h2>
+
+                    <div class="subsection">
+                        <h3 class="subsection-title">Joint Mobilization Grades</h3>
+                        <p>Joint mobilization techniques use graded oscillatory movements to address joint dysfunction, reduce pain, and restore normal arthrokinematics. Understanding the mobilization grades allows appropriate application based on treatment goals.</p>
+
+                        <div class="svg-container">
+                            <div class="svg-title">Joint Mobilization Grades - Position in Range</div>
+                            <svg width="500" height="200" viewBox="0 0 500 200">
+                                <!-- ROM bar -->
+                                <rect x="50" y="80" width="400" height="20" fill="#e2e8f0" stroke="#1a365d" stroke-width="2" rx="10"/>
+                                
+                                <!-- Grade I -->
+                                <rect x="50" y="60" width="60" height="60" fill="#fed7d7" stroke="#e53e3e" stroke-width="2" rx="5" opacity="0.8"/>
+                                <text x="80" y="95" font-family="Inter" font-size="11" font-weight="600" fill="#c53030" text-anchor="middle">Grade I</text>
+                                <text x="80" y="135" font-family="Inter" font-size="9" fill="#4a5568" text-anchor="middle">Small amp</text>
+                                <text x="80" y="147" font-family="Inter" font-size="9" fill="#4a5568" text-anchor="middle">beginning</text>
+                                
+                                <!-- Grade II -->
+                                <rect x="110" y="60" width="100" height="60" fill="#fef5e7" stroke="#d69e2e" stroke-width="2" rx="5" opacity="0.8"/>
+                                <text x="160" y="95" font-family="Inter" font-size="11" font-weight="600" fill="#c05621" text-anchor="middle">Grade II</text>
+                                <text x="160" y="135" font-family="Inter" font-size="9" fill="#4a5568" text-anchor="middle">Large amp</text>
+                                <text x="160" y="147" font-family="Inter" font-size="9" fill="#4a5568" text-anchor="middle">early range</text>
+                                
+                                <!-- Grade III -->
+                                <rect x="210" y="60" width="100" height="60" fill="#ebf8ff" stroke="#3182ce" stroke-width="2" rx="5" opacity="0.8"/>
+                                <text x="260" y="95" font-family="Inter" font-size="11" font-weight="600" fill="#2c5282" text-anchor="middle">Grade III</text>
+                                <text x="260" y="135" font-family="Inter" font-size="9" fill="#4a5568" text-anchor="middle">Large amp</text>
+                                <text x="260" y="147" font-family="Inter" font-size="9" fill="#4a5568" text-anchor="middle">into resistance</text>
+                                
+                                <!-- Grade IV -->
+                                <rect x="310" y="60" width="80" height="60" fill="#f0fff4" stroke="#38a169" stroke-width="2" rx="5" opacity="0.8"/>
+                                <text x="350" y="95" font-family="Inter" font-size="11" font-weight="600" fill="#2f855a" text-anchor="middle">Grade IV</text>
+                                <text x="350" y="135" font-family="Inter" font-size="9" fill="#4a5568" text-anchor="middle">Small amp</text>
+                                <text x="350" y="147" font-family="Inter" font-size="9" fill="#4a5568" text-anchor="middle">end range</text>
+                                
+                                <!-- Grade V (Manipulation) -->
+                                <circle cx="425" cy="90" r="20" fill="#faf5ff" stroke="#805ad5" stroke-width="2"/>
+                                <text x="425" y="95" font-family="Inter" font-size="11" font-weight="600" fill="#553c9a" text-anchor="middle">V</text>
+                                <text x="425" y="135" font-family="Inter" font-size="9" fill="#4a5568" text-anchor="middle">High velocity</text>
+                                <text x="425" y="147" font-family="Inter" font-size="9" fill="#4a5568" text-anchor="middle">thrust</text>
+                                
+                                <!-- Range labels -->
+                                <text x="50" y="40" font-family="Inter" font-size="10" fill="#4a5568" font-weight="600">Beginning of Available ROM</text>
+                                <text x="450" y="40" font-family="Inter" font-size="10" fill="#4a5568" font-weight="600" text-anchor="end">End of Range</text>
+                                
+                                <!-- Indications -->
+                                <text x="250" y="175" font-family="Inter" font-size="10" fill="#1a365d" text-anchor="middle">Grades I-II: Pain control | Grades III-IV-V: Increase mobility | Grade V: Joint manipulation</text>
+                            </svg>
+                        </div>
+
+                        <h4 class="subheading">Mobilization Grade Definitions</h4>
+                        <ul>
+                            <li><strong>Grade I:</strong> Small amplitude oscillations performed at the beginning of range; used for pain modulation and reducing protective muscle guarding.</li>
+                            <li><strong>Grade II:</strong> Large amplitude oscillations performed within the available range but not reaching resistance; used for pain relief and maintaining mobility.</li>
+                            <li><strong>Grade III:</strong> Large amplitude oscillations performed into resistance; used to increase mobility and stretch capsular structures.</li>
+                            <li><strong>Grade IV:</strong> Small amplitude oscillations performed at end range into resistance; used for capsular stretching and increasing end-range mobility.</li>
+                            <li><strong>Grade V:</strong> High-velocity, low-amplitude thrust manipulation performed at end range; requires specialized training and informed consent.</li>
+                        </ul>
+
+                        <div class="alert alert-info">
+                            <strong>Clinical Application:</strong> Use Grades I-II for acute, painful conditions to modulate pain. Progress to Grades III-IV as pain decreases and mobility becomes the primary goal. Grade V manipulation should only be performed by therapists with appropriate training and state licensure.
+                        </div>
+                    </div>
+
+                    <div class="subsection">
+                        <h3 class="subsection-title">Soft Tissue Techniques</h3>
+                        <p>Soft tissue mobilization addresses myofascial restrictions, scar tissue, and muscle hypertonicity. Various techniques can be integrated into treatment based on tissue presentation and patient tolerance.</p>
+
+                        <h4 class="subheading">Common Soft Tissue Techniques</h4>
+
+                        <div class="table-container">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Technique</th>
+                                        <th>Description</th>
+                                        <th>Indications</th>
+                                        <th>Contraindications</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>Effleurage/Petrissage</strong></td>
+                                        <td>Superficial to deep gliding and kneading strokes</td>
+                                        <td>General relaxation, circulation, edema reduction</td>
+                                        <td>Acute inflammation, open wounds</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Myofascial Release</strong></td>
+                                        <td>Sustained pressure into fascial restrictions</td>
+                                        <td>Fascial adhesions, movement restrictions</td>
+                                        <td>Acute injury, fragile skin</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Instrument-Assisted STM</strong></td>
+                                        <td>Specialized tools to detect and treat restrictions</td>
+                                        <td>Chronic tendinopathy, scar tissue</td>
+                                        <td>Open wounds, acute inflammation</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Trigger Point Therapy</strong></td>
+                                        <td>Sustained pressure on myofascial trigger points</td>
+                                        <td>Referred pain patterns, muscle dysfunction</td>
+                                        <td>Anticoagulation, acute injury</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Cross-Friction Massage</strong></td>
+                                        <td>Deep transverse fiber massage</td>
+                                        <td>Tendinopathy, scar mobilization</td>
+                                        <td>Acute tendon injury</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <h4 class="subheading">Technique Selection Considerations</h4>
+                        <ul>
+                            <li><strong>Acute Phase:</strong> Gentle techniques focused on edema management and pain modulation</li>
+                            <li><strong>Subacute Phase:</strong> Progressive depth to address developing restrictions</li>
+                            <li><strong>Chronic Phase:</strong> Aggressive techniques to remodel scar tissue and release adhesions</li>
+                            <li><strong>Tissue Response:</strong> Monitor for appropriate inflammatory response; modify if excessive soreness persists >48 hours</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h2 class="section-title">Modalities Overview</h2>
+
+                    <div class="subsection">
+                        <h3 class="subsection-title">Physical Agent Modalities: When to Use What</h3>
+                        <p>Physical agent modalities can be valuable adjuncts to therapeutic exercise and manual therapy when used judiciously based on evidence and clinical reasoning.</p>
+
+                        <h4 class="subheading">Thermal Modalities</h4>
+
+                        <div class="table-container">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Modality</th>
+                                        <th>Physiological Effects</th>
+                                        <th>Clinical Indications</th>
+                                        <th>Precautions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>Superficial Heat</strong></td>
+                                        <td>Increased circulation, tissue extensibility, pain reduction</td>
+                                        <td>Chronic pain, stiffness, pre-exercise warm-up</td>
+                                        <td>Acute inflammation, impaired sensation</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Cold (Cryotherapy)</strong></td>
+                                        <td>Vasoconstriction, decreased metabolism, pain reduction</td>
+                                        <td>Acute injury, post-exercise soreness, edema control</td>
+                                        <td>Cold intolerance, Raynaud's, open wounds</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Ultrasound</strong></td>
+                                        <td>Deep heating, increased tissue extensibility, healing</td>
+                                        <td>Tendinopathy, ligament injuries, scar tissue</td>
+                                        <td>Over metal implants, malignancy, pregnancy</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Diathermy</strong></td>
+                                        <td>Deep heating, increased blood flow</td>
+                                        <td>Large area heating, chronic pain</td>
+                                        <td>Metal implants, cardiac pacemakers</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <h4 class="subheading">Electrical Stimulation</h4>
+
+                        <div class="table-container">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Stimulation Type</th>
+                                        <th>Parameters</th>
+                                        <th>Primary Use</th>
+                                        <th>Key Settings</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>NMES (Neuromuscular)</strong></td>
+                                        <td>Medium frequency, moderate pulse duration</td>
+                                        <td>Muscle strengthening, activation</td>
+                                        <td>On:Off 1:4, 35-50 Hz</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Russian Current</strong></td>
+                                        <td>Medium frequency, burst pattern</td>
+                                        <td>Strength training, muscle re-education</td>
+                                        <td>50-100 Hz burst frequency</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>TENS (Conventional)</strong></td>
+                                        <td>High frequency, low intensity</td>
+                                        <td>Pain modulation (gate control)</td>
+                                        <td>80-150 Hz, sensory level</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Low-Rate TENS</strong></td>
+                                        <td>Low frequency, motor level</td>
+                                        <td>Pain modulation (endorphin release)</td>
+                                        <td>1-4 Hz, just below motor threshold</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>HVPC</strong></td>
+                                        <td>High voltage, monophasic pulses</td>
+                                        <td>Edema reduction, wound healing</td>
+                                        <td>100-150 pps, negative polarity</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="alert alert-warning">
+                            <strong>Evidence-Based Practice:</strong> Research supports modalities as adjuncts to exercise and manual therapy, not as standalone treatments. Modalities should facilitate participation in active interventions, not replace them.
+                        </div>
+                    </div>
+
+                    <div class="subsection">
+                        <h3 class="subsection-title">Tissue Healing Phase Applications</h3>
+
+                        <h4 class="subheading">Acute Phase (0-6 days)</h4>
+                        <ul>
+                            <li><strong>Primary Goals:</strong> Pain management, protection, edema control</li>
+                            <li><strong>Recommended Modalities:</strong> Cryotherapy, compression, elevation, TENS for pain</li>
+                            <li><strong>Avoid:</strong> Heat, deep friction massage, aggressive joint mobilization</li>
+                        </ul>
+
+                        <h4 class="subheading">Subacute Phase (3-21 days)</h4>
+                        <ul>
+                            <li><strong>Primary Goals:</strong> Promote tissue healing, restore mobility, prevent adhesions</li>
+                            <li><strong>Recommended Modalities:</strong> Ultrasound, heat before exercise, NMES for muscle activation</li>
+                            <li><strong>Progress to:</strong> Active interventions with modality support</li>
+                        </ul>
+
+                        <h4 class="subheading">Remodeling Phase (3+ weeks)</h4>
+                        <ul>
+                            <li><strong>Primary Goals:</strong> Tissue remodeling, functional restoration</li>
+                            <li><strong>Recommended Modalities:</strong> Heat before activity, cryotherapy post-activity for soreness</li>
+                            <li><strong>Focus:</strong> Progressive loading and functional training with minimal modality dependence</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h2 class="section-title">Patient Education and Home Exercise Programs</h2>
+
+                    <div class="subsection">
+                        <h3 class="subsection-title">Effective Patient Education Strategies</h3>
+                        <p>Patient education is one of the most powerful interventions in physical therapy. Effective education improves adherence, outcomes, and patient satisfaction while reducing healthcare utilization.</p>
+
+                        <h4 class="subheading">Pain Neuroscience Education</h4>
+                        <p>Teaching patients about pain physiology helps reduce fear-avoidance and catastrophizing:</p>
+                        <ul>
+                            <li><strong>Pain as protection:</strong> Explain that pain is a protective output, not always indicative of tissue damage</li>
+                            <li><strong>Pain complexity:</strong> Discuss biological, psychological, and social contributors to pain</li>
+                            <li><strong>Tissue healing vs. pain:</strong> Tissues often heal while pain persists; they are not equivalent</li>
+                            <li><strong>Graded exposure:</strong> Safe, progressive return to activity reduces threat perception</li>
+                        </ul>
+
+                        <h4 class="subheading">Teaching Techniques</h4>
+                        <ul>
+                            <li><strong>Teach-back method:</strong> Have patients explain concepts in their own words to ensure understanding</li>
+                            <li><strong>Visual aids:</strong> Use diagrams, videos, and models to enhance comprehension</li>
+                            <li><strong>Written materials:</strong> Provide take-home resources that reinforce verbal education</li>
+                            <li><strong>Limited information:</strong> Focus on 3-5 key points per session to avoid overload</li>
+                            <li><strong>Individualization:</strong> Adapt language and concepts to patient's educational level</li>
+                        </ul>
+                    </div>
+
+                    <div class="subsection">
+                        <h3 class="subsection-title">Home Exercise Program Design</h3>
+
+                        <h4 class="subheading">HEP Development Principles</h4>
+                        <ul>
+                            <li><strong>Simplicity:</strong> Start with 2-4 exercises; complexity increases with proficiency</li>
+                            <li><strong>Accessibility:</strong> Use minimal equipment; bodyweight exercises when possible</li>
+                            <li><strong>Specificity:</strong> Target identified impairments with functional relevance</li>
+                            <li><strong>Progression plan:</strong> Provide clear criteria for advancing exercises</li>
+                            <li><strong>Written instructions:</strong> Include pictures, sets/reps, frequency, and precautions</li>
+                        </ul>
+
+                        <h4 class="subheading">HEP Compliance Strategies</h4>
+                        <ul>
+                            <li><strong>Goal alignment:</strong> Connect exercises to patient's meaningful functional goals</li>
+                            <li><strong>Barrier identification:</strong> Address time constraints, space limitations, motivation issues</li>
+                            <li><strong>Self-monitoring:</strong> Use exercise logs or apps to track adherence and progress</li>
+                            <li><strong>Exercise modification:</strong> Adapt exercises for home environment as needed</li>
+                            <li><strong>Follow-up:</strong> Review HEP performance at each visit and modify as needed</li>
+                        </ul>
+
+                        <div class="alert alert-success">
+                            <strong>HEP Best Practice:</strong> Quality over quantity - 3 well-performed exercises consistently completed will outperform 10 exercises done sporadically or incorrectly.
+                        </div>
+                    </div>
+
+                    <div class="subsection">
+                        <h3 class="subsection-title">Activity Modification and Ergonomics</h3>
+                        <p>Teaching patients to modify activities and optimize their environment supports recovery and prevents recurrence.</p>
+
+                        <h4 class="subheading">Workplace Ergonomics</h4>
+                        <ul>
+                            <li><strong>Computer workstation:</strong> Monitor at eye level, keyboard at elbow height, feet flat on floor</li>
+                            <li><strong>Lifting mechanics:</strong> Keep load close to body, hinge at hips, avoid twisting</li>
+                            <li><strong>Micro-breaks:</strong> Change position or stretch every 30-45 minutes of sustained posture</li>
+                            <li><strong>Task rotation:</strong> Alternate between different types of work to vary tissue loads</li>
+                        </ul>
+
+                        <h4 class="subheading">Sleep Positioning</h4>
+                        <ul>
+                            <li><strong>Back sleeping:</strong> Pillow under knees to reduce lumbar lordosis</li>
+                            <li><strong>Side sleeping:</strong> Pillow between knees to maintain neutral hip alignment</li>
+                            <li><strong>Pillow height:</strong> Maintain neutral cervical spine regardless of position</li>
+                            <li><strong>Stomach sleeping:</strong> Discourage due to excessive cervical rotation and lumbar extension</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h2 class="section-title">Treatment Progression Principles</h2>
+
+                    <div class="subsection">
+                        <h3 class="subsection-title">Criteria for Progression</h3>
+                        <p>Systematic progression criteria ensure safe advancement through rehabilitation phases. Premature progression risks reinjury; delayed progression may result in unnecessary functional limitations.</p>
+
+                        <h4 class="subheading">Phase-to-Phase Progression Criteria</h4>
+
+                        <div class="table-container">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Current Phase</th>
+                                        <th>Progress To</th>
+                                        <th>Criteria for Advancement</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>Protection (Acute)</strong></td>
+                                        <td>Light Resistance</td>
+                                        <td>Pain <4/10, minimal swelling, pain-free PROM, able to activate muscle</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Light Resistance</strong></td>
+                                        <td>Moderate Resistance</td>
+                                        <td>Pain <3/10, pain-free AAROM, 4/5 strength, no adverse tissue response</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Moderate Resistance</strong></td>
+                                        <td>High Resistance</td>
+                                        <td>Pain <2/10, full AROM, 4+/5 strength, functional activities improving</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>High Resistance</strong></td>
+                                        <td>Power/Return to Sport</td>
+                                        <td>Normal strength, full ROM, no pain with functional tasks</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <h4 class="subheading">Return-to-Activity Criteria</h4>
+                        <ul>
+                            <li><strong>Symptom-free:</strong> No pain during or after activity; pain <2/10 with maximal effort</li>
+                            <li><strong>Strength:</strong> Within 90% of contralateral limb or normative values</li>
+                            <li><strong>Range of Motion:</strong> Full, pain-free ROM compared to uninvolved side</li>
+                            <li><strong>Functional testing:</strong> Successfully completes sport-specific or work-specific tasks</li>
+                            <li><strong>Psychological readiness:</strong> Patient reports confidence in returning to activity</li>
+                        </ul>
+
+                        <div class="alert alert-info">
+                            <strong>Progression Principle:</strong> Progress one variable at a time (intensity OR volume OR complexity). Monitor tissue response 24-48 hours post-exercise; persistent pain >3/10 indicates need to modify progression.
+                        </div>
+                    </div>
+
+                    <div class="subsection">
+                        <h3 class="subsection-title">Managing Plateaus and Setbacks</h3>
+
+                        <h4 class="subheading">Identifying Plateaus</h4>
+                        <p>Plateaus occur when patient progress stalls despite continued intervention. Recognizing and addressing plateaus is essential for maintaining forward momentum.</p>
+                        <ul>
+                            <li><strong>Symptom plateau:</strong> No change in pain or function for 2-3 weeks</li>
+                            <li><strong>Performance plateau:</strong> No improvement in objective measures (strength, ROM)</li>
+                            <li><strong>Goal plateau:</strong> No progression toward functional goals</li>
+                        </ul>
+
+                        <h4 class="subheading">Plateau Intervention Strategies</h4>
+                        <ul>
+                            <li><strong>Reassessment:</strong> Re-evaluate diagnosis and contributing factors</li>
+                            <li><strong>Exercise modification:</strong> Change exercise selection, intensity, or volume</li>
+                            <li><strong>Address barriers:</strong> Review psychosocial factors, adherence, lifestyle factors</li>
+                            <li><strong>Interdisciplinary approach:</strong> Consider referral for psychological or medical evaluation</li>
+                            <li><strong>Advanced interventions:</strong> Consider manual therapy or modalities as adjuncts</li>
+                        </ul>
+
+                        <h4 class="subheading">Managing Exacerbations</h4>
+                        <p>Temporary symptom increases are common during rehabilitation. Teaching patients to distinguish between acceptable discomfort and concerning pain helps prevent drop-out.</p>
+                        <ul>
+                            <li><strong>Acceptable response:</strong> Mild soreness (≤3/10) resolving within 24-48 hours</li>
+                            <li><strong>Modify activity:</strong> Moderate soreness lasting >48 hours; reduce intensity 10-20%</li>
+                            <li><strong>Stop and reassess:</strong> Sharp pain, pain >5/10, or symptoms worsening functional capacity</li>
+                        </ul>
+
+                        <div class="alert alert-success">
+                            <strong>Patient Education for Setbacks:</strong> Normalize temporary symptom fluctuations as part of the healing process. Provide clear criteria for when to continue vs. when to contact the therapist.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="key-takeaways">
+                    <h3>🎯 Module 4 Key Takeaways</h3>
+                    <ul>
+                        <li><strong>FITT-VP Framework:</strong> Systematic exercise prescription using Frequency, Intensity, Time, Type, Volume, and Progression ensures safe and effective dosing</li>
+                        <li><strong>Exercise Progression Pyramid:</strong> Foundation of stability/motor control → strength/endurance → power/speed → functional/sport-specific training</li>
+                        <li><strong>Joint Mobilization Grades:</strong> Grades I-II for pain control; Grades III-IV for mobility; Grade V requires specialized training and informed consent</li>
+                        <li><strong>Modalities as Adjuncts:</strong> Thermal agents, electrical stimulation, and other modalities support active interventions but should not replace exercise and manual therapy</li>
+                        <li><strong>Patient Education:</strong> Pain neuroscience education, clear HEP instructions, and activity modification strategies are among the most powerful interventions in PT</li>
+                        <li><strong>HEP Design:</strong> Simple, accessible exercises (2-4 initially) with clear written instructions; use teach-back method to ensure comprehension</li>
+                        <li><strong>Progression Criteria:</strong> Advance when pain <3/10, tissue response is favorable, and objective measures improve; progress one variable at a time</li>
+                        <li><strong>Return-to-Activity:</strong> Requires symptom-free status, 90% strength, full ROM, successful functional testing, and psychological readiness</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p><strong>DrTroy Continuing Education</strong></p>
+            <p>Musculoskeletal Evaluation and Treatment - Basic Level (3.0 Contact Hours)</p>
+            <p>Course Code: MSK-EVAL-BASIC-2025 | CCUs: 3.0 | Level: Basic</p>
+            <p style="margin-top: 1rem; font-size: 0.85rem; opacity: 0.8;">
+                © 2025 DrTroy CE. All rights reserved. | 
+                This course is approved for continuing education credit for Physical Therapists. | 
+                Course completion certificate available upon passing final assessment.
+            </p>
+        </div>
+    </footer>
+
+    <!-- JavaScript for Module Navigation and Progress Tracking -->
+    <script>
+        // Track completed modules
+        let completedModules = new Set();
+        
+        // Module content for progress tracking
+        const moduleInfo = {
+            1: { title: "Foundations of Musculoskeletal Assessment", progress: 25 },
+            2: { title: "Clinical Examination Techniques", progress: 50 },
+            3: { title: "Clinical Decision Making", progress: 75 },
+            4: { title: "Foundational Treatment Interventions", progress: 100 }
+        };
+
+        function showModule(moduleNum) {
+            // Hide all modules
+            document.querySelectorAll('.module').forEach(module => {
+                module.classList.remove('active');
+            });
+            
+            // Show selected module
+            document.getElementById('module' + moduleNum).classList.add('active');
+            
+            // Update navigation tabs
+            document.querySelectorAll('.nav-tab').forEach((tab, index) => {
+                tab.classList.remove('active');
+                if (index === moduleNum - 1) {
+                    tab.classList.add('active');
+                }
+            });
+            
+            // Mark module as completed
+            completedModules.add(moduleNum);
+            
+            // Update progress bar
+            updateProgress(moduleNum);
+            
+            // Scroll to top of content
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function updateProgress(currentModule) {
+            const progressFill = document.getElementById('progressFill');
+            const progressText = document.getElementById('progressText');
+            
+            const progress = moduleInfo[currentModule].progress;
+            const title = moduleInfo[currentModule].title;
+            
+            progressFill.style.width = progress + '%';
+            progressText.textContent = `Module ${currentModule} of 4 - ${title}`;
+            
+            // Visual feedback for completed modules
+            document.querySelectorAll('.nav-tab').forEach((tab, index) => {
+                if (completedModules.has(index + 1) && index + 1 !== currentModule) {
+                    tab.style.color = '#38a169';
+                }
+            });
+        }
+
+        // Initialize first module
+        document.addEventListener('DOMContentLoaded', function() {
+            completedModules.add(1);
+            updateProgress(1);
+        });
+
+        // Track scroll position for reading progress within module
+        document.addEventListener('scroll', function() {
+            const scrollPercent = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
+            
+            // Could add per-module progress tracking here
+        });
+
+        // Keyboard navigation support
+        document.addEventListener('keydown', function(e) {
+            const currentModule = document.querySelector('.module.active').id.replace('module', '');
+            const currentNum = parseInt(currentModule);
+            
+            if (e.key === 'ArrowRight' && currentNum < 4) {
+                showModule(currentNum + 1);
+            } else if (e.key === 'ArrowLeft' && currentNum > 1) {
+                showModule(currentNum - 1);
+            }
+        });
+    </script>
+</body>
+</html>

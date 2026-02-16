@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TPTA CCU Submission Package - Download</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #1a365d, #2c5282);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            padding: 3rem;
+            max-width: 600px;
+            text-align: center;
+        }
+        
+        .logo {
+            width: 80px;
+            height: 80px;
+            background: #059669;
+            border-radius: 50%;
+            margin: 0 auto 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+        }
+        
+        h1 {
+            color: #1a365d;
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+        
+        .subtitle {
+            color: #059669;
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 2rem;
+        }
+        
+        .description {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 2rem;
+        }
+        
+        .download-section {
+            background: #f8f9fa;
+            padding: 2rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+        }
+        
+        .download-btn {
+            display: inline-block;
+            background: #059669;
+            color: white;
+            padding: 1rem 2rem;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            margin: 0.5rem;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .download-btn:hover {
+            background: #047857;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(5, 150, 105, 0.3);
+        }
+        
+        .download-btn.secondary {
+            background: #6b7280;
+        }
+        
+        .download-btn.secondary:hover {
+            background: #4b5563;
+        }
+        
+        .course-details {
+            background: #e8f4f8;
+            padding: 1.5rem;
+            border-radius: 8px;
+            border-left: 4px solid #059669;
+            text-align: left;
+            margin: 1.5rem 0;
+        }
+        
+        .course-details h3 {
+            color: #1a365d;
+            margin-bottom: 1rem;
+        }
+        
+        .course-details ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .course-details li {
+            margin-bottom: 0.5rem;
+            padding-left: 1rem;
+            position: relative;
+        }
+        
+        .course-details li::before {
+            content: "✓";
+            color: #059669;
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+        }
+        
+        .instructions {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            padding: 1rem;
+            border-radius: 6px;
+            margin-top: 1.5rem;
+            font-size: 0.9rem;
+            color: #856404;
+        }
+        
+        .instructions h4 {
+            margin-bottom: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">📋</div>
+        
+        <h1>TPTA CCU Submission Package</h1>
+        <div class="subtitle">Comprehensive Musculoskeletal Evaluation Course</div>
+        
+        <p class="description">
+            Complete submission package for Texas Physical Therapy Association (TPTA) 
+            Continuing Competency Unit (CCU) approval. This document includes all required 
+            components for course approval submission.
+        </p>
+        
+        <div class="course-details">
+            <h3>Course Information</h3>
+            <ul>
+                <li><strong>Course Title:</strong> Comprehensive Musculoskeletal Evaluation</li>
+                <li><strong>Course ID:</strong> PT-MSK-001</li>
+                <li><strong>Duration:</strong> 180 minutes (3.0 CCUs)</li>
+                <li><strong>Director:</strong> Troy Hounshell, PT, ScD</li>
+                <li><strong>Target:</strong> Physical Therapists</li>
+            </ul>
+        </div>
+        
+        <div class="download-section">
+            <h3 style="color: #1a365d; margin-bottom: 1rem;">Download Options</h3>
+            
+            <a href="TPTA_CCU_Submission_Package.html" class="download-btn" target="_blank">
+                📄 View Full Document
+            </a>
+            
+            <button onclick="printToPDF()" class="download-btn">
+                📄 Print as PDF
+            </button>
+            
+            <button onclick="downloadHTML()" class="download-btn secondary">
+                💾 Download HTML
+            </button>
+        </div>
+        
+        <div class="instructions">
+            <h4>💡 Instructions for PDF Creation:</h4>
+            <p>1. Click "Print as PDF" above<br>
+            2. In the print dialog, select "Save as PDF" or "Microsoft Print to PDF"<br>
+            3. Choose landscape orientation for best formatting<br>
+            4. This will create a professional PDF ready for TPTA submission</p>
+        </div>
+        
+        <div style="margin-top: 2rem; padding-top: 2rem; border-top: 1px solid #e5e7eb; color: #666; font-size: 0.9rem;">
+            <p><strong>Package Contents:</strong></p>
+            <p>✓ Timed Schedule/Table of Contents<br>
+            ✓ Course Objectives (15 learning outcomes)<br>
+            ✓ Statement of Relevance to PT Practice<br>
+            ✓ Instructional Methods Documentation<br>
+            ✓ Course Certificate Template<br>
+            ✓ Course Evaluation Structure<br>
+            ✓ Instructor Qualifications<br>
+            ✓ Supporting Documentation</p>
+        </div>
+    </div>
+    
+    <script>
+        function printToPDF() {
+            // Open the submission document in a new window optimized for printing
+            const submissionWindow = window.open('TPTA_CCU_Submission_Package.html', '_blank');
+            
+            // Wait for the document to load, then trigger print
+            submissionWindow.onload = function() {
+                setTimeout(() => {
+                    submissionWindow.print();
+                }, 1000);
+            };
+        }
+        
+        function downloadHTML() {
+            // Create a download link for the HTML file
+            fetch('TPTA_CCU_Submission_Package.html')
+                .then(response => response.text())
+                .then(html => {
+                    const blob = new Blob([html], { type: 'text/html' });
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = 'TPTA_CCU_Submission_Package.html';
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                    URL.revokeObjectURL(url);
+                })
+                .catch(error => {
+                    console.error('Download error:', error);
+                    alert('Download failed. Please try the "View Full Document" option and save manually.');
+                });
+        }
+        
+        // Add some interactive features
+        document.querySelectorAll('.download-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                // Add click animation
+                this.style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    this.style.transform = '';
+                }, 150);
+            });
+        });
+    </script>
+</body>
+</html>

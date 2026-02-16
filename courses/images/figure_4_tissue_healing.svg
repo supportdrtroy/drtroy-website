@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 300">
+  <rect width="800" height="300" fill="white"/>
+  
+  <text x="400" y="30" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="#1a365d">Tissue Healing Phases</text>
+  
+  <!-- Timeline base -->
+  <line x1="80" y1="140" x2="720" y2="140" stroke="#1a365d" stroke-width="3"/>
+  
+  <!-- Phase 1: Inflammatory -->
+  <rect x="80" y="70" width="200" height="130" rx="8" fill="#fef2f2" stroke="#dc2626" stroke-width="2"/>
+  <text x="180" y="95" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#991b1b">INFLAMMATORY</text>
+  <text x="180" y="115" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#991b1b">Phase</text>
+  
+  <text x="95" y="145" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#333">Days 0-6</text>
+  
+  <text x="95" y="170" font-family="Arial, sans-serif" font-size="10" fill="#333">• Hemostasis</text>
+  <text x="95" y="185" font-family="Arial, sans-serif" font-size="10" fill="#333">• Inflammation</text>
+  
+  <!-- Arrow -->
+  <path d="M 280 140 L 320 140" stroke="#1a365d" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+  
+  <!-- Phase 2: Proliferative -->
+  <rect x="320" y="70" width="200" height="130" rx="8" fill="#fefce8" stroke="#ca8a04" stroke-width="2"/>
+  <text x="420" y="95" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#854d0e">PROLIFERATIVE</text>
+  <text x="420" y="115" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#854d0e">Phase</text>
+  
+  <text x="335" y="145" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#333">Days 3-21</text>
+  
+  <text x="335" y="170" font-family="Arial, sans-serif" font-size="10" fill="#333">• Fibroblast activity</text>
+  <text x="335" y="185" font-family="Arial, sans-serif" font-size="10" fill="#333">• Collagen synthesis</text>
+  
+  <!-- Arrow -->
+  <path d="M 520 140 L 560 140" stroke="#1a365d" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+  
+  <!-- Phase 3: Remodeling -->
+  <rect x="560" y="70" width="200" height="130" rx="8" fill="#f0fdf4" stroke="#16a34a" stroke-width="2"/>
+  <text x="660" y="95" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#166534">REMODELING</text>
+  <text x="660" y="115" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#166534">Phase</text>
+  
+  <text x="575" y="145" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#333">Weeks to Months</text>
+  
+  <text x="575" y="170" font-family="Arial, sans-serif" font-size="10" fill="#333">• Collagen alignment</text>
+  <text x="575" y="185" font-family="Arial, sans-serif" font-size="10" fill="#333">• Strength gains</text>
+  
+  <!-- Definitions marker -->
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#1a365d"/>
+    </marker>
+  </defs>
+  
+  <!-- Bottom notes -->
+  <text x="400" y="240" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#666">Phases overlap. Early mobilization promotes optimal collagen alignment.</text>
+  <text x="400" y="260" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#666">Immobilization beyond inflammatory phase leads to weak, disorganized tissue.</text>
+  <text x="400" y="285" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#1a365d" font-weight="bold">Treatment Principle: Protect early, mobilize during proliferation, progressively load during remodeling</text>
+</svg>

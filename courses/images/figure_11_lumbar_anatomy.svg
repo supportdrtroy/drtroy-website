@@ -1,0 +1,97 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 550">
+  <rect width="400" height="550" fill="white"/>
+  
+  <text x="200" y="25" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#1a365d">Lumbar Spine Anatomy</text>
+  <text x="200" y="42" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#666">Lateral View</text>
+  
+  <!-- L1 -->
+  <rect x="175" y="55" width="50" height="30" rx="4" fill="#e8dcc8" stroke="#8b7355" stroke-width="2"/>
+  <text x="235" y="75" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#333">L1</text>
+  
+  <!-- T12-L1 Disc -->
+  <rect x="180" y="85" width="40" height="8" fill="#ffb6c1" stroke="#d4a5a5" stroke-width="1"/>
+  
+  <!-- L2 -->
+  <rect x="175" y="93" width="50" height="30" rx="4" fill="#e8dcc8" stroke="#8b7355" stroke-width="2"/>
+  <text x="235" y="113" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#333">L2</text>
+  
+  <!-- L1-L2 Disc -->
+  <rect x="180" y="123" width="40" height="8" fill="#ffb6c1" stroke="#d4a5a5" stroke-width="1"/>
+  
+  <!-- L3 -->
+  <rect x="175" y="131" width="50" height="30" rx="4" fill="#e8dcc8" stroke="#8b7355" stroke-width="2"/>
+  <text x="235" y="151" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#333">L3</text>
+  
+  <!-- L2-L3 Disc -->
+  <rect x="180" y="161" width="40" height="8" fill="#ffb6c1" stroke="#d4a5a5" stroke-width="1"/>
+  
+  <!-- L4 -->
+  <rect x="175" y="169" width="50" height="30" rx="4" fill="#e8dcc8" stroke="#8b7355" stroke-width="2"/>
+  <text x="235" y="189" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#333">L4</text>
+  
+  <!-- L3-L4 Disc -->
+  <rect x="180" y="199" width="40" height="8" fill="#ffb6c1" stroke="#d4a5a5" stroke-width="1"/>
+  
+  <!-- L5 -->
+  <rect x="175" y="207" width="50" height="30" rx="4" fill="#e8dcc8" stroke="#8b7355" stroke-width="2"/>
+  <text x="235" y="227" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#333">L5</text>
+  
+  <!-- L4-L5 Disc -->
+  <rect x="180" y="237" width="40" height="8" fill="#ffb6c1" stroke="#d4a5a5" stroke-width="1"/>
+  <text x="225" y="233" font-family="Arial, sans-serif" font-size="9" fill="#991b1b" font-weight="bold">Common</text>
+  <text x="225" y="244" font-family="Arial, sans-serif" font-size="9" fill="#991b1b" font-weight="bold">herniation</text>
+  
+  <!-- Sacrum -->
+  <path d="M 170 245 L 230 245 L 235 350 L 165 350 Z" fill="#e8dcc8" stroke="#8b7355" stroke-width="2"/>
+  <text x="255" y="300" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#333">Sacrum</text>
+  <line x1="235" y1="295" x2="250" y2="298" stroke="#333" stroke-width="1"/>
+  
+  <!-- L5-S1 Disc -->
+  <rect x="180" y="245" width="40" height="8" fill="#ffb6c1" stroke="#d4a5a5" stroke-width="1"/>
+  <text x="225" y="266" font-family="Arial, sans-serif" font-size="9" fill="#991b1b" font-weight="bold">Common</text>
+  <text x="225" y="277" font-family="Arial, sans-serif" font-size="9" fill="#991b1b" font-weight="bold">herniation</text>
+  
+  <!-- Spinous processes -->
+  <rect x="188" y="85" width="8" height="10" fill="#e8dcc8" stroke="#8b7355" stroke-width="1"/>
+  <rect x="188" y="123" width="8" height="10" fill="#e8dcc8" stroke="#8b7355" stroke-width="1"/>
+  <rect x="188" y="161" width="8" height="10" fill="#e8dcc8" stroke="#8b7355" stroke-width="1"/>
+  <rect x="188" y="199" width="8" height="10" fill="#e8dcc8" stroke="#8b7355" stroke-width="1"/>
+  <rect x="188" y="237" width="8" height="10" fill="#e8dcc8" stroke="#8b7355" stroke-width="1"/>
+  
+  <!-- Spinal canal -->
+  <rect x="185" y="65" width="20" height="180" fill="#fff8dc" stroke="#daa520" stroke-width="1" opacity="0.5"/>
+  <text x="140" y="155" font-family="Arial, sans-serif" font-size="10" fill="#333">Spinal</text>
+  <text x="140" y="168" font-family="Arial, sans-serif" font-size="10" fill="#333">Canal</text>
+  <line x1="165" y1="160" x2="182" y2="160" stroke="#333" stroke-width="1"/>
+  
+  <!-- Nerve roots exiting -->
+  <path d="M 205 93 Q 230 95 245 110" fill="none" stroke="#ffd700" stroke-width="2"/>
+  <path d="M 205 131 Q 230 133 245 148" fill="none" stroke="#ffd700" stroke-width="2"/>
+  <path d="M 205 169 Q 230 171 245 186" fill="none" stroke="#ffd700" stroke-width="2"/>
+  <path d="M 205 207 Q 230 209 245 224" fill="none" stroke="#ffd700" stroke-width="2"/>
+  <path d="M 205 245 Q 230 247 245 262" fill="none" stroke="#ffd700" stroke-width="2"/>
+  <text x="250" y="180" font-family="Arial, sans-serif" font-size="9" fill="#333">Nerve</text>
+  <text x="250" y="192" font-family="Arial, sans-serif" font-size="9" fill="#333">Roots</text>
+  
+  <!-- Legend -->
+  <rect x="30" y="380" width="340" height="80" rx="8" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1"/>
+  <text x="200" y="405" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#1a365d">Legend</text>
+  
+  <rect x="45" y="420" width="20" height="12" fill="#e8dcc8" stroke="#8b7355" stroke-width="1"/>
+  <text x="75" y="430" font-family="Arial, sans-serif" font-size="10" fill="#333">Vertebral body</text>
+  
+  <rect x="45" y="440" width="20" height="8" fill="#ffb6c1" stroke="#d4a5a5" stroke-width="1"/>
+  <text x="75" y="448" font-family="Arial, sans-serif" font-size="10" fill="#333">Intervertebral disc</text>
+  
+  <rect x="180" y="420" width="20" height="12" fill="#fff8dc" stroke="#daa520" stroke-width="1"/>
+  <text x="210" y="430" font-family="Arial, sans-serif" font-size="10" fill="#333">Spinal canal</text>
+  
+  <line x1="180" y1="445" x2="200" y2="445" stroke="#ffd700" stroke-width="3"/>
+  <text x="210" y="448" font-family="Arial, sans-serif" font-size="10" fill="#333">Nerve root</text>
+  
+  <!-- Clinical note -->
+  <rect x="30" y="475" width="340" height="65" rx="8" fill="#f0f9ff" stroke="#0ea5e9" stroke-width="1"/>
+  <text x="200" y="498" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#0369a1">Clinical Anatomy Notes</text>
+  <text x="200" y="518" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#333">L4-L5 and L5-S1: Most common disc herniation levels</text>
+  <text x="200" y="533" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#333">L5 nerve root exits L5-S1 foramen; S1 exits below S1</text>
+</svg>

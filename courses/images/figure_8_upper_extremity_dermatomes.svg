@@ -1,0 +1,159 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 700">
+  <defs>
+    <!-- Animation for sequential highlighting -->
+    <style>
+      .dermatome {
+        opacity: 0.3;
+        animation: pulse 8s infinite;
+      }
+      .c5 { animation-delay: 0s; fill: #ff6b6b; }
+      .c6 { animation-delay: 1.6s; fill: #4ecdc4; }
+      .c7 { animation-delay: 3.2s; fill: #ffe66d; }
+      .c8 { animation-delay: 4.8s; fill: #95e1d3; }
+      .t1 { animation-delay: 6.4s; fill: #f38181; }
+      
+      @keyframes pulse {
+        0%, 100% { opacity: 0.3; }
+        10% { opacity: 0.8; }
+        20% { opacity: 0.3; }
+      }
+      
+      .label {
+        font-family: Arial, sans-serif;
+        font-weight: bold;
+        font-size: 14px;
+        fill: #333;
+      }
+      
+      .arm-outline {
+        fill: none;
+        stroke: #333;
+        stroke-width: 2;
+      }
+    </style>
+  </defs>
+  
+  <rect width="500" height="700" fill="white"/>
+  
+  <!-- Title -->
+  <text x="250" y="30" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="#1a365d">
+    Upper Extremity Dermatomes — Right Arm (Anterior View)
+  </text>
+  
+  <!-- Arm outline -->
+  <g transform="translate(150, 60)">
+    <!-- Shoulder/Deltoid area -->
+    <path d="M 100 20 Q 140 25 150 60 Q 155 80 145 100 L 135 110" 
+          class="arm-outline"/>
+    
+    <!-- Upper arm -->
+    <path d="M 135 110 L 130 180 Q 128 220 132 250" 
+          class="arm-outline"/>
+    
+    <!-- Elbow -->
+    <path d="M 132 250 Q 130 270 135 290" 
+          class="arm-outline"/>
+    
+    <!-- Forearm -->
+    <path d="M 135 290 L 140 380 Q 142 420 138 450" 
+          class="arm-outline"/>
+    
+    <!-- Wrist -->
+    <path d="M 138 450 L 136 470" 
+          class="arm-outline"/>
+    
+    <!-- Hand -->
+    <path d="M 136 470 Q 130 480 125 500 Q 120 520 122 540" 
+          class="arm-outline"/>
+    <!-- Thumb -->
+    <path d="M 136 470 Q 150 480 160 500 Q 165 515 162 525" 
+          class="arm-outline"/>
+    <!-- Fingers -->
+    <path d="M 122 540 Q 118 560 115 580" 
+          class="arm-outline"/>
+    <path d="M 128 545 Q 125 565 122 585" 
+          class="arm-outline"/>
+    <path d="M 134 545 Q 132 565 130 585" 
+          class="arm-outline"/>
+    <path d="M 140 540 Q 138 560 136 575" 
+          class="arm-outline"/>
+    <path d="M 145 530 Q 144 550 142 565" 
+          class="arm-outline"/>
+    
+    <!-- Inner arm outline -->
+    <path d="M 80 30 Q 60 50 55 80 Q 50 110 60 140 L 75 180 Q 85 220 90 250" 
+          class="arm-outline"/>
+    <path d="M 90 250 Q 95 270 100 290 L 105 380 Q 108 420 105 450" 
+          class="arm-outline"/>
+    <path d="M 105 450 L 108 470" 
+          class="arm-outline"/>
+    <path d="M 108 470 Q 115 480 120 500 Q 125 520 122 540" 
+          class="arm-outline"/>
+    
+    <!-- C5 Dermatome — Lateral shoulder/arm -->
+    <path d="M 100 20 Q 140 25 150 60 Q 155 80 145 100 L 135 110 L 130 180 
+             Q 128 220 132 250 L 135 140 Q 130 100 120 80 Q 110 60 100 50 Z" 
+          class="dermatome c5"/>
+    <text x="160" y="100" class="label">C5</text>
+    
+    <!-- C6 Dermatome — Lateral forearm, thumb, index -->
+    <path d="M 132 250 L 135 290 L 140 380 Q 142 420 138 450 L 136 470 
+             Q 150 480 160 500 Q 165 515 162 525 L 145 530 
+             L 140 540 L 134 545 L 128 545 L 122 540
+             Q 120 520 125 500 Q 120 480 108 470 L 105 450
+             Q 108 420 105 380 L 100 290 Q 95 270 90 250 Z" 
+          class="dermatome c6"/>
+    <text x="155" y="350" class="label">C6</text>
+    
+    <!-- C7 Dermatome — Middle finger, posterior -->
+    <path d="M 128 545 L 122 585 L 128 590 L 134 585 L 130 585 L 134 545 Z" 
+          class="dermatome c7"/>
+    <path d="M 132 250 Q 130 270 135 290 L 130 250 Z" 
+          class="dermatome c7"/>
+    <text x="145" y="570" class="label">C7</text>
+    
+    <!-- C8 Dermatome — Medial forearm, ring/little finger -->
+    <path d="M 105 450 L 108 470 Q 115 480 120 500 Q 125 520 122 540
+             L 115 580 L 122 585 L 128 545 L 122 540
+             Q 120 520 125 500 Q 120 480 108 470 L 105 450
+             L 100 380 L 95 290 Q 90 270 90 250 
+             L 85 220 Q 80 200 90 180 L 105 250 Z" 
+          class="dermatome c8"/>
+    <text x="70" y="350" class="label">C8</text>
+    
+    <!-- T1 Dermatome — Medial arm (axilla) -->
+    <path d="M 80 30 Q 60 50 55 80 Q 50 110 60 140 L 75 180 
+             Q 85 220 90 250 L 105 250 L 90 180 
+             Q 80 160 85 140 Q 90 110 95 80 Q 100 60 100 50 Z" 
+          class="dermatome t1"/>
+    <text x="50" y="100" class="label">T1</text>
+  </g>
+  
+  <!-- Legend -->
+  <rect x="30" y="620" width="440" height="60" rx="8" fill="#f8f9fa" stroke="#dee2e6" stroke-width="1"/>
+  <text x="250" y="645" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#333">
+    Cervical Dermatomes (C5-T1)
+  </text>
+  
+  <!-- Color key -->
+  <rect x="50" y="655" width="15" height="15" fill="#ff6b6b" opacity="0.6"/>
+  <text x="70" y="667" font-family="Arial, sans-serif" font-size="10" fill="#333">C5 — Lateral arm/deltoid</text>
+  
+  <rect x="180" y="655" width="15" height="15" fill="#4ecdc4" opacity="0.6"/>
+  <text x="200" y="667" font-family="Arial, sans-serif" font-size="10" fill="#333">C6 — Lateral forearm/thumb</text>
+  
+  <rect x="330" y="655" width="15" height="15" fill="#ffe66d" opacity="0.6"/>
+  <text x="350" y="667" font-family="Arial, sans-serif" font-size="10" fill="#333">C7 — Middle finger</text>
+  
+  <!-- Second row of legend -->
+  <rect x="50" y="675" width="15" height="15" fill="#95e1d3" opacity="0.6"/>
+  <text x="70" y="687" font-family="Arial, sans-serif" font-size="10" fill="#333">C8 — Medial forearm/ring &amp; little finger</text>
+  
+  <rect x="280" y="675" width="15" height="15" fill="#f38181" opacity="0.6"/>
+  <text x="300" y="687" font-family="Arial, sans-serif" font-size="10" fill="#333">T1 — Medial arm (axilla)</text>
+  
+  <!-- Animation note -->
+  <text x="250" y="580" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#666" font-style="italic">
+    Dermatomes pulse sequentially every 8 seconds
+  </text>
+</svg>

@@ -1,0 +1,2603 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DrTroy | Continuing Education</title>
+    
+    <!-- Security Headers -->
+    <meta http-equiv="Content-Security-Policy" content="
+        default-src 'self';
+        script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://js.stripe.com;
+        style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
+        font-src 'self' https://fonts.gstatic.com;
+        img-src 'self' data: https:;
+        connect-src 'self' https://*.supabase.co;
+    ">
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta http-equiv="X-Frame-Options" content="DENY">
+    <meta http-equiv="X-XSS-Protection" content="1; mode=block">
+    
+    <!-- Force HTTPS -->
+    <script>
+        if (location.protocol !== 'https:' && location.hostname !== 'localhost') {
+            location.replace('https:' + window.location.href.substring(window.location.protocol.length));
+        }
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --navy: #1a365d;
+            --navy-light: #2c5282;
+            --gold: #059669;
+            --gold-light: #10b981;
+            --gray-50: #f7fafc;
+            --gray-100: #edf2f7;
+            --gray-600: #4a5568;
+            --gray-800: #2d3748;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: var(--gray-800);
+        }
+
+        /* Header */
+        header {
+            background: #ffffff;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 3rem 2rem 1rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .logo img {
+            height: 300px;
+            width: auto;
+            max-width: 1200px;
+        }
+
+        nav {
+            margin-top: 1.5rem;
+        }
+
+        nav a {
+            color: var(--gray-600);
+            text-decoration: none;
+            margin: 0 1.5rem;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        nav a:hover {
+            color: var(--navy);
+        }
+
+        .login-link {
+            background: var(--gold) !important;
+            color: var(--navy) !important;
+            padding: 0.5rem 1rem !important;
+            border-radius: 6px !important;
+            font-weight: 600 !important;
+            transition: all 0.3s ease !important;
+        }
+
+        .login-link:hover {
+            background: #f6d55c !important;
+            color: var(--navy) !important;
+            transform: translateY(-2px) !important;
+        }
+
+        /* Hero */
+        .hero {
+            background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
+            color: white;
+            padding: 4rem 2rem;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 2.75rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto 2rem;
+        }
+
+        .hero-badges {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .badge {
+            background: rgba(255,255,255,0.1);
+            padding: 0.75rem 1.5rem;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        /* Opt-in Section */
+        .optin {
+            background: var(--gold);
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .optin-container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .optin h2 {
+            color: var(--navy);
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .optin p {
+            color: var(--navy);
+            margin-bottom: 1rem;
+        }
+
+        .optin-form {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            align-items: center;
+            max-width: 350px;
+            margin: 0 auto;
+        }
+
+        .optin-form input {
+            padding: 0.75rem 1rem;
+            border: none;
+            border-radius: 6px;
+            font-size: 1rem;
+            width: 100%;
+        }
+
+        .optin-form button {
+            background: var(--navy);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .optin-form button:hover {
+            background: var(--navy-light);
+        }
+
+        .password-match {
+            border: 2px solid #48bb78 !important;
+        }
+
+        .password-no-match {
+            border: 2px solid #f56565 !important;
+        }
+
+        /* Course Packages */
+        .packages {
+            padding: 4rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-header h2 {
+            color: var(--navy);
+            font-size: 2.25rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Invisible anchor positioning - Account for huge header (300px logo + 100px+ padding/nav) */
+        .scroll-anchor {
+            position: relative;
+            top: -450px;
+            visibility: hidden;
+        }
+
+        .section-header p {
+            color: var(--gray-600);
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .package-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        @media (max-width: 768px) {
+            .package-grid {
+                grid-template-columns: 1fr;
+                max-width: 100%;
+            }
+
+            .original-price {
+                font-size: 1.3rem;
+            }
+
+            .new-account-price {
+                font-size: 2rem;
+            }
+
+            .new-account-label {
+                font-size: 0.8rem;
+            }
+        }
+
+        .package-card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            overflow: hidden;
+            border: 2px solid transparent;
+            transition: all 0.3s;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .package-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+            border-color: var(--gold);
+        }
+
+        .package-header {
+            background: var(--navy);
+            color: white;
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .package-header h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .package-price {
+            text-align: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .original-price {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--gray-600);
+            text-decoration: line-through;
+            display: block;
+            margin-bottom: -0.2rem;
+        }
+
+        .new-account-price {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--gold);
+            display: block;
+        }
+
+        .new-account-label {
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--success);
+            margin-top: 0.2rem;
+        }
+
+        .package-content {
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .course-table {
+            margin-bottom: 1.5rem;
+        }
+
+        .course-header {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.75rem 0;
+            border-bottom: 2px solid var(--gold);
+            font-weight: 600;
+            color: var(--navy);
+            margin-bottom: 0.5rem;
+        }
+
+        .package-content ul {
+            list-style: none;
+            margin-bottom: 1.5rem;
+        }
+
+        .package-content li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid var(--gray-100);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .package-content li span:first-child {
+            flex: 1;
+            margin-right: 1rem;
+            line-height: 1.3;
+        }
+
+        .package-content li .hours {
+            flex-shrink: 0;
+            min-width: 35px;
+            text-align: right;
+            font-weight: 600;
+        }
+
+        /* Override for highlighted courses */
+        .package-content li[style*="background"] {
+            display: flex !important;
+            justify-content: space-between !important;
+            align-items: center !important;
+        }
+
+        .package-content li[style*="background"] span:first-child {
+            flex: 1 !important;
+        }
+
+        .package-content li[style*="background"] .hours {
+            flex-shrink: 0 !important;
+            min-width: 35px !important;
+            text-align: right !important;
+        }
+
+        .package-content li:last-child {
+            border-bottom: none;
+        }
+
+        .hours {
+            color: var(--gray-600);
+            font-size: 0.9rem;
+            text-align: right;
+        }
+
+        .total-hours {
+            background: var(--gray-100);
+            padding: 0.75rem;
+            border-radius: 6px;
+            text-align: center;
+            font-weight: 600;
+            color: var(--navy);
+            margin-bottom: 1rem;
+        }
+
+        .package-button {
+            display: block;
+            background: var(--gold);
+            color: var(--navy);
+            padding: 1rem;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            text-align: center;
+            transition: background 0.2s;
+            margin-top: auto;
+        }
+
+        .package-button:hover {
+            background: var(--gold-light);
+        }
+
+        .compliance-note {
+            background: var(--gray-50);
+            padding: 0.75rem;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            color: var(--gray-600);
+            margin-bottom: 1rem;
+            border-left: 3px solid var(--gold);
+        }
+
+        .compliance-note a {
+            color: var(--navy);
+            text-decoration: underline;
+        }
+
+        .compliance-note a:hover {
+            color: var(--navy-light);
+        }
+
+        /* Referral Section */
+        .referral {
+            background: var(--gray-50);
+            padding: 4rem 2rem;
+        }
+
+        .referral-steps {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .referral-step {
+            text-align: center;
+            padding: 1.5rem;
+        }
+
+        .step-number {
+            width: 50px;
+            height: 50px;
+            background: var(--gold);
+            color: var(--navy);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin: 0 auto 1rem;
+        }
+
+        .referral-step h3 {
+            color: var(--navy);
+            margin-bottom: 0.5rem;
+        }
+
+        .referral-step p {
+            color: var(--gray-600);
+        }
+
+        /* About Section - Minimal */
+        .about {
+            background: white;
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+
+        .about-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .about h2 {
+            color: var(--navy);
+            font-size: 1.75rem;
+            margin-bottom: 1rem;
+        }
+
+        .about p {
+            color: var(--gray-600);
+        }
+
+        /* Accreditation */
+        .accreditation {
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+
+        .accreditation h2 {
+            color: var(--navy);
+            font-size: 1.75rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .accred-grid {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .accred-item {
+            background: var(--gray-50);
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            color: var(--gray-600);
+        }
+
+        /* Contact Section */
+        .contact {
+            background: white;
+            padding: 4rem 2rem;
+        }
+
+        .contact-container {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .contact h2 {
+            color: var(--navy);
+            font-size: 2.25rem;
+            margin-bottom: 1rem;
+        }
+
+        .contact p {
+            color: var(--gray-600);
+            font-size: 1.1rem;
+            margin-bottom: 3rem;
+        }
+
+        .contact-form {
+            background: var(--gray-50);
+            border-radius: 12px;
+            padding: 2.5rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            text-align: left;
+        }
+
+        .contact-form .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .contact-form .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--navy);
+        }
+
+        .contact-form .form-input,
+        .contact-form .form-textarea {
+            width: 100%;
+            padding: 0.875rem 1rem;
+            border: 2px solid var(--gray-200);
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.2s ease;
+            font-family: inherit;
+            background: white;
+        }
+
+        .contact-form .form-textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .contact-form .form-input:focus,
+        .contact-form .form-textarea:focus {
+            outline: none;
+            border-color: var(--navy);
+            box-shadow: 0 0 0 3px rgba(30, 58, 138, 0.1);
+        }
+
+        .contact-submit {
+            background: var(--navy);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .contact-submit:hover {
+            background: #1e40af;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(30, 58, 138, 0.3);
+        }
+
+        .contact-success,
+        .contact-error {
+            margin-top: 1rem;
+            padding: 1rem;
+            border-radius: 6px;
+            display: none;
+        }
+
+        .contact-success {
+            background: #d1fae5;
+            border: 1px solid #10b981;
+            color: #065f46;
+        }
+
+        .contact-error {
+            background: #fee2e2;
+            border: 1px solid #f87171;
+            color: #991b1b;
+        }
+
+        .captcha-container {
+            background: var(--gray-100);
+            border: 2px dashed var(--gray-300);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            text-align: center;
+        }
+
+        .captcha-question {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--navy);
+            margin-bottom: 0.5rem;
+        }
+
+        .captcha-input {
+            width: 80px;
+            padding: 0.5rem;
+            border: 2px solid var(--gray-300);
+            border-radius: 4px;
+            font-size: 1.1rem;
+            text-align: center;
+            font-weight: 600;
+            margin: 0 0.5rem;
+        }
+
+        .captcha-input:focus {
+            outline: none;
+            border-color: var(--navy);
+            box-shadow: 0 0 0 2px rgba(30, 58, 138, 0.2);
+        }
+
+        .captcha-refresh {
+            background: var(--gray-600);
+            color: white;
+            border: none;
+            padding: 0.25rem 0.75rem;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            margin-left: 1rem;
+            transition: background 0.2s;
+        }
+
+        .captcha-refresh:hover {
+            background: #374151;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--navy);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        footer p {
+            color: rgba(255,255,255,0.7);
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .logo img {
+                height: 200px;
+                max-width: 95vw;
+                width: auto;
+            }
+            
+            .header-container {
+                padding: 1.5rem 1rem 1rem;
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            nav {
+                margin-top: 1rem;
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 1rem;
+            }
+            
+            nav a {
+                margin: 0;
+                font-size: 0.9rem;
+            }
+            
+            .login-link {
+                padding: 0.4rem 0.8rem !important;
+                font-size: 0.9rem !important;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo img {
+                height: 150px;
+                max-width: 90vw;
+                width: auto;
+            }
+            
+            .header-container {
+                padding: 1rem 0.75rem 1rem;
+            }
+        }
+
+        /* Custom Modal Styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal-overlay.show {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            max-width: 500px;
+            width: 90%;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            transform: translateY(-20px);
+            transition: transform 0.3s ease;
+        }
+
+        .modal-overlay.show .modal-content {
+            transform: translateY(0);
+        }
+
+        .modal-header {
+            color: var(--navy);
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .modal-success {
+            background: linear-gradient(135deg, var(--gold) 0%, #f6d55c 100%);
+            color: var(--navy);
+            border: 3px solid var(--gold);
+        }
+
+        .modal-success .modal-header {
+            color: var(--navy);
+        }
+
+        .modal-body {
+            font-size: 1rem;
+            line-height: 1.5;
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-benefits {
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem 0;
+            text-align: left;
+        }
+
+        .modal-benefits ul {
+            margin: 0;
+            padding-left: 1.2rem;
+        }
+
+        .modal-benefits li {
+            margin: 0.5rem 0;
+            color: var(--navy);
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+        }
+
+        .modal-btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .modal-btn-primary {
+            background: var(--navy);
+            color: white;
+        }
+
+        .modal-btn-primary:hover {
+            background: #2a4a6b;
+            transform: translateY(-2px);
+        }
+
+        .modal-btn-secondary {
+            background: var(--gray-200);
+            color: var(--gray-700);
+        }
+
+        .modal-btn-secondary:hover {
+            background: var(--gray-300);
+        }
+
+        /* Login Modal Input Styling */
+        #loginModal input[type="email"],
+        #loginModal input[type="password"] {
+            outline: none;
+        }
+
+        #loginModal input[type="email"]:focus,
+        #loginModal input[type="password"]:focus {
+            border-color: var(--gold) !important;
+            box-shadow: 0 0 0 3px rgba(214, 158, 46, 0.1) !important;
+        }
+
+        #loginModal input[type="email"]:hover,
+        #loginModal input[type="password"]:hover {
+            border-color: #9ca3af !important;
+        }
+
+        /* Forgot Password Modal Input Styling */
+        #resetEmail {
+            outline: none;
+        }
+
+        #resetEmail:focus {
+            border-color: var(--gold) !important;
+            box-shadow: 0 0 0 3px rgba(214, 158, 46, 0.1) !important;
+        }
+
+        #resetEmail:hover {
+            border-color: #9ca3af !important;
+        }
+
+        /* Checkout Modal Styling */
+        .checkout-section {
+            margin: 1rem 0;
+            padding: 1rem;
+            background: var(--gray-50);
+            border-radius: 6px;
+        }
+
+        .checkout-section h4 {
+            margin-bottom: 0.5rem;
+            color: var(--navy);
+        }
+
+        .discount-input {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .discount-input input {
+            flex: 1;
+            padding: 0.5rem;
+            border: 2px solid var(--gray-200);
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            text-transform: uppercase;
+        }
+
+        .discount-input button {
+            padding: 0.5rem 1rem;
+            background: var(--gold);
+            color: var(--navy);
+            border: none;
+            border-radius: 4px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .price-breakdown {
+            background: white;
+            padding: 1rem;
+            border-radius: 6px;
+            margin: 1rem 0;
+        }
+
+        .price-line {
+            display: flex;
+            justify-content: space-between;
+            margin: 0.5rem 0;
+        }
+
+        .price-total {
+            border-top: 2px solid var(--gold);
+            padding-top: 0.5rem;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .discount-success {
+            background: #48bb78;
+            color: white;
+            padding: 0.5rem;
+            border-radius: 4px;
+            margin: 0.5rem 0;
+            text-align: center;
+        }
+
+        .discount-error {
+            background: #f56565;
+            color: white;
+            padding: 0.5rem;
+            border-radius: 4px;
+            margin: 0.5rem 0;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div id="top"></div>
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <img src="courses/images/drtroy_logo_new.jpg" alt="DrTroy Continuing Education">
+            </div>
+            <nav>
+                <a href="#top">Home</a>
+                <a href="#packages">Packages</a>
+                <a href="courses.html">Course Catalog</a>
+                <a href="#about">About</a>
+                <a href="#contact">Contact</a>
+                <a href="#" id="myAccountLink" class="login-link" style="display: none;">My Account</a>
+                <a href="#" id="loginLink" class="login-link">Log In</a>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero" id="hero">
+        <h1>Professional Continuing Education</h1>
+        <p>Quality CE courses for PTs, PTAs, OTs, and COTAs. From practicing clinicians who understand your needs.</p>
+        <div class="hero-badges">
+            <span class="badge">✓ Board Approved</span>
+            <span class="badge">✓ Instant Certificates</span>
+            <span class="badge">✓ Practice-Ready Content</span>
+        </div>
+    </section>
+
+    <section class="optin">
+        <div class="optin-container">
+            <h2>Create Your Free Account</h2>
+            <p>Get <strong>$10 off every package</strong> and save your course progress. Pick up right where you left off.</p>
+            <form class="optin-form" id="accountCreationForm">
+                <div style="display: flex; gap: 0.5rem; margin-bottom: 0.5rem;">
+                    <input type="text" id="firstName" placeholder="First name" required style="flex: 1;" maxlength="50">
+                    <input type="text" id="lastName" placeholder="Last name" required style="flex: 1;" maxlength="50">
+                </div>
+                <input type="email" id="email" placeholder="Email address" required style="margin-bottom: 0.5rem; width: 100%;" maxlength="254">
+                <select id="discipline" required style="margin-bottom: 0.5rem; width: 100%; padding: 0.75rem; border: 2px solid var(--gray-100); border-radius: 8px; font-size: 1rem; background: white;">
+                    <option value="">Select your discipline</option>
+                    <option value="PT">Physical Therapist (PT)</option>
+                    <option value="PTA">Physical Therapist Assistant (PTA)</option>
+                    <option value="OT">Occupational Therapist (OT)</option>
+                    <option value="COTA">Certified Occupational Therapy Assistant (COTA)</option>
+                </select>
+                <input type="password" id="password" placeholder="Create password (min 8 characters)" required style="margin-bottom: 0.5rem; width: 100%;" minlength="8" maxlength="128">
+                <input type="password" id="confirmPassword" placeholder="Confirm password" required style="margin-bottom: 0.5rem; width: 100%;" maxlength="128">
+            <button type="submit">Create Free Account + Save $10</button>
+            </form>
+            <p style="font-size: 0.85rem; color: var(--gray-600); text-align: center; margin-top: 1rem;">
+                Password must be at least 8 characters with mixed case, numbers, and symbols.
+            </p>
+            <div id="passwordStrength" style="display: none; margin-top: 0.5rem; padding: 0.5rem; border-radius: 4px; font-size: 0.8rem; text-align: center;"></div>
+            <div id="accountCreationStatus" style="display: none; margin-top: 1rem; padding: 1rem; border-radius: 8px; text-align: center; font-weight: 600;"></div>
+        </div>
+    </section>
+
+    <div id="packages" class="scroll-anchor"></div>
+    <section class="packages">
+        <div class="section-header">
+            <h2>Pick Your Package</h2>
+            <h3 style="color: var(--gold); font-size: 1.5rem; margin-bottom: 1rem; font-weight: 600;">Back to the Basics</h3>
+            <p>Shared evidence-based content with role-specific applications. Better education, consistent quality, fair pricing.</p>
+            <div style="background: #dcfce7; border: 1px solid #22c55e; border-radius: 8px; padding: 1rem; margin: 1rem auto; max-width: 600px; color: #166534;">
+                <strong>Back to the Basics:</strong> Essential foundational courses covering core rehabilitation principles and practices. Each package includes the fundamental skills every professional needs.</div>
+        </div>
+        <div class="package-grid">
+            <div class="package-card">
+                <div class="package-header">
+                    <h3>Physical Therapists</h3>
+                    <div class="package-price">
+                        <span class="original-price">$109</span>
+                        <span class="new-account-price">$99</span>
+                        <div class="new-account-label">for new accounts!</div>
+                    </div>
+                </div>
+                <div class="package-content">
+                    <div class="total-hours">27 Total CCUs</div>
+                    <div class="course-table">
+                        <div style="background: #dcfce7; padding: 0.75rem; margin: 0.5rem 0; border-radius: 6px; font-weight: 600; color: #166534; font-size: 0.95rem;">
+                            Back to the Basics Core Package (24 CCUs)
+                        </div>
+                        <div class="course-header">
+                            <span>Course Name</span>
+                            <span>CCUs</span>
+                        </div>
+                        <ul>
+                            <li style="background: #f0fdf4; padding: 0.25rem 0.5rem; border-radius: 4px; margin: 0.25rem 0;"><span>Comprehensive Mobility and Fall Prevention</span> <span class="hours">3</span></li>
+                            <li style="background: #f0fdf4; padding: 0.25rem 0.5rem; border-radius: 4px; margin: 0.25rem 0;"><span>Balance, Gait, and Vestibular Management</span> <span class="hours">3</span></li>
+                            <li style="background: #f0fdf4; padding: 0.25rem 0.5rem; border-radius: 4px; margin: 0.25rem 0;"><span>Post-Surgical and Therapeutic Exercise</span> <span class="hours">3</span></li>
+                            <li style="background: #f0fdf4; padding: 0.25rem 0.5rem; border-radius: 4px; margin: 0.25rem 0;"><span>Geriatric Care Across the Continuum</span> <span class="hours">3</span></li>
+                            <li style="background: #f0fdf4; padding: 0.25rem 0.5rem; border-radius: 4px; margin: 0.25rem 0;"><span>Professional Documentation and Communication</span> <span class="hours">3</span></li>
+                            <li style="background: #f0fdf4; padding: 0.25rem 0.5rem; border-radius: 4px; margin: 0.25rem 0;"><span>Physical Agents, Modalities, and Wound Care</span> <span class="hours">3</span></li>
+                            <li style="background: #f0fdf4; padding: 0.25rem 0.5rem; border-radius: 4px; margin: 0.25rem 0;"><span>Neurological Rehabilitation</span> <span class="hours">3</span></li>
+                            <li style="background: #f0fdf4; padding: 0.25rem 0.5rem; border-radius: 4px; margin: 0.25rem 0;"><span>Infection Control and Patient Safety</span> <span class="hours">3</span></li>
+                        </ul>
+                        <div style="background: #eff6ff; padding: 0.75rem; margin: 0.5rem 0; border-radius: 6px; font-weight: 600; color: #1e40af; font-size: 0.95rem;">
+                            PT-Specific Course (3 CCUs)
+                        </div>
+                        <ul>
+                            <li style="padding: 0.25rem 0.5rem; margin: 0.25rem 0;"><span>PT Musculoskeletal Evaluation and Diagnosis</span> <span class="hours">3</span></li>
+                        </ul>
+                    </div>
+                    <div class="compliance-note">
+                        <p>Ethics requirement (2 CCUs) satisfied by Texas PT Jurisprudence Exam | All Professions: <a href="https://www.hhs.texas.gov/sites/default/files/documents/hhs-approved-human-trafficking-training.pdf" target="_blank">Human trafficking training (1 hr required) →</a></p>
+                    </div>
+                    <a href="#" class="package-button select-package" data-package="Physical Therapists" data-price="109">Select This Package</a>
+                    <div style="text-align: center; margin-top: 0.5rem;">
+                        <a href="courses.html" style="color: var(--warm-gray); text-decoration: none; font-size: 0.85rem;">View detailed course list</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="package-card">
+                <div class="package-header">
+                    <h3>PT Assistants</h3>
+                    <div class="package-price">
+                        <span class="original-price">$89</span>
+                        <span class="new-account-price">$79</span>
+                        <div class="new-account-label">for new accounts!</div>
+                    </div>
+                </div>
+                <div class="package-content">
+                    <div class="total-hours">17 Total CCUs</div>
+                    <div class="course-table">
+                        <div style="background: #dcfce7; padding: 0.75rem; margin: 0.5rem 0; border-radius: 6px; font-weight: 600; color: #166534; font-size: 0.95rem;">
+                            Back to the Basics Complete Package (17 CCUs)
+                        </div>
+                        <div class="course-header">
+                            <span>Course Name</span>
+                            <span>CCUs</span>
+                        </div>
+                        <ul>
+                            <li style="background: #f0fdf4; padding: 0.25rem 0.5rem; border-radius: 4px; margin: 0.25rem 0;"><span>Comprehensive Mobility and Fall Prevention</span> <span class="hours">3</span></li>
+                            <li style="background: #f0fdf4; padding: 0.25rem 0.5rem; border-radius: 4px; margin: 0.25rem 0;"><span>Post-Surgical and Therapeutic Exercise</span> <span class="hours">3</span></li>
+                            <li style="background: #f0fdf4; padding: 0.25rem 0.5rem; border-radius: 4px; margin: 0.25rem 0;"><span>Professional Documentation and Communication</span> <span class="hours">3</span></li>
+                            <li style="background: #f0fdf4; padding: 0.25rem 0.5rem; border-radius: 4px; margin: 0.25rem 0;"><span>Physical Agents, Modalities, and Wound Care</span> <span class="hours">3</span></li>
+                            <li style="background: #f0fdf4; padding: 0.25rem 0.5rem; border-radius: 4px; margin: 0.25rem 0;"><span>Infection Control and Patient Safety</span> <span class="hours">3</span></li>
+                            <li style="background: #f0fdf4; padding: 0.25rem 0.5rem; border-radius: 4px; margin: 0.25rem 0;"><span>Patient Education and Health Promotion</span> <span class="hours">2</span></li>
+                        </ul>
+                    </div>
+                    <div class="compliance-note">
+                        <p>Ethics requirement (2 CCUs) satisfied by Texas PT Jurisprudence Exam | All Professions: <a href="https://www.hhs.texas.gov/sites/default/files/documents/hhs-approved-human-trafficking-training.pdf" target="_blank">Human trafficking training (1 hr required) →</a></p>
+                    </div>
+                    <a href="#" class="package-button select-package" data-package="PT Assistants" data-price="89">Select This Package</a>
+                    <div style="text-align: center; margin-top: 0.5rem;">
+                        <a href="courses.html" style="color: var(--warm-gray); text-decoration: none; font-size: 0.85rem;">View detailed course list</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="package-card">
+                <div class="package-header">
+                    <h3>Occupational Therapists</h3>
+                    <div class="package-price">
+                        <span class="original-price">$109</span>
+                        <span class="new-account-price">$99</span>
+                        <div class="new-account-label">for new accounts!</div>
+                    </div>
+                </div>
+                <div class="package-content">
+                    <div class="total-hours">23 Total CCUs</div>
+                    <div class="course-table">
+                        <div style="background: #dcfce7; padding: 0.75rem; margin: 0.5rem 0; border-radius: 6px; font-weight: 600; color: #166534; font-size: 0.95rem;">
+                            Back to the Basics Core Package (20 CCUs)
+                        </div>
+                        <div class="course-header">
+                            <span>Course Name</span>
+                            <span>CCUs</span>
+                        </div>
+                        <ul>
+                            <li style="background: #f0fdf4; padding: 0.25rem 0.5rem; border-radius: 4px; margin: 0.25rem 0;"><span>Comprehensive Mobility and Fall Prevention</span> <span class="hours">3</span></li>
+                            <li style="background: #f0fdf4; padding: 0.25rem 0.5rem; border-radius: 4px; margin: 0.25rem 0;"><span>Balance, Gait, and Vestibular Management</span> <span class="hours">3</span></li>
+                            <li style="background: #f0fdf4; padding: 0.25rem 0.5rem; border-radius: 4px; margin: 0.25rem 0;"><span>Post-Surgical and Therapeutic Exercise</span> <span class="hours">3</span></li>
+                            <li style="background: #f0fdf4; padding: 0.25rem 0.5rem; border-radius: 4px; margin: 0.25rem 0;"><span>Professional Documentation and Communication</span> <span class="hours">3</span></li>
+                            <li style="background: #f0fdf4; padding: 0.25rem 0.5rem; border-radius: 4px; margin: 0.25rem 0;"><span>Physical Agents, Modalities, and Wound Care</span> <span class="hours">3</span></li>
+                            <li style="background: #f0fdf4; padding: 0.25rem 0.5rem; border-radius: 4px; margin: 0.25rem 0;"><span>Neurological Rehabilitation</span> <span class="hours">3</span></li>
+                            <li style="background: #f0fdf4; padding: 0.25rem 0.5rem; border-radius: 4px; margin: 0.25rem 0;"><span>Patient Education and Health Promotion</span> <span class="hours">2</span></li>
+                        </ul>
+                        <div style="background: #eff6ff; padding: 0.75rem; margin: 0.5rem 0; border-radius: 6px; font-weight: 600; color: #1e40af; font-size: 0.95rem;">
+                            OT-Specific Course (3 CCUs)
+                        </div>
+                        <ul>
+                            <li style="padding: 0.25rem 0.5rem; margin: 0.25rem 0;"><span>OT Evaluation and Assessment of ADLs</span> <span class="hours">3</span></li>
+                        </ul>
+                    </div>
+                    <div class="compliance-note">
+                        <p><a href="https://www.hhs.texas.gov/sites/default/files/documents/hhs-approved-human-trafficking-training.pdf" target="_blank">Human trafficking training (1 hr required) →</a></p>
+                    </div>
+                    <a href="#" class="package-button select-package" data-package="Occupational Therapists" data-price="109">Select This Package</a>
+                    <div style="text-align: center; margin-top: 0.5rem;">
+                        <a href="courses.html" style="color: var(--warm-gray); text-decoration: none; font-size: 0.85rem;">View detailed course list</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="package-card">
+                <div class="package-header">
+                    <h3>OT Assistants</h3>
+                    <div class="package-price">
+                        <span class="original-price">$89</span>
+                        <span class="new-account-price">$79</span>
+                        <div class="new-account-label">for new accounts!</div>
+                    </div>
+                </div>
+                <div class="package-content">
+                    <div class="total-hours">23 Total CCUs</div>
+                    <div class="course-table">
+                        <div style="background: #dcfce7; padding: 0.75rem; margin: 0.5rem 0; border-radius: 6px; font-weight: 600; color: #166534; font-size: 0.95rem;">
+                            Back to the Basics Complete Package (23 CCUs)
+                        </div>
+                        <div class="course-header">
+                            <span>Course Name</span>
+                            <span>CCUs</span>
+                        </div>
+                        <ul>
+                            <li style="background: #f0fdf4; padding: 0.25rem 0.5rem; border-radius: 4px; margin: 0.25rem 0;"><span>Comprehensive Mobility and Fall Prevention</span> <span class="hours">3</span></li>
+                            <li style="background: #f0fdf4; padding: 0.25rem 0.5rem; border-radius: 4px; margin: 0.25rem 0;"><span>Balance, Gait, and Vestibular Management</span> <span class="hours">3</span></li>
+                            <li style="background: #f0fdf4; padding: 0.25rem 0.5rem; border-radius: 4px; margin: 0.25rem 0;"><span>Post-Surgical and Therapeutic Exercise</span> <span class="hours">3</span></li>
+                            <li style="background: #f0fdf4; padding: 0.25rem 0.5rem; border-radius: 4px; margin: 0.25rem 0;"><span>Geriatric Care Across the Continuum</span> <span class="hours">3</span></li>
+                            <li style="background: #f0fdf4; padding: 0.25rem 0.5rem; border-radius: 4px; margin: 0.25rem 0;"><span>Professional Documentation and Communication</span> <span class="hours">3</span></li>
+                            <li style="background: #f0fdf4; padding: 0.25rem 0.5rem; border-radius: 4px; margin: 0.25rem 0;"><span>Physical Agents, Modalities, and Wound Care</span> <span class="hours">3</span></li>
+                            <li style="background: #f0fdf4; padding: 0.25rem 0.5rem; border-radius: 4px; margin: 0.25rem 0;"><span>Neurological Rehabilitation</span> <span class="hours">3</span></li>
+                            <li style="background: #f0fdf4; padding: 0.25rem 0.5rem; border-radius: 4px; margin: 0.25rem 0;"><span>Patient Education and Health Promotion</span> <span class="hours">2</span></li>
+                        </ul>
+                    </div>
+                    <div class="compliance-note">
+                        <p><a href="https://www.hhs.texas.gov/sites/default/files/documents/hhs-approved-human-trafficking-training.pdf" target="_blank">Human trafficking training (1 hr required) →</a></p>
+                    </div>
+                    <a href="#" class="package-button select-package" data-package="OT Assistants" data-price="89">Select This Package</a>
+                    <div style="text-align: center; margin-top: 0.5rem;">
+                        <a href="courses.html" style="color: var(--warm-gray); text-decoration: none; font-size: 0.85rem;">View detailed course list</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="referral">
+        <div class="section-header">
+            <h2>Refer a Colleague, Save 10%</h2>
+            <p>After you complete your purchase, you'll get a unique referral link to share with colleagues. When they buy, you get 10% off your next purchase.</p>
+        </div>
+    </section>
+
+    <div id="about" class="scroll-anchor"></div>
+    <section class="about">
+        <div class="about-container">
+            <h2>Why DrTroy?</h2>
+            <p>We keep it simple. Quality CE courses at fair prices. No upsells, no hidden fees, no nonsense. Just the hours you need on an easy to use platform.</p>
+        </div>
+    </section>
+
+    <section class="founder" style="background: var(--gray-50); padding: 3rem 2rem; text-align: center;">
+        <div class="founder-container" style="max-width: 600px; margin: 0 auto;">
+            <img src="troy-photo.jpg" alt="Dr. Troy Hounshell" style="width: 120px; height: 120px; border-radius: 50%; object-fit: cover; margin-bottom: 1.5rem; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+            <h3 style="color: var(--navy); font-size: 1.5rem; margin-bottom: 0.5rem;">Dr. Troy Hounshell, PT, ScD</h3>
+            <p style="color: var(--gold); font-weight: 600; margin-bottom: 0.5rem;">Founder</p>
+            <p style="color: var(--gray-600); font-size: 0.95rem;">25+ years of clinical experience. Practice owner. Delivering practical continuing education that works in the real world.</p>
+        </div>
+    </section>
+
+    <section class="accreditation">
+        <h2>Accreditation & Approvals</h2>
+        <div class="accred-grid">
+            <div class="accred-item">Texas PT Board</div>
+            <div class="accred-item">Texas OT Board</div>
+        </div>
+    </section>
+
+    <div id="contact" class="scroll-anchor"></div>
+    <section class="contact">
+        <div class="contact-container">
+            <h2>Send Us a Message</h2>
+            <p>Have a question about our courses or need help with your CE requirements? We're here to help.</p>
+            
+            <form class="contact-form" id="contactForm">
+                <div class="form-group">
+                    <label class="form-label" for="contactName">Your Name</label>
+                    <input type="text" id="contactName" class="form-input" required>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label" for="contactEmail">Email Address</label>
+                    <input type="email" id="contactEmail" class="form-input" required>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label" for="contactSubject">Subject</label>
+                    <select id="contactSubject" class="form-input" required>
+                        <option value="">Select a topic</option>
+                        <option value="Course Question">Course Content Question</option>
+                        <option value="CE Requirements">CE Requirements Help</option>
+                        <option value="Technical Support">Technical Support</option>
+                        <option value="Billing Question">Billing Question</option>
+                        <option value="Partnership">Partnership Inquiry</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label" for="contactMessage">Message</label>
+                    <textarea id="contactMessage" class="form-textarea" placeholder="Tell us how we can help you..." required></textarea>
+                </div>
+                
+                <div class="captcha-container">
+                    <div class="captcha-question">
+                        🛡️ Security Check: What is <span id="captchaNum1">5</span> + <span id="captchaNum2">3</span>?
+                        <button type="button" class="captcha-refresh" onclick="refreshCaptcha()">↻</button>
+                    </div>
+                    <input type="number" id="captchaAnswer" class="captcha-input" placeholder="?" required min="0" max="20">
+                    <p style="font-size: 0.85rem; color: var(--gray-600); margin-top: 0.5rem;">
+                        This helps us prevent spam messages
+                    </p>
+                </div>
+                
+                <button type="submit" class="contact-submit">Send Message</button>
+                
+                <div id="contactSuccess" class="contact-success">
+                    ✅ Thank you! Your message has been sent successfully. We'll get back to you within 24 hours.
+                </div>
+                
+                <div id="contactError" class="contact-error">
+                    ❌ Sorry, there was an error sending your message. Please try again or contact us directly.
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <footer>
+        <p style="margin-top: 0.5rem;">© 2026 DrTroy Continuing Education. All rights reserved.</p>
+        <p style="margin-top: 0.5rem; color: rgba(255,255,255,0.7); font-size: 0.9rem;">
+            Trusted by healthcare professionals across Texas
+        </p>
+    </footer>
+
+    <!-- Custom Modal -->
+    <div class="modal-overlay" id="customModal">
+        <div class="modal-content" id="modalContent">
+            <div class="modal-header" id="modalHeader">Welcome!</div>
+            <div class="modal-body" id="modalBody">Your message here</div>
+            <div class="modal-buttons" id="modalButtons">
+                <button class="modal-btn modal-btn-primary" onclick="closeModal()">OK</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Login Modal -->
+    <div class="modal-overlay" id="loginModal">
+        <div class="modal-content" style="max-width: 450px;">
+            <div class="modal-header">Welcome Back!</div>
+            <div class="modal-body">
+                <form id="loginForm" style="text-align: left;">
+                    <div style="margin-bottom: 1rem;">
+                        <label style="display: block; margin-bottom: 0.5rem; font-weight: 600; color: var(--navy);">Email</label>
+                        <input type="email" id="loginEmail" required style="width: 100%; padding: 0.75rem; border: 2px solid #d1d5db; border-radius: 6px; font-size: 1rem; box-sizing: border-box; transition: border-color 0.2s ease;">
+                    </div>
+                    <div style="margin-bottom: 1.5rem;">
+                        <label style="display: block; margin-bottom: 0.5rem; font-weight: 600; color: var(--navy);">Password</label>
+                        <input type="password" id="loginPassword" required style="width: 100%; padding: 0.75rem; border: 2px solid #d1d5db; border-radius: 6px; font-size: 1rem; box-sizing: border-box; transition: border-color 0.2s ease;">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-buttons">
+                <button class="modal-btn modal-btn-primary" onclick="handleLogin()">Log In</button>
+                <button class="modal-btn modal-btn-secondary" onclick="closeLoginModal()">Cancel</button>
+            </div>
+            <div style="text-align: center; margin-top: 1.5rem; padding-top: 1rem; border-top: 1px solid var(--gray-200);">
+                <p style="margin-bottom: 1rem; color: var(--gray-600);">Don't have an account yet?</p>
+                <button class="modal-btn modal-btn-secondary" onclick="showCreateAccountFromLogin()" style="margin-right: 0.5rem;">Create Account</button>
+                <button class="modal-btn modal-btn-secondary" onclick="showForgotPassword()">Forgot Password?</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Custom Modal Functions
+        function showModal(title, message, isSuccess = false, buttons = null) {
+            const modal = document.getElementById('customModal');
+            const header = document.getElementById('modalHeader');
+            const body = document.getElementById('modalBody');
+            const content = document.getElementById('modalContent');
+            const buttonArea = document.getElementById('modalButtons');
+            
+            header.textContent = title;
+            body.innerHTML = message;
+            
+            // Apply success styling if needed
+            if (isSuccess) {
+                content.classList.add('modal-success');
+            } else {
+                content.classList.remove('modal-success');
+            }
+            
+            // Set custom buttons or default OK button
+            if (buttons) {
+                buttonArea.innerHTML = buttons;
+            } else {
+                buttonArea.innerHTML = '<button class="modal-btn modal-btn-primary" onclick="closeModal()">OK</button>';
+            }
+            
+            modal.classList.add('show');
+        }
+        
+        function closeModal() {
+            const modal = document.getElementById('customModal');
+            modal.classList.remove('show');
+        }
+        
+        // Close modal when clicking overlay
+        document.getElementById('customModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+        
+        document.getElementById('loginModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeLoginModal();
+            }
+        });
+        
+        // Handle create account from package selection
+        function createAccountNow(packageName, price) {
+            // Store the selected package for after account creation
+            localStorage.setItem('selectedPackage', JSON.stringify({
+                name: packageName,
+                price: price
+            }));
+            
+            closeModal();
+            
+            // Scroll to account creation section
+            document.querySelector('.optin').scrollIntoView({ 
+                behavior: 'smooth',
+                block: 'center'
+            });
+            
+            // Highlight the account creation form
+            const optinSection = document.querySelector('.optin');
+            optinSection.style.border = '3px solid #d69e2e';
+            optinSection.style.borderRadius = '8px';
+            setTimeout(() => {
+                optinSection.style.border = '';
+                optinSection.style.borderRadius = '';
+            }, 3000);
+        }
+
+        // Login Modal Functions
+        function showLoginModal() {
+            document.getElementById('loginModal').classList.add('show');
+        }
+        
+        function closeLoginModal() {
+            document.getElementById('loginModal').classList.remove('show');
+            // Clear form
+            document.getElementById('loginEmail').value = '';
+            document.getElementById('loginPassword').value = '';
+        }
+        
+        function handleLogin() {
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+            
+            if (!email || !password) {
+                showModal('Missing Information', 'Please enter both email and password.');
+                return;
+            }
+            
+            // Check if account exists (in real app, this would be server-side)
+            const existingAccount = localStorage.getItem('drtroyAccount');
+            
+            if (existingAccount) {
+                const account = JSON.parse(existingAccount);
+                
+                // Debug login attempt
+                console.log('🔍 Debug - Login attempt:');
+                console.log('  - Stored email:', account.email);
+                console.log('  - Input email:', email);
+                console.log('  - Email match:', account.email === email);
+                console.log('  - Stored password exists:', account.password ? 'YES' : 'NO');
+                console.log('  - Stored password length:', account.password ? account.password.length : 0);
+                console.log('  - Input password exists:', password ? 'YES' : 'NO');
+                console.log('  - Input password length:', password ? password.length : 0);
+                console.log('  - Password match:', account.password === password);
+                console.log('  - Stored password first 3 chars:', account.password ? account.password.substring(0,3) + '***' : 'NONE');
+                console.log('  - Input password first 3 chars:', password ? password.substring(0,3) + '***' : 'NONE');
+                
+                if (account.email === email && account.password === password) {
+                    // Successful login — save to localStorage and update UI
+                    localStorage.setItem('customerName', account.firstName + ' ' + (account.lastName || ''));
+                    localStorage.setItem('customerEmail', account.email);
+                    if (account.discipline) localStorage.setItem('customerDiscipline', account.discipline);
+                    
+                    // CREATE USER SESSION (this was missing!)
+                    localStorage.setItem('userSession', JSON.stringify({
+                        userId: account.id,
+                        email: account.email,
+                        loginTime: Date.now(),
+                        expires: Date.now() + (7 * 24 * 60 * 60 * 1000) // 7 days
+                    }));
+                    
+                    closeLoginModal();
+                    
+                    // Update UI elements
+                    updateLoginButton();
+                    updatePackageDisplay();
+                    
+                    // Show welcome message
+                    showModal('Welcome Back!', `Hello ${account.firstName}! You're now logged in and ready to select your continuing education package.`, true);
+                    return;
+                }
+            }
+            
+            // Login failed - show clean error message
+            showModal('Login Failed', 'Email or password is incorrect. Please try again or create a new account.');
+        }
+        
+        function showUserDashboard(account) {
+            const message = `
+                <div style="text-align: center;">
+                    <h3 style="color: var(--navy); margin-bottom: 1rem;">Welcome back, ${account.firstName}!</h3>
+                    <div style="text-align: left; background: rgba(255,255,255,0.8); padding: 1.5rem; border-radius: 8px; margin: 1rem 0;">
+                        <h4 style="margin-bottom: 1rem; color: var(--navy);">Your Dashboard:</h4>
+                        <ul style="margin: 0; padding-left: 1.2rem;">
+                            <li style="margin: 0.5rem 0;">📚 Continue your courses</li>
+                            <li style="margin: 0.5rem 0;">📜 Download certificates</li>
+                            <li style="margin: 0.5rem 0;">📊 View progress history</li>
+                            <li style="margin: 0.5rem 0;">⚙️ Update account settings</li>
+                        </ul>
+                    </div>
+                    <p style="color: var(--gray-600); font-size: 0.9rem;">Dashboard functionality coming soon!</p>
+                </div>
+            `;
+            
+            showModal('Your DrTroy Dashboard', message, true);
+        }
+        
+        function showCreateAccountFromLogin() {
+            closeLoginModal();
+            // Scroll to account creation section
+            document.querySelector('.optin').scrollIntoView({ 
+                behavior: 'smooth',
+                block: 'center'
+            });
+            
+            // Highlight the account creation form
+            const optinSection = document.querySelector('.optin');
+            optinSection.style.border = '3px solid #d69e2e';
+            optinSection.style.borderRadius = '8px';
+            setTimeout(() => {
+                optinSection.style.border = '';
+                optinSection.style.borderRadius = '';
+            }, 3000);
+        }
+        
+        function showForgotPassword() {
+            const message = `
+                <div style="text-align: center;">
+                    <p style="margin-bottom: 1.5rem;">Enter your email address and we'll send you a password reset link.</p>
+                    <form id="forgotPasswordForm" style="text-align: left;">
+                        <label style="display: block; margin-bottom: 0.5rem; font-weight: 600; color: var(--navy);">Email Address</label>
+                        <input type="email" id="resetEmail" required style="width: 100%; padding: 0.75rem; border: 2px solid #d1d5db; border-radius: 6px; font-size: 1rem; margin-bottom: 1rem; box-sizing: border-box; transition: border-color 0.2s ease;">
+                    </form>
+                </div>
+            `;
+            
+            const buttons = `
+                <button class="modal-btn modal-btn-primary" onclick="sendPasswordReset()">Send Reset Link</button>
+                <button class="modal-btn modal-btn-secondary" onclick="showLoginModal(); closeModal();">Back to Login</button>
+            `;
+            
+            showModal('Reset Your Password', message, false, buttons);
+        }
+        
+        function sendPasswordReset() {
+            const email = document.getElementById('resetEmail').value;
+            if (!email) {
+                showModal('Missing Email', 'Please enter your email address.');
+                return;
+            }
+            
+            // In real app, this would send actual reset email
+            showModal('Reset Link Sent!', `Password reset instructions have been sent to ${email}. Check your inbox and spam folder.`, true);
+        }
+        
+        // Login link handler
+        // Login link click handler is now managed by updateLoginButton()
+
+        // Check for login parameter on page load
+        window.addEventListener('load', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.get('login') === 'true') {
+                setTimeout(() => {
+                    showLoginModal();
+                }, 500); // Small delay for page to load completely
+            }
+        });
+
+        // Real-time password confirmation validation
+        function setupPasswordValidation() {
+            const passwordField = document.querySelector('input[placeholder="Create password"]');
+            const confirmField = document.querySelector('input[placeholder="Confirm password"]');
+            
+            function validatePasswords() {
+                const password = passwordField.value;
+                const confirm = confirmField.value;
+                
+                // Only show validation if both fields have content
+                if (password.length > 0 && confirm.length > 0) {
+                    if (password === confirm) {
+                        confirmField.classList.remove('password-no-match');
+                        confirmField.classList.add('password-match');
+                    } else {
+                        confirmField.classList.remove('password-match');
+                        confirmField.classList.add('password-no-match');
+                    }
+                } else {
+                    // Clear validation styling if either field is empty
+                    confirmField.classList.remove('password-match', 'password-no-match');
+                }
+            }
+            
+            passwordField.addEventListener('input', validatePasswords);
+            confirmField.addEventListener('input', validatePasswords);
+        }
+        
+        // Initialize password validation after DOM loads
+        document.addEventListener('DOMContentLoaded', setupPasswordValidation);
+
+        // Checkout Modal Functions
+        function showCheckoutModal(packageName, originalPrice) {
+            const message = `
+                <div style="text-align: left;">
+                    <h3 style="text-align: center; margin-bottom: 1.5rem; color: var(--navy);">Checkout - ${packageName}</h3>
+                    
+                    <div class="checkout-section">
+                        <h4>Have a discount code?</h4>
+                        <div class="discount-input">
+                            <input type="text" id="discountCode" placeholder="Enter code" style="text-transform: uppercase;">
+                            <button onclick="applyDiscountCode('${packageName}', ${originalPrice})">Apply</button>
+                        </div>
+                        <div id="discountResult"></div>
+                    </div>
+                    
+                    <div class="price-breakdown">
+                        <div class="price-line">
+                            <span>Package:</span>
+                            <span>$${originalPrice}</span>
+                        </div>
+                        <div class="price-line" id="discountLine" style="display: none;">
+                            <span id="discountLabel">Discount:</span>
+                            <span id="discountAmount">-$0</span>
+                        </div>
+                        <div class="price-line price-total">
+                            <span>Total:</span>
+                            <span id="finalPrice">$${originalPrice}</span>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            const buttons = `
+                <button class="modal-btn modal-btn-primary" onclick="proceedToPayment('${packageName}', ${originalPrice})">Complete Purchase</button>
+                <button class="modal-btn modal-btn-secondary" onclick="closeModal()">Cancel</button>
+            `;
+            
+            showModal('Checkout', message, false, buttons);
+        }
+
+        function applyDiscountCode(packageName, originalPrice) {
+            const codeInput = document.getElementById('discountCode');
+            const code = codeInput.value.trim().toUpperCase();
+            const resultDiv = document.getElementById('discountResult');
+            
+            if (!code) {
+                resultDiv.innerHTML = '<div class="discount-error">Please enter a discount code</div>';
+                return;
+            }
+            
+            // Check employee codes first
+            const employeeCodes = JSON.parse(localStorage.getItem('employeeCodes') || '[]');
+            const employeeCode = employeeCodes.find(c => c.code === code && c.status === 'active');
+            
+            if (employeeCode) {
+                // Validate package type matches
+                const packageTypes = {
+                    'Physical Therapists': 'PT',
+                    'PT Assistants': 'PTA', 
+                    'Occupational Therapists': 'OT',
+                    'OT Assistants': 'COTA'
+                };
+                
+                if (packageTypes[packageName] === employeeCode.packageType) {
+                    // Calculate employee discount amount
+                    let discountAmount = 0;
+                    let discountLabel = 'Employee Discount';
+                    
+                    switch(employeeCode.discountType) {
+                        case 'percentage':
+                            discountAmount = Math.round((originalPrice * employeeCode.discountValue) / 100);
+                            discountLabel = `Employee Discount (${employeeCode.discountValue}% off)`;
+                            break;
+                        case 'fixed':
+                            discountAmount = Math.min(employeeCode.discountValue, originalPrice);
+                            discountLabel = `Employee Discount ($${employeeCode.discountValue} off)`;
+                            break;
+                        case 'free':
+                        default:
+                            discountAmount = originalPrice;
+                            discountLabel = 'Employee Discount (FREE)';
+                            break;
+                    }
+                    
+                    // Show success message
+                    if (discountAmount >= originalPrice) {
+                        resultDiv.innerHTML = '<div class="discount-success">✓ Employee code applied - FREE access!</div>';
+                    } else {
+                        resultDiv.innerHTML = `<div class="discount-success">✓ Employee discount applied!</div>`;
+                    }
+                    
+                    updatePriceDisplay(originalPrice, discountAmount, discountLabel);
+                    
+                    // Mark code as used (in real app, this would be server-side)
+                    employeeCode.status = 'used';
+                    employeeCode.usedOn = new Date().toISOString();
+                    localStorage.setItem('employeeCodes', JSON.stringify(employeeCodes));
+                    return;
+                } else {
+                    resultDiv.innerHTML = '<div class="discount-error">This code is for a different package type</div>';
+                    return;
+                }
+            }
+            
+            // Check marketing codes
+            const marketingCodes = JSON.parse(localStorage.getItem('marketingCodes') || '[]');
+            const marketingCode = marketingCodes.find(c => c.code === code && c.status === 'active');
+            
+            if (marketingCode) {
+                // Validate expiry date
+                if (marketingCode.expiryDate && new Date() > new Date(marketingCode.expiryDate)) {
+                    resultDiv.innerHTML = '<div class="discount-error">This code has expired</div>';
+                    return;
+                }
+                
+                // Validate usage limit
+                if (marketingCode.usageType === 'single' && marketingCode.totalUsed > 0) {
+                    resultDiv.innerHTML = '<div class="discount-error">This code has already been used</div>';
+                    return;
+                }
+                
+                if (marketingCode.usageType === 'limited' && marketingCode.totalUsed >= marketingCode.maxUses) {
+                    resultDiv.innerHTML = '<div class="discount-error">This code has reached its usage limit</div>';
+                    return;
+                }
+                
+                // Validate package compatibility
+                const packageTypes = {
+                    'Physical Therapists': 'PT',
+                    'PT Assistants': 'PTA', 
+                    'Occupational Therapists': 'OT',
+                    'OT Assistants': 'COTA'
+                };
+                
+                if (marketingCode.appliesTo !== 'all' && packageTypes[packageName] !== marketingCode.appliesTo) {
+                    resultDiv.innerHTML = '<div class="discount-error">This code does not apply to this package type</div>';
+                    return;
+                }
+                
+                // Validate minimum purchase
+                if (marketingCode.minPurchase && originalPrice < marketingCode.minPurchase) {
+                    resultDiv.innerHTML = `<div class="discount-error">Minimum purchase of $${marketingCode.minPurchase} required</div>`;
+                    return;
+                }
+                
+                // Calculate discount amount
+                let discountAmount = 0;
+                let discountLabel = marketingCode.code;
+                
+                switch(marketingCode.discountType) {
+                    case 'percentage':
+                        discountAmount = Math.round((originalPrice * marketingCode.discountValue) / 100);
+                        discountLabel += ` (${marketingCode.discountValue}% off)`;
+                        break;
+                    case 'fixed':
+                        discountAmount = Math.min(marketingCode.discountValue, originalPrice);
+                        discountLabel += ` ($${marketingCode.discountValue} off)`;
+                        break;
+                    case 'free':
+                        discountAmount = originalPrice;
+                        discountLabel += ' (FREE)';
+                        break;
+                }
+                
+                // Apply the discount
+                resultDiv.innerHTML = `<div class="discount-success">✓ ${discountLabel} applied!</div>`;
+                updatePriceDisplay(originalPrice, discountAmount, discountLabel);
+                
+                // Track usage (in real app, this would be server-side)
+                marketingCode.totalUsed = (marketingCode.totalUsed || 0) + 1;
+                if (marketingCode.usageType === 'single') {
+                    marketingCode.status = 'used';
+                }
+                localStorage.setItem('marketingCodes', JSON.stringify(marketingCodes));
+                return;
+            }
+            
+            // Check built-in codes
+            if (code === 'SAVE10') {
+                resultDiv.innerHTML = '<div class="discount-success">✓ $10 discount applied!</div>';
+                updatePriceDisplay(originalPrice, 10, 'SAVE10 Discount');
+                return;
+            }
+            
+            // Invalid code
+            resultDiv.innerHTML = '<div class="discount-error">Invalid or expired discount code</div>';
+        }
+
+        function updatePriceDisplay(originalPrice, discountAmount, discountLabel) {
+            const discountLine = document.getElementById('discountLine');
+            const discountLabelEl = document.getElementById('discountLabel');
+            const discountAmountEl = document.getElementById('discountAmount');
+            const finalPriceEl = document.getElementById('finalPrice');
+            
+            if (discountAmount > 0) {
+                discountLine.style.display = 'flex';
+                discountLabelEl.textContent = discountLabel + ':';
+                discountAmountEl.textContent = '-$' + discountAmount;
+                
+                const finalPrice = Math.max(0, originalPrice - discountAmount);
+                finalPriceEl.textContent = finalPrice === 0 ? 'FREE' : '$' + finalPrice;
+            } else {
+                discountLine.style.display = 'none';
+                finalPriceEl.textContent = '$' + originalPrice;
+            }
+        }
+
+        function proceedToPayment(packageName, originalPrice) {
+            const finalPriceEl = document.getElementById('finalPrice');
+            const finalPrice = finalPriceEl.textContent;
+            
+            if (finalPrice === 'FREE') {
+                showModal('Access Granted!', `
+                    <div style="text-align: center;">
+                        <h3 style="color: var(--navy); margin-bottom: 1rem;">Welcome to ${packageName}!</h3>
+                        <p style="margin-bottom: 1rem;">Your employee discount has been applied.</p>
+                        <div style="background: var(--gray-100); padding: 1.5rem; border-radius: 8px; margin: 1rem 0;">
+                            <h4 style="margin-bottom: 1rem;">You now have access to:</h4>
+                            <ul style="text-align: left; margin: 0; padding-left: 1.2rem;">
+                                <li>All CE courses in your package</li>
+                                <li>Downloadable certificates</li>
+                                <li>Progress tracking</li>
+                                <li>24/7 course access</li>
+                            </ul>
+                        </div>
+                        <p style="color: var(--gray-600); font-size: 0.9rem;">Course access functionality coming soon!</p>
+                    </div>
+                `, true);
+            } else {
+                showModal('Proceed to Payment', `
+                    <div style="text-align: center;">
+                        <p style="margin-bottom: 1rem;">Final amount: <strong>${finalPrice}</strong></p>
+                        <p style="color: var(--gray-600);">Payment processing would be integrated here with Stripe, PayPal, or another payment provider.</p>
+                    </div>
+                `, true);
+            }
+        }
+
+        // OLD HANDLER COMPLETELY REMOVED - Using only #accountCreationForm handler now
+
+        // Package selection handling - Redirect to checkout page
+        document.querySelectorAll('.select-package').forEach(button => {
+            button.addEventListener('click', function(e) {
+                e.preventDefault();
+                const packageName = this.getAttribute('data-package');
+                const price = this.getAttribute('data-price');
+                
+                // Check if user has created an account (simple localStorage check)
+                const hasAccount = localStorage.getItem('drtroyAccount');
+                
+                if (hasAccount) {
+                    // Get stored account info
+                    const accountInfo = JSON.parse(localStorage.getItem('drtroyAccount'));
+                    
+                    // Map package names to discipline codes
+                    const packageMap = {
+                        'Physical Therapists': 'PT',
+                        'PT Assistants': 'PTA', 
+                        'Occupational Therapists': 'OT',
+                        'OT Assistants': 'COTA'
+                    };
+                    
+                    // Check if user's discipline matches the package
+                    const userDiscipline = accountInfo.discipline;
+                    const targetPackage = packageMap[packageName];
+                    
+                    if (!isDisciplineAllowedForPackage(userDiscipline, targetPackage)) {
+                        const allowedPackage = getAllowedPackageForDiscipline(userDiscipline);
+                        showModal('Package Restriction', 
+                            `As a ${getDisciplineFullName(userDiscipline)}, you can only purchase the ${getDisciplineFullName(allowedPackage)} package. This ensures you receive the correct continuing education credits for your license.`, 
+                            false, 
+                            '<button class="modal-btn modal-btn-primary" onclick="closeModal()">OK</button>'
+                        );
+                        return;
+                    }
+                    
+                    // Store selected package info
+                    localStorage.setItem('selectedPackage', targetPackage || packageName);
+                    localStorage.setItem('packagePrice', price);
+                    
+                    // Redirect to checkout with parameters
+                    const params = new URLSearchParams({
+                        name: `${accountInfo.firstName} ${accountInfo.lastName}`,
+                        email: accountInfo.email,
+                        discipline: accountInfo.discipline || targetPackage || 'PT',
+                        package: targetPackage || 'PT'
+                    });
+                    
+                    window.location.href = `checkout.html?${params.toString()}`;
+                } else {
+                    // Prompt to create account
+                    const message = `
+                        <div style="text-align: center;">
+                            <p style="font-size: 1.1rem; margin-bottom: 1rem;">To purchase the <strong>${packageName}</strong> package ($${price}), please create your free account first.</p>
+                            <div class="modal-benefits">
+                                <ul>
+                                    <li>✓ Get <strong>$10 off immediately</strong></li>
+                                    <li>✓ Save your progress</li>
+                                    <li>✓ Pick up where you left off</li>
+                                </ul>
+                            </div>
+                        </div>
+                    `;
+                    
+                    const buttons = `
+                        <button class="modal-btn modal-btn-primary" onclick="createAccountNow('${packageName}', '${price}')">Create Account Now</button>
+                        <button class="modal-btn modal-btn-secondary" onclick="closeModal()">Maybe Later</button>
+                    `;
+                    
+                    showModal('Create Your Free Account', message, false, buttons);
+                }
+            });
+        });
+        
+        // Discipline-based package restrictions
+        function isDisciplineAllowedForPackage(userDiscipline, packageCode) {
+            const allowedMap = {
+                'PT': 'PT',
+                'PTA': 'PTA', 
+                'OT': 'OT',
+                'COTA': 'COTA'
+            };
+            return allowedMap[userDiscipline] === packageCode;
+        }
+        
+        function getAllowedPackageForDiscipline(discipline) {
+            return discipline; // Each discipline can only buy their own package
+        }
+        
+        function getDisciplineFullName(code) {
+            const names = {
+                'PT': 'Physical Therapist',
+                'PTA': 'Physical Therapist Assistant', 
+                'OT': 'Occupational Therapist',
+                'COTA': 'Certified Occupational Therapy Assistant'
+            };
+            return names[code] || code;
+        }
+        
+        // Update package display based on user discipline
+        function updatePackageDisplay() {
+            const accountInfo = localStorage.getItem('drtroyAccount');
+            if (!accountInfo) return;
+            
+            const userAccount = JSON.parse(accountInfo);
+            const userDiscipline = userAccount.discipline;
+            
+            document.querySelectorAll('.package-card').forEach(card => {
+                const button = card.querySelector('.select-package');
+                const packageName = button ? button.getAttribute('data-package') : null;
+                
+                if (!packageName) return;
+                
+                const packageMap = {
+                    'Physical Therapists': 'PT',
+                    'PT Assistants': 'PTA', 
+                    'Occupational Therapists': 'OT',
+                    'OT Assistants': 'COTA'
+                };
+                
+                const packageCode = packageMap[packageName];
+                const isAllowed = isDisciplineAllowedForPackage(userDiscipline, packageCode);
+                
+                if (!isAllowed) {
+                    // Dim the card and disable the button
+                    card.style.opacity = '0.5';
+                    card.style.pointerEvents = 'none';
+                    card.style.filter = 'grayscale(50%)';
+                    
+                    // Add restriction notice
+                    if (!card.querySelector('.restriction-notice')) {
+                        const notice = document.createElement('div');
+                        notice.className = 'restriction-notice';
+                        notice.style.cssText = `
+                            background: #fef2f2; 
+                            border: 1px solid #fca5a5; 
+                            border-radius: 4px; 
+                            padding: 0.5rem; 
+                            margin-top: 1rem; 
+                            font-size: 0.85rem; 
+                            color: #991b1b; 
+                            text-align: center;
+                        `;
+                        notice.innerHTML = `<strong>Restricted:</strong> Not available for ${getDisciplineFullName(userDiscipline)}s`;
+                        card.querySelector('.package-content').appendChild(notice);
+                    }
+                } else {
+                    // Highlight the allowed package
+                    card.style.border = '2px solid #22c55e';
+                    card.style.boxShadow = '0 4px 20px rgba(34, 197, 94, 0.15)';
+                    
+                    // Add "Your Package" indicator
+                    if (!card.querySelector('.your-package-indicator')) {
+                        const indicator = document.createElement('div');
+                        indicator.className = 'your-package-indicator';
+                        indicator.style.cssText = `
+                            background: #dcfce7; 
+                            border: 1px solid #22c55e; 
+                            border-radius: 4px; 
+                            padding: 0.5rem; 
+                            margin-top: 1rem; 
+                            font-size: 0.85rem; 
+                            color: #166534; 
+                            text-align: center; 
+                            font-weight: 600;
+                        `;
+                        indicator.innerHTML = `✓ Your ${getDisciplineFullName(userDiscipline)} Package`;
+                        card.querySelector('.package-content').appendChild(indicator);
+                    }
+                }
+            });
+        }
+
+        // Security & Validation Functions
+        function sanitizeInput(input) {
+            if (typeof input !== 'string') return '';
+            return input.trim().replace(/[<>]/g, '').substring(0, 200);
+        }
+
+        function validateEmail(email) {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailRegex.test(email) && email.length <= 254;
+        }
+
+        function validatePassword(password) {
+            const requirements = {
+                length: password.length >= 8,
+                lowercase: /[a-z]/.test(password),
+                uppercase: /[A-Z]/.test(password),
+                number: /[0-9]/.test(password),
+                special: /[^a-zA-Z0-9]/.test(password)
+            };
+            
+            const score = Object.values(requirements).filter(Boolean).length;
+            let strength = 'weak';
+            let color = '#e53e3e';
+            
+            if (score >= 4) {
+                strength = 'strong';
+                color = '#38a169';
+            } else if (score >= 3) {
+                strength = 'medium';
+                color = '#d69e2e';
+            }
+            
+            return { requirements, score, strength, color };
+        }
+
+        // Rate Limiting for Account Creation
+        class AccountCreationLimiter {
+            constructor() {
+                this.attempts = this.getStoredAttempts();
+                this.cleanupOldAttempts();
+            }
+
+            getStoredAttempts() {
+                try {
+                    const stored = localStorage.getItem('account_attempts');
+                    return stored ? JSON.parse(stored) : [];
+                } catch {
+                    return [];
+                }
+            }
+
+            storeAttempts() {
+                try {
+                    localStorage.setItem('account_attempts', JSON.stringify(this.attempts));
+                } catch {
+                    // Storage full or disabled
+                }
+            }
+
+            cleanupOldAttempts() {
+                const now = Date.now();
+                const maxAge = 60 * 60 * 1000; // 1 hour
+                this.attempts = this.attempts.filter(time => now - time < maxAge);
+                this.storeAttempts();
+            }
+
+            recordAttempt() {
+                this.attempts.push(Date.now());
+                this.storeAttempts();
+            }
+
+            isRateLimited() {
+                this.cleanupOldAttempts();
+                return this.attempts.length >= 3; // Max 3 attempts per hour
+            }
+        }
+
+        const accountLimiter = new AccountCreationLimiter();
+
+        // Real-time Password Validation
+        document.addEventListener('DOMContentLoaded', function() {
+            const passwordInput = document.getElementById('password');
+            const confirmInput = document.getElementById('confirmPassword');
+            const strengthDiv = document.getElementById('passwordStrength');
+            
+            if (passwordInput) {
+                passwordInput.addEventListener('input', function() {
+                    const password = this.value;
+                    if (password.length > 0) {
+                        const validation = validatePassword(password);
+                        strengthDiv.style.display = 'block';
+                        strengthDiv.style.backgroundColor = validation.color;
+                        strengthDiv.style.color = 'white';
+                        strengthDiv.textContent = `Password strength: ${validation.strength.toUpperCase()}`;
+                        
+                        if (validation.score < 3) {
+                            const missing = [];
+                            if (!validation.requirements.length) missing.push('8+ characters');
+                            if (!validation.requirements.lowercase) missing.push('lowercase');
+                            if (!validation.requirements.uppercase) missing.push('uppercase');
+                            if (!validation.requirements.number) missing.push('number');
+                            if (!validation.requirements.special) missing.push('symbol');
+                            strengthDiv.textContent += ` - Need: ${missing.join(', ')}`;
+                        }
+                    } else {
+                        strengthDiv.style.display = 'none';
+                    }
+                });
+            }
+            
+            if (confirmInput) {
+                confirmInput.addEventListener('input', function() {
+                    const password = passwordInput.value;
+                    const confirm = this.value;
+                    
+                    if (confirm.length > 0) {
+                        if (password === confirm) {
+                            this.style.borderColor = '#38a169';
+                            this.style.backgroundColor = '#f0fff4';
+                        } else {
+                            this.style.borderColor = '#e53e3e';
+                            this.style.backgroundColor = '#fef5f5';
+                        }
+                    } else {
+                        this.style.borderColor = 'var(--gray-100)';
+                        this.style.backgroundColor = 'white';
+                    }
+                });
+            }
+        });
+
+        // Secure Account Creation
+        async function handleAccountCreation(formData) {
+            const statusDiv = document.getElementById('accountCreationStatus');
+            
+            try {
+                // Show loading state
+                statusDiv.style.display = 'block';
+                statusDiv.style.backgroundColor = '#e6fffa';
+                statusDiv.style.color = '#047857';
+                statusDiv.textContent = '🔒 Creating secure account...';
+                
+                // Simulate account creation (in production, this would call your API)
+                await new Promise(resolve => setTimeout(resolve, 1500));
+                
+                // Create account data
+                const accountData = {
+                    id: 'user_' + Date.now(),
+                    firstName: formData.firstName,
+                    lastName: formData.lastName,
+                    email: formData.email,
+                    password: formData.password, // Store password for login verification
+                    discipline: formData.discipline,
+                    createdAt: new Date().toISOString(),
+                    isLoggedIn: true,
+                    hasDiscount: true, // $10 off for new accounts
+                    subscriptionStatus: 'free'
+                };
+                
+                // Store account (encrypted in production)
+                localStorage.setItem('drtroyAccount', JSON.stringify(accountData));
+                localStorage.setItem('userSession', JSON.stringify({
+                    userId: accountData.id,
+                    email: accountData.email,
+                    loginTime: Date.now(),
+                    expires: Date.now() + (7 * 24 * 60 * 60 * 1000) // 7 days
+                }));
+                
+                // DEBUG: Verify account was stored
+                const storedAccount = localStorage.getItem('drtroyAccount');
+                console.log('🔍 DEBUG - Account storage verification:');
+                console.log('  - Account saved to localStorage:', storedAccount ? 'YES' : 'NO');
+                console.log('  - Stored account email:', storedAccount ? JSON.parse(storedAccount).email : 'NONE');
+                console.log('  - Stored account password:', storedAccount ? (JSON.parse(storedAccount).password ? 'YES' : 'NO') : 'NONE');
+                
+                // Success state
+                statusDiv.style.backgroundColor = '#d4e6f1';
+                statusDiv.style.color = '#1e3a8a';
+                statusDiv.innerHTML = `
+                    <div>✅ <strong>Account created successfully!</strong></div>
+                    <div style="font-size: 0.9rem; margin-top: 0.5rem;">
+                        Welcome ${formData.firstName}! You're now logged in with $10 discount applied.
+                    </div>
+                `;
+                
+                // Log security event and debug info
+                console.log(`🔒 Account created: ${formData.email.substring(0, 3)}**** (${formData.discipline})`);
+                console.log('🔍 Debug - Password stored:', accountData.password ? 'YES' : 'NO');
+                console.log('🔍 Debug - Account data:', { ...accountData, password: accountData.password ? '[HIDDEN]' : 'MISSING' });
+                
+                // Update UI elements immediately after account creation
+                setTimeout(() => {
+                    updatePackageDisplay();
+                    updateLoginButton();
+                }, 100); // Small delay to ensure DOM is ready
+                
+                // Check if user selected a package before creating account
+                const selectedPackage = localStorage.getItem('selectedPackage');
+                
+                if (selectedPackage) {
+                    // User came from package selection - redirect to checkout
+                    const packageData = JSON.parse(selectedPackage);
+                    
+                    // Map package names to discipline codes  
+                    const packageMap = {
+                        'Physical Therapists': 'PT',
+                        'PT Assistants': 'PTA',
+                        'Occupational Therapists': 'OT', 
+                        'OT Assistants': 'COTA'
+                    };
+                    
+                    const packageCode = packageMap[packageData.name] || formData.discipline;
+                    
+                    // Store package info for checkout
+                    localStorage.setItem('selectedPackageCode', packageCode);
+                    localStorage.setItem('packagePrice', packageData.price);
+                    
+                    // Clear the selected package
+                    localStorage.removeItem('selectedPackage');
+                    
+                    // Redirect to checkout with parameters
+                    setTimeout(() => {
+                        const params = new URLSearchParams({
+                            name: `${formData.firstName} ${formData.lastName}`,
+                            email: formData.email,
+                            discipline: formData.discipline,
+                            package: packageCode
+                        });
+                        
+                        window.location.href = `checkout.html?${params.toString()}`;
+                    }, 2000);
+                } else {
+                    // Regular account creation - show packages
+                    setTimeout(() => {
+                        // Ensure UI is updated before scrolling
+                        updatePackageDisplay();
+                        updateLoginButton();
+                        
+                        document.getElementById('packages').scrollIntoView({ 
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                        
+                        // Show welcome message
+                        setTimeout(() => {
+                            // Final UI update before modal
+                            updatePackageDisplay();
+                            updateLoginButton();
+                            
+                            showModal('Welcome to DrTroy!', `
+                                <div style="text-align: center;">
+                                    <h3 style="color: var(--navy); margin-bottom: 1rem;">Account Created Successfully! 🎉</h3>
+                                    <div style="background: #d4e6f1; padding: 1rem; border-radius: 8px; margin: 1rem 0;">
+                                        <strong>Your Benefits:</strong>
+                                        <ul style="text-align: left; margin: 0.5rem 0; padding-left: 1.5rem;">
+                                            <li>🎯 $10 discount applied</li>
+                                            <li>💾 Course progress will be saved</li>
+                                            <li>🔒 Secure, HIPAA-level encryption</li>
+                                        </ul>
+                                    </div>
+                                    <p><strong>Next Step:</strong> Choose your CE package below!</p>
+                                </div>
+                            `, true);
+                        }, 2000);
+                    }, 3000);
+                }
+                
+                return true;
+                
+            } catch (error) {
+                console.error('Account creation failed:', error);
+                statusDiv.style.backgroundColor = '#fef5f5';
+                statusDiv.style.color = '#c53030';
+                statusDiv.textContent = '❌ Account creation failed. Please try again.';
+                return false;
+            }
+        }
+
+        // Form Submission Handler
+        document.getElementById('accountCreationForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            // Check rate limiting
+            if (accountLimiter.isRateLimited()) {
+                showModal('Too Many Attempts', 'Please wait an hour before creating another account. This helps prevent spam and keeps everyone secure.', false);
+                return;
+            }
+            
+            // Get and validate form data
+            const formData = {
+                firstName: sanitizeInput(document.getElementById('firstName').value),
+                lastName: sanitizeInput(document.getElementById('lastName').value),
+                email: sanitizeInput(document.getElementById('email').value.toLowerCase()),
+                discipline: document.getElementById('discipline').value,
+                password: document.getElementById('password').value,
+                confirmPassword: document.getElementById('confirmPassword').value
+            };
+            
+            // Debug: Check if password was captured from form
+            console.log('🔍 Debug - Form password captured:', formData.password ? 'YES' : 'NO');
+            
+            // Validation
+            const errors = [];
+            
+            if (!formData.firstName || formData.firstName.length < 1) {
+                errors.push('First name is required');
+            }
+            if (!formData.lastName || formData.lastName.length < 1) {
+                errors.push('Last name is required');
+            }
+            if (!validateEmail(formData.email)) {
+                errors.push('Valid email address is required');
+            }
+            if (!formData.discipline) {
+                errors.push('Please select your discipline');
+            }
+            
+            const passwordValidation = validatePassword(formData.password);
+            if (passwordValidation.score < 3) {
+                errors.push('Password must be stronger (need 8+ chars, mixed case, numbers, symbols)');
+            }
+            if (formData.password !== formData.confirmPassword) {
+                errors.push('Passwords do not match');
+            }
+            
+            // Check if account already exists
+            const existingAccount = localStorage.getItem('drtroyAccount');
+            if (existingAccount) {
+                const accountData = JSON.parse(existingAccount);
+                if (accountData.email === formData.email) {
+                    errors.push('An account with this email already exists');
+                }
+            }
+            
+            if (errors.length > 0) {
+                showModal('Account Creation Error', `
+                    <div style="text-align: left;">
+                        <p style="margin-bottom: 1rem;">Please fix the following issues:</p>
+                        <ul style="color: #c53030;">
+                            ${errors.map(error => `<li style="margin: 0.5rem 0;">${error}</li>`).join('')}
+                        </ul>
+                    </div>
+                `, false);
+                return;
+            }
+            
+            // Record attempt
+            accountLimiter.recordAttempt();
+            
+            // Create account
+            const success = await handleAccountCreation(formData);
+            
+            if (success) {
+                // Clear form
+                this.reset();
+                document.getElementById('passwordStrength').style.display = 'none';
+            }
+        });
+
+        // Captcha variables
+        let captchaAnswer = 0;
+
+        // Generate new captcha question
+        function generateCaptcha() {
+            const num1 = Math.floor(Math.random() * 10) + 1;
+            const num2 = Math.floor(Math.random() * 10) + 1;
+            document.getElementById('captchaNum1').textContent = num1;
+            document.getElementById('captchaNum2').textContent = num2;
+            captchaAnswer = num1 + num2;
+            document.getElementById('captchaAnswer').value = '';
+        }
+
+        // Refresh captcha
+        function refreshCaptcha() {
+            generateCaptcha();
+        }
+
+        // Contact Form Handler
+        document.getElementById('contactForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const formData = {
+                name: document.getElementById('contactName').value,
+                email: document.getElementById('contactEmail').value,
+                subject: document.getElementById('contactSubject').value,
+                message: document.getElementById('contactMessage').value
+            };
+            
+            const userCaptchaAnswer = parseInt(document.getElementById('captchaAnswer').value);
+            
+            // Basic validation
+            if (!formData.name || !formData.email || !formData.subject || !formData.message) {
+                showContactMessage('Please fill in all required fields.', true);
+                return;
+            }
+            
+            // Captcha validation
+            if (!userCaptchaAnswer || userCaptchaAnswer !== captchaAnswer) {
+                showContactMessage('Please solve the security question correctly.', true);
+                document.getElementById('captchaAnswer').focus();
+                return;
+            }
+            
+            // Disable submit button
+            const submitBtn = e.target.querySelector('.contact-submit');
+            const originalText = submitBtn.textContent;
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Sending...';
+            
+            try {
+                // Simulate sending email (in a real app, this would be server-side)
+                await new Promise(resolve => setTimeout(resolve, 2000));
+                
+                // In a real implementation, you'd send this to your backend:
+                // const response = await fetch('/send-contact-email', {
+                //     method: 'POST',
+                //     headers: { 'Content-Type': 'application/json' },
+                //     body: JSON.stringify(formData)
+                // });
+                
+                // For now, we'll show success and log the data
+                console.log('Contact form data submitted:', formData);
+                
+                // Show success message
+                showContactMessage('Thank you! Your message has been sent successfully. We\'ll get back to you within 24 hours.', false);
+                
+                // Clear form and regenerate captcha
+                this.reset();
+                generateCaptcha();
+                
+            } catch (error) {
+                console.error('Contact form error:', error);
+                showContactMessage('Sorry, there was an error sending your message. Please try again later.', true);
+                generateCaptcha(); // Reset captcha on error
+            } finally {
+                // Re-enable submit button
+                submitBtn.disabled = false;
+                submitBtn.textContent = originalText;
+            }
+        });
+
+        function showContactMessage(message, isError) {
+            const successEl = document.getElementById('contactSuccess');
+            const errorEl = document.getElementById('contactError');
+            
+            if (isError) {
+                errorEl.textContent = '❌ ' + message;
+                errorEl.style.display = 'block';
+                successEl.style.display = 'none';
+            } else {
+                successEl.textContent = '✅ ' + message;
+                successEl.style.display = 'block';
+                errorEl.style.display = 'none';
+            }
+            
+            // Auto-hide after 7 seconds
+            setTimeout(() => {
+                successEl.style.display = 'none';
+                errorEl.style.display = 'none';
+            }, 7000);
+        }
+
+        // Update login button and UI based on session status
+        function updateLoginButton() {
+            const loginButton = document.getElementById('loginLink');
+            const myAccountButton = document.getElementById('myAccountLink');
+            const hasAccount = localStorage.getItem('drtroyAccount');
+            const hasSession = localStorage.getItem('userSession');
+            
+            if (hasAccount && hasSession) {
+                const accountInfo = JSON.parse(hasAccount);
+                
+                // Hide login button, show logout and my account
+                loginButton.textContent = 'Log Out';
+                loginButton.onclick = function(e) {
+                    e.preventDefault();
+                    handleLogout();
+                };
+                
+                // Show My Account button
+                myAccountButton.style.display = 'inline-block';
+                myAccountButton.href = 'my-account.html';
+                
+                // Hide account creation section
+                updateUIForLoggedInUser(accountInfo);
+            } else {
+                // Show login button, hide my account
+                loginButton.textContent = 'Log In';
+                loginButton.onclick = function(e) {
+                    e.preventDefault();
+                    showLoginModal();
+                };
+                myAccountButton.style.display = 'none';
+                
+                // Show account creation section
+                updateUIForLoggedOutUser();
+            }
+        }
+        
+        // Update UI elements when user is logged in
+        function updateUIForLoggedInUser(accountInfo) {
+            const optinSection = document.querySelector('.optin');
+            if (optinSection) {
+                optinSection.style.display = 'none';
+            }
+        }
+        
+        // Update UI elements when user is logged out
+        function updateUIForLoggedOutUser() {
+            const optinSection = document.querySelector('.optin');
+            if (optinSection) {
+                optinSection.style.display = 'block';
+            }
+        }
+        
+        // Show My Account modal
+        function showMyAccountModal(accountInfo) {
+            const message = `
+                <div style="text-align: center;">
+                    <h3 style="color: var(--navy); margin-bottom: 1rem;">Welcome, ${accountInfo.firstName}!</h3>
+                    <div style="background: #f8f9fa; padding: 1.5rem; border-radius: 8px; margin: 1rem 0; text-align: left;">
+                        <p><strong>Name:</strong> ${accountInfo.firstName} ${accountInfo.lastName || ''}</p>
+                        <p><strong>Email:</strong> ${accountInfo.email}</p>
+                        <p><strong>Discipline:</strong> ${getDisciplineFullName(accountInfo.discipline)}</p>
+                        <p><strong>Account Status:</strong> Active</p>
+                        <p><strong>Member Since:</strong> ${new Date(accountInfo.createdAt).toLocaleDateString()}</p>
+                    </div>
+                    <div style="background: #dcfce7; padding: 1rem; border-radius: 8px; margin: 1rem 0;">
+                        <p><strong>Your Benefits:</strong></p>
+                        <ul style="text-align: left; margin: 0.5rem 0; padding-left: 1.5rem;">
+                            <li>🎯 $10 discount</li>
+                            <li>💾 Course progress tracking</li>
+                            <li>📜 Certificate downloads</li>
+                            <li>🔒 Secure, HIPAA-level encryption</li>
+                        </ul>
+                    </div>
+                </div>
+            `;
+            
+            const buttons = `
+                <button class="modal-btn modal-btn-secondary" onclick="closeModal()">Close</button>
+            `;
+            
+            showModal('My Account', message, true, buttons);
+        }
+        
+        // Handle logout
+        function handleLogout() {
+            // Clear ONLY session data, keep account for future login
+            // DO NOT REMOVE drtroyAccount - users need this to log back in!
+            localStorage.removeItem('userSession');
+            localStorage.removeItem('selectedPackage');
+            localStorage.removeItem('packagePrice');
+            localStorage.removeItem('selectedPackageCode');
+            localStorage.removeItem('customerName');
+            localStorage.removeItem('customerEmail');
+            localStorage.removeItem('customerDiscipline');
+            
+            console.log('🔍 DEBUG - Logout: Account kept for future login, session cleared');
+            
+            // Update UI elements
+            updateLoginButton();
+            updatePackageDisplay();
+            
+            // Show logout confirmation
+            showModal('Logged Out', 'You have been successfully logged out. You can now create a new account or log in with existing credentials.', false, 
+                '<button class="modal-btn modal-btn-primary" onclick="closeModal()">OK</button>');
+        }
+        // Initialize captcha, package restrictions, and login button when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            generateCaptcha();
+            updatePackageDisplay();
+            updateLoginButton();
+        });
+    </script>
+
+    <!-- Duplicate footer removed -->
+</body>
+</html>

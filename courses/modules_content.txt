@@ -1,0 +1,1422 @@
+<div class="module-header">
+<h1>Module 1: Introduction to MSK Evaluation (20 minutes)</h1>
+</div>
+
+<h2>1.1 Examination Model</h2>
+
+<div class="figure-box">
+<span class="figure-number">FIGURE 1: Examination Sequence Flowchart (SOAP Format)</span>
+<img src="images/figure_1_examination_sequence.svg" alt="Flowchart showing SOAP examination sequence">
+<div class="figure-caption">Illustration showing the systematic examination process: Subjective (patient history, pain assessment, functional limitations), Objective (observation, ROM, special tests, palpation), Assessment (diagnosis, impairments), and Plan (interventions, goals). Arrows indicate the cyclical nature of reassessment.</div>
+</div>
+
+<p>The systematic examination follows four phases: Subjective, Objective, Assessment, and Plan (SOAP).</p>
+
+<h3>Subjective Examination Components</h3>
+<ul>
+<li>Chief complaint and history of present illness</li>
+<li>Pain assessment (location, quality, intensity, aggravating/relieving factors)</li>
+<li>Functional limitations and patient goals</li>
+<li>Medical history, medications, social history</li>
+</ul>
+
+<h3>Objective Examination Components</h3>
+<ul>
+<li>Observation (posture, gait, functional movements)</li>
+<li>Active and passive range of motion</li>
+<li>Resisted isometric testing</li>
+<li>Special tests</li>
+<li>Palpation</li>
+<li>Neurological examination when indicated</li>
+</ul>
+
+<h2>1.2 Red Flags Screening</h2>
+
+<table>
+<tr><th>Red Flag</th><th>Potential Pathology</th><th>Action</th></tr>
+<tr><td>Bowel/bladder dysfunction with back pain</td><td>Cauda equina syndrome</td><td>EMERGENCY ED referral</td></tr>
+<tr><td>Saddle anesthesia</td><td>Cauda equina syndrome</td><td>EMERGENCY ED referral</td></tr>
+<tr><td>Progressive neurological deficits</td><td>Spinal cord compression</td><td>Urgent referral</td></tr>
+<tr><td>Unexplained weight loss >10%</td><td>Malignancy</td><td>Immediate referral</td></tr>
+<tr><td>Night pain unrelieved by position</td><td>Tumor, infection, fracture</td><td>Immediate imaging</td></tr>
+<tr><td>Fever with musculoskeletal pain</td><td>Infection</td><td>Urgent evaluation</td></tr>
+<tr><td>History of cancer with new pain</td><td>Metastatic disease</td><td>Immediate imaging</td></tr>
+<tr><td>Trauma age >65</td><td>Fracture</td><td>Immediate imaging</td></tr>
+</table>
+
+<div class="figure-box">
+<span class="figure-number">FIGURE 2: Red Flags Decision Tree</span>
+<img src="images/figure_2_red_flags.svg" alt="Decision tree for red flag screening">
+<div class="figure-caption">Flowchart diagram showing the decision-making process for red flag screening. Starting with initial patient presentation, branches lead to various red flag categories (neurological, systemic, oncological, traumatic) with corresponding actions: emergency referral, urgent imaging, or continue with standard examination.</div>
+</div>
+
+<div class="caution-box">
+<strong>Documentation:</strong> Always document red flag screening: "Patient screened for red flags including [list]. No red flags identified."
+</div>
+
+<h2>1.3 Pain Mechanisms</h2>
+
+<div class="figure-box">
+<span class="figure-number">FIGURE 3: Pain Mechanism Classification Diagram</span>
+<img src="images/figure_3_pain_mechanism.svg" alt="Classification diagram of pain mechanisms">
+<div class="figure-caption">Venn diagram or classification chart showing three primary pain mechanisms: Nociceptive (tissue damage, localized, mechanical pattern), Neuropathic (nervous system lesion, dermatomal, burning/shooting), and Nociplastic (altered processing, widespread, disproportionate). Include clinical examples and distinguishing features for each.</div>
+</div>
+
+<h3>Nociceptive Pain</h3>
+<p>From actual tissue damage. Localized, mechanical pattern, responds to treatment.</p>
+
+<h3>Neuropathic Pain</h3>
+<p>From nervous system lesion. Burning/shooting, dermatomal distribution, night symptoms.</p>
+
+<h3>Nociplastic Pain</h3>
+<p>Altered pain processing. Widespread, disproportionate, psychosocial factors.</p>
+
+<div class="figure-box">
+<span class="figure-number">FIGURE 4: Tissue Healing Phases Timeline</span>
+<img src="images/figure_4_tissue_healing.svg" alt="Timeline of tissue healing phases">
+<div class="figure-caption">Horizontal timeline showing the three phases of tissue healing: Inflammatory phase (0-6 days), Proliferative phase (3-21 days), and Remodeling phase (21 days to 2+ years). Include key cellular events, clinical presentation, and intervention considerations for each phase.</div>
+</div>
+
+<div class="divider">***</div>
+
+<div class="module-header">
+<h1>Module 2: Cervical Spine (18 minutes)</h1>
+</div>
+
+<h2>2.1 Anatomy</h2>
+
+<div class="figure-box">
+<span class="figure-number">FIGURE 5: Cervical Spine Anatomy — Gray's Anatomy Plates (1918)</span>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin: 1rem 0;">
+<div style="text-align: center;">
+<img src="images/gray86_atlas.png" alt="Atlas (C1)" style="width: 100%; max-width: 250px; height: auto; border: 1px solid #ddd;">
+<div style="font-size: 0.85rem; margin-top: 0.5rem;"><strong>Plate 86:</strong> Atlas (C1)</div>
+</div>
+<div style="text-align: center;">
+<img src="images/gray87_axis_above.png" alt="Axis (C2) from above" style="width: 100%; max-width: 250px; height: auto; border: 1px solid #ddd;">
+<div style="font-size: 0.85rem; margin-top: 0.5rem;"><strong>Plate 87:</strong> Axis (C2) — superior view</div>
+</div>
+<div style="text-align: center;">
+<img src="images/gray88_axis_side.png" alt="Axis (C2) from side" style="width: 100%; max-width: 250px; height: auto; border: 1px solid #ddd;">
+<div style="font-size: 0.85rem; margin-top: 0.5rem;"><strong>Plate 88:</strong> Axis (C2) — lateral view</div>
+</div>
+<div style="text-align: center;">
+<img src="images/gray85_cervical_vertebra_typical.png" alt="Typical cervical vertebra" style="width: 100%; max-width: 250px; height: auto; border: 1px solid #ddd;">
+<div style="font-size: 0.85rem; margin-top: 0.5rem;"><strong>Plate 85:</strong> Typical vertebra (C3-C6)</div>
+</div>
+<div style="text-align: center;">
+<img src="images/gray89_vertebra_prominens.png" alt="Vertebra prominens (C7)" style="width: 100%; max-width: 250px; height: auto; border: 1px solid #ddd;">
+<div style="font-size: 0.85rem; margin-top: 0.5rem;"><strong>Plate 89:</strong> Vertebra prominens (C7)</div>
+</div>
+</div>
+<div class="figure-caption">Classic anatomical illustrations from Henry Gray's <em>Anatomy of the Human Body</em>, 20th edition (1918). Plate 86: Atlas (C1) — supports the skull; Plate 87-88: Axis (C2) — features the dens for rotational movement; Plate 85: Typical cervical vertebra (C3-C6); Plate 89: Vertebra prominens (C7) — long spinous process landmark. Public domain.</div>
+</div>
+
+<h3>Upper Cervical (C0-C2)</h3>
+<ul>
+<li>C0-C1: 50% of flexion/extension</li>
+<li>C1-C2: 50% of rotation via dens pivot</li>
+<li>Vertebral arteries vulnerable to manipulation</li>
+</ul>
+
+<h3>Lower Cervical (C3-C7)</h3>
+<ul>
+<li>Discs C2-C7</li>
+<li>Uncovertebral joints guide movement</li>
+<li>Facet joints at 45 degrees</li>
+</ul>
+
+<h2>2.2 Cervical ROM</h2>
+<table>
+<tr><th>Movement</th><th>Normal</th><th>Functional</th></tr>
+<tr><td>Flexion</td><td>0-80</td><td>0-45</td></tr>
+<tr><td>Extension</td><td>0-70</td><td>0-45</td></tr>
+<tr><td>Side bend</td><td>0-45</td><td>0-30</td></tr>
+<tr><td>Rotation</td><td>0-80</td><td>0-60</td></tr>
+</table>
+
+<h2>2.3 Special Tests</h2>
+
+<div class="test-box">
+<strong>Spurling's Test (Foraminal Compression)</strong><br>
+Purpose: Cervical nerve root compression<br>
+Technique: Extend, laterally flex, rotate toward symptomatic side; apply axial compression<br>
+Positive: Radicular arm symptoms<br>
+Accuracy: Sens 30%, Spec 93% (highly specific)<br>
+Contraindications: Severe osteoporosis, fracture, vertebral artery insufficiency
+</div>
+
+<div class="figure-box">
+<span class="figure-number">FIGURE 6: Spurling's Test Illustration</span>
+<img src="images/figure_7_spurling.svg?v=3" alt="Spurling's test illustration">
+<div class="figure-caption">Illustration showing examiner performing Spurling's test on seated patient. Patient's neck is extended, laterally flexed, and rotated toward the symptomatic side while examiner applies gentle axial compression through the head. Arrows indicate direction of movement and force application.</div>
+</div>
+
+<div class="test-box">
+<strong>Distraction Test</strong><br>
+Purpose: Confirm radiculopathy by relieving compression<br>
+Technique: Supine; gently lift head to distract spine<br>
+Positive: Reduction of radicular symptoms<br>
+Accuracy: Sens 44%, Spec 90%
+</div>
+
+<div class="figure-box">
+<span class="figure-number">FIGURE 7: Cervical Distraction Test Illustration</span>
+<img src="images/figure_distraction_test.svg" alt="Cervical distraction test illustration">
+<div class="figure-caption">Illustration showing therapist performing cervical distraction test. One hand supports the occiput while the other hand controls the chin/jaw. Upward traction opens intervertebral foramina, reducing nerve root compression and relieving radicular symptoms.</div>
+</div>
+
+<div class="test-box">
+</div>
+
+<div class="test-box">
+<strong>Vertebral Artery Test</strong><br>
+Purpose: Screen before manipulation<br>
+Technique: Supine; passively extend, rotate, side-bend; hold 10-30 seconds<br>
+Positive: Nystagmus, dizziness, nausea, visual changes, dysarthria<br>
+Note: Poor sensitivity but standard precaution
+</div>
+
+<h2>2.4 Cervical Radiculopathy by Level</h2>
+<table>
+<tr><th>Level</th><th>Motor</th><th>Sensory</th><th>Reflex</th></tr>
+<tr><td>C5</td><td>Shoulder abd, elbow flex</td><td>Lateral arm</td><td>Biceps</td></tr>
+<tr><td>C6</td><td>Wrist ext, elbow flex</td><td>Lateral forearm, thumb</td><td>Brachioradialis</td></tr>
+<tr><td>C7</td><td>Elbow ext, wrist flex</td><td>Posterior arm, middle finger</td><td>Triceps</td></tr>
+<tr><td>C8</td><td>Finger flex, hand intrinsics</td><td>Ulnar forearm, little finger</td><td>None</td></tr>
+<tr><td>T1</td><td>Hand intrinsics</td><td>Medial arm</td><td>None</td></tr>
+</table>
+
+<div class="figure-box">
+<span class="figure-number">FIGURE 8: Upper Extremity Dermatomes (C5-T1)</span>
+<img src="images/figure_8_gray_dermatomes_anterior.png" alt="Gray's Anatomy upper extremity dermatome map">
+<div class="figure-caption">Gray's Anatomy Plate 812: Segmental distribution of the cutaneous nerves of the right upper extremity, anterior view. Public domain image from Gray's Anatomy, 20th edition (1918). Shows dermatomal distribution of C5-T1 nerve roots.</div>
+</div>
+
+<div class="divider">***</div>
+
+<div class="module-header">
+<h1>Module 3: Thoracic Spine (15 minutes)</h1>
+</div>
+
+<h2>3.1 Anatomy</h2>
+
+<div class="figure-box">
+<span class="figure-number">FIGURE 9: Thoracic Spine Anatomy — Gray's Anatomy Plates (1918)</span>
+<div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 1rem; margin: 1rem 0;">
+<div style="text-align: center; flex: 0 1 auto;">
+<img src="images/gray90_thoracic_vertebra.png" alt="Thoracic vertebra" style="width: 100%; max-width: 400px; height: auto; border: 1px solid #ddd;">
+<div style="font-size: 0.85rem; margin-top: 0.5rem;"><strong>Plate 90:</strong> Thoracic vertebra</div>
+</div>
+<div style="text-align: center; flex: 0 1 auto;">
+<img src="images/gray91_peculiar_thoracic.png" alt="Peculiar thoracic vertebrae" style="width: 100%; max-width: 400px; height: auto; border: 1px solid #ddd;">
+<div style="font-size: 0.85rem; margin-top: 0.5rem;"><strong>Plate 91:</strong> Peculiar thoracic vertebrae</div>
+</div>
+</div>
+<div class="figure-caption">Classic anatomical illustrations from Henry Gray's <em>Anatomy of the Human Body</em>, 20th edition (1918). Plate 90: Typical thoracic vertebra with costal facets; Plate 91: Comparative view showing variations at different thoracic levels (T1 transitional, T10-T12 lumbar-like characteristics). Public domain.</div>
+</div>
+
+<ul>
+<li>Rib articulations T1-T12</li>
+<li>Kyphosis 20-45 degrees normal</li>
+<li>Facet joints frontal plane = more rotation, less flex/ext</li>
+<li>Narrowest spinal canal region</li>
+</ul>
+
+<h2>3.2 Thoracic ROM</h2>
+<table>
+<tr><th>Movement</th><th>Range</th></tr>
+<tr><td>Flexion</td><td>20-45</td></tr>
+<tr><td>Extension</td><td>15-25</td></tr>
+<tr><td>Side bend</td><td>20-40 each</td></tr>
+<tr><td>Rotation</td><td>30-35 each (greatest in spine)</td></tr>
+</table>
+
+<h2>3.3 Special Tests</h2>
+
+<div class="test-box">
+<strong>Thoracic Rotation Test</strong><br>
+Purpose: Assess thoracic mobility<br>
+Technique: Seated, arms crossed; rotate trunk while stabilizing pelvis<br>
+Significance: Restriction indicates hypomobility
+</div>
+
+<div class="test-box">
+<strong>First Rib Mobility Test</strong><br>
+Purpose: Assess first rib hypomobility (common in TOS)<br>
+Technique: Supine; palpate first rib anterolateral to T1; assess mobility with respiration
+</div>
+
+<div class="caution-box">
+<strong>Thoracic Differential Diagnosis:</strong> Thoracic pain can mimic cardiac, pulmonary, GI pathology. Screen for chest pressure, SOB, nausea, fever.
+</div>
+
+<div class="divider">***</div>
+
+<div class="module-header">
+<h1>Module 4: Lumbar Spine (20 minutes)</h1>
+</div>
+
+<h2>4.1 Anatomy</h2>
+
+<div class="figure-box">
+<span class="figure-number">FIGURE 10: Lumbar Spine Anatomy — Gray's Anatomy Plates (1918)</span>
+<div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 1rem; margin: 1rem 0;">
+<div style="text-align: center; flex: 0 1 auto;">
+<img src="images/gray92_lumbar_side.png" alt="Lumbar vertebra from the side" style="width: 100%; max-width: 400px; height: auto; border: 1px solid #ddd;">
+<div style="font-size: 0.85rem; margin-top: 0.5rem;"><strong>Plate 92:</strong> Lumbar vertebra from the side</div>
+</div>
+<div style="text-align: center; flex: 0 1 auto;">
+<img src="images/gray93_lumbar_above_behind.png" alt="Lumbar vertebra from above and behind" style="width: 100%; max-width: 400px; height: auto; border: 1px solid #ddd;">
+<div style="font-size: 0.85rem; margin-top: 0.5rem;"><strong>Plate 93:</strong> Lumbar vertebra from above and behind</div>
+</div>
+<div style="text-align: center; flex: 0 1 auto;">
+<img src="images/gray94_lumbar_above.png" alt="Lumbar vertebra from above" style="width: 100%; max-width: 400px; height: auto; border: 1px solid #ddd;">
+<div style="font-size: 0.85rem; margin-top: 0.5rem;"><strong>Plate 94:</strong> Lumbar vertebra from above</div>
+</div>
+</div>
+<div class="figure-caption">Gray's Anatomy (1918) plates showing lumbar vertebra anatomy. Plate 92 (lateral view) demonstrates the massive kidney-shaped vertebral body designed for weight bearing, long spinous process, and thick transverse processes. Plate 93 (superior-posterior oblique) shows the vertebral arch structures: thick pedicles, broad laminae, and triangular vertebral foramen. Plate 94 (superior view) reveals the large central canal accommodating the cauda equina and the medially-facing superior articular facets. <em>Source: Gray's Anatomy, 20th ed. (1918), illustrated by Henry Vandyke Carter. Public domain.</em></div>
+</div>
+
+<ul>
+<li>Five vertebrae (L1-L5)</li>
+<li>Large vertebral bodies for weight bearing</li>
+<li>Thickest discs in spine (1/3 of lumbar height)</li>
+<li>Facet joints sagittal plane = flex/ext, limited rotation</li>
+</ul>
+
+<h2>4.2 Lumbar Nerve Roots</h2>
+<table>
+<tr><th>Level</th><th>Motor</th><th>Sensory</th><th>Reflex</th></tr>
+<tr><td>L3</td><td>Knee extension</td><td>Medial knee</td><td>Patellar</td></tr>
+<tr><td>L4</td><td>Ankle dorsiflexion</td><td>Medial leg/foot</td><td>Patellar</td></tr>
+<tr><td>L5</td><td>Great toe extension, hip abd</td><td>Lateral leg, dorsum foot</td><td>Medial hamstring</td></tr>
+<tr><td>S1</td><td>Ankle plantarflexion, hip ext</td><td>Lateral foot, sole</td><td>Achilles</td></tr>
+</table>
+
+<div class="figure-box">
+<span class="figure-number">FIGURE 11: Lumbosacral Plexus and Dermatomes — Gray's Anatomy Plates (1918)</span>
+<div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 1rem; margin: 1rem 0;">
+<div style="text-align: center; flex: 0 1 auto;">
+<img src="images/gray822_lumbar_plexus.png" alt="Lumbar plexus plan" style="width: 100%; max-width: 500px; height: auto; border: 1px solid #ddd;">
+<div style="font-size: 0.85rem; margin-top: 0.5rem;"><strong>Plate 822:</strong> Plan of Lumbar Plexus</div>
+</div>
+<div style="text-align: center; flex: 0 1 auto;">
+<img src="images/gray828_sacral_plexus.png" alt="Sacral and pudendal plexuses" style="width: 100%; max-width: 500px; height: auto; border: 1px solid #ddd;">
+<div style="font-size: 0.85rem; margin-top: 0.5rem;"><strong>Plate 828:</strong> Plan of Sacral and Pudendal Plexuses</div>
+</div>
+<div style="text-align: center; flex: 0 1 auto;">
+<img src="images/gray831_dermatomes_posterior.png" alt="Lower limb dermatomes posterior view" style="width: 100%; max-width: 500px; height: auto; border: 1px solid #ddd;">
+<div style="font-size: 0.85rem; margin-top: 0.5rem;"><strong>Plate 831:</strong> Cutaneous Nerves — Posterior View</div>
+</div>
+</div>
+<div class="figure-caption">Gray's Anatomy (1918) plates showing the lumbosacral nervous system. Plate 822 illustrates the lumbar plexus formation from L1-L4 roots with branches: iliohypogastric, ilioinguinal, genitofemoral, lateral femoral cutaneous, femoral, and obturator nerves. Plate 828 shows the sacral plexus (L4-S4) giving rise to superior/inferior gluteal nerves, posterior femoral cutaneous nerve, sciatic nerve (tibial and common peroneal divisions), and pudendal nerve. Plate 831 displays the segmental dermatome distribution of the posterior lower extremity. <em>Source: Gray's Anatomy, 20th ed. (1918), illustrated by Henry Vandyke Carter. Public domain.</em></div>
+</div>
+
+<h2>4.3 Special Tests</h2>
+
+<div class="test-box">
+<strong>Straight Leg Raise (SLR)</strong><br>
+Purpose: Lumbar radiculopathy, nerve root tension<br>
+Technique: Supine; passively lift extended leg by ankle<br>
+Positive: Radicular pain 30-70 degrees<br>
+Accuracy: Sens 91%, Spec 26% (highly sensitive, poorly specific)<br>
+Crossed SLR (raise unaffected leg produces symptoms): Sens 29%, Spec 88% (highly specific)
+</div>
+
+<div class="figure-box">
+<span class="figure-number">FIGURE 12: Straight Leg Raise Test</span>
+<img src="images/figure_13_straight_leg_raise.png?v=3" alt="Demonstration of straight leg raise test">
+<div class="figure-caption">Illustration showing supine patient with examiner performing straight leg raise test. Patient's leg is lifted with knee extended while examiner monitors for radicular symptoms. Include angle indicator showing 30-70 degree range where positive findings typically occur. Show both standard SLR and crossed SLR variations.</div>
+</div>
+
+<div class="test-box">
+<strong>Slump Test</strong><br>
+Purpose: Neural tension (more sensitive for central disc)<br>
+Technique: Seated slump with progressive cervical flexion, knee extension, ankle dorsiflexion<br>
+Positive: Symptom reproduction; relieved with cervical extension
+</div>
+
+<div class="figure-box">
+<span class="figure-number">FIGURE 13: Slump Test Demonstration</span>
+<img src="images/figure_slump_test.png?v=3" alt="Demonstration of slump test positions">
+<div class="figure-caption">Sequential illustrations showing the slump test progression: (1) seated neutral, (2) thoracic/lumbar flexion (slump), (3) cervical flexion, (4) knee extension, (5) ankle dorsiflexion. Include the sensitizing maneuver of cervical extension to relieve symptoms, confirming neural tension as the pain source.</div>
+</div>
+
+<div class="test-box">
+<strong>Prone Instability Test</strong><br>
+Purpose: Identify patients who may benefit from stabilization<br>
+Technique: Prone; passive extension to pain; then patient lifts legs activating stabilizers<br>
+Positive: Pain reduces with muscle activation
+</div>
+
+<h2>4.4 Low Back Pain Classification</h2>
+<table>
+<tr><th>Category</th><th>Percentage</th></tr>
+<tr><td>Nonspecific mechanical</td><td>85-90%</td></tr>
+<tr><td>Radiculopathy (sciatica)</td><td>5-10%</td></tr>
+<tr><td>Serious pathology</td><td>1-2%</td></tr>
+<tr><td>Inflammatory</td><td>&lt;1%</td></tr>
+</table>
+
+<div class="divider">***</div>
+
+<div class="module-header">
+<h1>Module 5: Sacroiliac Joint (12 minutes)</h1>
+</div>
+
+<h2>5.1 Anatomy</h2>
+
+<div class="figure-box">
+<span class="figure-number">FIGURE 14: Sacroiliac Joint Anatomy</span>
+<img src="images/figure_14_si_joint.png?v=3" alt="Sacroiliac joint anatomy - posterior view showing ligaments" style="max-height: 6.5in; width: auto;">
+<div class="figure-caption"><strong>Posterior view of the pelvic articulations.</strong> Gray's Anatomy Plate 320 (public domain). This illustration depicts the sacroiliac joints from the posterior aspect, showing the strong posterior ligamentous complex including the interosseous and posterior sacroiliac ligaments, sacrotuberous ligament, and sacrospinous ligament.</div>
+</div>
+
+<ul>
+<li>Articular surfaces: auricular (ear-shaped)</li>
+<li>Minimal movement (2-3 degrees rotation, 1-2mm translation)</li>
+<li>Strong ligamentous support</li>
+<li>Transmits forces between spine and lower extremities</li>
+</ul>
+
+<h2>5.2 Special Tests</h2>
+
+<div class="test-box">
+<strong>FABER Test (Patrick's Test)</strong><br>
+Purpose: Differentiate hip vs SI joint pathology<br>
+Technique: Supine; foot on opposite knee (figure-4), stabilize contralateral ASIS, apply downward pressure<br>
+Interpretation: Groin pain = hip; posterior pain = SI joint
+</div>
+
+<div class="test-box">
+<strong>Gaenslen's Test</strong><br>
+Purpose: SI joint stress test<br>
+Technique: Supine at table edge; one leg off table extended, opposite hip flexed to chest<br>
+Positive: SI pain on extended side
+</div>
+
+
+<div class="test-box">
+<strong>Thigh Thrust (Femoral Shear)</strong><br>
+Purpose: SI joint dysfunction<br>
+Technique: Supine; hip flexed 90, examiner applies posterior shear through femur<br>
+Positive: Posterior SI pain
+</div>
+
+<div class="test-box">
+<strong>Sacroiliac Compression Test</strong><br>
+Purpose: SI joint pathology<br>
+Technique: Side-lying; examiner applies downward pressure through pelvis<br>
+Positive: SI joint pain
+</div>
+
+<div class="clinical-pearl">
+<strong>SI Joint Cluster:</strong> Three or more positive tests increases likelihood of SI joint dysfunction (Sens 94%, Spec 78%).
+</div>
+
+<div class="divider">***</div>
+
+<div class="module-header">
+<h1>Module 6: Shoulder (20 minutes)</h1>
+</div>
+
+<h2>6.1 Anatomy</h2>
+
+<div class="figure-box">
+<span class="figure-number">FIGURE 15: Shoulder Complex Anatomy</span>
+<img src="images/figure_15_shoulder.png?v=1" alt="Shoulder anatomy - ligaments and acromioclavicular joints">
+<div class="figure-caption"><strong>Gray's Anatomy Plate 326 (public domain).</strong> Illustration showing the left shoulder and acromioclavicular joints with proper ligaments of the scapula. Key structures visible: glenohumeral joint, acromioclavicular (AC) joint articulation, coracoacromial ligament, coracoclavicular ligaments (trapezoid and conoid), superior transverse scapular ligament, and scapular anatomy.</div>
+</div>
+
+<h3>Four Joints of Shoulder Complex</h3>
+<ul>
+<li><strong>Glenohumeral:</strong> Primary shoulder joint; ball and socket</li>
+<li><strong>Acromioclavicular (AC):</strong> Connects clavicle to scapula</li>
+<li><strong>Sternoclavicular (SC):</strong> Only axial skeleton attachment</li>
+<li><strong>Scapulothoracic:</strong> Not true joint; movement on rib cage</li>
+</ul>
+
+<h3>Rotator Cuff</h3>
+<ul>
+<li><strong>SITS muscles:</strong> Supraspinatus, Infraspinatus, Teres minor, Subscapularis</li>
+<li>Function: Dynamic stabilization and humeral head centering</li>
+</ul>
+
+<h2>6.2 Shoulder ROM</h2>
+<table>
+<tr><th>Movement</th><th>Normal</th><th>Functional</th></tr>
+<tr><td>Flexion</td><td>0-180</td><td>140-160</td></tr>
+<tr><td>Extension</td><td>0-60</td><td>45</td></tr>
+<tr><td>Abduction</td><td>0-180</td><td>120</td></tr>
+<tr><td>Internal rotation</td><td>0-70</td><td>50 (toileting)</td></tr>
+<tr><td>External rotation</td><td>0-90</td><td>60-70</td></tr>
+</table>
+
+<h2>6.3 Special Tests</h2>
+
+<div class="test-box">
+<strong>Neer Impingement Test</strong><br>
+Purpose: Subacromial impingement<br>
+Technique: Stabilize scapula; forcibly elevate arm in forward flexion with internal rotation<br>
+Positive: Pain in 60-120 arc<br>
+Accuracy: Sens 79%, Spec 53%
+</div>
+
+
+<div class="test-box">
+<strong>Hawkins-Kennedy Test</strong><br>
+Purpose: Subacromial impingement<br>
+Technique: Arm at 90 flexion; examiner applies internal rotation<br>
+Positive: Pain with IR<br>
+Accuracy: Sens 79%, Spec 59%<br>
+Cluster: Neer + Hawkins increases accuracy
+</div>
+
+
+<div class="test-box">
+<strong>Empty Can Test (Jobe Test)</strong><br>
+Purpose: Supraspinatus pathology<br>
+Technique: Arms abducted 90 in scapular plane (30 forward), thumbs down (internal rotation), resist downward pressure<br>
+Positive: Weakness or pain<br>
+Accuracy: Sens 86%, Spec 50%
+</div>
+
+
+<div class="test-box">
+<strong>Drop Arm Test</strong><br>
+Purpose: Full-thickness rotator cuff tear<br>
+Technique: Patient actively abducts to 90; examiner releases support<br>
+Positive: Arm drops (cannot maintain position)<br>
+Accuracy: Sens 20-50%, Spec 90%+ (highly specific)
+</div>
+
+<div class="test-box">
+<strong>Apprehension Test</strong><br>
+Purpose: Anterior shoulder instability<br>
+Technique: Supine; arm abducted 90, slowly externally rotate while observing for apprehension<br>
+Positive: Patient apprehension, guarding, or reports feeling of dislocation<br>
+Accuracy: Sens 68-92%, Spec 89-100%
+</div>
+
+<div class="figure-box">
+<span class="figure-number">FIGURE 16: Empty Can Test (Jobe Test)</span>
+<img src="images/figure_16_empty_can.png" alt="Demonstration of empty can test" style="max-height: 5in; width: auto;">
+<div class="figure-caption">Illustration showing the empty can test position. Patient's arms abducted to 90 degrees in the scapular plane (30 degrees forward of the frontal plane), with shoulders internally rotated (thumbs pointing down as if emptying a can). Examiner applies downward pressure while patient resists. Weakness or pain indicates supraspinatus pathology. Also known as the Jobe test for rotator cuff assessment.</div>
+</div>
+
+<div class="figure-box">
+<span class="figure-number">FIGURE 17: Shoulder Apprehension Test</span>
+<img src="images/figure_17_apprehension.png?v=2" alt="Demonstration of shoulder apprehension test">
+<div class="figure-caption">Illustration showing the shoulder apprehension test for anterior instability. Patient positioned supine with shoulder abducted to 90 degrees and elbow flexed to 90 degrees. Examiner slowly externally rotates the shoulder while monitoring for signs of apprehension (facial expression, guarding, verbal report of feeling like the shoulder will dislocate). The test places the humeral head in a position of potential anterior subluxation.</div>
+</div>
+
+<div class="test-box">
+<strong>Relocation Test</strong><br>
+Purpose: Confirm anterior instability (follows positive apprehension)<br>
+Technique: Apply posterior glide pressure to humeral head during apprehension position<br>
+Positive: Relief of apprehension
+</div>
+
+<div class="test-box">
+<strong>Speed's Test</strong><br>
+Purpose: Biceps tendon pathology<br>
+Technique: Arm flexed 60-90, forearm supinated, elbow extended; resist forward flexion<br>
+Positive: Anterior shoulder pain<br>
+Accuracy: Sens 32%, Spec 75%
+</div>
+
+<div class="test-box">
+<strong>O'Brien's Test</strong><br>
+Purpose: SLAP lesion, AC joint pathology<br>
+Technique: Arm flexed 90, adducted 15, thumb down; resist downward pressure; repeat palm up<br>
+Positive: Pain thumb down, reduced palm up suggests SLAP; pain both positions suggests AC joint
+</div>
+
+<h2>6.4 Impingement vs Instability</h2>
+<table>
+<tr><th>Feature</th><th>Impingement</th><th>Instability</th></tr>
+<tr><td>Age</td><td>40+</td><td>15-30</td></tr>
+<tr><td>Onset</td><td>Gradual</td><td>Traumatic or recurrent</td></tr>
+<tr><td>Pain location</td><td>Lateral arm</td><td>Anterior, feeling of slipping</td></tr>
+<tr><td>Key tests</td><td>Neer, Hawkins positive</td><td>Apprehension positive</td></tr>
+<tr><td>Treatment</td><td>Rotator cuff strengthening</td><td>Capsular stabilization</td></tr>
+</table>
+
+<div class="divider">***</div>
+
+<div class="module-header">
+<h1>Module 7: Elbow (12 minutes)</h1>
+</div>
+
+<h2>7.1 Anatomy</h2>
+
+<div class="figure-box">
+<span class="figure-number">FIGURE 18: Elbow Joint Anatomy</span>
+<img src="images/grays_plate420_elbow.png" alt="Gray's Anatomy Plate 420 - Bones of the left upper extremity" style="max-height: 6in; width: auto;">
+<div class="figure-caption"><strong>Gray's Anatomy, Plate 420 (public domain, 1918).</strong> Bones of the left upper extremity showing the elbow joint articulations: humeroulnar, humeroradial, and proximal radioulnar joints. Anterior view demonstrating the trochlea, capitulum, medial and lateral epicondyles, olecranon, and radial head.</div>
+</div>
+
+<ul>
+<li><strong>Humeroulnar:</strong> Hinge joint for flexion/extension</li>
+<li><strong>Humeroradial:</strong> Flexion/extension and forearm rotation</li>
+<li><strong>Proximal radioulnar:</strong> Forearm pronation/supination</li>
+<li><strong>Valgus stabilizers:</strong> UCL (anterior bundle primary)</li>
+</ul>
+
+<h2>7.2 Elbow ROM</h2>
+<table>
+<tr><th>Movement</th><th>Normal</th><th>Functional</th></tr>
+<tr><td>Flexion</td><td>0-150</td><td>30-130 (ADL)</td></tr>
+<tr><td>Pronation</td><td>0-80</td><td>50</td></tr>
+<tr><td>Supination</td><td>0-80</td><td>50</td></tr>
+</table>
+
+<h2>7.3 Special Tests</h2>
+
+<div class="test-box">
+<strong>Cozen Test</strong><br>
+Purpose: Lateral epicondylitis (tennis elbow)<br>
+Technique: Elbow extended, forearm pronated, wrist extended; resist wrist extension<br>
+Positive: Lateral elbow pain
+</div>
+
+<div class="test-box">
+<strong>Mill's Test</strong><br>
+Purpose: Lateral epicondylitis<br>
+Technique: Elbow extended, forearm pronated, wrist flexed, ulnar deviated; passively stretch<br>
+Positive: Lateral elbow pain
+</div>
+
+<div class="test-box">
+<strong>Maudsley's Test</strong><br>
+Purpose: Lateral epicondylitis<br>
+Technique: Resist extension of middle finger<br>
+Positive: Lateral elbow pain at common extensor origin
+</div>
+
+<div class="test-box">
+<strong>Medial Epicondylitis Test</strong><br>
+Purpose: Golfer's elbow<br>
+Technique: Elbow extended, forearm supinated; resist wrist flexion and forearm pronation<br>
+Positive: Medial elbow pain
+</div>
+
+<div class="test-box">
+<strong>Valgus Stress Test</strong><br>
+Purpose: UCL integrity (thrower's elbow)<br>
+Technique: Elbow flexed 20-30; stabilize humerus, apply valgus force at elbow<br>
+Positive: Pain or laxity at medial elbow<br>
+Note: Compare to uninvolved side; assess end-feel
+</div>
+
+<div class="test-box">
+<strong>Tinel's Test (Elbow)</strong><br>
+Purpose: Ulnar nerve compression (cubital tunnel)<br>
+Technique: Tap ulnar nerve in groove posterior to medial epicondyle<br>
+Positive: Tingling/paresthesia in ulnar distribution
+</div>
+
+<div class="test-box">
+<strong>Elbow Flexion Test</strong><br>
+Purpose: Cubital tunnel syndrome<br>
+Technique: Hold elbow in maximal flexion with wrist extended for 1 minute<br>
+Positive: Reproduction of ulnar nerve symptoms
+</div>
+
+<div class="divider">***</div>
+
+<div class="module-header">
+<h1>Module 8: Wrist and Hand (12 minutes)</h1>
+</div>
+
+<h2>8.1 Anatomy</h2>
+
+<div class="figure-box">
+<span class="figure-number">FIGURE 19: Wrist Ligaments - Anterior View</span>
+<img src="images/grays_plate334_wrist_ligaments.png" alt="Gray's Anatomy Plate 334 - Ligaments of wrist, anterior view" style="max-height: 6in; width: auto;">
+<div class="figure-caption"><strong>Gray's Anatomy, Plate 334 (public domain, 1918).</strong> Ligaments of wrist, anterior (palmar) view. Shows the radiocarpal ligaments, ulnar collateral ligament, radial collateral ligament, and transverse carpal ligament forming the roof of the carpal tunnel. Essential anatomy for understanding wrist stability and carpal tunnel syndrome.</div>
+</div>
+
+<div class="figure-box">
+<span class="figure-number">FIGURE 19b: Wrist Ligaments - Posterior View</span>
+<img src="images/grays_plate335.png" alt="Gray's Anatomy Plate 335 - Ligaments of wrist, posterior view" style="max-height: 6in; width: auto;">
+<div class="figure-caption"><strong>Gray's Anatomy, Plate 335 (public domain, 1918).</strong> Ligaments of wrist, posterior (dorsal) view. Shows the dorsal radiocarpal ligaments and intercarpal ligaments providing stability to the wrist joint from the back.</div>
+</div>
+
+<div class="figure-box">
+<span class="figure-number">FIGURE 19c: Wrist Articulations</span>
+<img src="images/grays_plate336.png" alt="Gray's Anatomy Plate 336 - Wrist articulations" style="max-height: 6in; width: auto;">
+<div class="figure-caption"><strong>Gray's Anatomy, Plate 336 (public domain, 1918).</strong> Articulations of the wrist joint showing the relationships between the radius, ulna, and carpal bones. Demonstrates the complex articulations that allow wrist flexion, extension, abduction, and adduction.</div>
+</div>
+
+<ul>
+<li><strong>Radiocarpal joint:</strong> Radius, scaphoid, lunate, triquetrum</li>
+<li><strong>Midcarpal joint:</strong> Between proximal and distal carpal rows</li>
+<li><strong>TFCC:</strong> Triangular fibrocartilage complex; ulnar wrist stability</li>
+<li><strong>Carpal tunnel:</strong> Median nerve under transverse carpal ligament</li>
+</ul>
+
+<h2>8.2 Wrist ROM</h2>
+<table>
+<tr><th>Movement</th><th>Normal</th></tr>
+<tr><td>Flexion</td><td>0-80</td></tr>
+<tr><td>Extension</td><td>0-70</td></tr>
+<tr><td>Radial deviation</td><td>0-20</td></tr>
+<tr><td>Ulnar deviation</td><td>0-30</td></tr>
+</table>
+
+<h2>8.3 Special Tests</h2>
+
+<div class="test-box">
+<strong>Finkelstein Test</strong><br>
+Purpose: De Quervain's tenosynovitis<br>
+Technique: Thumb tucked in fist, ulnar deviate wrist<br>
+Positive: Pain over radial styloid<br>
+Note: Differentiate from CMC arthritis (grind test)
+</div>
+
+<div class="test-box">
+<strong>Phalen's Test</strong><br>
+Purpose: Carpal tunnel syndrome<br>
+Technique: Hold wrists in complete flexion for 60 seconds<br>
+Positive: Paresthesia in median nerve distribution (thumb, index, middle, radial half ring)<br>
+Accuracy: Sens 68%, Spec 73%
+</div>
+
+<div class="test-box">
+<strong>Tinel's Test (Wrist)</strong><br>
+Purpose: Carpal tunnel syndrome<br>
+Technique: Tap over carpal tunnel at wrist crease<br>
+Positive: Paresthesia in median distribution<br>
+Accuracy: Sens 50%, Spec 77%
+</div>
+
+<div class="test-box">
+<strong>Carpal Compression Test</strong><br>
+Purpose: Carpal tunnel syndrome<br>
+Technique: Apply sustained pressure over carpal tunnel with thumb<br>
+Positive: Reproduction of symptoms within 30 seconds<br>
+Accuracy: Sens 87%, Spec 90%
+</div>
+
+<div class="test-box">
+<strong>Watson's Test (Scaphoid Shift)</strong><br>
+Purpose: Scapholunate instability<br>
+Technique: Wrist in slight flexion; apply pressure to scaphoid tubercle while moving wrist from ulnar to radial deviation<br>
+Positive: Pain, clunk, or subluxation
+</div>
+
+<div class="test-box">
+<strong>TFCC Compression Test</strong><br>
+Purpose: TFCC tear<br>
+Technique: Axial load wrist with ulnar deviation<br>
+Positive: Ulnar wrist pain
+</div>
+
+<div class="divider">***</div>
+
+<div class="module-header">
+<h1>Module 9: Hip (15 minutes)</h1>
+</div>
+
+<h2>9.1 Anatomy</h2>
+
+<div class="figure-box">
+<span class="figure-number">FIGURE 20: Hip Bone Anatomy</span>
+<img src="images/grays_plate340_knee.png" alt="Gray's Anatomy Plate 340" style="max-height: 6in; width: auto;">
+<div class="figure-caption"><strong>Gray's Anatomy, Plate 340 (public domain, 1918).</strong></div>
+</div>
+
+<div class="figure-box">
+<span class="figure-number">FIGURE 20b: Hip Bone Anatomy</span>
+<img src="images/grays_plate341_knee.png" alt="Gray's Anatomy Plate 341" style="max-height: 6in; width: auto;">
+<div class="figure-caption"><strong>Gray's Anatomy, Plate 341 (public domain, 1918).</strong></div>
+</div>
+
+<div class="figure-box">
+<span class="figure-number">FIGURE 20c: Hip Bone Anatomy</span>
+<img src="images/grays_plate342_knee.png" alt="Gray's Anatomy Plate 342" style="max-height: 6in; width: auto;">
+<div class="figure-caption"><strong>Gray's Anatomy, Plate 342 (public domain, 1918).</strong></div>
+</div>
+
+<div class="figure-box">
+<span class="figure-number">FIGURE 20d: Hip Bone Anatomy</span>
+<img src="images/grays_plate343_knee.png" alt="Gray's Anatomy Plate 343" style="max-height: 6in; width: auto;">
+<div class="figure-caption"><strong>Gray's Anatomy, Plate 343 (public domain, 1918).</strong></div>
+</div>
+
+<ul>
+<li><strong>Ball and socket joint:</strong> Femoral head in acetabulum</li>
+<li><strong>Acetabular labrum:</strong> Fibrocartilaginous rim deepens socket</li>
+<li><strong>Hip capsule:</strong> Strong; limits extension and rotation</li>
+<li><strong>Primary hip flexors:</strong> Iliopsoas</li>
+<li><strong>Primary hip extensors:</strong> Gluteus maximus, hamstrings</li>
+<li><strong>Primary hip abductors:</strong> Gluteus medius, minimus</li>
+<li><strong>Primary hip external rotators:</strong> Piriformis, gemelli, obturators</li>
+</ul>
+
+<h2>9.2 Hip ROM</h2>
+<table>
+<tr><th>Movement</th><th>Normal</th><th>Functional</th></tr>
+<tr><td>Flexion</td><td>0-120</td><td>110</td></tr>
+<tr><td>Extension</td><td>0-30</td><td>10-15</td></tr>
+<tr><td>Abduction</td><td>0-45</td><td>30</td></tr>
+<tr><td>Internal rotation</td><td>0-45</td><td>30</td></tr>
+<tr><td>External rotation</td><td>0-45</td><td>30</td></tr>
+</table>
+
+<h2>9.3 Special Tests</h2>
+
+<div class="test-box">
+<strong>FABER Test (Patrick's Test)</strong><br>
+Purpose: Differentiate hip vs SI pathology<br>
+Technique: Supine; foot on opposite knee (figure-4), stabilize contralateral ASIS, apply downward pressure<br>
+Interpretation: Groin pain = hip pathology; posterior pain = SI joint
+</div>
+
+<div class="test-box">
+<strong>FADIR Test</strong><br>
+Purpose: Hip impingement (femoroacetabular impingement - FAI)<br>
+Technique: Hip flexed to 90, adducted, internally rotated<br>
+Positive: Anterior groin pain<br>
+Note: Highly sensitive for FAI screening (Sens 94-99%)
+</div>
+
+<div class="test-box">
+<strong>Thomas Test</strong><br>
+Purpose: Hip flexor tightness<br>
+Technique: Supine; flex one hip to chest while observing opposite leg<br>
+Positive: Opposite hip flexes off table (tight iliopsoas) or knee flexes (tight rectus femoris) or hip abducts (tight TFL/IT band)
+</div>
+
+<div class="test-box">
+<strong>Ober Test</strong><br>
+Purpose: IT band/TFL tightness<br>
+Technique: Side-lying; lower leg flexed for stability; upper leg extended, abducted, then lowered toward table<br>
+Positive: Upper leg remains abducted, does not lower to table
+</div>
+
+<div class="test-box">
+<strong>Trendelenburg Test</strong><br>
+Purpose: Gluteus medius weakness<br>
+Technique: Standing on one leg; observe pelvis<br>
+Positive: Contralateral pelvis drops (indicates stance hip abductor weakness)<br>
+Compensated: Patient leans over stance leg to maintain level pelvis
+</div>
+
+<div class="test-box">
+<strong>Piriformis Test (FAIR)</strong><br>
+Purpose: Piriformis syndrome<br>
+Technique: Supine; hip flexed, adducted, internally rotated (stretches piriformis)<br>
+Positive: Posterior hip/buttock pain<br>
+Note: Piriformis can compress sciatic nerve, causing sciatica-like symptoms
+</div>
+
+<h2>9.4 Hip Pathology Differential</h2>
+<table>
+<tr><th>Condition</th><th>Age</th><th>Pain Location</th><th>Key Finding</th></tr>
+<tr><td>Hip osteoarthritis</td><td>50+</td><td>Groin, anterior thigh</td><td>Limited IR, positive FADIR</td></tr>
+<tr><td>Labral tear/FAI</td><td>15-45</td><td>Anterior groin</td><td>Positive FADIR, catching/clicking</td></tr>
+<tr><td>Trochanteric bursitis</td><td>40-60</td><td>Lateral hip</td><td>Tenderness over greater trochanter</td></tr>
+<tr><td>Piriformis syndrome</td><td>Any</td><td>Posterior hip, sciatica</td><td>Positive FAIR, normal spine exam</td></tr>
+<tr><td>Stress fracture</td><td>Athletes</td><td>Groin, anterior hip</td><td>Weight-bearing pain, hop test positive</td></tr>
+</table>
+
+<div class="divider">***</div>
+
+<div class="module-header">
+<h1>Module 10: Knee (18 minutes)</h1>
+</div>
+
+<h2>10.1 Anatomy</h2>
+
+<div class="figure-box">
+<span class="figure-number">FIGURE 21: Knee Joint Anatomy</span>
+<img src="images/grays_plate345_knee.png" alt="Gray's Anatomy Plate 345" style="max-height: 6in; width: auto;">
+<div class="figure-caption"><strong>Gray's Anatomy, Plate 345 (public domain, 1918).</strong></div>
+</div>
+
+<div class="figure-box">
+<span class="figure-number">FIGURE 21b: Knee Joint Anatomy</span>
+<img src="images/grays_plate346_knee.png" alt="Gray's Anatomy Plate 346" style="max-height: 6in; width: auto;">
+<div class="figure-caption"><strong>Gray's Anatomy, Plate 346 (public domain, 1918).</strong></div>
+</div>
+
+<div class="figure-box">
+<span class="figure-number">FIGURE 21c: Knee Joint Anatomy</span>
+<img src="images/grays_plate347_knee.png" alt="Gray's Anatomy Plate 347" style="max-height: 6in; width: auto;">
+<div class="figure-caption"><strong>Gray's Anatomy, Plate 347 (public domain, 1918).</strong></div>
+</div>
+
+<h3>Bony Structures</h3>
+<ul>
+<li>Femoral condyles (medial and lateral)</li>
+<li>Tibial plateau</li>
+<li>Patella (sesamoid bone in quadriceps tendon)</li>
+<li>Intercondylar eminence (tibial spines - ACL/PCL attachments)</li>
+</ul>
+
+<h3>Ligaments</h3>
+<ul>
+<li><strong>ACL:</strong> Prevents anterior tibial translation, rotational stability</li>
+<li><strong>PCL:</strong> Prevents posterior tibial translation</li>
+<li><strong>MCL:</strong> Prevents valgus stress; superficial and deep layers</li>
+<li><strong>LCL:</strong> Prevents varus stress; cord-like structure</li>
+</ul>
+
+<h3>Menisci</h3>
+<ul>
+<li><strong>Medial meniscus:</strong> C-shaped, less mobile, attached to MCL and joint capsule (more commonly injured)</li>
+<li><strong>Lateral meniscus:</strong> O-shaped, more mobile, fewer attachments</li>
+<li><strong>Function:</strong> Shock absorption, load distribution, joint lubrication, secondary stabilization</li>
+</ul>
+
+<h2>10.2 Knee ROM</h2>
+<table>
+<tr><th>Movement</th><th>Normal</th><th>Functional</th></tr>
+<tr><td>Flexion</td><td>0-135</td><td>90 (stairs), 120 (squat)</td></tr>
+<tr><td>Extension</td><td>0 (full extension)</td><td>0 (needed for gait)</td></tr>
+<tr><td>Internal rotation</td><td>0-10 (flexed)</td><td>5-10</td></tr>
+<tr><td>External rotation</td><td>0-10 (flexed)</td><td>5-10</td></tr>
+</table>
+
+<h2>10.3 Special Tests - Ligaments</h2>
+
+<div class="test-box">
+<strong>Lachman Test</strong><br>
+Purpose: ACL integrity - gold standard<br>
+Technique: Knee flexed 20-30; stabilize femur, pull tibia anteriorly<br>
+Positive: Excessive anterior translation or soft end-feel<br>
+Accuracy: Sens 85%, Spec 94%<br>
+Advantage: More sensitive than anterior drawer in acute injuries (less hamstring guarding)
+</div>
+
+<div class="test-box">
+<strong>Anterior Drawer Test</strong><br>
+Purpose: ACL integrity<br>
+Technique: Knee flexed 90, foot stabilized; pull tibia anteriorly<br>
+Positive: Excessive anterior translation<br>
+Accuracy: Sens 48%, Spec 93%<br>
+Note: Less sensitive than Lachman in acute injuries due to hamstring guarding
+</div>
+
+<div class="test-box">
+<strong>Pivot Shift Test</strong><br>
+Purpose: ACL deficiency with rotational instability<br>
+Technique: Knee extended, internally rotated; apply valgus force while flexing knee<br>
+Positive: Clunk/reducible subluxation at 20-40 flexion<br>
+Accuracy: Sens 35-81%, Spec 98% (highly specific)<br>
+Note: Difficult to perform on awake patient due to apprehension
+</div>
+
+<div class="test-box">
+<strong>Posterior Drawer Test</strong><br>
+Purpose: PCL integrity<br>
+Technique: Knee flexed 90; push tibia posteriorly<br>
+Positive: Excessive posterior translation<br>
+Note: Grade I (0-5mm), II (5-10mm), III (>10mm - suggests PLC injury too)
+</div>
+
+<div class="test-box">
+<strong>Valgus Stress Test</strong><br>
+Purpose: MCL integrity<br>
+Technique: Knee flexed 20-30 (isolates MCL from joint); apply valgus force<br>
+Positive: Pain or laxity<br>
+Note: Test at 0 extension (if positive, suggests cruciate involvement)
+</div>
+
+<div class="test-box">
+<strong>Varus Stress Test</strong><br>
+Purpose: LCL integrity<br>
+Technique: Knee flexed 20-30; apply varus force<br>
+Positive: Pain or laxity<br>
+Note: Isolated LCL injuries less common than MCL
+</div>
+
+<h2>10.4 Special Tests - Meniscus</h2>
+
+<div class="test-box">
+<strong>McMurray's Test</strong><br>
+Purpose: Meniscal tear<br>
+Technique: Knee fully flexed; externally rotate and apply valgus while extending (tests medial); internally rotate and apply varus (tests lateral)<br>
+Positive: Click or pain at joint line<br>
+Accuracy: Sens 55%, Spec 77%<br>
+Note: Traditional test; newer tests more accurate
+</div>
+
+<div class="test-box">
+<strong>Thessaly Test</strong><br>
+Purpose: Meniscal tear<br>
+Technique: Patient standing on involved leg, knee flexed 20, rotating body over fixed foot<br>
+Positive: Joint line pain or catching/locking sensation<br>
+Accuracy: Sens 90%, Spec 97% (more accurate than McMurray)<br>
+Note: Weight-bearing test; caution with acute injuries
+</div>
+
+<div class="test-box">
+<strong>Apley's Compression Test</strong><br>
+Purpose: Meniscal tear<br>
+Technique: Prone; knee flexed 90; apply downward compression while rotating tibia<br>
+Positive: Joint line pain<br>
+Note: Distruction relieves pain (distinguishes from ligament injury)
+</div>
+
+<div class="test-box">
+<strong>Joint Line Tenderness</strong><br>
+Purpose: Meniscal tear<br>
+Technique: Palpate medial and lateral joint lines with knee flexed 90<br>
+Positive: Focal tenderness<br>
+Accuracy: Sens 76%, Spec 58% (highly sensitive, poor specificity)
+</div>
+
+<h2>10.5 Special Tests - Patellofemoral</h2>
+
+<div class="test-box">
+<strong>Patellar Apprehension Test</strong><br>
+Purpose: Patellar instability<br>
+Technique: Supine; attempt to push patella laterally with knee extended, then 30 flexed<br>
+Positive: Patient apprehension, guarding, or reports feeling of dislocation
+</div>
+
+<div class="test-box">
+<strong>Clarke's Sign (Patellar Grind)</strong><br>
+Purpose: Patellofemoral chondromalacia/arthritis<br>
+Technique: Supine; quadriceps relaxed; compress patella into trochlea while patient attempts quad set<br>
+Positive: Pain under patella<br>
+</div>
+
+<div class="test-box">
+<strong>Q-Angle Assessment</strong><br>
+Purpose: Patellofemoral alignment<br>
+Technique: Measure angle between line from ASIS to patella center, and patella center to tibial tubercle<br>
+Normal: Males 8-14 degrees, Females 12-18 degrees<br>
+Significance: Increased angle associated with patellar maltracking
+</div>
+
+<h2>10.6 ACL Injury Patterns</h2>
+<table>
+<tr><th>Mechanism</th><th>Description</th><th>Associated Injuries</th></tr>
+<tr><td>Non-contact pivot</td><td>Plant, cut, knee internally rotated, valgus force</td><td>Most common mechanism (70-80%)</td></tr>
+<tr><td>Hyperextension</td><td>Forced extension beyond normal range</td><td>Posterolateral corner, PCL</td></tr>
+<tr><td>Contact valgus</td><td>Blow to lateral knee</td><td>MCL, meniscus (unhappy triad)</td></tr>
+</table>
+
+<div class="clinical-pearl">
+<strong>Unhappy Triad:</strong> ACL tear + MCL tear + medial meniscus tear. Classically from valgus blow to lateral knee with foot planted.
+</div>
+
+<div class="divider">***</div>
+
+<div class="module-header">
+<h1>Module 11: Ankle and Foot (15 minutes)</h1>
+</div>
+
+<h2>11.1 Anatomy</h2>
+
+<div class="figure-box">
+<span class="figure-number">FIGURE 22: Ankle and Foot Anatomy</span>
+<img src="images/figure_22_ankle_anatomy.jpg" alt="Ankle and foot anatomy" style="max-height: 6in; width: auto;">
+<div class="figure-caption"></div>
+</div>
+
+<h3>Ankle Joint (Talocrural)</h3>
+<ul>
+<li><strong>Mortise:</strong> Tibia, fibula, talus articulation</li>
+<li><strong>Medial ligaments (deltoid):</strong> Strong, fan-shaped; resists eversion</li>
+<li><strong>Lateral ligaments:</strong> Anterior talofibular (ATFL), calcaneofibular (CFL), posterior talofibular (PTFL); resist inversion</li>
+<li><strong>ATFL:</strong> Most commonly sprained (inversion + plantarflexion)</li>
+</ul>
+
+<h3>Subtalar Joint</h3>
+<ul>
+<li>Talus and calcaneus articulation</li>
+<li>Primary motion: Inversion/eversion</li>
+<li>Essential for adapting to uneven terrain</li>
+</ul>
+
+<h2>11.2 Ankle ROM</h2>
+<table>
+<tr><th>Movement</th><th>Normal</th><th>Functional</th></tr>
+<tr><td>Dorsiflexion</td><td>0-20</td><td>10 (stairs), 15 (squat)</td></tr>
+<tr><td>Plantarflexion</td><td>0-50</td><td>30 (gait)</td></tr>
+<tr><td>Inversion</td><td>0-35</td><td>15-20</td></tr>
+<tr><td>Eversion</td><td>0-15</td><td>5-10</td></tr>
+</table>
+
+<h2>11.3 Special Tests</h2>
+
+<div class="test-box">
+<strong>Anterior Drawer Test (Ankle)</strong><br>
+Purpose: ATFL integrity (lateral ankle sprain)<br>
+Technique: Ankle slightly plantarflexed; stabilize tibia, pull talus anteriorly<br>
+Positive: Excessive anterior translation or pain compared to uninvolved side<br>
+Accuracy: Sens 71%, Spec 68%<br>
+Note: Most accurate 4-7 days post-injury (allows swelling to decrease)
+</div>
+
+<div class="test-box">
+<strong>Talar Tilt Test</strong><br>
+Purpose: CFL integrity (severe lateral sprain)<br>
+Technique: Ankle neutral or slightly dorsiflexed; stabilize tibia, invert talus<br>
+Positive: Excessive inversion or pain<br>
+Note: Positive talar tilt suggests grade II-III sprain
+</div>
+
+<div class="test-box">
+<strong>Thompson Test (Simmonds Test)</strong><br>
+Purpose: Achilles tendon rupture<br>
+Technique: Prone; squeeze calf muscle belly<br>
+Positive: No plantarflexion of ankle (tendon not connected)<br>
+Accuracy: Sens 96%, Spec 93%
+</div>
+
+<div class="test-box">
+<strong>Windlass Test</strong><br>
+Purpose: Plantar fasciitis<br>
+Technique: Dorsiflex great toe while palpating plantar fascia<br>
+Positive: Reproduction of heel pain<br>
+Note: Plantar fascia winds around metatarsal head; test tensions the fascia
+</div>
+
+<div class="test-box">
+<strong>Navicular Drop Test</strong><br>
+Purpose: Excessive pronation/flat foot<br>
+Technique: Mark navicular position in subtalar neutral; then weight-bearing; measure change in height<br>
+Positive: Drop >10mm suggests excessive pronation<br>
+Clinical significance: Associated with overuse injuries
+</div>
+
+<div class="test-box">
+<strong>Tinel's Sign (Tarsal Tunnel)</strong><br>
+Purpose: Tarsal tunnel syndrome (posterior tibial nerve)<br>
+Technique: Tap posterior to medial malleolus<br>
+Positive: Paresthesia in plantar foot distribution
+</div>
+
+<h2>11.4 Ottawa Ankle Rules</h2>
+<p>Radiographic guidelines to reduce unnecessary X-rays:</p>
+
+<h3>Ankle X-ray Indicated If:</h3>
+<ul>
+<li>Bony tenderness at posterior edge or tip of lateral malleolus OR</li>
+<li>Bony tenderness at posterior edge or tip of medial malleolus OR</li>
+<li>Inability to bear weight both immediately and in ER (4 steps)</li>
+</ul>
+
+<h3>Foot X-ray Indicated If:</h3>
+<ul>
+<li>Bony tenderness at base of 5th metatarsal OR</li>
+<li>Bony tenderness at navicular OR</li>
+<li>Inability to bear weight both immediately and in ER (4 steps)</li>
+</ul>
+
+<div class="clinical-pearl">
+<strong>Ottawa Ankle Rules:</strong> Nearly 100% sensitivity for detecting fractures. If negative, no fracture present. Reduces X-rays by 30-40%.
+</div>
+
+<h2>11.5 Ankle Sprain Grading</h2>
+<table>
+<tr><th>Grade</th><th>Description</th><th>Signs</th><th>Recovery</th></tr>
+<tr><td>I</td><td>Stretch, microscopic tear</td><td>Mild swelling, no instability</td><td>1-2 weeks</td></tr>
+<tr><td>II</td><td>Partial tear</td><td>Moderate swelling, some instability</td><td>3-6 weeks</td></tr>
+<tr><td>III</td><td>Complete rupture</td><td>Severe swelling, significant instability</td><td>8-12+ weeks</td></tr>
+</table>
+
+<div class="divider">***</div>
+
+<div class="module-header">
+<h1>Module 12: Clinical Reasoning and Documentation (35 minutes)</h1>
+</div>
+
+<h2>12.1 Evidence-Based Practice (EBP)</h2>
+
+<p>Evidence-based practice integrates three essential components to optimize patient outcomes:</p>
+
+<h3>The EBP Triad</h3>
+<ul>
+<li><strong>Best Research Evidence:</strong> Systematic reviews, randomized controlled trials, clinical practice guidelines</li>
+<li><strong>Clinical Expertise:</strong> Your experience, training, and professional judgment</li>
+<li><strong>Patient Values:</strong> Patient preferences, expectations, and circumstances</li>
+</ul>
+
+<div class="clinical-pearl">
+<strong>Hierarchy of Evidence:</strong> Systematic reviews and meta-analyses provide the highest level of evidence, followed by RCTs, cohort studies, case-control studies, case series, and expert opinion. Clinical practice guidelines synthesize evidence for specific conditions.
+</div>
+
+<h3>Applying EBP in Clinical Practice</h3>
+<p>When making clinical decisions, ask:</p>
+<ol>
+<li>What is the patient's primary concern and functional limitation?</li>
+<li>What evidence exists for different intervention approaches?</li>
+<li>What are the risks, benefits, and costs of each option?</li>
+<li>What does the patient prefer based on their values and goals?</li>
+<li>What is my clinical experience with similar patients?</li>
+</ol>
+
+<h2>12.2 Diagnostic Reasoning</h2>
+
+<h3>The Hypothesis-Oriented Approach</h3>
+<p>Clinical reasoning involves generating, testing, and refining hypotheses throughout the examination:</p>
+
+<ol>
+<li><strong>Generate Hypotheses:</strong> Based on subjective history, create a list of possible diagnoses</li>
+<li><strong>Select Tests:</strong> Choose examination procedures that differentiate between hypotheses</li>
+<li><strong>Test Hypotheses:</strong> Perform objective tests and interpret findings</li>
+<li><strong>Refine or Confirm:</strong> Update your diagnostic impression based on results</li>
+<li><strong>Reassess:</strong> Continuously evaluate as new information emerges</li>
+</ol>
+
+<h3>Pattern Recognition vs. Analytical Reasoning</h3>
+<ul>
+<li><strong>Pattern Recognition:</strong> Fast, intuitive recognition of familiar clinical presentations. Develops with experience but can lead to premature closure.</li>
+<li><strong>Analytical Reasoning:</strong> Systematic, deliberate analysis of findings. More reliable for complex or atypical presentations.</li>
+</ul>
+
+<div class="clinical-pearl">
+<strong>Balanced Approach:</strong> Experienced clinicians use pattern recognition for common presentations but switch to analytical reasoning when findings are atypical, red flags are present, or the case is complex.
+</div>
+
+<h2>12.3 Likelihood Ratios and Diagnostic Accuracy</h2>
+
+<p>Likelihood ratios (LRs) quantify how much a test result changes the probability of a condition:</p>
+
+<h3>Interpreting Likelihood Ratios</h3>
+<table>
+<tr><th>LR+ Value</th><th>Effect on Probability</th><th>Clinical Interpretation</th></tr>
+<tr><td>>10</td><td>Large increase</td><td>Test essentially rules in the condition</td></tr>
+<tr><td>5-10</td><td>Moderate increase</td><td>Substantially increases probability</td></tr>
+<tr><td>2-5</td><td>Small increase</td><td>Somewhat increases probability</td></tr>
+<tr><td>1-2</td><td>Minimal increase</td><td>Rarely changes clinical decision</td></tr>
+</table>
+
+<table>
+<tr><th>LR- Value</th><th>Effect on Probability</th><th>Clinical Interpretation</th></tr>
+<tr><td><0.1</td><td>Large decrease</td><td>Test essentially rules out the condition</td></tr>
+<tr><td>0.1-0.2</td><td>Moderate decrease</td><td>Substantially decreases probability</td></tr>
+<tr><td>0.2-0.5</td><td>Small decrease</td><td>Somewhat decreases probability</td></tr>
+<tr><td>0.5-1.0</td><td>Minimal decrease</td><td>Rarely changes clinical decision</td></tr>
+</table>
+
+<h3>Clinical Example: Shoulder Impingement</h3>
+<p>A patient presents with shoulder pain. Pre-test probability of subacromial impingement is 50% based on history.</p>
+<ul>
+<li><strong>Positive Neer test (LR+ 3.0):</strong> Increases probability to approximately 75%</li>
+<li><strong>Positive Hawkins-Kennedy (LR+ 2.4):</strong> Further increases probability</li>
+<li><strong>Positive painful arc (LR+ 3.0):</strong> Combined with other findings, probability now >90%</li>
+</ul>
+
+<div class="clinical-pearl">
+<strong>Cluster Testing:</strong> No single test has perfect accuracy. Using clusters of tests with positive likelihood ratios improves diagnostic confidence. The more positive findings in a cluster, the higher the post-test probability.
+</div>
+
+<h2>12.4 Differential Diagnosis Process</h2>
+
+<h3>Developing a Differential List</h3>
+<p>Generate a comprehensive list of possible diagnoses, then systematically rule in or rule out:</p>
+
+<ol>
+<li><strong>Life-threatening conditions first:</strong> Always consider serious pathology</li>
+<li><strong>Most common conditions:</strong> Common things are common</li>
+<li><strong>Patient-specific risks:</strong> Age, activity level, medical history</li>
+<li><strong>Atypical presentations:</strong> Don't dismiss findings that don't fit the pattern</li>
+</ol>
+
+<h3>Screening for Red Flags</h3>
+<p>Before focusing on musculoskeletal causes, screen for:</p>
+<ul>
+<li><strong>Serious pathology:</strong> Cancer, infection, fracture, cauda equina syndrome</li>
+<li><strong>Systemic conditions:</strong> Inflammatory arthritis, vascular disease</li>
+<li><strong>Referred pain:</strong> Visceral sources mimicking MSK pain</li>
+<li><strong>Psychosocial factors:</strong> Depression, fear-avoidance, catastrophizing</li>
+</ul>
+
+<h2>12.5 SMART Goals Framework</h2>
+
+<p>Well-written goals guide treatment and measure progress:</p>
+
+<h3>SMART Criteria Explained</h3>
+<ul>
+<li><strong>Specific:</strong> Clearly defined, not vague. "Walk 1 mile" vs. "Improve walking"</li>
+<li><strong>Measurable:</strong> Quantifiable outcome. "Knee flexion to 120 degrees" vs. "Better knee bend"</li>
+<li><strong>Achievable:</strong> Realistic given condition and timeframe. Consider tissue healing times</li>
+<li><strong>Relevant:</strong> Meaningful to the patient's life and priorities</li>
+<li><strong>Time-bound:</strong> Specific deadline for achievement. "Within 4 weeks"</li>
+</ul>
+
+<h3>Examples of Well-Written Goals</h3>
+<table>
+<tr><th>Condition</th><th>Short-term Goal (2-4 weeks)</th><th>Long-term Goal (6-12 weeks)</th></tr>
+<tr><td>Rotator Cuff Tear</td><td>Patient will demonstrate pain-free shoulder elevation to 120 degrees within 3 weeks</td><td>Patient will return to recreational tennis without pain or limitation within 10 weeks</td></tr>
+<tr><td>ACL Reconstruction</td><td>Patient will achieve 0-90 degrees knee ROM and normalized gait within 2 weeks</td><td>Patient will pass return-to-sport testing and resume competitive soccer within 9 months</td></tr>
+<tr><td>Low Back Pain</td><td>Patient will tolerate sitting for 60 minutes without pain increase within 2 weeks</td><td>Patient will resume full work duties and home exercise program independently within 6 weeks</td></tr>
+<tr><td>Total Knee Replacement</td><td>Patient will achieve 0-90 degrees knee flexion and ascend/descend stairs with rail within 2 weeks</td><td>Patient will walk 1 mile continuously and perform household activities without assistive device within 8 weeks</td></tr>
+</table>
+
+<h2>12.6 Documentation: The SOAP Note</h2>
+
+<p>The SOAP format provides a structured, legally defensible record of patient care:</p>
+
+<h3>Subjective (S)</h3>
+<p>Document the patient's report in their own words when possible:</p>
+<ul>
+<li><strong>Chief Complaint:</strong> Primary reason for visit</li>
+<li><strong>History of Present Illness:</strong> Onset, mechanism, progression, aggravating/relieving factors</li>
+<li><strong>Pain:</strong> Location, quality, intensity (VAS 0-10), pattern</li>
+<li><strong>Functional Status:</strong> What they can/cannot do</li>
+<li><strong>Prior Level of Function:</strong> Baseline before current condition</li>
+<li><strong>Patient Goals:</strong> What they want to achieve</li>
+<li><strong>Previous Treatment:</strong> What's been tried and response</li>
+<li><strong>Medical History:</strong> Relevant comorbidities, medications, red flags</li>
+</ul>
+
+<h3>Objective (O)</h3>
+<p>Record measurable, observable findings:</p>
+<ul>
+<li><strong>Observation:</strong> Posture, gait, swelling, atrophy, scars</li>
+<li><strong>Palpation:</strong> Temperature, tenderness, tissue texture</li>
+<li><strong>ROM:</strong> Active and passive, with end-feel</li>
+<li><strong>Strength:</strong> MMT grades (0-5) or dynamometry</li>
+<li><strong>Special Tests:</strong> Positive and negative findings with interpretation</li>
+<li><strong>Neurological:</strong> Sensation, reflexes, myotomes</li>
+<li><strong>Functional Tests:</strong> Timed Up and Go, Berg Balance, etc.</li>
+</ul>
+
+<h3>Assessment (A)</h3>
+<p>Synthesize findings into clinical conclusions:</p>
+<ul>
+<li><strong>Diagnosis/Impression:</strong> Primary and secondary diagnoses</li>
+<li><strong>Impairments:</strong> Specific limitations identified</li>
+<li><strong>Contributing Factors:</strong> Why the problem exists</li>
+<li><strong>Prognosis:</strong> Expected outcome and timeline</li>
+<li><strong>Progress:</strong> Compared to previous visits (re-evaluations)</li>
+</ul>
+
+<h3>Plan (P)</h3>
+<p>Outline the treatment approach and next steps:</p>
+<ul>
+<li><strong>Interventions:</strong> Specific treatments provided today</li>
+<li><strong>Patient Education:</strong> What was taught and patient's understanding</li>
+<li><strong>Home Program:</strong> Exercises, precautions, activity modifications</li>
+<li><strong>Goals:</strong> Short-term and long-term with timelines</li>
+<li><strong>Follow-up:</strong> Next visit frequency and plan</li>
+<li><strong>Referrals:</strong> To other providers if indicated</li>
+</ul>
+
+<h3>Sample SOAP Note</h3>
+<div class="clinical-pearl">
+<strong>S:</strong> 45-year-old male reports gradual onset of right shoulder pain over 6 weeks. Rates pain 5/10 at rest, 8/10 with overhead reaching. Primary complaint is inability to sleep on right side. Works as electrician and reports difficulty with overhead wiring. No history of trauma. Prior treatment with NSAIDs provided minimal relief. Goal is to return to full work duties without pain.
+<br><br>
+<strong>O:</strong> Inspection: No atrophy or swelling noted. Palpation: Tender over anterior/lateral acromion and bicipital groove. AROM: Shoulder flexion 150 degrees (painful at end range), abduction 140 degrees (painful arc 90-120), external rotation 45 degrees, internal rotation to L4. PROM: Full with pain at end range flexion and abduction. Strength: Flexion 4/5 (pain-limited), abduction 4/5, ER 4+/5, IR 5/5. Special Tests: Neer (+), Hawkins-Kennedy (+), Empty Can (+), Speed's (+), Yergason's (-), Drop Arm (-). Cervical screen: Negative.
+<br><br>
+<strong>A:</strong> 45-year-old male with subacromial impingement syndrome, likely secondary to supraspinatus tendinopathy and bicipital tendinitis. Positive cluster of impingement tests supports this diagnosis. Cervical involvement ruled out. Good prognosis for conservative management with activity modification, manual therapy, and progressive strengthening. No red flags identified.
+<br><br>
+<strong>P:</strong> 1. Patient education on impingement mechanism and activity modification to avoid overhead reaching during initial phase. 2. Manual therapy: Grade III-IV posterior glides to glenohumeral joint, cross-fiber friction to rotator cuff insertion. 3. Therapeutic exercise: Scapular stabilization exercises, rotator cuff strengthening with theraband (pain-free range), posterior capsule stretching. 4. Home program: Pendulum exercises, wall slides, external rotation with band. Demonstrated proper form. Patient verbalized understanding. 5. Ice 15 minutes post-treatment. 6. Next visit in 2 days. 7. STG: Pain-free AROM to 160 degrees within 2 weeks. LTG: Return to full electrician duties without symptoms within 6 weeks.
+</div>
+
+<h2>12.7 Re-evaluation and Progress Notes</h2>
+
+<h3>When to Re-evaluate</h3>
+<ul>
+<li><strong>Planned re-evaluations:</strong> Typically every 30 days or 10 visits</li>
+<li><strong>Significant change:</strong> New symptoms, unexpected response to treatment</li>
+<li><strong>Plateau:</strong> No progress for 2-3 visits</li>
+<li><strong>Goal achievement:</strong> When short-term goals are met</li>
+<li><strong>Change in status:</strong> New injury or exacerbation</li>
+</ul>
+
+<h3>Components of Progress Documentation</h3>
+<ol>
+<li><strong>Current Status:</strong> Compare to previous findings and baseline</li>
+<li><strong>Goal Progress:</strong> Which goals achieved, which need modification</li>
+<li><strong>Intervention Response:</strong> What's working, what's not</li>
+<li><strong>Plan Modifications:</strong> Changes to treatment approach</li>
+<li><strong>New Goals:</strong> Updated short-term and long-term goals</li>
+<li><strong>Prognosis Update:</strong> Revised outlook based on progress</li>
+</ol>
+
+<h2>12.8 Discharge Planning</h2>
+
+<h3>Discharge Criteria</h3>
+<p>Consider discharge when:</p>
+<ul>
+<li>Goals have been achieved or maximum benefit reached</li>
+<li>Patient can maintain progress with independent home program</li>
+<li>No further skilled intervention is required</li>
+<li>Patient has been educated on prevention and self-management</li>
+</ul>
+
+<h3>Discharge Documentation</h3>
+<ul>
+<li><strong>Initial Status:</strong> Baseline findings at evaluation</li>
+<li><strong>Current Status:</strong> Final objective measures and functional status</li>
+<li><strong>Progress Summary:</strong> Improvements achieved during episode of care</li>
+<li><strong>Goal Outcomes:</strong> Which goals met, partially met, or not met</li>
+<li><strong>Discharge Status:</strong> Current functional level and any remaining limitations</li>
+<li><strong>Home Program:</strong> Detailed instructions for maintenance</li>
+<li><strong>Recommendations:</strong> Follow-up care, referrals, precautions</li>
+</ul>
+
+<h2>12.9 Interprofessional Communication</h2>
+
+<h3>Referral Communication</h3>
+<p>When referring to physicians or other providers:</p>
+<ul>
+<li>Summarize relevant history and examination findings</li>
+<li>Clearly state reason for referral</li>
+<li>Include specific questions or concerns</li>
+<li>Document response and recommendations received</li>
+<li>Follow up on outcomes</li>
+</ul>
+
+<h3>Working with Ancillary Staff</h3>
+<p>Effective collaboration with PTAs, techs, and support staff:</p>
+<ul>
+<li>Provide clear, written instructions for delegated tasks</li>
+<li>Document supervision and communication</li>
+<li>Regularly review patient progress with team members</li>
+<li>Adjust plans based on PTA feedback</li>
+</ul>
+
+<div class="divider">***</div>
+
+<div class="module-header">
+<h1>References</h1>
+</div>
+
+<p>The content of this course is based on the following evidence-based sources:</p>
+
+<h2>Textbooks and Clinical References</h2>
+<ol>
+<li>Magee DJ. <em>Orthopedic Physical Assessment</em>. 7th ed. Elsevier; 2021.</li>
+<li>Hoppenfeld S, Hutton R. <em>Physical Examination of the Spine and Extremities</em>. Appleton-Century-Crofts; 1976.</li>
+<li>Kendall FP, McCreary EK, Provance PG, Rodgers M, Romani W. <em>Muscles: Testing and Function with Posture and Pain</em>. 5th ed. Lippincott Williams & Wilkins; 2005.</li>
+<li>Moore KL, Dalley AF, Agur AM. <em>Clinically Oriented Anatomy</em>. 8th ed. Wolters Kluwer; 2017.</li>
+<li>Netter FH. <em>Atlas of Human Anatomy</em>. 7th ed. Elsevier; 2018.</li>
+</ol>
+
+<h2>Special Test Accuracy Literature</h2>
+<ol start="6">
+<li>Shah KC, Rajshekhar V. Reliability of diagnosis of soft cervical disc prolapse: the value of clinical examination and magnetic resonance imaging. <em>Spine</em>. 2004;29(18):2120-2125.</li>
+<li>Benjaminse A, Gokeler A, van der Schans CP. Clinical diagnosis of an anterior cruciate ligament rupture: a meta-analysis. <em>J Orthop Sports Phys Ther</em>. 2006;36(5):267-288.</li>
+<li>Hegedus EJ, Goode AP, Cook CE, et al. Which physical examination tests provide clinicians with the most value when examining the shoulder? Update of a systematic review with meta-analysis of individual tests. <em>Br J Sports Med</em>. 2012;46(14):964-978.</li>
+<li>Konin JG, Wiksten DL, Isear JA, Brader H. <em>Special Tests for Orthopedic Examination</em>. 3rd ed. SLACK Incorporated; 2006.</li>
+<li>Dutton M. <em>Orthopaedic Examination, Evaluation, and Intervention</em>. 4th ed. McGraw-Hill Education; 2016.</li>
+</ol>
+
+<h2>Clinical Practice Guidelines</h2>
+<ol start="11">
+<li>Delitto A, George SZ, Van Dillen LR, et al. Low back pain clinical practice guidelines linked to the International Classification of Functioning, Disability, and Health from the Orthopaedic Section of the American Physical Therapy Association. <em>J Orthop Sports Phys Ther</em>. 2012;42(4):A1-A57.</li>
+<li>Childs JD, Cleland JA, Elliott JM, et al. Neck pain: clinical practice guidelines linked to the International Classification of Functioning, Disability, and Health from the Orthopaedic Section of the American Physical Therapy Association. <em>J Orthop Sports Phys Ther</em>. 2008;38(9):A1-A34.</li>
+<li>Stiell IG, Greenberg GH, McKnight RD, et al. Decision rules for the use of radiography in acute ankle injuries: refinement and prospective validation. <em>JAMA</em>. 1993;269(9):1127-1132.</li>
+</ol>
+
+<h2>Diagnostic Accuracy Studies</h2>
+<ol start="14">
+<li>Hanchard NC, Howe TE, Gilbert MM. Diagnosis of shoulder pain by history and selective tissue tension: agreement between assessors. <em>J Orthop Sports Phys Ther</em>. 2005;35(3):147-153.</li>
+<li>Baxter GD. <em>Clinical Assessment of the Musculoskeletal System: A Handbook for Clinicians</em>. University of Otago; 2016.</li>
+<li>Flynn TW, Cleland JA, Whitman JM. Users' Guide to the Musculoskeletal Examination: Fundamentals for the Evidence-Based Clinician. Evidence in Motion; 2008.</li>
+</ol>
+
+<div class="divider">***</div>
+

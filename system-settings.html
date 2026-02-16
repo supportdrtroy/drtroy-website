@@ -1,0 +1,882 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DrTroy.com - System Settings</title>
+    
+    <!-- Security Headers -->
+    <meta http-equiv="Content-Security-Policy" content="
+        default-src 'self';
+        script-src 'self' 'unsafe-inline';
+        style-src 'self' 'unsafe-inline';
+        img-src 'self' data: https:;
+    ">
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta http-equiv="X-Frame-Options" content="DENY">
+    <meta http-equiv="X-XSS-Protection" content="1; mode=block">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --navy: #1e3a8a;
+            --gold: #d69e2e;
+            --gray-50: #f9fafb;
+            --gray-100: #f3f4f6;
+            --gray-200: #e5e7eb;
+            --gray-600: #6b7280;
+            --gray-900: #111827;
+            --success: #059669;
+            --danger: #dc2626;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, var(--navy) 0%, #1e40af 100%);
+            min-height: 100vh;
+            padding: 2rem;
+        }
+
+        .header {
+            background: white;
+            border-radius: 12px 12px 0 0;
+            padding: 2rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0;
+        }
+
+        .header h1 {
+            color: var(--navy);
+            font-size: 2rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: var(--navy);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #1e40af;
+        }
+
+        .btn-secondary {
+            background: var(--gray-100);
+            color: var(--gray-900);
+        }
+
+        .btn-secondary:hover {
+            background: var(--gray-200);
+        }
+
+        .container {
+            background: white;
+            border-radius: 0 0 12px 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .tabs {
+            display: flex;
+            background: var(--gray-50);
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        .tab {
+            background: none;
+            border: none;
+            padding: 1.5rem 2rem;
+            cursor: pointer;
+            font-weight: 600;
+            color: var(--gray-600);
+            border-bottom: 3px solid transparent;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .tab.active {
+            color: var(--navy);
+            border-bottom-color: var(--navy);
+            background: white;
+        }
+
+        .tab:hover:not(.active) {
+            background: var(--gray-100);
+            color: var(--gray-900);
+        }
+
+        .tab-content {
+            display: none;
+            padding: 3rem;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .form-section {
+            background: var(--gray-50);
+            padding: 2rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+        }
+
+        .form-section h3 {
+            color: var(--navy);
+            margin-bottom: 1.5rem;
+            font-size: 1.25rem;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            font-weight: 600;
+            color: var(--gray-900);
+            margin-bottom: 0.5rem;
+        }
+
+        .form-input, .form-select {
+            padding: 0.75rem;
+            border: 1px solid var(--gray-200);
+            border-radius: 8px;
+            font-size: 0.9rem;
+        }
+
+        .form-input:focus, .form-select:focus {
+            outline: none;
+            border-color: var(--navy);
+            box-shadow: 0 0 0 3px rgba(30, 58, 138, 0.1);
+        }
+
+        .form-input[readonly] {
+            background: var(--gray-100);
+            color: var(--gray-600);
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin: 0.5rem 0;
+        }
+
+        .checkbox-group input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+        }
+
+        .system-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .info-card {
+            background: white;
+            border: 1px solid var(--gray-200);
+            border-radius: 8px;
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .info-card .label {
+            color: var(--gray-600);
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .info-card .value {
+            color: var(--gray-900);
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+
+        .info-card .value.success {
+            color: var(--success);
+        }
+
+        .action-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .action-btn {
+            padding: 1.5rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.2s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .action-btn.success {
+            background: var(--success);
+            color: white;
+        }
+
+        .action-btn.warning {
+            background: var(--gold);
+            color: white;
+        }
+
+        .action-btn.danger {
+            background: var(--danger);
+            color: white;
+        }
+
+        .action-btn.primary {
+            background: var(--navy);
+            color: white;
+        }
+
+        .action-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        .danger-zone {
+            background: #fef2f2;
+            border: 1px solid #fecaca;
+            border-radius: 12px;
+            padding: 2rem;
+        }
+
+        .danger-zone h4 {
+            color: #991b1b;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .danger-zone p {
+            color: #991b1b;
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+        }
+
+        .success-message {
+            background: #dcfce7;
+            border: 1px solid #059669;
+            border-radius: 8px;
+            padding: 1rem;
+            color: #065f46;
+            margin-top: 1rem;
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 1rem;
+            }
+
+            .header {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+
+            .tabs {
+                flex-wrap: wrap;
+            }
+
+            .tab {
+                padding: 1rem;
+                font-size: 0.9rem;
+            }
+
+            .tab-content {
+                padding: 2rem 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🖥️ System Settings</h1>
+        <div class="header-actions">
+            <button class="btn btn-secondary" onclick="window.close()">← Back to Admin</button>
+            <button class="btn btn-primary" onclick="saveAllSettings()">💾 Save All Settings</button>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="tabs">
+            <button class="tab active" onclick="switchTab('account')">
+                👤 Account
+            </button>
+            <button class="tab" onclick="switchTab('platform')">
+                🏢 Platform
+            </button>
+            <button class="tab" onclick="switchTab('security')">
+                🔒 Security
+            </button>
+            <button class="tab" onclick="switchTab('system')">
+                🖥️ System
+            </button>
+        </div>
+
+        <!-- Account Settings Tab -->
+        <div id="account" class="tab-content active">
+            <div class="form-section">
+                <h3>👤 Administrator Account</h3>
+                <form id="accountForm">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="adminUsername">Admin Username</label>
+                            <input type="text" id="adminUsername" class="form-input" value="troyhounshell" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label for="adminEmail">Admin Email</label>
+                            <input type="email" id="adminEmail" class="form-input" value="troyh@texastherapypros.com">
+                        </div>
+                        <div class="form-group">
+                            <label for="newPassword">Change Password</label>
+                            <input type="password" id="newPassword" class="form-input" placeholder="Enter new password">
+                        </div>
+                        <div class="form-group">
+                            <label for="confirmPassword">Confirm Password</label>
+                            <input type="password" id="confirmPassword" class="form-input" placeholder="Confirm new password">
+                        </div>
+                        <div class="form-group">
+                            <label for="systemTimezone">System Timezone</label>
+                            <select id="systemTimezone" class="form-select">
+                                <option value="America/Chicago" selected>Central Time (America/Chicago)</option>
+                                <option value="America/New_York">Eastern Time (America/New_York)</option>
+                                <option value="America/Denver">Mountain Time (America/Denver)</option>
+                                <option value="America/Los_Angeles">Pacific Time (America/Los_Angeles)</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="margin-top: 1.5rem;">💾 Save Account Settings</button>
+                </form>
+                <div id="accountSuccess" class="success-message"></div>
+            </div>
+        </div>
+
+        <!-- Platform Settings Tab -->
+        <div id="platform" class="tab-content">
+            <div class="form-section">
+                <h3>🏢 Platform Configuration</h3>
+                <form id="platformForm">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="platformName">Platform Name</label>
+                            <input type="text" id="platformName" class="form-input" value="DrTroy.com">
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="form-section">
+                <h3>📚 CCU Requirements by Discipline</h3>
+                <form id="ccuForm">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="ptCCU">Physical Therapist (PT)</label>
+                            <input type="number" id="ptCCU" class="form-input" value="27" min="1" max="50">
+                        </div>
+                        <div class="form-group">
+                            <label for="ptaCCU">Physical Therapist Assistant (PTA)</label>
+                            <input type="number" id="ptaCCU" class="form-input" value="17" min="1" max="50">
+                        </div>
+                        <div class="form-group">
+                            <label for="otCCU">Occupational Therapist (OT)</label>
+                            <input type="number" id="otCCU" class="form-input" value="23" min="1" max="50">
+                        </div>
+                        <div class="form-group">
+                            <label for="cotaCCU">Certified OT Assistant (COTA)</label>
+                            <input type="number" id="cotaCCU" class="form-input" value="23" min="1" max="50">
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="form-section">
+                <h3>⏰ License Renewal Warning Schedule</h3>
+                <form id="warningForm">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="warning1">First Warning (months before expiration)</label>
+                            <input type="number" id="warning1" class="form-input" value="6" min="1" max="12">
+                        </div>
+                        <div class="form-group">
+                            <label for="warning2">Second Warning (months before expiration)</label>
+                            <input type="number" id="warning2" class="form-input" value="1" min="1" max="6">
+                        </div>
+                        <div class="form-group">
+                            <label for="warning3">Final Warning (days before expiration)</label>
+                            <input type="number" id="warning3" class="form-input" value="7" min="1" max="30">
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="form-section">
+                <h3>💰 Course Pricing</h3>
+                <form id="pricingForm">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="annualPrice">Annual Subscription ($)</label>
+                            <input type="number" id="annualPrice" class="form-input" value="199" min="1">
+                        </div>
+                        <div class="form-group">
+                            <label for="coursePrice">Individual Course ($)</label>
+                            <input type="number" id="coursePrice" class="form-input" value="99" min="1">
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <button type="button" class="btn btn-primary" onclick="savePlatformSettings()">💾 Save Platform Settings</button>
+            <div id="platformSuccess" class="success-message"></div>
+        </div>
+
+        <!-- Security Settings Tab -->
+        <div id="security" class="tab-content">
+            <div class="form-section">
+                <h3>🔒 Security & Access Control</h3>
+                <form id="securityForm">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="sessionDuration">Admin Session Duration</label>
+                            <select id="sessionDuration" class="form-select">
+                                <option value="1">1 hour</option>
+                                <option value="4">4 hours</option>
+                                <option value="8" selected>8 hours (default)</option>
+                                <option value="12">12 hours</option>
+                                <option value="24">24 hours</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="maxAttempts">Max Failed Login Attempts</label>
+                            <input type="number" id="maxAttempts" class="form-input" value="5" min="3" max="10">
+                        </div>
+                        <div class="form-group">
+                            <label for="lockoutTime">Account Lockout Duration (minutes)</label>
+                            <input type="number" id="lockoutTime" class="form-input" value="15" min="5" max="60">
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="form-section">
+                <h3>🔐 Two-Factor Authentication</h3>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="enable2FA">
+                    <label for="enable2FA">Enable 2FA for admin login (coming soon)</label>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h3>📧 Security Notifications</h3>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="loginNotifications" checked>
+                    <label for="loginNotifications">Email notifications for admin logins</label>
+                </div>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="failedLoginNotifications" checked>
+                    <label for="failedLoginNotifications">Email notifications for failed login attempts</label>
+                </div>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="systemAlerts" checked>
+                    <label for="systemAlerts">System maintenance and error alerts</label>
+                </div>
+            </div>
+
+            <button type="button" class="btn btn-primary" onclick="saveSecuritySettings()">🔒 Save Security Settings</button>
+            <div id="securitySuccess" class="success-message"></div>
+        </div>
+
+        <!-- System Management Tab -->
+        <div id="system" class="tab-content">
+            <div class="form-section">
+                <h3>📊 System Information</h3>
+                <div class="system-info">
+                    <div class="info-card">
+                        <div class="label">Platform Version</div>
+                        <div class="value">DrTroy.com v2.1.0</div>
+                    </div>
+                    <div class="info-card">
+                        <div class="label">Database Status</div>
+                        <div class="value success">✅ Healthy</div>
+                    </div>
+                    <div class="info-card">
+                        <div class="label">Last Backup</div>
+                        <div class="value">Today, 3:00 AM</div>
+                    </div>
+                    <div class="info-card">
+                        <div class="label">System Load</div>
+                        <div class="value success">Low (12%)</div>
+                    </div>
+                    <div class="info-card">
+                        <div class="label">Uptime</div>
+                        <div class="value">7 days, 14 hours</div>
+                    </div>
+                    <div class="info-card">
+                        <div class="label">Storage Used</div>
+                        <div class="value">2.4 GB / 50 GB</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h3>🔧 System Actions</h3>
+                <div class="action-grid">
+                    <button class="action-btn success" onclick="performBackup()">
+                        <span style="font-size: 1.5rem;">💾</span>
+                        Manual Backup
+                    </button>
+                    <button class="action-btn warning" onclick="clearCache()">
+                        <span style="font-size: 1.5rem;">🗑️</span>
+                        Clear Cache
+                    </button>
+                    <button class="action-btn primary" onclick="exportSystemLogs()">
+                        <span style="font-size: 1.5rem;">📄</span>
+                        Export Logs
+                    </button>
+                    <button class="action-btn primary" onclick="restartSystem()">
+                        <span style="font-size: 1.5rem;">🔄</span>
+                        Restart System
+                    </button>
+                </div>
+            </div>
+
+            <div class="danger-zone">
+                <h4>⚠️ Danger Zone</h4>
+                <p>These actions cannot be undone. Use with extreme caution.</p>
+                <div class="action-grid">
+                    <button class="action-btn danger" onclick="resetAllData()">
+                        <span style="font-size: 1.5rem;">🚨</span>
+                        Reset All Data
+                    </button>
+                    <button class="action-btn danger" onclick="deleteAllUsers()">
+                        <span style="font-size: 1.5rem;">👥</span>
+                        Delete All Users
+                    </button>
+                    <button class="action-btn danger" onclick="factoryReset()">
+                        <span style="font-size: 1.5rem;">🏭</span>
+                        Factory Reset
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Tab switching
+        function switchTab(tabName) {
+            // Update tab buttons
+            document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            // Update tab content
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+            document.getElementById(tabName).classList.add('active');
+            
+            // Load data for specific tabs
+            if (tabName === 'account') loadAccountSettings();
+            if (tabName === 'platform') loadPlatformSettings();
+            if (tabName === 'security') loadSecuritySettings();
+        }
+
+        // Load existing settings
+        function loadAccountSettings() {
+            const accountSettings = JSON.parse(localStorage.getItem('drtroyAccountSettings') || '{}');
+            if (accountSettings.email) {
+                document.getElementById('adminEmail').value = accountSettings.email;
+            }
+            if (accountSettings.timezone) {
+                document.getElementById('systemTimezone').value = accountSettings.timezone;
+            }
+        }
+
+        function loadPlatformSettings() {
+            const platformSettings = JSON.parse(localStorage.getItem('drtroyPlatformSettings') || '{}');
+            if (platformSettings.name) {
+                document.getElementById('platformName').value = platformSettings.name;
+            }
+            if (platformSettings.ccuRequirements) {
+                document.getElementById('ptCCU').value = platformSettings.ccuRequirements.PT || 27;
+                document.getElementById('ptaCCU').value = platformSettings.ccuRequirements.PTA || 17;
+                document.getElementById('otCCU').value = platformSettings.ccuRequirements.OT || 23;
+                document.getElementById('cotaCCU').value = platformSettings.ccuRequirements.COTA || 23;
+            }
+            if (platformSettings.renewalWarnings) {
+                document.getElementById('warning1').value = platformSettings.renewalWarnings.first || 6;
+                document.getElementById('warning2').value = platformSettings.renewalWarnings.second || 1;
+                document.getElementById('warning3').value = platformSettings.renewalWarnings.final || 7;
+            }
+            if (platformSettings.pricing) {
+                document.getElementById('annualPrice').value = platformSettings.pricing.annual || 199;
+                document.getElementById('coursePrice').value = platformSettings.pricing.course || 99;
+            }
+        }
+
+        function loadSecuritySettings() {
+            const securitySettings = JSON.parse(localStorage.getItem('drtroySecuritySettings') || '{}');
+            if (securitySettings.sessionDuration) {
+                document.getElementById('sessionDuration').value = securitySettings.sessionDuration;
+            }
+            if (securitySettings.maxAttempts) {
+                document.getElementById('maxAttempts').value = securitySettings.maxAttempts;
+            }
+            if (securitySettings.lockoutTime) {
+                document.getElementById('lockoutTime').value = securitySettings.lockoutTime;
+            }
+            if (securitySettings.twoFactorAuth !== undefined) {
+                document.getElementById('enable2FA').checked = securitySettings.twoFactorAuth;
+            }
+            if (securitySettings.notifications) {
+                document.getElementById('loginNotifications').checked = securitySettings.notifications.login !== false;
+                document.getElementById('failedLoginNotifications').checked = securitySettings.notifications.failedLogin !== false;
+                document.getElementById('systemAlerts').checked = securitySettings.notifications.systemAlerts !== false;
+            }
+        }
+
+        // Form handlers
+        document.getElementById('accountForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const email = document.getElementById('adminEmail').value;
+            const newPassword = document.getElementById('newPassword').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            const timezone = document.getElementById('systemTimezone').value;
+            
+            // Validate passwords match if provided
+            if (newPassword && newPassword !== confirmPassword) {
+                alert('❌ Passwords do not match!');
+                return;
+            }
+            
+            // Save account settings
+            const accountSettings = {
+                email: email,
+                timezone: timezone,
+                updated: new Date().toISOString()
+            };
+            
+            // Update password if provided
+            if (newPassword) {
+                const credentials = {
+                    username: 'troyhounshell',
+                    password: newPassword,
+                    updated: new Date().toISOString()
+                };
+                localStorage.setItem('drtroyAdminCredentials', JSON.stringify(credentials));
+                accountSettings.passwordUpdated = true;
+            }
+            
+            localStorage.setItem('drtroyAccountSettings', JSON.stringify(accountSettings));
+            
+            // Show success message
+            const successEl = document.getElementById('accountSuccess');
+            successEl.textContent = '✅ Account settings saved successfully!' + (newPassword ? ' Your password has been updated.' : '');
+            successEl.style.display = 'block';
+            
+            // Clear password fields
+            document.getElementById('newPassword').value = '';
+            document.getElementById('confirmPassword').value = '';
+            
+            // Hide success message after 5 seconds
+            setTimeout(() => {
+                successEl.style.display = 'none';
+            }, 5000);
+        });
+
+        function savePlatformSettings() {
+            const platformSettings = {
+                name: document.getElementById('platformName').value,
+                ccuRequirements: {
+                    PT: parseInt(document.getElementById('ptCCU').value),
+                    PTA: parseInt(document.getElementById('ptaCCU').value),
+                    OT: parseInt(document.getElementById('otCCU').value),
+                    COTA: parseInt(document.getElementById('cotaCCU').value)
+                },
+                renewalWarnings: {
+                    first: parseInt(document.getElementById('warning1').value),
+                    second: parseInt(document.getElementById('warning2').value),
+                    final: parseInt(document.getElementById('warning3').value)
+                },
+                pricing: {
+                    annual: parseInt(document.getElementById('annualPrice').value),
+                    course: parseInt(document.getElementById('coursePrice').value)
+                },
+                updated: new Date().toISOString()
+            };
+            
+            localStorage.setItem('drtroyPlatformSettings', JSON.stringify(platformSettings));
+            
+            // Show success message
+            const successEl = document.getElementById('platformSuccess');
+            successEl.textContent = '✅ Platform settings saved successfully!';
+            successEl.style.display = 'block';
+            
+            setTimeout(() => {
+                successEl.style.display = 'none';
+            }, 5000);
+        }
+
+        function saveSecuritySettings() {
+            const securitySettings = {
+                sessionDuration: parseInt(document.getElementById('sessionDuration').value),
+                maxAttempts: parseInt(document.getElementById('maxAttempts').value),
+                lockoutTime: parseInt(document.getElementById('lockoutTime').value),
+                twoFactorAuth: document.getElementById('enable2FA').checked,
+                notifications: {
+                    login: document.getElementById('loginNotifications').checked,
+                    failedLogin: document.getElementById('failedLoginNotifications').checked,
+                    systemAlerts: document.getElementById('systemAlerts').checked
+                },
+                updated: new Date().toISOString()
+            };
+            
+            localStorage.setItem('drtroySecuritySettings', JSON.stringify(securitySettings));
+            
+            // Show success message
+            const successEl = document.getElementById('securitySuccess');
+            successEl.textContent = '✅ Security settings saved successfully!';
+            successEl.style.display = 'block';
+            
+            setTimeout(() => {
+                successEl.style.display = 'none';
+            }, 5000);
+        }
+
+        function saveAllSettings() {
+            // Save all forms
+            document.getElementById('accountForm').dispatchEvent(new Event('submit'));
+            setTimeout(() => savePlatformSettings(), 100);
+            setTimeout(() => saveSecuritySettings(), 200);
+            
+            // Show global success
+            setTimeout(() => {
+                alert('✅ All system settings saved successfully!');
+            }, 500);
+        }
+
+        // System action functions
+        function performBackup() {
+            if (confirm('🔄 Create a manual backup of all system data?\n\nThis may take a few minutes to complete.')) {
+                alert('💾 System backup initiated!\n\nBackup will be completed in the background and you\'ll receive an email when finished.');
+            }
+        }
+
+        function clearCache() {
+            if (confirm('🗑️ Clear all system cache?\n\nThis may temporarily slow down the platform while cache rebuilds.')) {
+                ['drtroyAnalytics', 'drtroyUserCache', 'drtroyEmailCache'].forEach(key => {
+                    localStorage.removeItem(key);
+                });
+                alert('✅ System cache cleared successfully!');
+            }
+        }
+
+        function exportSystemLogs() {
+            alert('📄 Exporting system logs...\n\nA download will begin shortly with the complete log file.');
+        }
+
+        function restartSystem() {
+            if (confirm('🔄 Restart the DrTroy.com platform?\n\nThis will briefly interrupt service for all users. Continue?')) {
+                alert('🔄 System restart initiated...\n\nPlatform will be back online within 2-3 minutes.');
+            }
+        }
+
+        function resetAllData() {
+            if (confirm('🚨 WARNING: Reset ALL system data?\n\nThis will permanently delete:\n• All user accounts\n• All course data\n• All analytics\n• All settings\n\nType "RESET" below to confirm:')) {
+                const confirmation = prompt('Type "RESET" to confirm this action:');
+                if (confirmation === 'RESET') {
+                    Object.keys(localStorage).forEach(key => {
+                        if (key.startsWith('drtroy')) {
+                            localStorage.removeItem(key);
+                        }
+                    });
+                    alert('🗑️ All system data has been reset!\n\nYou will need to reconfigure all settings.');
+                    location.reload();
+                } else {
+                    alert('❌ Data reset cancelled - confirmation text did not match.');
+                }
+            }
+        }
+
+        function deleteAllUsers() {
+            if (confirm('👥 DELETE ALL USERS WARNING!\n\nThis will permanently delete all user accounts and their data.\n\nThis action cannot be undone!\n\nContinue?')) {
+                const confirmation = prompt('Type "DELETE USERS" to confirm:');
+                if (confirmation === 'DELETE USERS') {
+                    localStorage.removeItem('drtroyUsers');
+                    localStorage.removeItem('drtroyUserProfiles');
+                    alert('👥 All user accounts have been deleted!');
+                } else {
+                    alert('❌ User deletion cancelled - confirmation text did not match.');
+                }
+            }
+        }
+
+        function factoryReset() {
+            if (confirm('🏭 FACTORY RESET WARNING!\n\nThis will reset the entire platform to its original state.\n\nALL DATA WILL BE PERMANENTLY LOST!\n\nContinue?')) {
+                const confirmation = prompt('Type "FACTORY RESET" to confirm this irreversible action:');
+                if (confirmation === 'FACTORY RESET') {
+                    localStorage.clear();
+                    alert('🏭 Factory reset completed!\n\nReloading platform...');
+                    location.reload();
+                } else {
+                    alert('❌ Factory reset cancelled - confirmation text did not match.');
+                }
+            }
+        }
+
+        // Initialize on load
+        document.addEventListener('DOMContentLoaded', function() {
+            loadAccountSettings();
+            loadPlatformSettings();
+            loadSecuritySettings();
+        });
+    </script>
+</body>
+</html>

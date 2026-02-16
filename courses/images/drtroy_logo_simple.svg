@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="700" viewBox="0 0 1400 700">
+  <!-- Main title "DRTROY" with very bold styling to match original -->
+  <text x="700" y="300" 
+        font-family="Arial Black, Helvetica, sans-serif" 
+        font-size="220" 
+        font-weight="900" 
+        fill="#1a365d" 
+        text-anchor="middle" 
+        letter-spacing="4px"
+        style="paint-order: stroke fill;">DRTROY</text>
+  
+  <!-- Top decorative line -->
+  <line x1="200" y1="150" x2="1200" y2="150" stroke="#718096" stroke-width="4"/>
+  <circle cx="170" cy="150" r="15" fill="none" stroke="#718096" stroke-width="4"/>
+  <circle cx="1230" cy="150" r="15" fill="none" stroke="#718096" stroke-width="4"/>
+  
+  <!-- Subtitle "CONTINUING EDUCATION" -->
+  <text x="700" y="420" 
+        font-family="Georgia, serif" 
+        font-size="52" 
+        font-weight="normal" 
+        fill="#718096" 
+        text-anchor="middle" 
+        letter-spacing="8px">CONTINUING EDUCATION</text>
+  
+  <!-- Bottom decorative line -->
+  <line x1="200" y1="500" x2="1200" y2="500" stroke="#718096" stroke-width="4"/>
+  <circle cx="170" cy="500" r="15" fill="none" stroke="#718096" stroke-width="4"/>
+  <circle cx="1230" cy="500" r="15" fill="none" stroke="#718096" stroke-width="4"/>
+</svg>

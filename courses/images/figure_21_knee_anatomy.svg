@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 500" width="600" height="500">
+  <!-- Background -->
+  <rect x="0" y="0" width="600" height="500" fill="#fafbfc"/>
+  
+  <!-- Title -->
+  <text x="300" y="30" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="#1a365d" text-anchor="middle">Knee Joint Anatomy</text>
+  
+  <!-- Left side - Anterior View -->
+  <text x="150" y="55" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#2d3748" text-anchor="middle">Anterior View</text>
+  
+  <!-- Femur (distal end) -->
+  <path d="M70 80 L70 130 Q100 140 130 130 L130 80 Q100 90 70 80" fill="#e2e8f0" stroke="#2d3748" stroke-width="2"/>
+  <text x="100" y="110" font-family="Arial, sans-serif" font-size="10" fill="#1a365d" text-anchor="middle" font-weight="bold">Femur</text>
+  
+  <!-- Medial Femoral Condyle -->
+  <ellipse cx="85" cy="135" rx="15" ry="12" fill="#cbd5e0" stroke="#2d3748" stroke-width="1.5"/>
+  <text x="60" y="155" font-family="Arial, sans-serif" font-size="8" fill="#4a5568">Medial Condyle</text>
+  
+  <!-- Lateral Femoral Condyle -->
+  <ellipse cx="115" cy="135" rx="15" ry="12" fill="#cbd5e0" stroke="#2d3748" stroke-width="1.5"/>
+  <text x="140" y="155" font-family="Arial, sans-serif" font-size="8" fill="#4a5568">Lateral Condyle</text>
+  
+  <!-- Tibia (proximal end) -->
+  <path d="M70 180 L70 250 L130 250 L130 180 Q100 170 70 180" fill="#e2e8f0" stroke="#2d3748" stroke-width="2"/>
+  <text x="100" y="220" font-family="Arial, sans-serif" font-size="10" fill="#1a365d" text-anchor="middle" font-weight="bold">Tibia</text>
+  
+  <!-- Tibial Plateau -->
+  <line x1="70" y1="180" x2="130" y2="180" stroke="#2d3748" stroke-width="2"/>
+  <text x="100" y="175" font-family="Arial, sans-serif" font-size="8" fill="#4a5568" text-anchor="middle">Tibial Plateau</text>
+  
+  <!-- Intercondylar Eminence -->
+  <path d="M95 175 L100 185 L105 175" fill="#a0aec0" stroke="#2d3748" stroke-width="1"/>
+  <text x="100" y="195" font-family="Arial, sans-serif" font-size="7" fill="#4a5568" text-anchor="middle">Spines</text>
+  
+  <!-- Patella -->
+  <ellipse cx="160" cy="150" rx="12" ry="18" fill="#fed7d7" stroke="#c53030" stroke-width="2"/>
+  <text x="185" y="145" font-family="Arial, sans-serif" font-size="9" fill="#c53030" font-weight="bold">Patella</text>
+  
+  <!-- Quadriceps Tendon -->
+  <path d="M160 130 L160 110" stroke="#805ad5" stroke-width="4" stroke-linecap="round"/>
+  <text x="175" y="115" font-family="Arial, sans-serif" font-size="8" fill="#805ad5">Quad Tendon</text>
+  
+  <!-- Patellar Ligament -->
+  <path d="M160 170 L160 190" stroke="#805ad5" stroke-width="4" stroke-linecap="round"/>
+  <text x="175" y="185" font-family="Arial, sans-serif" font-size="8" fill="#805ad5">Patellar Lig.</text>
+  
+  <!-- MCL -->
+  <path d="M70 140 L70 190" stroke="#c53030" stroke-width="4" stroke-linecap="round"/>
+  <text x="40" y="165" font-family="Arial, sans-serif" font-size="9" fill="#c53030" font-weight="bold">MCL</text>
+  
+  <!-- LCL -->
+  <path d="M130 140 L130 190" stroke="#c53030" stroke-width="3" stroke-linecap="round"/>
+  <text x="140" y="165" font-family="Arial, sans-serif" font-size="9" fill="#c53030" font-weight="bold">LCL</text>
+  
+  <!-- Menisci (dashed) -->
+  <path d="M85 145 L85 175" stroke="#38a169" stroke-width="3" stroke-dasharray="4,2"/>
+  <path d="M115 145 L115 175" stroke="#38a169" stroke-width="3" stroke-dasharray="4,2"/>
+  <text x="100" y="165" font-family="Arial, sans-serif" font-size="8" fill="#38a169" text-anchor="middle">Menisci</text>
+  
+  <!-- Right side - Sagittal View -->
+  <text x="450" y="55" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#2d3748" text-anchor="middle">Sagittal View</text>
+  
+  <!-- Femur (sagittal) -->
+  <path d="M400 80 Q420 85 440 80 L440 140 Q420 145 400 140 Z" fill="#e2e8f0" stroke="#2d3748" stroke-width="2"/>
+  <text x="420" y="115" font-family="Arial, sans-serif" font-size="10" fill="#1a365d" text-anchor="middle" font-weight="bold">Femur</text>
+  
+  <!-- Femoral Condyle (sagittal) -->
+  <path d="M410 140 Q420 155 430 140" fill="#cbd5e0" stroke="#2d3748" stroke-width="1.5"/>
+  
+  <!-- Tibia (sagittal) -->
+  <path d="M400 180 L400 260 L440 260 L440 180 Q420 170 400 180" fill="#e2e8f0" stroke="#2d3748" stroke-width="2"/>
+  <text x="420" y="220" font-family="Arial, sans-serif" font-size="10" fill="#1a365d" text-anchor="middle" font-weight="bold">Tibia</text>
+  
+  <!-- Patella (sagittal) -->
+  <ellipse cx="455" cy="145" rx="10" ry="15" fill="#fed7d7" stroke="#c53030" stroke-width="2"/>
+  <text x="475" y="140" font-family="Arial, sans-serif" font-size="9" fill="#c53030">Patella</text>
+  
+  <!-- Quadriceps Tendon -->
+  <path d="M455 125 L455 90" stroke="#805ad5" stroke-width="3"/>
+  <text x="460" y="100" font-family="Arial, sans-serif" font-size="8" fill="#805ad5">Quad Tendon</text>
+  
+  <!-- Patellar Ligament -->
+  <path d="M455 165 L455 190" stroke="#805ad5" stroke-width="3"/>
+  <text x="460" y="185" font-family="Arial, sans-serif" font-size="8" fill="#805ad5">Patellar Lig.</text>
+  
+  <!-- ACL -->
+  <path d="M425 145 L415 175" stroke="#dd6b20" stroke-width="3" stroke-linecap="round"/>
+  <text x="385" y="160" font-family="Arial, sans-serif" size="9" fill="#dd6b20" font-weight="bold">ACL</text>
+  
+  <!-- PCL -->
+  <path d="M415 145 L425 175" stroke="#3182ce" stroke-width="3" stroke-linecap="round"/>
+  <text x="385" y="180" font-family="Arial, sans-serif" size="9" fill="#3182ce" font-weight="bold">PCL</text>
+  
+  <!-- Meniscus -->
+  <path d="M405 165 Q420 160 435 165" stroke="#38a169" stroke-width="4" fill="none"/>
+  <text x="440" y="170" font-family="Arial, sans-serif" size="9" fill="#38a169">Meniscus</text>
+  
+  <!-- Joint Space -->
+  <path d="M410 145 Q420 150 430 145" stroke="#4299e1" stroke-width="1" fill="none" stroke-dasharray="3,2"/>
+  
+  <!-- Key Structures Box -->
+  <rect x="50" y="320" width="500" height="160" fill="#fff" stroke="#1a365d" stroke-width="2" rx="5"/>
+  <text x="300" y="345" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#1a365d" text-anchor="middle">Key Structures and Clinical Notes</text>
+  
+  <text x="70" y="370" font-family="Arial, sans-serif" font-size="11" fill="#333">
+    <tspan font-weight="bold">Bones:</tspan> Distal femur, proximal tibia, patella (sesamoid in quadriceps tendon)
+  </text>
+  <text x="70" y="390" font-family="Arial, sans-serif" font-size="11" fill="#333">
+    <tspan font-weight="bold">Ligaments:</tspan> ACL (anterior stability), PCL (posterior stability), MCL (medial), LCL (lateral)
+  </text>
+  <text x="70" y="410" font-family="Arial, sans-serif" font-size="11" fill="#333">
+    <tspan font-weight="bold">Menisci:</tspan> Medial (C-shaped, less mobile) and Lateral (O-shaped, more mobile) - shock absorption
+  </text>
+  <text x="70" y="430" font-family="Arial, sans-serif" font-size="11" fill="#333">
+    <tspan font-weight="bold">Extensor Mechanism:</tspan> Quadriceps → Quad tendon → Patella → Patellar ligament → Tibial tuberosity
+  </text>
+  <text x="70" y="450" font-family="Arial, sans-serif" font-size="11" fill="#333">
+    <tspan font-weight="bold">Unhappy Triad:</tspan> ACL + MCL + Medial meniscus tear (valgus blow to lateral knee)
+  </text>
+  <text x="70" y="470" font-family="Arial, sans-serif" font-size="11" fill="#c53030">
+    <tspan font-weight="bold">Common Injuries:</tspan> ACL tears (70% non-contact), meniscal tears, patellofemoral pain syndrome
+  </text>
+</svg>

@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unified Course Catalog | DrTroy CE</title>
+    
+    <!-- Security Headers -->
+    <meta http-equiv="Content-Security-Policy" content="
+        default-src 'self';
+        script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://js.stripe.com;
+        style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
+        font-src 'self' https://fonts.gstatic.com;
+        img-src 'self' data: https:;
+        connect-src 'self' https://*.supabase.co;
+    ">
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta http-equiv="X-Frame-Options" content="DENY">
+    <meta http-equiv="X-XSS-Protection" content="1; mode=block">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --navy: #1a365d;
+            --navy-light: #2c5282;
+            --gold: #d69e2e;
+            --gold-light: #ecc94b;
+            --gray-50: #f7fafc;
+            --gray-100: #edf2f7;
+            --gray-600: #4a5568;
+            --gray-800: #2d3748;
+            --green: #22c55e;
+            --green-light: #dcfce7;
+            --blue: #3b82f6;
+            --blue-light: #dbeafe;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: var(--gray-800);
+        }
+
+        header {
+            background: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 2rem 1rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .logo img {
+            height: 300px;
+            width: auto;
+            max-width: 1200px;
+        }
+
+        nav {
+            margin-top: 1.5rem;
+        }
+
+        nav a {
+            color: var(--gray-600);
+            text-decoration: none;
+            margin: 0 1.5rem;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        nav a:hover {
+            color: var(--navy);
+        }
+
+        .login-link {
+            background: var(--gold) !important;
+            color: var(--navy) !important;
+            padding: 0.5rem 1rem !important;
+            border-radius: 6px !important;
+            font-weight: 600 !important;
+            transition: all 0.3s ease !important;
+        }
+
+        .login-link:hover {
+            background: #f6d55c !important;
+            color: var(--navy) !important;
+            transform: translateY(-2px) !important;
+        }
+
+        .page-header {
+            background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
+            color: white;
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+
+        .page-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .page-header p {
+            opacity: 0.9;
+            font-size: 1.1rem;
+        }
+
+        .improvement-banner {
+            background: var(--green-light);
+            border-left: 4px solid var(--green);
+            padding: 1rem 2rem;
+            margin: 2rem auto;
+            max-width: 1000px;
+            border-radius: 6px;
+        }
+
+        .improvement-banner h3 {
+            color: #166534;
+            margin-bottom: 0.5rem;
+        }
+
+        .improvement-banner p {
+            color: #166534;
+        }
+
+        .catalog {
+            padding: 3rem 2rem;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .unified-section {
+            margin-bottom: 3rem;
+            border: 2px solid var(--green);
+            border-radius: 12px;
+            background: white;
+            overflow: hidden;
+        }
+
+        .profession-section {
+            margin-bottom: 3rem;
+        }
+
+        .section-header {
+            background: var(--green);
+            color: white;
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .section-header h2 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .section-header p {
+            opacity: 0.9;
+            font-size: 0.95rem;
+        }
+
+        .profession-header {
+            background: var(--navy);
+            color: white;
+            padding: 1.25rem 1.5rem;
+            border-radius: 8px 8px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .profession-header h2 {
+            font-size: 1.25rem;
+        }
+
+        .total-badge {
+            background: var(--gold);
+            color: var(--navy);
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .unified-badge {
+            background: var(--green);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .course-list {
+            background: white;
+            border: 1px solid var(--gray-100);
+            border-top: none;
+            border-radius: 0 0 8px 8px;
+            overflow: hidden;
+        }
+
+        .unified-course-list {
+            background: white;
+        }
+
+        .catalog-course-header {
+            padding: 1rem 1.5rem;
+            background: var(--gold);
+            color: var(--navy);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            border-bottom: 2px solid var(--gold);
+        }
+
+        .unified-course-header {
+            padding: 1rem 1.5rem;
+            background: var(--green);
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            border-bottom: 2px solid var(--green);
+        }
+
+        .course-item {
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid var(--gray-100);
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+
+        .unified-course-item {
+            padding: 1.25rem 1.5rem;
+            border-bottom: 1px solid var(--gray-100);
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 1rem;
+            background: var(--gray-50);
+        }
+
+        .course-item:last-child,
+        .unified-course-item:last-child {
+            border-bottom: none;
+        }
+
+        .course-item:hover,
+        .unified-course-item:hover {
+            background: var(--gray-50);
+        }
+
+        .unified-course-item:hover {
+            background: #f0fdf4;
+        }
+
+        .course-info {
+            flex: 1;
+        }
+
+        .course-title {
+            font-weight: 600;
+            font-size: 1.1rem;
+            color: var(--navy);
+            margin-bottom: 0.25rem;
+        }
+
+        .unified-course-title {
+            font-weight: 600;
+            font-size: 1.1rem;
+            color: var(--green);
+            margin-bottom: 0.25rem;
+        }
+
+        .course-description {
+            font-size: 0.9rem;
+            color: var(--gray-600);
+            line-height: 1.4;
+        }
+
+        .course-hours {
+            color: var(--gray-600);
+            font-size: 0.9rem;
+            font-weight: 600;
+            white-space: nowrap;
+            flex-shrink: 0;
+            min-width: 30px;
+            text-align: right;
+        }
+
+        .unified-badge-small {
+            display: inline-block;
+            background: var(--green);
+            color: white;
+            padding: 0.25rem 0.5rem;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-left: 0.5rem;
+        }
+
+        .profession-specific-badge {
+            display: inline-block;
+            background: var(--blue);
+            color: white;
+            padding: 0.25rem 0.5rem;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-left: 0.5rem;
+        }
+
+        .savings-highlight {
+            background: var(--blue-light);
+            border: 1px solid var(--blue);
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem 0;
+            font-size: 0.9rem;
+            color: #1e40af;
+        }
+
+        .compliance-banner {
+            background: var(--gold-light);
+            padding: 1rem 1.5rem;
+            border-left: 4px solid var(--gold);
+            margin-top: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .compliance-banner a {
+            color: var(--navy);
+            font-weight: 500;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 2rem;
+            color: var(--navy);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+        footer {
+            background: var(--navy);
+            color: white;
+            padding: 1.5rem;
+            text-align: center;
+            margin-top: 3rem;
+        }
+
+        footer p {
+            color: rgba(255,255,255,0.7);
+            font-size: 0.85rem;
+        }
+
+        @media (max-width: 768px) {
+            .logo img {
+                height: 200px;
+                max-width: 95vw;
+                width: auto;
+            }
+            
+            .header-container {
+                padding: 1.5rem 1rem 1rem;
+            }
+            
+            .profession-header {
+                flex-direction: column;
+                text-align: center;
+                gap: 0.5rem;
+            }
+
+            .course-item,
+            .unified-course-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.5rem;
+            }
+
+            .course-hours {
+                align-self: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <img src="images/drtroy_logo.png" alt="DrTroy Continuing Education">
+            </div>
+            <nav>
+                <a href="index.html">Home</a>
+                <a href="index.html#packages">Packages</a>
+                <a href="courses.html">Courses</a>
+                <a href="index.html#contact">Contact</a>
+                <a href="#" id="loginLink" class="login-link">Log In</a>
+            </nav>
+        </div>
+    </header>
+
+    <section class="page-header">
+        <h1>Unified Course Catalog</h1>
+        <p>Streamlined PT/PTA education with shared fundamentals and role-specific applications</p>
+    </section>
+
+    <div class="improvement-banner">
+        <h3>🚀 New: Unified PT/PTA Courses</h3>
+        <p>We've combined compatible courses to share foundational knowledge while maintaining profession-specific content. This means better consistency, more comprehensive coverage, and streamlined learning paths for both PTs and PTAs.</p>
+    </div>
+
+    <section class="catalog">
+        <!-- Unified Courses Section -->
+        <div class="unified-section">
+            <div class="section-header">
+                <h2>🤝 Unified PT/PTA Courses</h2>
+                <p>Shared foundational content with profession-specific applications</p>
+            </div>
+            <div class="unified-course-list">
+                <div class="unified-course-header">
+                    <span>Course Name</span>
+                    <span>CCUs</span>
+                </div>
+                
+                <div class="unified-course-item">
+                    <div class="course-info">
+                        <div class="unified-course-title">
+                            Comprehensive Mobility and Fall Prevention
+                            <span class="unified-badge-small">UNIFIED</span>
+                        </div>
+                        <div class="course-description">
+                            Evidence-based fall prevention strategies, safe transfer techniques, and mobility interventions. PT focus: assessment and treatment planning. PTA focus: implementation and hands-on techniques.
+                        </div>
+                        <div class="savings-highlight">
+                            <strong>Replaces:</strong> "Fall Prevention in Older Adults" (PT) + "Transfer and Mobility Training" (PTA)
+                        </div>
+                    </div>
+                    <span class="course-hours">3</span>
+                </div>
+
+                <div class="unified-course-item">
+                    <div class="course-info">
+                        <div class="unified-course-title">
+                            Balance, Gait, and Vestibular Management
+                            <span class="unified-badge-small">UNIFIED</span>
+                        </div>
+                        <div class="course-description">
+                            Comprehensive approach to balance disorders, gait abnormalities, and vestibular dysfunction. Shared anatomy/pathophysiology with role-appropriate assessment and intervention strategies.
+                        </div>
+                        <div class="savings-highlight">
+                            <strong>Replaces:</strong> "Balance and Vestibular Disorders" (PT) + "Gait Training and Assessment" (PTA)
+                        </div>
+                    </div>
+                    <span class="course-hours">3</span>
+                </div>
+
+                <div class="unified-course-item">
+                    <div class="course-info">
+                        <div class="unified-course-title">
+                            Post-Surgical and Therapeutic Exercise
+                            <span class="unified-badge-small">UNIFIED</span>
+                        </div>
+                        <div class="course-description">
+                            Exercise principles, post-surgical rehabilitation, and progressive strengthening. PT focus: evaluation and protocol development. PTA focus: exercise implementation and progression.
+                        </div>
+                        <div class="savings-highlight">
+                            <strong>Replaces:</strong> "Post-Surgical Rehabilitation" (PT) + "Therapeutic Exercise Techniques" (PTA)
+                        </div>
+                    </div>
+                    <span class="course-hours">3</span>
+                </div>
+
+                <div class="unified-course-item">
+                    <div class="course-info">
+                        <div class="unified-course-title">
+                            Geriatric Care Across the Continuum
+                            <span class="unified-badge-small">UNIFIED</span>
+                        </div>
+                        <div class="course-description">
+                            Age-related changes, common geriatric conditions, and safety considerations. Addresses both PT evaluation/planning and PTA implementation perspectives in geriatric care.
+                        </div>
+                        <div class="savings-highlight">
+                            <strong>Replaces:</strong> "Geriatric Physical Therapy Considerations" (PT) + related PTA content
+                        </div>
+                    </div>
+                    <span class="course-hours">3</span>
+                </div>
+
+                <div class="unified-course-item">
+                    <div class="course-info">
+                        <div class="unified-course-title">
+                            Professional Documentation and Communication
+                            <span class="unified-badge-small">UNIFIED</span>
+                        </div>
+                        <div class="course-description">
+                            Documentation standards, legal requirements, and professional communication. PT focus: evaluation documentation and billing. PTA focus: treatment notes and PT communication.
+                        </div>
+                        <div class="savings-highlight">
+                            <strong>Replaces:</strong> "Documentation and Billing Best Practices" (PT) + PTA documentation training
+                        </div>
+                    </div>
+                    <span class="course-hours">3</span>
+                </div>
+
+                <div class="course-item">
+                    <div class="course-info">
+                        <div class="course-title">
+                            Neurological Rehabilitation
+                            <span class="unified-badge-small">SHARED</span>
+                        </div>
+                        <div class="course-description">
+                            Treatment approaches for stroke, SCI, TBI, and progressive neurological conditions. Identical content appropriate for both PT and PTA scope.
+                        </div>
+                    </div>
+                    <span class="course-hours">2</span>
+                </div>
+
+                <div class="course-item">
+                    <div class="course-info">
+                        <div class="course-title">
+                            Infection Control and Patient Safety
+                            <span class="unified-badge-small">SHARED</span>
+                        </div>
+                        <div class="course-description">
+                            Universal precautions, infection prevention, and patient safety protocols. Identical requirements for all healthcare professionals.
+                        </div>
+                    </div>
+                    <span class="course-hours">1</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- PT-Specific Courses -->
+        <div class="profession-section">
+            <div class="profession-header">
+                <h2>Physical Therapists Only</h2>
+                <span class="total-badge">9 Hours</span>
+            </div>
+            <div class="course-list">
+                <div class="catalog-course-header">
+                    <span>Course Name</span>
+                    <span>CCUs</span>
+                </div>
+                
+                <div class="course-item">
+                    <div class="course-info">
+                        <div class="course-title">
+                            Comprehensive Musculoskeletal Evaluation
+                            <span class="profession-specific-badge">PT SCOPE</span>
+                        </div>
+                        <div class="course-description">
+                            Advanced evaluation techniques, differential diagnosis, and treatment planning for musculoskeletal conditions. Requires PT-level assessment and diagnostic skills.
+                        </div>
+                    </div>
+                    <span class="course-hours">3</span>
+                </div>
+
+                <div class="course-item">
+                    <div class="course-info">
+                        <div class="course-title">
+                            Chronic Pain Management
+                            <span class="profession-specific-badge">PT SCOPE</span>
+                        </div>
+                        <div class="course-description">
+                            Complex pain assessment, biopsychosocial factors, and interdisciplinary pain management approaches. Requires PT evaluation and diagnostic capabilities.
+                        </div>
+                    </div>
+                    <span class="course-hours">3</span>
+                </div>
+
+                <div class="course-item">
+                    <div class="course-info">
+                        <div class="course-title">
+                            Sports Injury Rehabilitation
+                            <span class="profession-specific-badge">PT SCOPE</span>
+                        </div>
+                        <div class="course-description">
+                            Sport-specific injury assessment, return-to-play decisions, and performance optimization. Emphasizes evaluation and complex decision-making.
+                        </div>
+                    </div>
+                    <span class="course-hours">3</span>
+                </div>
+            </div>
+            <div class="compliance-banner">
+                <strong>PT Total: 24 CCUs</strong> (15 unified + 9 PT-specific) | Ethics requirement (2 CCUs) via Jurisprudence Exam | <a href="https://www.hhs.texas.gov/sites/default/files/documents/hhs-approved-human-trafficking-training.pdf" target="_blank">Human trafficking training (1 hr required) →</a>
+            </div>
+        </div>
+
+        <!-- PTA-Specific Courses -->
+        <div class="profession-section">
+            <div class="profession-header">
+                <h2>PT Assistants Only</h2>
+                <span class="total-badge">5 Hours</span>
+            </div>
+            <div class="course-list">
+                <div class="catalog-course-header">
+                    <span>Course Name</span>
+                    <span>CCUs</span>
+                </div>
+                
+                <div class="course-item">
+                    <div class="course-info">
+                        <div class="course-title">
+                            Modalities and Physical Agents
+                            <span class="profession-specific-badge">PTA SCOPE</span>
+                        </div>
+                        <div class="course-description">
+                            Hands-on application of therapeutic modalities, physical agents, and equipment operation. Focuses on PTA implementation skills and safety protocols.
+                        </div>
+                    </div>
+                    <span class="course-hours">3</span>
+                </div>
+
+                <div class="course-item">
+                    <div class="course-info">
+                        <div class="course-title">
+                            Wound Care Basics for PTAs
+                            <span class="profession-specific-badge">PTA SCOPE</span>
+                        </div>
+                        <div class="course-description">
+                            Basic wound assessment, dressing changes, and wound care techniques within PTA scope of practice. Emphasizes implementation under PT supervision.
+                        </div>
+                    </div>
+                    <span class="course-hours">2</span>
+                </div>
+            </div>
+            <div class="compliance-banner">
+                <strong>PTA Total: 20 CCUs</strong> (15 unified + 5 PTA-specific) | Ethics requirement (2 CCUs) via Jurisprudence Exam | <a href="https://www.hhs.texas.gov/sites/default/files/documents/hhs-approved-human-trafficking-training.pdf" target="_blank">Human trafficking training (1 hr required) →</a>
+            </div>
+        </div>
+
+        <!-- Summary Section -->
+        <div class="savings-highlight" style="margin-top: 2rem; padding: 1.5rem; background: var(--green-light); border-color: var(--green);">
+            <h3 style="color: #166534; margin-bottom: 1rem;">📊 Standardization Benefits</h3>
+            <ul style="color: #166534; margin-left: 1.5rem;">
+                <li><strong>Content Efficiency:</strong> 5 unified courses replace 10 separate courses</li>
+                <li><strong>Consistent Quality:</strong> Same foundational knowledge for both professions</li>
+                <li><strong>Professional Clarity:</strong> Clear scope distinctions within unified content</li>
+                <li><strong>Maintenance Savings:</strong> Updates applied once, benefit both professions</li>
+                <li><strong>Better Education:</strong> Both professions learn shared evidence base</li>
+            </ul>
+        </div>
+
+        <a href="index.html" class="back-link">← Back to Packages</a>
+    </section>
+
+    <footer>
+        <p>Troy@DrTroy.com</p>
+        <p style="margin-top: 0.5rem;">© 2026 DrTroy Continuing Education</p>
+    </footer>
+
+    <script>
+        // Login link handler - redirect to homepage with login modal
+        document.getElementById('loginLink').addEventListener('click', function(e) {
+            e.preventDefault();
+            // Redirect to home page and open login modal
+            window.location.href = 'index.html?login=true';
+        });
+    </script>
+</body>
+</html>

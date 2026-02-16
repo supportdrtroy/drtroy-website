@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 500" width="600" height="500">
+  <!-- Background -->
+  <rect x="0" y="0" width="600" height="500" fill="#fafbfc"/>
+  
+  <!-- Title -->
+  <text x="300" y="30" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="#1a365d" text-anchor="middle">Elbow Joint Anatomy</text>
+  
+  <!-- Left side - Anterior View -->
+  <text x="150" y="55" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#2d3748" text-anchor="middle">Anterior View</text>
+  
+  <!-- Humerus (upper arm bone) -->
+  <path d="M120 80 L120 180 L135 185 L150 180 L150 80 Z" fill="#e2e8f0" stroke="#2d3748" stroke-width="2"/>
+  <text x="135" y="130" font-family="Arial, sans-serif" font-size="10" fill="#1a365d" text-anchor="middle" font-weight="bold">Humerus</text>
+  
+  <!-- Medial epicondyle -->
+  <ellipse cx="120" cy="185" rx="8" ry="12" fill="#cbd5e0" stroke="#2d3748" stroke-width="1.5"/>
+  <text x="95" y="190" font-family="Arial, sans-serif" font-size="9" fill="#4a5568">Medial</text>
+  <text x="95" y="200" font-family="Arial, sans-serif" font-size="9" fill="#4a5568">epicondyle</text>
+  
+  <!-- Lateral epicondyle -->
+  <ellipse cx="150" cy="185" rx="8" ry="12" fill="#cbd5e0" stroke="#2d3748" stroke-width="1.5"/>
+  <text x="170" y="190" font-family="Arial, sans-serif" font-size="9" fill="#4a5568">Lateral</text>
+  <text x="170" y="200" font-family="Arial, sans-serif" font-size="9" fill="#4a5568">epicondyle</text>
+  
+  <!-- Trochlea -->
+  <path d="M125 185 Q135 200 145 185" fill="#e2e8f0" stroke="#2d3748" stroke-width="1.5"/>
+  
+  <!-- Ulna -->
+  <path d="M125 200 L125 320 L145 320 L145 200 Z" fill="#e2e8f0" stroke="#2d3748" stroke-width="2"/>
+  <text x="135" y="260" font-family="Arial, sans-serif" font-size="10" fill="#1a365d" text-anchor="middle" font-weight="bold">Ulna</text>
+  
+  <!-- Olecranon -->
+  <path d="M125 200 Q135 190 145 200" fill="#cbd5e0" stroke="#2d3748" stroke-width="1.5"/>
+  <text x="110" y="215" font-family="Arial, sans-serif" font-size="9" fill="#4a5568">Olecranon</text>
+  
+  <!-- Radius -->
+  <path d="M155 210 L155 310 L170 310 L175 210 Z" fill="#e2e8f0" stroke="#2d3748" stroke-width="2"/>
+  <text x="165" y="260" font-family="Arial, sans-serif" font-size="10" fill="#1a365d" text-anchor="middle" font-weight="bold">Radius</text>
+  
+  <!-- Radial head -->
+  <ellipse cx="165" cy="210" rx="10" ry="8" fill="#cbd5e0" stroke="#2d3748" stroke-width="1.5"/>
+  <text x="190" y="210" font-family="Arial, sans-serif" font-size="9" fill="#4a5568">Radial head</text>
+  
+  <!-- UCL (Ulnar Collateral Ligament) - Medial -->
+  <path d="M118 195 Q110 220 122 240" stroke="#c53030" stroke-width="3" fill="none"/>
+  <text x="85" y="220" font-family="Arial, sans-serif" font-size="9" fill="#c53030" font-weight="bold">UCL</text>
+  
+  <!-- RCL (Radial Collateral Ligament) - Lateral -->
+  <path d="M152 195 Q160 220 148 240" stroke="#c53030" stroke-width="3" fill="none"/>
+  <text x="165" y="220" font-family="Arial, sans-serif" font-size="9" fill="#c53030" font-weight="bold">RCL</text>
+  
+  <!-- Joint capsule -->
+  <path d="M120 185 Q135 175 150 185" stroke="#4299e1" stroke-width="2" fill="none" stroke-dasharray="5,3"/>
+  <text x="135" y="170" font-family="Arial, sans-serif" font-size="9" fill="#4299e1">Joint capsule</text>
+  
+  <!-- Right side - Lateral View -->
+  <text x="450" y="55" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#2d3748" text-anchor="middle">Lateral View</text>
+  
+  <!-- Humerus side view -->
+  <path d="M420 80 L420 180 Q435 185 450 180 L450 80 Q435 75 420 80" fill="#e2e8f0" stroke="#2d3748" stroke-width="2"/>
+  <text x="435" y="130" font-family="Arial, sans-serif" font-size="10" fill="#1a365d" text-anchor="middle" font-weight="bold">Humerus</text>
+  
+  <!-- Lateral epicondyle -->
+  <circle cx="450" cy="185" r="8" fill="#cbd5e0" stroke="#2d3748" stroke-width="1.5"/>
+  <text x="470" y="185" font-family="Arial, sans-serif" font-size="9" fill="#4a5568">Lateral epicondyle</text>
+  
+  <!-- Capitulum -->
+  <path d="M435 185 Q445 195 450 185" fill="none" stroke="#2d3748" stroke-width="1.5"/>
+  <text x="470" y="200" font-family="Arial, sans-serif" font-size="9" fill="#4a5568">Capitulum</text>
+  
+  <!-- Radius side view -->
+  <path d="M440 210 L440 310 L455 310 L460 210" fill="#e2e8f0" stroke="#2d3748" stroke-width="2"/>
+  <text x="450" y="260" font-family="Arial, sans-serif" font-size="10" fill="#1a365d" text-anchor="middle" font-weight="bold">Radius</text>
+  
+  <!-- Radial head side -->
+  <ellipse cx="450" cy="210" rx="10" ry="12" fill="#cbd5e0" stroke="#2d3748" stroke-width="1.5"/>
+  
+  <!-- Annular ligament -->
+  <path d="M440 200 Q450 190 460 200" stroke="#805ad5" stroke-width="3" fill="none"/>
+  <text x="475" y="220" font-family="Arial, sans-serif" font-size="9" fill="#805ad5" font-weight="bold">Annular lig.</text>
+  
+  <!-- Olecranon posterior -->
+  <path d="M415 200 Q425 190 435 200" fill="#cbd5e0" stroke="#2d3748" stroke-width="1.5"/>
+  <text x="380" y="200" font-family="Arial, sans-serif" font-size="9" fill="#4a5568">Olecranon</text>
+  
+  <!-- Ulna side view -->
+  <path d="M410 205 L410 315 L430 315 L430 205" fill="#e2e8f0" stroke="#2d3748" stroke-width="2"/>
+  <text x="420" y="260" font-family="Arial, sans-serif" font-size="10" fill="#1a365d" text-anchor="middle" font-weight="bold">Ulna</text>
+  
+  <!-- Key Structures Box -->
+  <rect x="50" y="380" width="500" height="100" fill="#fff" stroke="#1a365d" stroke-width="2" rx="5"/>
+  <text x="300" y="405" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#1a365d" text-anchor="middle">Key Structures</text>
+  <text x="70" y="430" font-family="Arial, sans-serif" font-size="11" fill="#333">• <tspan font-weight="bold">Humeroulnar joint:</tspan> Hinge joint - primary elbow flexion/extension</text>
+  <text x="70" y="450" font-family="Arial, sans-serif" font-size="11" fill="#333">• <tspan font-weight="bold">Humeroradial joint:</tspan> Pivot/ball-and-socket for flexion and rotation</text>
+  <text x="70" y="470" font-family="Arial, sans-serif" font-size="11" fill="#333">• <tspan font-weight="bold">Proximal radioulnar joint:</tspan> Pivot joint for pronation/supination</text>
+</svg>

@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 450">
+  <rect width="600" height="450" fill="white"/>
+  
+  <text x="300" y="25" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#1a365d">Shoulder Anatomy</text>
+  <text x="300" y="42" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#666">Anterior and Posterior Views</text>
+  
+  <!-- ANTERIOR VIEW -->
+  <text x="150" y="65" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#1a365d">Anterior View</text>
+  
+  <!-- Ribcage outline -->
+  <ellipse cx="150" cy="200" rx="70" ry="90" fill="#f5f5f5" stroke="#ccc" stroke-width="1"/>
+  
+  <!-- Clavicle -->
+  <rect x="90" y="130" width="80" height="12" rx="3" transform="rotate(-15 150 136)" fill="#e8dcc8" stroke="#8b7355" stroke-width="2"/>
+  <text x="85" y="120" font-family="Arial, sans-serif" font-size="10" fill="#333">Clavicle</text>
+  <line x1="100" y1="125" x2="120" y2="135" stroke="#333" stroke-width="1"/>
+  
+  <!-- Scapula (anterior) -->
+  <path d="M 110 160 Q 130 180 125 250" fill="none" stroke="#e8dcc8" stroke-width="8"/>
+  <text x="80" y="220" font-family="Arial, sans-serif" font-size="10" fill="#333">Scapula</text>
+  <line x1="100" y1="220" x2="115" y2="215" stroke="#333" stroke-width="1"/>
+  
+  <!-- Humerus -->
+  <rect x="170" y="160" width="25" height="100" rx="5" transform="rotate(-10 182 210)" fill="#e8dcc8" stroke="#8b7355" stroke-width="2"/>
+  <ellipse cx="185" cy="150" rx="18" ry="15" fill="#e8dcc8" stroke="#8b7355" stroke-width="2"/>
+  <text x="215" y="150" font-family="Arial, sans-serif" font-size="10" fill="#333">Humeral Head</text>
+  <line x1="203" y1="150" x2="210" y2="150" stroke="#333" stroke-width="1"/>
+  
+  <!-- Subscapularis muscle -->
+  <path d="M 115 170 Q 140 200 135 240 Q 155 220 160 180" fill="#d4a5a5" stroke="#b08080" stroke-width="1" opacity="0.8"/>
+  <text x="70" y="200" font-family="Arial, sans-serif" font-size="9" fill="#333">Subscapularis</text>
+  <line x1="95" y1="200" x2="115" y2="205" stroke="#333" stroke-width="1"/>
+  
+  <!-- POSTERIOR VIEW -->
+  <text x="450" y="65" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#1a365d">Posterior View</text>
+  
+  <!-- Scapula outline -->
+  <path d="M 400 140 L 440 130 L 480 150 L 490 220 L 460 260 L 410 250 L 390 190 Z" fill="#e8dcc8" stroke="#8b7355" stroke-width="2"/>
+  
+  <!-- Spine of scapula -->
+  <line x1="405" y1="180" x2="475" y2="175" stroke="#a08060" stroke-width="4"/>
+  <text x="380" y="178" font-family="Arial, sans-serif" font-size="9" fill="#333">Spine</text>
+  <line x1="400" y1="178" x2="405" y2="178" stroke="#333" stroke-width="1"/>
+  
+  <!-- Acromion -->
+  <ellipse cx="485" cy="155" rx="12" ry="8" fill="#e8dcc8" stroke="#8b7355" stroke-width="2"/>
+  <text x="510" y="150" font-family="Arial, sans-serif" font-size="9" fill="#333">Acromion</text>
+  <line x1="497" y1="155" x2="508" y2="152" stroke="#333" stroke-width="1"/>
+  
+  <!-- Humerus head posterior -->
+  <ellipse cx="495" cy="165" rx="15" ry="18" fill="#e8dcc8" stroke="#8b7355" stroke-width="2"/>
+  
+  <!-- Supraspinatus -->
+  <ellipse cx="440" cy="155" rx="25" ry="15" fill="#d4a5a5" stroke="#b08080" stroke-width="1" opacity="0.8"/>
+  <text x="370" y="155" font-family="Arial, sans-serif" font-size="9" fill="#333">Supraspinatus</text>
+  <line x1="410" y1="155" x2="415" y2="155" stroke="#333" stroke-width="1"/>
+  
+  <!-- Infraspinatus -->
+  <ellipse cx="445" cy="220" rx="30" ry="25" fill="#d4a5a5" stroke="#b08080" stroke-width="1" opacity="0.8"/>
+  <text x="370" y="220" font-family="Arial, sans-serif" font-size="9" fill="#333">Infraspinatus</text>
+  <line x1="410" y1="220" x2="415" y2="220" stroke="#333" stroke-width="1"/>
+  
+  <!-- Teres minor -->
+  <ellipse cx="465" y="250" rx="15" ry="12" fill="#d4a5a5" stroke="#b08080" stroke-width="1" opacity="0.8"/>
+  <text x="495" y="270" font-family="Arial, sans-serif" font-size="9" fill="#333">Teres Minor</text>
+  <line x1="480" y1="260" x2="490" y2="268" stroke="#333" stroke-width="1"/>
+  
+  <!-- SITS Label -->
+  <rect x="350" y="320" width="200" height="60" rx="8" fill="#f0f9ff" stroke="#0ea5e9" stroke-width="1"/>
+  <text x="450" y="345" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#0369a1">SITS Muscles (Rotator Cuff)</text>
+  <text x="450" y="365" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#333">S - Supraspinatus | I - Infraspinatus</text>
+  <text x="450" y="380" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#333">T - Teres Minor | S - Subscapularis</text>
+  
+  <!-- Legend -->
+  <rect x="30" y="320" width="280" height="110" rx="8" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1"/>
+  <text x="170" y="345" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#1a365d">Four Joints of the Shoulder</text>
+  
+  <text x="45" y="365" font-family="Arial, sans-serif" font-size="10" fill="#333">1. Glenohumeral - Primary joint</text>
+  <text x="45" y="382" font-family="Arial, sans-serif" font-size="10" fill="#333">2. Acromioclavicular (AC)</text>
+  <text x="45" y="399" font-family="Arial, sans-serif" font-size="10" fill="#333">3. Sternoclavicular (SC)</text>
+  <text x="45" y="416" font-family="Arial, sans-serif" font-size="10" fill="#333">4. Scapulothoracic - Functional joint</text>
+</svg>

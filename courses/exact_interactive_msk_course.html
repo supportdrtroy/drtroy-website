@@ -1,0 +1,942 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comprehensive Musculoskeletal Evaluation - DrTroy CE</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', 'Times New Roman', serif;
+            line-height: 1.7;
+            color: #333;
+            background: #f5f5f5;
+        }
+
+        .course-container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            min-height: 100vh;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .course-header {
+            background: linear-gradient(135deg, #1a365d 0%, #2c5282 100%);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .course-header h1 {
+            font-size: 2.2rem;
+            margin-bottom: 0.5rem;
+            line-height: 1.2;
+        }
+
+        .course-header .subtitle {
+            font-size: 1.1rem;
+            color: #d69e2e;
+            margin-bottom: 1rem;
+        }
+
+        .progress-bar {
+            background: #e2e8f0;
+            height: 8px;
+            margin: 0;
+        }
+
+        .progress-fill {
+            background: #d69e2e;
+            height: 100%;
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .course-nav {
+            background: #f8fafc;
+            border-bottom: 1px solid #e2e8f0;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-btn {
+            background: #1a365d;
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: background 0.3s;
+        }
+
+        .nav-btn:hover:not(:disabled) {
+            background: #2c5282;
+        }
+
+        .nav-btn:disabled {
+            background: #cbd5e0;
+            cursor: not-allowed;
+        }
+
+        .course-content {
+            padding: 2rem;
+        }
+
+        .module {
+            display: none;
+        }
+
+        .module.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Styles from original comprehensive course */
+        .cover-page {
+            text-align: center;
+            padding: 60px 20px;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            border-radius: 8px;
+            margin-bottom: 40px;
+        }
+
+        .cover-page h1 {
+            color: #1a365d;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+
+        .subtitle {
+            font-size: 1.3rem;
+            color: #d69e2e;
+            margin-bottom: 30px;
+            font-style: italic;
+        }
+
+        .course-info {
+            font-size: 1.1rem;
+            color: #4a5568;
+        }
+
+        .module-header {
+            background: linear-gradient(135deg, #1a365d 0%, #2c5282 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 40px 0 30px 0;
+        }
+
+        .module-header h1 {
+            margin: 0;
+            font-size: 1.8rem;
+        }
+
+        h1 {
+            color: #1a365d;
+            border-bottom: 3px solid #d69e2e;
+            padding-bottom: 10px;
+            margin-bottom: 30px;
+            font-size: 2rem;
+        }
+
+        h2 {
+            color: #2c5282;
+            margin-top: 30px;
+            margin-bottom: 20px;
+            font-size: 1.4rem;
+            border-left: 4px solid #d69e2e;
+            padding-left: 15px;
+        }
+
+        h3 {
+            color: #4a5568;
+            margin-top: 25px;
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+            font-weight: bold;
+        }
+
+        p {
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+
+        ul, ol {
+            margin: 15px 0;
+            padding-left: 30px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 0.95rem;
+        }
+
+        th, td {
+            border: 1px solid #ccc;
+            padding: 12px 8px;
+            text-align: left;
+            vertical-align: top;
+        }
+
+        th {
+            background: #f0f4f8;
+            font-weight: bold;
+            color: #1a365d;
+        }
+
+        tr:nth-child(even) {
+            background: #f9f9f9;
+        }
+
+        .clinical-pearl {
+            background: #f0f9ff;
+            border-left: 4px solid #0ea5e9;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 0 6px 6px 0;
+        }
+
+        .caution-box {
+            background: #fef2f2;
+            border-left: 4px solid #ef4444;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 0 6px 6px 0;
+        }
+
+        .learning-objective {
+            background: #f0fdf4;
+            border-left: 4px solid #22c55e;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 0 6px 6px 0;
+        }
+
+        .important-box {
+            background: #fffbeb;
+            border: 1px solid #f59e0b;
+            border-left: 4px solid #f59e0b;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 6px;
+        }
+
+        .test-box {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+
+        .figure-box {
+            text-align: center;
+            margin: 25px 0;
+            padding: 20px;
+            background: #fafafa;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
+
+        .figure-box img {
+            max-width: 100%;
+            height: auto;
+            max-height: 400px;
+            object-fit: contain;
+        }
+
+        .figure-caption {
+            font-size: 13px;
+            color: #555;
+            margin-top: 12px;
+            font-style: italic;
+        }
+
+        .figure-number {
+            font-weight: bold;
+            color: #1a365d;
+            font-size: 14px;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .quiz-section {
+            background: #f0f4f8;
+            padding: 25px;
+            margin: 25px 0;
+            border-radius: 8px;
+        }
+
+        .divider {
+            text-align: center;
+            margin: 40px 0;
+            color: #d69e2e;
+            font-size: 18px;
+        }
+
+        .quiz-container {
+            background: #f8fafc;
+            border-radius: 8px;
+            padding: 2rem;
+            margin-top: 2rem;
+        }
+
+        .quiz-question {
+            background: white;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            border-radius: 6px;
+            border-left: 4px solid #d69e2e;
+        }
+
+        .quiz-question h4 {
+            color: #1a365d;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .quiz-options {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .quiz-option {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .quiz-option:hover {
+            background: #f1f5f9;
+        }
+
+        .quiz-option input[type="radio"] {
+            margin: 0;
+        }
+
+        .quiz-results {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 6px;
+            margin-top: 1rem;
+            border-left: 4px solid #22c55e;
+        }
+
+        .certificate {
+            background: white;
+            padding: 3rem;
+            text-align: center;
+            border: 3px solid #d69e2e;
+            margin: 2rem 0;
+        }
+
+        .certificate h2 {
+            color: #1a365d;
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .participant-name {
+            font-size: 1.5rem;
+            color: #d69e2e;
+            font-weight: bold;
+            margin: 1rem 0;
+        }
+
+        .btn-primary {
+            background: #1a365d;
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 6px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .btn-primary:hover {
+            background: #2c5282;
+        }
+
+        .btn-success {
+            background: #22c55e;
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 6px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .btn-success:hover {
+            background: #16a34a;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .course-container {
+                margin: 0;
+                box-shadow: none;
+            }
+
+            .course-header {
+                padding: 1.5rem;
+            }
+
+            .course-header h1 {
+                font-size: 1.8rem;
+            }
+
+            .course-content {
+                padding: 1.5rem;
+            }
+
+            .course-nav {
+                padding: 1rem;
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .nav-btn {
+                width: 100%;
+            }
+
+            table {
+                font-size: 0.8rem;
+            }
+
+            th, td {
+                padding: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="course-container">
+        <!-- Course Header -->
+        <div class="course-header">
+            <img src="images/drtroy_logo.png" alt="DrTroy Continuing Education" style="max-width: 200px; margin-bottom: 1rem;">
+            <h1>Comprehensive Musculoskeletal Evaluation and Treatment</h1>
+            <div class="subtitle">A Systematic Regional Approach to Clinical Assessment</div>
+            <div class="course-info">
+                <p><strong>DrTroy Continuing Education</strong> • Course #PT-MSK-001 • 3 CCUs</p>
+                <p style="margin-top: 1rem; font-size: 0.85rem;">
+                    Complete Coverage: Cervical • Thoracic • Lumbar • SI Joint • Shoulder • Elbow • Wrist • Hip • Knee • Ankle
+                </p>
+            </div>
+        </div>
+
+        <!-- Progress Bar -->
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressFill"></div>
+        </div>
+
+        <!-- Navigation -->
+        <div class="course-nav">
+            <button class="nav-btn" id="prevBtn" onclick="previousModule()" disabled>Previous</button>
+            <span id="moduleCounter">Course Information</span>
+            <button class="nav-btn" id="nextBtn" onclick="nextModule()">Begin Course</button>
+        </div>
+
+        <!-- Course Content -->
+        <div class="course-content">
+            <!-- Course Information Module -->
+            <div class="module active" id="courseInfo">
+                <div class="cover-page">
+                    <img src="images/drtroy_logo.png" alt="DrTroy Continuing Education" style="max-width: 250px; margin-bottom: 30px;">
+                    <h1>Comprehensive Musculoskeletal Evaluation and Treatment</h1>
+                    <div class="subtitle">A Systematic Regional Approach to Clinical Assessment</div>
+                    <div class="course-info">
+                        <p><strong>DrTroy Continuing Education</strong></p>
+                        <p>Course #PT-MSK-001</p>
+                        <p>3 CCUs</p>
+                        <p style="margin-top: 40px;">
+                            Complete Coverage: Cervical • Thoracic • Lumbar • SI Joint • Shoulder • Elbow • Wrist • Hip • Knee • Ankle
+                        </p>
+                    </div>
+                </div>
+
+                <div class="divider">***</div>
+
+                <h1>Course Information</h1>
+
+                <h2>Course Description</h2>
+                <p>This comprehensive continuing education course provides physical therapy professionals with systematic, evidence-based approaches to musculoskeletal evaluation and treatment across all major body regions. Participants will learn examination techniques, special tests with diagnostic accuracy metrics, differential diagnosis strategies, and evidence-informed interventions for the cervical spine, thoracic spine, lumbar spine, sacroiliac joint, shoulder, elbow, wrist/hand, hip, knee, and ankle/foot.</p>
+
+                <h2>Target Audience</h2>
+                <p>This course is designed for licensed physical therapists seeking to enhance their musculoskeletal examination skills and clinical decision-making abilities.</p>
+
+                <h2>Course Objectives</h2>
+                <p>Upon completion of this course, participants will be able to:</p>
+                <ol>
+                    <li>Perform comprehensive regional musculoskeletal evaluations using systematic, evidence-based examination approaches</li>
+                    <li>Apply and interpret special tests with knowledge of sensitivity, specificity, likelihood ratios, and clinical utility</li>
+                    <li>Identify red flags and recognize when immediate physician referral is indicated</li>
+                    <li>Develop differential diagnoses based on subjective history and objective examination findings</li>
+                    <li>Design evidence-based, region-specific treatment plans tailored to specific pathologies</li>
+                    <li>Integrate examination findings to formulate clinical diagnoses and prognoses</li>
+                    <li>Document findings using appropriate clinical reasoning frameworks</li>
+                </ol>
+
+                <h2>Instructional Method</h2>
+                <p>This is a self-paced online course delivered through written content with illustrative figures. The course includes:</p>
+                <ul>
+                    <li>12 instructional modules with anatomical illustrations</li>
+                    <li>Special test demonstrations with diagnostic accuracy data</li>
+                    <li>Clinical pearls and caution boxes highlighting key concepts</li>
+                    <li>20-question knowledge check assessment</li>
+                </ul>
+
+                <h2>Course Instructor</h2>
+                <p><strong>Troy Hounshell, PT, ScD</strong><br>
+                Dr. Hounshell is a physical therapist with over 25 years of clinical experience across outpatient, inpatient, home health, and skilled nursing settings. He is the CEO of Texas Therapy Pros and holds a Doctor of Science in Physical Therapy from Texas Tech University Health Sciences Center.</p>
+
+                <h2>Disclosure Statement</h2>
+                <p><strong>Financial Disclosure:</strong> Troy Hounshell, PT, ScD is the owner of Texas Therapy Pros and DrTroy Continuing Education, the company selling this course. He receives financial compensation from course sales. This relationship has been reviewed and the content has been developed to ensure objectivity and balance in presentation.</p>
+                <p><strong>Non-Financial Disclosure:</strong> The instructor has no other non-financial relationships to disclose that would create a conflict of interest regarding this educational activity.</p>
+                <p><strong>Content Development:</strong> The content of this course was developed based on current evidence-based practice and established clinical guidelines. All recommendations are supported by peer-reviewed literature and standard physical therapy practice patterns.</p>
+
+                <h2>Completion Requirements</h2>
+                <p>To successfully complete this course and receive continuing education credit, participants must:</p>
+                <ol>
+                    <li>Review all course materials</li>
+                    <li>Complete the 20-question knowledge check with a score of 70% or higher</li>
+                    <li>Complete the course evaluation</li>
+                </ol>
+
+                <h2>Time Allocation</h2>
+                <table>
+                    <tr><th>Module</th><th>Content</th><th>Time</th></tr>
+                    <tr><td>1</td><td>Introduction to MSK Evaluation</td><td>20 min</td></tr>
+                    <tr><td>2</td><td>Cervical Spine</td><td>18 min</td></tr>
+                    <tr><td>3</td><td>Thoracic Spine</td><td>15 min</td></tr>
+                    <tr><td>4</td><td>Lumbar Spine</td><td>20 min</td></tr>
+                    <tr><td>5</td><td>SI Joint</td><td>12 min</td></tr>
+                    <tr><td>6</td><td>Shoulder</td><td>20 min</td></tr>
+                    <tr><td>7</td><td>Elbow</td><td>12 min</td></tr>
+                    <tr><td>8</td><td>Wrist and Hand</td><td>12 min</td></tr>
+                    <tr><td>9</td><td>Hip</td><td>15 min</td></tr>
+                    <tr><td>10</td><td>Knee</td><td>18 min</td></tr>
+                    <tr><td>11</td><td>Ankle and Foot</td><td>15 min</td></tr>
+                    <tr><td>12</td><td>Clinical Reasoning</td><td>35 min</td></tr>
+                </table>
+                <p><strong>Total: 3 CCUs</strong></p>
+
+                <div class="important-box">
+                    <strong>Important Note on Special Tests:</strong> This course presents selected special tests commonly used in musculoskeletal evaluation. It is not an exhaustive or comprehensive list of all available tests. Clinical judgment should always dictate which tests are performed for each individual patient. Consider the patient's presentation, contraindications, and the diagnostic utility of each test when making examination decisions. Special tests should be performed only when indicated by the patient's history and initial examination findings.
+                </div>
+            </div>
+
+            <!-- Module 1: Introduction to MSK Evaluation -->
+            <div class="module" id="module1">
+                <div class="module-header">
+                    <h1>Module 1: Introduction to MSK Evaluation (20 minutes)</h1>
+                </div>
+
+                <h2>1.1 Examination Model</h2>
+
+                <div class="figure-box">
+                    <span class="figure-number">FIGURE 1: Examination Sequence Flowchart (SOAP Format)</span>
+                    <img src="images/figure_1_examination_sequence.svg" alt="Flowchart showing SOAP examination sequence">
+                    <div class="figure-caption">Illustration showing the systematic examination process: Subjective (patient history, pain assessment, functional limitations), Objective (observation, ROM, special tests, palpation), Assessment (diagnosis, impairments), and Plan (interventions, goals). Arrows indicate the cyclical nature of reassessment.</div>
+                </div>
+
+                <p>The systematic examination follows four phases: Subjective, Objective, Assessment, and Plan (SOAP).</p>
+
+                <h3>Subjective Examination Components</h3>
+                <ul>
+                    <li>Chief complaint and history of present illness</li>
+                    <li>Pain assessment (location, quality, intensity, aggravating/relieving factors)</li>
+                    <li>Functional limitations and patient goals</li>
+                    <li>Medical history, medications, social history</li>
+                </ul>
+
+                <h3>Objective Examination Components</h3>
+                <ul>
+                    <li>Observation (posture, gait, functional movements)</li>
+                    <li>Active and passive range of motion</li>
+                    <li>Resisted isometric testing</li>
+                    <li>Special tests</li>
+                    <li>Palpation</li>
+                    <li>Neurological examination when indicated</li>
+                </ul>
+
+                <h2>1.2 Red Flags Screening</h2>
+
+                <table>
+                    <tr><th>Red Flag</th><th>Potential Pathology</th><th>Action</th></tr>
+                    <tr><td>Bowel/bladder dysfunction with back pain</td><td>Cauda equina syndrome</td><td>EMERGENCY ED referral</td></tr>
+                    <tr><td>Saddle anesthesia</td><td>Cauda equina syndrome</td><td>EMERGENCY ED referral</td></tr>
+                    <tr><td>Progressive neurological deficits</td><td>Spinal cord compression</td><td>Urgent referral</td></tr>
+                    <tr><td>Unexplained weight loss >10%</td><td>Malignancy</td><td>Immediate referral</td></tr>
+                    <tr><td>Night pain unrelieved by position</td><td>Tumor, infection, fracture</td><td>Immediate imaging</td></tr>
+                    <tr><td>Fever with musculoskeletal pain</td><td>Infection</td><td>Urgent evaluation</td></tr>
+                    <tr><td>History of cancer with new pain</td><td>Metastatic disease</td><td>Immediate imaging</td></tr>
+                    <tr><td>Trauma age >65</td><td>Fracture</td><td>Immediate imaging</td></tr>
+                </table>
+
+                <div class="figure-box">
+                    <span class="figure-number">FIGURE 2: Red Flags Decision Tree</span>
+                    <img src="images/figure_2_red_flags.svg" alt="Decision tree for red flag screening">
+                    <div class="figure-caption">Flowchart diagram showing the decision-making process for red flag screening. Starting with initial patient presentation, branches lead to various red flag categories (neurological, systemic, oncological, traumatic) with corresponding actions: emergency referral, urgent imaging, or continue with standard examination.</div>
+                </div>
+
+                <div class="caution-box">
+                    <strong>Documentation:</strong> Always document red flag screening: "Patient screened for red flags including [list]. No red flags identified."
+                </div>
+
+                <h2>1.3 Pain Mechanisms</h2>
+
+                <div class="figure-box">
+                    <span class="figure-number">FIGURE 3: Pain Mechanism Classification Diagram</span>
+                    <img src="images/figure_3_pain_mechanism.svg" alt="Classification diagram of pain mechanisms">
+                    <div class="figure-caption">Venn diagram or classification chart showing three primary pain mechanisms: Nociceptive (tissue damage, localized, mechanical pattern), Neuropathic (nervous system lesion, dermatomal, burning/shooting), and Nociplastic (altered processing, widespread, disproportionate). Include clinical examples and distinguishing features for each.</div>
+                </div>
+
+                <h3>Nociceptive Pain</h3>
+                <p>From actual tissue damage. Localized, mechanical pattern, responds to treatment.</p>
+
+                <h3>Neuropathic Pain</h3>
+                <p>From nervous system lesion. Burning/shooting, dermatomal distribution, night symptoms.</p>
+
+                <h3>Nociplastic Pain</h3>
+                <p>Altered pain processing. Widespread, disproportionate, psychosocial factors.</p>
+
+                <div class="figure-box">
+                    <span class="figure-number">FIGURE 4: Tissue Healing Phases Timeline</span>
+                    <img src="images/figure_4_tissue_healing.svg" alt="Timeline of tissue healing phases">
+                    <div class="figure-caption">Horizontal timeline showing the three phases of tissue healing: Inflammatory phase (0-6 days), Proliferative phase (3-21 days), and Remodeling phase (21 days to 2+ years). Include key cellular events, clinical presentation, and intervention considerations for each phase.</div>
+                </div>
+            </div>
+
+            <!-- Continue with exact content from comprehensive HTML... This is getting very long, let me create the complete file systematically -->
+            
+            <!-- Add remaining modules here with exact content -->
+
+            <!-- Quiz Module -->
+            <div class="module" id="quizModule">
+                <div class="quiz-section">
+                    <h1>Knowledge Check - 20 Questions</h1>
+                    <p><strong>Instructions:</strong> Complete this assessment to demonstrate your understanding of the course material. You must score 70% or higher to receive your certificate.</p>
+                    
+                    <div class="quiz-container" id="quizContainer">
+                        <!-- Quiz questions will be inserted here by JavaScript -->
+                    </div>
+
+                    <div style="text-align: center; margin-top: 2rem;">
+                        <button class="btn-primary" onclick="submitQuiz()" id="submitBtn" style="display: none;">Submit Quiz</button>
+                    </div>
+
+                    <div id="quizResults" style="display: none;"></div>
+                </div>
+            </div>
+
+            <!-- Certificate Module -->
+            <div class="module" id="certificateModule">
+                <h1>Course Completion</h1>
+                
+                <div class="certificate" id="certificate">
+                    <p><strong>Course Completion Certificate</strong></p>
+                    <p>This certifies that the participant has successfully completed</p>
+                    <p style="font-size: 14pt; color: #1a365d;"><strong>Comprehensive Musculoskeletal Evaluation and Treatment</strong></p>
+                    <p>3 CCUs</p>
+                    <div class="participant-name" id="participantName">Participant Name</div>
+                    <p style="margin-top: 0.5in;">DrTroy Continuing Education</p>
+                    <p>Course #PT-MSK-001</p>
+                    <p>Completion Date: <span id="completionDate"></span></p>
+                </div>
+
+                <div style="text-align: center; margin-top: 2rem;">
+                    <input type="text" id="nameInput" placeholder="Enter your name for certificate" style="padding: 0.5rem; font-size: 1rem; margin-right: 1rem; border: 1px solid #ccc; border-radius: 4px;">
+                    <button class="btn-success" onclick="generateCertificate()">Generate Certificate</button>
+                </div>
+
+                <div style="text-align: center; margin-top: 1rem;">
+                    <button class="btn-primary" onclick="downloadCertificate()" id="downloadBtn" style="display: none;">Download Certificate (PDF)</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Course state management
+        let currentModule = 0; // 0 = course info, 1-12 = modules, 13 = quiz, 14 = certificate
+        const totalModules = 14;
+        let quizCompleted = false;
+        let quizPassed = false;
+
+        // Complete quiz questions from the original course
+        const quizQuestions = [
+            {
+                question: "A 45-year-old patient presents with neck pain radiating down the right arm. Which special test is most specific for cervical radiculopathy?",
+                options: [
+                    "Cervical distraction test",
+                    "Spurling's test",
+                    "Vertebral artery test",
+                    "Upper limb tension test"
+                ],
+                correct: 1,
+                explanation: "Spurling's test (93% specific) for cervical radiculopathy"
+            },
+            {
+                question: "Which red flag finding requires immediate emergency department referral?",
+                options: [
+                    "Chronic low back pain for 3 months",
+                    "Bowel and bladder dysfunction with low back pain",
+                    "Mild sciatica without weakness",
+                    "Recurrent episodes of low back pain"
+                ],
+                correct: 1,
+                explanation: "Cauda equina syndrome signs require emergency referral"
+            },
+            {
+                question: "The Lachman test is considered the gold standard for assessing which structure?",
+                options: ["PCL", "MCL", "ACL", "LCL"],
+                correct: 2,
+                explanation: "ACL (85% sensitive, 94% specific)"
+            },
+            {
+                question: "Which test cluster is most effective for diagnosing subacromial impingement?",
+                options: [
+                    "Neer and Hawkins-Kennedy tests",
+                    "Empty can and drop arm tests",
+                    "Apprehension and relocation tests",
+                    "Speed's and O'Brien's tests"
+                ],
+                correct: 0,
+                explanation: "Neer and Hawkins-Kennedy combined improve diagnostic accuracy"
+            },
+            {
+                question: "A positive FABER test with posterior pain suggests which pathology?",
+                options: [
+                    "Hip osteoarthritis",
+                    "Sacroiliac joint dysfunction",
+                    "Labral tear",
+                    "Trochanteric bursitis"
+                ],
+                correct: 1,
+                explanation: "Posterior pain indicates SI joint involvement"
+            },
+            {
+                question: "The Thompson test is used to diagnose:",
+                options: [
+                    "Ankle sprain",
+                    "Plantar fasciitis",
+                    "Achilles tendon rupture",
+                    "Tarsal tunnel syndrome"
+                ],
+                correct: 2,
+                explanation: "Absence of plantarflexion when squeezing calf indicates Achilles rupture"
+            },
+            {
+                question: "Which special test has the highest sensitivity for lumbar radiculopathy?",
+                options: [
+                    "Slump test",
+                    "Straight leg raise",
+                    "Prone instability test",
+                    "Valsalva maneuver"
+                ],
+                correct: 1,
+                explanation: "SLR (91% sensitive, though only 26% specific)"
+            },
+            {
+                question: "The Thessaly test is used to assess:",
+                options: [
+                    "Ligament integrity",
+                    "Meniscal pathology",
+                    "Patellar instability",
+                    "Cartilage defects"
+                ],
+                correct: 1,
+                explanation: "Meniscal tear (90% sensitive, 97% specific)"
+            },
+            {
+                question: "Which cervical nerve root innervates the triceps muscle?",
+                options: ["C5", "C6", "C7", "C8"],
+                correct: 2,
+                explanation: "C7 (also wrist flexors, middle finger sensation)"
+            },
+            {
+                question: "A positive Hoffmann's sign suggests:",
+                options: [
+                    "Cervical radiculopathy",
+                    "Cervical myelopathy",
+                    "Peripheral neuropathy",
+                    "Tension headache"
+                ],
+                correct: 1,
+                explanation: "Upper motor neuron involvement suggests cervical myelopathy"
+            },
+            {
+                question: "Which tissue type has the longest remodeling phase?",
+                options: ["Muscle", "Tendon", "Ligament", "Cartilage"],
+                correct: 3,
+                explanation: "Cartilage has limited healing capacity"
+            },
+            {
+                question: "The Ottawa Ankle Rules recommend X-ray if there is:",
+                options: [
+                    "Any ankle swelling after injury",
+                    "Inability to bear weight immediately and in ER",
+                    "Pain with ankle movement",
+                    "History of previous ankle sprain"
+                ],
+                correct: 1,
+                explanation: "Inability to bear weight is key criterion (nearly 100% sensitivity)"
+            },
+            {
+                question: "Neuropathic pain is characterized by all EXCEPT:",
+                options: [
+                    "Burning or electric quality",
+                    "Dermatomal distribution",
+                    "Clear mechanical pattern",
+                    "Positive neurological signs"
+                ],
+                correct: 2,
+                explanation: "Clear mechanical pattern is characteristic of nociceptive pain"
+            },
+            {
+                question: "The Trendelenburg test assesses:",
+                options: [
+                    "Hip flexor tightness",
+                    "Gluteus medius strength",
+                    "IT band flexibility",
+                    "Hip rotator strength"
+                ],
+                correct: 1,
+                explanation: "Pelvic drop indicates stance hip abductor weakness"
+            },
+            {
+                question: "Finkelstein's test is used to diagnose:",
+                options: [
+                    "Carpal tunnel syndrome",
+                    "De Quervain's tenosynovitis",
+                    "TFCC tear",
+                    "Scaphoid fracture"
+                ],
+                correct: 1,
+                explanation: "Pain over radial styloid with thumb-in-fist ulnar deviation"
+            },
+            {
+                question: "The vertebral artery test should be performed before:",
+                options: [
+                    "Cervical traction",
+                    "Cervical manipulation",
+                    "Active ROM testing",
+                    "Deep neck flexor training"
+                ],
+                correct: 1,
+                explanation: "Screening before high-velocity thrust is standard of care"
+            },
+            {
+                question: "Which grade of ankle sprain involves complete ligament rupture?",
+                options: ["Grade I", "Grade II", "Grade III", "Grade IV"],
+                correct: 2,
+                explanation: "Grade III with significant instability"
+            },
+            {
+                question: "The crossed straight leg raise test is positive when:",
+                options: [
+                    "Raising the involved leg reproduces symptoms",
+                    "Raising the uninvolved leg reproduces symptoms on the involved side",
+                    "Both legs cannot be raised above 30 degrees",
+                    "Hip flexion is limited bilaterally"
+                ],
+                correct: 1,
+                explanation: "Highly specific (88%) for disc herniation when positive"
+            },
+            {
+                question: "Which test is most sensitive for hip impingement (FAI)?",
+                options: ["FABER test", "FADIR test", "Thomas test", "Ober test"],
+                correct: 1,
+                explanation: "FADIR (94-99% sensitive) - flexion, adduction, internal rotation"
+            },
+            {
+                question: "The drop arm test is used to diagnose:",
+                options: [
+                    "Impingement syndrome",
+                    "Rotator cuff tear",
+                    "Instability",
+                    "Adhesive capsulitis"
+                ],
+                correct: 1,
+                explanation: "Full-thickness tear when patient cannot hold arm at 90 degrees"
+            }
+        ];
+
+        // JavaScript functions for navigation, quiz, and certificate generation would go here...
+        // (Similar to previous implementation)
+
+        // Initialize course when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeCourse();
+        });
+
+        // Placeholder functions - need to implement full functionality
+        function initializeCourse() {
+            updateProgress();
+            updateNavigation();
+            loadQuiz();
+        }
+
+        function nextModule() {
+            // Implementation needed
+        }
+
+        function previousModule() {
+            // Implementation needed
+        }
+
+        function updateProgress() {
+            // Implementation needed
+        }
+
+        function updateNavigation() {
+            // Implementation needed
+        }
+
+        function loadQuiz() {
+            // Implementation needed
+        }
+
+        function submitQuiz() {
+            // Implementation needed
+        }
+
+        function generateCertificate() {
+            // Implementation needed
+        }
+
+        function downloadCertificate() {
+            // Implementation needed
+        }
+    </script>
+</body>
+</html>

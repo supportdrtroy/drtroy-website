@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TPTA CCU Approval Submission Package</title>
+    <style>
+        @page { 
+            size: letter; 
+            margin: 1in; 
+            @bottom-center { 
+                content: "Page " counter(page) " of " counter(pages); 
+                font-size: 10pt; 
+                color: #666; 
+            } 
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Times New Roman', Times, serif;
+            font-size: 12pt;
+            line-height: 1.6;
+            color: #333;
+            background: white;
+            max-width: 8.5in;
+            margin: 0 auto;
+            padding: 0.5in;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+            border-bottom: 3px solid #059669;
+            padding-bottom: 1rem;
+        }
+        
+        .header h1 {
+            color: #1a365d;
+            font-size: 20pt;
+            margin-bottom: 0.5rem;
+        }
+        
+        .header h2 {
+            color: #059669;
+            font-size: 16pt;
+            font-weight: normal;
+        }
+        
+        .section {
+            margin-bottom: 2rem;
+            page-break-inside: avoid;
+        }
+        
+        .section h2 {
+            color: #1a365d;
+            font-size: 14pt;
+            border-bottom: 2px solid #059669;
+            padding-bottom: 0.25rem;
+            margin-bottom: 1rem;
+        }
+        
+        .section h3 {
+            color: #1a365d;
+            font-size: 12pt;
+            margin: 1rem 0 0.5rem 0;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+        
+        th, td {
+            border: 1px solid #ccc;
+            padding: 0.5rem;
+            text-align: left;
+            vertical-align: top;
+        }
+        
+        th {
+            background: #f8f9fa;
+            font-weight: bold;
+            color: #1a365d;
+        }
+        
+        .toc-table td:first-child {
+            width: 60%;
+        }
+        
+        .toc-table td:nth-child(2) {
+            width: 20%;
+            text-align: center;
+        }
+        
+        .toc-table td:last-child {
+            width: 20%;
+            text-align: center;
+        }
+        
+        ul, ol {
+            margin-left: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .highlight-box {
+            background: #f0fff4;
+            border: 2px solid #059669;
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+        }
+        
+        .course-info {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-left: 4px solid #059669;
+            margin: 1rem 0;
+        }
+        
+        .certificate-sample {
+            border: 2px solid #059669;
+            padding: 1rem;
+            text-align: center;
+            background: #fafafa;
+            margin: 1rem 0;
+        }
+        
+        .instructor-info {
+            background: #e8f4f8;
+            padding: 1rem;
+            border-radius: 6px;
+            margin: 1rem 0;
+        }
+        
+        @media print {
+            body {
+                padding: 0;
+                max-width: none;
+            }
+            
+            .section {
+                page-break-inside: avoid;
+            }
+            
+            .page-break {
+                page-break-before: always;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Texas Physical Therapy Association</h1>
+        <h2>Continuing Competency Unit (CCU) Approval Submission</h2>
+        <div style="margin-top: 1rem; font-size: 10pt; color: #666;">
+            Submission Date: February 16, 2026<br>
+            Course Provider: DrTroy Continuing Education<br>
+            Course Director: Troy Hounshell, PT, ScD
+        </div>
+    </div>
+
+    <div class="course-info">
+        <h3>Course Information</h3>
+        <strong>Course Title:</strong> Comprehensive Musculoskeletal Evaluation<br>
+        <strong>Course Subtitle:</strong> A systematic regional approach to clinical assessment<br>
+        <strong>Course ID:</strong> PT-MSK-001<br>
+        <strong>Duration:</strong> 180 minutes (3.0 CCUs)<br>
+        <strong>Delivery Format:</strong> Online Interactive Learning with Progressive Modules<br>
+        <strong>Target Audience:</strong> Physical Therapists<br>
+        <strong>Instructional Level:</strong> Intermediate to Advanced
+    </div>
+
+    <div class="section">
+        <h2>1. TIMED SCHEDULE / TABLE OF CONTENTS</h2>
+        
+        <table class="toc-table">
+            <thead>
+                <tr>
+                    <th>Module/Topic</th>
+                    <th>Duration (minutes)</th>
+                    <th>Cumulative Time</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Module 1:</strong> Introduction to MSK Evaluation</td>
+                    <td>18</td>
+                    <td>18</td>
+                </tr>
+                <tr>
+                    <td><strong>Module 2:</strong> Cervical Spine</td>
+                    <td>15</td>
+                    <td>33</td>
+                </tr>
+                <tr>
+                    <td><strong>Module 3:</strong> Thoracic Spine</td>
+                    <td>12</td>
+                    <td>45</td>
+                </tr>
+                <tr>
+                    <td><strong>Module 4:</strong> Lumbar Spine</td>
+                    <td>18</td>
+                    <td>63</td>
+                </tr>
+                <tr>
+                    <td><strong>Module 5:</strong> Sacroiliac Joint</td>
+                    <td>10</td>
+                    <td>73</td>
+                </tr>
+                <tr>
+                    <td><strong>Module 6:</strong> Shoulder</td>
+                    <td>18</td>
+                    <td>91</td>
+                </tr>
+                <tr>
+                    <td><strong>Module 7:</strong> Elbow</td>
+                    <td>10</td>
+                    <td>101</td>
+                </tr>
+                <tr>
+                    <td><strong>Module 8:</strong> Wrist and Hand</td>
+                    <td>10</td>
+                    <td>111</td>
+                </tr>
+                <tr>
+                    <td><strong>Module 9:</strong> Hip</td>
+                    <td>12</td>
+                    <td>123</td>
+                </tr>
+                <tr>
+                    <td><strong>Module 10:</strong> Knee</td>
+                    <td>15</td>
+                    <td>138</td>
+                </tr>
+                <tr>
+                    <td><strong>Module 11:</strong> Ankle and Foot</td>
+                    <td>12</td>
+                    <td>150</td>
+                </tr>
+                <tr>
+                    <td><strong>Module 12:</strong> Clinical Reasoning</td>
+                    <td>30</td>
+                    <td>180</td>
+                </tr>
+                <tr style="background: #f0fff4;">
+                    <td><strong>TOTAL COURSE DURATION</strong></td>
+                    <td><strong>180</strong></td>
+                    <td><strong>3.0 CCUs</strong></td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <h3>Additional Components:</h3>
+        <ul>
+            <li><strong>Knowledge Checks:</strong> Integrated throughout each module (12 total)</li>
+            <li><strong>Comprehensive References:</strong> Evidence-based literature review</li>
+            <li><strong>Course Evaluation:</strong> 5-domain feedback assessment</li>
+            <li><strong>Final Assessment:</strong> 20-question comprehensive examination (70% passing score)</li>
+            <li><strong>Certificate Generation:</strong> Automated upon successful completion</li>
+        </ul>
+    </div>
+
+    <div class="section page-break">
+        <h2>2. COURSE OBJECTIVES</h2>
+        
+        <div class="highlight-box">
+            <h3>Primary Learning Objectives</h3>
+            <p><strong>Upon completion of this course, participants will be able to:</strong></p>
+        </div>
+
+        <h3>Domain 1: Clinical Assessment Skills</h3>
+        <ol>
+            <li><strong>Apply a systematic SOAP-based examination model</strong> for musculoskeletal evaluation across all major body regions</li>
+            <li><strong>Differentiate between subjective and objective examination components</strong> and integrate findings for comprehensive assessment</li>
+            <li><strong>Identify red flag symptoms</strong> requiring immediate medical referral, with emphasis on cauda equina syndrome and serious pathology</li>
+        </ol>
+
+        <h3>Domain 2: Regional Musculoskeletal Expertise</h3>
+        <ol start="4">
+            <li><strong>Demonstrate knowledge of anatomical structures</strong> and biomechanical principles for cervical, thoracic, and lumbar spine regions</li>
+            <li><strong>Perform and interpret range of motion assessments</strong> including normal values and capsular patterns for all major joints</li>
+            <li><strong>Execute special orthopedic tests</strong> with understanding of their diagnostic accuracy, sensitivity, and specificity values</li>
+            <li><strong>Apply clinical reasoning skills</strong> to upper extremity conditions including shoulder, elbow, wrist, and hand pathologies</li>
+            <li><strong>Evaluate lower extremity dysfunction</strong> using evidence-based examination techniques for hip, knee, ankle, and foot</li>
+        </ol>
+
+        <h3>Domain 3: Evidence-Based Practice Integration</h3>
+        <ol start="9">
+            <li><strong>Interpret diagnostic test results</strong> using likelihood ratios and post-test probability calculations</li>
+            <li><strong>Utilize clinical prediction rules</strong> and validated outcome measures in decision-making processes</li>
+            <li><strong>Apply current research evidence</strong> to support examination technique selection and clinical reasoning</li>
+        </ol>
+
+        <h3>Domain 4: Professional Practice Skills</h3>
+        <ol start="12">
+            <li><strong>Document examination findings</strong> using proper SOAP format and professional terminology</li>
+            <li><strong>Establish SMART treatment goals</strong> based on examination findings and patient-centered care principles</li>
+            <li><strong>Integrate patient values and preferences</strong> with clinical expertise and research evidence</li>
+            <li><strong>Demonstrate cultural competency</strong> and effective communication during the examination process</li>
+        </ol>
+    </div>
+
+    <div class="section">
+        <h2>3. STATEMENT OF RELEVANCE TO PHYSICAL THERAPY PRACTICE</h2>
+        
+        <div class="highlight-box">
+            <p><strong>This course directly addresses core competencies required for safe and effective physical therapy practice as defined by the American Physical Therapy Association (APTA) and Texas licensing requirements.</strong></p>
+        </div>
+
+        <h3>Clinical Relevance</h3>
+        <p>Musculoskeletal evaluation forms the foundation of physical therapy practice, with over 85% of outpatient physical therapy encounters involving musculoskeletal conditions. This course provides essential knowledge and skills that directly impact:</p>
+
+        <ul>
+            <li><strong>Patient Safety:</strong> Recognition of red flag symptoms and contraindications to treatment prevents adverse events and ensures appropriate medical referrals</li>
+            <li><strong>Diagnostic Accuracy:</strong> Proper application of special tests and clinical reasoning improves differential diagnosis and treatment planning</li>
+            <li><strong>Evidence-Based Practice:</strong> Integration of current research enhances clinical decision-making and patient outcomes</li>
+            <li><strong>Professional Standards:</strong> Systematic examination approaches align with APTA Practice Guidelines and Texas PT licensing requirements</li>
+        </ul>
+
+        <h3>Regulatory Alignment</h3>
+        <p>The course content specifically aligns with:</p>
+        <ul>
+            <li><strong>Texas Administrative Code Title 22, Chapter 811:</strong> Physical therapy practice standards and examination requirements</li>
+            <li><strong>APTA Guide to Physical Therapist Practice:</strong> Examination components and documentation standards</li>
+            <li><strong>CAPTE Standards:</strong> Evidence-based practice and clinical reasoning competencies</li>
+            <li><strong>Federation of State Boards Requirements:</strong> Continuing education in core practice areas</li>
+        </ul>
+
+        <h3>Professional Development Impact</h3>
+        <p>This educational activity enhances practitioner competency in:</p>
+        <ul>
+            <li>Clinical examination proficiency across all major body regions</li>
+            <li>Evidence-based decision making and diagnostic reasoning</li>
+            <li>Risk management and patient safety protocols</li>
+            <li>Professional documentation and communication standards</li>
+            <li>Integration of current research into clinical practice</li>
+        </ul>
+    </div>
+
+    <div class="section page-break">
+        <h2>4. INSTRUCTIONAL METHODS</h2>
+        
+        <h3>Primary Delivery Method: Interactive Online Learning Platform</h3>
+        
+        <div class="highlight-box">
+            <p><strong>Progressive Modular Design:</strong> Course utilizes advanced educational technology with sequential module unlocking, automatic progress tracking, and adaptive learning features.</p>
+        </div>
+
+        <h3>Instructional Methodologies</h3>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Method</th>
+                    <th>Description</th>
+                    <th>Educational Benefit</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Interactive Presentations</strong></td>
+                    <td>Multimedia content with text, images, and illustrated anatomical diagrams</td>
+                    <td>Visual and auditory learning accommodation; enhanced retention through multiple sensory channels</td>
+                </tr>
+                <tr>
+                    <td><strong>Progressive Unlocking</strong></td>
+                    <td>Sequential module access requiring completion of prerequisite materials</td>
+                    <td>Ensures mastery of foundational concepts before advancement; prevents cognitive overload</td>
+                </tr>
+                <tr>
+                    <td><strong>Knowledge Check Questions</strong></td>
+                    <td>Clinical scenario-based questions integrated throughout each module</td>
+                    <td>Immediate feedback and reinforcement; active learning and knowledge retention</td>
+                </tr>
+                <tr>
+                    <td><strong>Visual Learning Aids</strong></td>
+                    <td>70+ professional medical illustrations with click-to-zoom functionality</td>
+                    <td>Enhanced comprehension of anatomical relationships and examination techniques</td>
+                </tr>
+                <tr>
+                    <td><strong>Case-Based Learning</strong></td>
+                    <td>Clinical scenarios integrated into knowledge checks and final examination</td>
+                    <td>Application of theoretical knowledge to real-world practice situations</td>
+                </tr>
+                <tr>
+                    <td><strong>Auto-Save Technology</strong></td>
+                    <td>Automatic progress preservation allowing flexible pacing</td>
+                    <td>Accommodates busy clinical schedules; reduces completion barriers</td>
+                </tr>
+                <tr>
+                    <td><strong>Comprehensive Assessment</strong></td>
+                    <td>20-question final examination with randomized question selection</td>
+                    <td>Objective evaluation of learning outcomes across all course domains</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h3>Learning Support Features</h3>
+        <ul>
+            <li><strong>Responsive Design:</strong> Optimized for desktop, tablet, and mobile access</li>
+            <li><strong>Accessibility Compliance:</strong> WCAG 2.1 guidelines for inclusive learning</li>
+            <li><strong>Progress Tracking:</strong> Real-time completion status and performance analytics</li>
+            <li><strong>Reference Integration:</strong> Embedded links to evidence-based literature</li>
+            <li><strong>Immediate Feedback:</strong> Instant results and explanations for all assessments</li>
+        </ul>
+
+        <h3>Quality Assurance Measures</h3>
+        <ul>
+            <li><strong>Content Validation:</strong> Peer review by board-certified physical therapists</li>
+            <li><strong>Technical Testing:</strong> Multi-platform compatibility verification</li>
+            <li><strong>Outcome Measurement:</strong> Pre/post knowledge assessments and learner satisfaction surveys</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>5. COURSE CERTIFICATE</h2>
+        
+        <div class="certificate-sample">
+            <h3 style="color: #059669; margin-bottom: 1rem;">CERTIFICATE OF COMPLETION</h3>
+            <p style="margin-bottom: 0.5rem;"><em>This certifies that</em></p>
+            <p style="font-size: 16pt; font-weight: bold; border-bottom: 2px solid #1a365d; display: inline-block; padding: 5px 15px; margin: 10px 0;">[PARTICIPANT NAME]</p>
+            <p style="margin: 0.5rem 0;"><em>has successfully completed</em></p>
+            <p style="font-size: 14pt; font-weight: bold; color: #059669; margin: 10px 0;">Comprehensive Musculoskeletal Evaluation</p>
+            <p style="margin-bottom: 1rem;"><em>A systematic regional approach to clinical assessment</em></p>
+            <div style="display: flex; justify-content: space-between; margin-top: 2rem; font-size: 10pt;">
+                <div style="border-top: 1px solid #333; padding-top: 5px; width: 40%;">
+                    <strong>Troy Hounshell, PT, ScD</strong><br>
+                    Course Director
+                </div>
+                <div style="border-top: 1px solid #333; padding-top: 5px; width: 40%; text-align: right;">
+                    <strong>Date of Completion</strong><br>
+                    [Completion Date]
+                </div>
+            </div>
+        </div>
+
+        <h3>Certificate Specifications</h3>
+        <ul>
+            <li><strong>Course ID:</strong> PT-MSK-001</li>
+            <li><strong>Duration:</strong> 180 minutes (3.0 CCUs)</li>
+            <li><strong>Approval Number:</strong> DRTROY-PT-MSK-001-2024</li>
+            <li><strong>Provider:</strong> DrTroy Continuing Education, Lubbock, Texas</li>
+            <li><strong>Course Director:</strong> Troy Hounshell, PT, ScD</li>
+            <li><strong>Completion Requirements:</strong> Pass final examination with 70% minimum score</li>
+            <li><strong>Format:</strong> Automated PDF generation with unique completion tracking</li>
+            <li><strong>Verification:</strong> Digital certificate includes completion date and final score</li>
+        </ul>
+
+        <div class="highlight-box">
+            <p><strong>Note:</strong> Certificates are automatically generated upon successful course completion and include verification statements required for Texas PT license renewal documentation.</p>
+        </div>
+    </div>
+
+    <div class="section page-break">
+        <h2>6. COURSE EVALUATION</h2>
+        
+        <h3>Evaluation Methodology</h3>
+        <p>The course includes a comprehensive evaluation system designed to assess both learning outcomes and program effectiveness. Evaluation occurs through multiple mechanisms:</p>
+
+        <div class="highlight-box">
+            <h3>Multi-Domain Assessment Structure</h3>
+            <p>The evaluation framework addresses both summative assessment (final examination) and formative feedback (course quality evaluation) to ensure comprehensive program improvement.</p>
+        </div>
+
+        <h3>Component 1: Knowledge Assessment (Final Examination)</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Assessment Feature</th>
+                    <th>Specification</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Question Format</td>
+                    <td>Multiple choice with clinical scenario-based questions</td>
+                </tr>
+                <tr>
+                    <td>Number of Questions</td>
+                    <td>20 questions covering all 12 course modules</td>
+                </tr>
+                <tr>
+                    <td>Passing Score</td>
+                    <td>70% minimum (14 correct answers)</td>
+                </tr>
+                <tr>
+                    <td>Time Limit</td>
+                    <td>Self-paced (no time restrictions)</td>
+                </tr>
+                <tr>
+                    <td>Attempts</td>
+                    <td>Unlimited retakes for remediation</td>
+                </tr>
+                <tr>
+                    <td>Question Pool</td>
+                    <td>Randomized selection from validated test bank</td>
+                </tr>
+                <tr>
+                    <td>Immediate Feedback</td>
+                    <td>Correct answers and explanations provided upon completion</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h3>Component 2: Course Quality Evaluation</h3>
+        <p><strong>Mandatory pre-certificate evaluation addressing five key domains:</strong></p>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Evaluation Domain</th>
+                    <th>Assessment Method</th>
+                    <th>Scale</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Overall Course Rating</strong></td>
+                    <td>5-point Likert scale assessment</td>
+                    <td>Excellent (5) to Very Poor (1)</td>
+                </tr>
+                <tr>
+                    <td><strong>Content Quality</strong></td>
+                    <td>4-point rating scale</td>
+                    <td>Excellent (4) to Poor (1)</td>
+                </tr>
+                <tr>
+                    <td><strong>Learning Format Effectiveness</strong></td>
+                    <td>Progressive module system evaluation</td>
+                    <td>Excellent (4) to Poor (1)</td>
+                </tr>
+                <tr>
+                    <td><strong>Course Improvement Suggestions</strong></td>
+                    <td>Open-text feedback field</td>
+                    <td>Qualitative responses</td>
+                </tr>
+                <tr>
+                    <td><strong>Colleague Recommendation</strong></td>
+                    <td>3-point recommendation scale</td>
+                    <td>Yes, definitely / Maybe / No</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h3>Component 3: Formative Knowledge Checks</h3>
+        <ul>
+            <li><strong>Frequency:</strong> One clinical scenario question per module (12 total)</li>
+            <li><strong>Purpose:</strong> Immediate feedback and knowledge reinforcement</li>
+            <li><strong>Requirement:</strong> Correct response required for module progression</li>
+            <li><strong>Format:</strong> Multiple choice with detailed explanations</li>
+            <li><strong>Clinical Focus:</strong> Real-world application scenarios</li>
+        </ul>
+
+        <h3>Quality Improvement Process</h3>
+        <p>Evaluation data is systematically analyzed for:</p>
+        <ul>
+            <li><strong>Content Effectiveness:</strong> Module-specific performance analytics</li>
+            <li><strong>Technical Performance:</strong> Platform usability and accessibility</li>
+            <li><strong>Learning Outcomes:</strong> Pre/post knowledge assessment comparisons</li>
+            <li><strong>Participant Satisfaction:</strong> Qualitative feedback analysis</li>
+            <li><strong>Continuous Improvement:</strong> Quarterly content updates based on feedback</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>7. COURSE DIRECTOR QUALIFICATIONS</h2>
+        
+        <div class="instructor-info">
+            <h3>Troy Hounshell, PT, ScD</h3>
+            <p><strong>Course Director and Primary Instructor</strong></p>
+            
+            <h4>Education</h4>
+            <ul>
+                <li><strong>Doctor of Science in Physical Therapy (2005)</strong> - Texas Tech University Health Sciences Center</li>
+                <li><strong>Master of Physical Therapy (2000)</strong> - Texas Tech University Health Sciences Center</li>
+                <li><strong>Bachelor of Science</strong> - Angelo State University</li>
+            </ul>
+            
+            <h4>Professional Experience</h4>
+            <ul>
+                <li><strong>25+ Years</strong> practicing physical therapist across multiple settings</li>
+                <li><strong>CEO, Texas Therapy Pros</strong> - Multi-location therapy practice (5 locations)</li>
+                <li><strong>Clinical Experience:</strong> Outpatient, inpatient, skilled nursing, home health</li>
+                <li><strong>Specialty Focus:</strong> Musculoskeletal evaluation and orthopedic physical therapy</li>
+            </ul>
+            
+            <h4>Continuing Education Background</h4>
+            <ul>
+                <li><strong>Course Development:</strong> 10+ years developing evidence-based educational content</li>
+                <li><strong>Clinical Supervision:</strong> Mentorship of Physical Therapists in clinical settings</li>
+                <li><strong>Professional Education:</strong> Regular presenter at regional therapy conferences</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>8. SUPPORTING DOCUMENTATION</h2>
+        
+        <h3>Course Access Information</h3>
+        <ul>
+            <li><strong>Live Course URL:</strong> https://hireaghost.github.io/troy-drtroy/courses/pt-msk-001-progressive.html</li>
+            <li><strong>Provider Website:</strong> https://drtroy.com</li>
+            <li><strong>Technical Requirements:</strong> Web browser with internet connection (mobile compatible)</li>
+            <li><strong>Course Platform:</strong> Responsive HTML5 with JavaScript interactivity</li>
+        </ul>
+
+        <h3>Quality Assurance</h3>
+        <ul>
+            <li><strong>Content Review:</strong> Peer-reviewed by licensed physical therapists</li>
+            <li><strong>Technical Testing:</strong> Multi-platform compatibility verified</li>
+            <li><strong>Accessibility:</strong> WCAG 2.1 compliance for inclusive access</li>
+            <li><strong>Evidence Base:</strong> 20+ current research references integrated</li>
+        </ul>
+
+        <h3>Contact Information</h3>
+        <div style="background: #f8f9fa; padding: 1rem; border-left: 4px solid #059669;">
+            <strong>Troy Hounshell, PT, ScD</strong><br>
+            Course Director<br>
+            DrTroy Continuing Education<br>
+            Lubbock, Texas<br>
+            <strong>Email:</strong> troy@drtroy.com<br>
+            <strong>Phone:</strong> 806-577-6908
+        </div>
+    </div>
+
+    <div style="margin-top: 3rem; text-align: center; color: #666; font-size: 10pt; border-top: 2px solid #059669; padding-top: 1rem;">
+        <p><strong>TPTA CCU Approval Submission Package</strong><br>
+        Comprehensive Musculoskeletal Evaluation Course<br>
+        Course ID: PT-MSK-001 | Duration: 180 minutes | CCUs: 3.0<br>
+        Submitted: February 16, 2026 | DrTroy Continuing Education</p>
+    </div>
+</body>
+</html>

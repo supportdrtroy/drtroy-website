@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 500" width="600" height="500">
+  <!-- Background -->
+  <rect x="0" y="0" width="600" height="500" fill="#fafbfc"/>
+  
+  <!-- Title -->
+  <text x="300" y="30" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="#1a365d" text-anchor="middle">Wrist and Hand Anatomy</text>
+  
+  <!-- Left side - Wrist Bones (Posterior/Dorsal View) -->
+  <text x="150" y="55" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#2d3748" text-anchor="middle">Carpal Bones (Dorsal)</text>
+  
+  <!-- Radius -->
+  <path d="M100 70 L100 150 L130 150 L140 70 Z" fill="#e2e8f0" stroke="#2d3748" stroke-width="2"/>
+  <text x="120" y="110" font-family="Arial, sans-serif" font-size="9" fill="#1a365d" text-anchor="middle" font-weight="bold">Radius</text>
+  
+  <!-- Ulna -->
+  <path d="M70 70 L70 140 L95 140 L100 70 Z" fill="#e2e8f0" stroke="#2d3748" stroke-width="2"/>
+  <text x="82" y="105" font-family="Arial, sans-serif" font-size="9" fill="#1a365d" text-anchor="middle" font-weight="bold">Ulna</text>
+  
+  <!-- Scaphoid -->
+  <ellipse cx="115" cy="165" rx="18" ry="12" fill="#cbd5e0" stroke="#2d3748" stroke-width="1.5"/>
+  <text x="115" y="168" font-family="Arial, sans-serif" font-size="8" fill="#2d3748" text-anchor="middle">Scaphoid</text>
+  
+  <!-- Lunate -->
+  <ellipse cx="85" cy="170" rx="12" ry="15" fill="#cbd5e0" stroke="#2d3748" stroke-width="1.5"/>
+  <text x="85" y="173" font-family="Arial, sans-serif" font-size="8" fill="#2d3748" text-anchor="middle">Lunate</text>
+  
+  <!-- Triquetrum -->
+  <ellipse cx="60" cy="175" rx="10" ry="12" fill="#cbd5e0" stroke="#2d3748" stroke-width="1.5"/>
+  <text x="50" y="178" font-family="Arial, sans-serif" font-size="7" fill="#2d3748">Triquetrum</text>
+  
+  <!-- Pisiform -->
+  <circle cx="55" cy="190" r="6" fill="#a0aec0" stroke="#2d3748" stroke-width="1.5"/>
+  <text x="40" y="205" font-family="Arial, sans-serif" font-size="7" fill="#2d3748">Pisiform</text>
+  
+  <!-- Trapezium -->
+  <ellipse cx="130" cy="195" rx="12" ry="10" fill="#cbd5e0" stroke="#2d3748" stroke-width="1.5"/>
+  <text x="145" y="198" font-family="Arial, sans-serif" font-size="7" fill="#2d3748">Trapezium</text>
+  
+  <!-- Trapezoid -->
+  <ellipse cx="110" cy="200" rx="10" ry="8" fill="#cbd5e0" stroke="#2d3748" stroke-width="1.5"/>
+  <text x="125" y="215" font-family="Arial, sans-serif" font-size="7" fill="#2d3748">Trapezoid</text>
+  
+  <!-- Capitate -->
+  <ellipse cx="90" cy="205" rx="12" ry="14" fill="#a0aec0" stroke="#2d3748" stroke-width="1.5"/>
+  <text x="90" y="208" font-family="Arial, sans-serif" font-size="8" fill="#fff" text-anchor="middle" font-weight="bold">Capitate</text>
+  
+  <!-- Hamate -->
+  <ellipse cx="65" cy="210" rx="12" ry="10" fill="#cbd5e0" stroke="#2d3748" stroke-width="1.5"/>
+  <text x="65" y="213" font-family="Arial, sans-serif" font-size="8" fill="#2d3748" text-anchor="middle">Hamate</text>
+  
+  <!-- Metacarpals -->
+  <rect x="45" y="230" width="15" height="60" rx="5" fill="#e2e8f0" stroke="#2d3748" stroke-width="1.5"/>
+  <rect x="65" y="230" width="15" height="65" rx="5" fill="#e2e8f0" stroke="#2d3748" stroke-width="1.5"/>
+  <rect x="85" y="230" width="15" height="70" rx="5" fill="#e2e8f0" stroke="#2d3748" stroke-width="1.5"/>
+  <rect x="105" y="230" width="15" height="65" rx="5" fill="#e2e8f0" stroke="#2d3748" stroke-width="1.5"/>
+  <rect x="125" y="230" width="15" height="55" rx="5" fill="#e2e8f0" stroke="#2d3748" stroke-width="1.5"/>
+  <text x="90" y="270" font-family="Arial, sans-serif" font-size="9" fill="#1a365d" text-anchor="middle" font-weight="bold">Metacarpals</text>
+  
+  <!-- Right side - Cross Section showing Carpal Tunnel -->
+  <text x="450" y="55" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#2d3748" text-anchor="middle">Carpal Tunnel Cross-Section</text>
+  
+  <!-- Carpal bones arch -->
+  <path d="M380 150 Q400 130 420 140 Q440 130 460 140 Q480 130 500 150 L500 180 Q480 170 460 180 Q440 170 420 180 Q400 170 380 180 Z" fill="#e2e8f0" stroke="#2d3748" stroke-width="2"/>
+  
+  <!-- Scaphoid label -->
+  <text x="400" y="165" font-family="Arial, sans-serif" font-size="8" fill="#2d3748" text-anchor="middle">Scaphoid</text>
+  
+  <!-- Lunate label -->
+  <text x="460" y="165" font-family="Arial, sans-serif" font-size="8" fill="#2d3748" text-anchor="middle">Lunate</text>
+  
+  <!-- Triquetrum label -->
+  <text x="485" y="160" font-family="Arial, sans-serif" font-size="7" fill="#2d3748">Triquetrum</text>
+  
+  <!-- Pisiform -->
+  <circle cx="490" cy="175" r="8" fill="#cbd5e0" stroke="#2d3748" stroke-width="1.5"/>
+  <text x="505" y="178" font-family="Arial, sans-serif" font-size="7" fill="#2d3748">Pisiform</text>
+  
+  <!-- Transverse carpal ligament -->
+  <path d="M380 150 Q440 120 500 150" stroke="#c53030" stroke-width="4" fill="none"/>
+  <text x="440" y="115" font-family="Arial, sans-serif" font-size="9" fill="#c53030" text-anchor="middle" font-weight="bold">Transverse Carpal Ligament</text>
+  
+  <!-- Carpal Tunnel Contents -->
+  <rect x="395" y="155" width="90" height="25" fill="#fed7d7" stroke="#c53030" stroke-width="1" rx="3"/>
+  <text x="440" y="168" font-family="Arial, sans-serif" font-size="8" fill="#742a2a" text-anchor="middle" font-weight="bold">CARPAL TUNNEL</text>
+  <text x="440" y="178" font-family="Arial, sans-serif" font-size="7" fill="#742a2a" text-anchor="middle">Median Nerve + Flexor Tendons</text>
+  
+  <!-- Median Nerve -->
+  <ellipse cx="415" cy="168" rx="8" ry="6" fill="#f6e05e" stroke="#d69e2e" stroke-width="1.5"/>
+  <text x="405" y="195" font-family="Arial, sans-serif" font-size="8" fill="#975a16">Median Nerve</text>
+  
+  <!-- Flexor tendons -->
+  <circle cx="435" cy="168" r="4" fill="#90cdf4" stroke="#2b6cb0" stroke-width="1"/>
+  <circle cx="445" cy="168" r="4" fill="#90cdf4" stroke="#2b6cb0" stroke-width="1"/>
+  <circle cx="455" cy="168" r="4" fill="#90cdf4" stroke="#2b6cb0" stroke-width="1"/>
+  <circle cx="465" cy="168" r="4" fill="#90cdf4" stroke="#2b6cb0" stroke-width="1"/>
+  
+  <!-- TFCC indication -->
+  <path d="M70 145 L85 160" stroke="#805ad5" stroke-width="2" stroke-dasharray="3,2"/>
+  <text x="30" y="155" font-family="Arial, sans-serif" font-size="8" fill="#805ad5">TFCC</text>
+  
+  <!-- Key Structures Box -->
+  <rect x="50" y="320" width="500" height="160" fill="#fff" stroke="#1a365d" stroke-width="2" rx="5"/>
+  <text x="300" y="345" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#1a365d" text-anchor="middle">Key Structures</text>
+  
+  <text x="70" y="370" font-family="Arial, sans-serif" font-size="11" fill="#333">
+    <tspan font-weight="bold">Proximal Carpal Row:</tspan> Scaphoid, Lunate, Triquetrum, Pisiform (articulate with radius/ulna)
+  </text>
+  <text x="70" y="390" font-family="Arial, sans-serif" font-size="11" fill="#333">
+    <tspan font-weight="bold">Distal Carpal Row:</tspan> Trapezium, Trapezoid, Capitate, Hamate (articulate with metacarpals)
+  </text>
+  <text x="70" y="410" font-family="Arial, sans-serif" font-size="11" fill="#333">
+    <tspan font-weight="bold">Carpal Tunnel:</tspan> Bounded by carpal bones (floor/walls) and transverse carpal ligament (roof)
+  </text>
+  <text x="70" y="430" font-family="Arial, sans-serif" font-size="11" fill="#333">
+    <tspan font-weight="bold">Contents:</tspan> Median nerve + 9 flexor tendons (4 FDS, 4 FDP, 1 FPL)
+  </text>
+  <text x="70" y="450" font-family="Arial, sans-serif" font-size="11" fill="#333">
+    <tspan font-weight="bold">TFCC:</tspan> Triangular Fibrocartilage Complex - stabilizes ulnar side of wrist
+  </text>
+  <text x="70" y="470" font-family="Arial, sans-serif" font-size="11" fill="#c53030">
+    <tspan font-weight="bold">Clinical:</tspan> Carpal tunnel syndrome = median nerve compression under transverse ligament
+  </text>
+</svg>

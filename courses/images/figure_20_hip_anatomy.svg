@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 500" width="600" height="500">
+  <!-- Background -->
+  <rect x="0" y="0" width="600" height="500" fill="#fafbfc"/>
+  
+  <!-- Title -->
+  <text x="300" y="30" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="#1a365d" text-anchor="middle">Hip Joint Anatomy</text>
+  
+  <!-- Left side - Anterior View of Hip Bone -->
+  <text x="150" y="55" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#2d3748" text-anchor="middle">Hip Bone (Os Coxae)</text>
+  
+  <!-- Ilium -->
+  <path d="M80 80 Q120 60 160 80 L170 150 Q165 170 150 180 L90 180 Q75 170 70 150 Z" fill="#e2e8f0" stroke="#2d3748" stroke-width="2"/>
+  <text x="120" y="130" font-family="Arial, sans-serif" font-size="11" fill="#1a365d" text-anchor="middle" font-weight="bold">Ilium</text>
+  
+  <!-- Iliac Crest -->
+  <path d="M80 80 Q120 55 160 80" stroke="#2d3748" stroke-width="3" fill="none"/>
+  <text x="120" y="50" font-family="Arial, sans-serif" font-size="9" fill="#4a5568" text-anchor="middle">Iliac Crest</text>
+  
+  <!-- ASIS -->
+  <circle cx="160" cy="80" r="5" fill="#f6ad55" stroke="#2d3748" stroke-width="1.5"/>
+  <text x="185" y="75" font-family="Arial, sans-serif" font-size="8" fill="#c05621" font-weight="bold">ASIS</text>
+  
+  <!-- PSIS -->
+  <circle cx="80" cy="80" r="5" fill="#f6ad55" stroke="#2d3748" stroke-width="1.5"/>
+  <text x="55" y="75" font-family="Arial, sans-serif" font-size="8" fill="#c05621" font-weight="bold">PSIS</text>
+  
+  <!-- Ischium -->
+  <path d="M90 180 L100 220 Q120 240 140 220 L150 180" fill="#cbd5e0" stroke="#2d3748" stroke-width="2"/>
+  <text x="120" y="205" font-family="Arial, sans-serif" font-size="10" fill="#1a365d" text-anchor="middle" font-weight="bold">Ischium</text>
+  
+  <!-- Ischial Tuberosity -->
+  <ellipse cx="120" cy="235" rx="15" ry="8" fill="#a0aec0" stroke="#2d3748" stroke-width="1.5"/>
+  <text x="120" y="255" font-family="Arial, sans-serif" font-size="8" fill="#4a5568" text-anchor="middle">Ischial Tuberosity</text>
+  
+  <!-- Pubis -->
+  <path d="M100 180 L110 200 L130 200 L140 180" fill="#e2e8f0" stroke="#2d3748" stroke-width="1.5"/>
+  <text x="155" y="195" font-family="Arial, sans-serif" font-size="9" fill="#1a365d">Pubis</text>
+  
+  <!-- Acetabulum -->
+  <circle cx="130" cy="160" r="18" fill="#fed7d7" stroke="#c53030" stroke-width="2"/>
+  <circle cx="130" cy="160" r="8" fill="#fff" stroke="#2d3748" stroke-width="1.5"/>
+  <text x="165" y="155" font-family="Arial, sans-serif" font-size="9" fill="#c53030" font-weight="bold">Acetabulum</text>
+  
+  <!-- Obturator Foramen -->
+  <ellipse cx="115" cy="195" rx="20" ry="12" fill="#fafbfc" stroke="#2d3748" stroke-width="1.5"/>
+  <text x="70" y="200" font-family="Arial, sans-serif" font-size="8" fill="#4a5568">Obturator</text>
+  <text x="70" y="210" font-family="Arial, sans-serif" font-size="8" fill="#4a5568">Foramen</text>
+  
+  <!-- Right side - Hip Joint Detail -->
+  <text x="450" y="55" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#2d3748" text-anchor="middle">Hip Joint (Coronal Section)</text>
+  
+  <!-- Acetabulum structure -->
+  <path d="M400 120 Q450 100 500 120 L500 200 Q450 220 400 200 Z" fill="#e2e8f0" stroke="#2d3748" stroke-width="2"/>
+  <text x="450" y="160" font-family="Arial, sans-serif" font-size="10" fill="#1a365d" text-anchor="middle" font-weight="bold">Acetabulum</text>
+  
+  <!-- Acetabular Labrum -->
+  <path d="M405 125 Q450 105 495 125" stroke="#805ad5" stroke-width="3" fill="none"/>
+  <text x="515" y="125" font-family="Arial, sans-serif" font-size="8" fill="#805ad5" font-weight="bold">Labrum</text>
+  
+  <!-- Femoral Head -->
+  <circle cx="450" cy="170" r="25" fill="#cbd5e0" stroke="#2d3748" stroke-width="2"/>
+  <text x="450" y="173" font-family="Arial, sans-serif" font-size="9" fill="#2d3748" text-anchor="middle" font-weight="bold">Femoral</text>
+  <text x="450" y="183" font-family="Arial, sans-serif" font-size="9" fill="#2d3748" text-anchor="middle" font-weight="bold">Head</text>
+  
+  <!-- Femoral Neck -->
+  <path d="M450 195 L450 250" stroke="#e2e8f0" stroke-width="20" stroke-linecap="round"/>
+  <path d="M450 195 L450 250" stroke="#2d3748" stroke-width="2" fill="none"/>
+  <text x="480" y="220" font-family="Arial, sans-serif" font-size="9" fill="#1a365d">Femoral Neck</text>
+  
+  <!-- Joint Capsule -->
+  <path d="M400 140 Q380 170 400 200" stroke="#4299e1" stroke-width="2" fill="none" stroke-dasharray="4,2"/>
+  <path d="M500 140 Q520 170 500 200" stroke="#4299e1" stroke-width="2" fill="none" stroke-dasharray="4,2"/>
+  <text x="540" y="170" font-family="Arial, sans-serif" font-size="8" fill="#4299e1">Joint Capsule</text>
+  
+  <!-- Ligaments -->
+  <!-- Iliofemoral ligament -->
+  <path d="M420 110 L440 150" stroke="#c53030" stroke-width="3" fill="none"/>
+  <text x="395" y="105" font-family="Arial, sans-serif" font-size="8" fill="#c53030">Iliofemoral</text>
+  
+  <!-- Pubofemoral ligament -->
+  <path d="M430 200 L445 185" stroke="#c53030" stroke-width="2" fill="none"/>
+  <text x="390" y="210" font-family="Arial, sans-serif" font-size="8" fill="#c53030">Pubofemoral</text>
+  
+  <!-- Ischiofemoral ligament (posterior - dashed) -->
+  <path d="M485 200 L465 180" stroke="#c53030" stroke-width="2" fill="none" stroke-dasharray="3,2"/>
+  <text x="490" y="215" font-family="Arial, sans-serif" font-size="8" fill="#c53030">Ischiofemoral</text>
+  
+  <!-- Greater Trochanter -->
+  <circle cx="475" cy="240" r="10" fill="#a0aec0" stroke="#2d3748" stroke-width="1.5"/>
+  <text x="495" y="255" font-family="Arial, sans-serif" font-size="8" fill="#4a5568">Greater Trochanter</text>
+  
+  <!-- Key Structures Box -->
+  <rect x="50" y="320" width="500" height="160" fill="#fff" stroke="#1a365d" stroke-width="2" rx="5"/>
+  <text x="300" y="345" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#1a365d" text-anchor="middle">Key Structures and Clinical Notes</text>
+  
+  <text x="70" y="370" font-family="Arial, sans-serif" font-size="11" fill="#333">
+    <tspan font-weight="bold">Hip Bone (Os Coxae):</tspan> Fusion of ilium, ischium, and pubis
+  </text>
+  <text x="70" y="390" font-family="Arial, sans-serif" font-size="11" fill="#333">
+    <tspan font-weight="bold">Acetabulum:</tspan> Deep socket formed by all three bones; articulates with femoral head
+  </text>
+  <text x="70" y="410" font-family="Arial, sans-serif" font-size="11" fill="#333">
+    <tspan font-weight="bold">Acetabular Labrum:</tspan> Fibrocartilaginous rim deepens socket and provides seal
+  </text>
+  <text x="70" y="430" font-family="Arial, sans-serif" font-size="11" fill="#333">
+    <tspan font-weight="bold">Ligaments:</tspan> Iliofemoral (Y-ligament), pubofemoral, ischiofemoral - provide stability
+  </text>
+  <text x="70" y="450" font-family="Arial, sans-serif" font-size="11" fill="#333">
+    <tspan font-weight="bold">Blood Supply:</tspan> Medial/lateral circumflex femoral arteries (retinacular vessels)
+  </text>
+  <text x="70" y="470" font-family="Arial, sans-serif" font-size="11" fill="#c53030">
+    <tspan font-weight="bold">Clinical:</tspan> Femoral neck fractures risk avascular necrosis; hip arthritis common in elderly
+  </text>
+</svg>

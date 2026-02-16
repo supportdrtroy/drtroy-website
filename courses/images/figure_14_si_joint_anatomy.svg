@@ -1,0 +1,142 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 500">
+  <rect width="700" height="500" fill="white"/>
+  
+  <!-- Title -->
+  <text x="350" y="25" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="#1a365d">Sacroiliac Joint Anatomy</text>
+  
+  <!-- LEFT SIDE: Posterior View of Pelvis -->
+  <g transform="translate(30, 50)">
+    <text x="160" y="15" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#333">Posterior View</text>
+    
+    <!-- Right Ilium (left side of image) -->
+    <path d="M 50 80 
+             C 40 70, 35 90, 40 110
+             C 45 130, 50 150, 45 170
+             C 42 190, 50 210, 60 220
+             L 100 220
+             C 105 210, 108 200, 105 190
+             C 100 180, 95 170, 100 160
+             C 105 140, 100 120, 95 100
+             C 90 80, 70 75, 50 80 Z" 
+          fill="#e8dcc8" stroke="#8b7355" stroke-width="2"/>
+    
+    <!-- Left Ilium (right side of image) - mirrored -->
+    <path d="M 270 80 
+             C 280 70, 285 90, 280 110
+             C 275 130, 270 150, 275 170
+             C 278 190, 270 210, 260 220
+             L 220 220
+             C 215 210, 212 200, 215 190
+             C 220 180, 225 170, 220 160
+             C 215 140, 220 120, 225 100
+             C 230 80, 250 75, 270 80 Z" 
+          fill="#e8dcc8" stroke="#8b7355" stroke-width="2"/>
+    
+    <!-- Sacrum (center) -->
+    <path d="M 100 60
+             C 120 55, 200 55, 220 60
+             L 215 90
+             C 210 100, 205 110, 200 120
+             C 195 140, 190 160, 185 180
+             C 180 200, 170 215, 160 230
+             L 140 230
+             C 130 215, 120 200, 115 180
+             C 110 160, 105 140, 100 120
+             C 95 110, 90 100, 105 90
+             L 100 60 Z"
+          fill="#f5e6d3" stroke="#8b7355" stroke-width="2"/>
+    
+    <!-- Coccyx -->
+    <path d="M 140 230 L 150 250 L 155 260 L 145 260 L 140 250 Z" 
+          fill="#e8dcc8" stroke="#8b7355" stroke-width="1.5"/>
+    
+    <!-- SI Joint Lines (auricular surfaces) -->
+    <path d="M 105 90 C 100 120, 110 160, 115 180" 
+          stroke="#dc2626" stroke-width="3" fill="none" stroke-dasharray="5,3"/>
+    <path d="M 215 90 C 220 120, 210 160, 205 180" 
+          stroke="#dc2626" stroke-width="3" fill="none" stroke-dasharray="5,3"/>
+    
+    <!-- PSIS markers -->
+    <circle cx="48" cy="82" r="4" fill="#2c5aa0"/>
+    <circle cx="272" cy="82" r="4" fill="#2c5aa0"/>
+    <text x="30" y="75" font-family="Arial, sans-serif" font-size="9" fill="#2c5aa0">PSIS</text>
+    <text x="275" y="75" font-family="Arial, sans-serif" font-size="9" fill="#2c5aa0">PSIS</text>
+    
+    <!-- Labels -->
+    <text x="160" y="140" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#333" font-weight="bold">Sacrum</text>
+    <text x="70" y="150" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#333">R Ilium</text>
+    <text x="250" y="150" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#333">L Ilium</text>
+    <text x="160" y="250" text-anchor="middle" font-family="Arial, sans-serif" font-size="9" fill="#333">Coccyx</text>
+    
+    <!-- SI Joint Labels -->
+    <text x="75" y="140" font-family="Arial, sans-serif" font-size="9" fill="#dc2626" font-weight="bold">SI Joint</text>
+    <text x="235" y="140" font-family="Arial, sans-serif" font-size="9" fill="#dc2626" font-weight="bold">SI Joint</text>
+  </g>
+  
+  <!-- RIGHT SIDE: Detailed SI Joint Anatomy -->
+  <g transform="translate(360, 50)">
+    <text x="160" y="15" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#333">SI Joint Detail (Coronal Section)</text>
+    
+    <!-- Ilium side -->
+    <path d="M 80 80 L 120 80 L 120 220 L 80 220 Z" 
+          fill="#e8dcc8" stroke="#8b7355" stroke-width="2"/>
+    <text x="70" y="155" font-family="Arial, sans-serif" font-size="10" fill="#333">Ilium</text>
+    
+    <!-- Sacrum side -->
+    <path d="M 200 80 L 240 80 L 240 220 L 200 220 Z" 
+          fill="#f5e6d3" stroke="#8b7355" stroke-width="2"/>
+    <text x="245" y="155" font-family="Arial, sans-serif" font-size="10" fill="#333">Sacrum</text>
+    
+    <!-- Articular Surfaces -->
+    <path d="M 120 90 C 140 100, 140 200, 120 210" 
+          fill="#d4a574" stroke="#8b4513" stroke-width="2"/>
+    <path d="M 200 90 C 180 100, 180 200, 200 210" 
+          fill="#c9956b" stroke="#8b4513" stroke-width="2"/>
+    
+    <!-- Joint Space -->
+    <line x1="140" y1="90" x2="180" y2="90" stroke="#666" stroke-width="1"/>
+    <line x1="140" y1="210" x2="180" y2="210" stroke="#666" stroke-width="1"/>
+    <text x="160" y="85" text-anchor="middle" font-family="Arial, sans-serif" font-size="8" fill="#666">Joint Space</text>
+    <text x="160" y="225" text-anchor="middle" font-family="Arial, sans-serif" font-size="8" fill="#666">(0.5-4mm)</text>
+    
+    <!-- Ligaments -->
+    <!-- Posterior SI Ligament -->
+    <path d="M 120 100 L 90 100 L 90 200 L 120 200" 
+          fill="none" stroke="#2c5aa0" stroke-width="3"/>
+    <text x="60" y="110" font-family="Arial, sans-serif" font-size="8" fill="#2c5aa0">Posterior SI</text>
+    <text x="60" y="122" font-family="Arial, sans-serif" font-size="8" fill="#2c5aa0">Ligament</text>
+    
+    <!-- Interosseous Ligament -->
+    <line x1="130" y1="110" x2="190" y2="110" stroke="#228b22" stroke-width="2"/>
+    <line x1="130" y1="130" x2="190" y2="130" stroke="#228b22" stroke-width="2"/>
+    <line x1="130" y1="150" x2="190" y2="150" stroke="#228b22" stroke-width="2"/>
+    <line x1="130" y1="170" x2="190" y2="170" stroke="#228b22" stroke-width="2"/>
+    <line x1="130" y1="190" x2="190" y2="190" stroke="#228b22" stroke-width="2"/>
+    <text x="160" y="105" text-anchor="middle" font-family="Arial, sans-serif" font-size="8" fill="#228b22">Interosseous</text>
+    
+    <!-- Anterior SI Ligament (shown as thinner) -->
+    <path d="M 200 100 L 230 100 L 230 200 L 200 200" 
+          fill="none" stroke="#dc2626" stroke-width="2" stroke-dasharray="3,2"/>
+    <text x="235" y="110" font-family="Arial, sans-serif" font-size="8" fill="#dc2626">Anterior SI</text>
+    <text x="235" y="122" font-family="Arial, sans-serif" font-size="8" fill="#dc2626">Ligament</text>
+  </g>
+  
+  <!-- Bottom: Clinical Information -->
+  <g transform="translate(50, 380)">
+    <rect x="0" y="0" width="300" height="100" rx="8" fill="#f0f9ff" stroke="#0ea5e9" stroke-width="1"/>
+    <text x="150" y="20" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#0369a1">Key Characteristics</text>
+    <text x="10" y="40" font-family="Arial, sans-serif" font-size="10" fill="#333">• Synovial plane joint with auricular (ear-shaped) surfaces</text>
+    <text x="10" y="55" font-family="Arial, sans-serif" font-size="10" fill="#333">• Minimal movement: 2-3° rotation, 1-2mm translation</text>
+    <text x="10" y="70" font-family="Arial, sans-serif" font-size="10" fill="#333">• Strongest ligaments in the body provide stability</text>
+    <text x="10" y="85" font-family="Arial, sans-serif" font-size="10" fill="#333">• Transmits forces between spine and lower extremities</text>
+  </g>
+  
+  <g transform="translate(370, 380)">
+    <rect x="0" y="0" width="280" height="100" rx="8" fill="#f0fdf4" stroke="#22c55e" stroke-width="1"/>
+    <text x="140" y="20" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#166534">Innervation & Function</text>
+    <text x="10" y="40" font-family="Arial, sans-serif" font-size="10" fill="#333">• Innervated by L4-S2 dorsal rami (variable)</text>
+    <text x="10" y="55" font-family="Arial, sans-serif" font-size="10" fill="#333">• Nutation: sacral flexion (top moves anterior)</text>
+    <text x="10" y="70" font-family="Arial, sans-serif" font-size="10" fill="#333">• Counternutation: sacral extension</text>
+    <text x="10" y="85" font-family="Arial, sans-serif" font-size="10" fill="#333">• Forms posterior wall of pelvic ring with pubic symphysis</text>
+  </g>
+</svg>

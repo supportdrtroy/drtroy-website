@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comprehensive Mobility and Fall Prevention - DrTroy CE</title>
+    <style>
+        @page { size: letter; margin: 0.75in; }
+        * { box-sizing: border-box; }
+
+        body {
+            font-family: 'Georgia', 'Times New Roman', serif;
+            font-size: 16px;
+            line-height: 1.7;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            background: #f5f5f5;
+        }
+
+        .content-wrapper {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px 60px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .cover-page {
+            text-align: center;
+            padding: 60px 20px;
+            background: white;
+            border-bottom: 2px solid #e2e8f0;
+            margin-bottom: 20px;
+        }
+        .cover-page h1 {
+            font-size: 28px;
+            color: #1a365d;
+            margin-bottom: 20px;
+            line-height: 1.3;
+        }
+        .cover-page .subtitle {
+            font-size: 16px;
+            color: #d69e2e;
+            margin-bottom: 40px;
+        }
+        .cover-page img {
+            max-width: 250px;
+            height: auto;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 22px;
+            color: #1a365d;
+            border-bottom: 2px solid #d69e2e;
+            padding-bottom: 10px;
+            margin-top: 40px;
+        }
+        h2 {
+            font-size: 18px;
+            color: #2c5282;
+            margin-top: 30px;
+        }
+        h3 {
+            font-size: 16px;
+            color: #333;
+            font-weight: bold;
+            margin-top: 25px;
+        }
+
+        .module-header {
+            background: linear-gradient(135deg, #1a365d 0%, #2c5282 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 30px 0;
+        }
+        .module-header h1 {
+            margin: 0;
+            color: white;
+            border: none;
+        }
+
+        .profession-selector {
+            background: #f8fafc;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+        }
+        
+        .profession-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 15px;
+        }
+        
+        .profession-btn {
+            padding: 12px 24px;
+            border: 2px solid #1a365d;
+            background: white;
+            color: #1a365d;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        
+        .profession-btn.active {
+            background: #1a365d;
+            color: white;
+        }
+        
+        .profession-btn:hover {
+            background: #2c5282;
+            color: white;
+            border-color: #2c5282;
+        }
+
+        .scope-content {
+            display: none;
+            margin: 20px 0;
+        }
+        
+        .scope-content.active {
+            display: block;
+        }
+
+        .shared-content {
+            display: block;
+        }
+
+        .scope-indicator {
+            padding: 15px;
+            border-radius: 6px;
+            margin: 15px 0;
+            border-left: 4px solid;
+        }
+        
+        .pt-scope {
+            background: #f0f9ff;
+            border-left-color: #0ea5e9;
+        }
+        
+        .pta-scope {
+            background: #f0fdf4;
+            border-left-color: #22c55e;
+        }
+
+        .scope-badge {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .pt-badge {
+            background: #0ea5e9;
+            color: white;
+        }
+        
+        .pta-badge {
+            background: #22c55e;
+            color: white;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 14px;
+        }
+        th, td {
+            border: 1px solid #ccc;
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background: #f0f4f8;
+            font-weight: bold;
+        }
+
+        .clinical-pearl {
+            background: #f0f9ff;
+            border-left: 4px solid #0ea5e9;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 0 6px 6px 0;
+        }
+
+        .case-study {
+            background: #fffbeb;
+            border: 1px solid #f59e0b;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        .case-study h4 {
+            color: #92400e;
+            margin-top: 0;
+        }
+
+        .progress-indicator {
+            background: #f8fafc;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        .progress-bar {
+            height: 8px;
+            background: #e2e8f0;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            background: #22c55e;
+            border-radius: 4px;
+            transition: width 0.3s ease;
+        }
+
+        @media (max-width: 768px) {
+            .content-wrapper {
+                padding: 20px;
+                margin: 0 10px;
+            }
+            .profession-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="content-wrapper">
+    <div class="cover-page">
+        <img src="../images/drtroy_logo.png" alt="DrTroy Continuing Education">
+        <h1>Comprehensive Mobility and Fall Prevention</h1>
+        <div class="subtitle">Unified PT/PTA Approach to Safe Patient Mobility</div>
+        <div style="font-size: 14px; color: #666; margin-top: 40px;">
+            <p><strong>DrTroy Continuing Education</strong></p>
+            <p>Course #MOBILITY-001</p>
+            <p>3 CCUs</p>
+        </div>
+    </div>
+
+    <!-- Profession Selection -->
+    <div class="profession-selector">
+        <h3 style="margin-top: 0;">Select Your Profession</h3>
+        <p>This course adapts content based on your professional role and scope of practice.</p>
+        <div class="profession-buttons">
+            <button class="profession-btn" onclick="setProfession('PT')" id="ptBtn">
+                Physical Therapist (PT)
+            </button>
+            <button class="profession-btn" onclick="setProfession('PTA')" id="ptaBtn">
+                Physical Therapist Assistant (PTA)
+            </button>
+        </div>
+    </div>
+
+    <!-- Progress Indicator -->
+    <div class="progress-indicator" id="progressSection" style="display: none;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+            <span><strong>Course Progress</strong></span>
+            <span id="progressText">0% Complete</span>
+        </div>
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+        </div>
+    </div>
+
+    <div id="courseContent" style="display: none;">
+
+    <h1>Course Information</h1>
+
+    <h2>Course Objectives</h2>
+    <p>Upon completion of this course, participants will be able to:</p>
+    <ol>
+        <li>Identify fall risk factors and implement evidence-based prevention strategies</li>
+        <li>Demonstrate safe transfer and mobility techniques appropriate to professional scope</li>
+        <li class="pt-only">Conduct comprehensive mobility assessments and develop treatment plans</li>
+        <li class="pta-only">Implement mobility interventions under PT supervision and direction</li>
+        <li>Apply environmental modification principles to reduce fall risk</li>
+        <li>Document mobility interventions and progress according to professional standards</li>
+    </ol>
+
+    <div class="module-header">
+        <h1>Module 1: Fall Prevention Fundamentals</h1>
+        <div style="font-size: 14px; opacity: 0.9;">Shared Content - 45 minutes</div>
+    </div>
+
+    <div class="shared-content">
+        <h2>1.1 Fall Statistics and Impact</h2>
+        <p>Falls are the leading cause of injury-related death among adults 65 and older, with one in four older adults falling each year. Understanding the scope and impact of falls is essential for all healthcare providers.</p>
+
+        <h3>Key Statistics</h3>
+        <ul>
+            <li>Falls result in 32,000 deaths per year in the United States</li>
+            <li>Medical costs for falls exceed $50 billion annually</li>
+            <li>20% of falls result in serious injury requiring medical treatment</li>
+            <li>Fear of falling affects 20-60% of older adults, leading to activity restriction</li>
+        </ul>
+
+        <h2>1.2 Multifactorial Fall Risk Model</h2>
+        <p>Falls result from complex interactions between intrinsic (person-related) and extrinsic (environmental) factors.</p>
+
+        <table>
+            <tr><th>Intrinsic Factors</th><th>Extrinsic Factors</th></tr>
+            <tr><td>Age-related changes</td><td>Poor lighting</td></tr>
+            <tr><td>Chronic conditions</td><td>Loose rugs/clutter</td></tr>
+            <tr><td>Medications</td><td>Uneven surfaces</td></tr>
+            <tr><td>Vision impairment</td><td>Lack of handrails</td></tr>
+            <tr><td>Balance/gait deficits</td><td>Inappropriate footwear</td></tr>
+            <tr><td>Cognitive impairment</td><td>Weather conditions</td></tr>
+        </table>
+
+        <div class="clinical-pearl">
+            <strong>Clinical Pearl:</strong> The risk of falling increases exponentially with the number of risk factors present. Individuals with 4 or more risk factors have a 78% probability of falling within the next year.
+        </div>
+
+        <h2>1.3 Evidence-Based Fall Prevention</h2>
+        <p>Research has identified several interventions with strong evidence for fall prevention effectiveness:</p>
+
+        <h3>Level A Evidence (Strong Research Support)</h3>
+        <ul>
+            <li><strong>Exercise Programs:</strong> Tai Chi, balance training, strengthening</li>
+            <li><strong>Medication Review:</strong> Reducing psychoactive medications</li>
+            <li><strong>Vision Assessment:</strong> Cataract surgery, prescription updates</li>
+            <li><strong>Home Safety Assessment:</strong> Environmental modification</li>
+        </ul>
+
+        <h3>Level B Evidence (Moderate Research Support)</h3>
+        <ul>
+            <li><strong>Vitamin D Supplementation:</strong> For deficient individuals</li>
+            <li><strong>Footwear Assessment:</strong> Appropriate, well-fitting shoes</li>
+            <li><strong>Cognitive Behavioral Interventions:</strong> Addressing fear of falling</li>
+        </ul>
+    </div>
+
+    <div class="module-header">
+        <h1>Module 2A: Assessment and Evaluation</h1>
+        <div style="font-size: 14px; opacity: 0.9;" class="pt-only">PT-Specific Content - 30 minutes</div>
+        <div style="font-size: 14px; opacity: 0.9;" class="pta-only">PTA-Specific Content - 30 minutes</div>
+    </div>
+
+    <!-- PT-Specific Content -->
+    <div class="scope-content pt-content">
+        <div class="scope-indicator pt-scope">
+            <span class="scope-badge pt-badge">PT SCOPE</span>
+            <p><strong>Physical Therapists</strong> conduct comprehensive evaluations, interpret findings, and develop treatment plans for fall prevention and mobility enhancement.</p>
+        </div>
+
+        <h2>2A.1 Comprehensive Fall Risk Assessment (PT)</h2>
+        <p>As the evaluating clinician, PTs must conduct systematic assessments to identify fall risk factors and develop evidence-based intervention plans.</p>
+
+        <h3>Standardized Assessment Tools</h3>
+        <table>
+            <tr><th>Assessment Tool</th><th>Purpose</th><th>Time</th><th>Cutoff Score</th></tr>
+            <tr><td>Berg Balance Scale</td><td>Functional balance assessment</td><td>15-20 min</td><td>&lt;46 = high fall risk</td></tr>
+            <tr><td>Tinetti POMA</td><td>Balance and gait performance</td><td>10-15 min</td><td>&lt;19 = high fall risk</td></tr>
+            <tr><td>Timed Up and Go</td><td>Functional mobility screening</td><td>2-3 min</td><td>&gt;14 sec = increased risk</td></tr>
+            <tr><td>Four Square Step Test</td><td>Dynamic balance and agility</td><td>2-3 min</td><td>&gt;15 sec = increased risk</td></tr>
+            <tr><td>Dynamic Gait Index</td><td>Gait stability during tasks</td><td>10-15 min</td><td>&lt;19 = increased risk</td></tr>
+        </table>
+
+        <h3>Clinical Decision Making</h3>
+        <p>PTs must synthesize assessment findings to determine:</p>
+        <ul>
+            <li><strong>Primary impairments:</strong> Strength, balance, coordination, range of motion</li>
+            <li><strong>Activity limitations:</strong> Functional mobility restrictions</li>
+            <li><strong>Participation restrictions:</strong> Impact on life roles and activities</li>
+            <li><strong>Prognosis:</strong> Expected outcomes and timeframe</li>
+            <li><strong>Plan of care:</strong> Interventions, goals, frequency, duration</li>
+        </ul>
+
+        <div class="case-study">
+            <h4>PT Case Study: Complex Fall Risk Assessment</h4>
+            <p><strong>Patient:</strong> 72-year-old female with history of stroke (6 months ago), diabetes, and recent fall at home.</p>
+            
+            <p><strong>Assessment Findings:</strong></p>
+            <ul>
+                <li>Berg Balance Scale: 38/56 (high fall risk)</li>
+                <li>Timed Up and Go: 18 seconds with walker</li>
+                <li>Left hemiparesis with 3+/5 strength lower extremity</li>
+                <li>Decreased sensation left foot</li>
+                <li>Takes 8 medications including sedating antihistamine</li>
+            </ul>
+
+            <p><strong>PT Clinical Reasoning:</strong> What are your primary concerns and intervention priorities? How would you develop a comprehensive plan of care?</p>
+        </div>
+    </div>
+
+    <!-- PTA-Specific Content -->
+    <div class="scope-content pta-content">
+        <div class="scope-indicator pta-scope">
+            <span class="scope-badge pta-badge">PTA SCOPE</span>
+            <p><strong>Physical Therapist Assistants</strong> implement treatments planned by the PT, provide skilled interventions, and monitor patient response to treatment.</p>
+        </div>
+
+        <h2>2A.1 Implementing Mobility Assessments (PTA)</h2>
+        <p>PTAs assist with data collection and implement standardized assessments as directed by the supervising PT.</p>
+
+        <h3>PTA Role in Assessment</h3>
+        <ul>
+            <li><strong>Data Collection:</strong> Perform specific tests as directed by PT</li>
+            <li><strong>Observation:</strong> Monitor patient performance and safety</li>
+            <li><strong>Documentation:</strong> Record objective findings accurately</li>
+            <li><strong>Communication:</strong> Report significant changes to supervising PT</li>
+        </ul>
+
+        <h3>Screening Tools PTAs Can Administer</h3>
+        <table>
+            <tr><th>Assessment</th><th>PTA Role</th><th>Key Safety Considerations</th></tr>
+            <tr><td>Timed Up and Go</td><td>Administer and time</td><td>Stand-by assist, clear path</td></tr>
+            <tr><td>6-Minute Walk Test</td><td>Administer per protocol</td><td>Monitor vitals, rest breaks</td></tr>
+            <tr><td>Berg Balance Scale items</td><td>Assist with specific items</td><td>Spotting technique, fall prevention</td></tr>
+            <tr><td>Gait observation</td><td>Document gait deviations</td><td>Appropriate assistive device</td></tr>
+        </table>
+
+        <h3>Recognizing Red Flags</h3>
+        <p>PTAs must recognize when to stop assessment and consult the supervising PT:</p>
+        <ul>
+            <li><strong>Safety concerns:</strong> Unsteadiness, near falls, patient fear</li>
+            <li><strong>Vital sign changes:</strong> Significant increase in HR, BP, shortness of breath</li>
+            <li><strong>Pain:</strong> New or worsening pain during mobility</li>
+            <li><strong>Cognitive changes:</strong> Confusion, disorientation</li>
+            <li><strong>Patient decline:</strong> Performance worse than expected</li>
+        </ul>
+
+        <div class="case-study">
+            <h4>PTA Case Study: Mobility Assessment Implementation</h4>
+            <p><strong>Scenario:</strong> You're working with a 68-year-old male post-knee replacement (2 weeks) who was referred for fall prevention following a fall at home.</p>
+            
+            <p><strong>PT Plan:</strong> "Please perform TUG test, observe gait with walker, and note any balance concerns during transfers."</p>
+            
+            <p><strong>Your Observations:</strong></p>
+            <ul>
+                <li>TUG: 22 seconds with front-wheeled walker</li>
+                <li>Gait: Short steps, wide base, excessive reliance on walker</li>
+                <li>Transfers: Requires minimal assist sit-to-stand</li>
+                <li>Patient reports knee pain 4/10 during activity</li>
+            </ul>
+
+            <p><strong>PTA Decision Making:</strong> How do you document these findings? What would you communicate to the supervising PT?</p>
+        </div>
+    </div>
+
+    <div class="module-header">
+        <h1>Module 3: Transfer and Mobility Techniques</h1>
+        <div style="font-size: 14px; opacity: 0.9;">Shared Content with Role-Specific Applications - 60 minutes</div>
+    </div>
+
+    <div class="shared-content">
+        <h2>3.1 Safe Transfer Principles</h2>
+        <p>Effective transfers require proper body mechanics, environmental setup, and patient preparation. Both PTs and PTAs must demonstrate competency in transfer techniques.</p>
+
+        <h3>Universal Transfer Safety Rules</h3>
+        <ol>
+            <li><strong>Plan the transfer:</strong> Clear path, stable surfaces, appropriate equipment</li>
+            <li><strong>Communicate:</strong> Explain the process, use clear verbal cues</li>
+            <li><strong>Position yourself:</strong> Wide base of support, bend knees, keep back straight</li>
+            <li><strong>Use patient's strength:</strong> Encourage maximum independence</li>
+            <li><strong>Maintain safety:</strong> Be prepared to assist or abort if unsafe</li>
+        </ol>
+
+        <h2>3.2 Transfer Progression Levels</h2>
+        
+        <table>
+            <tr><th>Level</th><th>Description</th><th>Staff Requirements</th><th>Equipment</th></tr>
+            <tr><td>Independent</td><td>No physical assistance needed</td><td>Supervision only</td><td>May use assistive device</td></tr>
+            <tr><td>Modified Independent</td><td>Uses assistive device or extra time</td><td>Stand-by assist</td><td>Walker, cane, etc.</td></tr>
+            <tr><td>Contact Guard Assist</td><td>Hands-on contact for safety/balance</td><td>1 person</td><td>As needed</td></tr>
+            <tr><td>Minimal Assist</td><td>Patient performs 75% of activity</td><td>1 person</td><td>May need equipment</td></tr>
+            <tr><td>Moderate Assist</td><td>Patient performs 50% of activity</td><td>1-2 people</td><td>May need mechanical lift</td></tr>
+            <tr><td>Maximum Assist</td><td>Patient performs 25% of activity</td><td>2+ people</td><td>Usually mechanical lift</td></tr>
+            <tr><td>Total Assist</td><td>Patient unable to participate</td><td>2+ people</td><td>Mechanical lift required</td></tr>
+        </table>
+    </div>
+
+    <!-- PT-Specific Transfer Content -->
+    <div class="scope-content pt-content">
+        <div class="scope-indicator pt-scope">
+            <span class="scope-badge pt-badge">PT ADVANCED TECHNIQUES</span>
+            <p>PTs determine transfer methods, train other staff, and handle complex transfer situations.</p>
+        </div>
+
+        <h2>3.3 PT Role: Transfer Assessment and Training</h2>
+
+        <h3>Complex Transfer Situations</h3>
+        <ul>
+            <li><strong>Neurological impairments:</strong> Hemiplegia, Parkinson's, SCI</li>
+            <li><strong>Cognitive impairments:</strong> Dementia, delirium, confusion</li>
+            <li><strong>Multiple comorbidities:</strong> Obesity, CHF, COPD</li>
+            <li><strong>Post-surgical:</strong> Weight-bearing restrictions, precautions</li>
+            <li><strong>Equipment dependencies:</strong> Lines, tubes, monitors</li>
+        </ul>
+
+        <h3>Teaching Transfer Techniques</h3>
+        <p>PTs are responsible for:</p>
+        <ul>
+            <li>Training PTAs in appropriate transfer methods</li>
+            <li>Educating family members and caregivers</li>
+            <li>Determining when transfers are contraindicated</li>
+            <li>Modifying techniques based on patient progress</li>
+            <li>Determining equipment needs and training others in use</li>
+        </ul>
+    </div>
+
+    <!-- PTA-Specific Transfer Content -->
+    <div class="scope-content pta-content">
+        <div class="scope-indicator pta-scope">
+            <span class="scope-badge pta-badge">PTA IMPLEMENTATION</span>
+            <p>PTAs execute transfer plans, provide skilled assistance, and monitor patient progress.</p>
+        </div>
+
+        <h2>3.3 PTA Role: Transfer Implementation and Progression</h2>
+
+        <h3>Skilled Transfer Interventions</h3>
+        <ul>
+            <li><strong>Hands-on assistance:</strong> Providing appropriate level of support</li>
+            <li><strong>Cueing and coaching:</strong> Verbal and tactile cues for safety</li>
+            <li><strong>Equipment setup:</strong> Proper positioning and use of devices</li>
+            <li><strong>Environmental management:</strong> Ensuring safe transfer space</li>
+            <li><strong>Progress monitoring:</strong> Advancing or regressing assistance level</li>
+        </ul>
+
+        <h3>When to Modify or Stop</h3>
+        <p>PTAs must recognize when to:</p>
+        <ul>
+            <li><strong>Increase assistance:</strong> Patient showing fatigue, unsteadiness, fear</li>
+            <li><strong>Use different technique:</strong> Patient not responding to current method</li>
+            <li><strong>Seek PT consultation:</strong> Unexpected difficulties or regression</li>
+            <li><strong>Stop activity:</strong> Safety concerns or medical changes</li>
+        </ul>
+
+        <div class="clinical-pearl">
+            <strong>PTA Clinical Pearl:</strong> Always err on the side of safety. It's better to provide more assistance than needed than to risk a fall or injury.
+        </div>
+    </div>
+
+    <!-- Continue with more modules... -->
+
+    </div>
+
+    <script>
+        let currentProfession = '';
+        let moduleProgress = 0;
+        const totalModules = 6;
+
+        function setProfession(profession) {
+            currentProfession = profession;
+            
+            // Update button states
+            document.querySelectorAll('.profession-btn').forEach(btn => btn.classList.remove('active'));
+            document.getElementById(profession.toLowerCase() + 'Btn').classList.add('active');
+            
+            // Show/hide profession-specific content
+            document.querySelectorAll('.scope-content').forEach(content => content.classList.remove('active'));
+            document.querySelectorAll('.' + profession.toLowerCase() + '-content').forEach(content => content.classList.add('active'));
+            
+            // Show/hide profession-specific objectives
+            document.querySelectorAll('.pt-only, .pta-only').forEach(item => item.style.display = 'none');
+            document.querySelectorAll('.' + profession.toLowerCase() + '-only').forEach(item => item.style.display = 'list-item');
+            
+            // Show course content and progress
+            document.getElementById('courseContent').style.display = 'block';
+            document.getElementById('progressSection').style.display = 'block';
+            
+            // Update progress
+            updateProgress();
+        }
+
+        function updateProgress() {
+            const progressPercent = Math.round((moduleProgress / totalModules) * 100);
+            document.getElementById('progressText').textContent = progressPercent + '% Complete';
+            document.getElementById('progressFill').style.width = progressPercent + '%';
+        }
+
+        function markModuleComplete() {
+            moduleProgress++;
+            updateProgress();
+        }
+
+        // Intersection Observer for automatic progress tracking
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting && entry.target.classList.contains('module-header')) {
+                    // Module is visible, could mark as started/completed
+                }
+            });
+        });
+
+        // Observe all module headers
+        document.querySelectorAll('.module-header').forEach((module) => {
+            observer.observe(module);
+        });
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            // Auto-detect profession from URL params if available
+            const urlParams = new URLSearchParams(window.location.search);
+            const profession = urlParams.get('profession');
+            if (profession && (profession === 'PT' || profession === 'PTA')) {
+                setProfession(profession);
+            }
+        });
+    </script>
+</div>
+
+</body>
+</html>

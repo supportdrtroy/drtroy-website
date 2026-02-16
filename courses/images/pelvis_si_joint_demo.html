@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pelvis SI Joint Illustration</title>
+</head>
+<body style="margin: 0; padding: 20px; background: #f5f5f5;">
+    
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
+     width="800" height="600" viewBox="0 0 800 600" style="border: 1px solid #ddd; background: white;">
+     
+  <defs>
+    <!-- Gradients for 3D depth perception -->
+    <linearGradient id="boneGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#f5f5dc;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#e6e6dc;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#d3d3d3;stop-opacity:1" />
+    </linearGradient>
+    
+    <linearGradient id="cartilageGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#87ceeb;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#4682b4;stop-opacity:1" />
+    </linearGradient>
+    
+    <!-- Shadow filter for depth -->
+    <filter id="shadow" x="-50%" y="-50%" width="200%" height="200%">
+      <feDropShadow dx="2" dy="2" stdDeviation="3" flood-color="#999999" flood-opacity="0.3"/>
+    </filter>
+    
+    <!-- Glow effect for highlighted structures -->
+    <filter id="highlight" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    
+    <!-- Arrow marker definition -->
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#333"/>
+    </marker>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="800" height="600" fill="white"/>
+  
+  <!-- Title -->
+  <text x="400" y="30" font-family="Arial, sans-serif" font-size="24" font-weight="bold" 
+        text-anchor="middle" fill="#1a365d">Pelvic Anatomy - Posterior View</text>
+  
+  <!-- Sacrum - Central triangular bone -->
+  <path d="M 350 80 
+           L 450 80 
+           Q 460 90 460 110
+           L 460 180
+           Q 460 200 450 210
+           L 420 240
+           Q 410 250 400 250
+           Q 390 250 380 240
+           L 350 210
+           Q 340 200 340 180
+           L 340 110
+           Q 340 90 350 80 Z" 
+        fill="url(#boneGradient)" 
+        stroke="#8b4513" 
+        stroke-width="2" 
+        filter="url(#shadow)"/>
+  
+  <!-- Sacral foramina (holes in sacrum) -->
+  <ellipse cx="370" cy="120" rx="8" ry="12" fill="#333" opacity="0.6"/>
+  <ellipse cx="390" cy="120" rx="8" ry="12" fill="#333" opacity="0.6"/>
+  <ellipse cx="410" cy="120" rx="8" ry="12" fill="#333" opacity="0.6"/>
+  <ellipse cx="430" cy="120" rx="8" ry="12" fill="#333" opacity="0.6"/>
+  
+  <ellipse cx="370" cy="160" rx="8" ry="12" fill="#333" opacity="0.6"/>
+  <ellipse cx="390" cy="160" rx="8" ry="12" fill="#333" opacity="0.6"/>
+  <ellipse cx="410" cy="160" rx="8" ry="12" fill="#333" opacity="0.6"/>
+  <ellipse cx="430" cy="160" rx="8" ry="12" fill="#333" opacity="0.6"/>
+  
+  <!-- Left Ilium -->
+  <path d="M 250 120
+           Q 240 110 240 100
+           Q 240 90 250 80
+           L 340 80
+           L 340 110
+           Q 340 130 350 150
+           L 360 180
+           Q 365 200 370 220
+           L 380 240
+           Q 390 250 400 260
+           Q 410 270 420 280
+           L 430 300
+           Q 440 320 440 340
+           L 440 380
+           Q 440 400 430 410
+           Q 420 420 400 420
+           L 280 420
+           Q 260 420 250 410
+           Q 240 400 240 380
+           L 240 140
+           Q 240 130 250 120 Z"
+        fill="url(#boneGradient)" 
+        stroke="#8b4513" 
+        stroke-width="2" 
+        filter="url(#shadow)"/>
+  
+  <!-- Right Ilium -->
+  <path d="M 550 120
+           Q 560 110 560 100
+           Q 560 90 550 80
+           L 460 80
+           L 460 110
+           Q 460 130 450 150
+           L 440 180
+           Q 435 200 430 220
+           L 420 240
+           Q 410 250 400 260
+           Q 390 270 380 280
+           L 370 300
+           Q 360 320 360 340
+           L 360 380
+           Q 360 400 370 410
+           Q 380 420 400 420
+           L 520 420
+           Q 540 420 550 410
+           Q 560 400 560 380
+           L 560 140
+           Q 560 130 550 120 Z"
+        fill="url(#boneGradient)" 
+        stroke="#8b4513" 
+        stroke-width="2" 
+        filter="url(#shadow)"/>
+  
+  <!-- LEFT SACROILIAC JOINT - Highlighted -->
+  <path d="M 340 80
+           L 340 110
+           Q 340 130 345 150
+           L 355 180
+           Q 360 200 365 220
+           L 375 240"
+        fill="none" 
+        stroke="#dc143c" 
+        stroke-width="6" 
+        filter="url(#highlight)"
+        opacity="0.8"/>
+  
+  <!-- Right Sacroiliac Joint - Highlighted -->
+  <path d="M 460 80
+           L 460 110
+           Q 460 130 455 150
+           L 445 180
+           Q 440 200 435 220
+           L 425 240"
+        fill="none" 
+        stroke="#dc143c" 
+        stroke-width="6" 
+        filter="url(#highlight)"
+        opacity="0.8"/>
+  
+  <!-- Joint cartilage visualization -->
+  <path d="M 340 80 L 340 240" 
+        fill="none" 
+        stroke="url(#cartilageGradient)" 
+        stroke-width="3" 
+        opacity="0.7"/>
+  <path d="M 460 80 L 460 240" 
+        fill="none" 
+        stroke="url(#cartilageGradient)" 
+        stroke-width="3" 
+        opacity="0.7"/>
+  
+  <!-- Coccyx - Tailbone -->
+  <path d="M 390 250
+           L 410 250
+           Q 415 260 415 270
+           L 415 290
+           Q 415 300 410 310
+           L 405 320
+           Q 400 330 395 330
+           Q 390 330 385 320
+           L 380 310
+           Q 375 300 375 290
+           L 375 270
+           Q 375 260 380 250
+           L 390 250 Z"
+        fill="url(#boneGradient)" 
+        stroke="#8b4513" 
+        stroke-width="2" 
+        filter="url(#shadow)"/>
+  
+  <!-- Labels with leader lines -->
+  <!-- Sacrum Label -->
+  <line x1="400" y1="165" x2="480" y2="120" stroke="#333" stroke-width="1"/>
+  <text x="485" y="115" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#1a365d">Sacrum</text>
+  
+  <!-- Left SI Joint Label -->
+  <line x1="340" y1="160" x2="280" y2="180" stroke="#dc143c" stroke-width="2"/>
+  <circle cx="280" cy="180" r="3" fill="#dc143c"/>
+  <text x="200" y="175" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#dc143c">Left Sacroiliac Joint (SI)</text>
+  
+  <!-- Right SI Joint Label -->
+  <line x1="460" y1="160" x2="520" y2="180" stroke="#dc143c" stroke-width="2"/>
+  <circle cx="520" cy="180" r="3" fill="#dc143c"/>
+  <text x="530" y="175" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#dc143c">Right Sacroiliac Joint (SI)</text>
+  
+  <!-- Ilium Labels -->
+  <line x1="295" y1="250" x2="180" y2="280" stroke="#333" stroke-width="1"/>
+  <text x="120" y="275" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#1a365d">Left Ilium</text>
+  
+  <line x1="505" y1="250" x2="620" y2="280" stroke="#333" stroke-width="1"/>
+  <text x="625" y="275" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#1a365d">Right Ilium</text>
+  
+  <!-- Coccyx Label -->
+  <line x1="395" y1="330" x2="450" y2="360" stroke="#333" stroke-width="1"/>
+  <text x="455" y="355" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#1a365d">Coccyx</text>
+  
+  <!-- Clinical Notes Box -->
+  <rect x="50" y="450" width="700" height="120" fill="#f0f8ff" stroke="#4682b4" stroke-width="2" rx="10"/>
+  <text x="70" y="475" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#1a365d">Clinical Significance of the Sacroiliac Joint:</text>
+  
+  <text x="70" y="495" font-family="Arial, sans-serif" font-size="12" fill="#333">• The SI joint is a synovial joint between the sacrum and ilium, crucial for load transfer from spine to pelvis</text>
+  <text x="70" y="510" font-family="Arial, sans-serif" font-size="12" fill="#333">• Limited mobility (2-4mm translation, 2-4° rotation) but critical for shock absorption during gait</text>
+  <text x="70" y="525" font-family="Arial, sans-serif" font-size="12" fill="#333">• Common source of low back pain (15-30% of mechanical low back pain cases)</text>
+  <text x="70" y="540" font-family="Arial, sans-serif" font-size="12" fill="#333">• Palpable landmarks: PSIS, ASIS, sacral sulcus. Assessment includes provocation tests and mobility testing</text>
+  <text x="70" y="555" font-family="Arial, sans-serif" font-size="12" fill="#333">• Treatment approaches: manual therapy, exercise, stabilization training, pain education</text>
+  
+  <!-- Anatomical orientation indicator -->
+  <g transform="translate(720, 400)">
+    <circle cx="0" cy="0" r="30" fill="#f5f5f5" stroke="#333" stroke-width="2"/>
+    <line x1="0" y1="-20" x2="0" y2="20" stroke="#333" stroke-width="2" marker-end="url(#arrowhead)"/>
+    <line x1="-20" y1="0" x2="20" y2="0" stroke="#333" stroke-width="2" marker-end="url(#arrowhead)"/>
+    <text x="-5" y="-25" font-family="Arial, sans-serif" font-size="10" fill="#333">S</text>
+    <text x="-5" y="35" font-family="Arial, sans-serif" font-size="10" fill="#333">I</text>
+    <text x="-30" y="5" font-family="Arial, sans-serif" font-size="10" fill="#333">L</text>
+    <text x="25" y="5" font-family="Arial, sans-serif" font-size="10" fill="#333">R</text>
+  </g>
+  
+</svg>
+
+</body>
+</html>

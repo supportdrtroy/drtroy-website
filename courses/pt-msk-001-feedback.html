@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Course Feedback - PT Musculoskeletal Evaluation | DrTroy CE</title>
+    <style>
+        * { box-sizing: border-box; }
+
+        body {
+            font-family: 'Georgia', 'Times New Roman', serif;
+            font-size: 16px;
+            line-height: 1.6;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            background: #f5f5f5;
+        }
+
+        .feedback-wrapper {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px 60px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        @media (max-width: 768px) {
+            .feedback-wrapper {
+                padding: 20px;
+                margin: 0 10px;
+            }
+        }
+
+        .feedback-header {
+            text-align: center;
+            padding: 30px 20px;
+            background: linear-gradient(135deg, #1a365d 0%, #2c5282 100%);
+            color: white;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+
+        .feedback-header h1 {
+            margin: 0 0 10px 0;
+            font-size: 24px;
+        }
+
+        .feedback-header p {
+            margin: 0;
+            opacity: 0.9;
+        }
+
+        .feedback-intro {
+            background: #f0fdf4;
+            border-left: 4px solid #22c55e;
+            padding: 20px;
+            margin-bottom: 30px;
+            border-radius: 0 6px 6px 0;
+        }
+
+        .feedback-intro h3 {
+            color: #166534;
+            margin-top: 0;
+        }
+
+        .form-section {
+            margin-bottom: 30px;
+            padding: 25px;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            background: #f8fafc;
+        }
+
+        .form-section h3 {
+            color: #1a365d;
+            margin-top: 0;
+            margin-bottom: 20px;
+            font-size: 18px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #374151;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e2e8f0;
+            border-radius: 6px;
+            font-size: 16px;
+            transition: border-color 0.2s;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: #d69e2e;
+        }
+
+        textarea.form-control {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .rating-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .rating-option {
+            flex: 1;
+            min-width: 120px;
+        }
+
+        .rating-option input[type="radio"] {
+            margin-right: 8px;
+            transform: scale(1.2);
+        }
+
+        .rating-option label {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            border: 2px solid #e2e8f0;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-weight: normal;
+        }
+
+        .rating-option input[type="radio"]:checked + label {
+            background: #fef3c7;
+            border-color: #d69e2e;
+            color: #92400e;
+        }
+
+        .checkbox-group {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+        }
+
+        .checkbox-item input[type="checkbox"] {
+            margin-right: 10px;
+            transform: scale(1.2);
+        }
+
+        .checkbox-item label {
+            font-weight: normal;
+            cursor: pointer;
+        }
+
+        .btn {
+            padding: 15px 30px;
+            border-radius: 6px;
+            border: none;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: #d69e2e;
+            color: #1a365d;
+        }
+
+        .btn-primary:hover {
+            background: #b7791f;
+        }
+
+        .btn-secondary {
+            background: #6b7280;
+            color: white;
+            margin-left: 10px;
+        }
+
+        .btn-secondary:hover {
+            background: #4b5563;
+        }
+
+        .form-actions {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 2px solid #f1f5f9;
+        }
+
+        .success-message {
+            background: #dcfce7;
+            color: #166534;
+            border: 1px solid #bbf7d0;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .success-message h3 {
+            color: #166534;
+            margin-bottom: 10px;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .required {
+            color: #dc2626;
+        }
+
+        /* Star Rating */
+        .star-rating {
+            display: flex;
+            gap: 5px;
+            margin-bottom: 10px;
+        }
+
+        .star {
+            font-size: 24px;
+            color: #d1d5db;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .star:hover,
+        .star.active {
+            color: #d69e2e;
+        }
+    </style>
+</head>
+<body>
+    <div class="feedback-wrapper">
+        <!-- Feedback Header -->
+        <div class="feedback-header">
+            <h1>Course Feedback</h1>
+            <p>PT Musculoskeletal Evaluation and Diagnosis • Course #PT-MSK-001</p>
+        </div>
+
+        <!-- Feedback Introduction -->
+        <div class="feedback-intro">
+            <h3>Help Us Improve</h3>
+            <p>Your feedback is valuable in helping us improve our courses and ensure they meet the needs of practicing clinicians. Please take a few minutes to share your thoughts about this course.</p>
+        </div>
+
+        <!-- Success Message (Hidden Initially) -->
+        <div id="successMessage" class="success-message hidden">
+            <h3>🎉 Course Fully Complete!</h3>
+            <p>Your feedback has been submitted successfully. We appreciate your input and will use it to improve future courses.</p>
+            <p><strong>You have successfully completed "PT Musculoskeletal Evaluation and Diagnosis" and earned 3.0 CCUs.</strong></p>
+            <div style="margin-top: 20px;">
+                <a href="../my-account.html" class="btn btn-primary" style="margin-right: 10px;">View My Account</a>
+                <a href="../course-catalog.html" class="btn btn-secondary">Browse More Courses</a>
+            </div>
+        </div>
+
+        <!-- Feedback Form -->
+        <form id="feedbackForm">
+            <!-- Course Rating -->
+            <div class="form-section">
+                <h3>Overall Course Rating <span class="required">*</span></h3>
+                <div class="form-group">
+                    <label>How would you rate this course overall?</label>
+                    <div class="star-rating" id="overallRating">
+                        <span class="star" data-rating="1">★</span>
+                        <span class="star" data-rating="2">★</span>
+                        <span class="star" data-rating="3">★</span>
+                        <span class="star" data-rating="4">★</span>
+                        <span class="star" data-rating="5">★</span>
+                    </div>
+                    <input type="hidden" id="overallRatingValue" name="overallRating" required>
+                </div>
+            </div>
+
+            <!-- Content Quality -->
+            <div class="form-section">
+                <h3>Content Assessment</h3>
+                
+                <div class="form-group">
+                    <label>How would you rate the course content quality?</label>
+                    <div class="rating-group">
+                        <div class="rating-option">
+                            <input type="radio" id="content-excellent" name="contentQuality" value="excellent">
+                            <label for="content-excellent">Excellent</label>
+                        </div>
+                        <div class="rating-option">
+                            <input type="radio" id="content-good" name="contentQuality" value="good">
+                            <label for="content-good">Good</label>
+                        </div>
+                        <div class="rating-option">
+                            <input type="radio" id="content-fair" name="contentQuality" value="fair">
+                            <label for="content-fair">Fair</label>
+                        </div>
+                        <div class="rating-option">
+                            <input type="radio" id="content-poor" name="contentQuality" value="poor">
+                            <label for="content-poor">Poor</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>How relevant was this content to your clinical practice?</label>
+                    <div class="rating-group">
+                        <div class="rating-option">
+                            <input type="radio" id="relevance-very" name="clinicalRelevance" value="very-relevant">
+                            <label for="relevance-very">Very Relevant</label>
+                        </div>
+                        <div class="rating-option">
+                            <input type="radio" id="relevance-somewhat" name="clinicalRelevance" value="somewhat-relevant">
+                            <label for="relevance-somewhat">Somewhat Relevant</label>
+                        </div>
+                        <div class="rating-option">
+                            <input type="radio" id="relevance-not" name="clinicalRelevance" value="not-relevant">
+                            <label for="relevance-not">Not Very Relevant</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Learning Objectives -->
+            <div class="form-section">
+                <h3>Learning Outcomes</h3>
+                
+                <div class="form-group">
+                    <label>Did this course meet your learning expectations?</label>
+                    <div class="rating-group">
+                        <div class="rating-option">
+                            <input type="radio" id="expectations-exceeded" name="learningExpectations" value="exceeded">
+                            <label for="expectations-exceeded">Exceeded</label>
+                        </div>
+                        <div class="rating-option">
+                            <input type="radio" id="expectations-met" name="learningExpectations" value="met">
+                            <label for="expectations-met">Met</label>
+                        </div>
+                        <div class="rating-option">
+                            <input type="radio" id="expectations-below" name="learningExpectations" value="below">
+                            <label for="expectations-below">Below Expectations</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Which aspects were most valuable to you? (Select all that apply)</label>
+                    <div class="checkbox-group">
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="value-tests" name="valuableAspects" value="special-tests">
+                            <label for="value-tests">Special test techniques and interpretation</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="value-clinical" name="valuableAspects" value="clinical-reasoning">
+                            <label for="value-clinical">Clinical reasoning frameworks</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="value-evidence" name="valuableAspects" value="evidence-based">
+                            <label for="value-evidence">Evidence-based examination approaches</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="value-regional" name="valuableAspects" value="regional-coverage">
+                            <label for="value-regional">Comprehensive regional coverage</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="value-practical" name="valuableAspects" value="practical-application">
+                            <label for="value-practical">Practical clinical application</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="value-pearls" name="valuableAspects" value="clinical-pearls">
+                            <label for="value-pearls">Clinical pearls and cautions</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Course Format -->
+            <div class="form-section">
+                <h3>Course Format and Delivery</h3>
+                
+                <div class="form-group">
+                    <label>How was the course length and pacing?</label>
+                    <div class="rating-group">
+                        <div class="rating-option">
+                            <input type="radio" id="length-perfect" name="courseLength" value="just-right">
+                            <label for="length-perfect">Just Right</label>
+                        </div>
+                        <div class="rating-option">
+                            <input type="radio" id="length-short" name="courseLength" value="too-short">
+                            <label for="length-short">Too Short</label>
+                        </div>
+                        <div class="rating-option">
+                            <input type="radio" id="length-long" name="courseLength" value="too-long">
+                            <label for="length-long">Too Long</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>How would you prefer to receive future courses?</label>
+                    <div class="checkbox-group">
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="format-text" name="preferredFormats" value="text-based">
+                            <label for="format-text">Text-based (like this course)</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="format-video" name="preferredFormats" value="video-lectures">
+                            <label for="format-video">Video lectures</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="format-interactive" name="preferredFormats" value="interactive-modules">
+                            <label for="format-interactive">Interactive online modules</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="format-live" name="preferredFormats" value="live-webinars">
+                            <label for="format-live">Live webinars</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="format-mixed" name="preferredFormats" value="mixed-format">
+                            <label for="format-mixed">Mixed format (text + video)</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Future Course Topics -->
+            <div class="form-section">
+                <h3>Future Course Interests</h3>
+                
+                <div class="form-group">
+                    <label>What topics would you like to see in future courses? (Select all that apply)</label>
+                    <div class="checkbox-group">
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="topic-neuro" name="futureTopics" value="neurological-rehab">
+                            <label for="topic-neuro">Advanced Neurological Rehabilitation</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="topic-manual" name="futureTopics" value="manual-therapy">
+                            <label for="topic-manual">Manual Therapy Techniques</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="topic-exercise" name="futureTopics" value="therapeutic-exercise">
+                            <label for="topic-exercise">Advanced Therapeutic Exercise</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="topic-pain" name="futureTopics" value="pain-science">
+                            <label for="topic-pain">Pain Science and Management</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="topic-geriatric" name="futureTopics" value="geriatric-care">
+                            <label for="topic-geriatric">Geriatric Care Specialization</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="topic-documentation" name="futureTopics" value="documentation">
+                            <label for="topic-documentation">Clinical Documentation</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Written Feedback -->
+            <div class="form-section">
+                <h3>Additional Comments</h3>
+                
+                <div class="form-group">
+                    <label for="improvements">What could be improved in this course?</label>
+                    <textarea class="form-control" id="improvements" name="improvements" placeholder="Please share any suggestions for improvement..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="recommend">Would you recommend this course to colleagues? Why or why not?</label>
+                    <textarea class="form-control" id="recommend" name="recommend" placeholder="Please explain your recommendation..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="additionalComments">Any additional comments or suggestions?</label>
+                    <textarea class="form-control" id="additionalComments" name="additionalComments" placeholder="Share any other thoughts about this course or DrTroy Continuing Education..."></textarea>
+                </div>
+            </div>
+
+            <!-- Form Actions -->
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">Submit Feedback & Complete Course</button>
+                <a href="../my-account.html" class="btn btn-secondary">Skip & Return to My Account</a>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        // Star rating functionality
+        const stars = document.querySelectorAll('.star');
+        const overallRatingInput = document.getElementById('overallRatingValue');
+
+        stars.forEach(star => {
+            star.addEventListener('click', function() {
+                const rating = this.dataset.rating;
+                overallRatingInput.value = rating;
+                
+                // Update visual state
+                stars.forEach((s, index) => {
+                    if (index < rating) {
+                        s.classList.add('active');
+                    } else {
+                        s.classList.remove('active');
+                    }
+                });
+            });
+
+            star.addEventListener('mouseover', function() {
+                const rating = this.dataset.rating;
+                stars.forEach((s, index) => {
+                    if (index < rating) {
+                        s.style.color = '#d69e2e';
+                    } else {
+                        s.style.color = '#d1d5db';
+                    }
+                });
+            });
+        });
+
+        document.getElementById('overallRating').addEventListener('mouseleave', function() {
+            const currentRating = overallRatingInput.value;
+            stars.forEach((s, index) => {
+                if (index < currentRating) {
+                    s.style.color = '#d69e2e';
+                } else {
+                    s.style.color = '#d1d5db';
+                }
+            });
+        });
+
+        // Form submission
+        document.getElementById('feedbackForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Validate required fields
+            if (!overallRatingInput.value) {
+                alert('Please provide an overall rating for the course.');
+                return;
+            }
+
+            // Collect form data
+            const formData = new FormData(this);
+            const feedbackData = {
+                courseId: 'PT-MSK-001',
+                courseTitle: 'PT Musculoskeletal Evaluation and Diagnosis',
+                submittedAt: new Date().toISOString(),
+                overallRating: formData.get('overallRating'),
+                contentQuality: formData.get('contentQuality'),
+                clinicalRelevance: formData.get('clinicalRelevance'),
+                learningExpectations: formData.get('learningExpectations'),
+                valuableAspects: formData.getAll('valuableAspects'),
+                courseLength: formData.get('courseLength'),
+                preferredFormats: formData.getAll('preferredFormats'),
+                futureTopics: formData.getAll('futureTopics'),
+                improvements: formData.get('improvements'),
+                recommend: formData.get('recommend'),
+                additionalComments: formData.get('additionalComments')
+            };
+
+            // Store feedback (in production, this would be sent to server)
+            storeFeedback(feedbackData);
+
+            // Show success message
+            document.getElementById('feedbackForm').classList.add('hidden');
+            document.getElementById('successMessage').classList.remove('hidden');
+
+            console.log('📝 Course feedback submitted:', feedbackData);
+        });
+
+        function storeFeedback(feedbackData) {
+            try {
+                // Get user account
+                const accountData = localStorage.getItem('drtroyAccount');
+                if (accountData) {
+                    const account = JSON.parse(accountData);
+                    
+                    // Store feedback in user account
+                    if (!account.courseFeedback) {
+                        account.courseFeedback = [];
+                    }
+                    
+                    account.courseFeedback.push(feedbackData);
+                    
+                    // Update course progress
+                    if (!account.courseProgress) {
+                        account.courseProgress = {};
+                    }
+                    if (!account.courseProgress['PT-MSK-001']) {
+                        account.courseProgress['PT-MSK-001'] = {};
+                    }
+                    
+                    account.courseProgress['PT-MSK-001'].feedbackSubmitted = true;
+                    account.courseProgress['PT-MSK-001'].feedbackSubmittedAt = new Date().toISOString();
+                    account.courseProgress['PT-MSK-001'].lastAccessedAt = new Date().toISOString();
+                    
+                    localStorage.setItem('drtroyAccount', JSON.stringify(account));
+                    
+                    console.log('📊 Feedback stored in user account');
+                }
+                
+                // Also store in global feedback collection for analytics
+                const globalFeedback = JSON.parse(localStorage.getItem('courseFeedback') || '[]');
+                globalFeedback.push(feedbackData);
+                localStorage.setItem('courseFeedback', JSON.stringify(globalFeedback));
+                
+            } catch (error) {
+                console.error('Error storing feedback:', error);
+            }
+        }
+    </script>
+</body>
+</html>

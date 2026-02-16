@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MSK Course Certificate - DrTroy CE</title>
+    <style>
+        @page {
+            size: letter landscape;
+            margin: 0.5in;
+        }
+
+        body {
+            font-family: 'Georgia', 'Times New Roman', serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .certificate {
+            width: 10in;
+            height: 7.5in;
+            background: white;
+            border: 8px solid #1a365d;
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .certificate::before {
+            content: '';
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            right: 20px;
+            bottom: 20px;
+            border: 3px solid #d69e2e;
+            border-radius: 8px;
+            pointer-events: none;
+        }
+
+        .certificate-header {
+            text-align: center;
+            margin-bottom: 25px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .logo {
+            max-width: 160px;
+            height: auto;
+            margin-bottom: 10px;
+        }
+
+        .institution-name {
+            font-size: 20px;
+            font-weight: bold;
+            color: #1a365d;
+            margin: 8px 0;
+            letter-spacing: 2px;
+        }
+
+        .certificate-title {
+            font-size: 32px;
+            font-weight: bold;
+            color: #d69e2e;
+            margin: 15px 0;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+        }
+
+        .certificate-subtitle {
+            font-size: 16px;
+            color: #666;
+            font-style: italic;
+            margin-bottom: 25px;
+        }
+
+        .certificate-body {
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .certificate-text {
+            font-size: 16px;
+            color: #333;
+            line-height: 1.6;
+            margin: 15px 0;
+        }
+
+        .participant-name {
+            font-size: 28px;
+            font-weight: bold;
+            color: #1a365d;
+            margin: 20px 0;
+            padding: 12px 0;
+            border-bottom: 3px solid #d69e2e;
+            display: inline-block;
+            min-width: 350px;
+            position: relative;
+        }
+
+        .course-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: #2c5282;
+            margin: 15px 0;
+            line-height: 1.3;
+        }
+
+        .course-details {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 25px 0;
+            background: #f8fafc;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .detail-box {
+            text-align: center;
+            flex: 1;
+        }
+
+        .detail-label {
+            font-size: 10px;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 4px;
+        }
+
+        .detail-value {
+            font-size: 14px;
+            font-weight: bold;
+            color: #1a365d;
+        }
+
+        .certificate-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-top: 30px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .signature-line {
+            text-align: center;
+            width: 200px;
+        }
+
+        .signature {
+            border-bottom: 2px solid #333;
+            height: 35px;
+            margin-bottom: 6px;
+            position: relative;
+        }
+
+        .signature-label {
+            font-size: 11px;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .credential-seal {
+            width: 70px;
+            height: 70px;
+            border: 3px solid #d69e2e;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #1a365d;
+            color: white;
+            font-size: 10px;
+            font-weight: bold;
+            text-align: center;
+            line-height: 1.1;
+        }
+
+        .decorative-corner {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M0,0 Q50,25 100,0 Q75,50 100,100 Q50,75 0,100 Q25,50 0,0" fill="%23d69e2e" opacity="0.1"/></svg>');
+        }
+
+        .corner-tl { top: 40px; left: 40px; }
+        .corner-tr { top: 40px; right: 40px; transform: rotate(90deg); }
+        .corner-bl { bottom: 40px; left: 40px; transform: rotate(270deg); }
+        .corner-br { bottom: 40px; right: 40px; transform: rotate(180deg); }
+
+        @media print {
+            body {
+                background: none;
+                padding: 0;
+                margin: 0;
+            }
+            .certificate {
+                box-shadow: none;
+                page-break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="certificate">
+        <!-- Decorative corners -->
+        <div class="decorative-corner corner-tl"></div>
+        <div class="decorative-corner corner-tr"></div>
+        <div class="decorative-corner corner-bl"></div>
+        <div class="decorative-corner corner-br"></div>
+
+        <!-- Certificate Header -->
+        <div class="certificate-header">
+            <img src="../images/drtroy_logo.png" alt="DrTroy Continuing Education" class="logo">
+            <div class="institution-name">DRTROY CONTINUING EDUCATION</div>
+            <div class="certificate-title">CERTIFICATE OF COMPLETION</div>
+            <div class="certificate-subtitle">Continuing Professional Development</div>
+        </div>
+
+        <!-- Certificate Body -->
+        <div class="certificate-body">
+            <div class="certificate-text">This certifies that</div>
+            
+            <div class="participant-name" id="participantName">[Participant Name]</div>
+            
+            <div class="certificate-text">has successfully completed</div>
+            
+            <div class="course-title">
+                Comprehensive Musculoskeletal Evaluation and Treatment
+            </div>
+            
+            <div class="certificate-text">A Systematic Regional Approach to Clinical Assessment</div>
+
+            <!-- Course Details -->
+            <div class="course-details">
+                <div class="detail-box">
+                    <div class="detail-label">Course Code</div>
+                    <div class="detail-value">PT-MSK-001</div>
+                </div>
+                <div class="detail-box">
+                    <div class="detail-label">Completion Date</div>
+                    <div class="detail-value" id="completionDate">[Date]</div>
+                </div>
+                <div class="detail-box">
+                    <div class="detail-label">Score Achieved</div>
+                    <div class="detail-value" id="scoreAchieved">[Score]%</div>
+                </div>
+                <div class="detail-box">
+                    <div class="detail-label">Continuing Education</div>
+                    <div class="detail-value">3.0 CCUs</div>
+                </div>
+            </div>
+
+            <div class="certificate-text" style="font-size: 12px; color: #666; margin-top: 15px;">
+                This course has met the standards for continuing competency as established by professional practice guidelines
+            </div>
+        </div>
+
+        <!-- Certificate Footer -->
+        <div class="certificate-footer">
+            <div class="signature-line">
+                <div class="signature">
+                    <!-- Digital signature would go here -->
+                </div>
+                <div class="signature-label">Dr. Troy Hounshell, PT, ScD</div>
+                <div class="signature-label" style="font-size: 9px; margin-top: 2px;">Course Director</div>
+            </div>
+            
+            <div class="credential-seal">
+                <div>
+                    <div>APPROVED</div>
+                    <div>CE PROVIDER</div>
+                </div>
+            </div>
+            
+            <div style="text-align: center; width: 200px;">
+                <div style="font-size: 9px; color: #666; margin-bottom: 4px;">Certificate ID</div>
+                <div style="font-size: 11px; font-family: 'Courier New', monospace; color: #333;" id="certificateId">MSK-2024-[ID]</div>
+                <div style="font-size: 8px; color: #999; margin-top: 4px;">Verify at drtroy.com/verify</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // MSK Course Certificate Configuration
+        const mskCertificateConfig = {
+            courseTitle: "Comprehensive Musculoskeletal Evaluation and Treatment",
+            courseSubtitle: "A Systematic Regional Approach to Clinical Assessment",
+            courseCode: "PT-MSK-001",
+            ceuValue: "3.0",
+            institutionName: "DrTroy Continuing Education",
+            instructorName: "Dr. Troy Hounshell, PT, ScD",
+            instructorTitle: "Course Director"
+        };
+
+        // Function to populate certificate
+        function populateCertificate(name, date, score) {
+            document.getElementById('participantName').textContent = name || '[Participant Name]';
+            document.getElementById('completionDate').textContent = date || '[Date]';
+            document.getElementById('scoreAchieved').textContent = score || '[Score]';
+            
+            // Generate unique certificate ID
+            const certificateId = generateCertificateId();
+            document.getElementById('certificateId').textContent = certificateId;
+            
+            // Update document title
+            document.title = `Certificate - ${name || 'MSK Course'} - DrTroy CE`;
+        }
+
+        // Generate unique certificate ID
+        function generateCertificateId() {
+            const randomId = Math.random().toString(36).substr(2, 6).toUpperCase();
+            const dateCode = new Date().toISOString().slice(0, 7).replace('-', '');
+            return `MSK-${dateCode}-${randomId}`;
+        }
+
+        // Auto-populate from URL parameters
+        document.addEventListener('DOMContentLoaded', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const name = urlParams.get('name');
+            const date = urlParams.get('date');
+            const score = urlParams.get('score');
+            
+            if (name || date || score) {
+                populateCertificate(name, date, score);
+            }
+        });
+
+        // Export for external access
+        window.MSKCertificate = {
+            populate: populateCertificate,
+            config: mskCertificateConfig,
+            generateId: generateCertificateId
+        };
+    </script>
+</body>
+</html>

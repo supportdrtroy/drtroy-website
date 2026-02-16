@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Knowledge Check - PT Musculoskeletal Evaluation | DrTroy CE</title>
+    <style>
+        * { box-sizing: border-box; }
+
+        body {
+            font-family: 'Georgia', 'Times New Roman', serif;
+            font-size: 16px;
+            line-height: 1.6;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            background: #f5f5f5;
+        }
+
+        .quiz-wrapper {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px 60px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        @media (max-width: 768px) {
+            .quiz-wrapper {
+                padding: 20px;
+                margin: 0 10px;
+            }
+        }
+
+        .quiz-header {
+            text-align: center;
+            padding: 30px 20px;
+            background: linear-gradient(135deg, #1a365d 0%, #2c5282 100%);
+            color: white;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+
+        .quiz-header h1 {
+            margin: 0 0 10px 0;
+            font-size: 24px;
+        }
+
+        .quiz-header p {
+            margin: 0;
+            opacity: 0.9;
+        }
+
+        .quiz-instructions {
+            background: #f0fdf4;
+            border-left: 4px solid #22c55e;
+            padding: 20px;
+            margin-bottom: 30px;
+            border-radius: 0 6px 6px 0;
+        }
+
+        .quiz-instructions h3 {
+            color: #166534;
+            margin-top: 0;
+        }
+
+        .question {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .question-number {
+            color: #d69e2e;
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .question-text {
+            color: #1a365d;
+            font-size: 17px;
+            margin: 10px 0 20px 0;
+            font-weight: 500;
+        }
+
+        .answer-options {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .answer-option {
+            margin: 12px 0;
+        }
+
+        .answer-option label {
+            display: flex;
+            align-items: flex-start;
+            cursor: pointer;
+            padding: 12px;
+            border-radius: 6px;
+            transition: background-color 0.2s;
+        }
+
+        .answer-option label:hover {
+            background-color: #f8fafc;
+        }
+
+        .answer-option input[type="radio"] {
+            margin-right: 12px;
+            margin-top: 2px;
+            transform: scale(1.2);
+        }
+
+        .answer-text {
+            flex: 1;
+            font-size: 16px;
+        }
+
+        .progress-bar {
+            background: #e2e8f0;
+            height: 8px;
+            border-radius: 4px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            background: linear-gradient(90deg, #d69e2e 0%, #1a365d 100%);
+            height: 100%;
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .quiz-navigation {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 2px solid #f1f5f9;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border-radius: 6px;
+            border: none;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: #d69e2e;
+            color: #1a365d;
+        }
+
+        .btn-primary:hover {
+            background: #b7791f;
+        }
+
+        .btn-secondary {
+            background: #6b7280;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #4b5563;
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .quiz-complete {
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        .score-display {
+            font-size: 48px;
+            font-weight: bold;
+            margin: 20px 0;
+        }
+
+        .score-pass {
+            color: #059669;
+        }
+
+        .score-fail {
+            color: #dc2626;
+        }
+
+        .result-message {
+            font-size: 18px;
+            margin: 20px 0;
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        .result-pass {
+            background: #dcfce7;
+            color: #166534;
+            border: 1px solid #bbf7d0;
+        }
+
+        .result-fail {
+            background: #fef2f2;
+            color: #991b1b;
+            border: 1px solid #fecaca;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .question-review {
+            margin-top: 30px;
+            padding: 0;
+        }
+
+        .review-item {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 15px;
+        }
+
+        .review-item.correct {
+            border-left: 4px solid #059669;
+        }
+
+        .review-item.incorrect {
+            border-left: 4px solid #dc2626;
+        }
+
+        .review-question {
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #1a365d;
+        }
+
+        .review-your-answer {
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        .review-correct-answer {
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        .your-answer {
+            color: #dc2626;
+            font-weight: bold;
+        }
+
+        .correct-answer {
+            color: #059669;
+            font-weight: bold;
+        }
+
+        .answer-explanation {
+            background: #f8fafc;
+            padding: 12px;
+            border-radius: 6px;
+            font-size: 14px;
+            color: #374151;
+            margin-top: 10px;
+        }
+
+        .review-summary {
+            background: #f0fdf4;
+            border: 1px solid #bbf7d0;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .review-summary h3 {
+            color: #166534;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="quiz-wrapper">
+        <!-- Quiz Header -->
+        <div class="quiz-header">
+            <h1>Knowledge Check</h1>
+            <p>PT Musculoskeletal Evaluation and Diagnosis • Course #PT-MSK-001</p>
+        </div>
+
+        <!-- Quiz Instructions -->
+        <div class="quiz-instructions" id="instructions">
+            <h3>Instructions</h3>
+            <ul>
+                <li>This knowledge check contains <strong>20 questions</strong> covering all course modules</li>
+                <li>You must score <strong>70% or higher (14/20 correct)</strong> to pass</li>
+                <li>You may take the quiz multiple times if needed</li>
+                <li>Select the best answer for each question</li>
+                <li>Click "Submit Quiz" when you have answered all questions</li>
+            </ul>
+            <button class="btn btn-primary" onclick="startQuiz()">Start Knowledge Check</button>
+        </div>
+
+        <!-- Progress Bar -->
+        <div id="progressSection" class="hidden">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+            <p style="text-align: center; color: #6b7280;">Question <span id="currentQuestion">1</span> of 20</p>
+        </div>
+
+        <!-- Quiz Questions -->
+        <div id="quizContainer" class="hidden">
+            <!-- Questions will be populated by JavaScript -->
+        </div>
+
+        <!-- Quiz Navigation -->
+        <div id="quizNavigation" class="quiz-navigation hidden">
+            <button class="btn btn-secondary" id="prevBtn" onclick="previousQuestion()">Previous</button>
+            <span id="questionCounter">Question 1 of 20</span>
+            <button class="btn btn-primary" id="nextBtn" onclick="nextQuestion()">Next</button>
+        </div>
+
+        <!-- Quiz Results -->
+        <div id="quizResults" class="quiz-complete hidden">
+            <h2>Quiz Complete!</h2>
+            <div class="score-display" id="scoreDisplay">85%</div>
+            <div class="result-message" id="resultMessage">
+                <!-- Result message will be populated by JavaScript -->
+            </div>
+            <div id="nextSteps">
+                <!-- Next step buttons will be populated by JavaScript -->
+            </div>
+            <div id="questionReview" class="question-review hidden">
+                <!-- Detailed review will be populated by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Knowledge Check Questions
+        const quizQuestions = [
+            {
+                question: "Which of the following is the most sensitive single test for ACL injury?",
+                options: [
+                    "Anterior drawer test",
+                    "Lachman test", 
+                    "Pivot shift test",
+                    "McMurray's test"
+                ],
+                correct: 1,
+                explanation: "The Lachman test has 85% sensitivity for ACL injury, making it the most sensitive single test."
+            },
+            {
+                question: "What is the normal range of motion for shoulder external rotation with the arm at the side?",
+                options: [
+                    "30-40°",
+                    "45-60°",
+                    "60-75°", 
+                    "75-90°"
+                ],
+                correct: 1,
+                explanation: "Normal shoulder external rotation with arm at side is 45-60°."
+            },
+            {
+                question: "Which special test has the highest positive likelihood ratio for shoulder apprehension?",
+                options: [
+                    "Hawkins-Kennedy test",
+                    "Neer impingement sign",
+                    "Apprehension test",
+                    "Empty can test"
+                ],
+                correct: 2,
+                explanation: "The apprehension test has a +LR of 18 for anterior shoulder instability."
+            },
+            {
+                question: "What is considered a positive straight leg raise test?",
+                options: [
+                    "Leg pain reproduction at any angle",
+                    "Back pain reproduction at any angle", 
+                    "Leg pain reproduction at <70° hip flexion",
+                    "Leg pain reproduction at >90° hip flexion"
+                ],
+                correct: 2,
+                explanation: "A positive SLR is leg pain reproduction at <70° of hip flexion."
+            },
+            {
+                question: "Which combination of findings significantly increases the likelihood of cervical radiculopathy?",
+                options: [
+                    "Positive Spurling's test + age >55 + symptom relief with distraction",
+                    "Positive ULNT + neck pain + headaches",
+                    "Limited cervical rotation + muscle spasm + tenderness",
+                    "Positive Spurling's test + normal reflexes + no weakness"
+                ],
+                correct: 0,
+                explanation: "The combination of positive Spurling's test, age >55, and symptom relief with cervical distraction significantly increases cervical radiculopathy probability."
+            },
+            {
+                question: "According to the Ottawa Ankle Rules, an ankle X-ray is indicated if there is:",
+                options: [
+                    "Any ankle pain after trauma",
+                    "Bone tenderness at the posterior edge of either malleolus OR inability to bear weight",
+                    "Swelling and bruising around the ankle",
+                    "Pain with active range of motion"
+                ],
+                correct: 1,
+                explanation: "Ottawa Ankle Rules require bone tenderness at malleoli OR inability to bear weight for X-ray indication."
+            },
+            {
+                question: "What is the recommended number of positive sacroiliac joint provocation tests to significantly increase likelihood of SIJ pain?",
+                options: [
+                    "1 or more",
+                    "2 or more", 
+                    "3 or more",
+                    "4 or more"
+                ],
+                correct: 2,
+                explanation: "Three or more positive SIJ provocation tests increase the likelihood ratio to 6.8."
+            },
+            {
+                question: "Which rotator cuff test is pathognomonic (definitively diagnostic) for full-thickness tear?",
+                options: [
+                    "Empty can test",
+                    "External rotation lag sign",
+                    "Hawkins-Kennedy test",
+                    "Neer impingement sign"
+                ],
+                correct: 1,
+                explanation: "A positive lag sign is pathognomonic for full-thickness rotator cuff tear (100% specificity)."
+            },
+            {
+                question: "In clinical reasoning, what does a positive likelihood ratio (+LR) of 10 indicate?",
+                options: [
+                    "Small increase in probability of diagnosis",
+                    "Moderate increase in probability of diagnosis",
+                    "Large increase in probability of diagnosis",
+                    "The test is 100% accurate"
+                ],
+                correct: 2,
+                explanation: "A +LR >10 indicates a large increase in the probability of the diagnosis."
+            },
+            {
+                question: "Which is a red flag requiring immediate physician referral?",
+                options: [
+                    "Chronic low back pain lasting 6 months",
+                    "Bilateral sciatica with saddle anesthesia",
+                    "Unilateral shoulder pain after overhead activity",
+                    "Knee pain after running"
+                ],
+                correct: 1,
+                explanation: "Bilateral sciatica with saddle anesthesia suggests cauda equina syndrome, requiring emergency referral."
+            },
+            {
+                question: "What is the sensitivity of the Thompson test for Achilles tendon rupture?",
+                options: [
+                    "76%",
+                    "86%", 
+                    "96%",
+                    "100%"
+                ],
+                correct: 2,
+                explanation: "The Thompson test has 96% sensitivity for complete Achilles tendon rupture."
+            },
+            {
+                question: "Which test is most specific for carpal tunnel syndrome?",
+                options: [
+                    "Phalen's test",
+                    "Tinel's sign",
+                    "Carpal compression test",
+                    "Finkelstein's test"
+                ],
+                correct: 2,
+                explanation: "The carpal compression test has 90% specificity and highest +LR (8.7) for carpal tunnel syndrome."
+            },
+            {
+                question: "What is the normal CCU requirement for Physical Therapists in most states?",
+                options: [
+                    "17 CCUs",
+                    "23 CCUs",
+                    "27 CCUs", 
+                    "30 CCUs"
+                ],
+                correct: 2,
+                explanation: "Most states require 27 CCUs for Physical Therapists per renewal period."
+            },
+            {
+                question: "Which hip test differentiates hip pathology from SIJ dysfunction?",
+                options: [
+                    "FABER test",
+                    "Thomas test", 
+                    "Trendelenburg test",
+                    "FADIR test"
+                ],
+                correct: 0,
+                explanation: "FABER test produces groin pain with hip pathology vs. posterior pain with SIJ dysfunction."
+            },
+            {
+                question: "What percentage constitutes a passing score for this knowledge check?",
+                options: [
+                    "60%",
+                    "65%",
+                    "70%",
+                    "75%"
+                ],
+                correct: 2,
+                explanation: "A score of 70% or higher (14/20 questions correct) is required to pass."
+            },
+            {
+                question: "Which thoracic spine intervention has evidence for improving cervical pain?",
+                options: [
+                    "Thoracic extension exercises",
+                    "Thoracic manipulation",
+                    "Thoracic flexion stretches", 
+                    "Rib mobilization"
+                ],
+                correct: 1,
+                explanation: "Thoracic spine manipulation has strong evidence for improving cervical spine pain and mobility."
+            },
+            {
+                question: "What is the approximate sensitivity of the McMurray's test for meniscal tears?",
+                options: [
+                    "16%",
+                    "46%",
+                    "76%",
+                    "96%"
+                ],
+                correct: 0,
+                explanation: "McMurray's test has low sensitivity (16%) but high specificity (98%) for meniscal tears."
+            },
+            {
+                question: "Which elbow condition is most commonly associated with repetitive gripping activities?",
+                options: [
+                    "Medial epicondylalgia",
+                    "Lateral epicondylalgia", 
+                    "Olecranon bursitis",
+                    "Radial tunnel syndrome"
+                ],
+                correct: 1,
+                explanation: "Lateral epicondylalgia (tennis elbow) is most commonly associated with repetitive gripping activities."
+            },
+            {
+                question: "In the systematic MSK examination framework, what follows the objective examination?",
+                options: [
+                    "Treatment planning",
+                    "Clinical reasoning",
+                    "Documentation",
+                    "Patient education"
+                ],
+                correct: 1,
+                explanation: "Clinical reasoning follows the objective examination, integrating subjective and objective findings."
+            },
+            {
+                question: "What is the primary purpose of understanding likelihood ratios in clinical practice?",
+                options: [
+                    "To replace clinical judgment",
+                    "To enhance diagnostic accuracy when combined with clinical findings",
+                    "To eliminate the need for multiple tests", 
+                    "To ensure 100% diagnostic certainty"
+                ],
+                correct: 1,
+                explanation: "Likelihood ratios enhance diagnostic accuracy when combined with thorough history and clinical findings."
+            }
+        ];
+
+        // Quiz State
+        let currentQuestionIndex = 0;
+        let userAnswers = new Array(quizQuestions.length).fill(null);
+        let quizStarted = false;
+
+        // Start the quiz
+        function startQuiz() {
+            document.getElementById('instructions').classList.add('hidden');
+            document.getElementById('progressSection').classList.remove('hidden');
+            document.getElementById('quizContainer').classList.remove('hidden');
+            document.getElementById('quizNavigation').classList.remove('hidden');
+            quizStarted = true;
+            showQuestion(0);
+        }
+
+        // Display a question
+        function showQuestion(index) {
+            currentQuestionIndex = index;
+            const question = quizQuestions[index];
+            
+            let optionsHTML = '';
+            question.options.forEach((option, optionIndex) => {
+                const isChecked = userAnswers[index] === optionIndex ? 'checked' : '';
+                optionsHTML += `
+                    <li class="answer-option">
+                        <label>
+                            <input type="radio" name="question${index}" value="${optionIndex}" ${isChecked} onchange="saveAnswer(${index}, ${optionIndex})">
+                            <span class="answer-text">${String.fromCharCode(65 + optionIndex)}. ${option}</span>
+                        </label>
+                    </li>
+                `;
+            });
+
+            document.getElementById('quizContainer').innerHTML = `
+                <div class="question">
+                    <div class="question-number">Question ${index + 1}</div>
+                    <div class="question-text">${question.question}</div>
+                    <ul class="answer-options">
+                        ${optionsHTML}
+                    </ul>
+                </div>
+            `;
+
+            updateProgress();
+            updateNavigation();
+        }
+
+        // Save user's answer
+        function saveAnswer(questionIndex, answerIndex) {
+            userAnswers[questionIndex] = answerIndex;
+        }
+
+        // Update progress bar
+        function updateProgress() {
+            const progress = ((currentQuestionIndex + 1) / quizQuestions.length) * 100;
+            document.getElementById('progressFill').style.width = progress + '%';
+            document.getElementById('currentQuestion').textContent = currentQuestionIndex + 1;
+        }
+
+        // Update navigation buttons
+        function updateNavigation() {
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            const questionCounter = document.getElementById('questionCounter');
+
+            prevBtn.disabled = currentQuestionIndex === 0;
+            
+            if (currentQuestionIndex === quizQuestions.length - 1) {
+                nextBtn.textContent = 'Submit Quiz';
+                nextBtn.onclick = submitQuiz;
+            } else {
+                nextBtn.textContent = 'Next';
+                nextBtn.onclick = nextQuestion;
+            }
+
+            questionCounter.textContent = `Question ${currentQuestionIndex + 1} of ${quizQuestions.length}`;
+        }
+
+        // Navigate to previous question
+        function previousQuestion() {
+            if (currentQuestionIndex > 0) {
+                showQuestion(currentQuestionIndex - 1);
+            }
+        }
+
+        // Navigate to next question
+        function nextQuestion() {
+            if (currentQuestionIndex < quizQuestions.length - 1) {
+                showQuestion(currentQuestionIndex + 1);
+            }
+        }
+
+        // Submit the quiz
+        function submitQuiz() {
+            // Check if all questions are answered
+            const unanswered = userAnswers.findIndex(answer => answer === null);
+            if (unanswered !== -1) {
+                alert(`Please answer question ${unanswered + 1} before submitting.`);
+                showQuestion(unanswered);
+                return;
+            }
+
+            // Calculate score
+            let correctAnswers = 0;
+            userAnswers.forEach((answer, index) => {
+                if (answer === quizQuestions[index].correct) {
+                    correctAnswers++;
+                }
+            });
+
+            const score = Math.round((correctAnswers / quizQuestions.length) * 100);
+            const passed = score >= 70;
+
+            // Hide quiz elements
+            document.getElementById('progressSection').classList.add('hidden');
+            document.getElementById('quizContainer').classList.add('hidden');
+            document.getElementById('quizNavigation').classList.add('hidden');
+
+            // Show results
+            showResults(score, correctAnswers, passed);
+        }
+
+        // Show quiz results
+        function showResults(score, correctAnswers, passed) {
+            const scoreDisplay = document.getElementById('scoreDisplay');
+            const resultMessage = document.getElementById('resultMessage');
+            const nextSteps = document.getElementById('nextSteps');
+
+            scoreDisplay.textContent = `${score}%`;
+            scoreDisplay.className = `score-display ${passed ? 'score-pass' : 'score-fail'}`;
+
+            if (passed) {
+                resultMessage.className = 'result-message result-pass';
+                resultMessage.innerHTML = `
+                    <h3>Congratulations! You Passed!</h3>
+                    <p>You answered ${correctAnswers} out of ${quizQuestions.length} questions correctly (${score}%).</p>
+                    <p>You have successfully completed the knowledge check for PT Musculoskeletal Evaluation and Diagnosis.</p>
+                `;
+
+                nextSteps.innerHTML = `
+                    <a href="pt-msk-001-certificate.html?from=quiz" class="btn btn-primary" style="margin-right: 10px;">Generate Certificate</a>
+                    <a href="pt-msk-001.html" class="btn btn-secondary">Return to Course</a>
+                `;
+            } else {
+                resultMessage.className = 'result-message result-fail';
+                resultMessage.innerHTML = `
+                    <h3>Not Quite There Yet</h3>
+                    <p>You answered ${correctAnswers} out of ${quizQuestions.length} questions correctly (${score}%).</p>
+                    <p>You need 70% or higher to pass. Review your answers below, then try again.</p>
+                `;
+
+                nextSteps.innerHTML = `
+                    <button class="btn btn-primary" onclick="location.reload()" style="margin-right: 10px;">Retake Quiz</button>
+                    <a href="pt-msk-001.html" class="btn btn-secondary">Review Course Material</a>
+                `;
+
+                // Show detailed review for failed attempts
+                showDetailedReview(correctAnswers, quizQuestions.length);
+            }
+
+            // Update course progress if passed
+            if (passed) {
+                updateCourseProgress();
+            }
+
+            document.getElementById('quizResults').classList.remove('hidden');
+        }
+
+        // Update course progress in user account
+        function updateCourseProgress() {
+            try {
+                const accountData = localStorage.getItem('drtroyAccount');
+                if (accountData) {
+                    const account = JSON.parse(accountData);
+                    if (!account.courseProgress) {
+                        account.courseProgress = {};
+                    }
+                    if (!account.courseProgress['PT-MSK-001']) {
+                        account.courseProgress['PT-MSK-001'] = {};
+                    }
+                    
+                    account.courseProgress['PT-MSK-001'].quizCompleted = true;
+                    account.courseProgress['PT-MSK-001'].quizScore = document.getElementById('scoreDisplay').textContent;
+                    account.courseProgress['PT-MSK-001'].quizCompletedAt = new Date().toISOString();
+                    account.courseProgress['PT-MSK-001'].lastAccessedAt = new Date().toISOString();
+                    
+                    localStorage.setItem('drtroyAccount', JSON.stringify(account));
+                    console.log('📊 Quiz completion tracked');
+                }
+            } catch (error) {
+                console.error('Error updating course progress:', error);
+            }
+        }
+
+        // Show detailed review for failed attempts
+        function showDetailedReview(correctAnswers, totalQuestions) {
+            const questionReview = document.getElementById('questionReview');
+            
+            let reviewHTML = `
+                <div class="review-summary">
+                    <h3>📋 Detailed Review</h3>
+                    <p>Review each question to understand the correct answers. You got ${correctAnswers} out of ${totalQuestions} correct.</p>
+                </div>
+            `;
+
+            userAnswers.forEach((userAnswer, index) => {
+                const question = quizQuestions[index];
+                const isCorrect = userAnswer === question.correct;
+                const userAnswerText = userAnswer !== null ? question.options[userAnswer] : 'Not answered';
+                const correctAnswerText = question.options[question.correct];
+
+                reviewHTML += `
+                    <div class="review-item ${isCorrect ? 'correct' : 'incorrect'}">
+                        <div class="review-question">
+                            Question ${index + 1}: ${question.question}
+                        </div>
+                        <div class="review-your-answer">
+                            Your answer: <span class="${isCorrect ? 'correct-answer' : 'your-answer'}">${userAnswer !== null ? String.fromCharCode(65 + userAnswer) : 'None'}. ${userAnswerText}</span>
+                        </div>
+                        ${!isCorrect ? `
+                            <div class="review-correct-answer">
+                                Correct answer: <span class="correct-answer">${String.fromCharCode(65 + question.correct)}. ${correctAnswerText}</span>
+                            </div>
+                        ` : ''}
+                        <div class="answer-explanation">
+                            <strong>Explanation:</strong> ${question.explanation}
+                        </div>
+                    </div>
+                `;
+            });
+
+            questionReview.innerHTML = reviewHTML;
+            questionReview.classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>

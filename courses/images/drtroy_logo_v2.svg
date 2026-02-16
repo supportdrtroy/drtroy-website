@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="600" viewBox="0 0 1200 600">
+  <!-- Main title "DRTROY" with thick block letters -->
+  <g>
+    <!-- Letter D -->
+    <path d="M 50 120 L 50 330 L 140 330 Q 200 330 200 225 Q 200 120 140 120 Z M 100 170 L 130 170 Q 150 170 150 225 Q 150 280 130 280 L 100 280 Z" fill="#1a365d"/>
+    
+    <!-- Letter R -->
+    <path d="M 220 120 L 220 330 L 270 330 L 270 240 L 290 240 L 330 330 L 390 330 L 340 230 Q 370 210 370 175 Q 370 120 320 120 Z M 270 170 L 310 170 Q 320 170 320 185 Q 320 200 310 200 L 270 200 Z" fill="#1a365d"/>
+    
+    <!-- Letter T -->
+    <path d="M 420 120 L 420 170 L 460 170 L 460 330 L 510 330 L 510 170 L 550 170 L 550 120 Z" fill="#1a365d"/>
+    
+    <!-- Letter R -->
+    <path d="M 580 120 L 580 330 L 630 330 L 630 240 L 650 240 L 690 330 L 750 330 L 700 230 Q 730 210 730 175 Q 730 120 680 120 Z M 630 170 L 670 170 Q 680 170 680 185 Q 680 200 670 200 L 630 200 Z" fill="#1a365d"/>
+    
+    <!-- Letter O -->
+    <path d="M 780 120 Q 720 120 720 225 Q 720 330 780 330 Q 840 330 840 225 Q 840 120 780 120 Z M 780 170 Q 790 170 790 225 Q 790 280 780 280 Q 770 280 770 225 Q 770 170 780 170 Z" fill="#1a365d"/>
+    
+    <!-- Letter Y -->
+    <path d="M 870 120 L 870 200 L 900 225 L 930 200 L 930 120 L 980 120 L 980 225 L 950 260 L 950 330 L 900 330 L 900 260 L 870 225 L 870 120 Z" fill="#1a365d"/>
+  </g>
+  
+  <!-- Decorative line above -->
+  <line x1="150" y1="80" x2="950" y2="80" stroke="#718096" stroke-width="3"/>
+  <circle cx="120" cy="80" r="15" fill="none" stroke="#718096" stroke-width="3"/>
+  <circle cx="980" cy="80" r="15" fill="none" stroke="#718096" stroke-width="3"/>
+  <path d="M 105 75 Q 120 65 135 75" stroke="#718096" stroke-width="3" fill="none"/>
+  <path d="M 965 75 Q 980 65 995 75" stroke="#718096" stroke-width="3" fill="none"/>
+  
+  <!-- Subtitle "CONTINUING EDUCATION" -->
+  <text x="600" y="420" font-family="Times, serif" font-size="48" font-weight="normal" 
+        fill="#718096" text-anchor="middle" letter-spacing="8px">CONTINUING EDUCATION</text>
+  
+  <!-- Decorative line below -->
+  <line x1="150" y1="480" x2="950" y2="480" stroke="#718096" stroke-width="3"/>
+  <circle cx="120" cy="480" r="15" fill="none" stroke="#718096" stroke-width="3"/>
+  <circle cx="980" cy="480" r="15" fill="none" stroke="#718096" stroke-width="3"/>
+  <path d="M 105 485 Q 120 495 135 485" stroke="#718096" stroke-width="3" fill="none"/>
+  <path d="M 965 485 Q 980 495 995 485" stroke="#718096" stroke-width="3" fill="none"/>
+</svg>

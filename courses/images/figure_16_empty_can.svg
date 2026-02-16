@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 400" width="500" height="400">
+  <!-- Background -->
+  <rect x="0" y="0" width="500" height="400" fill="#f8fafc"/>
+  
+  <!-- Title -->
+  <text x="250" y="30" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="#1a365d" text-anchor="middle">Empty Can Test (Jobe Test)</text>
+  
+  <!-- Figure 1: Patient Position (Left side) -->
+  <text x="125" y="55" font-family="Arial, sans-serif" font-size="12" fill="#555" text-anchor="middle">Patient Position</text>
+  
+  <!-- Patient body -->
+  <ellipse cx="125" cy="220" rx="35" ry="60" fill="#e2e8f0" stroke="#333" stroke-width="2"/>
+  <!-- Head -->
+  <circle cx="125" cy="140" r="25" fill="#ffdbac" stroke="#333" stroke-width="2"/>
+  <!-- Eyes -->
+  <circle cx="117" cy="135" r="3" fill="#333"/>
+  <circle cx="133" cy="135" r="3" fill="#333"/>
+  <!-- Nose -->
+  <path d="M125 140 L122 148 L128 148 Z" fill="#e5a05a"/>
+  <!-- Mouth -->
+  <path d="M120 155 Q125 158 130 155" stroke="#333" stroke-width="1" fill="none"/>
+  
+  <!-- Right arm (empty can position) - raised to 90 degrees abduction -->
+  <!-- Upper arm -->
+  <path d="M155 190 L220 160" stroke="#ffdbac" stroke-width="18" stroke-linecap="round"/>
+  <path d="M155 190 L220 160" stroke="#333" stroke-width="2" fill="none"/>
+  <!-- Forearm (elbow bent 90 degrees, internal rotation - thumb down) -->
+  <path d="M220 160 L260 180" stroke="#ffdbac" stroke-width="14" stroke-linecap="round"/>
+  <path d="M220 160 L260 180" stroke="#333" stroke-width="2" fill="none"/>
+  <!-- Hand (thumb pointing down) -->
+  <ellipse cx="268" cy="185" rx="12" ry="8" fill="#ffdbac" stroke="#333" stroke-width="2"/>
+  <!-- Thumb pointing down -->
+  <path d="M268 189 L268 200" stroke="#333" stroke-width="3" stroke-linecap="round"/>
+  <text x="268" y="210" font-family="Arial, sans-serif" font-size="10" fill="#c53030" text-anchor="middle">↓ Thumb down</text>
+  
+  <!-- Shoulder angle marker -->
+  <path d="M125 190 Q160 170 180 190" stroke="#666" stroke-width="1" fill="none" stroke-dasharray="4"/>
+  <text x="160" y="185" font-family="Arial, sans-serif" font-size="9" fill="#666">90°</text>
+  
+  <!-- Elbow angle marker -->
+  <path d="M205 165 Q215 175 225 175" stroke="#666" stroke-width="1" fill="none" stroke-dasharray="4"/>
+  <text x="215" y="195" font-family="Arial, sans-serif" font-size="9" fill="#666">90°</text>
+  
+  <!-- Figure 2: Examiner Position (Right side) -->
+  <text x="375" y="55" font-family="Arial, sans-serif" font-size="12" fill="#555" text-anchor="middle">Examiner Applying Force</text>
+  
+  <!-- Patient body (smaller, side view concept) -->
+  <ellipse cx="320" cy="220" rx="30" ry="55" fill="#e2e8f0" stroke="#333" stroke-width="2"/>
+  <circle cx="320" cy="145" r="22" fill="#ffdbac" stroke="#333" stroke-width="2"/>
+  
+  <!-- Patient arm in empty can position -->
+  <path d="M345 185 L400 150" stroke="#ffdbac" stroke-width="14" stroke-linecap="round"/>
+  <path d="M345 185 L400 150" stroke="#333" stroke-width="2" fill="none"/>
+  <!-- Forearm -->
+  <path d="M400 150 L440 170" stroke="#ffdbac" stroke-width="12" stroke-linecap="round"/>
+  <path d="M400 150 L440 170" stroke="#333" stroke-width="2" fill="none"/>
+  <!-- Hand -->
+  <ellipse cx="448" cy="175" rx="10" ry="7" fill="#ffdbac" stroke="#333" stroke-width="2"/>
+  
+  <!-- Examiner's hand applying downward pressure -->
+  <ellipse cx="445" cy="200" rx="15" ry="12" fill="#ffdbac" stroke="#333" stroke-width="2"/>
+  <!-- Downward force arrow -->
+  <path d="M445 200 L445 225" stroke="#c53030" stroke-width="3" stroke-linecap="round" marker-end="url(#arrowhead)"/>
+  
+  <!-- Arrow marker definition -->
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#c53030"/>
+    </marker>
+  </defs>
+  
+  <text x="445" y="245" font-family="Arial, sans-serif" font-size="10" fill="#c53030" text-anchor="middle">Downward force</text>
+  
+  <!-- Key Points Box -->
+  <rect x="50" y="300" width="400" height="85" fill="#fff" stroke="#1a365d" stroke-width="2" rx="5"/>
+  <text x="250" y="320" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#1a365d" text-anchor="middle">Key Test Elements</text>
+  <text x="60" y="340" font-family="Arial, sans-serif" font-size="10" fill="#333">• Arm abducted 90° in scapular plane (30° forward of frontal plane)</text>
+  <text x="60" y="355" font-family="Arial, sans-serif" font-size="10" fill="#333">• Shoulder internally rotated (thumbs pointing downward)</text>
+  <text x="60" y="370" font-family="Arial, sans-serif" font-size="10" fill="#333">• Patient resists examiner's downward pressure</text>
+  <text x="60" y="385" font-family="Arial, sans-serif" font-size="10" fill="#c53030">• Positive: Pain or weakness indicates supraspinatus pathology</text>
+</svg>

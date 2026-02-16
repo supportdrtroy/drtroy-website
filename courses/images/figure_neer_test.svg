@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400">
+  <rect width="600" height="400" fill="white"/>
+  
+  <text x="300" y="25" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#1a365d">Neer Impingement Test</text>
+  <text x="300" y="42" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#666">Subacromial Impingement</text>
+  
+  <!-- Patient -->
+  <ellipse cx="200" cy="120" rx="30" ry="35" fill="#e8dcc8" stroke="#8b7355" stroke-width="2"/>
+  <rect x="170" y="155" width="60" height="80" rx="10" fill="#4a5568" stroke="#2d3748" stroke-width="2"/>
+  <rect x="160" y="235" width="25" height="70" rx="8" fill="#4a5568" stroke="#2d3748" stroke-width="2"/>
+  <rect x="215" y="235" width="25" height="70" rx="8" fill="#4a5568" stroke="#2d3748" stroke-width="2"/>
+  
+  <!-- Arm in flexion -->
+  <g transform="rotate(-80 230 170)">
+    <rect x="225" y="160" width="25" height="80" rx="5" fill="#e8dcc8" stroke="#8b7355" stroke-width="2"/>
+    <rect x="225" y="90" width="22" height="70" rx="5" fill="#e8dcc8" stroke="#8b7355" stroke-width="2"/>
+  </g>
+  
+  <!-- Arc of motion -->
+  <path d="M 230 165 A 60 60 0 0 0 170 120" fill="none" stroke="#0ea5e9" stroke-width="3" stroke-dasharray="5,3"/>
+  <text x="140" y="100" font-family="Arial, sans-serif" font-size="11" fill="#0ea5e9" font-weight="bold">Full Flexion</text>
+  <line x1="170" y1="110" x2="185" y2="120" stroke="#0ea5e9" stroke-width="1"/>
+  
+  <!-- Therapist hand stabilizing scapula -->
+  <ellipse cx="160" cy="165" rx="15" ry="10" fill="#e8dcc8" stroke="#8b7355" stroke-width="2"/>
+  <text x="120" y="155" font-family="Arial, sans-serif" font-size="10" fill="#333">Stabilize</text>
+  <text x="120" y="170" font-family="Arial, sans-serif" font-size="10" fill="#333">Scapula</text>
+  <line x1="155" y1="160" x2="145" y2="162" stroke="#333" stroke-width="1"/>
+  
+  <!-- Impingement area -->
+  <ellipse cx="240" cy="100" rx="15" ry="10" fill="#fee2e2" stroke="#dc2626" stroke-width="2"/>
+  <text x="270" y="95" font-family="Arial, sans-serif" font-size="10" fill="#dc2626" font-weight="bold">Impingement</text>
+  <text x="270" y="110" font-family="Arial, sans-serif" font-size="10" fill="#dc2626" font-weight="bold">Zone</text>
+  <line x1="255" y1="100" x2="265" y2="102" stroke="#dc2626" stroke-width="1"/>
+  
+  <!-- Instructions -->
+  <rect x="350" y="80" width="230" height="120" rx="8" fill="#f0f9ff" stroke="#0ea5e9" stroke-width="1"/>
+  <text x="465" y="105" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#0369a1">Technique</text>
+  
+  <text x="365" y="130" font-family="Arial, sans-serif" font-size="11" fill="#333">1. Stabilize scapula</text>
+  <text x="365" y="150" font-family="Arial, sans-serif" font-size="11" fill="#333">2. Passively flex shoulder</text>
+  <text x="375" y="168" font-family="Arial, sans-serif" font-size="11" fill="#333">in forward flexion</text>
+  <text x="365" y="188" font-family="Arial, sans-serif" font-size="11" fill="#333">3. Apply overpressure</text>
+  
+  <!-- Positive test -->
+  <rect x="350" y="220" width="230" height="80" rx="8" fill="#fef2f2" stroke="#ef4444" stroke-width="1"/>
+  <text x="465" y="245" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#991b1b">Positive Test</text>
+  <text x="465" y="270" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#333">Pain in arc 60-120°</text>
+  <text x="465" y="290" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#333">Subacromial pain</text>
+  
+  <!-- Diagnostic accuracy -->
+  <rect x="30" y="320" width="300" height="70" rx="8" fill="#f0fdf4" stroke="#22c55e" stroke-width="1"/>
+  <text x="180" y="345" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#166534">Diagnostic Accuracy</text>
+  <text x="180" y="370" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#333">Sensitivity: 72-89% | Specificity: 30-50%</text>
+  <text x="180" y="385" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#666">Combine with Hawkins-Kennedy for better accuracy</text>
+</svg>

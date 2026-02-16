@@ -1,0 +1,3098 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comprehensive Musculoskeletal Evaluation - DrTroy CE</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        @page { size: letter; margin: 0.75in; @bottom-center { content: counter(page); font-size: 10pt; color: #666; } }
+        * { box-sizing: border-box; }
+
+        /* CSS Variables */
+        :root {
+            --navy: #1a365d;
+            --navy-light: #2c5282;
+            --gold: #059669;
+            --gold-light: #10b981;
+            --gray-50: #f7fafc;
+            --gray-100: #edf2f7;
+            --gray-200: #e5e7eb;
+            --gray-600: #4a5568;
+            --gray-800: #2d3748;
+            --gray-900: #111827;
+        }
+
+        /* Base styles */
+        body {
+            font-family: 'Georgia', 'Times New Roman', serif;
+            font-size: 16px;
+            line-height: 1.7;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            background: #f5f5f5;
+        }
+
+        /* Course Header Styles */
+        .course-header {
+            background: #ffffff;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 3px solid var(--gold);
+        }
+
+        .course-header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo img {
+            height: 60px;
+            width: auto;
+            max-width: 300px;
+        }
+
+        .course-nav {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .course-nav a {
+            color: var(--gray-600);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 14px;
+            transition: color 0.2s;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        .course-nav a:hover {
+            color: var(--navy);
+        }
+
+        .logout-btn {
+            background: var(--gold);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        .logout-btn:hover {
+            background: var(--gold-light);
+            transform: translateY(-2px);
+        }
+
+        /* Mobile Header */
+        @media (max-width: 768px) {
+            .course-header-container {
+                flex-direction: column;
+                padding: 1rem;
+                gap: 1rem;
+            }
+
+            .logo img {
+                height: 50px;
+            }
+
+            .course-nav {
+                gap: 1rem;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .course-nav a {
+                font-size: 13px;
+            }
+
+            .logout-btn {
+                font-size: 13px;
+                padding: 0.4rem 0.8rem;
+            }
+        }
+
+        /* Content container - responsive */
+        .content-wrapper {
+            max-width: 800px;
+            margin: 2rem auto;
+            background: white;
+            padding: 40px 60px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            border-radius: 8px;
+        }
+
+        /* Progress Bar Styles */
+        .progress-container {
+            background: #fff;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            border-left: 4px solid #059669;
+        }
+
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .progress-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #1a365d;
+        }
+
+        .save-status {
+            font-size: 12px;
+            color: #666;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e2e8f0;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #059669, #0ea570);
+            transition: width 0.3s ease;
+        }
+
+        .progress-text {
+            margin-top: 10px;
+            font-size: 14px;
+            color: #666;
+        }
+
+        /* Module Container Styles */
+        .module-container {
+            margin: 20px 0;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .module-header {
+            background: linear-gradient(135deg, #1a365d, #2d3748);
+            color: white;
+            padding: 20px;
+            cursor: pointer;
+            user-select: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background 0.2s ease;
+        }
+
+        .module-header:hover {
+            background: linear-gradient(135deg, #2d3748, #1a365d);
+        }
+
+        .module-header.completed {
+            background: linear-gradient(135deg, #059669, #0ea570);
+        }
+
+        .module-header.locked {
+            background: #cbd5e0;
+            color: #718096;
+            cursor: not-allowed;
+        }
+
+        .module-title {
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .module-status {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .module-icon {
+            font-size: 20px;
+        }
+
+        .module-content {
+            padding: 30px;
+            display: none;
+            background: white;
+        }
+
+        .module-content.active {
+            display: block;
+        }
+
+        /* Knowledge Check Styles */
+        .knowledge-check {
+            background: #f7fafc;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 25px;
+            margin: 30px 0;
+        }
+
+        .knowledge-check h3 {
+            color: #1a365d;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .question {
+            font-size: 16px;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .answer-options {
+            margin: 20px 0;
+        }
+
+        .answer-option {
+            display: flex;
+            align-items: flex-start;
+            margin: 10px 0;
+            padding: 12px;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .answer-option:hover {
+            background: #f7fafc;
+            border-color: #059669;
+        }
+
+        .answer-option input[type="radio"] {
+            margin-right: 12px;
+            margin-top: 3px;
+        }
+
+        .answer-option.correct {
+            background: #f0fff4;
+            border-color: #059669;
+            color: #065f46;
+        }
+
+        .answer-option.incorrect {
+            background: #fef2f2;
+            border-color: #dc2626;
+            color: #991b1b;
+        }
+
+        .check-answer-btn {
+            background: #059669;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: bold;
+            transition: background 0.2s ease;
+            margin-right: 10px;
+        }
+
+        .check-answer-btn:hover {
+            background: #047857;
+        }
+
+        .check-answer-btn:disabled {
+            background: #9ca3af;
+            cursor: not-allowed;
+        }
+
+        .feedback {
+            margin-top: 15px;
+            padding: 15px;
+            border-radius: 6px;
+            font-weight: bold;
+            display: none;
+        }
+
+        .feedback.correct {
+            background: #f0fff4;
+            border: 1px solid #059669;
+            color: #065f46;
+            display: block;
+        }
+
+        .feedback.incorrect {
+            background: #fef2f2;
+            border: 1px solid #dc2626;
+            color: #991b1b;
+            display: block;
+        }
+
+        .continue-btn {
+            background: #059669;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: bold;
+            margin-top: 15px;
+            display: none;
+        }
+
+        .continue-btn.show {
+            display: inline-block;
+        }
+
+        /* Save Button Styles */
+        .save-progress-btn {
+            background: #1a365d;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .save-progress-btn:hover {
+            background: #2d3748;
+        }
+
+        .clear-progress-btn {
+            background: #dc2626;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .clear-progress-btn:hover {
+            background: #b91c1c;
+        }
+
+        /* Confirmation Modal Styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+        }
+
+        .modal-overlay.show {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            max-width: 400px;
+            width: 90%;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            text-align: center;
+        }
+
+        .modal-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: #1a365d;
+            margin-bottom: 15px;
+        }
+
+        .modal-text {
+            color: #4a5568;
+            margin-bottom: 25px;
+            line-height: 1.5;
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+
+        .modal-btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.2s ease;
+        }
+
+        .modal-btn.confirm {
+            background: #dc2626;
+            color: white;
+        }
+
+        .modal-btn.confirm:hover {
+            background: #b91c1c;
+        }
+
+        .modal-btn.cancel {
+            background: #e5e7eb;
+            color: #374151;
+        }
+
+        .modal-btn.cancel:hover {
+            background: #d1d5db;
+        }
+
+        /* Notification Styles */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #059669;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 6px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            opacity: 0;
+            transform: translateY(-20px);
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .notification.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Mobile responsive */
+        @media (max-width: 900px) {
+            .content-wrapper {
+                padding: 30px 40px;
+                margin: 0 20px;
+            }
+            .progress-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .content-wrapper {
+                padding: 20px;
+                margin: 0 10px;
+            }
+            body {
+                font-size: 15px;
+                line-height: 1.6;
+            }
+            .module-title {
+                font-size: 16px;
+            }
+            .module-status {
+                gap: 5px;
+            }
+            .module-icon {
+                font-size: 16px;
+            }
+            .save-status > div {
+                flex-direction: column;
+                gap: 8px !important;
+            }
+            .save-progress-btn, .clear-progress-btn {
+                font-size: 12px;
+                padding: 8px 16px;
+            }
+            .modal-content {
+                padding: 20px;
+                margin: 20px;
+            }
+            .modal-buttons {
+                flex-direction: column;
+                gap: 10px;
+            }
+            .figure-box img {
+                max-height: 500px !important; /* Ensure larger images on mobile for better text readability */
+            }
+        }
+
+        /* Original course styles */
+        .cover-page {
+            text-align: center;
+            padding: 60px 30px;
+            background: linear-gradient(135deg, #1a365d, #2d3748);
+            color: white;
+            margin-bottom: 30px;
+            border-radius: 8px;
+        }
+
+        .cover-page img {
+            max-width: 250px;
+            height: auto;
+            margin: 0 auto 30px auto;
+            display: block;
+        }
+
+        .cover-page h1 {
+            font-size: 28px;
+            margin: 20px 0;
+            color: white;
+        }
+
+        .cover-page .subtitle {
+            font-size: 16px;
+            opacity: 0.9;
+            margin: 10px 0;
+        }
+
+        /* Standard typography */
+        h1 {
+            color: #1a365d;
+            font-size: 24px;
+            margin: 30px 0 20px 0;
+            font-weight: bold;
+        }
+
+        h2 {
+            color: #1a365d;
+            font-size: 20px;
+            margin: 25px 0 15px 0;
+            font-weight: bold;
+        }
+
+        h3 {
+            color: #2d3748;
+            font-size: 18px;
+            margin: 20px 0 10px 0;
+            font-weight: bold;
+        }
+
+        p {
+            margin: 15px 0;
+            text-align: justify;
+        }
+
+        ul, ol {
+            margin: 15px 0;
+            padding-left: 25px;
+        }
+
+        li {
+            margin: 8px 0;
+        }
+
+        /* Table styles */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 15px;
+        }
+
+        th, td {
+            border: 1px solid #059669;
+            padding: 12px;
+            text-align: left;
+            vertical-align: top;
+        }
+
+        th {
+            background-color: #059669;
+            color: white;
+            font-weight: bold;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+
+        /* Special boxes */
+        .figure-box {
+            border: 2px solid #059669;
+            padding: 20px;
+            margin: 25px 0;
+            border-radius: 8px;
+            background: #f8fbff;
+            text-align: center;
+        }
+
+        .figure-number {
+            display: block;
+            font-weight: bold;
+            color: #1a365d;
+            margin-bottom: 15px;
+            font-size: 16px;
+        }
+
+        .figure-caption {
+            margin-top: 15px;
+            font-size: 14px;
+            color: #4a5568;
+            font-style: italic;
+            line-height: 1.5;
+            text-align: left;
+        }
+
+        .figure-box img {
+            max-width: 100%;
+            height: auto;
+            max-height: 700px; /* Increased from 500px for better text readability */
+            border-radius: 4px;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+
+        .figure-box img:hover {
+            transform: scale(1.02);
+        }
+
+        /* Zoom overlay for images */
+        .image-zoom-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 3000;
+            cursor: pointer;
+        }
+
+        .image-zoom-overlay.show {
+            display: flex;
+        }
+
+        .image-zoom-overlay img {
+            max-width: 95%;
+            max-height: 95%;
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .zoom-hint {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            color: #333;
+            padding: 8px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .image-click-hint {
+            font-size: 12px;
+            color: #666;
+            font-style: italic;
+            margin-top: 8px;
+            text-align: center;
+        }
+
+        .test-box {
+            background-color: #e8f4f8;
+            border-left: 4px solid #059669;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .clinical-pearl {
+            background-color: #fff8e1;
+            border: 2px solid #f59e0b;
+            padding: 20px;
+            margin: 25px 0;
+            border-radius: 8px;
+        }
+
+        .caution-box {
+            background-color: #fef2f2;
+            border: 2px solid #dc2626;
+            padding: 20px;
+            margin: 25px 0;
+            border-radius: 8px;
+        }
+
+        .important-box {
+            background-color: #f0f9ff;
+            border: 2px solid #0ea5e9;
+            padding: 20px;
+            margin: 25px 0;
+            border-radius: 8px;
+        }
+
+        .divider {
+            text-align: center;
+            font-size: 24px;
+            color: #059669;
+            margin: 40px 0;
+            font-weight: bold;
+        }
+
+        /* Hide original module headers since we're using the new collapsible ones */
+        .original-module-header {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Navigation -->
+    <header class="course-header">
+        <div class="course-header-container">
+            <div class="logo">
+                <a href="../index.html" onclick="autoSaveAndNavigate(event, '../index.html')">
+                    <img src="images/drtroy_logo_new.jpg" alt="DrTroy.com - Continuing Education">
+                </a>
+            </div>
+            <nav class="course-nav">
+                <a href="../index.html" onclick="autoSaveAndNavigate(event, '../index.html')">Home</a>
+                <a href="../my-account.html" onclick="autoSaveAndNavigate(event, '../my-account.html')">My Account</a>
+                <a href="../courses.html" onclick="autoSaveAndNavigate(event, '../courses.html')">Courses</a>
+                <a href="../about.html" onclick="autoSaveAndNavigate(event, '../about.html')">About</a>
+                <a href="../contact.html" onclick="autoSaveAndNavigate(event, '../contact.html')">Contact</a>
+                <button class="logout-btn" onclick="logout()">Logout</button>
+            </nav>
+        </div>
+    </header>
+
+    <div class="content-wrapper">
+        <!-- Course Header -->
+        <div class="cover-page">
+            <img src="images/drtroy_logo_new.jpg" alt="DrTroy Continuing Education">
+            <h1>Comprehensive Musculoskeletal Evaluation</h1>
+            <div class="subtitle">Evidence-Based Special Tests and Clinical Reasoning</div>
+            <div class="subtitle">PT-MSK-001 | 3.0 CCUs | 180 Minutes</div>
+        </div>
+
+        <!-- Progress Tracking -->
+        <div class="progress-container">
+            <div class="progress-header">
+                <div class="progress-title">Course Progress</div>
+                <div class="save-status">
+                    <span id="saveStatus">Never saved</span>
+                    <div style="display: flex; gap: 10px;">
+                        <button class="save-progress-btn" onclick="saveProgress()">
+                            💾 Save Progress
+                        </button>
+                        <button class="clear-progress-btn" onclick="confirmClearProgress()">
+                            🗑️ Clear Progress
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+            </div>
+            <div class="progress-text" id="progressText">Ready to begin • 0 of 12 modules completed</div>
+        </div>
+
+        <!-- Course Introduction -->
+        <div style="padding: 20px; background: #f7fafc; border-radius: 8px; margin-bottom: 30px;">
+            <h2>🎓 Complete Interactive MSK Course</h2>
+            <p>Welcome to the comprehensive musculoskeletal evaluation course with progressive learning, knowledge checks, and immediate feedback.</p>
+            <ul>
+                <li><strong>Progressive Unlocking:</strong> Complete each module to unlock the next</li>
+                <li><strong>Smart Auto-Save:</strong> Progress saved automatically every 5 minutes + when navigating</li>
+                <li><strong>Resume Anytime:</strong> Come back later and continue where you left off</li>
+                <li><strong>Knowledge Checks:</strong> One targeted question per module reinforces key concepts</li>
+                <li><strong>Safe Navigation:</strong> Click any menu item or logo - your progress is preserved</li>
+                <li><strong>Complete References:</strong> Evidence-based sources and clinical guidelines</li>
+            </ul>
+            <div style="background: #e8f4f8; padding: 15px; border-radius: 6px; margin-top: 15px; border-left: 4px solid #059669;">
+                <strong>📚 Complete Course:</strong> All 12 modules covering Introduction, Cervical, Thoracic, Lumbar, SI Joint, Shoulder, Elbow, Wrist/Hand, Hip, Knee, Ankle/Foot, Clinical Reasoning<br>
+                <strong>🎯 Assessment:</strong> Final 20-question exam + course completion certificate<br>
+                <strong>⭐ CE Credits:</strong> 3.0 CCUs upon successful completion
+            </div>
+        </div>
+
+        <!-- Module 1 -->
+        <div class="module-container" id="module-1">
+            <div class="module-header" onclick="toggleModule(1)">
+                <div class="module-title">Module 1: Introduction to MSK Evaluation (18 min)</div>
+                <div class="module-status">
+                    <span class="module-icon">🔓</span>
+                    <span>Ready to Start</span>
+                </div>
+            </div>
+            <div class="module-content" id="content-1">
+                <h2>1.1 Examination Model</h2>
+                
+                <div class="figure-box">
+                    <span class="figure-number">FIGURE 1: Examination Sequence Flowchart (SOAP Format)</span>
+                    <img src="images/figure_1_examination_sequence.svg" alt="Flowchart showing SOAP examination sequence" onclick="zoomImage(this)">
+                    <div class="figure-caption">Illustration showing the systematic examination process: Subjective (patient history, pain assessment, functional limitations), Objective (observation, ROM, special tests, palpation), Assessment (diagnosis, impairments), and Plan (interventions, goals). Arrows indicate the cyclical nature of reassessment.</div>
+                    <div class="image-click-hint">💡 Click image to zoom</div>
+                </div>
+
+                <p>The systematic examination follows four phases: Subjective, Objective, Assessment, and Plan (SOAP).</p>
+
+                <h3>Subjective Examination Components</h3>
+                <ul>
+                    <li>Chief complaint and history of present illness</li>
+                    <li>Pain assessment (location, quality, intensity, aggravating/relieving factors)</li>
+                    <li>Functional limitations and patient goals</li>
+                    <li>Medical history, medications, social history</li>
+                </ul>
+
+                <h3>Objective Examination Components</h3>
+                <ul>
+                    <li>Observation (posture, gait, functional movements)</li>
+                    <li>Active and passive range of motion</li>
+                    <li>Resisted isometric testing</li>
+                    <li>Special tests</li>
+                    <li>Palpation</li>
+                    <li>Neurological examination when indicated</li>
+                </ul>
+
+                <h2>1.2 Red Flags Screening</h2>
+
+                <table>
+                    <tr><th>Red Flag</th><th>Potential Pathology</th><th>Action</th></tr>
+                    <tr><td>Bowel/bladder dysfunction with back pain</td><td>Cauda equina syndrome</td><td>EMERGENCY ED referral</td></tr>
+                    <tr><td>Saddle anesthesia</td><td>Cauda equina syndrome</td><td>EMERGENCY ED referral</td></tr>
+                    <tr><td>Progressive neurological deficits</td><td>Spinal cord compression</td><td>Urgent referral</td></tr>
+                    <tr><td>Unexplained weight loss >10%</td><td>Malignancy</td><td>Immediate referral</td></tr>
+                    <tr><td>Night pain unrelieved by position</td><td>Tumor, infection, fracture</td><td>Immediate imaging</td></tr>
+                    <tr><td>Fever with musculoskeletal pain</td><td>Infection</td><td>Urgent evaluation</td></tr>
+                    <tr><td>History of cancer with new pain</td><td>Metastatic disease</td><td>Immediate imaging</td></tr>
+                    <tr><td>Trauma age >65</td><td>Fracture</td><td>Immediate imaging</td></tr>
+                </table>
+
+                <div class="figure-box">
+                    <span class="figure-number">FIGURE 2: Red Flags Decision Tree</span>
+                    <img src="images/figure_2_red_flags.svg" alt="Decision tree for red flag screening" onclick="zoomImage(this)">
+                    <div class="figure-caption">Flowchart diagram showing the decision-making process for red flag screening. Starting with initial patient presentation, branches lead to various red flag categories (neurological, systemic, oncological, traumatic) with corresponding actions: emergency referral, urgent imaging, or continue with standard examination.</div>
+                    <div class="image-click-hint">💡 Click image to zoom</div>
+                </div>
+
+                <div class="caution-box">
+                    <strong>Documentation:</strong> Always document red flag screening: "Patient screened for red flags including [list]. No red flags identified."
+                </div>
+
+                <h2>1.3 Pain Mechanisms</h2>
+
+                <div class="figure-box">
+                    <span class="figure-number">FIGURE 3: Pain Mechanism Classification Diagram</span>
+                    <img src="images/figure_3_pain_mechanism.svg" alt="Classification diagram of pain mechanisms" onclick="zoomImage(this)">
+                    <div class="figure-caption">Classification diagram illustrating the three primary pain mechanisms in physical therapy evaluation: nociceptive pain (tissue damage, localized, mechanical pattern), neuropathic pain (nervous system lesion, dermatomal distribution, burning/shooting quality), and nociplastic pain (altered central processing, widespread distribution, disproportionate to tissue damage). Understanding these mechanisms guides appropriate examination and intervention strategies.</div>
+                    <div class="image-click-hint">💡 Click image to zoom</div>
+                </div>
+
+                <h3>Nociceptive Pain</h3>
+                <p>From actual tissue damage. Localized, mechanical pattern, responds to treatment.</p>
+
+                <h3>Neuropathic Pain</h3>
+                <p>From nervous system lesion. Burning/shooting, dermatomal distribution, night symptoms.</p>
+
+                <h3>Nociplastic Pain</h3>
+                <p>Altered pain processing. Widespread, disproportionate, psychosocial factors.</p>
+
+                <div class="figure-box">
+                    <span class="figure-number">FIGURE 4: Tissue Healing Phases Timeline</span>
+                    <img src="images/figure_4_tissue_healing.svg" alt="Timeline of tissue healing phases" onclick="zoomImage(this)">
+                    <div class="figure-caption">Timeline illustrating the three phases of tissue healing: Inflammatory phase (0-6 days), Proliferative phase (3-21 days), and Remodeling phase (21 days to 2+ years). Each phase has distinct cellular activities, clinical presentations, and treatment considerations that guide physical therapy intervention timing and approach.</div>
+                    <div class="image-click-hint">💡 Click image to zoom</div>
+                </div>
+
+                <!-- Knowledge Check for Module 1 -->
+                <div class="knowledge-check">
+                    <h3>🧠 Knowledge Check - Module 1</h3>
+                    <div class="question">
+                        A 35-year-old patient presents with low back pain and reports new onset bowel incontinence. What is the MOST appropriate immediate action?
+                    </div>
+                    <div class="answer-options">
+                        <label class="answer-option">
+                            <input type="radio" name="q1" value="A">
+                            A) Begin lumbar spine examination with special tests
+                        </label>
+                        <label class="answer-option">
+                            <input type="radio" name="q1" value="B">
+                            B) Apply heat and electrical stimulation
+                        </label>
+                        <label class="answer-option">
+                            <input type="radio" name="q1" value="C">
+                            C) Immediately refer to emergency department for potential cauda equina syndrome
+                        </label>
+                        <label class="answer-option">
+                            <input type="radio" name="q1" value="D">
+                            D) Schedule a follow-up appointment in 2 weeks
+                        </label>
+                    </div>
+                    <button class="check-answer-btn" onclick="checkAnswer(1, 'C')">Check Answer</button>
+                    <div class="feedback" id="feedback-1"></div>
+                    <button class="continue-btn" id="continue-1" onclick="unlockNextModule(2)">Continue to Module 2</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Module 2 -->
+        <div class="module-container" id="module-2">
+            <div class="module-header locked" onclick="toggleModule(2)">
+                <div class="module-title">Module 2: Cervical Spine (15 min)</div>
+                <div class="module-status">
+                    <span class="module-icon">🔒</span>
+                    <span>Complete Module 1</span>
+                </div>
+            </div>
+            <div class="module-content" id="content-2">
+                <h2>2.1 Anatomy</h2>
+
+                <div class="figure-box">
+                    <span class="figure-number">FIGURE 5: Cervical Spine Anatomy — Gray's Anatomy Plates (1918)</span>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin: 1rem 0;">
+                        <div style="text-align: center;">
+                            <img src="images/gray86_atlas.png" alt="Atlas (C1)" style="width: 100%; max-width: 250px; height: auto; border: 1px solid #ddd; cursor: pointer;" onclick="zoomImage(this)">
+                            <div style="font-size: 0.85rem; margin-top: 0.5rem;"><strong>Plate 86:</strong> Atlas (C1)</div>
+                        </div>
+                        <div style="text-align: center;">
+                            <img src="images/gray87_axis_above.png" onclick="zoomImage(this)" style="cursor: pointer;" alt="Axis (C2) from above" style="width: 100%; max-width: 250px; height: auto; border: 1px solid #ddd;">
+                            <div style="font-size: 0.85rem; margin-top: 0.5rem;"><strong>Plate 87:</strong> Axis (C2) — superior view</div>
+                        </div>
+                        <div style="text-align: center;">
+                            <img src="images/gray88_axis_side.png" alt="Axis (C2) from side" style="width: 100%; max-width: 250px; height: auto; border: 1px solid #ddd;">
+                            <div style="font-size: 0.85rem; margin-top: 0.5rem;"><strong>Plate 88:</strong> Axis (C2) — lateral view</div>
+                        </div>
+                        <div style="text-align: center;">
+                            <img src="images/gray85_cervical_vertebra_typical.png" alt="Typical cervical vertebra" style="width: 100%; max-width: 250px; height: auto; border: 1px solid #ddd;">
+                            <div style="font-size: 0.85rem; margin-top: 0.5rem;"><strong>Plate 85:</strong> Typical vertebra (C3-C6)</div>
+                        </div>
+                        <div style="text-align: center;">
+                            <img src="images/gray89_vertebra_prominens.png" alt="Vertebra prominens (C7)" style="width: 100%; max-width: 250px; height: auto; border: 1px solid #ddd;">
+                            <div style="font-size: 0.85rem; margin-top: 0.5rem;"><strong>Plate 89:</strong> Vertebra prominens (C7)</div>
+                        </div>
+                    </div>
+                    <div class="figure-caption">Classic anatomical illustrations from Henry Gray's <em>Anatomy of the Human Body</em>, 20th edition (1918). Plate 86: Atlas (C1) — supports the skull; Plate 87-88: Axis (C2) — features the dens for rotational movement; Plate 85: Typical cervical vertebra (C3-C6); Plate 89: Vertebra prominens (C7) — long spinous process landmark. Public domain.</div>
+                    <div class="image-click-hint">💡 Click any image to zoom for better text readability</div>
+                </div>
+
+                <h3>Upper Cervical (C0-C2)</h3>
+                <ul>
+                    <li>C0-C1: 50% of flexion/extension</li>
+                    <li>C1-C2: 50% of rotation via dens pivot</li>
+                    <li>Vertebral arteries vulnerable to manipulation</li>
+                </ul>
+
+                <h3>Lower Cervical (C3-C7)</h3>
+                <ul>
+                    <li>Discs C2-C7</li>
+                    <li>Uncovertebral joints guide movement</li>
+                    <li>Facet joints at 45 degrees</li>
+                </ul>
+
+                <h2>2.2 Cervical ROM</h2>
+                <table>
+                    <tr><th>Movement</th><th>Normal</th><th>Functional</th></tr>
+                    <tr><td>Flexion</td><td>0-80</td><td>0-45</td></tr>
+                    <tr><td>Extension</td><td>0-70</td><td>0-45</td></tr>
+                    <tr><td>Side bend</td><td>0-45</td><td>0-30</td></tr>
+                    <tr><td>Rotation</td><td>0-80</td><td>0-60</td></tr>
+                </table>
+
+                <h2>2.3 Special Tests</h2>
+
+                <div class="test-box">
+                    <strong>Spurling's Test (Foraminal Compression)</strong><br>
+                    Purpose: Cervical nerve root compression<br>
+                    Technique: Extend, laterally flex, rotate toward symptomatic side; apply axial compression<br>
+                    Positive: Radicular arm symptoms<br>
+                    Accuracy: Sens 30%, Spec 93% (highly specific)<br>
+                    Contraindications: Severe osteoporosis, fracture, vertebral artery insufficiency
+                </div>
+
+                <div class="figure-box">
+                    <span class="figure-number">FIGURE 6: Spurling's Test Illustration</span>
+                    <img src="images/figure_7_spurling.svg?v=3" alt="Spurling's test illustration" onclick="zoomImage(this)">
+                    <div class="figure-caption">Illustration showing examiner performing Spurling's test on seated patient. Patient's neck is extended, laterally flexed, and rotated toward the symptomatic side while examiner applies gentle axial compression through the head. Arrows indicate direction of movement and force application.</div>
+                    <div class="image-click-hint">💡 Click image to zoom</div>
+                </div>
+
+                <div class="test-box">
+                    <strong>Distraction Test</strong><br>
+                    Purpose: Confirm radiculopathy by relieving compression<br>
+                    Technique: Supine; gently lift head to distract spine<br>
+                    Positive: Reduction of radicular symptoms<br>
+                    Accuracy: Sens 44%, Spec 90%
+                </div>
+
+                <div class="figure-box">
+                    <span class="figure-number">FIGURE 7: Cervical Distraction Test Illustration</span>
+                    <img src="images/figure_distraction_test.svg" alt="Cervical distraction test illustration" onclick="zoomImage(this)">
+                    <div class="figure-caption">Illustration showing therapist performing cervical distraction test. One hand supports the occiput while the other hand controls the chin/jaw. Upward traction opens intervertebral foramina, reducing nerve root compression and relieving radicular symptoms.</div>
+                    <div class="image-click-hint">💡 Click image to zoom</div>
+                </div>
+
+                <div class="test-box">
+                    <strong>Vertebral Artery Test</strong><br>
+                    Purpose: Screen before manipulation<br>
+                    Technique: Supine; passively extend, rotate, side-bend; hold 10-30 seconds<br>
+                    Positive: Nystagmus, dizziness, nausea, visual changes, dysarthria<br>
+                    Note: Poor sensitivity but standard precaution
+                </div>
+
+                <h2>2.4 Cervical Radiculopathy by Level</h2>
+                <table>
+                    <tr><th>Level</th><th>Motor</th><th>Sensory</th><th>Reflex</th></tr>
+                    <tr><td>C5</td><td>Shoulder abd, elbow flex</td><td>Lateral arm</td><td>Biceps</td></tr>
+                    <tr><td>C6</td><td>Wrist ext, elbow flex</td><td>Lateral forearm, thumb</td><td>Brachioradialis</td></tr>
+                    <tr><td>C7</td><td>Elbow ext, wrist flex</td><td>Posterior arm, middle finger</td><td>Triceps</td></tr>
+                    <tr><td>C8</td><td>Finger flex, hand intrinsics</td><td>Ulnar forearm, little finger</td><td>None</td></tr>
+                    <tr><td>T1</td><td>Hand intrinsics</td><td>Medial arm</td><td>None</td></tr>
+                </table>
+
+                <div class="figure-box">
+                    <span class="figure-number">FIGURE 8: Upper Extremity Dermatomes (C5-T1)</span>
+                    <img src="images/figure_8_gray_dermatomes_anterior.png" alt="Gray's Anatomy upper extremity dermatome map">
+                    <div class="figure-caption">Gray's Anatomy Plate 812: Segmental distribution of the cutaneous nerves of the right upper extremity, anterior view. Public domain image from Gray's Anatomy, 20th edition (1918). Shows dermatomal distribution of C5-T1 nerve roots.</div>
+                </div>
+
+                <!-- Knowledge Check for Module 2 -->
+                <div class="knowledge-check">
+                    <h3>🧠 Knowledge Check - Module 2</h3>
+                    <div class="question">
+                        Spurling's test is positive in a patient with neck pain. What does this indicate, and what is the diagnostic significance?
+                    </div>
+                    <div class="answer-options">
+                        <label class="answer-option">
+                            <input type="radio" name="q2" value="A">
+                            A) Vertebral artery insufficiency; highly sensitive test
+                        </label>
+                        <label class="answer-option">
+                            <input type="radio" name="q2" value="B">
+                            B) Cervical nerve root compression; highly specific test (93% specificity)
+                        </label>
+                        <label class="answer-option">
+                            <input type="radio" name="q2" value="C">
+                            C) Upper cervical instability; moderately sensitive and specific
+                        </label>
+                        <label class="answer-option">
+                            <input type="radio" name="q2" value="D">
+                            D) Cervical muscle strain; highly sensitive but not specific
+                        </label>
+                    </div>
+                    <button class="check-answer-btn" onclick="checkAnswer(2, 'B')">Check Answer</button>
+                    <div class="feedback" id="feedback-2"></div>
+                    <button class="continue-btn" id="continue-2" onclick="unlockNextModule(3)">Continue to Module 3</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Module 3 -->
+        <div class="module-container" id="module-3">
+            <div class="module-header locked" onclick="toggleModule(3)">
+                <div class="module-title">Module 3: Thoracic Spine (12 min)</div>
+                <div class="module-status">
+                    <span class="module-icon">🔒</span>
+                    <span>Complete Module 2</span>
+                </div>
+            </div>
+            <div class="module-content" id="content-3">
+                <h2>3.1 Anatomy</h2>
+
+                <div class="figure-box">
+                    <span class="figure-number">FIGURE 9: Thoracic Spine Anatomy — Gray's Anatomy Plates (1918)</span>
+                    <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 1rem; margin: 1rem 0;">
+                        <div style="text-align: center; flex: 0 1 auto;">
+                            <img src="images/gray90_thoracic_vertebra.png" alt="Thoracic vertebra" style="width: 100%; max-width: 400px; height: auto; border: 1px solid #ddd;">
+                            <div style="font-size: 0.85rem; margin-top: 0.5rem;"><strong>Plate 90:</strong> Thoracic vertebra</div>
+                        </div>
+                        <div style="text-align: center; flex: 0 1 auto;">
+                            <img src="images/gray91_peculiar_thoracic.png" alt="Peculiar thoracic vertebrae" style="width: 100%; max-width: 400px; height: auto; border: 1px solid #ddd;">
+                            <div style="font-size: 0.85rem; margin-top: 0.5rem;"><strong>Plate 91:</strong> Peculiar thoracic vertebrae</div>
+                        </div>
+                    </div>
+                    <div class="figure-caption">Classic anatomical illustrations from Henry Gray's <em>Anatomy of the Human Body</em>, 20th edition (1918). Plate 90: Typical thoracic vertebra with costal facets; Plate 91: Comparative view showing variations at different thoracic levels (T1 transitional, T10-T12 lumbar-like characteristics). Public domain.</div>
+                </div>
+
+                <ul>
+                    <li>Rib articulations T1-T12</li>
+                    <li>Kyphosis 20-45 degrees normal</li>
+                    <li>Facet joints frontal plane = more rotation, less flex/ext</li>
+                    <li>Narrowest spinal canal region</li>
+                </ul>
+
+                <h2>3.2 Thoracic ROM</h2>
+                <table>
+                    <tr><th>Movement</th><th>Range</th></tr>
+                    <tr><td>Flexion</td><td>20-45</td></tr>
+                    <tr><td>Extension</td><td>15-25</td></tr>
+                    <tr><td>Side bend</td><td>20-40 each</td></tr>
+                    <tr><td>Rotation</td><td>30-35 each (greatest in spine)</td></tr>
+                </table>
+
+                <h2>3.3 Special Tests</h2>
+
+                <div class="test-box">
+                    <strong>Thoracic Rotation Test</strong><br>
+                    Purpose: Assess thoracic mobility<br>
+                    Technique: Seated, arms crossed; rotate trunk while stabilizing pelvis<br>
+                    Significance: Restriction indicates hypomobility
+                </div>
+
+                <div class="test-box">
+                    <strong>First Rib Mobility Test</strong><br>
+                    Purpose: Assess first rib hypomobility (common in TOS)<br>
+                    Technique: Supine; palpate first rib anterolateral to T1; assess mobility with respiration
+                </div>
+
+                <div class="caution-box">
+                    <strong>Thoracic Differential Diagnosis:</strong> Thoracic pain can mimic cardiac, pulmonary, GI pathology. Screen for chest pressure, SOB, nausea, fever.
+                </div>
+
+                <!-- Knowledge Check for Module 3 -->
+                <div class="knowledge-check">
+                    <h3>🧠 Knowledge Check - Module 3</h3>
+                    <div class="question">
+                        Which movement has the greatest range of motion in the thoracic spine compared to other spinal regions?
+                    </div>
+                    <div class="answer-options">
+                        <label class="answer-option">
+                            <input type="radio" name="q3" value="A">
+                            A) Flexion (20-45 degrees)
+                        </label>
+                        <label class="answer-option">
+                            <input type="radio" name="q3" value="B">
+                            B) Extension (15-25 degrees)
+                        </label>
+                        <label class="answer-option">
+                            <input type="radio" name="q3" value="C">
+                            C) Rotation (30-35 degrees each direction)
+                        </label>
+                        <label class="answer-option">
+                            <input type="radio" name="q3" value="D">
+                            D) Side bending (20-40 degrees each direction)
+                        </label>
+                    </div>
+                    <button class="check-answer-btn" onclick="checkAnswer(3, 'C')">Check Answer</button>
+                    <div class="feedback" id="feedback-3"></div>
+                    <button class="continue-btn" id="continue-3" onclick="showMoreModulesMessage()">Continue to Module 4</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Module 4 -->
+        <div class="module-container" id="module-4">
+            <div class="module-header locked" onclick="toggleModule(4)">
+                <div class="module-title">Module 4: Lumbar Spine (18 min)</div>
+                <div class="module-status">
+                    <span class="module-icon">🔒</span>
+                    <span>Complete Module 3</span>
+                </div>
+            </div>
+            <div class="module-content" id="content-4">
+                <h2>4.1 Anatomy</h2>
+
+                <div class="figure-box">
+                    <span class="figure-number">FIGURE 10: Lumbar Spine Anatomy — Gray's Anatomy Plates (1918)</span>
+                    <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 1rem; margin: 1rem 0;">
+                        <div style="text-align: center; flex: 0 1 auto;">
+                            <img src="images/gray92_lumbar_side.png" alt="Lumbar vertebra from the side" style="width: 100%; max-width: 400px; height: auto; border: 1px solid #ddd; cursor: pointer;" onclick="zoomImage(this)">
+                            <div style="font-size: 0.85rem; margin-top: 0.5rem;"><strong>Plate 92:</strong> Lumbar vertebra from the side</div>
+                        </div>
+                        <div style="text-align: center; flex: 0 1 auto;">
+                            <img src="images/gray93_lumbar_above_behind.png" alt="Lumbar vertebra from above and behind" style="width: 100%; max-width: 400px; height: auto; border: 1px solid #ddd; cursor: pointer;" onclick="zoomImage(this)">
+                            <div style="font-size: 0.85rem; margin-top: 0.5rem;"><strong>Plate 93:</strong> Lumbar vertebra from above and behind</div>
+                        </div>
+                        <div style="text-align: center; flex: 0 1 auto;">
+                            <img src="images/gray94_lumbar_above.png" alt="Lumbar vertebra from above" style="width: 100%; max-width: 400px; height: auto; border: 1px solid #ddd; cursor: pointer;" onclick="zoomImage(this)">
+                            <div style="font-size: 0.85rem; margin-top: 0.5rem;"><strong>Plate 94:</strong> Lumbar vertebra from above</div>
+                        </div>
+                    </div>
+                    <div class="figure-caption">Gray's Anatomy (1918) plates showing lumbar vertebra anatomy. Plate 92 (lateral view) demonstrates the massive kidney-shaped vertebral body designed for weight bearing, long spinous process, and thick transverse processes. Plate 93 (superior-posterior oblique) shows the vertebral arch structures: thick pedicles, broad laminae, and triangular vertebral foramen. Plate 94 (superior view) reveals the large central canal accommodating the cauda equina and the medially-facing superior articular facets.</div>
+                    <div class="image-click-hint">💡 Click any image to zoom for better text readability</div>
+                </div>
+
+                <ul>
+                    <li>Five vertebrae (L1-L5)</li>
+                    <li>Large vertebral bodies for weight bearing</li>
+                    <li>Thickest discs in spine (1/3 of lumbar height)</li>
+                    <li>Facet joints sagittal plane = flex/ext, limited rotation</li>
+                </ul>
+
+                <h2>4.2 Lumbar Nerve Roots</h2>
+                <table>
+                    <tr><th>Level</th><th>Motor</th><th>Sensory</th><th>Reflex</th></tr>
+                    <tr><td>L3</td><td>Knee extension</td><td>Medial knee</td><td>Patellar</td></tr>
+                    <tr><td>L4</td><td>Ankle dorsiflexion</td><td>Medial leg/foot</td><td>Patellar</td></tr>
+                    <tr><td>L5</td><td>Great toe extension, hip abd</td><td>Lateral leg, dorsum foot</td><td>Medial hamstring</td></tr>
+                    <tr><td>S1</td><td>Ankle plantarflexion, hip ext</td><td>Lateral foot, sole</td><td>Achilles</td></tr>
+                </table>
+
+                <h2>4.3 Special Tests</h2>
+
+                <div class="test-box">
+                    <strong>Straight Leg Raise (SLR)</strong><br>
+                    Purpose: Lumbar radiculopathy, nerve root tension<br>
+                    Technique: Supine; passively lift extended leg by ankle<br>
+                    Positive: Radicular pain 30-70 degrees<br>
+                    Accuracy: Sens 91%, Spec 26% (highly sensitive, poorly specific)<br>
+                    Crossed SLR (raise unaffected leg produces symptoms): Sens 29%, Spec 88% (highly specific)
+                </div>
+
+                <div class="test-box">
+                    <strong>Slump Test</strong><br>
+                    Purpose: Neural tension (more sensitive for central disc)<br>
+                    Technique: Seated slump with progressive cervical flexion, knee extension, ankle dorsiflexion<br>
+                    Positive: Symptom reproduction; relieved with cervical extension
+                </div>
+
+                <div class="test-box">
+                    <strong>Prone Instability Test</strong><br>
+                    Purpose: Identify patients who may benefit from stabilization<br>
+                    Technique: Prone; passive extension to pain; then patient lifts legs activating stabilizers<br>
+                    Positive: Pain reduces with muscle activation
+                </div>
+
+                <h2>4.4 Low Back Pain Classification</h2>
+                <table>
+                    <tr><th>Category</th><th>Percentage</th></tr>
+                    <tr><td>Nonspecific mechanical</td><td>85-90%</td></tr>
+                    <tr><td>Radiculopathy (sciatica)</td><td>5-10%</td></tr>
+                    <tr><td>Serious pathology</td><td>1-2%</td></tr>
+                    <tr><td>Inflammatory</td><td>&lt;1%</td></tr>
+                </table>
+
+                <!-- Knowledge Check for Module 4 -->
+                <div class="knowledge-check">
+                    <h3>🧠 Knowledge Check - Module 4</h3>
+                    <div class="question">
+                        A positive straight leg raise test at 45 degrees with radicular symptoms suggests:
+                    </div>
+                    <div class="answer-options">
+                        <label class="answer-option">
+                            <input type="radio" name="q4" value="A">
+                            A) Hip impingement - the test is not specific for lumbar pathology
+                        </label>
+                        <label class="answer-option">
+                            <input type="radio" name="q4" value="B">
+                            B) Lumbar radiculopathy - this is a highly sensitive test for nerve root tension
+                        </label>
+                        <label class="answer-option">
+                            <input type="radio" name="q4" value="C">
+                            C) Hamstring tightness - symptoms should occur later in range
+                        </label>
+                        <label class="answer-option">
+                            <input type="radio" name="q4" value="D">
+                            D) Sacroiliac joint dysfunction - wrong test for SI joint pathology
+                        </label>
+                    </div>
+                    <button class="check-answer-btn" onclick="checkAnswer(4, 'B')">Check Answer</button>
+                    <div class="feedback" id="feedback-4"></div>
+                    <button class="continue-btn" id="continue-4" onclick="unlockNextModule(5)">Continue to Module 5</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Module 5 -->
+        <div class="module-container" id="module-5">
+            <div class="module-header locked" onclick="toggleModule(5)">
+                <div class="module-title">Module 5: Sacroiliac Joint (10 min)</div>
+                <div class="module-status">
+                    <span class="module-icon">🔒</span>
+                    <span>Complete Module 4</span>
+                </div>
+            </div>
+            <div class="module-content" id="content-5">
+                <h2>5.1 Anatomy</h2>
+
+                <ul>
+                    <li>Articular surfaces: auricular (ear-shaped)</li>
+                    <li>Minimal movement (2-3 degrees rotation, 1-2mm translation)</li>
+                    <li>Strong ligamentous support</li>
+                    <li>Transmits forces between spine and lower extremities</li>
+                </ul>
+
+                <h2>5.2 Special Tests</h2>
+
+                <div class="test-box">
+                    <strong>FABER Test (Patrick's Test)</strong><br>
+                    Purpose: Differentiate hip vs SI joint pathology<br>
+                    Technique: Supine; foot on opposite knee (figure-4), stabilize contralateral ASIS, apply downward pressure<br>
+                    Interpretation: Groin pain = hip; posterior pain = SI joint
+                </div>
+
+                <div class="test-box">
+                    <strong>Gaenslen's Test</strong><br>
+                    Purpose: SI joint stress test<br>
+                    Technique: Supine at table edge; one leg off table extended, opposite hip flexed to chest<br>
+                    Positive: SI pain on extended side
+                </div>
+
+                <div class="test-box">
+                    <strong>Thigh Thrust (Femoral Shear)</strong><br>
+                    Purpose: SI joint dysfunction<br>
+                    Technique: Supine; hip flexed 90, examiner applies posterior shear through femur<br>
+                    Positive: Posterior SI pain
+                </div>
+
+                <div class="test-box">
+                    <strong>Sacroiliac Compression Test</strong><br>
+                    Purpose: SI joint pathology<br>
+                    Technique: Side-lying; examiner applies downward pressure through pelvis<br>
+                    Positive: SI joint pain
+                </div>
+
+                <div class="clinical-pearl">
+                    <strong>SI Joint Cluster:</strong> Three or more positive tests increases likelihood of SI joint dysfunction (Sens 94%, Spec 78%).
+                </div>
+
+                <!-- Knowledge Check for Module 5 -->
+                <div class="knowledge-check">
+                    <h3>🧠 Knowledge Check - Module 5</h3>
+                    <div class="question">
+                        A patient has positive FABER test with groin pain. This suggests:
+                    </div>
+                    <div class="answer-options">
+                        <label class="answer-option">
+                            <input type="radio" name="q5" value="A">
+                            A) Sacroiliac joint dysfunction - FABER stresses the SI joint
+                        </label>
+                        <label class="answer-option">
+                            <input type="radio" name="q5" value="B">
+                            B) Hip pathology - groin pain indicates hip involvement, not SI joint
+                        </label>
+                        <label class="answer-option">
+                            <input type="radio" name="q5" value="C">
+                            C) Lumbar spine pathology - the test position stresses L4-5
+                        </label>
+                        <label class="answer-option">
+                            <input type="radio" name="q5" value="D">
+                            D) Iliopsoas tightness - this is the primary muscle being stretched
+                        </label>
+                    </div>
+                    <button class="check-answer-btn" onclick="checkAnswer(5, 'B')">Check Answer</button>
+                    <div class="feedback" id="feedback-5"></div>
+                    <button class="continue-btn" id="continue-5" onclick="unlockNextModule(6)">Continue to Module 6</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Module 6 -->
+        <div class="module-container" id="module-6">
+            <div class="module-header locked" onclick="toggleModule(6)">
+                <div class="module-title">Module 6: Shoulder (18 min)</div>
+                <div class="module-status">
+                    <span class="module-icon">🔒</span>
+                    <span>Complete Module 5</span>
+                </div>
+            </div>
+            <div class="module-content" id="content-6">
+                <h2>6.1 Anatomy</h2>
+
+                <h3>Four Joints of Shoulder Complex</h3>
+                <ul>
+                    <li><strong>Glenohumeral:</strong> Primary shoulder joint; ball and socket</li>
+                    <li><strong>Acromioclavicular (AC):</strong> Connects clavicle to scapula</li>
+                    <li><strong>Sternoclavicular (SC):</strong> Only axial skeleton attachment</li>
+                    <li><strong>Scapulothoracic:</strong> Not true joint; movement on rib cage</li>
+                </ul>
+
+                <h3>Rotator Cuff</h3>
+                <ul>
+                    <li><strong>SITS muscles:</strong> Supraspinatus, Infraspinatus, Teres minor, Subscapularis</li>
+                    <li>Function: Dynamic stabilization and humeral head centering</li>
+                </ul>
+
+                <h2>6.2 Shoulder ROM</h2>
+                <table>
+                    <tr><th>Movement</th><th>Normal</th><th>Functional</th></tr>
+                    <tr><td>Flexion</td><td>0-180</td><td>140-160</td></tr>
+                    <tr><td>Extension</td><td>0-60</td><td>45</td></tr>
+                    <tr><td>Abduction</td><td>0-180</td><td>120</td></tr>
+                    <tr><td>Internal rotation</td><td>0-70</td><td>50 (toileting)</td></tr>
+                    <tr><td>External rotation</td><td>0-90</td><td>60-70</td></tr>
+                </table>
+
+                <h2>6.3 Special Tests</h2>
+
+                <div class="test-box">
+                    <strong>Neer Impingement Test</strong><br>
+                    Purpose: Subacromial impingement<br>
+                    Technique: Stabilize scapula; forcibly elevate arm in forward flexion with internal rotation<br>
+                    Positive: Pain in 60-120 arc<br>
+                    Accuracy: Sens 79%, Spec 53%
+                </div>
+
+                <div class="test-box">
+                    <strong>Hawkins-Kennedy Test</strong><br>
+                    Purpose: Subacromial impingement<br>
+                    Technique: Shoulder flexed 90; forcibly internally rotate<br>
+                    Positive: Pain<br>
+                    Accuracy: Sens 79%, Spec 59%
+                </div>
+
+                <div class="test-box">
+                    <strong>Empty Can Test (Jobe's Test)</strong><br>
+                    Purpose: Supraspinatus tear<br>
+                    Technique: Arms in scapular plane, thumbs down; resist abduction<br>
+                    Positive: Pain or weakness<br>
+                    Accuracy: Sens 86%, Spec 50%
+                </div>
+
+                <!-- Knowledge Check for Module 6 -->
+                <div class="knowledge-check">
+                    <h3>🧠 Knowledge Check - Module 6</h3>
+                    <div class="question">
+                        A positive Empty Can test (Jobe's test) primarily indicates pathology of which muscle?
+                    </div>
+                    <div class="answer-options">
+                        <label class="answer-option">
+                            <input type="radio" name="q6" value="A">
+                            A) Infraspinatus - this muscle primarily provides external rotation
+                        </label>
+                        <label class="answer-option">
+                            <input type="radio" name="q6" value="B">
+                            B) Supraspinatus - this test specifically targets the supraspinatus muscle
+                        </label>
+                        <label class="answer-option">
+                            <input type="radio" name="q6" value="C">
+                            C) Subscapularis - this muscle provides internal rotation
+                        </label>
+                        <label class="answer-option">
+                            <input type="radio" name="q6" value="D">
+                            D) Teres minor - this is a secondary external rotator
+                        </label>
+                    </div>
+                    <button class="check-answer-btn" onclick="checkAnswer(6, 'B')">Check Answer</button>
+                    <div class="feedback" id="feedback-6"></div>
+                    <button class="continue-btn" id="continue-6" onclick="unlockNextModule(7)">Continue to Module 7</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Module 7 -->
+        <div class="module-container" id="module-7">
+            <div class="module-header locked" onclick="toggleModule(7)">
+                <div class="module-title">Module 7: Elbow (10 min)</div>
+                <div class="module-status">
+                    <span class="module-icon">🔒</span>
+                    <span>Complete Module 6</span>
+                </div>
+            </div>
+            <div class="module-content" id="content-7">
+                <h2>7.1 Anatomy</h2>
+
+                <ul>
+                    <li><strong>Humeroulnar:</strong> Hinge joint for flexion/extension</li>
+                    <li><strong>Humeroradial:</strong> Flexion/extension and forearm rotation</li>
+                    <li><strong>Proximal radioulnar:</strong> Forearm pronation/supination</li>
+                    <li><strong>Valgus stabilizers:</strong> UCL (anterior bundle primary)</li>
+                </ul>
+
+                <h2>7.2 Elbow ROM</h2>
+                <table>
+                    <tr><th>Movement</th><th>Normal</th><th>Functional</th></tr>
+                    <tr><td>Flexion</td><td>0-150</td><td>30-130 (ADL)</td></tr>
+                    <tr><td>Pronation</td><td>0-80</td><td>50</td></tr>
+                    <tr><td>Supination</td><td>0-80</td><td>50</td></tr>
+                </table>
+
+                <h2>7.3 Special Tests</h2>
+
+                <div class="test-box">
+                    <strong>Cozen Test</strong><br>
+                    Purpose: Lateral epicondylitis (tennis elbow)<br>
+                    Technique: Elbow extended, forearm pronated, wrist extended; resist wrist extension<br>
+                    Positive: Lateral elbow pain
+                </div>
+
+                <div class="test-box">
+                    <strong>Medial Epicondylitis Test</strong><br>
+                    Purpose: Golfer's elbow<br>
+                    Technique: Elbow extended, forearm supinated; resist wrist flexion and forearm pronation<br>
+                    Positive: Medial elbow pain
+                </div>
+
+                <div class="test-box">
+                    <strong>Valgus Stress Test</strong><br>
+                    Purpose: UCL integrity (thrower's elbow)<br>
+                    Technique: Elbow flexed 20-30; stabilize humerus, apply valgus force at elbow<br>
+                    Positive: Pain or laxity at medial elbow
+                </div>
+
+                <!-- Knowledge Check for Module 7 -->
+                <div class="knowledge-check">
+                    <h3>🧠 Knowledge Check - Module 7</h3>
+                    <div class="question">
+                        A positive Cozen test indicates which condition?
+                    </div>
+                    <div class="answer-options">
+                        <label class="answer-option">
+                            <input type="radio" name="q7" value="A">
+                            A) Medial epicondylitis (golfer's elbow) affecting the flexor-pronator mass
+                        </label>
+                        <label class="answer-option">
+                            <input type="radio" name="q7" value="B">
+                            B) Lateral epicondylitis (tennis elbow) affecting the extensor tendon origin
+                        </label>
+                        <label class="answer-option">
+                            <input type="radio" name="q7" value="C">
+                            C) Ulnar collateral ligament injury from valgus stress
+                        </label>
+                        <label class="answer-option">
+                            <input type="radio" name="q7" value="D">
+                            D) Ulnar nerve compression at the cubital tunnel
+                        </label>
+                    </div>
+                    <button class="check-answer-btn" onclick="checkAnswer(7, 'B')">Check Answer</button>
+                    <div class="feedback" id="feedback-7"></div>
+                    <button class="continue-btn" id="continue-7" onclick="unlockNextModule(8)">Continue to Module 8</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Module 8 -->
+        <div class="module-container" id="module-8">
+            <div class="module-header locked" onclick="toggleModule(8)">
+                <div class="module-title">Module 8: Wrist and Hand (10 min)</div>
+                <div class="module-status">
+                    <span class="module-icon">🔒</span>
+                    <span>Complete Module 7</span>
+                </div>
+            </div>
+            <div class="module-content" id="content-8">
+                <h2>8.1 Anatomy</h2>
+
+                <ul>
+                    <li><strong>Radiocarpal joint:</strong> Radius, scaphoid, lunate, triquetrum</li>
+                    <li><strong>Midcarpal joint:</strong> Between proximal and distal carpal rows</li>
+                    <li><strong>TFCC:</strong> Triangular fibrocartilage complex; ulnar wrist stability</li>
+                    <li><strong>Carpal tunnel:</strong> Median nerve under transverse carpal ligament</li>
+                </ul>
+
+                <h2>8.2 Wrist ROM</h2>
+                <table>
+                    <tr><th>Movement</th><th>Normal</th></tr>
+                    <tr><td>Flexion</td><td>0-80</td></tr>
+                    <tr><td>Extension</td><td>0-70</td></tr>
+                    <tr><td>Radial deviation</td><td>0-20</td></tr>
+                    <tr><td>Ulnar deviation</td><td>0-30</td></tr>
+                </table>
+
+                <h2>8.3 Special Tests</h2>
+
+                <div class="test-box">
+                    <strong>Finkelstein Test</strong><br>
+                    Purpose: De Quervain's tenosynovitis<br>
+                    Technique: Thumb tucked in fist, ulnar deviate wrist<br>
+                    Positive: Pain over radial styloid
+                </div>
+
+                <div class="test-box">
+                    <strong>Phalen's Test</strong><br>
+                    Purpose: Carpal tunnel syndrome<br>
+                    Technique: Hold wrists in complete flexion for 60 seconds<br>
+                    Positive: Paresthesia in median nerve distribution<br>
+                    Accuracy: Sens 68%, Spec 73%
+                </div>
+
+                <div class="test-box">
+                    <strong>Carpal Compression Test</strong><br>
+                    Purpose: Carpal tunnel syndrome<br>
+                    Technique: Apply sustained pressure over carpal tunnel with thumb<br>
+                    Positive: Reproduction of symptoms within 30 seconds<br>
+                    Accuracy: Sens 87%, Spec 90%
+                </div>
+
+                <!-- Knowledge Check for Module 8 -->
+                <div class="knowledge-check">
+                    <h3>🧠 Knowledge Check - Module 8</h3>
+                    <div class="question">
+                        Which carpal tunnel syndrome test has the highest specificity (90%)?
+                    </div>
+                    <div class="answer-options">
+                        <label class="answer-option">
+                            <input type="radio" name="q8" value="A">
+                            A) Phalen's test - flexing wrists for 60 seconds
+                        </label>
+                        <label class="answer-option">
+                            <input type="radio" name="q8" value="B">
+                            B) Tinel's test - tapping over the carpal tunnel
+                        </label>
+                        <label class="answer-option">
+                            <input type="radio" name="q8" value="C">
+                            C) Carpal compression test - sustained pressure over tunnel
+                        </label>
+                        <label class="answer-option">
+                            <input type="radio" name="q8" value="D">
+                            D) Finkelstein test - testing for De Quervain's tenosynovitis
+                        </label>
+                    </div>
+                    <button class="check-answer-btn" onclick="checkAnswer(8, 'C')">Check Answer</button>
+                    <div class="feedback" id="feedback-8"></div>
+                    <button class="continue-btn" id="continue-8" onclick="unlockNextModule(9)">Continue to Module 9</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Module 9 -->
+        <div class="module-container" id="module-9">
+            <div class="module-header locked" onclick="toggleModule(9)">
+                <div class="module-title">Module 9: Hip (12 min)</div>
+                <div class="module-status">
+                    <span class="module-icon">🔒</span>
+                    <span>Complete Module 8</span>
+                </div>
+            </div>
+            <div class="module-content" id="content-9">
+                <h2>9.1 Anatomy</h2>
+
+                <ul>
+                    <li><strong>Ball and socket joint:</strong> Maximum mobility</li>
+                    <li><strong>Acetabular labrum:</strong> Deepens socket, provides stability</li>
+                    <li><strong>Ligamentum teres:</strong> Contains blood supply to femoral head</li>
+                    <li><strong>Capsular pattern:</strong> Flexion, abduction, internal rotation</li>
+                </ul>
+
+                <h2>9.2 Hip ROM</h2>
+                <table>
+                    <tr><th>Movement</th><th>Normal</th><th>Functional</th></tr>
+                    <tr><td>Flexion</td><td>0-120</td><td>90 (stairs)</td></tr>
+                    <tr><td>Extension</td><td>0-30</td><td>10 (gait)</td></tr>
+                    <tr><td>Abduction</td><td>0-45</td><td>20</td></tr>
+                    <tr><td>Adduction</td><td>0-30</td><td>10</td></tr>
+                    <tr><td>Internal rotation</td><td>0-45</td><td>10</td></tr>
+                    <tr><td>External rotation</td><td>0-45</td><td>10</td></tr>
+                </table>
+
+                <h2>9.3 Special Tests</h2>
+
+                <div class="test-box">
+                    <strong>FADIR Test (Hip Impingement)</strong><br>
+                    Purpose: Femoroacetabular impingement<br>
+                    Technique: Hip flexed, adducted, internally rotated<br>
+                    Positive: Anterior hip/groin pain<br>
+                    Accuracy: Sens 96%, Spec 25%
+                </div>
+
+                <div class="test-box">
+                    <strong>Thomas Test</strong><br>
+                    Purpose: Hip flexor tightness<br>
+                    Technique: Supine at table edge; pull opposite knee to chest<br>
+                    Positive: Test leg lifts off table (hip flexor tightness)
+                </div>
+
+                <div class="test-box">
+                    <strong>Trendelenburg Test</strong><br>
+                    Purpose: Gluteus medius weakness<br>
+                    Technique: Standing on one leg; observe pelvis<br>
+                    Positive: Contralateral pelvis drops
+                </div>
+
+                <!-- Knowledge Check for Module 9 -->
+                <div class="knowledge-check">
+                    <h3>🧠 Knowledge Check - Module 9</h3>
+                    <div class="question">
+                        A positive Trendelenburg test indicates weakness of which muscle?
+                    </div>
+                    <div class="answer-options">
+                        <label class="answer-option">
+                            <input type="radio" name="q9" value="A">
+                            A) Gluteus maximus - this muscle primarily extends the hip
+                        </label>
+                        <label class="answer-option">
+                            <input type="radio" name="q9" value="B">
+                            B) Gluteus medius - weakness causes contralateral pelvic drop
+                        </label>
+                        <label class="answer-option">
+                            <input type="radio" name="q9" value="C">
+                            C) Piriformis - this muscle provides external rotation and stability
+                        </label>
+                        <label class="answer-option">
+                            <input type="radio" name="q9" value="D">
+                            D) Tensor fasciae latae - this muscle assists with hip abduction
+                        </label>
+                    </div>
+                    <button class="check-answer-btn" onclick="checkAnswer(9, 'B')">Check Answer</button>
+                    <div class="feedback" id="feedback-9"></div>
+                    <button class="continue-btn" id="continue-9" onclick="unlockNextModule(10)">Continue to Module 10</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Module 10 -->
+        <div class="module-container" id="module-10">
+            <div class="module-header locked" onclick="toggleModule(10)">
+                <div class="module-title">Module 10: Knee (15 min)</div>
+                <div class="module-status">
+                    <span class="module-icon">🔒</span>
+                    <span>Complete Module 9</span>
+                </div>
+            </div>
+            <div class="module-content" id="content-10">
+                <h2>10.1 Anatomy</h2>
+
+                <h3>Bony Structures</h3>
+                <ul>
+                    <li>Femoral condyles (medial and lateral)</li>
+                    <li>Tibial plateau</li>
+                    <li>Patella (sesamoid bone in quadriceps tendon)</li>
+                    <li>Intercondylar eminence (tibial spines - ACL/PCL attachments)</li>
+                </ul>
+
+                <h3>Ligaments</h3>
+                <ul>
+                    <li><strong>ACL:</strong> Prevents anterior tibial translation, rotational stability</li>
+                    <li><strong>PCL:</strong> Prevents posterior tibial translation</li>
+                    <li><strong>MCL:</strong> Prevents valgus stress; superficial and deep layers</li>
+                    <li><strong>LCL:</strong> Prevents varus stress; cord-like structure</li>
+                </ul>
+
+                <h2>10.2 Special Tests - Ligaments</h2>
+
+                <div class="test-box">
+                    <strong>Lachman Test</strong><br>
+                    Purpose: ACL integrity - gold standard<br>
+                    Technique: Knee flexed 20-30; stabilize femur, pull tibia anteriorly<br>
+                    Positive: Excessive anterior translation or soft end-feel<br>
+                    Accuracy: Sens 85%, Spec 94%
+                </div>
+
+                <div class="test-box">
+                    <strong>Pivot Shift Test</strong><br>
+                    Purpose: ACL deficiency with rotational instability<br>
+                    Technique: Knee extended, internally rotated; apply valgus force while flexing knee<br>
+                    Positive: Clunk/reducible subluxation at 20-40 flexion<br>
+                    Accuracy: Sens 35-81%, Spec 98% (highly specific)
+                </div>
+
+                <div class="test-box">
+                    <strong>McMurray's Test</strong><br>
+                    Purpose: Meniscal tear<br>
+                    Technique: Knee fully flexed; externally rotate and apply valgus while extending (tests medial)<br>
+                    Positive: Click or pain at joint line<br>
+                    Accuracy: Sens 55%, Spec 77%
+                </div>
+
+                <!-- Knowledge Check for Module 10 -->
+                <div class="knowledge-check">
+                    <h3>🧠 Knowledge Check - Module 10</h3>
+                    <div class="question">
+                        Which test is considered the gold standard for ACL integrity?
+                    </div>
+                    <div class="answer-options">
+                        <label class="answer-option">
+                            <input type="radio" name="q10" value="A">
+                            A) Anterior drawer test - performed at 90 degrees knee flexion
+                        </label>
+                        <label class="answer-option">
+                            <input type="radio" name="q10" value="B">
+                            B) Pivot shift test - highly specific but difficult to perform
+                        </label>
+                        <label class="answer-option">
+                            <input type="radio" name="q10" value="C">
+                            C) Lachman test - performed at 20-30 degrees, most reliable
+                        </label>
+                        <label class="answer-option">
+                            <input type="radio" name="q10" value="D">
+                            D) McMurray's test - this tests meniscal integrity, not ACL
+                        </label>
+                    </div>
+                    <button class="check-answer-btn" onclick="checkAnswer(10, 'C')">Check Answer</button>
+                    <div class="feedback" id="feedback-10"></div>
+                    <button class="continue-btn" id="continue-10" onclick="unlockNextModule(11)">Continue to Module 11</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Module 11 -->
+        <div class="module-container" id="module-11">
+            <div class="module-header locked" onclick="toggleModule(11)">
+                <div class="module-title">Module 11: Ankle and Foot (12 min)</div>
+                <div class="module-status">
+                    <span class="module-icon">🔒</span>
+                    <span>Complete Module 10</span>
+                </div>
+            </div>
+            <div class="module-content" id="content-11">
+                <h2>11.1 Anatomy</h2>
+
+                <h3>Ankle Joint (Talocrural)</h3>
+                <ul>
+                    <li><strong>Mortise:</strong> Tibia, fibula, talus articulation</li>
+                    <li><strong>Medial ligaments (deltoid):</strong> Strong, fan-shaped; resists eversion</li>
+                    <li><strong>Lateral ligaments:</strong> ATFL, CFL, PTFL; resist inversion</li>
+                    <li><strong>ATFL:</strong> Most commonly sprained (inversion + plantarflexion)</li>
+                </ul>
+
+                <h2>11.2 Ankle ROM</h2>
+                <table>
+                    <tr><th>Movement</th><th>Normal</th><th>Functional</th></tr>
+                    <tr><td>Dorsiflexion</td><td>0-20</td><td>10 (stairs), 15 (squat)</td></tr>
+                    <tr><td>Plantarflexion</td><td>0-50</td><td>30 (gait)</td></tr>
+                    <tr><td>Inversion</td><td>0-35</td><td>15-20</td></tr>
+                    <tr><td>Eversion</td><td>0-15</td><td>5-10</td></tr>
+                </table>
+
+                <h2>11.3 Special Tests</h2>
+
+                <div class="test-box">
+                    <strong>Anterior Drawer Test (Ankle)</strong><br>
+                    Purpose: ATFL integrity (lateral ankle sprain)<br>
+                    Technique: Ankle slightly plantarflexed; stabilize tibia, pull talus anteriorly<br>
+                    Positive: Excessive anterior translation or pain<br>
+                    Accuracy: Sens 71%, Spec 68%
+                </div>
+
+                <div class="test-box">
+                    <strong>Thompson Test</strong><br>
+                    Purpose: Achilles tendon rupture<br>
+                    Technique: Prone; squeeze calf muscle belly<br>
+                    Positive: No plantarflexion of ankle<br>
+                    Accuracy: Sens 96%, Spec 93%
+                </div>
+
+                <h2>11.4 Ottawa Ankle Rules</h2>
+                <p><strong>Ankle X-ray indicated if:</strong></p>
+                <ul>
+                    <li>Bony tenderness at posterior edge or tip of lateral malleolus OR</li>
+                    <li>Bony tenderness at posterior edge or tip of medial malleolus OR</li>
+                    <li>Inability to bear weight both immediately and in ER (4 steps)</li>
+                </ul>
+
+                <div class="clinical-pearl">
+                    <strong>Ottawa Ankle Rules:</strong> Nearly 100% sensitivity for detecting fractures. If negative, no fracture present.
+                </div>
+
+                <!-- Knowledge Check for Module 11 -->
+                <div class="knowledge-check">
+                    <h3>🧠 Knowledge Check - Module 11</h3>
+                    <div class="question">
+                        A negative Thompson test indicates:
+                    </div>
+                    <div class="answer-options">
+                        <label class="answer-option">
+                            <input type="radio" name="q11" value="A">
+                            A) Achilles tendon rupture - no plantarflexion occurs with calf squeeze
+                        </label>
+                        <label class="answer-option">
+                            <input type="radio" name="q11" value="B">
+                            B) Intact Achilles tendon - normal plantarflexion occurs with calf squeeze
+                        </label>
+                        <label class="answer-option">
+                            <input type="radio" name="q11" value="C">
+                            C) Ankle sprain - lateral ligament involvement
+                        </label>
+                        <label class="answer-option">
+                            <input type="radio" name="q11" value="D">
+                            D) Tarsal tunnel syndrome - nerve compression symptoms
+                        </label>
+                    </div>
+                    <button class="check-answer-btn" onclick="checkAnswer(11, 'B')">Check Answer</button>
+                    <div class="feedback" id="feedback-11"></div>
+                    <button class="continue-btn" id="continue-11" onclick="unlockNextModule(12)">Continue to Module 12</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Module 12 -->
+        <div class="module-container" id="module-12">
+            <div class="module-header locked" onclick="toggleModule(12)">
+                <div class="module-title">Module 12: Clinical Reasoning (30 min)</div>
+                <div class="module-status">
+                    <span class="module-icon">🔒</span>
+                    <span>Complete Module 11</span>
+                </div>
+            </div>
+            <div class="module-content" id="content-12">
+                <h2>12.1 Evidence-Based Practice</h2>
+
+                <h3>The EBP Triad</h3>
+                <ul>
+                    <li><strong>Best Research Evidence:</strong> Systematic reviews, RCTs, clinical guidelines</li>
+                    <li><strong>Clinical Expertise:</strong> Your experience, training, and professional judgment</li>
+                    <li><strong>Patient Values:</strong> Patient preferences, expectations, and circumstances</li>
+                </ul>
+
+                <h2>12.2 Likelihood Ratios</h2>
+
+                <table>
+                    <tr><th>LR+ Value</th><th>Effect on Probability</th><th>Clinical Interpretation</th></tr>
+                    <tr><td>>10</td><td>Large increase</td><td>Test essentially rules in the condition</td></tr>
+                    <tr><td>5-10</td><td>Moderate increase</td><td>Substantially increases probability</td></tr>
+                    <tr><td>2-5</td><td>Small increase</td><td>Somewhat increases probability</td></tr>
+                    <tr><td>1-2</td><td>Minimal increase</td><td>Rarely changes clinical decision</td></tr>
+                </table>
+
+                <h2>12.3 SMART Goals</h2>
+
+                <ul>
+                    <li><strong>Specific:</strong> Clearly defined, not vague</li>
+                    <li><strong>Measurable:</strong> Quantifiable outcome</li>
+                    <li><strong>Achievable:</strong> Realistic given condition and timeframe</li>
+                    <li><strong>Relevant:</strong> Meaningful to the patient's life</li>
+                    <li><strong>Time-bound:</strong> Specific deadline for achievement</li>
+                </ul>
+
+                <h2>12.4 SOAP Documentation</h2>
+
+                <ul>
+                    <li><strong>Subjective:</strong> Patient's report in their own words</li>
+                    <li><strong>Objective:</strong> Measurable, observable findings</li>
+                    <li><strong>Assessment:</strong> Clinical conclusions and diagnosis</li>
+                    <li><strong>Plan:</strong> Treatment approach and next steps</li>
+                </ul>
+
+                <!-- Knowledge Check for Module 12 -->
+                <div class="knowledge-check">
+                    <h3>🧠 Knowledge Check - Module 12</h3>
+                    <div class="question">
+                        A test with a positive likelihood ratio (LR+) of 8.0 would be considered to have what effect on probability?
+                    </div>
+                    <div class="answer-options">
+                        <label class="answer-option">
+                            <input type="radio" name="q12" value="A">
+                            A) Minimal increase - rarely changes clinical decision making
+                        </label>
+                        <label class="answer-option">
+                            <input type="radio" name="q12" value="B">
+                            B) Small increase - somewhat increases probability of condition
+                        </label>
+                        <label class="answer-option">
+                            <input type="radio" name="q12" value="C">
+                            C) Moderate increase - substantially increases probability of condition
+                        </label>
+                        <label class="answer-option">
+                            <input type="radio" name="q12" value="D">
+                            D) Large increase - essentially rules in the condition
+                        </label>
+                    </div>
+                    <button class="check-answer-btn" onclick="checkAnswer(12, 'C')">Check Answer</button>
+                    <div class="feedback" id="feedback-12"></div>
+                    <button class="continue-btn" id="continue-12" onclick="showFinalAssessment()">Complete Course Content</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- References Section -->
+        <div class="module-container" id="references-section" style="display: none;">
+            <div class="module-header" style="background: linear-gradient(135deg, #059669, #0ea570);">
+                <div class="module-title">📚 References</div>
+                <div class="module-status">
+                    <span class="module-icon">📖</span>
+                    <span>Reference Materials</span>
+                </div>
+            </div>
+            <div class="module-content" style="display: block;">
+                <h2>Primary References</h2>
+                
+                <h3>Textbooks</h3>
+                <ol>
+                    <li>Magee DJ. <em>Orthopedic Physical Assessment</em>. 7th ed. St. Louis, MO: Elsevier; 2021.</li>
+                    <li>Cleland JA, Koppenhaver S, Su J. <em>Netter's Orthopaedic Clinical Examination: An Evidence-Based Approach</em>. 3rd ed. Philadelphia, PA: Elsevier; 2016.</li>
+                    <li>Dutton M. <em>Dutton's Orthopedic: Examination, Evaluation and Intervention</em>. 5th ed. New York: McGraw Hill; 2020.</li>
+                    <li>Hoppenfeld S. <em>Physical Examination of the Spine and Extremities</em>. Norwalk, CT: Appleton-Century-Crofts; 1976.</li>
+                    <li>Gray H. <em>Anatomy of the Human Body</em>. 20th ed. Philadelphia: Lea & Febiger; 1918. Public domain.</li>
+                </ol>
+
+                <h3>Journal Articles - Diagnostic Accuracy</h3>
+                <ol>
+                    <li>Scholten RJ, Mink van der Molen A, Uitdehaag BM, et al. Surgical treatment options for carpal tunnel syndrome. <em>Cochrane Database Syst Rev</em>. 2007;(4):CD003905.</li>
+                    <li>Coppieters MW, Stappaerts KH, Wouters LL, Janssens K. The immediate effects of a cervical lateral glide treatment technique in patients with neurogenic cervicobrachial pain. <em>J Orthop Sports Phys Ther</em>. 2003;33(7):369-378.</li>
+                    <li>Malanga GA, Landes P, Nadler SF. Provocative tests in cervical spine examination: historical basis and scientific analyses. <em>Pain Physician</em>. 2003;6(2):199-205.</li>
+                    <li>van der Windt DA, Simons E, Riphagen II, et al. Physical examination for lumbar radiculopathy due to disc herniation in patients with low-back pain. <em>Cochrane Database Syst Rev</em>. 2010;(2):CD007431.</li>
+                    <li>Laslett M, Aprill CN, McDonald B, Young SB. Diagnosis of sacroiliac joint pain: validity of individual provocation tests and composites of tests. <em>Man Ther</em>. 2005;10(3):207-218.</li>
+                </ol>
+
+                <h3>Clinical Practice Guidelines</h3>
+                <ol>
+                    <li>Childs JD, Cleland JA, Elliott JM, et al. Neck pain: Clinical practice guidelines linked to the International Classification of Functioning, Disability, and Health from the Orthopedic Section of the American Physical Therapy Association. <em>J Orthop Sports Phys Ther</em>. 2008;38(9):A1-A34.</li>
+                    <li>Delitto A, George SZ, Van Dillen LR, et al. Low back pain. <em>J Orthop Sports Phys Ther</em>. 2012;42(4):A1-A57.</li>
+                    <li>Kelley MJ, Shaffer MA, Kuhn JE, et al. Shoulder pain and mobility deficits: adhesive capsulitis. <em>J Orthop Sports Phys Ther</em>. 2013;43(5):A1-31.</li>
+                    <li>Martin RL, Davenport TE, Paulseth S, et al. Ankle stability and movement coordination impairments: ankle ligament sprains. <em>J Orthop Sports Phys Ther</em>. 2013;43(9):A1-40.</li>
+                </ol>
+
+                <h3>Evidence Synthesis</h3>
+                <ol>
+                    <li>Hegedus EJ, Goode A, Campbell S, et al. Physical examination tests of the shoulder: a systematic review with meta-analysis of individual tests. <em>Br J Sports Med</em>. 2008;42(2):80-92.</li>
+                    <li>Scholten-Peeters GG, Verhagen AP, Bekkering GE, et al. Prognostic factors of whiplash-associated disorders: a systematic review of prospective cohort studies. <em>Pain</em>. 2003;104(1-2):303-322.</li>
+                    <li>Devillé WL, van der Windt DA, Dzaferagic A, Bezemer PD, Bouter LM. The test of Lasègue: systematic review of the accuracy of diagnosing herniated discs. <em>Spine</em>. 2000;25(9):1140-1147.</li>
+                </ol>
+
+                <h3>Professional Organizations</h3>
+                <ul>
+                    <li>American Physical Therapy Association (APTA): <a href="https://www.apta.org" target="_blank">www.apta.org</a></li>
+                    <li>Orthopedic Section, APTA: <a href="https://www.orthopt.org" target="_blank">www.orthopt.org</a></li>
+                    <li>International Association for the Study of Pain: <a href="https://www.iasp-pain.org" target="_blank">www.iasp-pain.org</a></li>
+                </ul>
+
+                <div class="important-box" style="margin-top: 30px;">
+                    <h3>Continuing Education Credit</h3>
+                    <p>This course is designed for physical therapists, occupational therapists, and assistants seeking continuing education in musculoskeletal evaluation. All content is based on current evidence-based practice and established clinical guidelines.</p>
+                    <p><strong>Approval:</strong> This activity is approved for 3.0 CCUs by DrTroy Continuing Education.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Course Feedback -->
+        <div class="module-container" id="course-feedback" style="display: none;">
+            <div class="module-header" style="background: linear-gradient(135deg, #7c3aed, #a855f7);">
+                <div class="module-title">💬 Course Feedback</div>
+                <div class="module-status">
+                    <span class="module-icon">⭐</span>
+                    <span>Help Us Improve</span>
+                </div>
+            </div>
+            <div class="module-content" style="display: block;">
+                <h2>Course Evaluation</h2>
+                <p>Your feedback is essential for maintaining and improving the quality of our continuing education programs.</p>
+                
+                <form id="course-feedback-form">
+                    <div style="margin: 20px 0;">
+                        <label style="display: block; font-weight: bold; margin-bottom: 5px;">Overall Course Rating:</label>
+                        <div style="display: flex; gap: 10px; margin-bottom: 15px;">
+                            <label><input type="radio" name="overall-rating" value="5"> ⭐⭐⭐⭐⭐ Excellent</label>
+                            <label><input type="radio" name="overall-rating" value="4"> ⭐⭐⭐⭐ Good</label>
+                            <label><input type="radio" name="overall-rating" value="3"> ⭐⭐⭐ Average</label>
+                            <label><input type="radio" name="overall-rating" value="2"> ⭐⭐ Poor</label>
+                            <label><input type="radio" name="overall-rating" value="1"> ⭐ Very Poor</label>
+                        </div>
+                    </div>
+
+                    <div style="margin: 20px 0;">
+                        <label style="display: block; font-weight: bold; margin-bottom: 5px;">Content Quality:</label>
+                        <div style="display: flex; gap: 10px; margin-bottom: 15px;">
+                            <label><input type="radio" name="content-quality" value="5"> Excellent</label>
+                            <label><input type="radio" name="content-quality" value="4"> Good</label>
+                            <label><input type="radio" name="content-quality" value="3"> Average</label>
+                            <label><input type="radio" name="content-quality" value="2"> Poor</label>
+                        </div>
+                    </div>
+
+                    <div style="margin: 20px 0;">
+                        <label style="display: block; font-weight: bold; margin-bottom: 5px;">Learning Format (Progressive Modules):</label>
+                        <div style="display: flex; gap: 10px; margin-bottom: 15px;">
+                            <label><input type="radio" name="format-rating" value="5"> Excellent</label>
+                            <label><input type="radio" name="format-rating" value="4"> Good</label>
+                            <label><input type="radio" name="format-rating" value="3"> Average</label>
+                            <label><input type="radio" name="format-rating" value="2"> Poor</label>
+                        </div>
+                    </div>
+
+                    <div style="margin: 20px 0;">
+                        <label for="improvements" style="display: block; font-weight: bold; margin-bottom: 5px;">What could be improved?</label>
+                        <textarea id="improvements" name="improvements" rows="3" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;" placeholder="Optional suggestions for course improvements..."></textarea>
+                    </div>
+
+                    <div style="margin: 20px 0;">
+                        <label for="recommend" style="display: block; font-weight: bold; margin-bottom: 5px;">Would you recommend this course to colleagues?</label>
+                        <div style="display: flex; gap: 10px; margin-bottom: 15px;">
+                            <label><input type="radio" name="recommend" value="yes"> Yes, definitely</label>
+                            <label><input type="radio" name="recommend" value="maybe"> Maybe</label>
+                            <label><input type="radio" name="recommend" value="no"> No</label>
+                        </div>
+                    </div>
+
+                    <button type="button" onclick="submitFeedback()" style="background: #7c3aed; color: white; padding: 12px 24px; border: none; border-radius: 6px; font-weight: bold; cursor: pointer;">Submit Feedback & Continue to Final Exam</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Final Assessment (unlocked after all modules) -->
+        <div class="module-container" id="final-assessment" style="display: none;">
+            <div class="module-header" style="background: linear-gradient(135deg, #dc2626, #ef4444);">
+                <div class="module-title">🎯 Final Assessment (20 Questions)</div>
+                <div class="module-status">
+                    <span class="module-icon">📝</span>
+                    <span>Pass with 70% to earn certificate</span>
+                </div>
+            </div>
+            <div class="module-content" style="display: none;" id="final-exam-content">
+                <div class="important-box" style="margin-bottom: 30px;">
+                    <h3>Final Examination Instructions</h3>
+                    <ul>
+                        <li><strong>Questions:</strong> 20 multiple choice questions covering all course modules</li>
+                        <li><strong>Passing Score:</strong> 70% (14 correct answers)</li>
+                        <li><strong>Time Limit:</strong> No time limit - work at your own pace</li>
+                        <li><strong>Attempts:</strong> You may retake the exam if needed</li>
+                        <li><strong>Certificate:</strong> Automatically generated upon passing</li>
+                    </ul>
+                </div>
+
+                <div id="final-exam-questions">
+                    <!-- Questions will be loaded here -->
+                </div>
+
+                <div style="text-align: center; margin: 30px 0;">
+                    <button class="check-answer-btn" onclick="startFinalExam()" id="start-exam-btn">Start Final Examination</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Certificate Section -->
+        <div class="module-container" id="certificate-section" style="display: none;">
+            <div class="module-header" style="background: linear-gradient(135deg, #059669, #10b981);">
+                <div class="module-title">🏆 Course Completion Certificate</div>
+                <div class="module-status">
+                    <span class="module-icon">🎓</span>
+                    <span>Congratulations!</span>
+                </div>
+            </div>
+            <div class="module-content" style="display: block;">
+                <div style="text-align: center; padding: 40px; background: linear-gradient(135deg, #f0fff4, #f7fafc); border-radius: 12px; border: 3px solid #059669; margin: 20px 0;">
+                    <div style="font-size: 24px; font-weight: bold; color: #059669; margin-bottom: 20px;">🎉 COURSE COMPLETED! 🎉</div>
+                    
+                    <div id="certificate-content" style="background: white; padding: 40px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); margin: 20px 0; border: 2px solid #059669;">
+                        <div style="text-align: center; color: #1a365d;">
+                            <img src="images/drtroy_logo_new.jpg" alt="DrTroy.com" style="height: 60px; margin-bottom: 20px;">
+                            
+                            <h1 style="color: #059669; margin: 20px 0; font-size: 28px;">CERTIFICATE OF COMPLETION</h1>
+                            
+                            <div style="font-size: 18px; margin: 20px 0;">
+                                This certifies that
+                            </div>
+                            
+                            <div style="font-size: 24px; font-weight: bold; color: #1a365d; border-bottom: 2px solid #1a365d; display: inline-block; padding: 5px 20px; margin: 10px 0;" id="participant-name">
+                                [Participant Name]
+                            </div>
+                            
+                            <div style="font-size: 18px; margin: 20px 0;">
+                                has successfully completed
+                            </div>
+                            
+                            <div style="font-size: 22px; font-weight: bold; color: #059669; margin: 15px 0;">
+                                Comprehensive Musculoskeletal Evaluation
+                            </div>
+                            
+                            <div style="font-size: 16px; margin: 20px 0; color: #4a5568;">
+                                A systematic regional approach to clinical assessment<br>
+                                Course ID: PT-MSK-001 | 180 minutes | 3.0 CCUs
+                            </div>
+                            
+                            <div style="display: flex; justify-content: space-between; margin-top: 40px; font-size: 14px; color: #4a5568;">
+                                <div>
+                                    <div style="border-top: 1px solid #333; margin-top: 20px; padding-top: 5px;">
+                                        Troy Hounshell, PT, ScD<br>
+                                        Course Director
+                                    </div>
+                                </div>
+                                <div>
+                                    <div style="border-top: 1px solid #333; margin-top: 20px; padding-top: 5px;">
+                                        Date of Completion<br>
+                                        <span id="completion-date">[Date]</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div style="margin-top: 30px; font-size: 12px; color: #666;">
+                                DrTroy.com Continuing Education | Lubbock, Texas<br>
+                                This certificate verifies completion of continuing education requirements
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="margin-top: 30px;">
+                        <button onclick="printCertificate()" style="background: #059669; color: white; padding: 15px 30px; border: none; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; margin: 0 10px;">📄 Print Certificate</button>
+                        <button onclick="downloadCertificate()" style="background: #1a365d; color: white; padding: 15px 30px; border: none; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; margin: 0 10px;">💾 Download PDF</button>
+                    </div>
+
+                    <div style="margin-top: 30px; font-size: 14px; color: #666;">
+                        <strong>Final Score:</strong> <span id="final-score-display">[Score]</span>% • 
+                        <strong>Completion Date:</strong> <span id="completion-date-display">[Date]</span>
+                    </div>
+                </div>
+
+                <div class="important-box" style="margin-top: 30px;">
+                    <h3>Next Steps</h3>
+                    <ul>
+                        <li><strong>Save Your Certificate:</strong> Print or download for your records</li>
+                        <li><strong>CE Documentation:</strong> Use this certificate for license renewal requirements</li>
+                        <li><strong>Additional Courses:</strong> Browse our catalog for more continuing education</li>
+                        <li><strong>Share Feedback:</strong> Help us improve by sharing your course experience</li>
+                    </ul>
+                    <div style="text-align: center; margin-top: 20px;">
+                        <button onclick="returnToAccount()" style="background: #059669; color: white; padding: 12px 24px; border: none; border-radius: 6px; font-weight: bold; cursor: pointer;">Return to My Account</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Notification element -->
+    <div class="notification" id="notification"></div>
+
+    <!-- Confirmation Modal -->
+    <div class="modal-overlay" id="confirmModal">
+        <div class="modal-content">
+            <div class="modal-title">⚠️ Clear All Progress?</div>
+            <div class="modal-text">
+                This will permanently delete all your course progress, including completed modules and knowledge check answers. You'll start over from the beginning.
+                <br><br>
+                <strong>This action cannot be undone.</strong>
+            </div>
+            <div class="modal-buttons">
+                <button class="modal-btn cancel" onclick="hideConfirmModal()">Cancel</button>
+                <button class="modal-btn confirm" onclick="clearProgress()">Clear Progress</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Image Zoom Overlay -->
+    <div class="image-zoom-overlay" id="imageZoomOverlay" onclick="closeZoom()">
+        <div class="zoom-hint">Click to close • ESC key • Scroll to zoom</div>
+        <img id="zoomedImage" src="" alt="">
+    </div>
+
+    <script>
+        // Course Progress Management
+        let courseProgress = {
+            currentModule: 1,
+            completedModules: [],
+            unlockedModules: [1],
+            knowledgeCheckAnswers: {},
+            scrollPositions: {},
+            timeSpent: 0,
+            lastSaved: null,
+            startTime: Date.now()
+        };
+
+        // Load saved progress on page load
+        window.addEventListener('load', function() {
+            loadProgress();
+            updateProgressDisplay();
+            startAutoSave();
+            trackTimeSpent();
+            enableImageZoom();
+        });
+
+        // Enable zoom for all images
+        function enableImageZoom() {
+            const images = document.querySelectorAll('.figure-box img');
+            images.forEach(img => {
+                if (!img.onclick) {
+                    img.onclick = () => zoomImage(img);
+                    img.style.cursor = 'pointer';
+                }
+            });
+            
+            // Add click hints to figure boxes that don't have them
+            const figureBoxes = document.querySelectorAll('.figure-box');
+            figureBoxes.forEach(box => {
+                if (!box.querySelector('.image-click-hint')) {
+                    const hint = document.createElement('div');
+                    hint.className = 'image-click-hint';
+                    hint.textContent = '💡 Click image to zoom';
+                    box.appendChild(hint);
+                }
+            });
+        }
+
+        // Save/Load Functions
+        function saveProgress(showNotificationMessage = true) {
+            courseProgress.lastSaved = new Date().toISOString();
+            courseProgress.scrollPositions[courseProgress.currentModule] = window.scrollY;
+            localStorage.setItem('pt-msk-001-progress', JSON.stringify(courseProgress));
+            
+            // Update save status immediately
+            const saveStatus = document.getElementById('saveStatus');
+            saveStatus.textContent = 'Saved just now';
+            saveStatus.style.color = '#059669';
+            
+            // Reset color after 2 seconds
+            setTimeout(() => {
+                saveStatus.style.color = '#666';
+            }, 2000);
+            
+            if (showNotificationMessage) {
+                showNotification('💾 Progress saved!');
+            }
+        }
+
+        function loadProgress() {
+            const saved = localStorage.getItem('pt-msk-001-progress');
+            if (saved) {
+                courseProgress = { ...courseProgress, ...JSON.parse(saved) };
+                
+                // Update UI based on loaded progress
+                courseProgress.unlockedModules.forEach(moduleNum => {
+                    unlockModule(moduleNum, false);
+                });
+                
+                courseProgress.completedModules.forEach(moduleNum => {
+                    markModuleComplete(moduleNum);
+                });
+
+                // Update save status
+                if (courseProgress.lastSaved) {
+                    const timeDiff = Math.round((Date.now() - new Date(courseProgress.lastSaved)) / 60000);
+                    document.getElementById('saveStatus').textContent = 
+                        timeDiff < 1 ? 'Saved just now' : `Saved ${timeDiff} minutes ago`;
+                }
+            }
+        }
+
+        // Auto-save every 5 minutes
+        function startAutoSave() {
+            setInterval(() => {
+                saveProgress(false); // Don't show notification for background saves
+            }, 300000); // 5 minutes
+        }
+
+        // Track time spent
+        function trackTimeSpent() {
+            setInterval(() => {
+                courseProgress.timeSpent = Math.round((Date.now() - courseProgress.startTime) / 60000);
+            }, 60000); // Every minute
+        }
+
+        // Module Management
+        function toggleModule(moduleNum) {
+            const moduleContainer = document.getElementById(`module-${moduleNum}`);
+            const content = document.getElementById(`content-${moduleNum}`);
+            const header = moduleContainer.querySelector('.module-header');
+            
+            if (header.classList.contains('locked')) {
+                showNotification('⚠️ Complete previous modules first');
+                return;
+            }
+
+            // Close all other modules
+            document.querySelectorAll('.module-content').forEach(content => {
+                content.classList.remove('active');
+            });
+
+            // Open this module
+            content.classList.add('active');
+            courseProgress.currentModule = moduleNum;
+            updateProgressDisplay(); // Update progress when switching modules
+            
+            // Scroll to module
+            moduleContainer.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function unlockModule(moduleNum, showNotification = true) {
+            const moduleContainer = document.getElementById(`module-${moduleNum}`);
+            if (!moduleContainer) return;
+            
+            const header = moduleContainer.querySelector('.module-header');
+            const status = header.querySelector('.module-status');
+            
+            header.classList.remove('locked');
+            header.onclick = () => toggleModule(moduleNum);
+            
+            status.innerHTML = '<span class="module-icon">🔓</span><span>Ready to Start</span>';
+            
+            if (!courseProgress.unlockedModules.includes(moduleNum)) {
+                courseProgress.unlockedModules.push(moduleNum);
+            }
+            
+            if (showNotification) {
+                showNotification(`🔓 Module ${moduleNum} unlocked!`);
+            }
+            
+            updateProgressDisplay(); // Ensure progress updates when unlocking
+        }
+
+        function markModuleComplete(moduleNum) {
+            const moduleContainer = document.getElementById(`module-${moduleNum}`);
+            if (!moduleContainer) return;
+            
+            const header = moduleContainer.querySelector('.module-header');
+            const status = header.querySelector('.module-status');
+            
+            // Add visual feedback immediately
+            header.classList.add('completed');
+            status.innerHTML = '<span class="module-icon">✅</span><span>Completed</span>';
+            
+            // Update progress data
+            if (!courseProgress.completedModules.includes(moduleNum)) {
+                courseProgress.completedModules.push(moduleNum);
+            }
+            
+            // Force UI update
+            updateProgressDisplay();
+        }
+
+        function unlockNextModule(nextModuleNum) {
+            unlockModule(nextModuleNum);
+            saveProgress(); // Auto-save when unlocking next module
+        }
+
+        // Knowledge Check Functions
+        function checkAnswer(moduleNum, correctAnswer) {
+            const selectedOption = document.querySelector(`input[name="q${moduleNum}"]:checked`);
+            const feedback = document.getElementById(`feedback-${moduleNum}`);
+            const continueBtn = document.getElementById(`continue-${moduleNum}`);
+            const checkBtn = event.target;
+            
+            if (!selectedOption) {
+                showNotification('⚠️ Please select an answer');
+                return;
+            }
+
+            const userAnswer = selectedOption.value;
+            checkBtn.disabled = true;
+            
+            // Store the answer
+            courseProgress.knowledgeCheckAnswers[`module${moduleNum}`] = {
+                answer: userAnswer,
+                correct: userAnswer === correctAnswer,
+                timestamp: new Date().toISOString()
+            };
+
+            // Show visual feedback on options
+            const options = document.querySelectorAll(`input[name="q${moduleNum}"]`);
+            options.forEach(option => {
+                const label = option.parentElement;
+                if (option.value === correctAnswer) {
+                    label.classList.add('correct');
+                } else if (option.value === userAnswer && userAnswer !== correctAnswer) {
+                    label.classList.add('incorrect');
+                }
+                option.disabled = true;
+            });
+
+            // Show feedback message
+            if (userAnswer === correctAnswer) {
+                feedback.className = 'feedback correct';
+                feedback.textContent = '✅ Excellent! You can now continue to the next module.';
+                continueBtn.classList.add('show');
+                markModuleComplete(moduleNum);
+                updateProgressDisplay(); // Update progress immediately
+                saveProgress(); // Auto-save on completion
+            } else {
+                feedback.className = 'feedback incorrect';
+                feedback.textContent = '❌ Incorrect. Please review the material and try again.';
+                
+                // Allow retry after 3 seconds
+                setTimeout(() => {
+                    checkBtn.disabled = false;
+                    checkBtn.textContent = 'Try Again';
+                    options.forEach(option => {
+                        option.disabled = false;
+                        option.parentElement.classList.remove('correct', 'incorrect');
+                    });
+                    feedback.style.display = 'none';
+                }, 3000);
+            }
+        }
+
+        // Progress Display
+        function updateProgressDisplay() {
+            const totalModules = 12;
+            const completedCount = courseProgress.completedModules.length;
+            const progressPercent = Math.round((completedCount / totalModules) * 100);
+            
+            document.getElementById('progressFill').style.width = `${progressPercent}%`;
+            
+            const statusText = completedCount === 0 ? 
+                'Ready to begin • 0 of 12 modules completed' :
+                completedCount === totalModules ?
+                'Course Complete! • All 12 modules finished' :
+                `Module ${courseProgress.currentModule} of 12 • ${completedCount} modules completed (${progressPercent}%)`;
+            
+            document.getElementById('progressText').textContent = statusText;
+        }
+
+        // Notification System
+        function showNotification(message) {
+            const notification = document.getElementById('notification');
+            notification.textContent = message;
+            notification.classList.add('show');
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+        }
+
+        // Auto-save on scroll (every 30 seconds of activity)
+        let scrollSaveTimeout;
+        window.addEventListener('scroll', function() {
+            clearTimeout(scrollSaveTimeout);
+            scrollSaveTimeout = setTimeout(() => {
+                courseProgress.scrollPositions[courseProgress.currentModule] = window.scrollY;
+                saveProgress(false); // Silent save for scroll-based saves
+            }, 30000);
+        });
+
+        // Save before page unload with prompt
+        window.addEventListener('beforeunload', function(e) {
+            // Auto-save progress silently
+            saveProgress(false);
+            
+            // Show prompt if they have progress to lose
+            if (courseProgress.completedModules.length > 0 || courseProgress.currentModule > 1) {
+                e.preventDefault();
+                e.returnValue = 'Your course progress has been auto-saved. Are you sure you want to leave?';
+                return 'Your course progress has been auto-saved. Are you sure you want to leave?';
+            }
+        });
+
+        // Auto-save and navigate function
+        function autoSaveAndNavigate(event, url) {
+            event.preventDefault();
+            
+            // Save progress first (with visual feedback)
+            saveProgress(false); // Don't double-notify
+            
+            // Show custom navigation notification
+            showNotification('💾 Progress saved! Navigating...');
+            
+            // Add visual feedback to save button
+            const saveStatus = document.getElementById('saveStatus');
+            saveStatus.style.color = '#059669';
+            saveStatus.style.fontWeight = 'bold';
+            saveStatus.textContent = '✅ Auto-saved for navigation';
+            
+            // Navigate after short delay
+            setTimeout(() => {
+                window.location.href = url;
+            }, 1200);
+        }
+
+        // Show Final Assessment
+        function showFinalAssessment() {
+            // Show references section first
+            document.getElementById('references-section').style.display = 'block';
+            
+            // Show course feedback
+            document.getElementById('course-feedback').style.display = 'block';
+            
+            // Update progress
+            updateProgressDisplay();
+            saveProgress();
+            
+            // Show completion message
+            showNotification('🎉 Course content complete! Please provide feedback before taking the final exam.');
+            
+            // Scroll to references
+            document.getElementById('references-section').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Submit Course Feedback
+        function submitFeedback() {
+            const form = document.getElementById('course-feedback-form');
+            const formData = new FormData(form);
+            
+            // Validate required fields
+            if (!formData.get('overall-rating')) {
+                showNotification('⚠️ Please provide an overall course rating');
+                return;
+            }
+
+            // Store feedback (in real implementation, this would go to a database)
+            const feedback = {
+                overallRating: formData.get('overall-rating'),
+                contentQuality: formData.get('content-quality'),
+                formatRating: formData.get('format-rating'),
+                improvements: formData.get('improvements'),
+                recommend: formData.get('recommend'),
+                timestamp: new Date().toISOString()
+            };
+
+            localStorage.setItem('pt-msk-001-feedback', JSON.stringify(feedback));
+            
+            // Show final assessment
+            document.getElementById('final-assessment').style.display = 'block';
+            document.getElementById('final-exam-content').style.display = 'block';
+            
+            showNotification('✅ Thank you for your feedback! Final exam is now available.');
+            
+            // Scroll to final assessment
+            setTimeout(() => {
+                document.getElementById('final-assessment').scrollIntoView({ behavior: 'smooth' });
+            }, 1000);
+        }
+
+        // Final Exam Questions
+        const finalExamQuestions = [
+            {
+                question: "Which red flag symptom requires IMMEDIATE emergency department referral?",
+                options: ["Night pain", "Fever with back pain", "Bowel/bladder dysfunction with back pain", "History of cancer"],
+                correct: 2,
+                explanation: "Bowel/bladder dysfunction with back pain suggests cauda equina syndrome, requiring immediate emergency referral."
+            },
+            {
+                question: "Spurling's test has what diagnostic accuracy characteristics?",
+                options: ["High sensitivity, low specificity", "High sensitivity, high specificity", "Low sensitivity, high specificity", "Low sensitivity, low specificity"],
+                correct: 2,
+                explanation: "Spurling's test has 30% sensitivity but 93% specificity, making it highly specific for cervical nerve root compression."
+            },
+            {
+                question: "Which spinal region has the greatest rotation range of motion?",
+                options: ["Cervical spine", "Thoracic spine", "Lumbar spine", "All regions equal"],
+                correct: 1,
+                explanation: "The thoracic spine has 30-35 degrees rotation each direction, the greatest in the spine due to frontal plane facet joints."
+            },
+            {
+                question: "The straight leg raise test is most accurate when positive at what range?",
+                options: ["0-30 degrees", "30-70 degrees", "70-90 degrees", ">90 degrees"],
+                correct: 1,
+                explanation: "SLR is most indicative of nerve root tension when positive between 30-70 degrees of hip flexion."
+            },
+            {
+                question: "A positive FABER test with groin pain indicates:",
+                options: ["Sacroiliac joint dysfunction", "Hip pathology", "Lumbar spine pathology", "Iliopsoas tightness"],
+                correct: 1,
+                explanation: "FABER test with groin pain suggests hip pathology; posterior pain would indicate SI joint involvement."
+            },
+            {
+                question: "The Empty Can test (Jobe's test) primarily evaluates which muscle?",
+                options: ["Infraspinatus", "Supraspinatus", "Subscapularis", "Teres minor"],
+                correct: 1,
+                explanation: "The Empty Can test specifically targets the supraspinatus muscle with resisted abduction in the scapular plane."
+            },
+            {
+                question: "Lateral epicondylitis is tested with which examination?",
+                options: ["Cozen test", "Medial epicondylitis test", "Valgus stress test", "Tinel's sign"],
+                correct: 0,
+                explanation: "Cozen test evaluates lateral epicondylitis (tennis elbow) by resisting wrist extension with the elbow extended."
+            },
+            {
+                question: "Which carpal tunnel syndrome test has the highest specificity (90%)?",
+                options: ["Phalen's test", "Tinel's test", "Carpal compression test", "Finkelstein test"],
+                correct: 2,
+                explanation: "Carpal compression test has 87% sensitivity and 90% specificity, the highest specificity among carpal tunnel tests."
+            },
+            {
+                question: "A positive Trendelenburg test indicates weakness of:",
+                options: ["Gluteus maximus", "Gluteus medius", "Piriformis", "Tensor fasciae latae"],
+                correct: 1,
+                explanation: "Trendelenburg test evaluates gluteus medius strength; weakness causes contralateral pelvic drop during single-leg stance."
+            },
+            {
+                question: "The gold standard test for ACL integrity is:",
+                options: ["Anterior drawer test", "Pivot shift test", "Lachman test", "McMurray's test"],
+                correct: 2,
+                explanation: "Lachman test is considered the gold standard for ACL evaluation with 85% sensitivity and 94% specificity."
+            },
+            {
+                question: "A negative Thompson test indicates:",
+                options: ["Achilles tendon rupture", "Intact Achilles tendon", "Ankle sprain", "Tarsal tunnel syndrome"],
+                correct: 1,
+                explanation: "A negative (normal) Thompson test shows plantarflexion with calf squeeze, indicating intact Achilles tendon continuity."
+            },
+            {
+                question: "A likelihood ratio of 8.0 has what effect on probability?",
+                options: ["Minimal increase", "Small increase", "Moderate increase", "Large increase"],
+                correct: 2,
+                explanation: "LR+ of 5-10 indicates a moderate increase in probability, substantially increasing the likelihood of the condition."
+            },
+            {
+                question: "SMART goals must be all EXCEPT:",
+                options: ["Specific", "Measurable", "Subjective", "Time-bound"],
+                correct: 2,
+                explanation: "SMART goals are Specific, Measurable, Achievable, Relevant, and Time-bound. 'Subjective' is not part of SMART criteria."
+            },
+            {
+                question: "The 'A' in SOAP documentation stands for:",
+                options: ["Accurate", "Assessment", "Action", "Anatomy"],
+                correct: 1,
+                explanation: "SOAP format: Subjective, Objective, Assessment, Plan. Assessment synthesizes findings into clinical conclusions."
+            },
+            {
+                question: "Evidence-based practice integrates which three components?",
+                options: ["Research, experience, cost", "Research, expertise, patient values", "Guidelines, tests, treatments", "Diagnosis, prognosis, intervention"],
+                correct: 1,
+                explanation: "EBP integrates best research evidence, clinical expertise, and patient values/preferences."
+            },
+            {
+                question: "What percentage of low back pain is classified as nonspecific mechanical?",
+                options: ["50-60%", "70-80%", "85-90%", "95-100%"],
+                correct: 2,
+                explanation: "85-90% of low back pain is nonspecific mechanical, with only 5-10% being radiculopathy and 1-2% serious pathology."
+            },
+            {
+                question: "The SI joint cluster requires how many positive tests for increased likelihood of dysfunction?",
+                options: ["1 or more", "2 or more", "3 or more", "All 4 tests"],
+                correct: 2,
+                explanation: "Three or more positive SI joint tests increases likelihood of SI dysfunction (94% sensitivity, 78% specificity)."
+            },
+            {
+                question: "Ottawa Ankle Rules have what sensitivity for detecting fractures?",
+                options: ["Nearly 50%", "Nearly 75%", "Nearly 90%", "Nearly 100%"],
+                correct: 3,
+                explanation: "Ottawa Ankle Rules have nearly 100% sensitivity for fractures; if negative, fracture is effectively ruled out."
+            },
+            {
+                question: "The capsular pattern for the hip joint is:",
+                options: ["Flexion, extension, rotation", "Flexion, abduction, internal rotation", "Extension, adduction, external rotation", "All motions equally limited"],
+                correct: 1,
+                explanation: "Hip capsular pattern shows greatest limitation in flexion, then abduction, then internal rotation."
+            },
+            {
+                question: "Which tissue healing phase lasts the longest?",
+                options: ["Inflammatory phase", "Proliferative phase", "Remodeling phase", "All phases equal"],
+                correct: 2,
+                explanation: "Remodeling phase lasts 21 days to 2+ years, much longer than inflammatory (0-6 days) and proliferative (3-21 days) phases."
+            }
+        ];
+
+        let currentExamState = {
+            questions: [],
+            currentQuestion: 0,
+            answers: [],
+            startTime: null,
+            completed: false
+        };
+
+        // Start Final Exam
+        function startFinalExam() {
+            // Shuffle questions for variety
+            currentExamState.questions = [...finalExamQuestions].sort(() => Math.random() - 0.5);
+            currentExamState.answers = new Array(20).fill(null);
+            currentExamState.startTime = Date.now();
+            currentExamState.completed = false;
+            
+            displayExamQuestion(0);
+            
+            document.getElementById('start-exam-btn').style.display = 'none';
+            showNotification('📝 Final exam started! Answer all 20 questions.');
+        }
+
+        // Display Exam Question
+        function displayExamQuestion(questionIndex) {
+            const question = currentExamState.questions[questionIndex];
+            const questionsContainer = document.getElementById('final-exam-questions');
+            
+            questionsContainer.innerHTML = `
+                <div class="knowledge-check" style="margin: 20px 0;">
+                    <h3>🎯 Question ${questionIndex + 1} of 20</h3>
+                    <div class="question" style="font-size: 16px; margin-bottom: 20px;">
+                        ${question.question}
+                    </div>
+                    <div class="answer-options">
+                        ${question.options.map((option, index) => `
+                            <label class="answer-option">
+                                <input type="radio" name="exam-q${questionIndex}" value="${index}" onchange="recordExamAnswer(${questionIndex}, ${index})">
+                                ${String.fromCharCode(65 + index)}) ${option}
+                            </label>
+                        `).join('')}
+                    </div>
+                    <div style="margin-top: 20px; display: flex; justify-content: space-between; align-items: center;">
+                        <div style="color: #666; font-size: 14px;">
+                            Progress: ${questionIndex + 1}/20 questions
+                        </div>
+                        <div>
+                            ${questionIndex > 0 ? `<button onclick="displayExamQuestion(${questionIndex - 1})" style="background: #6b7280; color: white; padding: 8px 16px; border: none; border-radius: 4px; margin-right: 10px;">← Previous</button>` : ''}
+                            ${questionIndex < 19 ? `<button onclick="displayExamQuestion(${questionIndex + 1})" style="background: #059669; color: white; padding: 8px 16px; border: none; border-radius: 4px;">Next →</button>` : `<button onclick="submitFinalExam()" style="background: #dc2626; color: white; padding: 12px 24px; border: none; border-radius: 4px; font-weight: bold;">Submit Final Exam</button>`}
+                        </div>
+                    </div>
+                    <div style="margin-top: 15px; padding: 15px; background: #f9fafb; border-radius: 6px; font-size: 14px; color: #4b5563;">
+                        <strong>Answered:</strong> ${currentExamState.answers.filter(a => a !== null).length}/20 questions
+                    </div>
+                </div>
+            `;
+            
+            // Restore previous answer if exists
+            if (currentExamState.answers[questionIndex] !== null) {
+                const radioButton = document.querySelector(`input[name="exam-q${questionIndex}"][value="${currentExamState.answers[questionIndex]}"]`);
+                if (radioButton) radioButton.checked = true;
+            }
+        }
+
+        // Record Exam Answer
+        function recordExamAnswer(questionIndex, answerIndex) {
+            currentExamState.answers[questionIndex] = answerIndex;
+            
+            // Auto-save progress
+            localStorage.setItem('pt-msk-001-exam-progress', JSON.stringify(currentExamState));
+        }
+
+        // Submit Final Exam
+        function submitFinalExam() {
+            // Check if all questions answered
+            const unanswered = currentExamState.answers.filter(a => a === null).length;
+            if (unanswered > 0) {
+                if (!confirm(`You have ${unanswered} unanswered questions. Submit anyway?`)) {
+                    return;
+                }
+            }
+            
+            // Calculate score
+            let correctAnswers = 0;
+            for (let i = 0; i < currentExamState.questions.length; i++) {
+                if (currentExamState.answers[i] === currentExamState.questions[i].correct) {
+                    correctAnswers++;
+                }
+            }
+            
+            const scorePercent = Math.round((correctAnswers / 20) * 100);
+            const passed = scorePercent >= 70;
+            
+            // Store results
+            const examResults = {
+                score: scorePercent,
+                correctAnswers: correctAnswers,
+                totalQuestions: 20,
+                passed: passed,
+                completionDate: new Date().toISOString(),
+                timeTaken: Math.round((Date.now() - currentExamState.startTime) / 60000) // minutes
+            };
+            
+            localStorage.setItem('pt-msk-001-exam-results', JSON.stringify(examResults));
+            
+            if (passed) {
+                showCertificate(examResults);
+                showNotification('🎉 Congratulations! You passed with ' + scorePercent + '%');
+            } else {
+                showExamResults(examResults, false);
+                showNotification('📚 Score: ' + scorePercent + '%. You need 70% to pass. Please review and retake.');
+            }
+        }
+
+        // Show Certificate
+        function showCertificate(examResults) {
+            document.getElementById('certificate-section').style.display = 'block';
+            
+            // Fill in certificate details
+            const completionDate = new Date(examResults.completionDate).toLocaleDateString();
+            document.getElementById('completion-date').textContent = completionDate;
+            document.getElementById('completion-date-display').textContent = completionDate;
+            document.getElementById('final-score-display').textContent = examResults.score;
+            
+            // Get user name from localStorage or prompt
+            let userName = localStorage.getItem('userName') || 'Course Participant';
+            if (userName === 'Course Participant') {
+                userName = prompt('Enter your name for the certificate:') || 'Course Participant';
+                localStorage.setItem('userName', userName);
+            }
+            document.getElementById('participant-name').textContent = userName;
+            
+            // Scroll to certificate
+            setTimeout(() => {
+                document.getElementById('certificate-section').scrollIntoView({ behavior: 'smooth' });
+            }, 1000);
+        }
+
+        // Print Certificate
+        function printCertificate() {
+            const certificateContent = document.getElementById('certificate-content');
+            const printWindow = window.open('', '_blank');
+            printWindow.document.write(`
+                <html>
+                <head>
+                    <title>Course Completion Certificate</title>
+                    <style>
+                        body { font-family: Arial, sans-serif; margin: 40px; }
+                        @media print { body { margin: 0; } }
+                    </style>
+                </head>
+                <body>
+                    ${certificateContent.innerHTML}
+                </body>
+                </html>
+            `);
+            printWindow.document.close();
+            printWindow.print();
+        }
+
+        // Download Certificate (simplified)
+        function downloadCertificate() {
+            showNotification('📄 Certificate print dialog opened - use "Save as PDF" option');
+            printCertificate();
+        }
+
+        // Return to Account
+        function returnToAccount() {
+            autoSaveAndNavigate(event, '../my-account.html');
+        }
+
+        // Clear Progress Functions
+        function confirmClearProgress() {
+            document.getElementById('confirmModal').classList.add('show');
+        }
+
+        function hideConfirmModal() {
+            document.getElementById('confirmModal').classList.remove('show');
+        }
+
+        function clearProgress() {
+            // Remove from localStorage
+            localStorage.removeItem('pt-msk-001-progress');
+            
+            // Reset progress object to initial state
+            courseProgress = {
+                currentModule: 1,
+                completedModules: [],
+                unlockedModules: [1],
+                knowledgeCheckAnswers: {},
+                scrollPositions: {},
+                timeSpent: 0,
+                lastSaved: null,
+                startTime: Date.now()
+            };
+
+            // Reset all UI elements
+            resetUIToInitialState();
+            
+            // Hide modal
+            hideConfirmModal();
+            
+            // Update displays
+            updateProgressDisplay();
+            document.getElementById('saveStatus').textContent = 'Never saved';
+            
+            // Show confirmation
+            showNotification('🗑️ Progress cleared! Starting fresh.');
+            
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function resetUIToInitialState() {
+            // Reset all modules to locked state except Module 1
+            for (let i = 1; i <= 12; i++) {
+                const moduleContainer = document.getElementById(`module-${i}`);
+                if (!moduleContainer) continue;
+                
+                const header = moduleContainer.querySelector('.module-header');
+                const status = header.querySelector('.module-status');
+                const content = document.getElementById(`content-${i}`);
+                
+                // Remove active content
+                content.classList.remove('active');
+                
+                if (i === 1) {
+                    // Module 1 stays unlocked
+                    header.classList.remove('completed', 'locked');
+                    header.onclick = () => toggleModule(1);
+                    status.innerHTML = '<span class="module-icon">🔓</span><span>Ready to Start</span>';
+                } else {
+                    // Lock other modules
+                    header.classList.remove('completed');
+                    header.classList.add('locked');
+                    header.onclick = () => toggleModule(i);
+                    status.innerHTML = `<span class="module-icon">🔒</span><span>Complete Module ${i-1}</span>`;
+                }
+            }
+            
+            // Hide all completion sections
+            document.getElementById('references-section').style.display = 'none';
+            document.getElementById('course-feedback').style.display = 'none';
+            document.getElementById('final-assessment').style.display = 'none';
+            document.getElementById('certificate-section').style.display = 'none';
+            
+            // Reset all knowledge check forms
+            for (let i = 1; i <= 12; i++) {
+                const feedback = document.getElementById(`feedback-${i}`);
+                const continueBtn = document.getElementById(`continue-${i}`);
+                
+                if (feedback) {
+                    feedback.style.display = 'none';
+                    feedback.className = 'feedback';
+                }
+                
+                if (continueBtn) {
+                    continueBtn.classList.remove('show');
+                }
+                
+                // Reset radio buttons and styling
+                const options = document.querySelectorAll(`input[name="q${i}"]`);
+                options.forEach(option => {
+                    option.checked = false;
+                    option.disabled = false;
+                    option.parentElement.classList.remove('correct', 'incorrect');
+                });
+            }
+            
+            // Reset all check answer buttons
+            const checkButtons = document.querySelectorAll('.check-answer-btn');
+            checkButtons.forEach(btn => {
+                btn.disabled = false;
+                btn.textContent = 'Check Answer';
+            });
+        }
+
+        // Close modal when clicking outside
+        document.getElementById('confirmModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                hideConfirmModal();
+            }
+        });
+
+        // Close modal with Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                hideConfirmModal();
+                closeZoom();
+            }
+        });
+
+        // Logout function
+        function logout() {
+            // Clear course progress
+            localStorage.removeItem('pt-msk-001-progress');
+            
+            // Clear any other user session data
+            localStorage.removeItem('userSession');
+            localStorage.removeItem('loginState');
+            
+            // Redirect to login page
+            showNotification('👋 Logging out...');
+            setTimeout(() => {
+                window.location.href = '../login.html';
+            }, 1000);
+        }
+
+        // Image Zoom Functions
+        function zoomImage(img) {
+            const overlay = document.getElementById('imageZoomOverlay');
+            const zoomedImg = document.getElementById('zoomedImage');
+            
+            zoomedImg.src = img.src;
+            zoomedImg.alt = img.alt;
+            overlay.classList.add('show');
+            
+            // Prevent body scroll when zoomed
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeZoom() {
+            const overlay = document.getElementById('imageZoomOverlay');
+            overlay.classList.remove('show');
+            
+            // Restore body scroll
+            document.body.style.overflow = 'auto';
+        }
+
+        // Zoom with mouse wheel
+        document.getElementById('zoomedImage').addEventListener('wheel', function(e) {
+            e.preventDefault();
+            const img = this;
+            const currentScale = img.style.transform ? parseFloat(img.style.transform.match(/scale\(([\d.]+)\)/)?.[1] || 1) : 1;
+            const scaleFactor = e.deltaY > 0 ? 0.9 : 1.1;
+            const newScale = Math.min(Math.max(currentScale * scaleFactor, 0.5), 3);
+            
+            img.style.transform = `scale(${newScale})`;
+        });
+    </script>
+</body>
+</html>

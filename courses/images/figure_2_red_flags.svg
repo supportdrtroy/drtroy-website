@@ -1,0 +1,117 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500">
+  <!-- Background -->
+  <rect width="800" height="500" fill="white"/>
+  
+  <!-- Title -->
+  <text x="400" y="35" text-anchor="middle" font-family="Arial, sans-serif" font-size="22" font-weight="bold" fill="#1a365d">Red Flags Screening Decision Tree</text>
+  
+  <!-- Start Box -->
+  <rect x="300" y="55" width="200" height="50" rx="25" fill="#e8f4f8" stroke="#1a365d" stroke-width="3"/>
+  <text x="400" y="85" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#1a365d">Patient Presentation</text>
+  
+  <!-- Arrow down from start -->
+  <path d="M 400 105 L 400 125" stroke="#1a365d" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+  
+  <!-- Decision Diamond -->
+  <polygon points="400,125 480,165 400,205 320,165" fill="#fff8e8" stroke="#1a365d" stroke-width="3"/>
+  <text x="400" y="160" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#1a365d">Red Flags</text>
+  <text x="400" y="175" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#1a365d">Present?</text>
+  
+  <!-- YES branch -->
+  <path d="M 480 165 L 580 165" stroke="#dc2626" stroke-width="2" fill="none"/>
+  <text x="530" y="158" text-anchor="middle" font-family="Arial, sans-serif" font-size="13" fill="#dc2626" font-weight="bold">YES</text>
+  
+  <!-- NO branch -->
+  <path d="M 320 165 L 220 165" stroke="#16a34a" stroke-width="2" fill="none"/>
+  <text x="270" y="158" text-anchor="middle" font-family="Arial, sans-serif" font-size="13" fill="#16a34a" font-weight="bold">NO</text>
+  
+  <!-- NO: Continue Examination -->
+  <rect x="50" y="140" width="170" height="50" rx="8" fill="#dcfce7" stroke="#16a34a" stroke-width="3"/>
+  <text x="135" y="165" text-anchor="middle" font-family="Arial, sans-serif" font-size="15" font-weight="bold" fill="#166534">Continue Standard</text>
+  <text x="135" y="182" text-anchor="middle" font-family="Arial, sans-serif" font-size="15" font-weight="bold" fill="#166534">Examination</text>
+  
+  <!-- YES: Categorize Red Flags -->
+  <rect x="580" y="140" width="170" height="50" rx="8" fill="#fee2e2" stroke="#dc2626" stroke-width="3"/>
+  <text x="665" y="165" text-anchor="middle" font-family="Arial, sans-serif" font-size="15" font-weight="bold" fill="#991b1b">Categorize Red Flag</text>
+  <text x="665" y="182" text-anchor="middle" font-family="Arial, sans-serif" font-size="13" fill="#991b1b">(See categories below)</text>
+  
+  <!-- Arrow down to categories -->
+  <path d="M 665 190 L 665 210" stroke="#dc2626" stroke-width="2" fill="none" marker-end="url(#arrowhead2)"/>
+  
+  <!-- Red Flag Categories -->
+  
+  <!-- Category 1: Neurological -->
+  <rect x="50" y="230" width="170" height="80" rx="8" fill="#fef2f2" stroke="#dc2626" stroke-width="2"/>
+  <text x="135" y="250" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#991b1b">⚡ NEUROLOGICAL</text>
+  <text x="135" y="270" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#333">Bowel/bladder dysfunction</text>
+  <text x="135" y="285" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#333">Saddle anesthesia</text>
+  <text x="135" y="300" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#333">Progressive weakness</text>
+  
+  <!-- Category 2: Systemic -->
+  <rect x="240" y="230" width="170" height="80" rx="8" fill="#fef2f2" stroke="#dc2626" stroke-width="2"/>
+  <text x="325" y="250" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#991b1b">🌡️ SYSTEMIC</text>
+  <text x="325" y="270" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#333">Fever with pain</text>
+  <text x="325" y="285" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#333">Unexplained weight loss</text>
+  <text x="325" y="300" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#333">Night pain unrelieved</text>
+  
+  <!-- Category 3: Oncologic -->
+  <rect x="430" y="230" width="170" height="80" rx="8" fill="#fef2f2" stroke="#dc2626" stroke-width="2"/>
+  <text x="515" y="250" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#991b1b">⚠️ ONCOLOGIC</text>
+  <text x="515" y="270" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#333">History of cancer</text>
+  <text x="515" y="285" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#333">Age >50 with new pain</text>
+  <text x="515" y="300" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#333">Pain at multiple sites</text>
+  
+  <!-- Category 4: Traumatic -->
+  <rect x="620" y="230" width="170" height="80" rx="8" fill="#fef2f2" stroke="#dc2626" stroke-width="2"/>
+  <text x="705" y="250" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#991b1b">💥 TRAUMATIC</text>
+  <text x="705" y="270" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#333">Significant trauma</text>
+  <text x="705" y="285" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#333">Age >65 with fall</text>
+  <text x="705" y="300" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#333">Osteoporosis + trauma</text>
+  
+  <!-- Arrows to action boxes -->
+  <path d="M 135 310 L 135 330" stroke="#dc2626" stroke-width="2" fill="none" marker-end="url(#arrowhead2)"/>
+  <path d="M 325 310 L 325 330" stroke="#dc2626" stroke-width="2" fill="none" marker-end="url(#arrowhead2)"/>
+  <path d="M 515 310 L 515 330" stroke="#dc2626" stroke-width="2" fill="none" marker-end="url(#arrowhead2)"/>
+  <path d="M 705 310 L 705 330" stroke="#dc2626" stroke-width="2" fill="none" marker-end="url(#arrowhead2)"/>
+  
+  <!-- Action Boxes -->
+  
+  <!-- Emergency -->
+  <rect x="70" y="340" width="130" height="60" rx="8" fill="#dc2626" stroke="#991b1b" stroke-width="2"/>
+  <text x="135" y="365" text-anchor="middle" font-family="Arial, sans-serif" font-size="13" font-weight="bold" fill="white">EMERGENCY</text>
+  <text x="135" y="380" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="white">ED Referral</text>
+  <text x="135" y="393" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#fecaca">(Cauda Equina)</text>
+  
+  <!-- Urgent -->
+  <rect x="260" y="340" width="130" height="60" rx="8" fill="#ea580c" stroke="#c2410c" stroke-width="2"/>
+  <text x="325" y="365" text-anchor="middle" font-family="Arial, sans-serif" font-size="13" font-weight="bold" fill="white">URGENT</text>
+  <text x="325" y="380" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="white">Imaging + MD</text>
+  <text x="325" y="393" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#fed7aa">(Infection/Fracture)</text>
+  
+  <!-- Immediate -->
+  <rect x="450" y="340" width="130" height="60" rx="8" fill="#ca8a04" stroke="#a16207" stroke-width="2"/>
+  <text x="515" y="365" text-anchor="middle" font-family="Arial, sans-serif" font-size="13" font-weight="bold" fill="white">IMMEDIATE</text>
+  <text x="515" y="380" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="white">Oncology Referral</text>
+  <text x="515" y="393" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#fef08a">(Cancer History)</text>
+  
+  <!-- Imaging -->
+  <rect x="640" y="340" width="130" height="60" rx="8" fill="#4b5563" stroke="#374151" stroke-width="2"/>
+  <text x="705" y="365" text-anchor="middle" font-family="Arial, sans-serif" font-size="13" font-weight="bold" fill="white">IMAGING</text>
+  <text x="705" y="380" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="white">X-ray / MRI</text>
+  <text x="705" y="393" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#d1d5db">(Fracture/Unexplained)</text>
+  
+  <!-- Marker definitions -->
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#1a365d"/>
+    </marker>
+    <marker id="arrowhead2" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#dc2626"/>
+    </marker>
+  </defs>
+  
+  <!-- Bottom note -->
+  <text x="400" y="440" text-anchor="middle" font-family="Arial, sans-serif" font-size="13" fill="#666" font-style="italic">Document: "Patient screened for red flags. [Findings] [Action taken]"</text>
+  <text x="400" y="460" text-anchor="middle" font-family="Arial, sans-serif" font-size="13" fill="#666" font-style="italic">When in doubt, consult with physician before proceeding with PT intervention</text>
+  <text x="400" y="485" text-anchor="middle" font-family="Arial, sans-serif" font-size="13" fill="#991b1b" font-weight="bold">⚠️ Cauda Equina Syndrome = Emergency Department IMMEDIATELY</text>
+</svg>

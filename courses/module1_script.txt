@@ -1,0 +1,21 @@
+Module 1: Introduction to Musculoskeletal Evaluation
+
+Welcome to Module 1 of the Comprehensive Musculoskeletal Evaluation and Treatment course. This module provides the foundation for systematic, evidence-based examination approaches used throughout this course.
+
+The Examination Model consists of five components: History, Observation, Movement Testing, Special Tests, and Palpation. These components work together to form a complete clinical picture.
+
+First, we take a thorough history. This includes understanding the mechanism of injury, symptom location, onset and duration, aggravating and relieving factors, prior episodes, current functional limitations, and any red flags that might require immediate physician referral.
+
+Next, we perform observation. We assess posture, gait patterns, swelling, muscle atrophy, scars, and the patient's willingness to move. These visual cues provide valuable information before we even touch the patient.
+
+Movement testing comes next. We evaluate both active and passive range of motion, looking for the quantity of movement and the quality of that movement. We note any painful arcs, restrictions, or compensatory patterns.
+
+Special tests help us identify specific structures that may be involved. Each test has known sensitivity and specificity values, which help us interpret their clinical utility. Remember that special tests confirm or rule out specific hypotheses generated from the history and initial examination.
+
+Finally, palpation allows us to identify specific anatomical structures, assess tissue texture, temperature, and locate exact points of tenderness. Palpation is typically performed last to avoid sensitizing tissues before movement testing.
+
+Key principles to remember: Always screen for red flags first. Red flags include signs of serious pathology such as cancer, infection, fracture, or cauda equina syndrome. When red flags are present, immediate physician referral is required.
+
+Also remember that structure does not always equal pain. Many findings on imaging are present in asymptomatic individuals. Clinical decisions should be based on the patient's presentation, not imaging alone.
+
+This concludes Module 1. In the next module, we will apply this systematic approach to the cervical spine.

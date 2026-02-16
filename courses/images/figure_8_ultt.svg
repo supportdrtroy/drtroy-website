@@ -1,0 +1,149 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 500">
+  <rect width="700" height="500" fill="white"/>
+  
+  <!-- Title -->
+  <text x="350" y="25" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#1a365d">Upper Limb Tension Test — Median Nerve</text>
+  
+  <!-- Position 1: Starting -->
+  <g transform="translate(30, 50)">
+    <text x="70" y="15" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#333">1. Starting Position</text>
+    <!-- Patient supine -->
+    <ellipse cx="70" cy="80" rx="25" ry="20" fill="#e8dcc8" stroke="#333" stroke-width="1.5"/>
+    <!-- Shoulder -->
+    <circle cx="40" cy="100" r="12" fill="#e8dcc8" stroke="#333" stroke-width="1.5"/>
+    <!-- Arm -->
+    <line x1="40" y1="100" x2="100" y2="120" stroke="#333" stroke-width="3"/>
+    <!-- Elbow -->
+    <circle cx="100" cy="120" r="8" fill="#e8dcc8" stroke="#333" stroke-width="1.5"/>
+    <!-- Forearm -->
+    <line x1="100" y1="120" x2="130" y2="150" stroke="#333" stroke-width="3"/>
+    <!-- Hand -->
+    <ellipse cx="135" cy="155" rx="10" ry="8" fill="#e8dcc8" stroke="#333" stroke-width="1.5"/>
+    <text x="70" y="190" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#333">Shoulder depressed,</text>
+    <text x="70" y="205" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#333">elbow flexed</text>
+  </g>
+  
+  <!-- Position 2: Shoulder Abduction -->
+  <g transform="translate(190, 50)">
+    <text x="70" y="15" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#333">2. Shoulder Abduction</text>
+    <ellipse cx="70" cy="80" rx="25" ry="20" fill="#e8dcc8" stroke="#333" stroke-width="1.5"/>
+    <circle cx="40" cy="100" r="12" fill="#e8dcc8" stroke="#333" stroke-width="1.5"/>
+    <!-- Arm abducted to 90-110° -->
+    <line x1="40" y1="100" x2="40" y2="30" stroke="#333" stroke-width="3"/>
+    <!-- Arrow showing movement -->
+    <path d="M 60 100 Q 80 70 60 40" stroke="#22c55e" stroke-width="2" fill="none" marker-end="url(#arrowup)"/>
+    <circle cx="40" cy="30" r="8" fill="#e8dcc8" stroke="#333" stroke-width="1.5"/>
+    <!-- Forearm -->
+    <line x1="40" y1="30" x2="70" y2="30" stroke="#333" stroke-width="3"/>
+    <!-- Hand -->
+    <ellipse cx="78" cy="30" rx="10" ry="8" fill="#e8dcc8" stroke="#333" stroke-width="1.5"/>
+    <text x="70" y="190" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#333">Abduct to 90-110°</text>
+    <text x="70" y="205" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#333">(gradual)</text>
+  </g>
+  
+  <!-- Position 3: Supination & Wrist Extension -->
+  <g transform="translate(350, 50)">
+    <text x="70" y="15" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#333">3. Supination + Wrist Ext</text>
+    <ellipse cx="70" cy="80" rx="25" ry="20" fill="#e8dcc8" stroke="#333" stroke-width="1.5"/>
+    <circle cx="40" cy="100" r="12" fill="#e8dcc8" stroke="#333" stroke-width="1.5"/>
+    <line x1="40" y1="100" x2="40" y2="30" stroke="#333" stroke-width="3"/>
+    <circle cx="40" cy="30" r="8" fill="#e8dcc8" stroke="#333" stroke-width="1.5"/>
+    <!-- Forearm supinated -->
+    <line x1="40" y1="30" x2="80" y2="15" stroke="#333" stroke-width="3"/>
+    <!-- Wrist extension -->
+    <path d="M 80 15 L 95 10" stroke="#333" stroke-width="2"/>
+    <!-- Hand extended -->
+    <ellipse cx="100" cy="8" rx="12" ry="6" fill="#e8dcc8" stroke="#333" stroke-width="1.5"/>
+    <!-- Fingers extended -->
+    <line x1="108" y1="6" x2="120" y2="4" stroke="#333" stroke-width="1.5"/>
+    <line x1="108" y1="8" x2="120" y2="8" stroke="#333" stroke-width="1.5"/>
+    <line x1="108" y1="10" x2="120" y2="12" stroke="#333" stroke-width="1.5"/>
+    <text x="70" y="190" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#333">Forearm supination,</text>
+    <text x="70" y="205" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#333">wrist & finger ext</text>
+  </g>
+  
+  <!-- Position 4: External Rotation -->
+  <g transform="translate(510, 50)">
+    <text x="70" y="15" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#333">4. External Rotation</text>
+    <ellipse cx="70" cy="80" rx="25" ry="20" fill="#e8dcc8" stroke="#333" stroke-width="1.5"/>
+    <circle cx="40" cy="100" r="12" fill="#e8dcc8" stroke="#333" stroke-width="1.5"/>
+    <line x1="40" y1="100" x2="40" y2="30" stroke="#333" stroke-width="3"/>
+    <circle cx="40" cy="30" r="8" fill="#e8dcc8" stroke="#333" stroke-width="1.5"/>
+    <!-- External rotation arrow -->
+    <path d="M 30 35 Q 50 20 55 40" stroke="#22c55e" stroke-width="2" fill="none" marker-end="url(#arrowup)"/>
+    <line x1="40" y1="30" x2="80" y2="15" stroke="#333" stroke-width="3"/>
+    <path d="M 80 15 L 95 10" stroke="#333" stroke-width="2"/>
+    <ellipse cx="100" cy="8" rx="12" ry="6" fill="#e8dcc8" stroke="#333" stroke-width="1.5"/>
+    <line x1="108" y1="6" x2="120" y2="4" stroke="#333" stroke-width="1.5"/>
+    <line x1="108" y1="8" x2="120" y2="8" stroke="#333" stroke-width="1.5"/>
+    <line x1="108" y1="10" x2="120" y2="12" stroke="#333" stroke-width="1.5"/>
+    <text x="70" y="190" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#333">Shoulder external</text>
+    <text x="70" y="205" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#333">rotation (gradual)</text>
+  </g>
+  
+  <!-- Position 5: Elbow Extension -->
+  <g transform="translate(110, 250)">
+    <text x="70" y="15" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#333">5. Elbow Extension</text>
+    <ellipse cx="70" cy="80" rx="25" ry="20" fill="#e8dcc8" stroke="#333" stroke-width="1.5"/>
+    <circle cx="40" cy="100" r="12" fill="#e8dcc8" stroke="#333" stroke-width="1.5"/>
+    <line x1="40" y1="100" x2="40" y2="30" stroke="#333" stroke-width="3"/>
+    <circle cx="40" cy="30" r="8" fill="#e8dcc8" stroke="#333" stroke-width="1.5"/>
+    <!-- Full elbow extension -->
+    <line x1="40" y1="30" x2="110" y2="15" stroke="#333" stroke-width="3"/>
+    <!-- Elbow extension arrow -->
+    <path d="M 50 25 Q 80 10 100 15" stroke="#22c55e" stroke-width="2" fill="none" marker-end="url(#arrowright)"/>
+    <path d="M 110 15 L 125 10" stroke="#333" stroke-width="2"/>
+    <ellipse cx="130" cy="8" rx="12" ry="6" fill="#e8dcc8" stroke="#333" stroke-width="1.5"/>
+    <line x1="138" y1="6" x2="150" y2="4" stroke="#333" stroke-width="1.5"/>
+    <line x1="138" y1="8" x2="150" y2="8" stroke="#333" stroke-width="1.5"/>
+    <line x1="138" y1="10" x2="150" y2="12" stroke="#333" stroke-width="1.5"/>
+    <text x="70" y="190" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#333">Extend elbow</text>
+    <text x="70" y="205" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#333">(last component)</text>
+  </g>
+  
+  <!-- Position 6: Cervical Side Bend -->
+  <g transform="translate(270, 250)">
+    <text x="70" y="15" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#333">6. Cervical Side Bend</text>
+    <!-- Head tilted -->
+    <ellipse cx="80" cy="75" rx="25" ry="20" fill="#e8dcc8" stroke="#333" stroke-width="1.5" transform="rotate(-15 80 75)"/>
+    <circle cx="40" cy="100" r="12" fill="#e8dcc8" stroke="#333" stroke-width="1.5"/>
+    <line x1="40" y1="100" x2="40" y2="30" stroke="#333" stroke-width="3"/>
+    <circle cx="40" cy="30" r="8" fill="#e8dcc8" stroke="#333" stroke-width="1.5"/>
+    <line x1="40" y1="30" x2="110" y2="15" stroke="#333" stroke-width="3"/>
+    <path d="M 110 15 L 125 10" stroke="#333" stroke-width="2"/>
+    <ellipse cx="130" cy="8" rx="12" ry="6" fill="#e8dcc8" stroke="#333" stroke-width="1.5"/>
+    <!-- Cervical side bend away arrow -->
+    <path d="M 90 55 Q 110 50 100 35" stroke="#dc2626" stroke-width="2" fill="none" marker-end="url(#arrowleft)"/>
+    <text x="110" y="40" font-family="Arial, sans-serif" font-size="9" fill="#dc2626">Away</text>
+    <text x="70" y="190" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#333">Cervical side bend</text>
+    <text x="70" y="205" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#333">AWAY from test side</text>
+  </g>
+  
+  <!-- Positive Test Indicator -->
+  <g transform="translate(430, 250)">
+    <rect x="0" y="0" width="140" height="220" rx="8" fill="#fef2f2" stroke="#ef4444" stroke-width="2"/>
+    <text x="70" y="25" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#991b1b">POSITIVE TEST</text>
+    <text x="70" y="50" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#333">Reproduction of</text>
+    <text x="70" y="68" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#333">patient's symptoms:</text>
+    <text x="10" y="95" font-family="Arial, sans-serif" font-size="10" fill="#333">• Pain</text>
+    <text x="10" y="113" font-family="Arial, sans-serif" font-size="10" fill="#333">• Tingling</text>
+    <text x="10" y="131" font-family="Arial, sans-serif" font-size="10" fill="#333">• Numbness</text>
+    <text x="10" y="149" font-family="Arial, sans-serif" font-size="10" fill="#333">• In arm/hand</text>
+    <line x1="10" y1="165" x2="130" y2="165" stroke="#ef4444" stroke-width="1"/>
+    <text x="70" y="185" text-anchor="middle" font-family="Arial, sans-serif" font-size="9" fill="#666">Sensitizing:</text>
+    <text x="70" y="203" text-anchor="middle" font-family="Arial, sans-serif" font-size="9" fill="#666">Cervical side bend</text>
+  </g>
+  
+  <!-- Markers -->
+  <defs>
+    <marker id="arrowup" markerWidth="10" markerHeight="10" refX="5" refY="10" orient="auto">
+      <path d="M 0 10 L 5 0 L 10 10" fill="#22c55e"/>
+    </marker>
+    <marker id="arrowright" markerWidth="10" markerHeight="10" refX="0" refY="5" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10" fill="#22c55e"/>
+    </marker>
+    <marker id="arrowleft" markerWidth="10" markerHeight="10" refX="10" refY="5" orient="auto">
+      <path d="M 10 0 L 0 5 L 10 10" fill="#dc2626"/>
+    </marker>
+  </defs>
+</svg>

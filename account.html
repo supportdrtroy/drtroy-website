@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Account | DrTroy CE</title>
+    
+    <meta http-equiv="Content-Security-Policy" content="
+        default-src 'self';
+        script-src 'self' 'unsafe-inline';
+        style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
+        font-src 'self' https://fonts.gstatic.com;
+        img-src 'self' data: https:;
+        connect-src 'self' https://*.supabase.co;
+    ">
+    
+    <script>
+        if (location.protocol !== 'https:' && location.hostname !== 'localhost') {
+            location.replace('https:' + window.location.href.substring(window.location.protocol.length));
+        }
+    </script>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --navy: #1a365d;
+            --navy-light: #2c5282;
+            --gold: #d69e2e;
+            --gold-light: #ecc94b;
+            --gray-50: #f7fafc;
+            --gray-100: #edf2f7;
+            --gray-200: #e2e8f0;
+            --gray-400: #a0aec0;
+            --gray-600: #4a5568;
+            --gray-800: #2d3748;
+            --success: #38a169;
+            --success-light: #c6f6d5;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: var(--gray-800);
+            background: var(--gray-50);
+            min-height: 100vh;
+        }
+
+        /* Header */
+        .account-header {
+            background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
+            color: white;
+            padding: 0;
+        }
+
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: white;
+            text-decoration: none;
+        }
+
+        .logo span { color: var(--gold); }
+
+        .header-nav {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+        }
+
+        .header-nav a {
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .header-nav a:hover { color: white; }
+
+        .btn-logout {
+            background: rgba(255,255,255,0.15);
+            color: white;
+            border: 1px solid rgba(255,255,255,0.3);
+            padding: 0.5rem 1.25rem;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-logout:hover {
+            background: rgba(255,255,255,0.25);
+        }
+
+        /* Welcome Banner */
+        .welcome-banner {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 2rem 2.5rem;
+        }
+
+        .welcome-banner h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+        }
+
+        .welcome-banner p {
+            color: rgba(255,255,255,0.7);
+            font-size: 1rem;
+        }
+
+        /* Main Content */
+        .account-content {
+            max-width: 1200px;
+            margin: -1rem auto 3rem;
+            padding: 0 2rem;
+        }
+
+        /* Stats Bar */
+        .stats-bar {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+        }
+
+        .stat-label {
+            font-size: 0.85rem;
+            color: var(--gray-400);
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--navy);
+        }
+
+        .stat-value.gold { color: var(--gold); }
+
+        /* Section */
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.25rem;
+        }
+
+        .section-header h2 {
+            font-size: 1.35rem;
+            font-weight: 700;
+            color: var(--navy);
+        }
+
+        .package-badge {
+            background: linear-gradient(135deg, var(--gold), var(--gold-light));
+            color: var(--navy);
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        /* Course Cards */
+        .courses-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+        }
+
+        .course-card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem 2rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            transition: all 0.25s;
+            border-left: 4px solid var(--gray-200);
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .course-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+            border-left-color: var(--gold);
+        }
+
+        .course-card.completed {
+            border-left-color: var(--success);
+        }
+
+        .course-card.in-progress {
+            border-left-color: var(--gold);
+        }
+
+        .course-info {
+            flex: 1;
+        }
+
+        .course-title {
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: var(--gray-800);
+            margin-bottom: 0.35rem;
+        }
+
+        .course-meta {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+        }
+
+        .course-hours {
+            font-size: 0.85rem;
+            color: var(--gray-600);
+            font-weight: 500;
+        }
+
+        .course-status {
+            font-size: 0.8rem;
+            font-weight: 600;
+            padding: 0.25rem 0.75rem;
+            border-radius: 12px;
+        }
+
+        .status-not-started {
+            background: var(--gray-100);
+            color: var(--gray-600);
+        }
+
+        .status-in-progress {
+            background: #fefcbf;
+            color: #975a16;
+        }
+
+        .status-completed {
+            background: var(--success-light);
+            color: #276749;
+        }
+
+        .course-action {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--navy);
+            font-weight: 600;
+            font-size: 0.95rem;
+            white-space: nowrap;
+        }
+
+        .course-action .arrow {
+            font-size: 1.2rem;
+            transition: transform 0.2s;
+        }
+
+        .course-card:hover .course-action .arrow {
+            transform: translateX(4px);
+        }
+
+        /* Progress Bar */
+        .progress-bar-container {
+            width: 120px;
+            margin: 0 2rem;
+        }
+
+        .progress-bar-bg {
+            height: 6px;
+            background: var(--gray-100);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            border-radius: 3px;
+            transition: width 0.5s ease;
+        }
+
+        .progress-bar-fill.not-started { width: 0; background: var(--gray-400); }
+        .progress-bar-fill.in-progress { background: var(--gold); }
+        .progress-bar-fill.completed { width: 100%; background: var(--success); }
+
+        .progress-text {
+            font-size: 0.75rem;
+            color: var(--gray-400);
+            text-align: right;
+            margin-top: 0.2rem;
+        }
+
+        /* Account Info Section */
+        .account-info-section {
+            margin-top: 2.5rem;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        .info-card {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+        }
+
+        .info-card h3 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--navy);
+            margin-bottom: 1.25rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 2px solid var(--gray-100);
+        }
+
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.6rem 0;
+        }
+
+        .info-row:not(:last-child) {
+            border-bottom: 1px solid var(--gray-50);
+        }
+
+        .info-label {
+            font-size: 0.9rem;
+            color: var(--gray-400);
+            font-weight: 500;
+        }
+
+        .info-value {
+            font-size: 0.9rem;
+            color: var(--gray-800);
+            font-weight: 500;
+            text-align: right;
+        }
+
+        .btn-edit {
+            background: var(--gray-50);
+            border: 1px solid var(--gray-200);
+            color: var(--navy);
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            float: right;
+            margin-top: 1rem;
+        }
+
+        .btn-edit:hover {
+            background: var(--navy);
+            color: white;
+            border-color: var(--navy);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .stats-bar { grid-template-columns: 1fr; }
+            .info-grid { grid-template-columns: 1fr; }
+            .header-top { padding: 1rem; }
+            .welcome-banner { padding: 1.5rem 1rem 2rem; }
+            .account-content { padding: 0 1rem; }
+            .course-card { flex-wrap: wrap; gap: 1rem; padding: 1.25rem; }
+            .progress-bar-container { width: 100%; margin: 0; }
+            .course-action { width: 100%; justify-content: center; padding-top: 0.5rem; border-top: 1px solid var(--gray-100); }
+            .header-nav { gap: 1rem; }
+        }
+
+        @media (max-width: 480px) {
+            .welcome-banner h1 { font-size: 1.4rem; }
+            .stat-value { font-size: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="account-header">
+        <div class="header-top">
+            <a href="index.html" class="logo">Dr<span>Troy</span> CE</a>
+            <div class="header-nav">
+                <a href="courses.html">Course Catalog</a>
+                <a href="account.html" style="color: white;">My Account</a>
+                <button class="btn-logout" id="logoutBtn">Log Out</button>
+            </div>
+        </div>
+        <div class="welcome-banner">
+            <h1 id="welcomeName">Welcome back!</h1>
+            <p id="welcomePackage">Loading your courses...</p>
+        </div>
+    </div>
+
+    <div class="account-content">
+        <div class="stats-bar">
+            <div class="stat-card">
+                <div class="stat-label">Total Courses</div>
+                <div class="stat-value" id="totalCourses">0</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Completed</div>
+                <div class="stat-value gold" id="completedCourses">0</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">CE Hours Earned</div>
+                <div class="stat-value" id="hoursEarned">0</div>
+            </div>
+        </div>
+
+        <div class="section-header">
+            <h2>My Courses</h2>
+            <span class="package-badge" id="packageBadge">PT Package</span>
+        </div>
+
+        <div class="courses-grid" id="coursesGrid">
+            <!-- Courses populated by JS -->
+        </div>
+
+        <div class="account-info-section">
+            <div class="section-header">
+                <h2>Account Settings</h2>
+            </div>
+            <div class="info-grid">
+                <div class="info-card">
+                    <h3>Personal Information</h3>
+                    <div class="info-row">
+                        <span class="info-label">Name</span>
+                        <span class="info-value" id="acctName">—</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Email</span>
+                        <span class="info-value" id="acctEmail">—</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Phone</span>
+                        <span class="info-value" id="acctPhone">—</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Discipline</span>
+                        <span class="info-value" id="acctDiscipline">—</span>
+                    </div>
+                </div>
+                <div class="info-card">
+                    <h3>Billing Address</h3>
+                    <div class="info-row">
+                        <span class="info-label">Address</span>
+                        <span class="info-value" id="acctAddress1">—</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">City</span>
+                        <span class="info-value" id="acctCity">—</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">State</span>
+                        <span class="info-value" id="acctState">—</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">ZIP Code</span>
+                        <span class="info-value" id="acctZip">—</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Course data per package
+        const packageCourses = {
+            'PT': {
+                title: 'PT Package',
+                discipline: 'Physical Therapist',
+                courses: [
+                    { name: 'Musculoskeletal Evaluation and Treatment', hours: 3 },
+                    { name: 'Fall Prevention in Older Adults', hours: 3 },
+                    { name: 'Post-Surgical Rehabilitation', hours: 3 },
+                    { name: 'Chronic Pain Management', hours: 3 },
+                    { name: 'Balance and Vestibular Disorders', hours: 3 },
+                    { name: 'Sports Injury Rehabilitation', hours: 3 },
+                    { name: 'Documentation and Billing Best Practices', hours: 3 },
+                    { name: 'Geriatric Physical Therapy Considerations', hours: 3 },
+                    { name: 'Neurological Rehabilitation', hours: 2 },
+                    { name: 'Infection Control and Patient Safety', hours: 1 }
+                ]
+            },
+            'PTA': {
+                title: 'PTA Package',
+                discipline: 'Physical Therapist Assistant',
+                courses: [
+                    { name: 'Therapeutic Exercise Techniques', hours: 3 },
+                    { name: 'Modalities and Physical Agents', hours: 3 },
+                    { name: 'Transfer and Mobility Training', hours: 3 },
+                    { name: 'Gait Training and Assessment', hours: 3 },
+                    { name: 'Wound Care Basics for PTAs', hours: 2 },
+                    { name: 'Neurological Rehabilitation', hours: 2 },
+                    { name: 'Infection Control and Patient Safety', hours: 1 }
+                ]
+            },
+            'OT': {
+                title: 'OT Package',
+                discipline: 'Occupational Therapist',
+                courses: [
+                    { name: 'Activities of Daily Living (ADL) Assessment', hours: 3 },
+                    { name: 'Upper Extremity Rehabilitation', hours: 3 },
+                    { name: 'Cognitive Assessment and Intervention', hours: 3 },
+                    { name: 'Home Modification and Safety', hours: 3 },
+                    { name: 'Pediatric Occupational Therapy', hours: 3 },
+                    { name: 'Adaptive Equipment and Assistive Technology', hours: 3 },
+                    { name: 'Mental Health in Occupational Therapy', hours: 2 },
+                    { name: 'Neurological Rehabilitation', hours: 2 },
+                    { name: 'Infection Control and Patient Safety', hours: 1 }
+                ]
+            },
+            'COTA': {
+                title: 'COTA Package',
+                discipline: 'OT Assistant',
+                courses: [
+                    { name: 'Therapeutic Activities in OT', hours: 3 },
+                    { name: 'Functional Mobility Training', hours: 3 },
+                    { name: 'Patient-Centered Care Techniques', hours: 3 },
+                    { name: 'Orthotics and Splinting Basics', hours: 3 },
+                    { name: 'Group Intervention Strategies', hours: 3 },
+                    { name: 'Documentation for COTAs', hours: 3 },
+                    { name: 'Pediatric Interventions for COTAs', hours: 2 },
+                    { name: 'Neurological Rehabilitation', hours: 2 },
+                    { name: 'Infection Control and Patient Safety', hours: 1 }
+                ]
+            }
+        };
+
+        function loadAccount() {
+            const name = localStorage.getItem('customerName') || 'Student';
+            const email = localStorage.getItem('customerEmail') || '';
+            const phone = localStorage.getItem('customerPhone') || '';
+            const discipline = localStorage.getItem('customerDiscipline') || 'PT';
+            const address1 = localStorage.getItem('customerAddress1') || '';
+            const address2 = localStorage.getItem('customerAddress2') || '';
+            const city = localStorage.getItem('customerCity') || '';
+            const state = localStorage.getItem('customerState') || '';
+            const zip = localStorage.getItem('customerZip') || '';
+            const pkg = localStorage.getItem('selectedPackage') || discipline;
+
+            const pkgData = packageCourses[pkg] || packageCourses['PT'];
+
+            // Welcome
+            document.getElementById('welcomeName').textContent = 'Welcome back, ' + name.split(' ')[0] + '!';
+            document.getElementById('welcomePackage').textContent = pkgData.title + ' — ' + pkgData.courses.length + ' courses ready for you';
+            document.getElementById('packageBadge').textContent = pkgData.title;
+
+            // Stats
+            const totalCourses = pkgData.courses.length;
+            const totalHours = pkgData.courses.reduce((sum, c) => sum + c.hours, 0);
+
+            // Load progress from localStorage
+            const progress = JSON.parse(localStorage.getItem('courseProgress') || '{}');
+            let completed = 0;
+            let hoursEarned = 0;
+
+            pkgData.courses.forEach(course => {
+                const key = course.name.replace(/[^a-zA-Z]/g, '');
+                if (progress[key] === 'completed') {
+                    completed++;
+                    hoursEarned += course.hours;
+                }
+            });
+
+            document.getElementById('totalCourses').textContent = totalCourses;
+            document.getElementById('completedCourses').textContent = completed;
+            document.getElementById('hoursEarned').textContent = hoursEarned + ' / ' + totalHours;
+
+            // Build course cards
+            const grid = document.getElementById('coursesGrid');
+            grid.innerHTML = '';
+
+            pkgData.courses.forEach((course, index) => {
+                const key = course.name.replace(/[^a-zA-Z]/g, '');
+                const status = progress[key] || 'not-started';
+                const progressPct = status === 'completed' ? 100 : (status === 'in-progress' ? (progress[key + '_pct'] || 50) : 0);
+
+                const statusLabels = {
+                    'not-started': 'Not Started',
+                    'in-progress': 'In Progress',
+                    'completed': 'Completed'
+                };
+
+                const actionLabels = {
+                    'not-started': 'Start Course',
+                    'in-progress': 'Continue',
+                    'completed': 'Review'
+                };
+
+                const card = document.createElement('a');
+                card.href = '#';
+                card.className = 'course-card ' + status;
+                card.onclick = function(e) {
+                    e.preventDefault();
+                    startCourse(course.name, index);
+                };
+
+                card.innerHTML = `
+                    <div class="course-info">
+                        <div class="course-title">${course.name}</div>
+                        <div class="course-meta">
+                            <span class="course-hours">${course.hours} Contact Hour${course.hours > 1 ? 's' : ''}</span>
+                            <span class="course-status status-${status}">${statusLabels[status]}</span>
+                        </div>
+                    </div>
+                    <div class="progress-bar-container">
+                        <div class="progress-bar-bg">
+                            <div class="progress-bar-fill ${status}" style="width: ${progressPct}%"></div>
+                        </div>
+                        <div class="progress-text">${progressPct}%</div>
+                    </div>
+                    <div class="course-action">
+                        ${actionLabels[status]} <span class="arrow">→</span>
+                    </div>
+                `;
+
+                grid.appendChild(card);
+            });
+
+            // Account info
+            const disciplineMap = { 'PT': 'Physical Therapist', 'PTA': 'PT Assistant', 'OT': 'Occupational Therapist', 'COTA': 'OT Assistant' };
+            document.getElementById('acctName').textContent = name || '—';
+            document.getElementById('acctEmail').textContent = email || '—';
+            document.getElementById('acctPhone').textContent = phone || '—';
+            document.getElementById('acctDiscipline').textContent = disciplineMap[discipline] || discipline || '—';
+            document.getElementById('acctAddress1').textContent = (address1 + (address2 ? ', ' + address2 : '')) || '—';
+            document.getElementById('acctCity').textContent = city || '—';
+            document.getElementById('acctState').textContent = state || '—';
+            document.getElementById('acctZip').textContent = zip || '—';
+        }
+
+        function startCourse(courseName, index) {
+            // For now, show a message. When course content is built, this links to the actual course page.
+            alert('Course: ' + courseName + '\n\nCourse content is being developed. You will be able to start this course soon!');
+        }
+
+        // Logout
+        document.getElementById('logoutBtn').addEventListener('click', function() {
+            if (confirm('Are you sure you want to log out?')) {
+                window.location.href = 'index.html';
+            }
+        });
+
+        document.addEventListener('DOMContentLoaded', loadAccount);
+    </script>
+</body>
+</html>

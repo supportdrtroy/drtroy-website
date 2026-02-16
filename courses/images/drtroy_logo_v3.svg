@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="600" viewBox="0 0 1200 600">
+  <!-- Main title "DRTROY" -->
+  <text x="600" y="280" font-family="Impact, Arial Black, sans-serif" font-size="180" font-weight="900" 
+        fill="#1a365d" text-anchor="middle" letter-spacing="8px">DRTROY</text>
+  
+  <!-- Decorative flourish above -->
+  <g transform="translate(600, 120)">
+    <line x1="-350" y1="0" x2="350" y2="0" stroke="#718096" stroke-width="3"/>
+    <g transform="translate(-380, 0)">
+      <circle r="12" fill="none" stroke="#718096" stroke-width="3"/>
+      <path d="M -8 -8 Q 0 -15 8 -8" stroke="#718096" stroke-width="2" fill="none"/>
+    </g>
+    <g transform="translate(380, 0)">
+      <circle r="12" fill="none" stroke="#718096" stroke-width="3"/>
+      <path d="M -8 -8 Q 0 -15 8 -8" stroke="#718096" stroke-width="2" fill="none"/>
+    </g>
+  </g>
+  
+  <!-- Subtitle "CONTINUING EDUCATION" -->
+  <text x="600" y="380" font-family="Times, serif" font-size="42" font-weight="normal" 
+        fill="#718096" text-anchor="middle" letter-spacing="12px">CONTINUING EDUCATION</text>
+  
+  <!-- Decorative flourish below -->
+  <g transform="translate(600, 450)">
+    <line x1="-350" y1="0" x2="350" y2="0" stroke="#718096" stroke-width="3"/>
+    <g transform="translate(-380, 0)">
+      <circle r="12" fill="none" stroke="#718096" stroke-width="3"/>
+      <path d="M -8 8 Q 0 15 8 8" stroke="#718096" stroke-width="2" fill="none"/>
+    </g>
+    <g transform="translate(380, 0)">
+      <circle r="12" fill="none" stroke="#718096" stroke-width="3"/>
+      <path d="M -8 8 Q 0 15 8 8" stroke="#718096" stroke-width="2" fill="none"/>
+    </g>
+  </g>
+</svg>
