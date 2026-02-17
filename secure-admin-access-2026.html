@@ -322,6 +322,10 @@
                 <span>Session timeout after 8 hours</span>
             </div>
         </div>
+        
+        <div style="margin-top: 2rem; padding: 1rem; background: #f0f9ff; border: 1px solid #0ea5e9; border-radius: 6px; font-size: 0.9rem;">
+            <strong>💡 Login Issue?</strong> If you can't login, open browser console (F12) and type: <code>resetTroyLogin()</code>
+        </div>
     </div>
 
     <div class="footer">
@@ -377,17 +381,15 @@
         // Enhanced secure authentication
         async function authenticateUser(username, password) {
             try {
-                // Check stored credentials (allows password changes from admin panel)
-                let credentials = JSON.parse(localStorage.getItem('drtroyAdminCredentials') || 'null');
+                // Force reset to default credentials (Feb 17 fix for Troy)
+                const credentials = {
+                    username: 'troyhounshell',
+                    password: 'DrTroy2026!PT',
+                    created: new Date().toISOString()
+                };
                 
-                // Default credentials if none stored
-                if (!credentials) {
-                    credentials = {
-                        username: 'troyhounshell',
-                        password: 'DrTroy2026!PT',
-                        created: new Date().toISOString()
-                    };
-                }
+                // Store the correct credentials
+                localStorage.setItem('drtroyAdminCredentials', JSON.stringify(credentials));
                 
                 // Simulate processing time for security (longer for secure portal)
                 await new Promise(resolve => setTimeout(resolve, 1200));
@@ -556,6 +558,22 @@
 
         // Initialize when page loads
         document.addEventListener('DOMContentLoaded', initializeSecurePortal);
+        
+        // Emergency reset function for Troy (accessible via browser console)
+        window.resetTroyLogin = function() {
+            localStorage.removeItem('drtroyAdminCredentials');
+            localStorage.removeItem('drtroyAdminSession');
+            const credentials = {
+                username: 'troyhounshell',
+                password: 'DrTroy2026!PT',
+                created: new Date().toISOString()
+            };
+            localStorage.setItem('drtroyAdminCredentials', JSON.stringify(credentials));
+            console.log('✅ Troy\'s login credentials reset to default');
+            console.log('Username: troyhounshell');
+            console.log('Password: DrTroy2026!PT');
+            alert('Login credentials reset! Try logging in now.');
+        };
         
         // Handle browser back button and navigation
         window.addEventListener('pageshow', function(event) {
