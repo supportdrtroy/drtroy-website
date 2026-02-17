@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600">
+  <!-- Background -->
+  <rect width="800" height="600" fill="#f8f9fa"/>
+  
+  <!-- Header -->
+  <rect x="0" y="0" width="800" height="80" fill="#1a365d"/>
+  <text x="400" y="50" font-family="Arial, sans-serif" font-size="32" font-weight="bold" fill="white" text-anchor="middle">Fall Statistics &amp; Healthcare Burden</text>
+  
+  <!-- Main Statistics Grid -->
+  
+  <!-- Statistic 1: 3 million ED visits -->
+  <rect x="50" y="120" width="320" height="180" fill="white" stroke="#e5e7eb" stroke-width="2" rx="8"/>
+  <!-- Center the content around y=210 (120 + 90) -->
+  <text x="210" y="180" font-family="Arial, sans-serif" font-size="44" font-weight="bold" fill="#dc2626" text-anchor="middle">3M+</text>
+  <text x="210" y="205" font-family="Arial, sans-serif" font-size="16" font-weight="600" fill="#374151" text-anchor="middle">Older Adults</text>
+  <text x="210" y="225" font-family="Arial, sans-serif" font-size="13" fill="#6b7280" text-anchor="middle">treated in emergency</text>
+  <text x="210" y="240" font-family="Arial, sans-serif" font-size="13" fill="#6b7280" text-anchor="middle">departments annually</text>
+  <text x="210" y="255" font-family="Arial, sans-serif" font-size="13" fill="#6b7280" text-anchor="middle">for fall injuries</text>
+  
+  <!-- Hospital icon for stat 1 -->
+  <circle cx="210" cy="275" r="10" fill="#dc2626"/>
+  <rect x="207" y="272" width="6" height="6" fill="white"/>
+  <rect x="208" y="273" width="4" height="1" fill="#dc2626"/>
+  <rect x="208" y="276" width="4" height="1" fill="#dc2626"/>
+  
+  <!-- Statistic 2: Leading cause of death -->
+  <rect x="430" y="120" width="320" height="180" fill="white" stroke="#e5e7eb" stroke-width="2" rx="8"/>
+  <!-- Center the content around y=210 (120 + 90) -->
+  <text x="590" y="175" font-family="Arial, sans-serif" font-size="32" font-weight="bold" fill="#b91c1c" text-anchor="middle">#1 CAUSE</text>
+  <text x="590" y="200" font-family="Arial, sans-serif" font-size="16" font-weight="600" fill="#374151" text-anchor="middle">of injury death</text>
+  <text x="590" y="220" font-family="Arial, sans-serif" font-size="13" fill="#6b7280" text-anchor="middle">in adults age 65+</text>
+  <text x="590" y="240" font-family="Arial, sans-serif" font-size="13" font-weight="600" fill="#dc2626" text-anchor="middle">LEADING KILLER</text>
+  
+  <!-- Warning icon for stat 2 -->
+  <polygon points="590,260 584,275 596,275" fill="#dc2626"/>
+  <text x="590" y="270" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="white" text-anchor="middle">!</text>
+  
+  <!-- Statistic 3: 1 in 4 falls -->
+  <rect x="50" y="340" width="320" height="180" fill="white" stroke="#e5e7eb" stroke-width="2" rx="8"/>
+  <!-- Center the content around y=430 (340 + 90) -->
+  <text x="210" y="395" font-family="Arial, sans-serif" font-size="44" font-weight="bold" fill="#f59e0b" text-anchor="middle">1 in 4</text>
+  <text x="210" y="420" font-family="Arial, sans-serif" font-size="16" font-weight="600" fill="#374151" text-anchor="middle">Older Adults</text>
+  <text x="210" y="440" font-family="Arial, sans-serif" font-size="13" fill="#6b7280" text-anchor="middle">falls each year</text>
+  <text x="210" y="455" font-family="Arial, sans-serif" font-size="12" font-weight="600" fill="#f59e0b" text-anchor="middle">EVERY 11 SECONDS</text>
+  
+  <!-- People icons for stat 3 -->
+  <g transform="translate(180,475)">
+    <circle cx="10" cy="8" r="5" fill="#f59e0b"/>
+    <rect x="7.5" y="13" width="5" height="8" fill="#f59e0b"/>
+    <circle cx="25" cy="8" r="5" fill="#f59e0b"/>
+    <rect x="22.5" y="13" width="5" height="8" fill="#f59e0b"/>
+    <circle cx="40" cy="8" r="5" fill="#f59e0b"/>
+    <rect x="37.5" y="13" width="5" height="8" fill="#f59e0b"/>
+    <circle cx="55" cy="8" r="5" fill="#dc2626"/>
+    <rect x="52.5" y="13" width="5" height="8" fill="#dc2626"/>
+  </g>
+  
+  <!-- Statistic 4: $50 billion costs -->
+  <rect x="430" y="340" width="320" height="180" fill="white" stroke="#e5e7eb" stroke-width="2" rx="8"/>
+  <!-- Center the content around y=430 (340 + 90) -->
+  <text x="590" y="395" font-family="Arial, sans-serif" font-size="44" font-weight="bold" fill="#059669" text-anchor="middle">$50B+</text>
+  <text x="590" y="420" font-family="Arial, sans-serif" font-size="16" font-weight="600" fill="#374151" text-anchor="middle">Medical Costs</text>
+  <text x="590" y="440" font-family="Arial, sans-serif" font-size="13" fill="#6b7280" text-anchor="middle">annually from</text>
+  <text x="590" y="455" font-family="Arial, sans-serif" font-size="13" fill="#6b7280" text-anchor="middle">fall-related injuries</text>
+  
+  <!-- Dollar icon for stat 4 -->
+  <circle cx="590" cy="480" r="12" fill="#059669"/>
+  <text x="590" y="486" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="white" text-anchor="middle">$</text>
+  
+  <!-- Footer -->
+  <rect x="0" y="550" width="800" height="50" fill="#e5e7eb"/>
+  <text x="400" y="575" font-family="Arial, sans-serif" font-size="14" fill="#374151" text-anchor="middle">Data Source: CDC WISQARS and BRFSS Surveillance Systems</text>
+</svg>
