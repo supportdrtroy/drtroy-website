@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
     <title>DrTroy | Continuing Education - Coming Soon</title>
     
     <!-- Security Headers -->
@@ -477,62 +477,268 @@
             }
         }
 
-        /* Responsive design */
-        @media (max-width: 768px) {
+        /* Enhanced Mobile-First Responsive Design */
+        @media (max-width: 1024px) {
             .container {
-                padding: 60px 20px 40px;
-                gap: 40px;
+                padding: 60px 30px 40px;
+                gap: 45px;
             }
             
-            .content-grid {
-                gap: 35px;
+            .logo img {
+                max-width: 260px;
             }
             
             .coming-soon h1 {
-                font-size: 2.5rem;
+                font-size: 3.2rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            body {
+                line-height: 1.6;
+            }
+            
+            .container {
+                padding: 50px 20px 30px;
+                gap: 35px;
+                min-height: calc(100vh - 60px);
+            }
+            
+            .content-grid {
+                gap: 30px;
+            }
+            
+            .logo {
+                margin-bottom: 25px;
+            }
+            
+            .logo img {
+                max-width: 240px;
+                border-radius: 12px;
+            }
+            
+            .coming-soon h1 {
+                font-size: 2.8rem;
+                margin-bottom: 15px;
+                line-height: 1.1;
+            }
+            
+            .coming-soon .subtitle {
+                font-size: 1rem;
+                margin-bottom: 30px;
+            }
+            
+            .description {
+                padding: 30px 25px;
+                border-radius: 16px;
+            }
+            
+            .description p {
+                font-size: 1.05rem;
+                line-height: 1.7;
             }
             
             .features {
-                gap: 20px;
+                gap: 15px;
+                flex-direction: row;
+                justify-content: center;
             }
             
             .feature {
-                font-size: 0.85rem;
-                padding: 14px 20px;
+                font-size: 0.8rem;
+                padding: 12px 18px;
+                border-radius: 25px;
+                white-space: nowrap;
+            }
+            
+            .notify-section {
+                padding: 35px 25px;
+                border-radius: 20px;
+            }
+            
+            .notify-section h3 {
+                font-size: 1.8rem;
+                margin-bottom: 12px;
+            }
+            
+            .notify-section p {
+                font-size: 1rem;
+                margin-bottom: 25px;
             }
             
             .email-form {
                 flex-direction: column;
                 align-items: stretch;
+                gap: 12px;
+                max-width: 100%;
             }
             
             .email-input {
                 min-width: auto;
+                padding: 14px 18px;
+                font-size: 1rem;
+                border-radius: 10px;
             }
             
-            .description,
-            .notify-section {
-                padding: 30px 25px;
+            .notify-btn {
+                padding: 14px 28px;
+                font-size: 0.95rem;
+                border-radius: 10px;
+                min-height: 48px; /* Better touch target */
+            }
+            
+            .contact-info {
+                padding-top: 30px;
+                margin-top: 25px;
+            }
+            
+            .contact-info p {
+                font-size: 0.9rem;
             }
         }
 
         @media (max-width: 480px) {
+            .header-accent {
+                height: 6px;
+            }
+            
             .container {
-                padding: 40px 15px 30px;
+                padding: 40px 16px 25px;
+                gap: 30px;
             }
             
             .logo img {
-                max-width: 220px;
+                max-width: 200px;
+                border-radius: 10px;
             }
             
             .coming-soon h1 {
-                font-size: 2rem;
+                font-size: 2.2rem;
+                margin-bottom: 12px;
+            }
+            
+            .coming-soon .subtitle {
+                font-size: 0.95rem;
+                margin-bottom: 25px;
+            }
+            
+            .description {
+                padding: 25px 20px;
+                border-radius: 14px;
+            }
+            
+            .description p {
+                font-size: 1rem;
+                line-height: 1.6;
             }
             
             .features {
                 flex-direction: column;
                 align-items: center;
-                gap: 12px;
+                gap: 10px;
+            }
+            
+            .feature {
+                font-size: 0.85rem;
+                padding: 12px 24px;
+                width: auto;
+                min-width: 160px;
+                text-align: center;
+            }
+            
+            .notify-section {
+                padding: 30px 20px;
+                border-radius: 16px;
+            }
+            
+            .notify-section h3 {
+                font-size: 1.6rem;
+            }
+            
+            .email-form {
+                gap: 10px;
+            }
+            
+            .email-input {
+                padding: 16px 18px;
+                font-size: 16px; /* Prevents zoom on iOS */
+            }
+            
+            .notify-btn {
+                padding: 16px 24px;
+                min-height: 52px; /* Larger touch target on mobile */
+            }
+        }
+        
+        @media (max-width: 360px) {
+            .container {
+                padding: 35px 12px 20px;
+            }
+            
+            .logo img {
+                max-width: 180px;
+            }
+            
+            .coming-soon h1 {
+                font-size: 1.9rem;
+            }
+            
+            .description,
+            .notify-section {
+                padding: 20px 16px;
+            }
+            
+            .features {
+                gap: 8px;
+            }
+            
+            .feature {
+                font-size: 0.8rem;
+                padding: 10px 20px;
+                min-width: 140px;
+            }
+        }
+        
+        /* Touch-friendly improvements */
+        @media (hover: none) and (pointer: coarse) {
+            .feature:hover {
+                transform: none;
+                box-shadow: 
+                    0 8px 20px rgba(139, 21, 56, 0.3),
+                    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            }
+            
+            .notify-btn:hover {
+                transform: none;
+            }
+            
+            .logo img:hover {
+                transform: none;
+                box-shadow: 
+                    0 20px 40px var(--shadow-burgundy),
+                    0 8px 16px rgba(0, 0, 0, 0.1),
+                    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            }
+            
+            /* Disable parallax on mobile for better performance */
+            .container {
+                transform: none !important;
+            }
+        }
+        
+        /* Prevent horizontal scroll on very small screens */
+        @media (max-width: 320px) {
+            * {
+                max-width: 100%;
+            }
+            
+            .container {
+                padding: 30px 8px 15px;
+            }
+            
+            .coming-soon h1 {
+                font-size: 1.7rem;
+                word-break: break-word;
             }
         }
 
@@ -654,36 +860,86 @@
             }, 5000);
         }
         
-        // Enhanced interactive effects with medical precision
+        // Enhanced interactive effects with medical precision + mobile optimization
         document.addEventListener('DOMContentLoaded', function() {
-            // Subtle parallax effect on scroll
-            window.addEventListener('scroll', () => {
-                const scrolled = window.pageYOffset;
-                const container = document.querySelector('.container');
-                if (container) {
-                    container.style.transform = `translateY(${scrolled * 0.1}px)`;
-                }
-            });
+            const isMobile = window.innerWidth <= 768 || 'ontouchstart' in document.documentElement;
             
-            // Add staggered hover effects to features
-            const features = document.querySelectorAll('.feature');
-            features.forEach((feature, index) => {
-                feature.addEventListener('mouseenter', () => {
-                    features.forEach((f, i) => {
-                        if (i !== index) {
-                            f.style.transform = 'scale(0.98) translateY(2px)';
-                            f.style.opacity = '0.8';
-                        }
-                    });
+            // Subtle parallax effect on scroll (desktop only for better performance)
+            if (!isMobile) {
+                window.addEventListener('scroll', () => {
+                    const scrolled = window.pageYOffset;
+                    const container = document.querySelector('.container');
+                    if (container) {
+                        container.style.transform = `translateY(${scrolled * 0.1}px)`;
+                    }
                 });
                 
-                feature.addEventListener('mouseleave', () => {
-                    features.forEach(f => {
-                        f.style.transform = '';
-                        f.style.opacity = '';
+                // Add staggered hover effects to features (desktop only)
+                const features = document.querySelectorAll('.feature');
+                features.forEach((feature, index) => {
+                    feature.addEventListener('mouseenter', () => {
+                        features.forEach((f, i) => {
+                            if (i !== index) {
+                                f.style.transform = 'scale(0.98) translateY(2px)';
+                                f.style.opacity = '0.8';
+                            }
+                        });
+                    });
+                    
+                    feature.addEventListener('mouseleave', () => {
+                        features.forEach(f => {
+                            f.style.transform = '';
+                            f.style.opacity = '';
+                        });
                     });
                 });
+            }
+            
+            // Mobile-specific optimizations
+            if (isMobile) {
+                // Add touch feedback for buttons
+                const touchElements = document.querySelectorAll('.notify-btn, .feature');
+                touchElements.forEach(element => {
+                    element.addEventListener('touchstart', function() {
+                        this.style.transform = 'scale(0.98)';
+                    }, { passive: true });
+                    
+                    element.addEventListener('touchend', function() {
+                        setTimeout(() => {
+                            this.style.transform = '';
+                        }, 100);
+                    }, { passive: true });
+                });
+                
+                // Prevent double-tap zoom on form elements
+                const emailInput = document.getElementById('notifyEmail');
+                if (emailInput) {
+                    emailInput.addEventListener('touchend', function(e) {
+                        e.preventDefault();
+                        this.focus();
+                    });
+                }
+            }
+            
+            // Handle orientation changes
+            window.addEventListener('orientationchange', function() {
+                setTimeout(function() {
+                    // Recalculate layout after orientation change
+                    window.scrollTo(0, window.scrollY);
+                }, 100);
             });
+            
+            // Improve form submission on mobile
+            const form = document.querySelector('.email-form');
+            if (form) {
+                form.addEventListener('submit', function(e) {
+                    // Blur input to hide mobile keyboard after submission
+                    const emailInput = document.getElementById('notifyEmail');
+                    if (emailInput && isMobile) {
+                        emailInput.blur();
+                    }
+                });
+            }
         });
     </script>
 </body>
