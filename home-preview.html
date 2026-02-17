@@ -586,7 +586,7 @@
                             </div>
                         </div>
                         
-                        <button class="btn btn-primary" style="margin-top: 2rem;">Select This Package</button>
+                        <button class="btn btn-primary" onclick="selectPackage('PT', 'PT Core Package')" style="margin-top: 2rem;">Select This Package</button>
                     </div>
 
                     <!-- OT Package -->
@@ -637,7 +637,7 @@
                             </div>
                         </div>
                         
-                        <button class="btn btn-primary" style="margin-top: 2rem;">Select This Package</button>
+                        <button class="btn btn-primary" onclick="selectPackage('OT', 'OT Core Package')" style="margin-top: 2rem;">Select This Package</button>
                     </div>
 
                     <!-- COTA Package -->
@@ -684,7 +684,7 @@
                             </div>
                         </div>
                         
-                        <button class="btn btn-primary" style="margin-top: 2rem;">Select This Package</button>
+                        <button class="btn btn-primary" onclick="selectPackage('COTA', 'COTA Complete Package')" style="margin-top: 2rem;">Select This Package</button>
                     </div>
 
                     <!-- PTA Package -->
@@ -723,17 +723,17 @@
                             </div>
                         </div>
                         
-                        <button class="btn btn-primary" style="margin-top: 2rem;">Select This Package</button>
+                        <button class="btn btn-primary" onclick="selectPackage('PTA', 'PTA Complete Package')" style="margin-top: 2rem;">Select This Package</button>
                     </div>
                 </div>
             </div>
         </section>
 
         <!-- Account Creation Section -->
-        <section style="padding: 4rem 2rem; background: var(--neutral-50);">
+        <section id="account-section" style="padding: 4rem 2rem; background: var(--neutral-50);">
             <div style="max-width: 600px; margin: 0 auto;">
-                <div style="background: white; border-radius: 24px; padding: 3rem; box-shadow: var(--shadow-xl); border: 1px solid var(--neutral-100); text-align: center;">
-                    <h2 style="font-family: 'Playfair Display', Georgia, serif; font-size: 1.75rem; font-weight: 600; color: var(--primary-navy); margin-bottom: 1rem;">Create Your Free Account</h2>
+                <div id="account-form-container" style="background: white; border-radius: 24px; padding: 3rem; box-shadow: var(--shadow-xl); border: 1px solid var(--neutral-100); text-align: center; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);">
+                    <h2 id="account-title" style="font-family: 'Playfair Display', Georgia, serif; font-size: 1.75rem; font-weight: 600; color: var(--primary-navy); margin-bottom: 1rem;">Create Your Free Account</h2>
                     <p style="color: var(--neutral-600); margin-bottom: 1rem; font-size: 0.95rem; line-height: 1.6;">New customers save $10 on bundles and save your course progress. Pick up right where you left off.</p>
                     <p style="color: var(--accent-emerald); font-weight: 600; margin-bottom: 2rem; font-size: 0.95rem;">Get a $10 credit on future purchases when you refer a colleague!</p>
                     
@@ -852,6 +852,75 @@
             console.log('✅ Homepage preview initialized');
         });
 
+        // Handle package selection
+        function selectPackage(packageCode, packageName) {
+            console.log('📦 Package selected:', packageCode, packageName);
+            
+            // Store selected package
+            sessionStorage.setItem('selectedPackage', JSON.stringify({
+                code: packageCode,
+                name: packageName,
+                timestamp: new Date().toISOString()
+            }));
+            
+            // Update account form title to reflect selection
+            const accountTitle = document.getElementById('account-title');
+            accountTitle.innerHTML = `Create Account to Get ${packageName}`;
+            accountTitle.style.color = 'var(--accent-emerald)';
+            
+            // Add selection indicator to form
+            const formContainer = document.getElementById('account-form-container');
+            formContainer.style.borderColor = 'var(--accent-emerald)';
+            formContainer.style.borderWidth = '3px';
+            
+            // Smooth scroll to account section
+            const accountSection = document.getElementById('account-section');
+            accountSection.scrollIntoView({ 
+                behavior: 'smooth', 
+                block: 'center'
+            });
+            
+            // Add subtle animation to draw attention
+            setTimeout(() => {
+                formContainer.style.transform = 'scale(1.02)';
+                setTimeout(() => {
+                    formContainer.style.transform = 'scale(1)';
+                }, 300);
+            }, 500);
+            
+            // Show selection confirmation
+            const confirmation = document.createElement('div');
+            confirmation.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: var(--accent-emerald);
+                color: white;
+                padding: 1.25rem 2rem;
+                border-radius: 12px;
+                box-shadow: var(--shadow-xl);
+                z-index: 10000;
+                font-weight: 600;
+                font-size: 0.95rem;
+                max-width: 350px;
+                text-align: center;
+            `;
+            confirmation.innerHTML = `
+                <div style="margin-bottom: 0.5rem;">📦 ${packageName} Selected!</div>
+                <div style="font-size: 0.85rem; opacity: 0.9;">Create your free account below to get started</div>
+            `;
+            
+            document.body.appendChild(confirmation);
+            
+            // Auto-remove notification
+            setTimeout(() => {
+                if (confirmation.parentNode) {
+                    confirmation.style.opacity = '0';
+                    setTimeout(() => confirmation.remove(), 300);
+                }
+            }, 4000);
+        }
+
         // Handle account creation form
         document.getElementById('account-form').addEventListener('submit', function(e) {
             e.preventDefault();
@@ -864,11 +933,24 @@
                 created: new Date().toISOString()
             };
             
+            // Check for selected package
+            const selectedPackage = sessionStorage.getItem('selectedPackage');
+            if (selectedPackage) {
+                const pkg = JSON.parse(selectedPackage);
+                accountData.selectedPackage = pkg;
+                sessionStorage.removeItem('selectedPackage'); // Clean up
+            }
+            
             // Store account data (in production, this would be handled server-side)
             localStorage.setItem('drtroyAccount', JSON.stringify(accountData));
             
-            // Show success message
-            alert('Account created successfully! New customers save $10 on bundles and can earn $10 credits for referrals.');
+            // Show success message with package context
+            let successMessage = 'Account created successfully! New customers save $10 on bundles and can earn $10 credits for referrals.';
+            if (selectedPackage) {
+                const pkg = JSON.parse(selectedPackage);
+                successMessage = `Account created! Ready to get your ${pkg.name}. New customers save $10 on bundles!`;
+            }
+            alert(successMessage);
             
             // Redirect to course catalog
             window.location.href = 'course-catalog.html';
