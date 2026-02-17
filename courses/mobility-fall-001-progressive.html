@@ -729,19 +729,21 @@
     </style>
 </head>
 <body>
-    <!-- Course Header -->
+    <!-- Header Navigation -->
     <header class="course-header">
         <div class="course-header-container">
             <div class="logo">
-                <a href="../index.html" onclick="handleNavigation(event, '../index.html')">
-                    <img src="images/drtroy_logo_new.jpg" alt="DrTroy CE" onerror="this.src='../courses/images/drtroy_logo_new.jpg'">
+                <a href="../index.html" onclick="autoSaveAndNavigate(event, '../index.html')">
+                    <img src="images/drtroy_logo_new.jpg" alt="DrTroy.com - Continuing Education">
                 </a>
             </div>
             <nav class="course-nav">
-                <a href="../index.html" onclick="handleNavigation(event, '../index.html')">Home</a>
-                <a href="../course-catalog.html" onclick="handleNavigation(event, '../course-catalog.html')">Course Catalog</a>
-                <a href="../my-account.html" onclick="handleNavigation(event, '../my-account.html')">My Account</a>
-                <button class="logout-btn" onclick="handleLogout()">🚪 Logout</button>
+                <a href="../index.html" onclick="autoSaveAndNavigate(event, '../index.html')">Home</a>
+                <a href="../my-account.html" onclick="autoSaveAndNavigate(event, '../my-account.html')">My Account</a>
+                <a href="../courses.html" onclick="autoSaveAndNavigate(event, '../courses.html')">Courses</a>
+                <a href="../about.html" onclick="autoSaveAndNavigate(event, '../about.html')">About</a>
+                <a href="../contact.html" onclick="autoSaveAndNavigate(event, '../contact.html')">Contact</a>
+                <button class="logout-btn" onclick="logout()">Logout</button>
             </nav>
         </div>
     </header>
@@ -2308,21 +2310,43 @@
         });
 
         // Handle navigation with auto-save
-        function handleNavigation(event, url) {
+        function autoSaveAndNavigate(event, url) {
             event.preventDefault();
-            saveProgress();
+            
+            // Save progress first (with visual feedback)
+            saveProgress(false); // Don't double-notify
+            
+            // Show custom navigation notification
+            showNotification('💾 Progress saved! Navigating...');
+            
+            // Add visual feedback to save button
+            const saveStatus = document.getElementById('saveStatus');
+            if (saveStatus) {
+                saveStatus.style.color = '#059669';
+                saveStatus.style.fontWeight = 'bold';
+                saveStatus.textContent = '✅ Auto-saved for navigation';
+            }
+            
+            // Navigate after short delay
             setTimeout(() => {
                 window.location.href = url;
-            }, 100);
+            }, 1200);
         }
 
         // Handle logout
-        function handleLogout() {
-            saveProgress();
+        function logout() {
+            // Clear course progress
+            localStorage.removeItem('mobility-fall-001-progress');
+            
+            // Clear any other user session data
+            localStorage.removeItem('userSession');
+            localStorage.removeItem('loginState');
+            
+            // Redirect to login page
+            showNotification('👋 Logging out...');
             setTimeout(() => {
-                localStorage.removeItem('userSession');
-                window.location.href = '../index.html';
-            }, 100);
+                window.location.href = '../login.html';
+            }, 1000);
         }
 
         // Toggle module visibility
