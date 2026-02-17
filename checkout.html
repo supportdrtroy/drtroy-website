@@ -27,22 +27,32 @@
     </script>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Source+Sans+Pro:wght@300;400;500;600&display=swap" rel="stylesheet">
     <script src="https://js.stripe.com/v3/"></script>
-    <script src="js/cart.js"></script>
     
     <style>
         :root {
-            --navy: #1a365d;
-            --navy-light: #2c5282;
-            --gold: #d69e2e;
-            --gold-light: #ecc94b;
-            --gray-50: #f7fafc;
-            --gray-100: #edf2f7;
-            --gray-600: #4a5568;
-            --gray-800: #2d3748;
-            --success: #38a169;
-            --error: #e53e3e;
+            --primary-navy: #1a365d;
+            --accent-emerald: #059669;
+            --accent-emerald-light: #10b981;
+            --accent-emerald-dark: #047857;
+            --neutral-50: #fafafa;
+            --neutral-100: #f5f5f5;
+            --neutral-200: #e5e5e5;
+            --neutral-300: #d4d4d4;
+            --neutral-400: #a3a3a3;
+            --neutral-600: #525252;
+            --neutral-700: #404040;
+            --neutral-800: #262626;
+            --neutral-900: #171717;
+            --success-light: #dcfce7;
+            --success-dark: #166534;
+            --error-light: #fee2e2;
+            --error-dark: #dc2626;
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+            --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
         }
 
         * {
@@ -51,564 +61,609 @@
             box-sizing: border-box;
         }
 
-        html {
-            scroll-behavior: smooth;
-        }
-
         body {
-            font-family: 'Inter', sans-serif;
+            font-family: 'Source Sans Pro', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-weight: 400;
             line-height: 1.6;
-            color: var(--gray-800);
-            background: var(--gray-50);
+            color: var(--neutral-800);
+            background: linear-gradient(135deg, var(--neutral-50) 0%, #ffffff 100%);
+            min-height: 100vh;
         }
 
         /* Header */
-        header {
-            background: white;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--neutral-200);
             position: sticky;
             top: 0;
             z-index: 100;
         }
 
         .header-container {
-            max-width: 1200px;
+            max-width: 1280px;
             margin: 0 auto;
-            padding: 2rem 2rem 1rem;
+            padding: 1.5rem 2rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
         .logo img {
-            height: 80px;
+            height: 72px;
             width: auto;
         }
 
-        .nav-back {
-            color: var(--navy);
-            text-decoration: none;
-            font-weight: 500;
+        .nav-links {
             display: flex;
             align-items: center;
-            gap: 0.5rem;
-            transition: color 0.2s;
+            gap: 2.5rem;
         }
 
-        .nav-back:hover {
-            color: var(--gold);
+        .nav-links a {
+            color: var(--neutral-600);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-navy);
         }
 
         /* Main Content */
-        .checkout-container {
-            max-width: 1000px;
-            margin: 2rem auto;
-            padding: 0 2rem;
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 4rem;
+            position: relative;
+        }
+
+        .page-header::before {
+            content: '';
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 4px;
+            background: var(--accent-emerald);
+            border-radius: 2px;
+        }
+
+        .page-header h1 {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: 3.25rem;
+            font-weight: 600;
+            color: var(--primary-navy);
+            margin-bottom: 1rem;
+            letter-spacing: -0.02em;
+        }
+
+        .page-header p {
+            font-size: 1.125rem;
+            color: var(--neutral-600);
+            font-weight: 300;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Checkout Layout */
+        .checkout-layout {
             display: grid;
-            grid-template-columns: 1fr 400px;
-            gap: 3rem;
+            grid-template-columns: 1fr 420px;
+            gap: 4rem;
+            align-items: start;
         }
 
-        .checkout-main {
+        @media (max-width: 1024px) {
+            .checkout-layout {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+        }
+
+        /* Checkout Form */
+        .checkout-form {
             background: white;
-            border-radius: 12px;
-            padding: 2.5rem;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-        }
-
-        .checkout-sidebar {
-            background: white;
-            border-radius: 12px;
-            padding: 2.5rem;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-            height: fit-content;
-            position: sticky;
-            top: 140px;
-        }
-
-        .page-title {
-            color: var(--navy);
-            font-size: 2.25rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-        }
-
-        .page-subtitle {
-            color: var(--gray-600);
-            margin-bottom: 2rem;
-        }
-
-        /* Order Summary */
-        .order-summary h3 {
-            color: var(--navy);
-            font-size: 1.5rem;
-            margin-bottom: 1.5rem;
-            font-weight: 600;
-        }
-
-        .selected-package {
-            border: 2px solid var(--gold);
-            border-radius: 8px;
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
-            background: rgba(214, 158, 46, 0.05);
-        }
-
-        .package-title {
-            font-size: 1.25rem;
-            font-weight: 600;
-            color: var(--navy);
-            margin-bottom: 0.5rem;
-        }
-
-        .package-hours {
-            color: var(--gray-600);
-            margin-bottom: 1rem;
-        }
-
-        .package-price {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--navy);
-        }
-
-        .discount-applied {
-            background: var(--success);
-            color: white;
-            padding: 0.5rem 1rem;
             border-radius: 20px;
-            font-size: 0.9rem;
-            font-weight: 500;
-            margin-bottom: 1rem;
-            display: inline-block;
+            padding: 3rem;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid var(--neutral-100);
         }
 
-        .price-breakdown {
-            border-top: 1px solid var(--gray-100);
-            padding-top: 1.5rem;
+        .form-section {
+            margin-bottom: 3rem;
         }
 
-        .price-row {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 0.75rem;
+        .form-section:last-child {
+            margin-bottom: 0;
         }
 
-        .price-row.total {
-            border-top: 2px solid var(--gold);
-            padding-top: 1rem;
-            margin-top: 1rem;
-            font-weight: 700;
-            font-size: 1.25rem;
-            color: var(--navy);
-        }
-
-        .discount-row {
-            color: var(--success);
-            font-weight: 500;
-        }
-
-        /* Customer Info */
-        .customer-info {
-            margin-bottom: 2rem;
-        }
-
-        .customer-info h3 {
-            color: var(--navy);
-            font-size: 1.25rem;
-            margin-bottom: 1rem;
+        .section-title {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: 1.75rem;
             font-weight: 600;
+            color: var(--primary-navy);
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--neutral-100);
+            position: relative;
         }
 
-        .info-grid {
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 80px;
+            height: 2px;
+            background: var(--accent-emerald);
+        }
+
+        .form-row {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 1rem;
-        }
-
-        .info-item {
-            background: var(--gray-50);
-            padding: 1rem;
-            border-radius: 6px;
-            border-left: 3px solid var(--gold);
-        }
-
-        .info-label {
-            font-size: 0.9rem;
-            color: var(--gray-600);
-            margin-bottom: 0.25rem;
-        }
-
-        .info-value {
-            font-weight: 500;
-            color: var(--navy);
-        }
-
-        /* Payment Form */
-        .payment-section h3 {
-            color: var(--navy);
-            font-size: 1.25rem;
+            gap: 1.5rem;
             margin-bottom: 1.5rem;
-            font-weight: 600;
+        }
+
+        .form-row.single {
+            grid-template-columns: 1fr;
         }
 
         .form-group {
             margin-bottom: 1.5rem;
         }
 
-        .form-group label {
+        .form-label {
             display: block;
-            margin-bottom: 0.5rem;
-            color: var(--navy);
-            font-weight: 500;
+            margin-bottom: 0.75rem;
+            font-weight: 600;
+            color: var(--neutral-700);
+            font-size: 0.95rem;
         }
 
         .form-input {
             width: 100%;
-            padding: 0.875rem;
-            border: 2px solid var(--gray-100);
-            border-radius: 6px;
+            padding: 1rem 1.25rem;
+            border: 2px solid var(--neutral-200);
+            border-radius: 12px;
             font-size: 1rem;
-            transition: border-color 0.2s;
+            color: var(--neutral-800);
+            background: white;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            font-family: inherit;
         }
 
         .form-input:focus {
             outline: none;
-            border-color: var(--gold);
+            border-color: var(--accent-emerald);
+            box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.1);
+        }
+
+        .form-input::placeholder {
+            color: var(--neutral-400);
         }
 
         /* Stripe Elements */
-        .stripe-element {
-            padding: 0.875rem;
-            border: 2px solid var(--gray-100);
-            border-radius: 6px;
+        #card-element {
+            padding: 1rem 1.25rem;
+            border: 2px solid var(--neutral-200);
+            border-radius: 12px;
             background: white;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        .stripe-element--focus {
-            border-color: var(--gold);
+        #card-element:focus {
+            border-color: var(--accent-emerald);
+            box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.1);
         }
 
-        .stripe-element--invalid {
-            border-color: var(--error);
-        }
-
-        .payment-errors {
-            color: var(--error);
+        #card-errors {
+            color: var(--error-dark);
+            margin-top: 0.75rem;
             font-size: 0.9rem;
-            margin-top: 0.5rem;
+            font-weight: 500;
         }
 
-        /* Security Notice */
-        .security-notice {
-            background: rgba(26, 54, 93, 0.05);
-            border-left: 3px solid var(--navy);
-            padding: 1rem;
-            margin: 1.5rem 0;
-            border-radius: 6px;
+        /* Order Summary */
+        .order-summary {
+            background: white;
+            border-radius: 20px;
+            padding: 3rem;
+            box-shadow: var(--shadow-xl);
+            border: 1px solid var(--neutral-100);
+            height: fit-content;
+            position: sticky;
+            top: 140px;
         }
 
-        .security-notice p {
-            font-size: 0.9rem;
-            color: var(--gray-600);
-            margin: 0;
-        }
-
-        /* Complete Purchase Button */
-        .complete-purchase-btn {
-            width: 100%;
-            background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
-            color: white;
-            border: none;
-            padding: 1.25rem 2rem;
-            border-radius: 8px;
-            font-size: 1.1rem;
+        .order-summary h2 {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: 2rem;
             font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
+            color: var(--primary-navy);
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .summary-items {
+            margin-bottom: 2rem;
+        }
+
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            padding: 1.5rem 0;
+            border-bottom: 1px solid var(--neutral-100);
+        }
+
+        .summary-item:last-child {
+            border-bottom: none;
+        }
+
+        .item-info {
+            flex: 1;
+            margin-right: 1rem;
+        }
+
+        .item-title {
+            font-weight: 600;
+            color: var(--primary-navy);
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+            line-height: 1.4;
+        }
+
+        .item-meta {
+            font-size: 0.9rem;
+            color: var(--neutral-600);
+        }
+
+        .item-price {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-weight: 600;
+            color: var(--primary-navy);
+            font-size: 1.125rem;
+        }
+
+        .summary-totals {
+            border-top: 2px solid var(--neutral-100);
+            padding-top: 2rem;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            font-size: 1.05rem;
+        }
+
+        .summary-row.total {
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: var(--primary-navy);
             margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 2px solid var(--accent-emerald);
         }
 
-        .complete-purchase-btn:hover:not(:disabled) {
-            background: linear-gradient(135deg, var(--navy-light) 0%, var(--navy) 100%);
+        .discount-row {
+            color: var(--accent-emerald-dark);
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1.25rem 2rem;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            border: none;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent-emerald) 0%, var(--accent-emerald-light) 100%);
+            color: white;
+            box-shadow: var(--shadow-md);
+        }
+
+        .btn-primary:hover:not(:disabled) {
+            background: linear-gradient(135deg, var(--accent-emerald-dark) 0%, var(--accent-emerald) 100%);
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(26, 54, 93, 0.3);
+            box-shadow: var(--shadow-xl);
         }
 
-        .complete-purchase-btn:disabled {
+        .btn-primary:disabled {
             opacity: 0.6;
             cursor: not-allowed;
             transform: none;
         }
 
-        .btn-loading {
-            position: relative;
-            color: transparent;
+        .btn-outline {
+            background: transparent;
+            color: var(--accent-emerald);
+            border: 2px solid var(--accent-emerald);
         }
 
-        .btn-loading::after {
+        .btn-outline:hover {
+            background: var(--accent-emerald);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .btn-block {
+            width: 100%;
+            margin-bottom: 1rem;
+        }
+
+        /* Loading State */
+        .loading {
+            position: relative;
+            pointer-events: none;
+        }
+
+        .loading::after {
             content: '';
             position: absolute;
             top: 50%;
             left: 50%;
-            transform: translate(-50%, -50%);
             width: 20px;
             height: 20px;
-            border: 2px solid rgba(255,255,255,0.3);
+            margin: -10px 0 0 -10px;
+            border: 2px solid transparent;
+            border-top-color: currentColor;
             border-radius: 50%;
-            border-top: 2px solid white;
             animation: spin 1s linear infinite;
         }
 
         @keyframes spin {
-            0% { transform: translate(-50%, -50%) rotate(0deg); }
-            100% { transform: translate(-50%, -50%) rotate(360deg); }
+            to { transform: rotate(360deg); }
         }
 
-        /* Terms */
-        .terms-checkbox {
+        /* Security Badge */
+        .security-badge {
             display: flex;
-            align-items: flex-start;
+            align-items: center;
+            justify-content: center;
             gap: 0.75rem;
-            margin: 1.5rem 0;
-        }
-
-        .terms-checkbox input[type="checkbox"] {
-            margin-top: 0.25rem;
-        }
-
-        .terms-checkbox label {
+            background: var(--success-light);
+            color: var(--success-dark);
+            padding: 1rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
             font-size: 0.9rem;
-            color: var(--gray-600);
-            line-height: 1.4;
+            font-weight: 600;
         }
 
-        .terms-checkbox a {
-            color: var(--navy);
-            text-decoration: underline;
+        /* Empty Cart */
+        .empty-cart {
+            text-align: center;
+            padding: 4rem 2rem;
+            background: white;
+            border-radius: 20px;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid var(--neutral-100);
         }
 
-        /* Mobile Responsive */
+        .empty-cart h3 {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: 2rem;
+            color: var(--primary-navy);
+            margin-bottom: 1rem;
+        }
+
+        .empty-cart p {
+            color: var(--neutral-600);
+            margin-bottom: 2rem;
+            font-size: 1.125rem;
+        }
+
+        /* Responsive Design */
         @media (max-width: 768px) {
-            .checkout-container {
-                grid-template-columns: 1fr;
-                gap: 2rem;
-                margin: 1rem auto;
+            .container {
+                padding: 2rem 1rem;
             }
-            
-            .checkout-sidebar {
-                order: -1;
-                position: static;
+
+            .page-header h1 {
+                font-size: 2.5rem;
             }
-            
-            .header-container {
-                padding: 1.5rem 1rem 1rem;
-                flex-direction: column;
-                gap: 1rem;
-                text-align: center;
-            }
-            
-            .logo img {
-                height: 60px;
-            }
-            
-            .checkout-main,
-            .checkout-sidebar {
+
+            .checkout-form,
+            .order-summary {
                 padding: 2rem;
             }
-            
-            .info-grid {
+
+            .form-row {
                 grid-template-columns: 1fr;
             }
         }
 
-        @media (max-width: 480px) {
-            .checkout-main,
-            .checkout-sidebar {
-                padding: 1.5rem;
-                margin: 0 1rem;
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
             }
-            
-            .page-title {
-                font-size: 1.75rem;
+            to {
+                opacity: 1;
+                transform: translateY(0);
             }
+        }
+
+        .checkout-form,
+        .order-summary {
+            animation: fadeInUp 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .order-summary {
+            animation-delay: 0.1s;
         }
     </style>
 </head>
+
 <body>
-    <header>
+    <!-- Header -->
+    <header class="header">
         <div class="header-container">
             <div class="logo">
-                <img src="courses/images/drtroy_logo_new.jpg" alt="DrTroy Continuing Education">
+                <a href="index.html">
+                    <img src="courses/images/drtroy_logo_new.jpg" alt="DrTroy Continuing Education">
+                </a>
             </div>
-            <a href="index.html" class="nav-back">
-                ← Back to Home
-            </a>
+            <nav class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="course-catalog.html">Courses</a>
+                <a href="cart.html">Cart</a>
+            </nav>
         </div>
     </header>
 
-    <div class="checkout-container">
-        <div class="checkout-main">
-            <h1 class="page-title">Complete Your Purchase</h1>
-            <p class="page-subtitle">You're just one step away from accessing your continuing education courses.</p>
+    <!-- Main Content -->
+    <main class="container">
+        <div class="page-header">
+            <h1>Complete Your Purchase</h1>
+            <p>Secure checkout for your continuing education courses</p>
+        </div>
 
-            <!-- Customer Information -->
-            <div class="customer-info">
-                <h3>Account Information</h3>
-                <div class="info-grid">
-                    <div class="info-item">
-                        <div class="info-label">Name</div>
-                        <div class="info-value" id="customerName">John Smith</div>
-                    </div>
-                    <div class="info-item">
-                        <div class="info-label">Email</div>
-                        <div class="info-value" id="customerEmail">john@example.com</div>
-                    </div>
-                    <div class="info-item">
-                        <div class="info-label">Phone</div>
-                        <div class="info-value" id="customerPhone">Not provided</div>
-                    </div>
-                    <div class="info-item">
-                        <div class="info-label">Address</div>
-                        <div class="info-value" id="customerAddress">Not provided</div>
-                    </div>
-                    <div class="info-item">
-                        <div class="info-label">Discipline</div>
-                        <div class="info-value" id="customerDiscipline">Physical Therapist</div>
-                    </div>
-                    <div class="info-item">
-                        <div class="info-label">Package Selected</div>
-                        <div class="info-value" id="selectedPackageName">PT Package</div>
-                    </div>
-                </div>
-            </div>
+        <!-- Empty Cart Message -->
+        <div class="empty-cart" id="empty-cart" style="display: none;">
+            <h3>Your cart is empty</h3>
+            <p>Add some courses to your cart before proceeding to checkout.</p>
+            <a href="course-catalog.html" class="btn btn-primary">Browse Courses</a>
+        </div>
 
-            <!-- Billing Information -->
-            <div class="billing-section">
-                <h3>Billing Information</h3>
-                
-                <div class="form-group">
-                    <label for="phone">Phone Number *</label>
-                    <input type="tel" id="phone" name="phone" class="form-input" required placeholder="(555) 123-4567">
-                </div>
-
-                <div class="form-group">
-                    <label for="address1">Address Line 1 *</label>
-                    <input type="text" id="address1" name="address1" class="form-input" required placeholder="123 Main Street">
-                </div>
-
-                <div class="form-group">
-                    <label for="address2">Address Line 2</label>
-                    <input type="text" id="address2" name="address2" class="form-input" placeholder="Apartment, suite, etc. (optional)">
-                </div>
-
-                <div style="display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 1rem;">
-                    <div class="form-group">
-                        <label for="city">City *</label>
-                        <input type="text" id="city" name="city" class="form-input" required placeholder="Dallas">
-                    </div>
-                    <div class="form-group">
-                        <label for="state">State *</label>
-                        <select id="state" name="state" class="form-input" required>
-                            <option value="">Select</option>
-                            <option value="TX" selected>Texas</option>
-                            <option value="AL">Alabama</option>
-                            <option value="AK">Alaska</option>
-                            <option value="AZ">Arizona</option>
-                            <option value="AR">Arkansas</option>
-                            <option value="CA">California</option>
-                            <option value="CO">Colorado</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="zip">ZIP *</label>
-                        <input type="text" id="zip" name="zip" class="form-input" required placeholder="75201" maxlength="10">
-                    </div>
-                </div>
-            </div>
-
-            <!-- Payment Information -->
-            <div class="payment-section">
-                <h3>Payment Information</h3>
-                
-                <form id="payment-form">
-                    <div class="form-group">
-                        <label for="cardholder-name">Full Name on Card</label>
-                        <input type="text" id="cardholder-name" name="cardholder-name" class="form-input" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="card-element">Credit or Debit Card</label>
-                        <div id="card-element" class="stripe-element">
-                            <!-- Stripe Elements will create form elements here -->
+        <!-- Checkout Layout -->
+        <div class="checkout-layout" id="checkout-content" style="display: none;">
+            <!-- Checkout Form -->
+            <div class="checkout-form">
+                <form id="checkout-form">
+                    <!-- Customer Information -->
+                    <div class="form-section">
+                        <h2 class="section-title">Customer Information</h2>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="firstName" class="form-label">First Name *</label>
+                                <input type="text" id="firstName" name="firstName" class="form-input" required placeholder="Enter your first name">
+                            </div>
+                            <div class="form-group">
+                                <label for="lastName" class="form-label">Last Name *</label>
+                                <input type="text" id="lastName" name="lastName" class="form-input" required placeholder="Enter your last name">
+                            </div>
                         </div>
-                        <div id="card-errors" class="payment-errors" role="alert"></div>
+                        
+                        <div class="form-group">
+                            <label for="email" class="form-label">Email Address *</label>
+                            <input type="email" id="email" name="email" class="form-input" required placeholder="your.email@example.com">
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="phone" class="form-label">Phone Number</label>
+                                <input type="tel" id="phone" name="phone" class="form-input" placeholder="(555) 123-4567">
+                            </div>
+                            <div class="form-group">
+                                <label for="profession" class="form-label">Profession *</label>
+                                <select id="profession" name="profession" class="form-input" required>
+                                    <option value="">Select your profession</option>
+                                    <option value="PT">Physical Therapist</option>
+                                    <option value="PTA">Physical Therapist Assistant</option>
+                                    <option value="OT">Occupational Therapist</option>
+                                    <option value="COTA">Certified Occupational Therapy Assistant</option>
+                                    <option value="Other">Other Healthcare Professional</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="licenseNumber" class="form-label">License Number *</label>
+                            <input type="text" id="licenseNumber" name="licenseNumber" class="form-input" required placeholder="Enter your professional license number">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="licenseState" class="form-label">License State *</label>
+                            <input type="text" id="licenseState" name="licenseState" class="form-input" required placeholder="State where you are licensed">
+                        </div>
                     </div>
 
-                    <div class="security-notice">
-                        <p>🔒 Your payment information is secure and encrypted. We use Stripe for payment processing and never store your card details on our servers.</p>
+                    <!-- Payment Information -->
+                    <div class="form-section">
+                        <h2 class="section-title">Payment Information</h2>
+                        
+                        <div class="security-badge">
+                            🔒 Your payment information is secure and encrypted
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="card-element" class="form-label">Credit Card *</label>
+                            <div id="card-element">
+                                <!-- Stripe Elements will create form elements here -->
+                            </div>
+                            <div id="card-errors" role="alert"></div>
+                        </div>
                     </div>
 
-                    <div class="terms-checkbox">
-                        <input type="checkbox" id="terms-agree" required>
-                        <label for="terms-agree">I agree to the <a href="#" target="_blank">Terms of Service</a> and <a href="#" target="_blank">Privacy Policy</a>. I understand that access to courses will be provided immediately upon successful payment.</label>
-                    </div>
-
-                    <button type="submit" id="submit-payment" class="complete-purchase-btn">
+                    <!-- Submit Button -->
+                    <button type="submit" class="btn btn-primary btn-block" id="submit-button">
                         Complete Purchase
                     </button>
                 </form>
             </div>
-        </div>
 
-        <!-- Order Summary Sidebar -->
-        <div class="checkout-sidebar">
+            <!-- Order Summary -->
             <div class="order-summary">
-                <h3>Order Summary</h3>
+                <h2>Order Summary</h2>
                 
-                <div class="selected-package">
-                    <div class="package-title" id="sidebarPackageTitle">PT Package</div>
-                    <div class="package-hours" id="sidebarPackageHours">27 Contact Hours </div>
-                    
-                    <div class="discount-applied" id="discountApplied">
-                        New Customer Discount Applied!
-                    </div>
-                    
-                    <div class="package-price" id="sidebarPackagePrice">$99</div>
+                <div class="summary-items" id="summary-items">
+                    <!-- Items will be populated by JavaScript -->
                 </div>
-
-                <div class="price-breakdown">
-                    <div class="price-row">
+                
+                <div class="summary-totals">
+                    <div class="summary-row">
                         <span>Subtotal:</span>
-                        <span id="subtotalAmount">$109</span>
+                        <span id="summary-subtotal">$0.00</span>
                     </div>
-                    <div class="price-row discount-row" id="discountRow">
-                        <span>New Customer Discount:</span>
-                        <span id="discountAmount">-$10</span>
+                    
+                    <div class="summary-row discount-row" id="discount-row" style="display: none;">
+                        <span>New Account Discount:</span>
+                        <span id="discount-amount">-$0.00</span>
                     </div>
-                    <div class="price-row total">
+                    
+                    <div class="summary-row total">
                         <span>Total:</span>
-                        <span id="totalAmount">$99</span>
+                        <span id="summary-total">$0.00</span>
                     </div>
                 </div>
-
-                <div style="margin-top: 2rem; padding-top: 2rem; border-top: 1px solid var(--gray-100);">
-                    <h4 style="color: var(--navy); margin-bottom: 1rem;">What's Included:</h4>
-                    <ul style="color: var(--gray-600); font-size: 0.9rem; line-height: 1.6;">
-                        <li>✓ Immediate course access</li>
-                        <li>✓ Mobile-friendly platform</li>
-                        <li>✓ Downloadable certificates</li>
-                        <li>✓ Texas board-approved hours</li>
-                        <li>✓ Email support</li>
-                    </ul>
-                </div>
+                
+                <a href="cart.html" class="btn btn-outline btn-block">← Back to Cart</a>
             </div>
         </div>
-    </div>
+    </main>
 
+    <!-- Include cart system -->
+    <script src="js/cart.js"></script>
+    
     <script>
-        // Initialize Stripe (replace with your publishable key)
-        const stripe = Stripe('pk_test_51234567890abcdef'); // Replace with actual key
+        // Initialize Stripe
+        const stripe = Stripe('pk_test_TYooMQauvdEDq54NiTphI7jx'); // Replace with your publishable key
         const elements = stripe.elements();
 
         // Create card element
@@ -616,13 +671,11 @@
             style: {
                 base: {
                     fontSize: '16px',
-                    color: '#2d3748',
+                    color: '#262626',
+                    fontFamily: 'Source Sans Pro, -apple-system, BlinkMacSystemFont, sans-serif',
                     '::placeholder': {
-                        color: '#4a5568',
+                        color: '#a3a3a3',
                     },
-                },
-                invalid: {
-                    color: '#e53e3e',
                 },
             },
         });
@@ -639,438 +692,154 @@
             }
         });
 
-        // Load customer data from URL parameters or localStorage
-        function loadCustomerData() {
-            const urlParams = new URLSearchParams(window.location.search);
+        // Populate checkout page
+        function populateCheckout() {
+            console.log('💳 Populating checkout...');
             
-            // Get data from URL or localStorage
-            const customerData = {
-                name: urlParams.get('name') || localStorage.getItem('customerName') || 'John Smith',
-                email: urlParams.get('email') || localStorage.getItem('customerEmail') || 'john@example.com',
-                discipline: urlParams.get('discipline') || localStorage.getItem('customerDiscipline') || 'PT',
-                package: urlParams.get('package') || localStorage.getItem('selectedPackage') || 'PT'
-            };
-
-            // Update customer info display
-            document.getElementById('customerName').textContent = customerData.name;
-            document.getElementById('customerEmail').textContent = customerData.email;
-            document.getElementById('cardholder-name').value = customerData.name;
+            const cartData = window.drtroyCart.getCheckoutData();
             
-            // Map discipline codes to full names
-            const disciplineMap = {
-                'PT': 'Physical Therapist',
-                'PTA': 'Physical Therapist Assistant',
-                'OT': 'Occupational Therapist',
-                'COTA': 'Certified Occupational Therapy Assistant'
-            };
-            
-            document.getElementById('customerDiscipline').textContent = disciplineMap[customerData.discipline] || customerData.discipline;
-
-            // Pre-fill billing fields from localStorage if returning customer
-            const savedPhone = localStorage.getItem('customerPhone');
-            const savedAddress1 = localStorage.getItem('customerAddress1');
-            const savedAddress2 = localStorage.getItem('customerAddress2');
-            const savedCity = localStorage.getItem('customerCity');
-            const savedState = localStorage.getItem('customerState');
-            const savedZip = localStorage.getItem('customerZip');
-            const savedFullAddress = localStorage.getItem('customerFullAddress');
-
-            if (savedPhone) {
-                document.getElementById('phone').value = savedPhone;
-                document.getElementById('customerPhone').textContent = savedPhone;
-            }
-            if (savedAddress1) document.getElementById('address1').value = savedAddress1;
-            if (savedAddress2) document.getElementById('address2').value = savedAddress2;
-            if (savedCity) document.getElementById('city').value = savedCity;
-            if (savedState) document.getElementById('state').value = savedState;
-            if (savedZip) document.getElementById('zip').value = savedZip;
-            if (savedFullAddress) document.getElementById('customerAddress').textContent = savedFullAddress;
-
-            // Live-update the account info display as user types
-            document.getElementById('phone').addEventListener('input', function() {
-                document.getElementById('customerPhone').textContent = this.value || 'Not provided';
-            });
-            document.getElementById('address1').addEventListener('input', updateAddressDisplay);
-            document.getElementById('city').addEventListener('input', updateAddressDisplay);
-            document.getElementById('state').addEventListener('change', updateAddressDisplay);
-            document.getElementById('zip').addEventListener('input', updateAddressDisplay);
-
-            // Update package information
-            updatePackageDisplay(customerData.package);
-        }
-
-        function updateAddressDisplay() {
-            const addr1 = document.getElementById('address1').value;
-            const city = document.getElementById('city').value;
-            const state = document.getElementById('state').value;
-            const zip = document.getElementById('zip').value;
-            if (addr1 || city) {
-                let display = addr1;
-                if (city) display += ', ' + city;
-                if (state) display += ', ' + state;
-                if (zip) display += ' ' + zip;
-                document.getElementById('customerAddress').textContent = display;
-            } else {
-                document.getElementById('customerAddress').textContent = 'Not provided';
-            }
-        }
-
-        function updatePackageDisplay(packageType) {
-            const packages = {
-                'PT': {
-                    title: 'PT Package',
-                    hours: '27 Contact Hours',
-                    homepagePrice: 109,  // Price shown on homepage
-                    finalPrice: 99       // Homepage price minus $10
-                },
-                'PTA': {
-                    title: 'PTA Package', 
-                    hours: '17 Contact Hours',
-                    homepagePrice: 89,   // Price shown on homepage  
-                    finalPrice: 79       // Homepage price minus $10
-                },
-                'OT': {
-                    title: 'OT Package',
-                    hours: '23 Contact Hours ', 
-                    homepagePrice: 109,  // Price shown on homepage
-                    finalPrice: 99       // Homepage price minus $10
-                },
-                'COTA': {
-                    title: 'COTA Package',
-                    hours: '23 Contact Hours ',
-                    homepagePrice: 89,   // Price shown on homepage
-                    finalPrice: 79       // Homepage price minus $10
-                }
-            };
-
-            const pkg = packages[packageType] || packages['PT'];
-            
-            // Update main display
-            document.getElementById('selectedPackageName').textContent = pkg.title;
-            
-            // Update sidebar - show homepage price with $10 discount
-            document.getElementById('sidebarPackageTitle').textContent = pkg.title;
-            document.getElementById('sidebarPackageHours').textContent = pkg.hours;
-            document.getElementById('sidebarPackagePrice').textContent = `$${pkg.finalPrice}`;
-            
-            // Show discount calculation: Homepage Price - $10 = Final Price
-            document.getElementById('discountApplied').style.display = 'inline-block';
-            document.getElementById('discountRow').style.display = 'flex';
-            document.getElementById('subtotalAmount').textContent = `$${pkg.homepagePrice}`;
-            document.getElementById('discountAmount').textContent = `-$10`;
-            document.getElementById('totalAmount').textContent = `$${pkg.finalPrice}`;
-        }
-
-        // Handle form submission
-        const form = document.getElementById('payment-form');
-        form.addEventListener('submit', async (event) => {
-            event.preventDefault();
-
-            const submitButton = document.getElementById('submit-payment');
-            const termsCheckbox = document.getElementById('terms-agree');
-            
-            // Check if terms are agreed
-            if (!termsCheckbox.checked) {
-                alert('Please agree to the Terms of Service and Privacy Policy to continue.');
+            if (cartData.items.length === 0) {
+                document.getElementById('empty-cart').style.display = 'block';
+                document.getElementById('checkout-content').style.display = 'none';
                 return;
             }
 
-            // Disable button and show loading
-            submitButton.disabled = true;
-            submitButton.classList.add('btn-loading');
-
-            const {token, error} = await stripe.createToken(cardElement, {
-                name: document.getElementById('cardholder-name').value,
+            document.getElementById('empty-cart').style.display = 'none';
+            document.getElementById('checkout-content').style.display = 'block';
+            
+            // Populate order summary items
+            const summaryItems = document.getElementById('summary-items');
+            let itemsHtml = '';
+            
+            cartData.items.forEach(item => {
+                const quantity = item.quantity || 1;
+                itemsHtml += `
+                    <div class="summary-item">
+                        <div class="item-info">
+                            <div class="item-title">${item.title}</div>
+                            <div class="item-meta">
+                                ${item.credits} CCU${item.credits !== 1 ? 's' : ''} • 
+                                ${item.type === 'course' ? 'Individual Course' : 'Bundle Package'}
+                                ${quantity > 1 ? ` × ${quantity}` : ''}
+                            </div>
+                        </div>
+                        <div class="item-price">$${(item.price * quantity).toFixed(2)}</div>
+                    </div>
+                `;
             });
-
-            if (error) {
-                // Show error to customer
-                document.getElementById('card-errors').textContent = error.message;
-                submitButton.disabled = false;
-                submitButton.classList.remove('btn-loading');
+            
+            summaryItems.innerHTML = itemsHtml;
+            
+            // Update totals
+            document.getElementById('summary-subtotal').textContent = `$${cartData.subtotal.toFixed(2)}`;
+            document.getElementById('summary-total').textContent = `$${cartData.total.toFixed(2)}`;
+            
+            const discountRow = document.getElementById('discount-row');
+            if (cartData.hasNewAccountDiscount && cartData.discount > 0) {
+                document.getElementById('discount-amount').textContent = `-$${cartData.discount.toFixed(2)}`;
+                discountRow.style.display = 'flex';
             } else {
-                // Send token to your server for payment processing
-                processPayment(token);
+                discountRow.style.display = 'none';
+            }
+            
+            console.log('✅ Checkout populated');
+        }
+
+        // Handle form submission
+        const form = document.getElementById('checkout-form');
+        form.addEventListener('submit', async (event) => {
+            event.preventDefault();
+            
+            const submitButton = document.getElementById('submit-button');
+            submitButton.disabled = true;
+            submitButton.classList.add('loading');
+            submitButton.innerHTML = 'Processing...';
+
+            // Get form data
+            const formData = new FormData(form);
+            const customerData = {
+                firstName: formData.get('firstName'),
+                lastName: formData.get('lastName'),
+                email: formData.get('email'),
+                phone: formData.get('phone'),
+                profession: formData.get('profession'),
+                licenseNumber: formData.get('licenseNumber'),
+                licenseState: formData.get('licenseState')
+            };
+
+            // Validate required fields
+            const requiredFields = ['firstName', 'lastName', 'email', 'profession', 'licenseNumber', 'licenseState'];
+            const missingFields = requiredFields.filter(field => !customerData[field]);
+            
+            if (missingFields.length > 0) {
+                alert(`Please fill in all required fields: ${missingFields.join(', ')}`);
+                submitButton.disabled = false;
+                submitButton.classList.remove('loading');
+                submitButton.innerHTML = 'Complete Purchase';
+                return;
+            }
+
+            // Get cart data
+            const cartData = window.drtroyCart.getCheckoutData();
+            
+            try {
+                // For demo purposes, we'll simulate a successful payment
+                // In production, you would create a payment intent on your server
+                
+                // Simulate payment processing
+                await new Promise(resolve => setTimeout(resolve, 2000));
+                
+                // Store purchase data
+                const purchaseData = {
+                    orderId: 'ORDER-' + Date.now(),
+                    customer: customerData,
+                    items: cartData.items,
+                    totals: {
+                        subtotal: cartData.subtotal,
+                        discount: cartData.discount,
+                        total: cartData.total
+                    },
+                    purchaseDate: new Date().toISOString(),
+                    paymentMethod: 'card'
+                };
+                
+                // Store in localStorage (in production, this would be handled server-side)
+                localStorage.setItem('lastPurchase', JSON.stringify(purchaseData));
+                
+                // Clear cart
+                window.drtroyCart.clear();
+                
+                // Redirect to success page
+                window.location.href = 'success.html';
+                
+            } catch (error) {
+                console.error('Payment failed:', error);
+                
+                // Show error message
+                const displayError = document.getElementById('card-errors');
+                displayError.textContent = 'Payment failed. Please try again.';
+                
+                // Re-enable submit button
+                submitButton.disabled = false;
+                submitButton.classList.remove('loading');
+                submitButton.innerHTML = 'Complete Purchase';
             }
         });
 
-        async function processPayment(token) {
-            try {
-                // Save customer billing info to localStorage for account/database
-                const billingData = {
-                    phone: document.getElementById('phone').value,
-                    address1: document.getElementById('address1').value,
-                    address2: document.getElementById('address2').value,
-                    city: document.getElementById('city').value,
-                    state: document.getElementById('state').value,
-                    zip: document.getElementById('zip').value
-                };
-                localStorage.setItem('customerPhone', billingData.phone);
-                localStorage.setItem('customerAddress1', billingData.address1);
-                localStorage.setItem('customerAddress2', billingData.address2);
-                localStorage.setItem('customerCity', billingData.city);
-                localStorage.setItem('customerState', billingData.state);
-                localStorage.setItem('customerZip', billingData.zip);
-                
-                // Build full address string
-                let fullAddress = billingData.address1;
-                if (billingData.address2) fullAddress += ', ' + billingData.address2;
-                fullAddress += ', ' + billingData.city + ', ' + billingData.state + ' ' + billingData.zip;
-                localStorage.setItem('customerFullAddress', fullAddress);
-
-                // In a real implementation, send token + billing data to your backend
-                // For demo purposes, simulate success after delay
-                await new Promise(resolve => setTimeout(resolve, 2000));
-                
-                // Assign courses to user account
-                await assignCoursesToUser();
-                
-                // Mark purchase complete and store package
-                localStorage.setItem('purchaseComplete', 'true');
-                localStorage.setItem('purchaseDate', new Date().toISOString());
-                
-                // Redirect to account dashboard
-                window.location.href = 'my-account.html';
-                
-            } catch (error) {
-                // Handle payment error
-                document.getElementById('card-errors').textContent = 'Payment failed. Please try again.';
-                
-                const submitButton = document.getElementById('submit-payment');
-                submitButton.disabled = false;
-                submitButton.classList.remove('btn-loading');
-            }
-        }
-
-        // Package to Course Mapping (Based on actual home page packages)
-        const PACKAGE_COURSES = {
-            'PT': [
-                'PT-MSK-001', // PT Musculoskeletal Evaluation and Diagnosis (3 CCUs)
-                'MOBILITY-001', // Comprehensive Mobility and Fall Prevention (3 CCUs)
-                'BALANCE-001', // Balance, Gait, and Vestibular Management (3 CCUs)  
-                'EXERCISE-001', // Post-Surgical and Therapeutic Exercise (3 CCUs)
-                'GERIATRIC-001', // Geriatric Care Across the Continuum (3 CCUs)
-                'DOCUMENTATION-001', // Professional Documentation and Communication (3 CCUs)
-                'MODALITIES-001', // Physical Agents, Modalities, and Wound Care (3 CCUs)
-                'NEURO-001', // Neurological Rehabilitation (3 CCUs)
-                'INFECTION-001' // Infection Control and Patient Safety (3 CCUs)
-            ], // Total: 27 CCUs
-            'PTA': [
-                'MOBILITY-001', // Comprehensive Mobility and Fall Prevention (3 CCUs)
-                'EXERCISE-001', // Post-Surgical and Therapeutic Exercise (3 CCUs)
-                'DOCUMENTATION-001', // Professional Documentation and Communication (3 CCUs)
-                'MODALITIES-001', // Physical Agents, Modalities, and Wound Care (3 CCUs)
-                'INFECTION-001', // Infection Control and Patient Safety (3 CCUs)
-                'EDUCATION-001' // Patient Education and Health Promotion (2 CCUs)
-            ], // Total: 17 CCUs
-            'OT': [
-                'OT-ADL-001', // OT Evaluation and Assessment of ADLs (3 CCUs)
-                'MOBILITY-001', // Comprehensive Mobility and Fall Prevention (3 CCUs)
-                'BALANCE-001', // Balance, Gait, and Vestibular Management (3 CCUs)
-                'EXERCISE-001', // Post-Surgical and Therapeutic Exercise (3 CCUs)
-                'DOCUMENTATION-001', // Professional Documentation and Communication (3 CCUs)
-                'MODALITIES-001', // Physical Agents, Modalities, and Wound Care (3 CCUs)
-                'NEURO-001', // Neurological Rehabilitation (3 CCUs)
-                'EDUCATION-001' // Patient Education and Health Promotion (2 CCUs)
-            ], // Total: 23 CCUs
-            'COTA': [
-                'MOBILITY-001', // Comprehensive Mobility and Fall Prevention (3 CCUs)
-                'BALANCE-001', // Balance, Gait, and Vestibular Management (3 CCUs)
-                'EXERCISE-001', // Post-Surgical and Therapeutic Exercise (3 CCUs)
-                'GERIATRIC-001', // Geriatric Care Across the Continuum (3 CCUs)
-                'DOCUMENTATION-001', // Professional Documentation and Communication (3 CCUs)
-                'MODALITIES-001', // Physical Agents, Modalities, and Wound Care (3 CCUs)
-                'NEURO-001', // Neurological Rehabilitation (3 CCUs)
-                'EDUCATION-001' // Patient Education and Health Promotion (2 CCUs)
-            ] // Total: 23 CCUs
-        };
-
-        // Individual Course Database (Updated Pricing)
-        const INDIVIDUAL_COURSES = {
-            'PT-MSK-001': {
-                title: 'PT Musculoskeletal Evaluation and Diagnosis',
-                credits: 3,
-                price: 27.99,
-                courseNumber: 'DRTROY-PT-MSK-001-2024'
-            },
-            'OT-ADL-001': {
-                title: 'OT Evaluation and Assessment of ADLs',
-                credits: 3,
-                price: 27.99,
-                courseNumber: 'DRTROY-OT-ADL-001-2024'
-            },
-            'MOBILITY-001': {
-                title: 'Comprehensive Mobility and Fall Prevention',
-                credits: 3,
-                price: 27.99,
-                courseNumber: 'DRTROY-MOBILITY-001-2024'
-            },
-            'BALANCE-001': {
-                title: 'Balance, Gait, and Vestibular Management',
-                credits: 3,
-                price: 27.99,
-                courseNumber: 'DRTROY-BALANCE-001-2024'
-            },
-            'EXERCISE-001': {
-                title: 'Post-Surgical and Therapeutic Exercise',
-                credits: 3,
-                price: 27.99,
-                courseNumber: 'DRTROY-EXERCISE-001-2024'
-            },
-            'GERIATRIC-001': {
-                title: 'Geriatric Care Across the Continuum',
-                credits: 3,
-                price: 27.99,
-                courseNumber: 'DRTROY-GERIATRIC-001-2024'
-            },
-            'DOCUMENTATION-001': {
-                title: 'Professional Documentation and Communication',
-                credits: 3,
-                price: 27.99,
-                courseNumber: 'DRTROY-DOC-001-2024'
-            },
-            'MODALITIES-001': {
-                title: 'Physical Agents, Modalities, and Wound Care',
-                credits: 3,
-                price: 27.99,
-                courseNumber: 'DRTROY-MODALITIES-001-2024'
-            },
-            'NEURO-001': {
-                title: 'Neurological Rehabilitation',
-                credits: 3,
-                price: 27.99,
-                courseNumber: 'DRTROY-NEURO-001-2024'
-            },
-            'INFECTION-001': {
-                title: 'Infection Control and Patient Safety',
-                credits: 3,
-                price: 27.99,
-                courseNumber: 'DRTROY-INFECTION-001-2024'
-            },
-            'EDUCATION-001': {
-                title: 'Patient Education and Health Promotion',
-                credits: 2,
-                price: 18.99,
-                courseNumber: 'DRTROY-EDUCATION-001-2024'
-            },
-            'HEALTHTECH-001': {
-                title: 'Healthcare Technology and Electronic Records',
-                credits: 1.5,
-                price: 14.99,
-                courseNumber: 'DRTROY-HEALTHTECH-001-2024'
-            }
-        };
-
-        // Individual Course Sales Settings (Hidden until enabled)
-        const INDIVIDUAL_SALES_ENABLED = false;
-
-        // Assign courses to user account after successful purchase
-        async function assignCoursesToUser() {
-            try {
-                const accountData = localStorage.getItem('drtroyAccount');
-                if (!accountData) {
-                    console.error('No user account found');
-                    return;
-                }
-                
-                const account = JSON.parse(accountData);
-                
-                // Initialize enrolledCourses if it doesn't exist
-                if (!account.enrolledCourses) {
-                    account.enrolledCourses = [];
-                }
-                
-                // Initialize purchases if it doesn't exist
-                if (!account.purchases) {
-                    account.purchases = [];
-                }
-                
-                // Check if this is a package or individual course purchase
-                const urlParams = new URLSearchParams(window.location.search);
-                const purchaseType = urlParams.get('type');
-                
-                if (purchaseType === 'individual') {
-                    // Individual course purchase
-                    const courseId = urlParams.get('course');
-                    const courseData = localStorage.getItem('selectedCourse');
-                    
-                    if (!courseId || !courseData || !INDIVIDUAL_COURSES[courseId]) {
-                        console.error('Invalid individual course purchase');
-                        return;
-                    }
-                    
-                    const course = JSON.parse(courseData);
-                    console.log('📚 Assigning individual course:', courseId);
-                    
-                    // Add course to enrolled courses (avoid duplicates)
-                    if (!account.enrolledCourses.includes(courseId)) {
-                        account.enrolledCourses.push(courseId);
-                        console.log('✅ Added individual course:', courseId);
-                    }
-                    
-                    // Add individual purchase record
-                    account.purchases.push({
-                        type: 'individual',
-                        courseId: courseId,
-                        courseTitle: course.title,
-                        amount: course.price,
-                        credits: course.credits,
-                        courseNumber: INDIVIDUAL_COURSES[courseId].approvalNumber,
-                        purchaseDate: new Date().toISOString(),
-                        status: 'completed'
-                    });
-                    
-                } else {
-                    // Package purchase (existing logic)
-                    const selectedPackage = localStorage.getItem('selectedPackageCode');
-                    console.log('📚 Assigning courses for package:', selectedPackage);
-                    
-                    if (!selectedPackage || !PACKAGE_COURSES[selectedPackage]) {
-                        console.error('Invalid package selected:', selectedPackage);
-                        return;
-                    }
-                    
-                    // Get courses for this package
-                    const coursesToAssign = PACKAGE_COURSES[selectedPackage];
-                    console.log('Courses to assign:', coursesToAssign);
-                    
-                    // Add new courses (avoid duplicates)
-                    coursesToAssign.forEach(courseId => {
-                        if (!account.enrolledCourses.includes(courseId)) {
-                            account.enrolledCourses.push(courseId);
-                            console.log('✅ Added course:', courseId);
-                        }
-                    });
-                    
-                    // Add package purchase record
-                    account.purchases.push({
-                        type: 'package',
-                        packageCode: selectedPackage,
-                        packageName: localStorage.getItem('selectedPackage'),
-                        amount: parseFloat(localStorage.getItem('packagePrice')),
-                        coursesIncluded: coursesToAssign,
-                        purchaseDate: new Date().toISOString(),
-                        status: 'completed'
-                    });
-                }
-                
-                // Update account timestamp
-                account.updatedAt = new Date().toISOString();
-                
-                // Save updated account
-                localStorage.setItem('drtroyAccount', JSON.stringify(account));
-                
-                console.log('🎓 Course enrollment complete!');
-                console.log('User now has access to:', account.enrolledCourses);
-                
-            } catch (error) {
-                console.error('Error assigning courses:', error);
-            }
-        }
-
-        // Load data when page loads
+        // Initialize page
         document.addEventListener('DOMContentLoaded', function() {
-            loadCustomerData();
+            console.log('💳 Checkout page initializing...');
+            
+            // Ensure cart system is ready
+            if (!window.drtroyCart) {
+                console.error('❌ Cart system not available');
+                return;
+            }
+            
+            console.log('✅ Cart system ready');
+            populateCheckout();
+            
+            console.log('✅ Checkout initialized');
         });
     </script>
 </body>
