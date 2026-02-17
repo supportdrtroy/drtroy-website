@@ -98,6 +98,33 @@
             transform: translateY(-2px);
         }
 
+        /* Mobile Header */
+        @media (max-width: 768px) {
+            .course-header-container {
+                flex-direction: column;
+                padding: 1rem;
+                gap: 1rem;
+            }
+
+            .logo img {
+                height: 50px;
+            }
+
+            .course-nav {
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+
+            .course-nav a {
+                font-size: 13px;
+            }
+
+            .logout-btn {
+                font-size: 13px;
+                padding: 0.4rem 0.8rem;
+            }
+        }
+
         /* Progress container */
         .progress-container {
             background: white;
