@@ -6,7 +6,6 @@
     <title>Course Catalog | DrTroy CE</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <script src="js/cart.js"></script>
     <style>
         :root {
             --navy: #1a365d;
@@ -680,15 +679,27 @@
 
         // Populate course categories
         function populateCourses() {
+            console.log('🔍 Populating courses...');
+            console.log('📚 Course catalog:', COURSE_CATALOG);
+            
             const ptContainer = document.getElementById('ptCourses');
             const otContainer = document.getElementById('otCourses');
             const coreContainer = document.getElementById('coreCourses');
 
+            if (!ptContainer || !otContainer || !coreContainer) {
+                console.error('❌ Course containers not found!');
+                return;
+            }
+
             let ptHtml = '';
             let otHtml = '';
             let coreHtml = '';
+            let courseCount = 0;
 
             for (const [courseId, course] of Object.entries(COURSE_CATALOG)) {
+                courseCount++;
+                console.log(`📖 Processing course: ${courseId} - ${course.title} (${course.category})`);
+                
                 const cardHtml = generateCourseCard(courseId, course);
                 
                 if (course.category === 'pt-specific') {
@@ -699,6 +710,11 @@
                     coreHtml += cardHtml;
                 }
             }
+
+            console.log(`✅ Processed ${courseCount} courses`);
+            console.log(`PT courses: ${ptHtml.length > 0 ? 'Found' : 'None'}`);
+            console.log(`OT courses: ${otHtml.length > 0 ? 'Found' : 'None'}`);
+            console.log(`Core courses: ${coreHtml.length > 0 ? 'Found' : 'None'}`);
 
             ptContainer.innerHTML = ptHtml;
             otContainer.innerHTML = otHtml;
@@ -715,10 +731,16 @@
 
         // Cart system is handled by cart.js - no need for individual purchase function
 
+        // Make course data available globally for cart system
+        window.COURSE_CATALOG = COURSE_CATALOG;
+        
         // Initialize page
         document.addEventListener('DOMContentLoaded', function() {
             populateCourses();
         });
     </script>
+    
+    <!-- Load cart system after course data is defined -->
+    <script src="js/cart.js"></script>
 </body>
 </html>

@@ -168,8 +168,8 @@ class ShoppingCart {
     }
 }
 
-// Course and Package Data
-const COURSE_CATALOG = {
+// Course and Package Data (will be overridden by page-specific data if available)
+window.COURSE_CATALOG = window.COURSE_CATALOG || {
     'PT-MSK-001': {
         title: 'PT Musculoskeletal Evaluation and Diagnosis',
         credits: 3,
@@ -276,7 +276,7 @@ const COURSE_CATALOG = {
     }
 };
 
-const PACKAGE_CATALOG = {
+window.PACKAGE_CATALOG = window.PACKAGE_CATALOG || {
     'PT': {
         title: 'PT Package - Complete Continuing Education',
         code: 'PT',
@@ -328,7 +328,7 @@ window.drtroyCart = new ShoppingCart();
 
 // Cart helper functions
 window.addCourseToCart = function(courseId) {
-    const course = COURSE_CATALOG[courseId];
+    const course = window.COURSE_CATALOG[courseId];
     if (!course) {
         alert('Course not found.');
         return;
@@ -359,7 +359,7 @@ window.addCourseToCart = function(courseId) {
 };
 
 window.addPackageToCart = function(packageCode) {
-    const pkg = PACKAGE_CATALOG[packageCode];
+    const pkg = window.PACKAGE_CATALOG[packageCode];
     if (!pkg) {
         alert('Package not found.');
         return;
