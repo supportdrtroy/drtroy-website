@@ -4,19 +4,46 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Course Catalog | DrTroy CE</title>
+    
+    <!-- Security Headers -->
+    <meta http-equiv="Content-Security-Policy" content="
+        default-src 'self';
+        script-src 'self' 'unsafe-inline';
+        style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
+        font-src 'self' https://fonts.gstatic.com;
+        img-src 'self' data: https:;
+        connect-src 'self' https://*.supabase.co;
+    ">
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta http-equiv="X-Frame-Options" content="DENY">
+    <meta http-equiv="X-XSS-Protection" content="1; mode=block">
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Source+Sans+Pro:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
     <style>
         :root {
-            --navy: #1a365d;
-            --gold: #d69e2e;
-            --gray-50: #f7fafc;
-            --gray-100: #edf2f7;
-            --gray-200: #e2e8f0;
-            --gray-600: #4a5568;
-            --gray-800: #2d3748;
-            --success: #38a169;
-            --danger: #e53e3e;
+            --primary-navy: #1a365d;
+            --accent-emerald: #059669;
+            --accent-emerald-light: #10b981;
+            --accent-emerald-dark: #047857;
+            --neutral-50: #fafafa;
+            --neutral-100: #f5f5f5;
+            --neutral-200: #e5e5e5;
+            --neutral-300: #d4d4d4;
+            --neutral-400: #a3a3a3;
+            --neutral-600: #525252;
+            --neutral-700: #404040;
+            --neutral-800: #262626;
+            --neutral-900: #171717;
+            --success-light: #dcfce7;
+            --success-dark: #166534;
+            --error-light: #fee2e2;
+            --error-dark: #dc2626;
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+            --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
         }
 
         * {
@@ -26,338 +53,511 @@
         }
 
         body {
-            font-family: 'Inter', sans-serif;
+            font-family: 'Source Sans Pro', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-weight: 400;
             line-height: 1.6;
-            color: var(--gray-800);
-            background: var(--gray-50);
+            color: var(--neutral-800);
+            background: linear-gradient(135deg, var(--neutral-50) 0%, #ffffff 100%);
+            min-height: 100vh;
         }
 
         /* Header */
         .header {
-            background: #ffffff;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--neutral-200);
             position: sticky;
             top: 0;
             z-index: 100;
         }
 
         .header-container {
-            max-width: 1200px;
+            max-width: 1280px;
             margin: 0 auto;
-            padding: 2rem;
+            padding: 1.5rem 2rem;
             display: flex;
-            flex-direction: column;
+            justify-content: space-between;
             align-items: center;
-            text-align: center;
         }
 
         .logo img {
-            height: 200px;
+            height: 72px;
             width: auto;
-            max-width: 800px;
         }
 
-        nav {
-            margin-top: 1rem;
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 2.5rem;
         }
 
-        nav a {
-            color: var(--gray-600);
+        .nav-links a {
+            color: var(--neutral-600);
             text-decoration: none;
-            margin: 0 1.5rem;
             font-weight: 500;
-            transition: color 0.2s;
+            font-size: 0.95rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
         }
 
-        nav a:hover {
-            color: var(--navy);
+        .nav-links a:hover {
+            color: var(--primary-navy);
         }
 
-        .login-link {
-            background: var(--gold) !important;
-            color: var(--navy) !important;
-            padding: 0.5rem 1rem !important;
-            border-radius: 6px !important;
-            font-weight: 600 !important;
-            text-decoration: none !important;
-            margin-left: 1rem !important;
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--accent-emerald);
+            transform: scaleX(0);
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .nav-links a:hover::after {
+            transform: scaleX(1);
+        }
+
+        .cart-icon {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            color: var(--accent-emerald);
+            font-weight: 600;
+            font-size: 0.95rem;
+            position: relative;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .cart-icon:hover {
+            color: var(--accent-emerald-dark);
+        }
+
+        .cart-count {
+            background: var(--error-dark);
+            color: white;
+            border-radius: 50%;
+            width: 22px;
+            height: 22px;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            font-weight: 700;
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            box-shadow: var(--shadow-sm);
         }
 
         /* Main Content */
         .container {
-            max-width: 1200px;
+            max-width: 1280px;
             margin: 0 auto;
-            padding: 2rem;
+            padding: 3rem 2rem;
         }
 
         .page-header {
             text-align: center;
-            margin-bottom: 3rem;
+            margin-bottom: 5rem;
+            position: relative;
+        }
+
+        .page-header::before {
+            content: '';
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 4px;
+            background: var(--accent-emerald);
+            border-radius: 2px;
         }
 
         .page-header h1 {
-            font-size: 2.5rem;
-            color: var(--navy);
-            margin-bottom: 1rem;
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: 3.75rem;
+            font-weight: 600;
+            color: var(--primary-navy);
+            margin-bottom: 1.5rem;
+            letter-spacing: -0.02em;
         }
 
         .page-header p {
-            font-size: 1.1rem;
-            color: var(--gray-600);
-            max-width: 600px;
+            font-size: 1.25rem;
+            color: var(--neutral-600);
+            font-weight: 300;
+            max-width: 700px;
             margin: 0 auto;
+            line-height: 1.7;
         }
 
-        /* Course Categories */
-        .course-category {
-            margin-bottom: 3rem;
+        /* Featured Packages Section */
+        .featured-packages {
+            margin-bottom: 6rem;
+            background: white;
+            border-radius: 24px;
+            padding: 4rem;
+            box-shadow: var(--shadow-xl);
+            border: 1px solid var(--neutral-100);
+            position: relative;
+            overflow: hidden;
         }
 
-        .category-header {
-            background: var(--navy);
-            color: white;
-            padding: 1.5rem;
-            border-radius: 8px 8px 0 0;
-            margin-bottom: 0;
+        .featured-packages::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent-emerald), var(--accent-emerald-light));
         }
 
-        .category-header h2 {
+        .featured-packages h2 {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: 2.5rem;
+            font-weight: 600;
+            color: var(--primary-navy);
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+
+        .featured-packages .subtitle {
+            text-align: center;
+            font-size: 1.125rem;
+            color: var(--neutral-600);
+            margin-bottom: 3.5rem;
+            font-weight: 300;
+        }
+
+        .package-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+        }
+
+        .package-card {
+            background: var(--neutral-50);
+            border: 2px solid var(--accent-emerald);
+            border-radius: 20px;
+            padding: 2.5rem;
+            text-align: center;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .package-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-xl);
+            border-color: var(--accent-emerald-dark);
+        }
+
+        .package-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--accent-emerald);
+        }
+
+        .package-title {
+            font-family: 'Playfair Display', Georgia, serif;
             font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--primary-navy);
+            margin-bottom: 0.75rem;
+        }
+
+        .package-credits {
+            color: var(--neutral-600);
+            font-size: 1rem;
+            margin-bottom: 1.5rem;
+            font-weight: 500;
+        }
+
+        .package-pricing {
+            margin: 2rem 0;
+        }
+
+        .original-price {
+            text-decoration: line-through;
+            color: var(--neutral-400);
+            font-size: 1.125rem;
+            display: block;
             margin-bottom: 0.5rem;
         }
 
-        .category-description {
-            color: rgba(255,255,255,0.9);
-            font-size: 0.95rem;
+        .discounted-price {
+            color: var(--accent-emerald);
+            font-family: 'Playfair Display', Georgia, serif;
+            font-weight: 700;
+            font-size: 2.25rem;
+            display: block;
         }
 
-        /* Course Grid */
+        .savings {
+            color: var(--success-dark);
+            font-weight: 600;
+            font-size: 1rem;
+            margin-top: 0.5rem;
+        }
+
+        .package-description {
+            color: var(--neutral-600);
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin: 1.5rem 0;
+        }
+
+        /* Courses Section */
+        .courses-section h2 {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: 2.5rem;
+            font-weight: 600;
+            color: var(--primary-navy);
+            margin-bottom: 3rem;
+            text-align: center;
+        }
+
+        .course-categories {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .category-filter {
+            background: var(--neutral-100);
+            color: var(--neutral-600);
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 25px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .category-filter.active,
+        .category-filter:hover {
+            background: var(--accent-emerald);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
         .courses-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 1.5rem;
-            background: white;
-            padding: 2rem;
-            border-radius: 0 0 8px 8px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+            gap: 2.5rem;
         }
 
         .course-card {
-            background: var(--gray-50);
-            border: 1px solid var(--gray-200);
-            border-radius: 8px;
-            padding: 1.5rem;
-            transition: all 0.2s ease;
+            background: white;
+            border-radius: 20px;
+            padding: 2.5rem;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid var(--neutral-100);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
         }
 
         .course-card:hover {
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            border-color: var(--gold);
+            transform: translateY(-6px);
+            box-shadow: var(--shadow-xl);
         }
 
         .course-header {
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
         }
 
-        .course-header h3 {
-            color: var(--navy);
-            font-size: 1.1rem;
-            line-height: 1.3;
-            flex: 1;
-            margin-right: 1rem;
+        .course-title {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: 1.375rem;
+            font-weight: 600;
+            color: var(--primary-navy);
+            line-height: 1.4;
+            margin-bottom: 0.5rem;
         }
 
         .course-status {
-            font-size: 0.75rem;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
             font-weight: 600;
-            padding: 0.25rem 0.75rem;
-            border-radius: 12px;
-            white-space: nowrap;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         .status-available {
-            background: #dbeafe;
-            color: #1e40af;
+            background: var(--success-light);
+            color: var(--success-dark);
         }
 
         .status-coming-soon {
-            background: #f3f4f6;
-            color: #6b7280;
+            background: var(--neutral-200);
+            color: var(--neutral-600);
         }
 
-        .course-description {
-            color: var(--gray-600);
-            margin-bottom: 1rem;
-            font-size: 0.9rem;
-        }
-
-        .course-details {
+        .course-meta {
+            display: flex;
+            gap: 2rem;
             margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+            color: var(--neutral-600);
         }
 
         .course-credits {
             font-weight: 600;
-            color: var(--gold);
-            margin-bottom: 0.5rem;
         }
 
-        .course-approval {
-            font-size: 0.8rem;
-            color: var(--gray-600);
-            font-family: 'Courier New', monospace;
-            background: white;
-            padding: 0.25rem 0.5rem;
-            border-radius: 4px;
-            display: inline-block;
-            margin-bottom: 0.5rem;
+        .course-description {
+            color: var(--neutral-700);
+            line-height: 1.7;
+            margin-bottom: 2rem;
         }
 
         .course-price {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: 1.5rem;
             font-weight: 600;
-            color: var(--navy);
-            font-size: 0.9rem;
-        }
-
-        .course-price.hidden {
-            display: none;
+            color: var(--accent-emerald);
+            margin-bottom: 2rem;
+            text-align: center;
         }
 
         .course-actions {
             display: flex;
-            gap: 0.5rem;
+            gap: 1rem;
             flex-wrap: wrap;
         }
 
+        /* Buttons */
         .btn {
-            padding: 0.5rem 1rem;
-            border-radius: 6px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem 2rem;
+            border-radius: 12px;
             text-decoration: none;
-            font-weight: 500;
-            text-align: center;
+            font-weight: 600;
+            font-size: 0.95rem;
             cursor: pointer;
             border: none;
-            font-size: 0.9rem;
-            transition: all 0.2s ease;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            flex: 1;
+            min-width: 140px;
         }
 
         .btn-primary {
-            background: var(--gold);
-            color: var(--navy);
+            background: linear-gradient(135deg, var(--accent-emerald) 0%, var(--accent-emerald-light) 100%);
+            color: white;
+            box-shadow: var(--shadow-md);
         }
 
         .btn-primary:hover {
-            background: #b7791f;
-        }
-
-        .btn-secondary {
-            background: var(--gray-200);
-            color: var(--gray-800);
-        }
-
-        .btn-secondary:hover {
-            background: var(--gray-300);
+            background: linear-gradient(135deg, var(--accent-emerald-dark) 0%, var(--accent-emerald) 100%);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-xl);
         }
 
         .btn-outline {
             background: transparent;
-            color: var(--navy);
-            border: 1px solid var(--navy);
+            color: var(--accent-emerald);
+            border: 2px solid var(--accent-emerald);
         }
 
         .btn-outline:hover {
-            background: var(--navy);
+            background: var(--accent-emerald);
             color: white;
+            transform: translateY(-2px);
         }
 
-        .btn:disabled {
-            opacity: 0.5;
+        .btn-secondary {
+            background: var(--neutral-200);
+            color: var(--neutral-600);
             cursor: not-allowed;
         }
 
-        /* Package Info */
-        .package-info {
-            background: white;
-            border: 2px solid var(--gold);
-            border-radius: 8px;
-            padding: 2rem;
-            margin-bottom: 3rem;
-            text-align: center;
+        .btn-block {
+            width: 100%;
         }
 
-        .package-info h2 {
-            color: var(--navy);
-            margin-bottom: 1rem;
-        }
-
-        .package-info p {
-            color: var(--gray-600);
-            margin-bottom: 1.5rem;
-        }
-
-        .package-info .btn {
-            font-size: 1rem;
-            padding: 0.75rem 2rem;
-        }
-
-        /* Individual Sales Notice */
-        .individual-sales-notice {
-            background: #fef3c7;
-            border: 1px solid #d97706;
-            border-radius: 8px;
-            padding: 1rem;
-            margin-bottom: 2rem;
-            color: #92400e;
-            text-align: center;
-        }
-
-        .individual-sales-notice.hidden {
-            display: none;
-        }
-
+        /* Responsive Design */
         @media (max-width: 768px) {
-            .header-container {
-                padding: 1rem;
-            }
-
-            .logo img {
-                height: 120px;
-            }
-
-            nav a {
-                margin: 0 0.75rem;
-                font-size: 0.9rem;
-            }
-
             .container {
-                padding: 1rem;
+                padding: 2rem 1rem;
             }
 
             .page-header h1 {
-                font-size: 2rem;
+                font-size: 2.75rem;
+            }
+
+            .featured-packages {
+                padding: 2.5rem 1.5rem;
+            }
+
+            .package-grid {
+                grid-template-columns: 1fr;
             }
 
             .courses-grid {
                 grid-template-columns: 1fr;
-                gap: 1rem;
-                padding: 1rem;
             }
 
-            .course-header {
+            .course-card {
+                padding: 2rem;
+            }
+
+            .course-actions {
                 flex-direction: column;
-                align-items: flex-start;
             }
 
-            .course-header h3 {
-                margin-bottom: 0.5rem;
-                margin-right: 0;
+            .nav-links {
+                gap: 1.5rem;
+            }
+
+            .category-filter {
+                padding: 0.5rem 1rem;
+                font-size: 0.9rem;
             }
         }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .course-card {
+            animation: fadeInUp 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .course-card:nth-child(2) { animation-delay: 0.1s; }
+        .course-card:nth-child(3) { animation-delay: 0.2s; }
+        .course-card:nth-child(4) { animation-delay: 0.3s; }
     </style>
 </head>
+
 <body>
     <!-- Header -->
     <header class="header">
@@ -367,124 +567,65 @@
                     <img src="courses/images/drtroy_logo_new.jpg" alt="DrTroy Continuing Education">
                 </a>
             </div>
-            <nav>
+            <nav class="nav-links">
                 <a href="index.html">Home</a>
-                <a href="index.html#packages">Packages</a>
-                <a href="course-catalog.html">Course Catalog</a>
+                <a href="course-catalog.html">Courses</a>
                 <a href="index.html#about">About</a>
                 <a href="index.html#contact">Contact</a>
-                <a href="cart.html" style="color: var(--gold); font-weight: 600; position: relative;">
-                    🛒 Cart <span id="cart-count" style="background: #dc2626; color: white; border-radius: 50%; width: 18px; height: 18px; font-size: 0.7rem; position: absolute; top: -8px; right: -8px; display: none; align-items: center; justify-content: center;">0</span>
+                <a href="cart.html" class="cart-icon" id="cart-icon">
+                    🛒 Cart
+                    <span class="cart-count" id="cart-count">0</span>
                 </a>
-                <a href="my-account.html" class="login-link">My Account</a>
             </nav>
         </div>
     </header>
 
+    <!-- Main Content -->
     <main class="container">
         <div class="page-header">
             <h1>Course Catalog</h1>
-            <p>Comprehensive continuing education courses designed by practicing clinicians for real-world application.</p>
+            <p>Professional continuing education courses designed by Dr. Troy Hounshell for healthcare professionals across all settings</p>
         </div>
 
         <!-- Featured Bundle Packages -->
-        <div class="package-info">
-            <h2>🎯 Featured Bundle Packages - Save Big!</h2>
-            <p>Get all your required CCUs at a discounted price with our discipline-specific packages. <strong>$10 off for new accounts!</strong></p>
+        <section class="featured-packages">
+            <h2>🎯 Featured Bundle Packages</h2>
+            <p class="subtitle">Get all your required CCUs at a discounted price with our discipline-specific packages.</p>
             
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin: 2rem 0;">
-                <div style="border: 2px solid var(--gold); border-radius: 8px; padding: 1.5rem; text-align: center;">
-                    <h3 style="color: var(--navy); margin-bottom: 0.5rem;">PT Package</h3>
-                    <p style="color: var(--gray-600); margin-bottom: 1rem;">27 Contact Hours</p>
-                    <div style="margin-bottom: 1rem;">
-                        <span style="text-decoration: line-through; color: var(--gray-600);">$109</span>
-                        <span style="color: var(--gold); font-weight: 700; font-size: 1.5rem; margin-left: 0.5rem;">$99</span>
-                        <div style="color: var(--success); font-weight: 600; font-size: 0.9rem;">Save $10!</div>
-                    </div>
-                    <button class="btn btn-primary" onclick="console.log('🖱️ PT Package button clicked'); window.addPackageToCart('PT')" style="width: 100%;">Add to Cart</button>
-                </div>
-                
-                <div style="border: 2px solid var(--gold); border-radius: 8px; padding: 1.5rem; text-align: center;">
-                    <h3 style="color: var(--navy); margin-bottom: 0.5rem;">OT Package</h3>
-                    <p style="color: var(--gray-600); margin-bottom: 1rem;">23 Contact Hours</p>
-                    <div style="margin-bottom: 1rem;">
-                        <span style="text-decoration: line-through; color: var(--gray-600);">$109</span>
-                        <span style="color: var(--gold); font-weight: 700; font-size: 1.5rem; margin-left: 0.5rem;">$99</span>
-                        <div style="color: var(--success); font-weight: 600; font-size: 0.9rem;">Save $10!</div>
-                    </div>
-                    <button class="btn btn-primary" onclick="console.log('🖱️ Package button clicked for OT'); window.addPackageToCart('OT')" style="width: 100%;">Add to Cart</button>
-                </div>
-                
-                <div style="border: 2px solid var(--gold); border-radius: 8px; padding: 1.5rem; text-align: center;">
-                    <h3 style="color: var(--navy); margin-bottom: 0.5rem;">PTA Package</h3>
-                    <p style="color: var(--gray-600); margin-bottom: 1rem;">17 Contact Hours</p>
-                    <div style="margin-bottom: 1rem;">
-                        <span style="text-decoration: line-through; color: var(--gray-600);">$89</span>
-                        <span style="color: var(--gold); font-weight: 700; font-size: 1.5rem; margin-left: 0.5rem;">$79</span>
-                        <div style="color: var(--success); font-weight: 600; font-size: 0.9rem;">Save $10!</div>
-                    </div>
-                    <button class="btn btn-primary" onclick="console.log('🖱️ Package button clicked for PTA'); window.addPackageToCart('PTA')" style="width: 100%;">Add to Cart</button>
-                </div>
-                
-                <div style="border: 2px solid var(--gold); border-radius: 8px; padding: 1.5rem; text-align: center;">
-                    <h3 style="color: var(--navy); margin-bottom: 0.5rem;">COTA Package</h3>
-                    <p style="color: var(--gray-600); margin-bottom: 1rem;">23 Contact Hours</p>
-                    <div style="margin-bottom: 1rem;">
-                        <span style="text-decoration: line-through; color: var(--gray-600);">$89</span>
-                        <span style="color: var(--gold); font-weight: 700; font-size: 1.5rem; margin-left: 0.5rem;">$79</span>
-                        <div style="color: var(--success); font-weight: 600; font-size: 0.9rem;">Save $10!</div>
-                    </div>
-                    <button class="btn btn-primary" onclick="console.log('🖱️ Package button clicked for COTA'); window.addPackageToCart('COTA')" style="width: 100%;">Add to Cart</button>
-                </div>
+            <div class="package-grid" id="package-grid">
+                <!-- Packages will be populated by JavaScript -->
             </div>
+        </section>
+
+        <!-- Individual Courses -->
+        <section class="courses-section">
+            <h2>Individual Courses</h2>
             
-            <p style="text-align: center; margin-top: 1rem;">
-                <a href="cart.html" class="btn btn-outline">View Cart & Checkout</a>
-            </p>
-        </div>
+            <div class="course-categories">
+                <button class="category-filter active" onclick="filterCourses('all')">All Courses</button>
+                <button class="category-filter" onclick="filterCourses('pt-specific')">PT Specific</button>
+                <button class="category-filter" onclick="filterCourses('ot-specific')">OT Specific</button>
+                <button class="category-filter" onclick="filterCourses('core')">Core Courses</button>
+                <button class="category-filter" onclick="filterCourses('available')">Available Now</button>
+            </div>
 
-        <!-- Individual Sales Available Notice -->
-        <div class="individual-sales-notice" id="individualSalesNotice" style="background: #d1fae5; border: 1px solid #10b981; color: #065f46;">
-            <strong>Individual Course Sales Now Available!</strong> 
-            Purchase courses individually at our new competitive rates: 1 CCU = $9.99, 2 CCU = $18.99, 3 CCU = $27.99. Bundle packages still available for maximum savings.
-        </div>
-
-        <!-- PT-Specific Courses -->
-        <div class="course-category">
-            <div class="category-header">
-                <h2>Physical Therapist (PT) Courses</h2>
-                <p class="category-description">Specialized courses designed specifically for licensed physical therapists</p>
+            <div class="courses-grid" id="courses-grid">
+                <!-- Courses will be populated by JavaScript -->
             </div>
-            <div class="courses-grid" id="ptCourses">
-                <!-- PT courses will be populated by JavaScript -->
-            </div>
-        </div>
-
-        <!-- OT-Specific Courses -->
-        <div class="course-category">
-            <div class="category-header">
-                <h2>Occupational Therapist (OT) Courses</h2>
-                <p class="category-description">Specialized courses designed specifically for licensed occupational therapists</p>
-            </div>
-            <div class="courses-grid" id="otCourses">
-                <!-- OT courses will be populated by JavaScript -->
-            </div>
-        </div>
-
-        <!-- Core Courses -->
-        <div class="course-category">
-            <div class="category-header">
-                <h2>Core Rehabilitation Courses</h2>
-                <p class="category-description">Essential courses for all rehabilitation professionals - PTs, PTAs, OTs, and COTAs</p>
-            </div>
-            <div class="courses-grid" id="coreCourses">
-                <!-- Core courses will be populated by JavaScript -->
-            </div>
-        </div>
+        </section>
     </main>
 
+    <!-- Include cart system -->
+    <script src="js/cart.js"></script>
+    
     <script>
-        // Course Database with Approval Numbers and Individual Pricing
+        // Individual sales configuration
+        const INDIVIDUAL_SALES_CONFIG = {
+            enabled: true,
+            testMode: false
+        };
+
+        // Course Data - Enhanced for new design
         const COURSE_CATALOG = {
             // PT-Specific Courses
             'PT-MSK-001': {
@@ -623,53 +764,86 @@
             }
         };
 
-        // Individual Sales Configuration
-        const INDIVIDUAL_SALES_CONFIG = {
-            enabled: true, // Individual sales now enabled
-            newAccountDiscount: 0 // No discount on individual courses (bundles only get $10 discount)
+        // Package Data - Same as cart.js but with enhanced descriptions
+        const PACKAGE_CATALOG = {
+            'PT': {
+                title: 'PT Package - Complete Continuing Education',
+                code: 'PT',
+                credits: 27,
+                description: 'Complete CE package designed for Physical Therapists. Includes core courses plus PT-specific specialties covering MSK evaluation, joint replacements, and comprehensive rehabilitation approaches.',
+                originalPrice: 109,
+                finalPrice: 99,
+                savings: 10,
+                courses: ['PT-MSK-001', 'JOINT-001', 'MOBILITY-001', 'NEURO-001', 'EDUCATION-001', 'HEALTHTECH-001', 'BALANCE-001', 'EXERCISE-001', 'GERIATRIC-001'],
+                featured: true
+            },
+            'OT': {
+                title: 'OT Package - Complete Continuing Education',
+                code: 'OT',
+                credits: 23,
+                description: 'Complete CE package designed for Occupational Therapists with OT-specific content including ADL assessment, mobility training, and specialized interventions.',
+                originalPrice: 109,
+                finalPrice: 99,
+                savings: 10,
+                courses: ['OT-ADL-001', 'MOBILITY-001', 'NEURO-001', 'EDUCATION-001', 'HEALTHTECH-001', 'GERIATRIC-001', 'INFECTION-001'],
+                featured: true
+            },
+            'PTA': {
+                title: 'PTA Package - Continuing Education for PTAs',
+                code: 'PTA',
+                credits: 17,
+                description: 'Tailored CE package for Physical Therapist Assistants covering essential topics including mobility, neurological rehabilitation, and patient education.',
+                originalPrice: 89,
+                finalPrice: 79,
+                savings: 10,
+                courses: ['MOBILITY-001', 'NEURO-001', 'EDUCATION-001', 'HEALTHTECH-001', 'GERIATRIC-001'],
+                featured: true
+            },
+            'COTA': {
+                title: 'COTA Package - Continuing Education for COTAs',
+                code: 'COTA',
+                credits: 23,
+                description: 'Tailored CE package for Certified Occupational Therapy Assistants focusing on practical skills and evidence-based interventions.',
+                originalPrice: 89,
+                finalPrice: 79,
+                savings: 10,
+                courses: ['MOBILITY-001', 'NEURO-001', 'EDUCATION-001', 'HEALTHTECH-001', 'GERIATRIC-001'],
+                featured: true
+            }
         };
 
-        // Individual Course Pricing Structure
-        const INDIVIDUAL_PRICING = {
-            1: 9.99,    // 1 CCU = $9.99
-            1.5: 14.99, // 1.5 CCU = $14.99
-            2: 18.99,   // 2 CCU = $18.99
-            3: 27.99    // 3 CCU = $27.99
-        };
-
-        // Generate course cards
+        // Generate course card HTML
         function generateCourseCard(courseId, course) {
             const statusClass = course.status === 'available' ? 'status-available' : 'status-coming-soon';
             const statusText = course.status === 'available' ? 'Available Now' : 'Coming Soon';
             
-            // Individual pricing (now enabled)
-            const individualPriceHtml = INDIVIDUAL_SALES_CONFIG.enabled ? 
-                `<div class="course-price">Individual: $${course.individualPrice}</div>` : 
-                `<div class="course-price hidden">Individual: $${course.individualPrice}</div>`;
-            
             // Action buttons
             let actionButtons = '';
             if (course.status === 'available') {
-                actionButtons = `<a href="${course.url}" class="btn btn-primary">View Course</a>`;
-                if (INDIVIDUAL_SALES_CONFIG.enabled) {
-                    actionButtons += `<button class="btn btn-outline" onclick="console.log('🖱️ Button clicked for course: ${courseId}'); window.addCourseToCart('${courseId}');" style="margin-left: 0.5rem;">🛒 Add to Cart - $${course.individualPrice}</button>`;
-                }
+                actionButtons = `
+                    <a href="${course.url}" class="btn btn-primary">View Course</a>
+                    <button class="btn btn-outline" onclick="addCourseToCartWithFeedback('${courseId}')">
+                        🛒 Add to Cart - $${course.individualPrice}
+                    </button>
+                `;
             } else {
                 actionButtons = `<button class="btn btn-secondary" disabled>Coming Soon</button>`;
             }
 
             return `
-                <div class="course-card">
+                <div class="course-card" data-category="${course.category}" data-status="${course.status}">
                     <div class="course-header">
-                        <h3>${course.title}</h3>
+                        <div>
+                            <h3 class="course-title">${course.title}</h3>
+                            <div class="course-meta">
+                                <span class="course-credits">${course.credits} CCU${course.credits !== 1 ? 's' : ''}</span>
+                                <span>Course #: ${course.courseNumber}</span>
+                            </div>
+                        </div>
                         <span class="course-status ${statusClass}">${statusText}</span>
                     </div>
                     <p class="course-description">${course.description}</p>
-                    <div class="course-details">
-                        <div class="course-credits">${course.credits} CCUs</div>
-                        <div class="course-approval">Course #: ${course.courseNumber}</div>
-                        ${individualPriceHtml}
-                    </div>
+                    <div class="course-price">$${course.individualPrice}</div>
                     <div class="course-actions">
                         ${actionButtons}
                     </div>
@@ -677,70 +851,202 @@
             `;
         }
 
-        // Populate course categories
-        function populateCourses() {
-            console.log('🔍 Populating courses...');
-            console.log('📚 Course catalog:', COURSE_CATALOG);
+        // Generate package card HTML
+        function generatePackageCard(pkg) {
+            return `
+                <div class="package-card">
+                    <div class="package-title">${pkg.title}</div>
+                    <div class="package-credits">${pkg.credits} Contact Hours</div>
+                    <div class="package-pricing">
+                        <span class="original-price">$${pkg.originalPrice}</span>
+                        <span class="discounted-price">$${pkg.finalPrice}</span>
+                        <div class="savings">Save $${pkg.savings}!</div>
+                    </div>
+                    <p class="package-description">${pkg.description}</p>
+                    <button class="btn btn-primary btn-block" onclick="addPackageToCartWithFeedback('${pkg.code}')">
+                        Add Package to Cart
+                    </button>
+                </div>
+            `;
+        }
+
+        // Enhanced add to cart functions with better feedback
+        function addCourseToCartWithFeedback(courseId) {
+            console.log('🛒 Adding course to cart:', courseId);
             
-            const ptContainer = document.getElementById('ptCourses');
-            const otContainer = document.getElementById('otCourses');
-            const coreContainer = document.getElementById('coreCourses');
-
-            if (!ptContainer || !otContainer || !coreContainer) {
-                console.error('❌ Course containers not found!');
-                return;
-            }
-
-            let ptHtml = '';
-            let otHtml = '';
-            let coreHtml = '';
-            let courseCount = 0;
-
-            for (const [courseId, course] of Object.entries(COURSE_CATALOG)) {
-                courseCount++;
-                console.log(`📖 Processing course: ${courseId} - ${course.title} (${course.category})`);
+            try {
+                const result = window.addCourseToCart(courseId);
+                console.log('✅ Add to cart result:', result);
                 
-                const cardHtml = generateCourseCard(courseId, course);
-                
-                if (course.category === 'pt-specific') {
-                    ptHtml += cardHtml;
-                } else if (course.category === 'ot-specific') {
-                    otHtml += cardHtml;
-                } else if (course.category === 'core') {
-                    coreHtml += cardHtml;
+                if (result) {
+                    showAddNotification(`Course added to cart!`);
+                } else {
+                    showAddNotification('Error adding course to cart', true);
                 }
-            }
-
-            console.log(`✅ Processed ${courseCount} courses`);
-            console.log(`PT courses: ${ptHtml.length > 0 ? 'Found' : 'None'}`);
-            console.log(`OT courses: ${otHtml.length > 0 ? 'Found' : 'None'}`);
-            console.log(`Core courses: ${coreHtml.length > 0 ? 'Found' : 'None'}`);
-
-            ptContainer.innerHTML = ptHtml;
-            otContainer.innerHTML = otHtml;
-            coreContainer.innerHTML = coreHtml;
-
-            // Show individual sales notice if not enabled
-            if (!INDIVIDUAL_SALES_CONFIG.enabled) {
-                document.getElementById('individualSalesNotice').classList.remove('hidden');
-            } else {
-                // Individual sales are enabled - hide the notice
-                document.getElementById('individualSalesNotice').classList.add('hidden');
+            } catch (error) {
+                console.error('❌ Error adding course:', error);
+                showAddNotification('Error adding course to cart', true);
             }
         }
 
-        // Cart system is handled by cart.js - no need for individual purchase function
+        function addPackageToCartWithFeedback(packageCode) {
+            console.log('🛒 Adding package to cart:', packageCode);
+            
+            try {
+                const result = window.addPackageToCart(packageCode);
+                console.log('✅ Add package result:', result);
+                
+                if (result) {
+                    showAddNotification(`Package added to cart!`);
+                } else {
+                    showAddNotification('Error adding package to cart', true);
+                }
+            } catch (error) {
+                console.error('❌ Error adding package:', error);
+                showAddNotification('Error adding package to cart', true);
+            }
+        }
 
-        // Make course data available globally for cart system
-        window.COURSE_CATALOG = COURSE_CATALOG;
-        
+        // Show add to cart notification
+        function showAddNotification(message, isError = false) {
+            // Remove existing notification
+            const existing = document.getElementById('add-notification');
+            if (existing) existing.remove();
+            
+            const notification = document.createElement('div');
+            notification.id = 'add-notification';
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: ${isError ? 'var(--error-dark)' : 'var(--accent-emerald)'};
+                color: white;
+                padding: 1.25rem 2rem;
+                border-radius: 12px;
+                box-shadow: var(--shadow-xl);
+                z-index: 10000;
+                font-weight: 600;
+                font-size: 0.95rem;
+                max-width: 400px;
+                transform: translateX(400px);
+                transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            `;
+            notification.innerHTML = `
+                ${message}
+                <div style="margin-top: 0.5rem; font-size: 0.85rem; opacity: 0.9;">
+                    <a href="cart.html" style="color: white; text-decoration: underline;">View Cart</a>
+                </div>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            // Slide in animation
+            setTimeout(() => {
+                notification.style.transform = 'translateX(0)';
+            }, 100);
+            
+            // Auto-remove after 4 seconds
+            setTimeout(() => {
+                if (notification.parentNode) {
+                    notification.style.transform = 'translateX(400px)';
+                    setTimeout(() => notification.remove(), 300);
+                }
+            }, 4000);
+        }
+
+        // Course filtering
+        function filterCourses(category) {
+            console.log('🔍 Filtering courses by category:', category);
+            
+            // Update active filter button
+            document.querySelectorAll('.category-filter').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            // Filter course cards
+            const courseCards = document.querySelectorAll('.course-card');
+            courseCards.forEach(card => {
+                const cardCategory = card.dataset.category;
+                const cardStatus = card.dataset.status;
+                
+                let shouldShow = false;
+                
+                if (category === 'all') {
+                    shouldShow = true;
+                } else if (category === 'available') {
+                    shouldShow = cardStatus === 'available';
+                } else {
+                    shouldShow = cardCategory === category;
+                }
+                
+                if (shouldShow) {
+                    card.style.display = 'block';
+                    card.style.animation = 'fadeInUp 0.5s cubic-bezier(0.4, 0, 0.2, 1)';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        // Populate the page
+        function populatePage() {
+            console.log('🚀 Populating course catalog...');
+            
+            // Populate featured packages
+            const packageGrid = document.getElementById('package-grid');
+            let packagesHtml = '';
+            
+            Object.values(PACKAGE_CATALOG).forEach(pkg => {
+                if (pkg.featured) {
+                    packagesHtml += generatePackageCard(pkg);
+                }
+            });
+            
+            packageGrid.innerHTML = packagesHtml;
+            
+            // Populate courses
+            const coursesGrid = document.getElementById('courses-grid');
+            let coursesHtml = '';
+            
+            Object.entries(COURSE_CATALOG).forEach(([courseId, course]) => {
+                coursesHtml += generateCourseCard(courseId, course);
+            });
+            
+            coursesGrid.innerHTML = coursesHtml;
+            
+            console.log('✅ Course catalog populated');
+        }
+
         // Initialize page
         document.addEventListener('DOMContentLoaded', function() {
-            populateCourses();
+            console.log('🚀 Course catalog initializing...');
+            
+            // Ensure cart system is ready
+            if (!window.drtroyCart) {
+                console.error('❌ Cart system not available');
+                return;
+            }
+            
+            console.log('✅ Cart system ready');
+            
+            // Populate the page
+            populatePage();
+            
+            // Update cart icon
+            window.updateCartIcon();
+            
+            // Listen for cart changes
+            try {
+                window.drtroyCart.addListener(function() {
+                    console.log('🔔 Cart changed, updating icon');
+                    window.updateCartIcon();
+                });
+                console.log('✅ Cart change listener added');
+            } catch (error) {
+                console.error('❌ Error adding cart listener:', error);
+            }
         });
     </script>
-    
-    <!-- Load cart system after course data is defined -->
-    <script src="js/cart.js"></script>
 </body>
 </html>
