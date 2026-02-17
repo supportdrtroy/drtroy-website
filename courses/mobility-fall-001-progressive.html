@@ -391,6 +391,71 @@
             .module-title {
                 font-size: 16px;
             }
+
+            /* Mobile table optimization */
+            table {
+                font-size: 13px;
+                border: 0;
+                width: 100%;
+                margin: 15px 0;
+            }
+
+            table thead {
+                display: none;
+            }
+
+            table, table tbody, table tr, table td {
+                display: block;
+            }
+
+            table tr {
+                border: 2px solid #e5e7eb;
+                margin-bottom: 15px;
+                padding: 15px 10px;
+                border-radius: 8px;
+                background: white;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+                position: relative;
+            }
+
+            table td {
+                border: none;
+                padding: 8px 5px 8px 45%;
+                text-align: left;
+                position: relative;
+                word-wrap: break-word;
+                hyphens: auto;
+                min-height: 20px;
+                line-height: 1.4;
+            }
+
+            table td:before {
+                content: attr(data-label);
+                position: absolute;
+                left: 10px;
+                top: 8px;
+                width: 40%;
+                padding-right: 10px;
+                white-space: nowrap;
+                font-weight: 600;
+                color: var(--navy);
+                font-size: 12px;
+                text-transform: uppercase;
+                letter-spacing: 0.5px;
+            }
+
+            /* Specific styling for Economic Impact table */
+            .mobile-responsive-table tr {
+                border-left: 4px solid var(--gold);
+            }
+
+            .mobile-responsive-table td[data-label="Annual Cost"],
+            .mobile-responsive-table td[data-label="Per Fall Incident"] {
+                font-weight: 600;
+                color: var(--gold);
+                font-size: 14px;
+            }
+            }
             .module-status {
                 gap: 5px;
             }
@@ -827,13 +892,42 @@
                 </div>
 
                 <h3>Economic Impact Analysis</h3>
-                <table>
-                    <tr><th>Cost Category</th><th>Annual Cost (Billions)</th><th>Per Fall Incident</th><th>Setting</th></tr>
-                    <tr><td>Fatal falls</td><td>$754 million</td><td>$13,000</td><td>All settings</td></tr>
-                    <tr><td>Non-fatal falls</td><td>$50.0 billion</td><td>$14,000</td><td>All settings</td></tr>
-                    <tr><td>Hospital admissions</td><td>$38.6 billion</td><td>$35,000</td><td>Acute care</td></tr>
-                    <tr><td>Emergency department</td><td>$8.7 billion</td><td>$3,300</td><td>ED visits</td></tr>
-                    <tr><td>Post-acute care</td><td>$2.7 billion</td><td>$28,000</td><td>SNF/Home Health</td></tr>
+                <table class="mobile-responsive-table">
+                    <thead>
+                        <tr><th>Cost Category</th><th>Annual Cost (Billions)</th><th>Per Fall Incident</th><th>Setting</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td data-label="Cost Category">Fatal falls</td>
+                            <td data-label="Annual Cost">$754 million</td>
+                            <td data-label="Per Fall Incident">$13,000</td>
+                            <td data-label="Setting">All settings</td>
+                        </tr>
+                        <tr>
+                            <td data-label="Cost Category">Non-fatal falls</td>
+                            <td data-label="Annual Cost">$50.0 billion</td>
+                            <td data-label="Per Fall Incident">$14,000</td>
+                            <td data-label="Setting">All settings</td>
+                        </tr>
+                        <tr>
+                            <td data-label="Cost Category">Hospital admissions</td>
+                            <td data-label="Annual Cost">$38.6 billion</td>
+                            <td data-label="Per Fall Incident">$35,000</td>
+                            <td data-label="Setting">Acute care</td>
+                        </tr>
+                        <tr>
+                            <td data-label="Cost Category">Emergency department</td>
+                            <td data-label="Annual Cost">$8.7 billion</td>
+                            <td data-label="Per Fall Incident">$3,300</td>
+                            <td data-label="Setting">ED visits</td>
+                        </tr>
+                        <tr>
+                            <td data-label="Cost Category">Post-acute care</td>
+                            <td data-label="Annual Cost">$2.7 billion</td>
+                            <td data-label="Per Fall Incident">$28,000</td>
+                            <td data-label="Setting">SNF/Home Health</td>
+                        </tr>
+                    </tbody>
                 </table>
 
                 <h2>1.2 Multifactorial Risk Assessment</h2>
