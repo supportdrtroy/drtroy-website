@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400" width="600" height="400">
+  <rect width="600" height="400" fill="#f8f9fa"/>
+  
+  <!-- Title -->
+  <text x="300" y="30" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="#1a365d" text-anchor="middle">High-Risk Medications by Class</text>
+  
+  <!-- Simple bars -->
+  <rect x="50" y="70" width="500" height="250" fill="white" stroke="#e5e7eb" stroke-width="2"/>
+  
+  <!-- Medication bars with percentages -->
+  <rect x="80" y="100" width="60" height="146" fill="#dc2626"/>
+  <text x="110" y="90" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#dc2626" text-anchor="middle">73%</text>
+  <text x="110" y="270" font-family="Arial, sans-serif" font-size="10" fill="#374151" text-anchor="middle">Benzodiazepines</text>
+  
+  <rect x="160" y="124" width="60" height="122" fill="#dc2626"/>
+  <text x="190" y="114" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#dc2626" text-anchor="middle">52%</text>
+  <text x="190" y="270" font-family="Arial, sans-serif" font-size="10" fill="#374151" text-anchor="middle">Tricyclics</text>
+  
+  <rect x="240" y="136" width="60" height="110" fill="#f59e0b"/>
+  <text x="270" y="126" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#f59e0b" text-anchor="middle">45%</text>
+  <text x="270" y="270" font-family="Arial, sans-serif" font-size="10" fill="#374151" text-anchor="middle">Anticonvulsants</text>
+  
+  <rect x="320" y="143" width="60" height="103" fill="#f59e0b"/>
+  <text x="350" y="133" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#f59e0b" text-anchor="middle">42%</text>
+  <text x="350" y="270" font-family="Arial, sans-serif" font-size="10" fill="#374151" text-anchor="middle">Antihistamines</text>
+  
+  <rect x="400" y="154" width="60" height="92" fill="#059669"/>
+  <text x="430" y="144" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#059669" text-anchor="middle">38%</text>
+  <text x="430" y="270" font-family="Arial, sans-serif" font-size="10" fill="#374151" text-anchor="middle">Muscle Relax</text>
+  
+  <rect x="480" y="161" width="60" height="85" fill="#059669"/>
+  <text x="510" y="151" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#059669" text-anchor="middle">35%</text>
+  <text x="510" y="270" font-family="Arial, sans-serif" font-size="10" fill="#374151" text-anchor="middle">Antipsychotics</text>
+  
+  <!-- Y-axis scale -->
+  <text x="40" y="250" font-family="Arial, sans-serif" font-size="10" fill="#374151">0%</text>
+  <text x="40" y="200" font-family="Arial, sans-serif" font-size="10" fill="#374151">25%</text>
+  <text x="40" y="150" font-family="Arial, sans-serif" font-size="10" fill="#374151">50%</text>
+  <text x="40" y="100" font-family="Arial, sans-serif" font-size="10" fill="#374151">75%</text>
+  
+  <!-- Bottom label -->
+  <text x="300" y="310" font-family="Arial, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">Fall Risk Increase by Medication Class</text>
+  
+  <!-- Legend -->
+  <rect x="450" y="340" width="12" height="12" fill="#dc2626"/>
+  <text x="470" y="350" font-family="Arial, sans-serif" font-size="10" fill="#374151">Very High Risk</text>
+  <rect x="450" y="355" width="12" height="12" fill="#f59e0b"/>
+  <text x="470" y="365" font-family="Arial, sans-serif" font-size="10" fill="#374151">High Risk</text>
+  <rect x="450" y="370" width="12" height="12" fill="#059669"/>
+  <text x="470" y="380" font-family="Arial, sans-serif" font-size="10" fill="#374151">Moderate Risk</text>
+</svg>
