@@ -1,0 +1,2439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Considerations in Lower Extremity Joint Replacements - DrTroy CE</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        @page { size: letter; margin: 0.75in; @bottom-center { content: counter(page); font-size: 10pt; color: #666; } }
+        * { box-sizing: border-box; }
+
+        /* CSS Variables */
+        :root {
+            --navy: #1a365d;
+            --navy-light: #2c5282;
+            --gold: #059669;
+            --gold-light: #10b981;
+            --gray-50: #f7fafc;
+            --gray-100: #edf2f7;
+            --gray-200: #e5e7eb;
+            --gray-600: #4a5568;
+            --gray-800: #2d3748;
+            --gray-900: #111827;
+        }
+
+        /* Base styles */
+        body {
+            font-family: 'Georgia', 'Times New Roman', serif;
+            font-size: 16px;
+            line-height: 1.7;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            background: #f5f5f5;
+        }
+
+        /* Course Header Styles */
+        .course-header {
+            background: #ffffff;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 3px solid var(--gold);
+        }
+
+        .course-header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo img {
+            height: 60px;
+            width: auto;
+            max-width: 300px;
+        }
+
+        .course-nav {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .course-nav a {
+            color: var(--gray-600);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 14px;
+            transition: color 0.2s;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        .course-nav a:hover {
+            color: var(--navy);
+        }
+
+        .logout-btn {
+            background: var(--gold);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        .logout-btn:hover {
+            background: var(--gold-light);
+            transform: translateY(-2px);
+        }
+
+        /* Main Course Container */
+        .course-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            background: white;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            border-radius: 10px;
+            margin-top: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        /* Course Title Section */
+        .course-title-section {
+            text-align: center;
+            border-bottom: 2px solid var(--gray-200);
+            padding-bottom: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .course-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--navy);
+            margin: 0;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        .course-subtitle {
+            font-size: 1.1rem;
+            color: var(--gray-600);
+            margin: 1rem 0;
+            font-style: italic;
+        }
+
+        .course-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        .info-box {
+            background: var(--gray-50);
+            padding: 1rem;
+            border-radius: 8px;
+            text-align: center;
+            border-left: 4px solid var(--gold);
+        }
+
+        .info-box strong {
+            color: var(--navy);
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Progress Tracking */
+        .progress-container {
+            background: var(--gray-50);
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+            border: 2px solid var(--gold-light);
+        }
+
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        .progress-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--navy);
+        }
+
+        .progress-percentage {
+            font-size: 1rem;
+            color: var(--gold);
+            font-weight: 600;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 12px;
+            background: white;
+            border-radius: 6px;
+            overflow: hidden;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--gold) 0%, var(--gold-light) 100%);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        /* Module Styles */
+        .module {
+            margin-bottom: 3rem;
+            border: 1px solid var(--gray-200);
+            border-radius: 12px;
+            overflow: hidden;
+            background: white;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+        }
+
+        .module:hover {
+            box-shadow: 0 6px 25px rgba(0,0,0,0.1);
+        }
+
+        .module-header {
+            background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
+            color: white;
+            padding: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .module-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .module-header:hover::before {
+            left: 100%;
+        }
+
+        .module-header.completed {
+            background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%);
+        }
+
+        .module-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin: 0;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        .module-header.completed .module-title {
+            position: relative;
+        }
+
+        .module-header.completed .module-title::after {
+            content: ' ✓';
+            font-size: 1.2rem;
+            margin-left: 0.5rem;
+        }
+
+        .module-content {
+            padding: 2rem;
+            display: none;
+            background: white;
+        }
+
+        .module-content.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .module-content h2 {
+            color: var(--navy);
+            font-size: 1.4rem;
+            margin: 2rem 0 1rem 0;
+            font-weight: 600;
+            border-bottom: 2px solid var(--gold);
+            padding-bottom: 0.5rem;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        .module-content h3 {
+            color: var(--navy-light);
+            font-size: 1.2rem;
+            margin: 1.5rem 0 0.75rem 0;
+            font-weight: 600;
+        }
+
+        .module-content p {
+            margin-bottom: 1rem;
+            text-align: justify;
+        }
+
+        .module-content ul, .module-content ol {
+            margin: 1rem 0;
+            padding-left: 2rem;
+        }
+
+        .module-content li {
+            margin-bottom: 0.5rem;
+        }
+
+        /* Highlight boxes */
+        .highlight-box {
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            border-left: 5px solid var(--gold);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .highlight-box.clinical-tip {
+            background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+            border-left-color: var(--gold);
+        }
+
+        .highlight-box.key-point {
+            background: linear-gradient(135deg, #fef7cd 0%, #fef3c7 100%);
+            border-left-color: #d97706;
+        }
+
+        .highlight-box.caution {
+            background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%);
+            border-left-color: #dc2626;
+        }
+
+        .highlight-box.surgical-note {
+            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+            border-left-color: #3b82f6;
+        }
+
+        /* Knowledge Check */
+        .knowledge-check {
+            background: linear-gradient(135deg, var(--gray-50) 0%, white 100%);
+            border: 2px solid var(--gold);
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 2rem 0;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+
+        .knowledge-check h3 {
+            color: var(--navy);
+            margin-top: 0;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        .question {
+            margin: 1.5rem 0;
+            padding: 1rem;
+            background: white;
+            border-radius: 8px;
+            border: 1px solid var(--gray-200);
+        }
+
+        .question-text {
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--navy);
+        }
+
+        .answer-option {
+            margin: 0.5rem 0;
+            padding: 0.5rem;
+            cursor: pointer;
+            border-radius: 6px;
+            transition: background 0.2s;
+        }
+
+        .answer-option:hover {
+            background: var(--gray-50);
+        }
+
+        .answer-option.correct {
+            background: #dcfce7 !important;
+            border-left: 4px solid var(--gold);
+            padding-left: 1rem;
+        }
+
+        .answer-option.incorrect {
+            background: #fee2e2 !important;
+            border-left: 4px solid #dc2626;
+            padding-left: 1rem;
+        }
+
+        /* Completion Tracking */
+        .module-completion {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem;
+            background: var(--gray-50);
+            border-top: 1px solid var(--gray-200);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        .complete-btn {
+            background: var(--gold);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        .complete-btn:hover {
+            background: var(--gold-light);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(5, 150, 105, 0.3);
+        }
+
+        .complete-btn:disabled {
+            background: var(--gray-600);
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .completed-badge {
+            background: var(--gold);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        /* Certificate Section */
+        .certificate-section {
+            background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
+            color: white;
+            text-align: center;
+            padding: 3rem;
+            border-radius: 12px;
+            margin: 3rem 0;
+            display: none;
+        }
+
+        .certificate-section.visible {
+            display: block;
+            animation: slideUp 0.5s ease;
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .certificate-btn {
+            background: var(--gold);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            margin-top: 1rem;
+        }
+
+        .certificate-btn:hover {
+            background: var(--gold-light);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(5, 150, 105, 0.4);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .course-container {
+                margin: 1rem;
+                padding: 1rem;
+            }
+
+            .course-title {
+                font-size: 2rem;
+            }
+
+            .module-title {
+                font-size: 1.1rem;
+            }
+
+            .course-info {
+                grid-template-columns: 1fr;
+            }
+
+            .progress-container {
+                padding: 1rem;
+            }
+        }
+
+        /* Print Styles */
+        @media print {
+            .course-header,
+            .progress-container,
+            .complete-btn,
+            .certificate-section {
+                display: none !important;
+            }
+
+            .module-content {
+                display: block !important;
+            }
+
+            .module {
+                break-inside: avoid;
+                margin-bottom: 2rem;
+            }
+
+            body {
+                background: white;
+                font-size: 11pt;
+                line-height: 1.4;
+            }
+
+            .course-container {
+                box-shadow: none;
+                margin: 0;
+                padding: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Course Header -->
+    <header class="course-header">
+        <div class="course-header-container">
+            <div class="logo">
+                <img src="images/drtroy_logo_new.jpg" alt="DrTroy CE">
+            </div>
+            <div class="course-nav">
+                <a href="../course-catalog.html">Course Catalog</a>
+                <a href="../my-account.html">My Account</a>
+                <button class="logout-btn" onclick="logout()">Logout</button>
+            </div>
+        </div>
+    </header>
+
+    <div class="course-container">
+        <!-- Course Title Section -->
+        <div class="course-title-section">
+            <h1 class="course-title">🏥 Considerations in Lower Extremity Joint Replacements</h1>
+            <p class="course-subtitle">Comprehensive Management of Hip, Knee, and Ankle Arthroplasty from Pre-Op to Long-Term Care</p>
+            
+            <div class="course-info">
+                <div class="info-box">
+                    <strong>Duration</strong>
+                    3.0 Hours (180 minutes)
+                </div>
+                <div class="info-box">
+                    <strong>Continuing Education</strong>
+                    3.0 CCUs
+                </div>
+                <div class="info-box">
+                    <strong>Course ID</strong>
+                    JOINT-001
+                </div>
+                <div class="info-box">
+                    <strong>Approval #</strong>
+                    DRTROY-JOINT-001-2024
+                </div>
+            </div>
+        </div>
+
+        <!-- Progress Tracking -->
+        <div class="progress-container">
+            <div class="progress-header">
+                <div class="progress-title">Course Progress</div>
+                <div class="progress-percentage">0% Complete</div>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill"></div>
+            </div>
+        </div>
+
+        <!-- Module 1: Introduction and Epidemiology -->
+        <div class="module" data-module="1">
+            <div class="module-header" onclick="toggleModule(1)">
+                <div class="module-title">Module 1: Epidemiology and Overview of Lower Extremity Joint Replacements (15 min)</div>
+            </div>
+            <div class="module-content">
+                <h2>1.1 Current Statistics and Trends</h2>
+                <p>Lower extremity joint replacements have become among the most successful surgical procedures in modern medicine, with over 1 million total hip and knee replacements performed annually in the United States.</p>
+                
+                <div class="highlight-box key-point">
+                    <strong>Joint Replacement Statistics (Annual US Data):</strong>
+                    <ul>
+                        <li><strong>Total Hip Arthroplasty (THA):</strong> Approximately 450,000 procedures annually</li>
+                        <li><strong>Total Knee Arthroplasty (TKA):</strong> Over 750,000 procedures annually</li>
+                        <li><strong>Total Ankle Replacement (TAR):</strong> Approximately 8,000 procedures annually</li>
+                        <li><strong>Revision surgeries:</strong> Account for 10-15% of all joint replacements</li>
+                        <li><strong>Growth projection:</strong> Demand expected to increase 170% for hips, 670% for knees by 2030</li>
+                    </ul>
+                </div>
+
+                <h3>Demographics and Risk Factors</h3>
+                <p>Understanding patient demographics helps rehabilitation professionals prepare for the increasing volume and complexity of joint replacement patients.</p>
+
+                <ul>
+                    <li><strong>Age trends:</strong> Average age 65-70 for primary replacements, but increasing numbers of younger patients (under 65)</li>
+                    <li><strong>Gender distribution:</strong> Hip replacements more common in women (60%), knee replacements equal gender distribution</li>
+                    <li><strong>Primary indications:</strong> Osteoarthritis (85%), rheumatoid arthritis (5%), avascular necrosis (4%), fracture (3%)</li>
+                    <li><strong>Obesity impact:</strong> 40% of joint replacement patients have BMI >30, increasing surgical complexity and rehabilitation challenges</li>
+                    <li><strong>Comorbidity prevalence:</strong> Diabetes (25%), cardiovascular disease (35%), osteoporosis (20%)</li>
+                </ul>
+
+                <h2>1.2 Economic Impact and Healthcare Utilization</h2>
+                <p>Joint replacement procedures represent significant healthcare expenditures and resource utilization across the care continuum.</p>
+
+                <h3>Cost Considerations</h3>
+                <div class="highlight-box clinical-tip">
+                    <strong>Healthcare Economics:</strong>
+                    <ul>
+                        <li><strong>Average costs:</strong> THA $40,000-50,000, TKA $35,000-45,000, TAR $30,000-40,000</li>
+                        <li><strong>Revision costs:</strong> 2-3 times higher than primary procedures</li>
+                        <li><strong>Readmission rates:</strong> 30-day readmission rates 4-6% for elective procedures</li>
+                        <li><strong>Length of stay:</strong> Average 2-3 days for primary procedures (down from 7-10 days historically)</li>
+                        <li><strong>Post-acute utilization:</strong> 40% home health, 30% SNF, 30% outpatient direct discharge</li>
+                    </ul>
+                </div>
+
+                <h2>1.3 Evolution of Surgical Techniques and Implants</h2>
+                <p>Advances in surgical techniques, implant design, and materials have significantly improved outcomes and longevity of joint replacements.</p>
+
+                <h3>Modern Implant Materials</h3>
+                <ul>
+                    <li><strong>Bearing surfaces:</strong> Metal-on-polyethylene remains gold standard, ceramic and highly cross-linked polyethylene improving wear rates</li>
+                    <li><strong>Fixation methods:</strong> Cemented, cementless, and hybrid techniques based on patient age, bone quality, and activity level</li>
+                    <li><strong>Implant longevity:</strong> Modern implants show 95%+ survival at 10 years, 85-90% at 20 years</li>
+                    <li><strong>Minimally invasive approaches:</strong> Shorter incisions, muscle-sparing techniques reducing tissue trauma</li>
+                </ul>
+
+                <h3>Technological Advances</h3>
+                <div class="highlight-box surgical-note">
+                    <strong>Recent Innovations:</strong>
+                    <ul>
+                        <li><strong>Computer-assisted surgery:</strong> Navigation systems improving implant positioning accuracy</li>
+                        <li><strong>Robotic surgery:</strong> Enhanced precision in bone preparation and implant placement</li>
+                        <li><strong>Patient-specific instrumentation:</strong> Custom guides based on individual anatomy</li>
+                        <li><strong>Rapid recovery protocols:</strong> Enhanced recovery after surgery (ERAS) reducing hospital stays</li>
+                        <li><strong>Outpatient procedures:</strong> Same-day discharge becoming increasingly common for appropriate candidates</li>
+                    </ul>
+                </div>
+
+                <div class="knowledge-check">
+                    <h3>Knowledge Check</h3>
+                    <div class="question">
+                        <div class="question-text">What is the primary indication for lower extremity joint replacement surgery?</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">A) Rheumatoid arthritis</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">B) Fracture</div>
+                        <div class="answer-option" onclick="selectAnswer(this, true)">C) Osteoarthritis</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">D) Avascular necrosis</div>
+                    </div>
+                </div>
+
+                <div class="module-completion">
+                    <div>Estimated completion time: 15 minutes</div>
+                    <button class="complete-btn" onclick="completeModule(1)">Mark Complete</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Module 2: Pre-operative Assessment and Optimization -->
+        <div class="module" data-module="2">
+            <div class="module-header" onclick="toggleModule(2)">
+                <div class="module-title">Module 2: Pre-operative Assessment and Medical Optimization (15 min)</div>
+            </div>
+            <div class="module-content">
+                <h2>2.1 Comprehensive Pre-operative Evaluation</h2>
+                <p>Thorough pre-operative assessment is crucial for optimizing surgical outcomes and preventing complications in joint replacement patients.</p>
+
+                <div class="highlight-box key-point">
+                    <strong>Essential Pre-operative Assessments:</strong>
+                    <ul>
+                        <li><strong>Medical history:</strong> Cardiovascular disease, diabetes, pulmonary conditions, previous surgeries</li>
+                        <li><strong>Medication review:</strong> Anticoagulants, immunosuppressants, NSAIDs, supplements</li>
+                        <li><strong>Functional assessment:</strong> Baseline mobility, activities of daily living, work demands</li>
+                        <li><strong>Social evaluation:</strong> Home environment, support systems, transportation</li>
+                        <li><strong>Nutritional status:</strong> Protein levels, vitamin D, overall nutritional health</li>
+                    </ul>
+                </div>
+
+                <h3>Risk Stratification</h3>
+                <p>Identifying high-risk patients allows for targeted interventions to improve outcomes:</p>
+
+                <ul>
+                    <li><strong>Cardiac risk factors:</strong> History of MI, CHF, arrhythmias, valvular disease</li>
+                    <li><strong>Pulmonary considerations:</strong> COPD, sleep apnea, smoking history</li>
+                    <li><strong>Metabolic factors:</strong> Poorly controlled diabetes, thyroid disorders, obesity</li>
+                    <li><strong>Renal function:</strong> Chronic kidney disease affecting medication dosing and healing</li>
+                    <li><strong>Bleeding risk:</strong> Coagulopathy, anticoagulant use, platelet disorders</li>
+                </ul>
+
+                <h2>2.2 Medical Optimization Strategies</h2>
+                <p>Pre-operative optimization can significantly reduce complications and improve recovery outcomes.</p>
+
+                <h3>Cardiovascular Optimization</h3>
+                <div class="highlight-box clinical-tip">
+                    <strong>Cardiac Preparation:</strong>
+                    <ul>
+                        <li><strong>Blood pressure control:</strong> Target <140/90 mmHg, ideally <130/80</li>
+                        <li><strong>Diabetes management:</strong> HbA1c <8%, ideally <7% for elective surgery</li>
+                        <li><strong>Anticoagulation management:</strong> Bridge therapy protocols for high-risk patients</li>
+                        <li><strong>Cardiac clearance:</strong> Stress testing for intermediate-to-high risk patients</li>
+                        <li><strong>Medication optimization:</strong> Continue beta-blockers, ACE inhibitors as appropriate</li>
+                    </ul>
+                </div>
+
+                <h3>Nutritional Optimization</h3>
+                <p>Nutritional status directly impacts wound healing, infection risk, and functional recovery:</p>
+                <ul>
+                    <li><strong>Protein requirements:</strong> 1.2-1.6 g/kg body weight daily for surgical patients</li>
+                    <li><strong>Vitamin D levels:</strong> Target >30 ng/mL for optimal bone health</li>
+                    <li><strong>Iron deficiency:</strong> Correct anemia (Hgb >11 g/dL) before elective surgery</li>
+                    <li><strong>Albumin levels:</strong> >3.5 g/dL indicates adequate nutritional status</li>
+                    <li><strong>Weight management:</strong> BMI >40 may warrant delay for weight loss</li>
+                </ul>
+
+                <h2>2.3 Infection Prevention Protocols</h2>
+                <p>Preventing surgical site infections is critical given the catastrophic consequences of prosthetic joint infection.</p>
+
+                <h3>Pre-operative Infection Screening</h3>
+                <ul>
+                    <li><strong>Dental evaluation:</strong> Address active dental infections 2-4 weeks before surgery</li>
+                    <li><strong>Skin assessment:</strong> Treat active skin conditions, especially around surgical site</li>
+                    <li><strong>Urinary tract:</strong> Screen and treat UTIs, especially in elderly patients</li>
+                    <li><strong>Remote infections:</strong> Identify and treat any active infections</li>
+                    <li><strong>Nasal screening:</strong> MRSA decolonization protocols when indicated</li>
+                </ul>
+
+                <div class="highlight-box caution">
+                    <strong>High-Risk Factors for Infection:</strong>
+                    <ul>
+                        <li><strong>Patient factors:</strong> Diabetes, obesity, immunosuppression, smoking, malnutrition</li>
+                        <li><strong>Surgical factors:</strong> Prolonged operative time, revision surgery, blood transfusion</li>
+                        <li><strong>Environmental factors:</strong> Inadequate prophylaxis, breach in sterile technique</li>
+                        <li><strong>Prosthetic factors:</strong> Implant type, surface characteristics, biofilm formation</li>
+                    </ul>
+                </div>
+
+                <h2>2.4 Patient Education and Expectation Setting</h2>
+                <p>Comprehensive pre-operative education improves patient satisfaction and adherence to post-operative protocols.</p>
+
+                <h3>Educational Topics</h3>
+                <ul>
+                    <li><strong>Surgical procedure:</strong> Implant type, surgical approach, expected duration</li>
+                    <li><strong>Recovery timeline:</strong> Hospital stay, rehabilitation phases, return to activities</li>
+                    <li><strong>Pain management:</strong> Multimodal approaches, opioid expectations, alternatives</li>
+                    <li><strong>Activity restrictions:</strong> Weight-bearing status, movement precautions, driving</li>
+                    <li><strong>Warning signs:</strong> Infection symptoms, blood clots, implant complications</li>
+                    <li><strong>Long-term care:</strong> Activity modifications, follow-up schedule, implant longevity</li>
+                </ul>
+
+                <div class="knowledge-check">
+                    <h3>Knowledge Check</h3>
+                    <div class="question">
+                        <div class="question-text">What HbA1c target is recommended for diabetic patients undergoing elective joint replacement?</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">A) <9%</div>
+                        <div class="answer-option" onclick="selectAnswer(this, true)">B) <8%, ideally <7%</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">C) <10%</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">D) <6%</div>
+                    </div>
+                </div>
+
+                <div class="module-completion">
+                    <div>Estimated completion time: 15 minutes</div>
+                    <button class="complete-btn" onclick="completeModule(2)">Mark Complete</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Module 3: Total Hip Arthroplasty - Surgical Approaches and Early Care -->
+        <div class="module" data-module="3">
+            <div class="module-header" onclick="toggleModule(3)">
+                <div class="module-title">Module 3: Total Hip Arthroplasty - Surgical Approaches and Immediate Post-operative Care (15 min)</div>
+            </div>
+            <div class="module-content">
+                <h2>3.1 Surgical Approaches and Implications</h2>
+                <p>The surgical approach for total hip arthroplasty significantly impacts post-operative precautions, rehabilitation protocols, and functional outcomes.</p>
+
+                <div class="highlight-box surgical-note">
+                    <strong>Common Surgical Approaches:</strong>
+                    <ul>
+                        <li><strong>Posterior approach (45%):</strong> Most common, violates posterior capsule and external rotators</li>
+                        <li><strong>Lateral/Hardinge approach (30%):</strong> Splits gluteus medius, preserves posterior structures</li>
+                        <li><strong>Anterior approach (20%):</strong> Muscle-sparing, intermuscular plane, rapid recovery</li>
+                        <li><strong>Anterolateral approach (5%):</strong> Modified lateral approach with anterior component</li>
+                    </ul>
+                </div>
+
+                <h3>Approach-Specific Considerations</h3>
+
+                <h4>Posterior Approach</h4>
+                <ul>
+                    <li><strong>Advantages:</strong> Excellent visualization, extensile, surgeon familiarity</li>
+                    <li><strong>Disadvantages:</strong> Higher dislocation risk, abductor weakness, limp potential</li>
+                    <li><strong>Precautions:</strong> Avoid hip flexion >90°, internal rotation, adduction across midline</li>
+                    <li><strong>Expected deficits:</strong> External rotator weakness, posterior capsule disruption</li>
+                </ul>
+
+                <h4>Lateral Approach</h4>
+                <ul>
+                    <li><strong>Advantages:</strong> Lower dislocation risk, stable construct</li>
+                    <li><strong>Disadvantages:</strong> Abductor muscle disruption, Trendelenburg gait risk</li>
+                    <li><strong>Precautions:</strong> Avoid adduction past midline, excessive external rotation</li>
+                    <li><strong>Expected deficits:</strong> Abductor weakness, lateral thigh numbness</li>
+                </ul>
+
+                <h4>Anterior Approach</h4>
+                <ul>
+                    <li><strong>Advantages:</strong> Muscle-sparing, rapid recovery, immediate weight-bearing</li>
+                    <li><strong>Disadvantages:</strong> Learning curve, component positioning challenges</li>
+                    <li><strong>Precautions:</strong> Minimal restrictions, avoid excessive extension/external rotation</li>
+                    <li><strong>Expected deficits:</strong> Minimal muscle disruption, faster functional recovery</li>
+                </ul>
+
+                <h2>3.2 Immediate Post-operative Management</h2>
+                <p>The first 24-48 hours post-operatively are critical for preventing complications and establishing rehabilitation foundations.</p>
+
+                <h3>Early Mobilization Protocols</h3>
+                <div class="highlight-box clinical-tip">
+                    <strong>Timeline for Mobilization:</strong>
+                    <ul>
+                        <li><strong>Day of surgery:</strong> Bed mobility, sitting edge of bed, possible standing with therapy</li>
+                        <li><strong>Post-op day 1:</strong> Ambulation with appropriate assistive device, stair negotiation assessment</li>
+                        <li><strong>Post-op day 2:</strong> Increased distance, functional activities, discharge planning</li>
+                        <li><strong>Discharge criteria:</strong> Safe transfers, ambulation 150+ feet, stair climbing if needed at home</li>
+                    </ul>
+                </div>
+
+                <h3>Weight-bearing Considerations</h3>
+                <p>Weight-bearing restrictions depend on surgical approach, implant fixation, and bone quality:</p>
+                <ul>
+                    <li><strong>Cemented implants:</strong> Typically weight-bearing as tolerated immediately</li>
+                    <li><strong>Cementless implants:</strong> May require toe-touch or partial weight-bearing for 4-6 weeks</li>
+                    <li><strong>Revision surgery:</strong> Often restricted based on bone grafting and component stability</li>
+                    <li><strong>Fracture fixation:</strong> Variable restrictions based on fracture pattern and fixation method</li>
+                </ul>
+
+                <h2>3.3 Dislocation Prevention</h2>
+                <p>Hip dislocation is one of the most feared complications, with rates varying from 0.5% to 5% depending on multiple factors.</p>
+
+                <h3>Risk Factors for Dislocation</h3>
+                <div class="highlight-box caution">
+                    <strong>Dislocation Risk Factors:</strong>
+                    <ul>
+                        <li><strong>Patient factors:</strong> Advanced age, cognitive impairment, substance abuse, previous dislocation</li>
+                        <li><strong>Surgical factors:</strong> Posterior approach, component malposition, inadequate soft tissue repair</li>
+                        <li><strong>Implant factors:</strong> Small femoral head size, liner design, implant positioning</li>
+                        <li><strong>Post-operative factors:</strong> Non-compliance with precautions, falls, inappropriate positioning</li>
+                    </ul>
+                </div>
+
+                <h3>Traditional Hip Precautions (Posterior Approach)</h3>
+                <ul>
+                    <li><strong>Flexion restriction:</strong> No hip flexion beyond 90 degrees</li>
+                    <li><strong>Adduction restriction:</strong> No crossing legs or moving operated leg across midline</li>
+                    <li><strong>Internal rotation restriction:</strong> No turning foot inward or rotating leg inward</li>
+                    <li><strong>Combined movements:</strong> Avoid combinations of restricted movements</li>
+                    <li><strong>Duration:</strong> Traditionally 6-12 weeks, though evidence supports earlier discontinuation</li>
+                </ul>
+
+                <h2>3.4 Modern Trends in Hip Precautions</h2>
+                <p>Recent evidence questions the necessity of strict precautions, leading to more liberal approaches in appropriate patients.</p>
+
+                <div class="highlight-box key-point">
+                    <strong>Evidence-Based Precaution Modifications:</strong>
+                    <ul>
+                        <li><strong>Reduced duration:</strong> 4-6 weeks instead of traditional 12 weeks</li>
+                        <li><strong>Activity-based restrictions:</strong> Focus on functional activities rather than strict anatomical limits</li>
+                        <li><strong>Patient-specific approach:</strong> Consider individual risk factors and compliance</li>
+                        <li><strong>Surgeon preference:</strong> Increasing trend toward minimal or no formal precautions</li>
+                        <li><strong>Enhanced recovery protocols:</strong> Emphasis on early mobilization and function</li>
+                    </ul>
+                </div>
+
+                <div class="knowledge-check">
+                    <h3>Knowledge Check</h3>
+                    <div class="question">
+                        <div class="question-text">Which surgical approach for total hip arthroplasty has the highest risk of dislocation?</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">A) Anterior approach</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">B) Lateral approach</div>
+                        <div class="answer-option" onclick="selectAnswer(this, true)">C) Posterior approach</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">D) Anterolateral approach</div>
+                    </div>
+                </div>
+
+                <div class="module-completion">
+                    <div>Estimated completion time: 15 minutes</div>
+                    <button class="complete-btn" onclick="completeModule(3)">Mark Complete</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Module 4: Total Knee Arthroplasty - Surgical Considerations and Early Management -->
+        <div class="module" data-module="4">
+            <div class="module-header" onclick="toggleModule(4)">
+                <div class="module-title">Module 4: Total Knee Arthroplasty - Surgical Considerations and Early Management (15 min)</div>
+            </div>
+            <div class="module-content">
+                <h2>4.1 Types of Knee Replacement</h2>
+                <p>Understanding the different types of knee replacement procedures is essential for appropriate rehabilitation planning and patient education.</p>
+
+                <div class="highlight-box surgical-note">
+                    <strong>Knee Replacement Types:</strong>
+                    <ul>
+                        <li><strong>Total Knee Arthroplasty (TKA):</strong> Replacement of all three compartments (medial, lateral, patellofemoral)</li>
+                        <li><strong>Unicompartmental Knee Arthroplasty (UKA):</strong> Partial replacement of single compartment</li>
+                        <li><strong>Bicompartmental Knee Arthroplasty:</strong> Replacement of two compartments</li>
+                        <li><strong>Patellofemoral Arthroplasty:</strong> Isolated replacement of kneecap joint</li>
+                        <li><strong>Revision TKA:</strong> Replacement or modification of previous knee replacement</li>
+                    </ul>
+                </div>
+
+                <h3>Implant Design Considerations</h3>
+                <ul>
+                    <li><strong>Cruciate-retaining (CR):</strong> Preserves posterior cruciate ligament, more normal kinematics</li>
+                    <li><strong>Cruciate-substituting (PS):</strong> Sacrifices PCL, cam-post mechanism for posterior translation</li>
+                    <li><strong>Mobile-bearing:</strong> Polyethylene insert can rotate, potentially reducing wear</li>
+                    <li><strong>Fixed-bearing:</strong> Traditional design with polyethylene bonded to tibial component</li>
+                    <li><strong>Gender-specific designs:</strong> Anatomical modifications for female patients</li>
+                </ul>
+
+                <h2>4.2 Immediate Post-operative Considerations</h2>
+                <p>Unlike hip replacement, knee replacement patients face unique challenges related to swelling, stiffness, and range of motion recovery.</p>
+
+                <h3>Range of Motion Priorities</h3>
+                <div class="highlight-box clinical-tip">
+                    <strong>ROM Milestones and Timeline:</strong>
+                    <ul>
+                        <li><strong>Immediate post-op:</strong> 0° extension, 90° flexion goal within 48 hours</li>
+                        <li><strong>Week 1:</strong> Maintain 0° extension, achieve 90-100° flexion</li>
+                        <li><strong>Week 2-4:</strong> Progress to 110-120° flexion, full extension mandatory</li>
+                        <li><strong>Week 6-12:</strong> Functional ROM 0-115° minimum for ADLs</li>
+                        <li><strong>Beyond 12 weeks:</strong> Maximal improvement typically achieved by 3-6 months</li>
+                    </ul>
+                </div>
+
+                <h3>Extension vs. Flexion Priority</h3>
+                <p>The rehabilitation philosophy "flexion is a luxury, extension is a necessity" guides early intervention priorities:</p>
+                <ul>
+                    <li><strong>Extension importance:</strong> Essential for normal gait, knee stability, and functional mobility</li>
+                    <li><strong>Flexion contracture consequences:</strong> Increased energy expenditure, compensatory patterns, prosthetic loosening</li>
+                    <li><strong>Flexion benefits:</strong> Improved ADL function, stair climbing, sitting comfort</li>
+                    <li><strong>Balance approach:</strong> Prioritize extension while aggressively pursuing flexion gains</li>
+                </ul>
+
+                <h2>4.3 Pain and Swelling Management</h2>
+                <p>Effective pain and swelling control are crucial for successful rehabilitation and patient satisfaction following knee replacement.</p>
+
+                <h3>Multimodal Pain Management</h3>
+                <div class="highlight-box key-point">
+                    <strong>Evidence-Based Pain Control:</strong>
+                    <ul>
+                        <li><strong>Regional anesthesia:</strong> Adductor canal blocks, femoral nerve blocks for perioperative pain</li>
+                        <li><strong>Local infiltration:</strong> Periarticular injection with local anesthetics and anti-inflammatories</li>
+                        <li><strong>Oral medications:</strong> Acetaminophen, NSAIDs (if not contraindicated), gabapentin</li>
+                        <li><strong>Opioid minimization:</strong> Reduced reliance on narcotics to prevent side effects and dependency</li>
+                        <li><strong>Physical modalities:</strong> Cryotherapy, compression, elevation, TENS units</li>
+                    </ul>
+                </div>
+
+                <h3>Swelling Control Strategies</h3>
+                <ul>
+                    <li><strong>Elevation:</strong> Leg elevation above heart level when possible</li>
+                    <li><strong>Compression:</strong> Elastic bandages, compression stockings, pneumatic compression devices</li>
+                    <li><strong>Cryotherapy:</strong> Ice application 15-20 minutes every 2-3 hours</li>
+                    <li><strong>Active movement:</strong> Ankle pumps, quad sets, gentle ROM to promote circulation</li>
+                    <li><strong>Medication:</strong> NSAIDs if appropriate, avoid excessive fluid retention</li>
+                </ul>
+
+                <h2>4.4 Early Mobility and Weight-bearing</h2>
+                <p>Most knee replacement patients can bear weight as tolerated immediately post-operatively, though pain and swelling may limit function initially.</p>
+
+                <h3>Mobility Progression</h3>
+                <ul>
+                    <li><strong>Day of surgery:</strong> Bed mobility, transfer training, possible standing</li>
+                    <li><strong>Post-op day 1:</strong> Ambulation with assistive device, basic ADL training</li>
+                    <li><strong>Post-op day 2:</strong> Increased ambulation distance, stair training if needed</li>
+                    <li><strong>Discharge readiness:</strong> Safe ambulation 150+ feet, independence with ADLs, appropriate ROM</li>
+                </ul>
+
+                <div class="highlight-box clinical-tip">
+                    <strong>Assistive Device Recommendations:</strong>
+                    <ul>
+                        <li><strong>Walker:</strong> Most stable option for elderly or unsteady patients</li>
+                        <li><strong>Crutches:</strong> For younger, more athletic patients with good upper body strength</li>
+                        <li><strong>Cane:</strong> Transition device as strength and confidence improve</li>
+                        <li><strong>Duration:</strong> Typically 2-6 weeks, based on strength, balance, and confidence</li>
+                    </ul>
+                </div>
+
+                <h2>4.5 Complications and Warning Signs</h2>
+                <p>Early recognition of complications is essential for preventing long-term problems and ensuring optimal outcomes.</p>
+
+                <div class="highlight-box caution">
+                    <strong>Early Complications to Monitor:</strong>
+                    <ul>
+                        <li><strong>Infection signs:</strong> Increased pain, redness, warmth, drainage, fever, elevated WBC</li>
+                        <li><strong>Deep vein thrombosis:</strong> Calf pain, swelling, positive Homan's sign</li>
+                        <li><strong>Pulmonary embolism:</strong> Shortness of breath, chest pain, rapid heart rate</li>
+                        <li><strong>Manipulation risk factors:</strong> Flexion <90° at 2 weeks, minimal progress with therapy</li>
+                        <li><strong>Peroneal nerve injury:</strong> Foot drop, numbness lateral leg/foot</li>
+                    </ul>
+                </div>
+
+                <div class="knowledge-check">
+                    <h3>Knowledge Check</h3>
+                    <div class="question">
+                        <div class="question-text">What is the minimum flexion ROM goal within 48 hours post-TKA?</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">A) 60 degrees</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">B) 75 degrees</div>
+                        <div class="answer-option" onclick="selectAnswer(this, true)">C) 90 degrees</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">D) 105 degrees</div>
+                    </div>
+                </div>
+
+                <div class="module-completion">
+                    <div>Estimated completion time: 15 minutes</div>
+                    <button class="complete-btn" onclick="completeModule(4)">Mark Complete</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Module 5: Total Ankle Replacement and Alternative Procedures -->
+        <div class="module" data-module="5">
+            <div class="module-header" onclick="toggleModule(5)">
+                <div class="module-title">Module 5: Total Ankle Replacement and Alternative Lower Extremity Procedures (15 min)</div>
+            </div>
+            <div class="module-content">
+                <h2>5.1 Total Ankle Replacement Overview</h2>
+                <p>Total ankle replacement (TAR) is a less common but increasingly important procedure for end-stage ankle arthritis, offering an alternative to ankle fusion.</p>
+
+                <div class="highlight-box key-point">
+                    <strong>TAR vs. Ankle Fusion Considerations:</strong>
+                    <ul>
+                        <li><strong>TAR advantages:</strong> Preserved motion, better function, reduced adjacent joint stress</li>
+                        <li><strong>TAR disadvantages:</strong> Higher complication rates, implant loosening, limited activity restrictions</li>
+                        <li><strong>Fusion advantages:</strong> Durability, pain relief, fewer restrictions once healed</li>
+                        <li><strong>Fusion disadvantages:</strong> Loss of motion, adjacent joint arthritis, nonunion risk</li>
+                        <li><strong>Patient selection:</strong> Age, activity level, bone quality, deformity correction needs</li>
+                    </ul>
+                </div>
+
+                <h3>Indications and Contraindications for TAR</h3>
+
+                <h4>Ideal Candidates</h4>
+                <ul>
+                    <li><strong>Age:</strong> Typically >50 years old with lower activity demands</li>
+                    <li><strong>Diagnosis:</strong> Primary osteoarthritis, rheumatoid arthritis, post-traumatic arthritis</li>
+                    <li><strong>Bone quality:</strong> Adequate bone stock for implant fixation</li>
+                    <li><strong>Alignment:</strong> Correctable deformity, stable surrounding joints</li>
+                    <li><strong>Soft tissues:</strong> Adequate skin coverage, no active infection</li>
+                </ul>
+
+                <h4>Contraindications</h4>
+                <ul>
+                    <li><strong>Absolute:</strong> Active infection, severe peripheral vascular disease, neuropathic arthropathy</li>
+                    <li><strong>Relative:</strong> Younger age, high activity level, obesity, smoking, poor bone quality</li>
+                    <li><strong>Technical:</strong> Severe deformity, previous fusion attempts, inadequate bone stock</li>
+                </ul>
+
+                <h2>5.2 Post-operative Management of TAR</h2>
+                <p>Ankle replacement requires careful post-operative management due to the complex biomechanics and higher complication rates.</p>
+
+                <h3>Immobilization and Weight-bearing Phases</h3>
+                <div class="highlight-box clinical-tip">
+                    <strong>TAR Recovery Timeline:</strong>
+                    <ul>
+                        <li><strong>Phase 1 (0-2 weeks):</strong> Non-weight-bearing in splint, wound healing priority</li>
+                        <li><strong>Phase 2 (2-6 weeks):</strong> Transition to boot, partial weight-bearing progression</li>
+                        <li><strong>Phase 3 (6-12 weeks):</strong> Weight-bearing as tolerated, ROM progression</li>
+                        <li><strong>Phase 4 (3-6 months):</strong> Return to normal activities, implant integration</li>
+                    </ul>
+                </div>
+
+                <h3>Range of Motion and Functional Goals</h3>
+                <ul>
+                    <li><strong>Normal ankle ROM:</strong> 20° dorsiflexion, 50° plantarflexion</li>
+                    <li><strong>TAR expectations:</strong> 10-15° dorsiflexion, 30-40° plantarflexion typical</li>
+                    <li><strong>Functional requirements:</strong> 10° dorsiflexion needed for normal gait</li>
+                    <li><strong>ADL demands:</strong> 15° dorsiflexion for stairs, squatting activities</li>
+                </ul>
+
+                <h2>5.3 Partial Joint Replacements</h2>
+                <p>Partial joint replacements offer alternatives to total joint replacement for appropriately selected patients with localized arthritis.</p>
+
+                <h3>Unicompartmental Knee Arthroplasty (UKA)</h3>
+                <div class="highlight-box surgical-note">
+                    <strong>UKA Considerations:</strong>
+                    <ul>
+                        <li><strong>Indications:</strong> Isolated medial or lateral compartment arthritis, intact ACL</li>
+                        <li><strong>Advantages:</strong> Smaller incision, faster recovery, preserved normal kinematics</li>
+                        <li><strong>Disadvantages:</strong> Risk of progression to total knee replacement</li>
+                        <li><strong>Rehabilitation:</strong> Typically faster return to function than TKA</li>
+                        <li><strong>Longevity:</strong> 10-15 year survival rates 85-95% with appropriate patient selection</li>
+                    </ul>
+                </div>
+
+                <h3>Hip Resurfacing Arthroplasty</h3>
+                <ul>
+                    <li><strong>Patient selection:</strong> Young, active males with good bone quality</li>
+                    <li><strong>Advantages:</strong> Bone conservation, more normal biomechanics, easier revision</li>
+                    <li><strong>Disadvantages:</strong> Metal-on-metal concerns, femoral neck fracture risk</li>
+                    <li><strong>Current status:</strong> Declining use due to metal ion concerns and improved standard THA results</li>
+                </ul>
+
+                <h2>5.4 Revision Joint Replacement</h2>
+                <p>Revision procedures are increasingly common as patient populations age and primary joint replacements reach end of service life.</p>
+
+                <h3>Indications for Revision Surgery</h3>
+                <ul>
+                    <li><strong>Aseptic loosening:</strong> Most common cause, mechanical failure of implant fixation</li>
+                    <li><strong>Prosthetic joint infection:</strong> Requires staged revision with antibiotic spacers</li>
+                    <li><strong>Osteolysis:</strong> Bone loss due to wear particle-induced inflammation</li>
+                    <li><strong>Instability/dislocation:</strong> Recurrent dislocation requiring component revision</li>
+                    <li><strong>Periprosthetic fracture:</strong> Fracture around implant requiring revision</li>
+                    <li><strong>Component wear:</strong> Isolated liner exchange vs. complete revision</li>
+                </ul>
+
+                <h3>Revision Surgery Complexity</h3>
+                <div class="highlight-box caution">
+                    <strong>Revision Challenges:</strong>
+                    <ul>
+                        <li><strong>Bone deficiency:</strong> May require bone grafting or structural allografts</li>
+                        <li><strong>Soft tissue compromise:</strong> Scarring, muscle weakness, instability</li>
+                        <li><strong>Component removal:</strong> Well-fixed implants difficult to extract</li>
+                        <li><strong>Complication rates:</strong> 2-3 times higher than primary procedures</li>
+                        <li><strong>Recovery time:</strong> Longer rehabilitation, delayed return to function</li>
+                        <li><strong>Patient expectations:</strong> May not achieve same level of function as primary</li>
+                    </ul>
+                </div>
+
+                <div class="knowledge-check">
+                    <h3>Knowledge Check</h3>
+                    <div class="question">
+                        <div class="question-text">What is the most common indication for revision joint replacement surgery?</div>
+                        <div class="answer-option" onclick="selectAnswer(this, true)">A) Aseptic loosening</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">B) Prosthetic joint infection</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">C) Component wear</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">D) Periprosthetic fracture</div>
+                    </div>
+                </div>
+
+                <div class="module-completion">
+                    <div>Estimated completion time: 15 minutes</div>
+                    <button class="complete-btn" onclick="completeModule(5)">Mark Complete</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Module 6: Rehabilitation Protocols and Evidence-Based Practice -->
+        <div class="module" data-module="6">
+            <div class="module-header" onclick="toggleModule(6)">
+                <div class="module-title">Module 6: Rehabilitation Protocols and Evidence-Based Practice (15 min)</div>
+            </div>
+            <div class="module-content">
+                <h2>6.1 Phases of Joint Replacement Rehabilitation</h2>
+                <p>Rehabilitation following joint replacement surgery follows predictable phases, each with specific goals and interventions based on healing timelines and functional recovery.</p>
+
+                <div class="highlight-box key-point">
+                    <strong>Rehabilitation Phase Framework:</strong>
+                    <ul>
+                        <li><strong>Phase I (0-6 weeks):</strong> Protection, early mobilization, basic function</li>
+                        <li><strong>Phase II (6-12 weeks):</strong> Progressive strengthening, advanced mobility</li>
+                        <li><strong>Phase III (3-6 months):</strong> Functional training, return to activities</li>
+                        <li><strong>Phase IV (6-12 months):</strong> Optimization, maintenance, long-term management</li>
+                    </ul>
+                </div>
+
+                <h3>Phase I: Protection and Early Mobilization (0-6 weeks)</h3>
+                <ul>
+                    <li><strong>Goals:</strong> Wound healing, prevent complications, establish basic mobility</li>
+                    <li><strong>Precautions:</strong> Adhere to surgical restrictions, monitor for complications</li>
+                    <li><strong>Interventions:</strong> Gentle ROM, transfer training, assistive device use, patient education</li>
+                    <li><strong>Setting:</strong> Hospital, SNF, home health as appropriate</li>
+                </ul>
+
+                <h3>Phase II: Progressive Strengthening (6-12 weeks)</h3>
+                <ul>
+                    <li><strong>Goals:</strong> Increase strength, improve ROM, advance functional activities</li>
+                    <li><strong>Interventions:</strong> Progressive resistance exercises, advanced gait training, ADL progression</li>
+                    <li><strong>Milestones:</strong> Discontinue assistive devices, return to driving, light activities</li>
+                    <li><strong>Setting:</strong> Outpatient therapy, home exercise program</li>
+                </ul>
+
+                <h2>6.2 Evidence-Based Exercise Prescription</h2>
+                <p>Research demonstrates the effectiveness of specific exercise interventions for optimizing joint replacement outcomes.</p>
+
+                <h3>Strength Training Principles</h3>
+                <div class="highlight-box clinical-tip">
+                    <strong>Evidence-Based Strength Training:</strong>
+                    <ul>
+                        <li><strong>Timing:</strong> Progressive loading beginning 6-8 weeks post-surgery</li>
+                        <li><strong>Frequency:</strong> 2-3 times per week for optimal gains</li>
+                        <li><strong>Intensity:</strong> 60-80% of 1RM for strength, 40-60% for endurance</li>
+                        <li><strong>Progression:</strong> 5-10% increases weekly based on tolerance</li>
+                        <li><strong>Duration:</strong> Minimum 8-12 weeks for significant adaptations</li>
+                    </ul>
+                </div>
+
+                <h3>Hip Replacement Exercise Priorities</h3>
+                <ul>
+                    <li><strong>Abductor strengthening:</strong> Essential for gait quality and preventing Trendelenburg</li>
+                    <li><strong>Extension strength:</strong> Hip extensors crucial for stair climbing and rising from chair</li>
+                    <li><strong>Core stability:</strong> Trunk strengthening supports hip function and prevents compensations</li>
+                    <li><strong>Balance training:</strong> Proprioception and stability exercises reduce fall risk</li>
+                </ul>
+
+                <h3>Knee Replacement Exercise Priorities</h3>
+                <ul>
+                    <li><strong>Quadriceps strength:</strong> Primary determinant of functional outcomes</li>
+                    <li><strong>Range of motion:</strong> Aggressive flexion/extension ROM critical early and ongoing</li>
+                    <li><strong>Hamstring flexibility:</strong> Address restrictions that limit extension</li>
+                    <li><strong>Functional training:</strong> Stair climbing, squatting, balance activities</li>
+                </ul>
+
+                <h2>6.3 Outcome Measures and Functional Assessment</h2>
+                <p>Standardized outcome measures provide objective assessment of progress and guide treatment decisions.</p>
+
+                <h3>Hip-Specific Outcome Measures</h3>
+                <div class="highlight-box clinical-tip">
+                    <strong>Validated Hip Assessment Tools:</strong>
+                    <ul>
+                        <li><strong>Harris Hip Score (HHS):</strong> 100-point scale assessing pain, function, range of motion</li>
+                        <li><strong>WOMAC:</strong> Western Ontario McMaster Osteoarthritis Index for pain, stiffness, function</li>
+                        <li><strong>Hip disability and Osteoarthritis Outcome Score (HOOS):</strong> Comprehensive self-reported measure</li>
+                        <li><strong>Oxford Hip Score:</strong> 12-item patient-reported outcome measure</li>
+                    </ul>
+                </div>
+
+                <h3>Knee-Specific Outcome Measures</h3>
+                <ul>
+                    <li><strong>Knee Society Score (KSS):</strong> Clinical rating system for pain, function, alignment</li>
+                    <li><strong>WOMAC:</strong> Widely used for knee osteoarthritis and arthroplasty outcomes</li>
+                    <li><strong>Knee Injury and Osteoarthritis Outcome Score (KOOS):</strong> Comprehensive knee assessment</li>
+                    <li><strong>Oxford Knee Score:</strong> 12-item patient-reported outcome measure</li>
+                </ul>
+
+                <h3>Functional Performance Tests</h3>
+                <ul>
+                    <li><strong>Timed Up and Go (TUG):</strong> Mobility and fall risk assessment</li>
+                    <li><strong>6-Minute Walk Test:</strong> Endurance and functional capacity</li>
+                    <li><strong>Stair Climbing Test:</strong> Power and functional strength assessment</li>
+                    <li><strong>Single Leg Stance:</strong> Balance and proprioceptive function</li>
+                </ul>
+
+                <h2>6.4 Technology and Advanced Interventions</h2>
+                <p>Emerging technologies and advanced rehabilitation techniques show promise for enhancing joint replacement outcomes.</p>
+
+                <h3>Technology-Assisted Rehabilitation</h3>
+                <div class="highlight-box surgical-note">
+                    <strong>Innovative Rehabilitation Technologies:</strong>
+                    <ul>
+                        <li><strong>Virtual reality training:</strong> Immersive environments for balance and gait training</li>
+                        <li><strong>Wearable sensors:</strong> Objective monitoring of activity and movement patterns</li>
+                        <li><strong>Telerehabilitation:</strong> Remote monitoring and guidance for home-based programs</li>
+                        <li><strong>Robotic-assisted therapy:</strong> Precision movement training and objective assessment</li>
+                        <li><strong>Neuromuscular electrical stimulation:</strong> Adjunct to voluntary exercise for strength gains</li>
+                    </ul>
+                </div>
+
+                <h3>Advanced Manual Techniques</h3>
+                <ul>
+                    <li><strong>Joint mobilization:</strong> Restore arthrokinematics and improve ROM</li>
+                    <li><strong>Soft tissue mobilization:</strong> Address scar tissue and muscle restrictions</li>
+                    <li><strong>Myofascial release:</strong> Improve tissue extensibility and function</li>
+                    <li><strong>Dry needling:</strong> Address muscle dysfunction and pain</li>
+                </ul>
+
+                <div class="knowledge-check">
+                    <h3>Knowledge Check</h3>
+                    <div class="question">
+                        <div class="question-text">What is the recommended frequency for strength training following joint replacement surgery?</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">A) Daily</div>
+                        <div class="answer-option" onclick="selectAnswer(this, true)">B) 2-3 times per week</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">C) Once per week</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">D) 4-5 times per week</div>
+                    </div>
+                </div>
+
+                <div class="module-completion">
+                    <div>Estimated completion time: 15 minutes</div>
+                    <button class="complete-btn" onclick="completeModule(6)">Mark Complete</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Module 7: Complications and Risk Management -->
+        <div class="module" data-module="7">
+            <div class="module-header" onclick="toggleModule(7)">
+                <div class="module-title">Module 7: Complications Recognition and Risk Management (15 min)</div>
+            </div>
+            <div class="module-content">
+                <h2>7.1 Early Post-operative Complications</h2>
+                <p>Early recognition and management of complications following joint replacement surgery can prevent serious consequences and improve outcomes.</p>
+
+                <div class="highlight-box caution">
+                    <strong>Common Early Complications (0-6 weeks):</strong>
+                    <ul>
+                        <li><strong>Surgical site infection (1-2%):</strong> Superficial vs. deep infection requiring different treatments</li>
+                        <li><strong>Venous thromboembolism (1-3%):</strong> Deep vein thrombosis and pulmonary embolism</li>
+                        <li><strong>Dislocation (1-5% hip, <1% knee):</strong> Component malposition or soft tissue failure</li>
+                        <li><strong>Periprosthetic fracture (0.1-2%):</strong> Fracture around or through prosthetic components</li>
+                        <li><strong>Nerve injury (0.1-2%):</strong> Direct trauma or traction injury during surgery</li>
+                    </ul>
+                </div>
+
+                <h3>Infection Recognition and Management</h3>
+                <p>Prosthetic joint infection is a devastating complication requiring prompt recognition and aggressive treatment.</p>
+
+                <h4>Clinical Presentation</h4>
+                <ul>
+                    <li><strong>Local signs:</strong> Erythema, warmth, swelling, drainage, increasing pain</li>
+                    <li><strong>Systemic signs:</strong> Fever, chills, malaise, elevated WBC and ESR</li>
+                    <li><strong>Functional signs:</strong> Sudden loss of function, inability to weight-bear</li>
+                    <li><strong>Timeline:</strong> Early (<3 months) vs. delayed (3-24 months) vs. late (>24 months)</li>
+                </ul>
+
+                <h4>Risk Factors for Infection</h4>
+                <div class="highlight-box key-point">
+                    <strong>Infection Risk Stratification:</strong>
+                    <ul>
+                        <li><strong>Patient factors:</strong> Diabetes, obesity, immunosuppression, smoking, malnutrition</li>
+                        <li><strong>Surgical factors:</strong> Prolonged operative time, revision surgery, allogenic transfusion</li>
+                        <li><strong>Post-operative factors:</strong> Wound complications, remote infections, dental procedures</li>
+                        <li><strong>Implant factors:</strong> Specific implant materials, surface characteristics</li>
+                    </ul>
+                </div>
+
+                <h2>7.2 Venous Thromboembolism Prevention and Recognition</h2>
+                <p>Joint replacement surgery carries significant risk for venous thromboembolism, requiring prophylaxis and vigilant monitoring.</p>
+
+                <h3>Risk Assessment</h3>
+                <ul>
+                    <li><strong>Patient risk factors:</strong> Age >65, obesity, previous VTE, cancer, immobility</li>
+                    <li><strong>Surgical risk factors:</strong> Hip surgery higher risk than knee, revision surgery</li>
+                    <li><strong>Genetic factors:</strong> Factor V Leiden, prothrombin mutations</li>
+                    <li><strong>Medication factors:</strong> Hormone replacement, oral contraceptives</li>
+                </ul>
+
+                <h3>Prevention Strategies</h3>
+                <div class="highlight-box clinical-tip">
+                    <strong>VTE Prophylaxis Methods:</strong>
+                    <ul>
+                        <li><strong>Mechanical prophylaxis:</strong> Sequential compression devices, TED stockings</li>
+                        <li><strong>Pharmacological prophylaxis:</strong> Aspirin, warfarin, LMWH, DOACs</li>
+                        <li><strong>Early mobilization:</strong> Most important intervention for VTE prevention</li>
+                        <li><strong>Duration:</strong> Minimum 10-14 days, up to 35 days for high-risk patients</li>
+                    </ul>
+                </div>
+
+                <h3>Recognition and Management</h3>
+                <ul>
+                    <li><strong>DVT signs:</strong> Calf pain and swelling, positive Homan's sign (unreliable)</li>
+                    <li><strong>PE signs:</strong> Shortness of breath, chest pain, tachycardia, hypoxemia</li>
+                    <li><strong>Diagnostic tests:</strong> D-dimer (screening), ultrasound (DVT), CT-PE protocol</li>
+                    <li><strong>Treatment:</strong> Immediate anticoagulation, IVC filter for contraindications</li>
+                </ul>
+
+                <h2>7.3 Joint-Specific Complications</h2>
+
+                <h3>Hip Replacement Complications</h3>
+                <div class="highlight-box surgical-note">
+                    <strong>Hip-Specific Complications:</strong>
+                    <ul>
+                        <li><strong>Dislocation (1-5%):</strong> Posterior most common, requires reduction and activity modification</li>
+                        <li><strong>Leg length discrepancy:</strong> >2cm clinically significant, may require shoe lift</li>
+                        <li><strong>Heterotopic ossification:</strong> Abnormal bone formation around joint</li>
+                        <li><strong>Trochanteric bursitis:</strong> Lateral hip pain, often activity-related</li>
+                        <li><strong>Abductor weakness:</strong> Trendelenburg gait, lateral hip pain</li>
+                    </ul>
+                </div>
+
+                <h3>Knee Replacement Complications</h3>
+                <ul>
+                    <li><strong>Stiffness/arthrofibrosis (5-10%):</strong> Loss of motion requiring manipulation or revision</li>
+                    <li><strong>Patellar complications:</strong> Maltracking, fracture, clunk syndrome</li>
+                    <li><strong>Peroneal nerve palsy (0.1-2%):</strong> Foot drop, lateral leg numbness</li>
+                    <li><strong>Persistent pain (5-15%):</strong> Multifactorial etiology requiring comprehensive evaluation</li>
+                </ul>
+
+                <h2>7.4 Long-term Complications and Surveillance</h2>
+                <p>Long-term complications may occur years after successful joint replacement surgery, requiring ongoing surveillance and management.</p>
+
+                <h3>Aseptic Loosening</h3>
+                <ul>
+                    <li><strong>Pathophysiology:</strong> Mechanical failure of implant-bone interface</li>
+                    <li><strong>Risk factors:</strong> Young age, high activity, implant design, poor fixation</li>
+                    <li><strong>Presentation:</strong> Progressive pain, especially with activity and weight-bearing</li>
+                    <li><strong>Diagnosis:</strong> Serial radiographs showing progressive radiolucencies</li>
+                    <li><strong>Management:</strong> Revision surgery when symptomatic</li>
+                </ul>
+
+                <h3>Osteolysis and Wear</h3>
+                <div class="highlight-box caution">
+                    <strong>Wear-Related Problems:</strong>
+                    <ul>
+                        <li><strong>Polyethylene wear:</strong> Generates particles causing inflammatory response</li>
+                        <li><strong>Osteolysis:</strong> Bone destruction around implant due to wear particles</li>
+                        <li><strong>Metal-on-metal concerns:</strong> Metal ion release, pseudotumors, soft tissue reactions</li>
+                        <li><strong>Monitoring:</strong> Regular radiographs, metal ion levels for MoM bearings</li>
+                        <li><strong>Management:</strong> Component revision before catastrophic bone loss</li>
+                    </ul>
+                </div>
+
+                <h3>Late Infection</h3>
+                <ul>
+                    <li><strong>Sources:</strong> Hematogenous spread from dental, urinary, or respiratory infections</li>
+                    <li><strong>Prevention:</strong> Antibiotic prophylaxis for dental procedures (controversial)</li>
+                    <li><strong>Presentation:</strong> Insidious onset of pain, stiffness, functional decline</li>
+                    <li><strong>Diagnosis:</strong> Joint aspiration, nuclear medicine studies</li>
+                    <li><strong>Treatment:</strong> Usually requires two-stage revision with antibiotic spacer</li>
+                </ul>
+
+                <div class="knowledge-check">
+                    <h3>Knowledge Check</h3>
+                    <div class="question">
+                        <div class="question-text">What is the most effective intervention for preventing venous thromboembolism following joint replacement?</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">A) Anticoagulant medication</div>
+                        <div class="answer-option" onclick="selectAnswer(this, true)">B) Early mobilization</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">C) Sequential compression devices</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">D) TED stockings</div>
+                    </div>
+                </div>
+
+                <div class="module-completion">
+                    <div>Estimated completion time: 15 minutes</div>
+                    <button class="complete-btn" onclick="completeModule(7)">Mark Complete</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Module 8: Care Coordination and Discharge Planning -->
+        <div class="module" data-module="8">
+            <div class="module-header" onclick="toggleModule(8)">
+                <div class="module-title">Module 8: Care Coordination and Discharge Planning Across Settings (15 min)</div>
+            </div>
+            <div class="module-content">
+                <h2>8.1 Post-Acute Care Pathways</h2>
+                <p>Effective care coordination and appropriate discharge planning are critical for optimal joint replacement outcomes and resource utilization.</p>
+
+                <div class="highlight-box key-point">
+                    <strong>Post-Acute Care Options:</strong>
+                    <ul>
+                        <li><strong>Direct home discharge (30%):</strong> Younger, healthier patients with good support systems</li>
+                        <li><strong>Home health services (40%):</strong> Skilled nursing/therapy in home environment</li>
+                        <li><strong>Inpatient rehabilitation facility (15%):</strong> Intensive therapy for complex patients</li>
+                        <li><strong>Skilled nursing facility (15%):</strong> 24-hour nursing care with rehabilitation</li>
+                    </ul>
+                </div>
+
+                <h3>Discharge Planning Considerations</h3>
+                <ul>
+                    <li><strong>Medical stability:</strong> Stable vital signs, controlled pain, no acute complications</li>
+                    <li><strong>Functional readiness:</strong> Safe transfers, basic mobility with assistive device</li>
+                    <li><strong>Cognitive status:</strong> Ability to follow precautions and safety instructions</li>
+                    <li><strong>Home environment:</strong> Safety assessment, equipment needs, accessibility</li>
+                    <li><strong>Social support:</strong> Caregiver availability, family involvement, transportation</li>
+                </ul>
+
+                <h2>8.2 Home Health Services</h2>
+                <p>Home health services provide skilled nursing and rehabilitation in the patient's home environment, promoting comfort and family involvement.</p>
+
+                <h3>Home Health Eligibility Criteria</h3>
+                <div class="highlight-box clinical-tip">
+                    <strong>Medicare Home Health Requirements:</strong>
+                    <ul>
+                        <li><strong>Homebound status:</strong> Patient confined to home except for medical appointments</li>
+                        <li><strong>Skilled need:</strong> Requires skilled nursing or therapy services</li>
+                        <li><strong>Physician order:</strong> Plan of care established by referring physician</li>
+                        <li><strong>Part-time/intermittent:</strong> Services provided on part-time, intermittent basis</li>
+                        <li><strong>Reasonable and necessary:</strong> Services medically reasonable and necessary</li>
+                    </ul>
+                </div>
+
+                <h3>Home Health Advantages and Challenges</h3>
+
+                <h4>Advantages</h4>
+                <ul>
+                    <li><strong>Familiar environment:</strong> Patient comfort and family involvement</li>
+                    <li><strong>Functional training:</strong> Practice skills in actual home environment</li>
+                    <li><strong>Cost-effective:</strong> Lower cost than institutional care</li>
+                    <li><strong>Patient satisfaction:</strong> High satisfaction with home-based services</li>
+                </ul>
+
+                <h4>Challenges</h4>
+                <ul>
+                    <li><strong>Limited equipment:</strong> Fewer therapy tools and modalities available</li>
+                    <li><strong>Safety concerns:</strong> Home environment may pose safety risks</li>
+                    <li><strong>Compliance issues:</strong> Difficulty monitoring adherence to exercise programs</li>
+                    <li><strong>Social isolation:</strong> Limited peer interaction and motivation</li>
+                </ul>
+
+                <h2>8.3 Skilled Nursing Facility Care</h2>
+                <p>SNF services provide 24-hour nursing care with intensive rehabilitation for patients who cannot return home immediately post-surgery.</p>
+
+                <h3>SNF Level of Care Criteria</h3>
+                <ul>
+                    <li><strong>Medical complexity:</strong> Requires daily skilled nursing assessment and intervention</li>
+                    <li><strong>Rehabilitation intensity:</strong> Needs intensive therapy services (3+ hours/day)</li>
+                    <li><strong>Safety concerns:</strong> Cannot be safely managed in home environment</li>
+                    <li><strong>Lack of support:</strong> Insufficient caregiver support at home</li>
+                    <li><strong>Medical supervision:</strong> Requires physician oversight and nursing care</li>
+                </ul>
+
+                <h3>SNF Rehabilitation Programs</h3>
+                <div class="highlight-box surgical-note">
+                    <strong>SNF Therapy Services:</strong>
+                    <ul>
+                        <li><strong>Physical therapy:</strong> Mobility training, strengthening, gait training</li>
+                        <li><strong>Occupational therapy:</strong> ADL training, adaptive equipment, home safety</li>
+                        <li><strong>Speech therapy:</strong> Swallowing assessment if indicated, cognitive rehabilitation</li>
+                        <li><strong>Intensity:</strong> Minimum 5 days/week, 3+ hours combined therapy</li>
+                        <li><strong>Duration:</strong> Average length of stay 15-20 days for joint replacement</li>
+                    </ul>
+                </div>
+
+                <h2>8.4 Outpatient Rehabilitation</h2>
+                <p>Outpatient therapy services provide advanced rehabilitation in clinical settings with specialized equipment and expertise.</p>
+
+                <h3>Outpatient Therapy Advantages</h3>
+                <ul>
+                    <li><strong>Specialized equipment:</strong> Access to advanced rehabilitation technology</li>
+                    <li><strong>Peer interaction:</strong> Motivation from other patients in similar situations</li>
+                    <li><strong>Expert supervision:</strong> Specialized therapists with joint replacement expertise</li>
+                    <li><strong>Progressive difficulty:</strong> Graduated challenge progression in controlled environment</li>
+                    <li><strong>Objective measures:</strong> Standardized testing and outcome measurement</li>
+                </ul>
+
+                <h3>Transition Planning</h3>
+                <div class="highlight-box key-point">
+                    <strong>Successful Transitions:</strong>
+                    <ul>
+                        <li><strong>Communication:</strong> Clear information transfer between care settings</li>
+                        <li><strong>Medication reconciliation:</strong> Accurate medication lists and instructions</li>
+                        <li><strong>Equipment coordination:</strong> Ensure appropriate DME available at discharge</li>
+                        <li><strong>Follow-up scheduling:</strong> Appropriate medical and therapy appointments</li>
+                        <li><strong>Emergency planning:</strong> Clear instructions for complications or concerns</li>
+                    </ul>
+                </div>
+
+                <h2>8.5 Long-term Management and Follow-up</h2>
+                <p>Joint replacement patients require ongoing surveillance and management to ensure optimal long-term outcomes.</p>
+
+                <h3>Follow-up Schedule</h3>
+                <ul>
+                    <li><strong>6 weeks:</strong> Wound check, early complications, activity progression</li>
+                    <li><strong>3 months:</strong> Functional progress, return to activities, complications</li>
+                    <li><strong>6 months:</strong> Implant integration, activity tolerance, satisfaction</li>
+                    <li><strong>1 year:</strong> Long-term function, radiographic assessment, annual screening</li>
+                    <li><strong>Annual:</strong> Routine surveillance, component assessment, functional status</li>
+                </ul>
+
+                <h3>Patient Education for Long-term Care</h3>
+                <div class="highlight-box clinical-tip">
+                    <strong>Long-term Care Priorities:</strong>
+                    <ul>
+                        <li><strong>Activity modification:</strong> Avoid high-impact activities, repetitive loading</li>
+                        <li><strong>Weight management:</strong> Maintain healthy weight to reduce implant stress</li>
+                        <li><strong>Infection prevention:</strong> Dental hygiene, prompt treatment of infections</li>
+                        <li><strong>Fall prevention:</strong> Home safety, balance training, appropriate footwear</li>
+                        <li><strong>Warning signs:</strong> Recognize symptoms requiring medical attention</li>
+                    </ul>
+                </div>
+
+                <h3>Return to Activities Guidelines</h3>
+                <ul>
+                    <li><strong>Driving:</strong> 2-6 weeks based on side of surgery and type of vehicle</li>
+                    <li><strong>Work return:</strong> 6-12 weeks depending on physical demands</li>
+                    <li><strong>Sports activities:</strong> Low-impact sports preferred, avoid high-impact activities</li>
+                    <li><strong>Travel:</strong> Resume after 6-8 weeks with precautions for long flights</li>
+                    <li><strong>Sexual activity:</strong> Resume when comfortable with appropriate positioning</li>
+                </ul>
+
+                <div class="knowledge-check">
+                    <h3>Knowledge Check</h3>
+                    <div class="question">
+                        <div class="question-text">What percentage of joint replacement patients typically receive home health services?</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">A) 15%</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">B) 30%</div>
+                        <div class="answer-option" onclick="selectAnswer(this, true)">C) 40%</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">D) 60%</div>
+                    </div>
+                </div>
+
+                <div class="module-completion">
+                    <div>Estimated completion time: 15 minutes</div>
+                    <button class="complete-btn" onclick="completeModule(8)">Mark Complete</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Module 9: Special Populations and Considerations -->
+        <div class="module" data-module="9">
+            <div class="module-header" onclick="toggleModule(9)">
+                <div class="module-title">Module 9: Special Populations and Unique Considerations (15 min)</div>
+            </div>
+            <div class="module-content">
+                <h2>9.1 Elderly Patients and Frailty Considerations</h2>
+                <p>The aging population presents unique challenges for joint replacement surgery, requiring modified approaches to optimize outcomes in frail and elderly patients.</p>
+
+                <div class="highlight-box key-point">
+                    <strong>Geriatric-Specific Considerations:</strong>
+                    <ul>
+                        <li><strong>Frailty assessment:</strong> Use validated tools to identify high-risk patients</li>
+                        <li><strong>Cognitive status:</strong> Screen for dementia and delirium risk factors</li>
+                        <li><strong>Polypharmacy:</strong> Review medications for interactions and side effects</li>
+                        <li><strong>Bone quality:</strong> Assess for osteoporosis and fracture risk</li>
+                        <li><strong>Functional baseline:</strong> Realistic goals based on pre-operative status</li>
+                    </ul>
+                </div>
+
+                <h3>Frailty Assessment Tools</h3>
+                <ul>
+                    <li><strong>Fried Frailty Phenotype:</strong> Weight loss, exhaustion, low activity, slow walking, weakness</li>
+                    <li><strong>Clinical Frailty Scale:</strong> 9-point scale from very fit to terminally ill</li>
+                    <li><strong>FRAIL Scale:</strong> Fatigue, resistance, ambulation, illnesses, loss of weight</li>
+                    <li><strong>Modified 5-item frailty index:</strong> Validated specifically for orthopedic surgery</li>
+                </ul>
+
+                <h3>Perioperative Management of Elderly Patients</h3>
+                <div class="highlight-box clinical-tip">
+                    <strong>Elder-Specific Protocols:</strong>
+                    <ul>
+                        <li><strong>Anesthesia considerations:</strong> Regional anesthesia preferred, minimize narcotics</li>
+                        <li><strong>Delirium prevention:</strong> Maintain orientation, avoid unnecessary medications</li>
+                        <li><strong>Early mobilization:</strong> Even more critical to prevent deconditioning</li>
+                        <li><strong>Nutritional support:</strong> Protein supplementation, vitamin D optimization</li>
+                        <li><strong>Multidisciplinary care:</strong> Geriatrician involvement when appropriate</li>
+                    </ul>
+                </div>
+
+                <h2>9.2 Younger, Active Patients</h2>
+                <p>Younger patients present different challenges related to higher activity expectations and longer implant survival requirements.</p>
+
+                <h3>Unique Considerations for Young Adults</h3>
+                <ul>
+                    <li><strong>Activity expectations:</strong> Desire to return to high-level sports and activities</li>
+                    <li><strong>Implant longevity:</strong> Need for 30-40 years of implant survival</li>
+                    <li><strong>Revision likelihood:</strong> Higher probability of requiring revision surgery</li>
+                    <li><strong>Alternative procedures:</strong> Consider joint preservation techniques when possible</li>
+                    <li><strong>Lifestyle modifications:</strong> Activity restrictions may significantly impact quality of life</li>
+                </ul>
+
+                <h3>Activity Guidelines for Young Patients</h3>
+                <div class="highlight-box surgical-note">
+                    <strong>Activity Recommendations by Level:</strong>
+                    <ul>
+                        <li><strong>Recommended:</strong> Swimming, cycling, golf, tennis (doubles), hiking</li>
+                        <li><strong>Allowed with experience:</strong> Tennis (singles), skiing, hockey</li>
+                        <li><strong>Not recommended:</strong> Running, basketball, football, soccer</li>
+                        <li><strong>Individual assessment:</strong> Consider patient experience, implant type, bone quality</li>
+                    </ul>
+                </div>
+
+                <h2>9.3 Obese Patients</h2>
+                <p>Obesity significantly impacts joint replacement outcomes, requiring specialized approaches and realistic expectations.</p>
+
+                <h3>Obesity-Related Challenges</h3>
+                <ul>
+                    <li><strong>Surgical complexity:</strong> Increased operative time, visualization difficulties</li>
+                    <li><strong>Wound complications:</strong> Higher infection rates, delayed healing</li>
+                    <li><strong>Implant survival:</strong> Increased wear rates, higher revision risk</li>
+                    <li><strong>Functional outcomes:</strong> May not achieve same functional levels as normal-weight patients</li>
+                    <li><strong>Anesthetic risk:</strong> Airway management, positioning challenges</li>
+                </ul>
+
+                <h3>Management Strategies</h3>
+                <div class="highlight-box caution">
+                    <strong>Obesity Management Approaches:</strong>
+                    <ul>
+                        <li><strong>Pre-operative weight loss:</strong> Consider delaying surgery for BMI >40</li>
+                        <li><strong>Nutritional optimization:</strong> Protein supplementation, vitamin deficiency correction</li>
+                        <li><strong>Extended prophylaxis:</strong> Longer antibiotic courses, VTE prophylaxis</li>
+                        <li><strong>Intensive rehabilitation:</strong> May require longer therapy duration</li>
+                        <li><strong>Long-term weight management:</strong> Essential for implant longevity</li>
+                    </ul>
+                </div>
+
+                <h2>9.4 Patients with Multiple Comorbidities</h2>
+                <p>Patients with diabetes, cardiovascular disease, and other chronic conditions require specialized perioperative management.</p>
+
+                <h3>Diabetes Management</h3>
+                <ul>
+                    <li><strong>Glycemic control:</strong> HbA1c <8% for elective surgery, ideally <7%</li>
+                    <li><strong>Perioperative monitoring:</strong> Frequent glucose checks, insulin protocols</li>
+                    <li><strong>Wound healing:</strong> Optimize nutrition, control blood sugars post-operatively</li>
+                    <li><strong>Infection risk:</strong> Higher risk requires vigilant monitoring</li>
+                </ul>
+
+                <h3>Cardiovascular Disease Considerations</h3>
+                <div class="highlight-box clinical-tip">
+                    <strong>Cardiac Risk Management:</strong>
+                    <ul>
+                        <li><strong>Pre-operative assessment:</strong> Cardiology clearance for high-risk patients</li>
+                        <li><strong>Medication management:</strong> Continue cardiac medications, manage anticoagulation</li>
+                        <li><strong>Monitoring:</strong> Telemetry monitoring, fluid balance management</li>
+                        <li><strong>Activity progression:</strong> Gradual increase based on cardiac tolerance</li>
+                    </ul>
+                </div>
+
+                <h2>9.5 Bilateral Joint Replacement</h2>
+                <p>Some patients require replacement of both hips or knees, either simultaneously or in staged procedures.</p>
+
+                <h3>Simultaneous vs. Staged Procedures</h3>
+
+                <h4>Simultaneous Bilateral Surgery</h4>
+                <ul>
+                    <li><strong>Advantages:</strong> Single anesthesia, shorter total recovery time, cost savings</li>
+                    <li><strong>Disadvantages:</strong> Higher complication rates, increased blood loss, longer surgery</li>
+                    <li><strong>Candidate selection:</strong> Younger, healthier patients with minimal comorbidities</li>
+                    <li><strong>Contraindications:</strong> Cardiac disease, pulmonary disease, advanced age</li>
+                </ul>
+
+                <h4>Staged Bilateral Surgery</h4>
+                <ul>
+                    <li><strong>Advantages:</strong> Lower perioperative risk, can use first side for rehabilitation</li>
+                    <li><strong>Disadvantages:</strong> Two separate recoveries, higher total cost</li>
+                    <li><strong>Timing:</strong> Typically 3-6 months between procedures</li>
+                    <li><strong>Planning:</strong> Consider dominant side first for upper extremity function</li>
+                </ul>
+
+                <h3>Rehabilitation Considerations for Bilateral Procedures</h3>
+                <div class="highlight-box key-point">
+                    <strong>Bilateral Rehabilitation Challenges:</strong>
+                    <ul>
+                        <li><strong>Weight-bearing restrictions:</strong> May affect both legs simultaneously</li>
+                        <li><strong>Assistive device use:</strong> More challenging with bilateral restrictions</li>
+                        <li><strong>Hip precautions:</strong> Difficulty avoiding restricted positions</li>
+                        <li><strong>Transfer training:</strong> Requires creative approaches and additional assistance</li>
+                        <li><strong>Discharge planning:</strong> May require higher level of care</li>
+                    </ul>
+                </div>
+
+                <div class="knowledge-check">
+                    <h3>Knowledge Check</h3>
+                    <div class="question">
+                        <div class="question-text">What BMI threshold may warrant delaying elective joint replacement for weight loss?</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">A) >30</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">B) >35</div>
+                        <div class="answer-option" onclick="selectAnswer(this, true)">C) >40</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">D) >45</div>
+                    </div>
+                </div>
+
+                <div class="module-completion">
+                    <div>Estimated completion time: 15 minutes</div>
+                    <button class="complete-btn" onclick="completeModule(9)">Mark Complete</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Module 10: Quality Improvement and Outcome Optimization -->
+        <div class="module" data-module="10">
+            <div class="module-header" onclick="toggleModule(10)">
+                <div class="module-title">Module 10: Quality Improvement and Outcome Optimization (15 min)</div>
+            </div>
+            <div class="module-content">
+                <h2>10.1 Enhanced Recovery After Surgery (ERAS) Protocols</h2>
+                <p>ERAS protocols are evidence-based, multidisciplinary approaches that optimize patient care throughout the surgical journey, leading to improved outcomes and reduced length of stay.</p>
+
+                <div class="highlight-box key-point">
+                    <strong>ERAS Core Elements:</strong>
+                    <ul>
+                        <li><strong>Pre-operative optimization:</strong> Medical clearance, nutrition, education</li>
+                        <li><strong>Perioperative management:</strong> Regional anesthesia, fluid management, temperature control</li>
+                        <li><strong>Post-operative care:</strong> Early mobilization, multimodal pain control, nausea prevention</li>
+                        <li><strong>Discharge planning:</strong> Standardized criteria, patient education, follow-up</li>
+                    </ul>
+                </div>
+
+                <h3>ERAS Components by Phase</h3>
+
+                <h4>Pre-operative Phase</h4>
+                <ul>
+                    <li><strong>Patient education:</strong> Comprehensive education classes, expectation setting</li>
+                    <li><strong>Medical optimization:</strong> Anemia correction, diabetes control, smoking cessation</li>
+                    <li><strong>Nutritional preparation:</strong> Avoid prolonged fasting, carbohydrate loading</li>
+                    <li><strong>Anxiety management:</strong> Appropriate premedication, relaxation techniques</li>
+                </ul>
+
+                <h4>Intraoperative Phase</h4>
+                <ul>
+                    <li><strong>Anesthesia approach:</strong> Regional blocks preferred, minimize general anesthesia</li>
+                    <li><strong>Fluid management:</strong> Goal-directed fluid therapy, avoid fluid overload</li>
+                    <li><strong>Temperature control:</strong> Maintain normothermia throughout procedure</li>
+                    <li><strong>Antiemetic prophylaxis:</strong> Multiple agents for high-risk patients</li>
+                </ul>
+
+                <h4>Post-operative Phase</h4>
+                <div class="highlight-box clinical-tip">
+                    <strong>Post-operative ERAS Elements:</strong>
+                    <ul>
+                        <li><strong>Pain management:</strong> Multimodal approach minimizing opioids</li>
+                        <li><strong>Early mobilization:</strong> Out of bed within 6 hours when possible</li>
+                        <li><strong>Urinary catheter removal:</strong> Remove as soon as medically appropriate</li>
+                        <li><strong>Diet advancement:</strong> Resume normal diet as tolerated</li>
+                        <li><strong>Discharge planning:</strong> Standardized criteria and patient education</li>
+                    </ul>
+                </div>
+
+                <h2>10.2 Quality Metrics and Outcome Measurement</h2>
+                <p>Systematic measurement of quality indicators enables continuous improvement in joint replacement programs.</p>
+
+                <h3>Key Performance Indicators</h3>
+                <ul>
+                    <li><strong>Length of stay:</strong> Average days from admission to discharge</li>
+                    <li><strong>Readmission rates:</strong> 30-day and 90-day readmission percentages</li>
+                    <li><strong>Complication rates:</strong> Infection, dislocation, VTE, mortality</li>
+                    <li><strong>Functional outcomes:</strong> Patient-reported outcome measures (PROMs)</li>
+                    <li><strong>Patient satisfaction:</strong> HCAHPS scores, discharge surveys</li>
+                    <li><strong>Cost metrics:</strong> Total episode costs, resource utilization</li>
+                </ul>
+
+                <h3>Registry Participation</h3>
+                <div class="highlight-box surgical-note">
+                    <strong>Joint Replacement Registries:</strong>
+                    <ul>
+                        <li><strong>American Joint Replacement Registry (AJRR):</strong> National registry tracking implant performance</li>
+                        <li><strong>Function and Outcomes Research for Comparative Effectiveness in Total Joint Replacement (FORCE-TJR):</strong> Patient-reported outcomes research</li>
+                        <li><strong>Institutional registries:</strong> Hospital-specific tracking systems</li>
+                        <li><strong>Benefits:</strong> Benchmarking, implant surveillance, outcome research</li>
+                    </ul>
+                </div>
+
+                <h2>10.3 Value-Based Care and Bundled Payments</h2>
+                <p>Healthcare payment models are shifting toward value-based care, emphasizing outcomes and efficiency over volume.</p>
+
+                <h3>Bundled Payment Models</h3>
+                <ul>
+                    <li><strong>Comprehensive Care for Joint Replacement (CJR):</strong> Medicare bundled payment model</li>
+                    <li><strong>Episode definition:</strong> 90-day episodes starting with hospital admission</li>
+                    <li><strong>Cost targets:</strong> Based on historical regional spending</li>
+                    <li><strong>Quality metrics:</strong> Complication rates, patient satisfaction, functional outcomes</li>
+                    <li><strong>Shared savings/losses:</strong> Financial incentives for high-quality, efficient care</li>
+                </ul>
+
+                <h3>Strategies for Success in Value-Based Care</h3>
+                <div class="highlight-box key-point">
+                    <strong>Value-Based Care Success Factors:</strong>
+                    <ul>
+                        <li><strong>Care standardization:</strong> Evidence-based protocols and pathways</li>
+                        <li><strong>Team collaboration:</strong> Multidisciplinary teams with clear roles</li>
+                        <li><strong>Patient engagement:</strong> Education and shared decision-making</li>
+                        <li><strong>Data analytics:</strong> Real-time monitoring of outcomes and costs</li>
+                        <li><strong>Continuous improvement:</strong> Regular review and protocol updates</li>
+                    </ul>
+                </div>
+
+                <h2>10.4 Patient-Reported Outcome Measures (PROMs)</h2>
+                <p>PROMs provide valuable insights into patient perspectives on their health status and treatment outcomes.</p>
+
+                <h3>Implementation of PROMs Programs</h3>
+                <ul>
+                    <li><strong>Pre-operative baseline:</strong> Establish functional and quality of life baseline</li>
+                    <li><strong>Follow-up intervals:</strong> 3, 6, 12, and 24 months post-surgery</li>
+                    <li><strong>Technology integration:</strong> Electronic platforms for efficient data collection</li>
+                    <li><strong>Clinical integration:</strong> Use results to guide clinical decision-making</li>
+                    <li><strong>Patient feedback:</strong> Share results with patients to demonstrate value</li>
+                </ul>
+
+                <h3>Benefits of PROMs</h3>
+                <div class="highlight-box clinical-tip">
+                    <strong>PROMs Advantages:</strong>
+                    <ul>
+                        <li><strong>Patient-centered care:</strong> Focus on outcomes that matter to patients</li>
+                        <li><strong>Quality improvement:</strong> Identify areas for program enhancement</li>
+                        <li><strong>Benchmarking:</strong> Compare outcomes to national standards</li>
+                        <li><strong>Risk adjustment:</strong> Account for patient factors in outcome analysis</li>
+                        <li><strong>Research opportunities:</strong> Real-world evidence generation</li>
+                    </ul>
+                </div>
+
+                <h2>10.5 Future Directions and Innovation</h2>
+                <p>Joint replacement surgery continues to evolve with technological advances and changing patient expectations.</p>
+
+                <h3>Emerging Technologies</h3>
+                <ul>
+                    <li><strong>Artificial intelligence:</strong> Predictive analytics for complications and outcomes</li>
+                    <li><strong>Wearable technology:</strong> Continuous monitoring of activity and recovery</li>
+                    <li><strong>Telemedicine:</strong> Remote follow-up and rehabilitation monitoring</li>
+                    <li><strong>3D printing:</strong> Custom implants and surgical guides</li>
+                    <li><strong>Advanced materials:</strong> New bearing surfaces and implant designs</li>
+                </ul>
+
+                <h3>Personalized Medicine Approaches</h3>
+                <div class="highlight-box surgical-note">
+                    <strong>Precision Medicine in Joint Replacement:</strong>
+                    <ul>
+                        <li><strong>Genetic testing:</strong> Identify patients at risk for complications</li>
+                        <li><strong>Biomarkers:</strong> Predict infection, loosening, or poor healing</li>
+                        <li><strong>Imaging advances:</strong> Better pre-operative planning and outcome prediction</li>
+                        <li><strong>Patient stratification:</strong> Tailor treatments based on individual characteristics</li>
+                        <li><strong>Predictive modeling:</strong> Use big data to optimize patient selection and timing</li>
+                    </ul>
+                </div>
+
+                <h3>Sustainability and Cost-Effectiveness</h3>
+                <ul>
+                    <li><strong>Implant standardization:</strong> Reduce inventory costs while maintaining quality</li>
+                    <li><strong>Outpatient procedures:</strong> Appropriate patient selection for same-day discharge</li>
+                    <li><strong>Resource optimization:</strong> Efficient use of OR time, equipment, and personnel</li>
+                    <li><strong>Population health:</strong> Focus on prevention and early intervention</li>
+                </ul>
+
+                <div class="knowledge-check">
+                    <h3>Knowledge Check</h3>
+                    <div class="question">
+                        <div class="question-text">What is the episode length for the CJR bundled payment model?</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">A) 30 days</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">B) 60 days</div>
+                        <div class="answer-option" onclick="selectAnswer(this, true)">C) 90 days</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">D) 120 days</div>
+                    </div>
+                </div>
+
+                <div class="module-completion">
+                    <div>Estimated completion time: 15 minutes</div>
+                    <button class="complete-btn" onclick="completeModule(10)">Mark Complete</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Module 11: Interdisciplinary Team Management -->
+        <div class="module" data-module="11">
+            <div class="module-header" onclick="toggleModule(11)">
+                <div class="module-title">Module 11: Interdisciplinary Team Management and Communication (15 min)</div>
+            </div>
+            <div class="module-content">
+                <h2>11.1 The Joint Replacement Care Team</h2>
+                <p>Successful joint replacement outcomes require coordinated efforts from a multidisciplinary team of healthcare professionals, each contributing specialized expertise throughout the patient's journey.</p>
+
+                <div class="highlight-box key-point">
+                    <strong>Core Team Members and Roles:</strong>
+                    <ul>
+                        <li><strong>Orthopedic surgeon:</strong> Surgical planning, procedure execution, post-operative management</li>
+                        <li><strong>Anesthesiologist:</strong> Perioperative pain management, regional blocks, medical optimization</li>
+                        <li><strong>Nursing staff:</strong> Patient education, medication management, wound care, mobility assistance</li>
+                        <li><strong>Physical therapist:</strong> Mobility training, strength assessment, functional restoration</li>
+                        <li><strong>Occupational therapist:</strong> ADL training, adaptive equipment, safety assessment</li>
+                        <li><strong>Case manager:</strong> Discharge planning, resource coordination, insurance authorization</li>
+                        <li><strong>Pharmacist:</strong> Medication reconciliation, pain management protocols, drug interactions</li>
+                    </ul>
+                </div>
+
+                <h3>Extended Team Members</h3>
+                <ul>
+                    <li><strong>Social worker:</strong> Psychosocial assessment, community resources, family dynamics</li>
+                    <li><strong>Nutritionist:</strong> Nutritional assessment, pre-operative optimization, wound healing support</li>
+                    <li><strong>Respiratory therapist:</strong> Pulmonary function optimization, postoperative breathing exercises</li>
+                    <li><strong>Chaplain/spiritual care:</strong> Emotional and spiritual support during recovery</li>
+                    <li><strong>Patient navigator:</strong> Guide patients through care process, coordinate appointments</li>
+                </ul>
+
+                <h2>11.2 Communication Strategies and Tools</h2>
+                <p>Effective communication among team members is essential for patient safety, quality outcomes, and efficient care delivery.</p>
+
+                <h3>Structured Communication Methods</h3>
+                <div class="highlight-box clinical-tip">
+                    <strong>SBAR Communication Framework:</strong>
+                    <ul>
+                        <li><strong>Situation:</strong> Current patient status, immediate concerns or changes</li>
+                        <li><strong>Background:</strong> Relevant medical history, surgical details, current medications</li>
+                        <li><strong>Assessment:</strong> Clinical findings, vital signs, functional status</li>
+                        <li><strong>Recommendation:</strong> Proposed actions, requests for orders or consultations</li>
+                    </ul>
+                </div>
+
+                <h3>Technology-Enhanced Communication</h3>
+                <ul>
+                    <li><strong>Electronic health records:</strong> Real-time documentation and information sharing</li>
+                    <li><strong>Secure messaging:</strong> HIPAA-compliant communication between providers</li>
+                    <li><strong>Mobile applications:</strong> Point-of-care access to patient information</li>
+                    <li><strong>Telemedicine platforms:</strong> Remote consultations and follow-up care</li>
+                    <li><strong>Clinical decision support:</strong> Embedded protocols and alerts in EHR systems</li>
+                </ul>
+
+                <h2>11.3 Care Coordination Across Settings</h2>
+                <p>Joint replacement patients often transition through multiple care settings, requiring seamless coordination to prevent complications and ensure continuity.</p>
+
+                <h3>Transition Points and Challenges</h3>
+                <ul>
+                    <li><strong>Home to hospital:</strong> Pre-operative education, medical optimization</li>
+                    <li><strong>OR to recovery:</strong> Immediate post-operative monitoring and pain management</li>
+                    <li><strong>Hospital to post-acute care:</strong> Discharge planning, equipment needs</li>
+                    <li><strong>Post-acute to home:</strong> Safety assessment, ongoing therapy needs</li>
+                    <li><strong>Acute care to outpatient:</strong> Long-term follow-up, complication monitoring</li>
+                </ul>
+
+                <h3>Care Coordination Best Practices</h3>
+                <div class="highlight-box surgical-note">
+                    <strong>Coordination Strategies:</strong>
+                    <ul>
+                        <li><strong>Standardized protocols:</strong> Consistent care pathways across all settings</li>
+                        <li><strong>Information transfer:</strong> Complete and accurate handoff communications</li>
+                        <li><strong>Medication reconciliation:</strong> Accurate medication lists at each transition</li>
+                        <li><strong>Follow-up scheduling:</strong> Appointments coordinated before discharge</li>
+                        <li><strong>24/7 availability:</strong> Contact information for urgent concerns</li>
+                    </ul>
+                </div>
+
+                <h2>11.4 Quality Improvement and Team Performance</h2>
+                <p>Regular assessment of team performance and systematic quality improvement initiatives enhance patient outcomes and team effectiveness.</p>
+
+                <h3>Team-Based Quality Metrics</h3>
+                <ul>
+                    <li><strong>Communication effectiveness:</strong> Handoff quality, information accuracy</li>
+                    <li><strong>Care coordination:</strong> Timely transitions, appropriate discharge planning</li>
+                    <li><strong>Patient safety:</strong> Medication errors, falls, hospital-acquired conditions</li>
+                    <li><strong>Efficiency measures:</strong> Length of stay, readmission rates, cost per case</li>
+                    <li><strong>Team satisfaction:</strong> Job satisfaction, turnover rates, burnout measures</li>
+                </ul>
+
+                <h3>Continuous Improvement Strategies</h3>
+                <div class="highlight-box key-point">
+                    <strong>Team Improvement Methods:</strong>
+                    <ul>
+                        <li><strong>Regular team meetings:</strong> Multidisciplinary rounds, case reviews</li>
+                        <li><strong>Root cause analysis:</strong> Systematic review of adverse events</li>
+                        <li><strong>Process improvement:</strong> Identify and eliminate inefficiencies</li>
+                        <li><strong>Education and training:</strong> Ongoing professional development</li>
+                        <li><strong>Feedback systems:</strong> Patient and team member input on care quality</li>
+                    </ul>
+                </div>
+
+                <h2>11.5 Patient and Family Engagement</h2>
+                <p>Engaging patients and families as active members of the care team improves satisfaction, adherence, and outcomes.</p>
+
+                <h3>Shared Decision-Making</h3>
+                <ul>
+                    <li><strong>Treatment options:</strong> Present alternatives with risks and benefits</li>
+                    <li><strong>Patient preferences:</strong> Consider individual values and goals</li>
+                    <li><strong>Risk communication:</strong> Use understandable language and visual aids</li>
+                    <li><strong>Decision support:</strong> Provide tools to help patients make informed choices</li>
+                </ul>
+
+                <h3>Family Involvement Strategies</h3>
+                <div class="highlight-box clinical-tip">
+                    <strong>Family Engagement Approaches:</strong>
+                    <ul>
+                        <li><strong>Education sessions:</strong> Include family in pre-operative teaching</li>
+                        <li><strong>Bedside participation:</strong> Involve family in basic care activities</li>
+                        <li><strong>Home preparation:</strong> Family training for post-discharge care</li>
+                        <li><strong>Communication preferences:</strong> Respect family dynamics and cultural factors</li>
+                        <li><strong>Support systems:</strong> Connect families with peer support groups</li>
+                    </ul>
+                </div>
+
+                <h3>Cultural Competence in Team Care</h3>
+                <ul>
+                    <li><strong>Language services:</strong> Professional interpreters, translated materials</li>
+                    <li><strong>Cultural assessment:</strong> Understand patient/family cultural background</li>
+                    <li><strong>Religious considerations:</strong> Respect dietary restrictions, prayer needs</li>
+                    <li><strong>Gender preferences:</strong> Accommodate preferences for same-gender providers</li>
+                    <li><strong>Family decision-making:</strong> Respect cultural approaches to medical decisions</li>
+                </ul>
+
+                <div class="knowledge-check">
+                    <h3>Knowledge Check</h3>
+                    <div class="question">
+                        <div class="question-text">What does the "R" represent in the SBAR communication framework?</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">A) Response</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">B) Report</div>
+                        <div class="answer-option" onclick="selectAnswer(this, true)">C) Recommendation</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">D) Review</div>
+                    </div>
+                </div>
+
+                <div class="module-completion">
+                    <div>Estimated completion time: 15 minutes</div>
+                    <button class="complete-btn" onclick="completeModule(11)">Mark Complete</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Module 12: Ethical and Legal Considerations -->
+        <div class="module" data-module="12">
+            <div class="module-header" onclick="toggleModule(12)">
+                <div class="module-title">Module 12: Ethical and Legal Considerations in Joint Replacement Care (15 min)</div>
+            </div>
+            <div class="module-content">
+                <h2>12.1 Informed Consent and Shared Decision-Making</h2>
+                <p>Informed consent is both a legal requirement and ethical obligation that ensures patients understand the risks, benefits, and alternatives to joint replacement surgery.</p>
+
+                <div class="highlight-box key-point">
+                    <strong>Elements of Valid Informed Consent:</strong>
+                    <ul>
+                        <li><strong>Disclosure:</strong> Explanation of procedure, risks, benefits, and alternatives</li>
+                        <li><strong>Comprehension:</strong> Patient understanding verified through teach-back methods</li>
+                        <li><strong>Voluntariness:</strong> Decision made free from coercion or undue pressure</li>
+                        <li><strong>Competence:</strong> Patient has cognitive capacity to make healthcare decisions</li>
+                        <li><strong>Documentation:</strong> Written consent forms and clinical documentation</li>
+                    </ul>
+                </div>
+
+                <h3>Risk Communication Best Practices</h3>
+                <ul>
+                    <li><strong>Use plain language:</strong> Avoid medical jargon, explain terms clearly</li>
+                    <li><strong>Quantify risks:</strong> Use natural frequencies (1 in 100) rather than percentages</li>
+                    <li><strong>Visual aids:</strong> Charts, diagrams, and models to enhance understanding</li>
+                    <li><strong>Time for questions:</strong> Allow adequate time for patient questions and concerns</li>
+                    <li><strong>Written materials:</strong> Provide take-home information for review</li>
+                </ul>
+
+                <h2>12.2 Patient Autonomy and Decision-Making Capacity</h2>
+                <p>Respecting patient autonomy while ensuring decision-making capacity can be challenging, particularly with elderly or cognitively impaired patients.</p>
+
+                <h3>Assessing Decision-Making Capacity</h3>
+                <div class="highlight-box clinical-tip">
+                    <strong>Capacity Assessment Components:</strong>
+                    <ul>
+                        <li><strong>Understanding:</strong> Can the patient comprehend relevant information?</li>
+                        <li><strong>Appreciation:</strong> Does the patient understand how information applies to them?</li>
+                        <li><strong>Reasoning:</strong> Can the patient compare treatment options logically?</li>
+                        <li><strong>Choice:</strong> Can the patient express a clear, consistent choice?</li>
+                    </ul>
+                </div>
+
+                <h3>Surrogate Decision-Making</h3>
+                <ul>
+                    <li><strong>Advance directives:</strong> Previously expressed patient wishes</li>
+                    <li><strong>Healthcare proxy:</strong> Designated decision-maker</li>
+                    <li><strong>Family involvement:</strong> When no formal surrogate designated</li>
+                    <li><strong>Best interest standard:</strong> What would reasonable person choose in this situation</li>
+                    <li><strong>Substituted judgment:</strong> What would this patient want if competent</li>
+                </ul>
+
+                <h2>12.3 Resource Allocation and Access to Care</h2>
+                <p>Healthcare resources are finite, raising ethical questions about equitable access to joint replacement surgery.</p>
+
+                <h3>Allocation Considerations</h3>
+                <ul>
+                    <li><strong>Medical necessity:</strong> Severity of symptoms and functional impairment</li>
+                    <li><strong>Likelihood of benefit:</strong> Expected outcomes based on patient factors</li>
+                    <li><strong>Cost-effectiveness:</strong> Resource utilization and societal benefit</li>
+                    <li><strong>Equity concerns:</strong> Fair distribution across demographic groups</li>
+                    <li><strong>Waiting lists:</strong> Priority systems and time-to-treatment goals</li>
+                </ul>
+
+                <h3>Barriers to Access</h3>
+                <div class="highlight-box caution">
+                    <strong>Access Challenges:</strong>
+                    <ul>
+                        <li><strong>Insurance coverage:</strong> Pre-authorization requirements, coverage limitations</li>
+                        <li><strong>Geographic barriers:</strong> Limited specialists in rural areas</li>
+                        <li><strong>Socioeconomic factors:</strong> Transportation, time off work, caregiver availability</li>
+                        <li><strong>Cultural barriers:</strong> Language, health beliefs, provider cultural competence</li>
+                        <li><strong>Implicit bias:</strong> Unconscious discrimination affecting treatment recommendations</li>
+                    </ul>
+                </div>
+
+                <h2>12.4 Quality of Care and Patient Safety</h2>
+                <p>Healthcare providers have ethical obligations to provide high-quality, safe care and to report and address quality concerns.</p>
+
+                <h3>Quality Assurance Responsibilities</h3>
+                <ul>
+                    <li><strong>Competence maintenance:</strong> Ongoing education, skill development, board certification</li>
+                    <li><strong>Evidence-based practice:</strong> Using current best evidence in clinical decisions</li>
+                    <li><strong>Outcome monitoring:</strong> Tracking personal and institutional outcomes</li>
+                    <li><strong>Peer review:</strong> Participating in quality improvement activities</li>
+                    <li><strong>Reporting obligations:</strong> Adverse events, quality concerns, impaired colleagues</li>
+                </ul>
+
+                <h3>Patient Safety Culture</h3>
+                <div class="highlight-box surgical-note">
+                    <strong>Safety Culture Elements:</strong>
+                    <ul>
+                        <li><strong>Just culture:</strong> Learning from errors without blame when appropriate</li>
+                        <li><strong>Transparency:</strong> Open communication about errors and near misses</li>
+                        <li><strong>Continuous improvement:</strong> Systematic approach to enhancing safety</li>
+                        <li><strong>Team communication:</strong> Effective handoffs and information sharing</li>
+                        <li><strong>Leadership commitment:</strong> Organizational support for safety initiatives</li>
+                    </ul>
+                </div>
+
+                <h2>12.5 End-of-Life and Palliative Care Considerations</h2>
+                <p>Some joint replacement patients may face end-of-life issues or require palliative care approaches during their treatment journey.</p>
+
+                <h3>Palliative Care Integration</h3>
+                <ul>
+                    <li><strong>Symptom management:</strong> Pain and suffering relief as primary goals</li>
+                    <li><strong>Goals of care:</strong> Discussing realistic expectations and priorities</li>
+                    <li><strong>Family support:</strong> Addressing caregiver burden and grief</li>
+                    <li><strong>Advance planning:</strong> Discussing future care preferences</li>
+                    <li><strong>Spiritual care:</strong> Addressing existential and spiritual concerns</li>
+                </ul>
+
+                <h3>Ethical Dilemmas in Complex Cases</h3>
+                <div class="highlight-box key-point">
+                    <strong>Common Ethical Scenarios:</strong>
+                    <ul>
+                        <li><strong>Futile care:</strong> Surgery unlikely to provide meaningful benefit</li>
+                        <li><strong>Non-compliance:</strong> Patient unable or unwilling to follow treatment plans</li>
+                        <li><strong>Family conflicts:</strong> Disagreements between patient and family</li>
+                        <li><strong>Resource limitations:</strong> ICU beds, rehabilitation services availability</li>
+                        <li><strong>Provider disagreements:</strong> Team members with different treatment recommendations</li>
+                    </ul>
+                </div>
+
+                <h2>12.6 Legal and Regulatory Compliance</h2>
+                <p>Joint replacement care must comply with numerous legal and regulatory requirements at federal, state, and institutional levels.</p>
+
+                <h3>Key Legal Considerations</h3>
+                <ul>
+                    <li><strong>Medical malpractice:</strong> Standard of care, documentation requirements</li>
+                    <li><strong>HIPAA compliance:</strong> Patient privacy and information security</li>
+                    <li><strong>Emergency Medical Treatment and Labor Act (EMTALA):</strong> Emergency care obligations</li>
+                    <li><strong>Americans with Disabilities Act (ADA):</strong> Reasonable accommodations</li>
+                    <li><strong>State licensing boards:</strong> Professional practice regulations</li>
+                </ul>
+
+                <h3>Documentation and Risk Management</h3>
+                <div class="highlight-box clinical-tip">
+                    <strong>Legal Protection Strategies:</strong>
+                    <ul>
+                        <li><strong>Thorough documentation:</strong> Complete, accurate, timely medical records</li>
+                        <li><strong>Evidence-based practice:</strong> Following established clinical guidelines</li>
+                        <li><strong>Clear communication:</strong> Patient education, informed consent processes</li>
+                        <li><strong>Professional development:</strong> Maintaining competence, continuing education</li>
+                        <li><strong>Risk management:</strong> Participating in institutional quality improvement</li>
+                    </ul>
+                </div>
+
+                <div class="knowledge-check">
+                    <h3>Knowledge Check</h3>
+                    <div class="question">
+                        <div class="question-text">Which element is NOT required for valid informed consent?</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">A) Disclosure of risks and benefits</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">B) Patient comprehension</div>
+                        <div class="answer-option" onclick="selectAnswer(this, true)">C) Family agreement with the decision</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">D) Voluntary decision-making</div>
+                    </div>
+                </div>
+
+                <div class="module-completion">
+                    <div>Estimated completion time: 15 minutes</div>
+                    <button class="complete-btn" onclick="completeModule(12)">Mark Complete</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Certificate Section -->
+        <div class="certificate-section" id="certificateSection">
+            <h2>🏥 Congratulations!</h2>
+            <p>You have successfully completed the <strong>Considerations in Lower Extremity Joint Replacements</strong> course.</p>
+            <p>You have earned <strong>3.0 Continuing Education Units</strong></p>
+            <button class="certificate-btn" onclick="generateCertificate()">Download Certificate</button>
+        </div>
+    </div>
+
+    <script>
+        // Course state management
+        let courseState = {
+            modulesCompleted: [],
+            totalModules: 12,
+            startTime: new Date(),
+            completionTime: null
+        };
+
+        // Load saved progress
+        function loadProgress() {
+            const saved = localStorage.getItem('jointReplacementProgress');
+            if (saved) {
+                courseState = JSON.parse(saved);
+                courseState.modulesCompleted.forEach(moduleNum => {
+                    const moduleHeader = document.querySelector(`[data-module="${moduleNum}"] .module-header`);
+                    if (moduleHeader) {
+                        moduleHeader.classList.add('completed');
+                    }
+                });
+                updateProgress();
+            }
+        }
+
+        // Save progress
+        function saveProgress() {
+            localStorage.setItem('jointReplacementProgress', JSON.stringify(courseState));
+        }
+
+        // Toggle module visibility
+        function toggleModule(moduleNum) {
+            const module = document.querySelector(`[data-module="${moduleNum}"]`);
+            const content = module.querySelector('.module-content');
+            const isActive = content.classList.contains('active');
+            
+            // Close all other modules
+            document.querySelectorAll('.module-content').forEach(c => {
+                c.classList.remove('active');
+            });
+            
+            // Toggle current module
+            if (!isActive) {
+                content.classList.add('active');
+            }
+        }
+
+        // Complete module
+        function completeModule(moduleNum) {
+            if (!courseState.modulesCompleted.includes(moduleNum)) {
+                courseState.modulesCompleted.push(moduleNum);
+                const moduleHeader = document.querySelector(`[data-module="${moduleNum}"] .module-header`);
+                moduleHeader.classList.add('completed');
+                
+                // Replace complete button with badge
+                const completion = document.querySelector(`[data-module="${moduleNum}"] .module-completion`);
+                completion.innerHTML = '<div>Module completed ✓</div><div class="completed-badge">Completed</div>';
+                
+                updateProgress();
+                saveProgress();
+                
+                // Check if all modules completed
+                if (courseState.modulesCompleted.length === courseState.totalModules) {
+                    courseState.completionTime = new Date();
+                    document.getElementById('certificateSection').classList.add('visible');
+                    saveProgress();
+                }
+            }
+        }
+
+        // Update progress bar
+        function updateProgress() {
+            const percentage = Math.round((courseState.modulesCompleted.length / courseState.totalModules) * 100);
+            document.querySelector('.progress-fill').style.width = percentage + '%';
+            document.querySelector('.progress-percentage').textContent = percentage + '% Complete';
+        }
+
+        // Handle quiz answers
+        function selectAnswer(element, isCorrect) {
+            // Remove previous selections
+            const question = element.parentElement;
+            question.querySelectorAll('.answer-option').forEach(opt => {
+                opt.classList.remove('correct', 'incorrect');
+            });
+            
+            // Mark selected answer
+            element.classList.add(isCorrect ? 'correct' : 'incorrect');
+            
+            // Show feedback
+            setTimeout(() => {
+                if (isCorrect) {
+                    element.innerHTML += ' ✓ Correct!';
+                } else {
+                    element.innerHTML += ' ✗ Incorrect';
+                    // Show correct answer
+                    question.querySelectorAll('.answer-option').forEach((opt, index) => {
+                        if (opt.onclick.toString().includes('true')) {
+                            opt.classList.add('correct');
+                            opt.innerHTML += ' ✓ Correct Answer';
+                        }
+                    });
+                }
+            }, 500);
+        }
+
+        // Generate certificate
+        function generateCertificate() {
+            const certificateContent = generateCertificateHTML();
+            const newWindow = window.open('', '_blank');
+            newWindow.document.write(certificateContent);
+            newWindow.document.close();
+            newWindow.print();
+        }
+
+        // Generate certificate HTML
+        function generateCertificateHTML() {
+            const completionDate = new Date().toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+            
+            return `
+                <!DOCTYPE html>
+                <html>
+                <head>
+                    <title>Certificate - Considerations in Lower Extremity Joint Replacements</title>
+                    <style>
+                        body { font-family: 'Georgia', serif; text-align: center; padding: 50px; background: #f8f9fa; }
+                        .certificate { background: white; padding: 60px; border: 10px solid #1a365d; max-width: 800px; margin: 0 auto; }
+                        .header { color: #1a365d; font-size: 36px; margin-bottom: 20px; }
+                        .title { font-size: 24px; color: #059669; margin: 30px 0; }
+                        .recipient { font-size: 28px; color: #333; margin: 20px 0; border-bottom: 2px solid #1a365d; padding-bottom: 10px; }
+                        .content { font-size: 18px; line-height: 1.6; margin: 30px 0; }
+                        .signature { margin-top: 60px; display: flex; justify-content: space-around; }
+                        .sig-line { border-top: 2px solid #333; width: 200px; padding-top: 10px; }
+                        .date { color: #666; margin-top: 20px; }
+                    </style>
+                </head>
+                <body>
+                    <div class="certificate">
+                        <div class="header">CERTIFICATE OF COMPLETION</div>
+                        <div class="title">Considerations in Lower Extremity Joint Replacements</div>
+                        <div class="content">
+                            This certifies that<br>
+                            <div class="recipient">[Participant Name]</div>
+                            has successfully completed the continuing education course<br>
+                            <strong>Considerations in Lower Extremity Joint Replacements</strong><br>
+                            consisting of 3.0 contact hours of instruction
+                        </div>
+                        <div class="signature">
+                            <div class="sig-line">Dr. Troy Hounshell, PT, ScD<br>Course Director</div>
+                            <div class="sig-line">DrTroy Continuing Education<br>Approved Provider</div>
+                        </div>
+                        <div class="date">Completed: ${completionDate}<br>Course ID: JOINT-001<br>Approval #: DRTROY-JOINT-001-2024</div>
+                    </div>
+                </body>
+                </html>
+            `;
+        }
+
+        // Logout function
+        function logout() {
+            localStorage.clear();
+            window.location.href = '../index.html';
+        }
+
+        // Initialize course
+        document.addEventListener('DOMContentLoaded', function() {
+            loadProgress();
+        });
+
+        // Auto-save progress periodically
+        setInterval(saveProgress, 30000); // Save every 30 seconds
+    </script>
+</body>
+</html>
