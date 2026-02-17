@@ -6,6 +6,7 @@
     <title>Course Catalog | DrTroy CE</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="js/cart.js"></script>
     <style>
         :root {
             --navy: #1a365d;
@@ -373,6 +374,9 @@
                 <a href="course-catalog.html">Course Catalog</a>
                 <a href="index.html#about">About</a>
                 <a href="index.html#contact">Contact</a>
+                <a href="cart.html" style="color: var(--gold); font-weight: 600; position: relative;">
+                    🛒 Cart <span id="cart-count" style="background: #dc2626; color: white; border-radius: 50%; width: 18px; height: 18px; font-size: 0.7rem; position: absolute; top: -8px; right: -8px; display: none; align-items: center; justify-content: center;">0</span>
+                </a>
                 <a href="my-account.html" class="login-link">My Account</a>
             </nav>
         </div>
@@ -384,11 +388,60 @@
             <p>Comprehensive continuing education courses designed by practicing clinicians for real-world application.</p>
         </div>
 
-        <!-- Package Recommendation -->
+        <!-- Featured Bundle Packages -->
         <div class="package-info">
-            <h2>Save with Package Deals</h2>
-            <p>Get all your required CCUs at a discounted price with our discipline-specific packages.</p>
-            <a href="index.html#packages" class="btn btn-primary">View Packages</a>
+            <h2>🎯 Featured Bundle Packages - Save Big!</h2>
+            <p>Get all your required CCUs at a discounted price with our discipline-specific packages. <strong>$10 off for new accounts!</strong></p>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin: 2rem 0;">
+                <div style="border: 2px solid var(--gold); border-radius: 8px; padding: 1.5rem; text-align: center;">
+                    <h3 style="color: var(--navy); margin-bottom: 0.5rem;">PT Package</h3>
+                    <p style="color: var(--gray-600); margin-bottom: 1rem;">27 Contact Hours</p>
+                    <div style="margin-bottom: 1rem;">
+                        <span style="text-decoration: line-through; color: var(--gray-600);">$109</span>
+                        <span style="color: var(--gold); font-weight: 700; font-size: 1.5rem; margin-left: 0.5rem;">$99</span>
+                        <div style="color: var(--success); font-weight: 600; font-size: 0.9rem;">Save $10!</div>
+                    </div>
+                    <button class="btn btn-primary" onclick="addPackageToCart('PT')" style="width: 100%;">Add to Cart</button>
+                </div>
+                
+                <div style="border: 2px solid var(--gold); border-radius: 8px; padding: 1.5rem; text-align: center;">
+                    <h3 style="color: var(--navy); margin-bottom: 0.5rem;">OT Package</h3>
+                    <p style="color: var(--gray-600); margin-bottom: 1rem;">23 Contact Hours</p>
+                    <div style="margin-bottom: 1rem;">
+                        <span style="text-decoration: line-through; color: var(--gray-600);">$109</span>
+                        <span style="color: var(--gold); font-weight: 700; font-size: 1.5rem; margin-left: 0.5rem;">$99</span>
+                        <div style="color: var(--success); font-weight: 600; font-size: 0.9rem;">Save $10!</div>
+                    </div>
+                    <button class="btn btn-primary" onclick="addPackageToCart('OT')" style="width: 100%;">Add to Cart</button>
+                </div>
+                
+                <div style="border: 2px solid var(--gold); border-radius: 8px; padding: 1.5rem; text-align: center;">
+                    <h3 style="color: var(--navy); margin-bottom: 0.5rem;">PTA Package</h3>
+                    <p style="color: var(--gray-600); margin-bottom: 1rem;">17 Contact Hours</p>
+                    <div style="margin-bottom: 1rem;">
+                        <span style="text-decoration: line-through; color: var(--gray-600);">$89</span>
+                        <span style="color: var(--gold); font-weight: 700; font-size: 1.5rem; margin-left: 0.5rem;">$79</span>
+                        <div style="color: var(--success); font-weight: 600; font-size: 0.9rem;">Save $10!</div>
+                    </div>
+                    <button class="btn btn-primary" onclick="addPackageToCart('PTA')" style="width: 100%;">Add to Cart</button>
+                </div>
+                
+                <div style="border: 2px solid var(--gold); border-radius: 8px; padding: 1.5rem; text-align: center;">
+                    <h3 style="color: var(--navy); margin-bottom: 0.5rem;">COTA Package</h3>
+                    <p style="color: var(--gray-600); margin-bottom: 1rem;">23 Contact Hours</p>
+                    <div style="margin-bottom: 1rem;">
+                        <span style="text-decoration: line-through; color: var(--gray-600);">$89</span>
+                        <span style="color: var(--gold); font-weight: 700; font-size: 1.5rem; margin-left: 0.5rem;">$79</span>
+                        <div style="color: var(--success); font-weight: 600; font-size: 0.9rem;">Save $10!</div>
+                    </div>
+                    <button class="btn btn-primary" onclick="addPackageToCart('COTA')" style="width: 100%;">Add to Cart</button>
+                </div>
+            </div>
+            
+            <p style="text-align: center; margin-top: 1rem;">
+                <a href="cart.html" class="btn btn-outline">View Cart & Checkout</a>
+            </p>
         </div>
 
         <!-- Individual Sales Available Notice -->
@@ -600,7 +653,7 @@
             if (course.status === 'available') {
                 actionButtons = `<a href="${course.url}" class="btn btn-primary">View Course</a>`;
                 if (INDIVIDUAL_SALES_CONFIG.enabled) {
-                    actionButtons += `<button class="btn btn-outline" onclick="purchaseIndividual('${courseId}')" style="margin-left: 0.5rem;">Buy Individual - $${course.individualPrice}</button>`;
+                    actionButtons += `<button class="btn btn-outline" onclick="addCourseToCart('${courseId}')" style="margin-left: 0.5rem;">🛒 Add to Cart - $${course.individualPrice}</button>`;
                 }
             } else {
                 actionButtons = `<button class="btn btn-secondary" disabled>Coming Soon</button>`;
@@ -660,32 +713,7 @@
             }
         }
 
-        // Individual course purchase
-        function purchaseIndividual(courseId) {
-            const course = COURSE_CATALOG[courseId];
-            if (!course) {
-                alert('Course not found.');
-                return;
-            }
-
-            if (course.status !== 'available') {
-                alert('This course is not yet available for purchase.');
-                return;
-            }
-
-            // Store course info and redirect to checkout
-            localStorage.setItem('selectedCourse', JSON.stringify({
-                courseId: courseId,
-                title: course.title,
-                price: course.individualPrice,
-                credits: course.credits,
-                courseNumber: course.courseNumber,
-                type: 'individual'
-            }));
-
-            // Redirect to checkout
-            window.location.href = 'checkout.html?type=individual&course=' + courseId;
-        }
+        // Cart system is handled by cart.js - no need for individual purchase function
 
         // Initialize page
         document.addEventListener('DOMContentLoaded', function() {

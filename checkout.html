@@ -29,6 +29,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://js.stripe.com/v3/"></script>
+    <script src="js/cart.js"></script>
     
     <style>
         :root {
@@ -884,73 +885,79 @@
             ] // Total: 23 CCUs
         };
 
-        // Individual Course Database (for individual purchases)
+        // Individual Course Database (Updated Pricing)
         const INDIVIDUAL_COURSES = {
             'PT-MSK-001': {
                 title: 'PT Musculoskeletal Evaluation and Diagnosis',
                 credits: 3,
-                price: 45,
-                approvalNumber: 'DRTROY-PT-MSK-001-2024'
+                price: 27.99,
+                courseNumber: 'DRTROY-PT-MSK-001-2024'
             },
             'OT-ADL-001': {
                 title: 'OT Evaluation and Assessment of ADLs',
                 credits: 3,
-                price: 45,
-                approvalNumber: 'DRTROY-OT-ADL-001-2024'
+                price: 27.99,
+                courseNumber: 'DRTROY-OT-ADL-001-2024'
             },
             'MOBILITY-001': {
                 title: 'Comprehensive Mobility and Fall Prevention',
                 credits: 3,
-                price: 45,
-                approvalNumber: 'DRTROY-MOBILITY-001-2024'
+                price: 27.99,
+                courseNumber: 'DRTROY-MOBILITY-001-2024'
             },
             'BALANCE-001': {
                 title: 'Balance, Gait, and Vestibular Management',
                 credits: 3,
-                price: 45,
-                approvalNumber: 'DRTROY-BALANCE-001-2024'
+                price: 27.99,
+                courseNumber: 'DRTROY-BALANCE-001-2024'
             },
             'EXERCISE-001': {
                 title: 'Post-Surgical and Therapeutic Exercise',
                 credits: 3,
-                price: 45,
-                approvalNumber: 'DRTROY-EXERCISE-001-2024'
+                price: 27.99,
+                courseNumber: 'DRTROY-EXERCISE-001-2024'
             },
             'GERIATRIC-001': {
                 title: 'Geriatric Care Across the Continuum',
                 credits: 3,
-                price: 45,
-                approvalNumber: 'DRTROY-GERIATRIC-001-2024'
+                price: 27.99,
+                courseNumber: 'DRTROY-GERIATRIC-001-2024'
             },
             'DOCUMENTATION-001': {
                 title: 'Professional Documentation and Communication',
                 credits: 3,
-                price: 45,
-                approvalNumber: 'DRTROY-DOC-001-2024'
+                price: 27.99,
+                courseNumber: 'DRTROY-DOC-001-2024'
             },
             'MODALITIES-001': {
                 title: 'Physical Agents, Modalities, and Wound Care',
                 credits: 3,
-                price: 45,
-                approvalNumber: 'DRTROY-MODALITIES-001-2024'
+                price: 27.99,
+                courseNumber: 'DRTROY-MODALITIES-001-2024'
             },
             'NEURO-001': {
                 title: 'Neurological Rehabilitation',
                 credits: 3,
-                price: 45,
-                approvalNumber: 'DRTROY-NEURO-001-2024'
+                price: 27.99,
+                courseNumber: 'DRTROY-NEURO-001-2024'
             },
             'INFECTION-001': {
                 title: 'Infection Control and Patient Safety',
                 credits: 3,
-                price: 45,
-                approvalNumber: 'DRTROY-INFECTION-001-2024'
+                price: 27.99,
+                courseNumber: 'DRTROY-INFECTION-001-2024'
             },
             'EDUCATION-001': {
                 title: 'Patient Education and Health Promotion',
                 credits: 2,
-                price: 30,
-                approvalNumber: 'DRTROY-EDUCATION-001-2024'
+                price: 18.99,
+                courseNumber: 'DRTROY-EDUCATION-001-2024'
+            },
+            'HEALTHTECH-001': {
+                title: 'Healthcare Technology and Electronic Records',
+                credits: 1.5,
+                price: 14.99,
+                courseNumber: 'DRTROY-HEALTHTECH-001-2024'
             }
         };
 
@@ -1008,7 +1015,7 @@
                         courseTitle: course.title,
                         amount: course.price,
                         credits: course.credits,
-                        approvalNumber: INDIVIDUAL_COURSES[courseId].approvalNumber,
+                        courseNumber: INDIVIDUAL_COURSES[courseId].approvalNumber,
                         purchaseDate: new Date().toISOString(),
                         status: 'completed'
                     });

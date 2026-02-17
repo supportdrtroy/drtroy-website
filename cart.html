@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart | DrTroy CE</title>
+    
+    <!-- Security Headers -->
+    <meta http-equiv="Content-Security-Policy" content="
+        default-src 'self';
+        script-src 'self' 'unsafe-inline';
+        style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
+        font-src 'self' https://fonts.gstatic.com;
+        img-src 'self' data: https:;
+        connect-src 'self' https://*.supabase.co;
+    ">
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta http-equiv="X-Frame-Options" content="DENY">
+    <meta http-equiv="X-XSS-Protection" content="1; mode=block">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --navy: #1a365d;
+            --gold: #059669;
+            --gold-light: #10b981;
+            --gray-50: #f7fafc;
+            --gray-100: #edf2f7;
+            --gray-200: #e2e8f0;
+            --gray-600: #4a5568;
+            --gray-800: #2d3748;
+            --success: #059669;
+            --danger: #dc2626;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: var(--gray-800);
+            background: var(--gray-50);
+        }
+
+        /* Header */
+        .header {
+            background: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo img {
+            height: 80px;
+            width: auto;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: var(--gray-600);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: var(--navy);
+        }
+
+        .cart-icon {
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--gold);
+            font-weight: 600;
+        }
+
+        .cart-count {
+            background: var(--danger);
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            font-weight: 700;
+            position: absolute;
+            top: -8px;
+            right: -8px;
+        }
+
+        /* Main Content */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .page-header h1 {
+            font-size: 2.5rem;
+            color: var(--navy);
+            margin-bottom: 1rem;
+        }
+
+        .page-header p {
+            font-size: 1.1rem;
+            color: var(--gray-600);
+        }
+
+        /* Cart Layout */
+        .cart-layout {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 3rem;
+            align-items: start;
+        }
+
+        @media (max-width: 768px) {
+            .cart-layout {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Cart Items */
+        .cart-items {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .cart-items h2 {
+            color: var(--navy);
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--gray-100);
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            padding: 1.5rem 0;
+            border-bottom: 1px solid var(--gray-100);
+        }
+
+        .cart-item:last-child {
+            border-bottom: none;
+        }
+
+        .item-details {
+            flex: 1;
+            margin-right: 1rem;
+        }
+
+        .item-title {
+            font-weight: 600;
+            color: var(--navy);
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .item-meta {
+            font-size: 0.9rem;
+            color: var(--gray-600);
+            margin-bottom: 0.5rem;
+        }
+
+        .item-type {
+            display: inline-block;
+            background: var(--gold);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .item-type.package {
+            background: var(--navy);
+        }
+
+        .item-actions {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 1rem;
+        }
+
+        .item-price {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--navy);
+        }
+
+        .quantity-controls {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .qty-btn {
+            background: var(--gray-100);
+            border: none;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+
+        .qty-btn:hover {
+            background: var(--gray-200);
+        }
+
+        .qty-display {
+            min-width: 40px;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .remove-btn {
+            color: var(--danger);
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 0.9rem;
+            text-decoration: underline;
+            transition: opacity 0.2s;
+        }
+
+        .remove-btn:hover {
+            opacity: 0.7;
+        }
+
+        /* Empty Cart */
+        .empty-cart {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: var(--gray-600);
+        }
+
+        .empty-cart h3 {
+            color: var(--navy);
+            margin-bottom: 1rem;
+        }
+
+        /* Cart Summary */
+        .cart-summary {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            height: fit-content;
+            position: sticky;
+            top: 120px;
+        }
+
+        .cart-summary h2 {
+            color: var(--navy);
+            margin-bottom: 1.5rem;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+            font-size: 1rem;
+        }
+
+        .summary-row.total {
+            border-top: 2px solid var(--gold);
+            padding-top: 1rem;
+            margin-top: 1.5rem;
+            font-weight: 700;
+            font-size: 1.25rem;
+            color: var(--navy);
+        }
+
+        .discount-row {
+            color: var(--success);
+        }
+
+        .discount-notice {
+            background: #d1fae5;
+            border: 1px solid var(--success);
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1.5rem 0;
+            font-size: 0.9rem;
+            color: #065f46;
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            text-align: center;
+            cursor: pointer;
+            border: none;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+        }
+
+        .btn-primary {
+            background: var(--gold);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--gold-light);
+            transform: translateY(-2px);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--gold);
+            border: 2px solid var(--gold);
+        }
+
+        .btn-outline:hover {
+            background: var(--gold);
+            color: white;
+        }
+
+        .btn-secondary {
+            background: var(--gray-200);
+            color: var(--gray-600);
+        }
+
+        .btn-block {
+            width: 100%;
+            margin-bottom: 1rem;
+        }
+
+        .continue-shopping {
+            text-align: center;
+            margin-top: 2rem;
+        }
+
+        /* Featured Packages */
+        .featured-packages {
+            margin-top: 4rem;
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .featured-packages h2 {
+            color: var(--navy);
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .package-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .package-card {
+            border: 2px solid var(--gold);
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .package-card:hover {
+            transform: translateY(-4px);
+        }
+
+        .package-title {
+            color: var(--navy);
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .package-credits {
+            color: var(--gray-600);
+            margin-bottom: 1rem;
+        }
+
+        .package-pricing {
+            margin: 1rem 0;
+        }
+
+        .original-price {
+            text-decoration: line-through;
+            color: var(--gray-600);
+            font-size: 0.9rem;
+        }
+
+        .discounted-price {
+            color: var(--gold);
+            font-weight: 700;
+            font-size: 1.5rem;
+        }
+
+        .savings {
+            color: var(--success);
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-container">
+            <div class="logo">
+                <a href="index.html">
+                    <img src="courses/images/drtroy_logo_new.jpg" alt="DrTroy Continuing Education">
+                </a>
+            </div>
+            <nav class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="course-catalog.html">Courses</a>
+                <a href="index.html#about">About</a>
+                <a href="index.html#contact">Contact</a>
+                <div class="cart-icon" id="cart-icon">
+                    🛒 Cart
+                    <span class="cart-count" id="cart-count">0</span>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container">
+        <div class="page-header">
+            <h1>Shopping Cart</h1>
+            <p>Review your courses and packages before checkout</p>
+        </div>
+
+        <div class="cart-layout">
+            <!-- Cart Items -->
+            <div class="cart-items">
+                <h2>Cart Items</h2>
+                <div id="cart-items-container">
+                    <!-- Items will be populated by JavaScript -->
+                    <div class="empty-cart" id="empty-cart">
+                        <h3>Your cart is empty</h3>
+                        <p>Add some courses or packages to get started with your continuing education.</p>
+                        <a href="course-catalog.html" class="btn btn-primary" style="margin-top: 1rem;">Browse Courses</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Cart Summary -->
+            <div class="cart-summary" id="cart-summary" style="display: none;">
+                <h2>Order Summary</h2>
+                
+                <div class="summary-row">
+                    <span>Subtotal:</span>
+                    <span id="subtotal">$0.00</span>
+                </div>
+                
+                <div class="summary-row discount-row" id="discount-row" style="display: none;">
+                    <span>New Account Discount:</span>
+                    <span id="discount-amount">-$0.00</span>
+                </div>
+                
+                <div class="summary-row total">
+                    <span>Total:</span>
+                    <span id="total">$0.00</span>
+                </div>
+
+                <div class="discount-notice" id="discount-notice" style="display: none;">
+                    <strong>New Account Discount Applied!</strong><br>
+                    Save $10 on each bundle package.
+                </div>
+
+                <a href="checkout.html?from=cart" class="btn btn-primary btn-block" id="checkout-btn">Proceed to Checkout</a>
+                
+                <button class="btn btn-outline btn-block" onclick="clearCart()">Clear Cart</button>
+            </div>
+        </div>
+
+        <div class="continue-shopping">
+            <a href="course-catalog.html" class="btn btn-outline">← Continue Shopping</a>
+        </div>
+
+        <!-- Featured Packages -->
+        <div class="featured-packages" id="featured-packages">
+            <h2>🎯 Featured Bundle Packages - Save Big!</h2>
+            <p style="text-align: center; color: var(--gray-600); margin-bottom: 2rem;">
+                Get all your required CCUs at a discounted price with our discipline-specific packages.
+            </p>
+            <div class="package-grid" id="package-grid">
+                <!-- Packages will be populated by JavaScript -->
+            </div>
+        </div>
+    </main>
+
+    <!-- Include cart system -->
+    <script src="js/cart.js"></script>
+    
+    <script>
+        // Populate cart items
+        function populateCart() {
+            const cartData = window.drtroyCart.getCheckoutData();
+            const container = document.getElementById('cart-items-container');
+            const summary = document.getElementById('cart-summary');
+            const emptyCart = document.getElementById('empty-cart');
+            
+            if (cartData.items.length === 0) {
+                emptyCart.style.display = 'block';
+                summary.style.display = 'none';
+                return;
+            }
+
+            emptyCart.style.display = 'none';
+            summary.style.display = 'block';
+            
+            let itemsHtml = '';
+            
+            cartData.items.forEach(item => {
+                const itemTypeLabel = item.type === 'package' ? 'Bundle Package' : 'Individual Course';
+                const itemTypeClass = item.type === 'package' ? 'package' : 'course';
+                
+                let quantityControls = '';
+                if (item.type === 'course' && item.quantity > 1) {
+                    quantityControls = `
+                        <div class="quantity-controls">
+                            <button class="qty-btn" onclick="updateQuantity('${item.courseId}', ${item.quantity - 1})">-</button>
+                            <span class="qty-display">${item.quantity}</span>
+                            <button class="qty-btn" onclick="updateQuantity('${item.courseId}', ${item.quantity + 1})">+</button>
+                        </div>
+                    `;
+                }
+                
+                itemsHtml += `
+                    <div class="cart-item">
+                        <div class="item-details">
+                            <div class="item-title">${item.title}</div>
+                            <div class="item-meta">
+                                ${item.credits} CCU${item.credits !== 1 ? 's' : ''} • 
+                                Course #: ${item.courseNumber || item.packageCode}
+                            </div>
+                            <span class="item-type ${itemTypeClass}">${itemTypeLabel}</span>
+                        </div>
+                        <div class="item-actions">
+                            <div class="item-price">$${(item.price * (item.quantity || 1)).toFixed(2)}</div>
+                            ${quantityControls}
+                            <button class="remove-btn" onclick="removeFromCart('${item.type === 'course' ? item.courseId : item.packageCode}', '${item.type}')">
+                                Remove
+                            </button>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            container.innerHTML = itemsHtml;
+            
+            // Update summary
+            document.getElementById('subtotal').textContent = `$${cartData.subtotal.toFixed(2)}`;
+            document.getElementById('total').textContent = `$${cartData.total.toFixed(2)}`;
+            
+            const discountRow = document.getElementById('discount-row');
+            const discountNotice = document.getElementById('discount-notice');
+            
+            if (cartData.hasNewAccountDiscount && cartData.discount > 0) {
+                document.getElementById('discount-amount').textContent = `-$${cartData.discount.toFixed(2)}`;
+                discountRow.style.display = 'flex';
+                discountNotice.style.display = 'block';
+            } else {
+                discountRow.style.display = 'none';
+                discountNotice.style.display = 'none';
+            }
+        }
+        
+        // Remove item from cart
+        function removeFromCart(itemId, type) {
+            window.drtroyCart.removeItem(itemId, type);
+            populateCart();
+        }
+        
+        // Update quantity
+        function updateQuantity(courseId, newQuantity) {
+            window.drtroyCart.updateQuantity(courseId, newQuantity);
+            populateCart();
+        }
+        
+        // Clear cart
+        function clearCart() {
+            if (confirm('Are you sure you want to clear your cart?')) {
+                window.drtroyCart.clear();
+                populateCart();
+            }
+        }
+        
+        // Populate featured packages
+        function populateFeaturedPackages() {
+            const packageGrid = document.getElementById('package-grid');
+            
+            let packagesHtml = '';
+            
+            Object.values(window.PACKAGE_CATALOG).forEach(pkg => {
+                if (pkg.featured) {
+                    packagesHtml += `
+                        <div class="package-card">
+                            <div class="package-title">${pkg.title}</div>
+                            <div class="package-credits">${pkg.credits} Contact Hours</div>
+                            <div class="package-pricing">
+                                <div class="original-price">$${pkg.originalPrice}</div>
+                                <div class="discounted-price">$${pkg.finalPrice}</div>
+                                <div class="savings">Save $${pkg.savings}!</div>
+                            </div>
+                            <p style="color: var(--gray-600); font-size: 0.9rem; margin: 1rem 0;">
+                                ${pkg.description}
+                            </p>
+                            <button class="btn btn-primary" onclick="addPackageToCart('${pkg.code}')">
+                                Add Package to Cart
+                            </button>
+                        </div>
+                    `;
+                }
+            });
+            
+            packageGrid.innerHTML = packagesHtml;
+        }
+        
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            populateCart();
+            populateFeaturedPackages();
+            
+            // Listen for cart changes
+            window.drtroyCart.addListener(function() {
+                populateCart();
+            });
+        });
+    </script>
+</body>
+</html>
