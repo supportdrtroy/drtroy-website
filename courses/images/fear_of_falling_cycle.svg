@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600" width="600" height="600">
+  <!-- Background -->
+  <rect width="600" height="600" fill="#f8f9fa"/>
+  
+  <!-- Title -->
+  <text x="300" y="40" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="#1a365d" text-anchor="middle">Fear of Falling Cycle</text>
+  
+  <!-- Central elements arranged in a circle -->
+  
+  <!-- 1. Initial Fall/Fear (Top) -->
+  <rect x="220" y="80" width="160" height="80" fill="#dc2626" stroke="#b91c1c" stroke-width="2" rx="10"/>
+  <text x="300" y="110" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="white" text-anchor="middle">FALL INCIDENT</text>
+  <text x="300" y="130" font-family="Arial, sans-serif" font-size="12" fill="white" text-anchor="middle">or</text>
+  <text x="300" y="145" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="white" text-anchor="middle">FEAR OF FALLING</text>
+  
+  <!-- Arrow down -->
+  <path d="M 300 160 L 300 200" stroke="#374151" stroke-width="4" fill="none" marker-end="url(#arrowhead)"/>
+  
+  <!-- 2. Activity Restriction (Right) -->
+  <rect x="420" y="220" width="160" height="80" fill="#f59e0b" stroke="#d97706" stroke-width="2" rx="10"/>
+  <text x="500" y="250" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="white" text-anchor="middle">ACTIVITY</text>
+  <text x="500" y="270" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="white" text-anchor="middle">RESTRICTION</text>
+  <text x="500" y="290" font-family="Arial, sans-serif" font-size="11" fill="white" text-anchor="middle">"I'll avoid risky activities"</text>
+  
+  <!-- Arrow down-left -->
+  <path d="M 470 300 L 400 360" stroke="#374151" stroke-width="4" fill="none" marker-end="url(#arrowhead)"/>
+  
+  <!-- 3. Deconditioning (Bottom-right) -->
+  <rect x="320" y="380" width="160" height="80" fill="#7c3aed" stroke="#6d28d9" stroke-width="2" rx="10"/>
+  <text x="400" y="410" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="white" text-anchor="middle">PHYSICAL</text>
+  <text x="400" y="430" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="white" text-anchor="middle">DECONDITIONING</text>
+  <text x="400" y="450" font-family="Arial, sans-serif" font-size="11" fill="white" text-anchor="middle">↓ Strength, balance, endurance</text>
+  
+  <!-- Arrow down-left -->
+  <path d="M 360 460 L 260 500" stroke="#374151" stroke-width="4" fill="none" marker-end="url(#arrowhead)"/>
+  
+  <!-- 4. Increased Frailty (Bottom) -->
+  <rect x="120" y="520" width="160" height="80" fill="#059669" stroke="#047857" stroke-width="2" rx="10"/>
+  <text x="200" y="550" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="white" text-anchor="middle">INCREASED</text>
+  <text x="200" y="570" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="white" text-anchor="middle">FRAILTY</text>
+  <text x="200" y="590" font-family="Arial, sans-serif" font-size="11" fill="white" text-anchor="middle">↓ Functional capacity</text>
+  
+  <!-- Arrow up-left -->
+  <path d="M 150 520 L 80 380" stroke="#374151" stroke-width="4" fill="none" marker-end="url(#arrowhead)"/>
+  
+  <!-- 5. Higher Fall Risk (Left) -->
+  <rect x="20" y="300" width="160" height="80" fill="#be185d" stroke="#a21caf" stroke-width="2" rx="10"/>
+  <text x="100" y="330" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="white" text-anchor="middle">HIGHER</text>
+  <text x="100" y="350" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="white" text-anchor="middle">FALL RISK</text>
+  <text x="100" y="370" font-family="Arial, sans-serif" font-size="11" fill="white" text-anchor="middle">Actual increased danger</text>
+  
+  <!-- Arrow up -->
+  <path d="M 130 300 L 200 200" stroke="#374151" stroke-width="4" fill="none" marker-end="url(#arrowhead)"/>
+  
+  <!-- 6. Reinforced Fear (Top-left) -->
+  <rect x="20" y="120" width="160" height="80" fill="#dc2626" stroke="#b91c1c" stroke-width="2" rx="10"/>
+  <text x="100" y="150" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="white" text-anchor="middle">REINFORCED</text>
+  <text x="100" y="170" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="white" text-anchor="middle">FEAR</text>
+  <text x="100" y="190" font-family="Arial, sans-serif" font-size="11" fill="white" text-anchor="middle">"See, I was right to worry"</text>
+  
+  <!-- Arrow to complete circle -->
+  <path d="M 180 160 L 220 140" stroke="#374151" stroke-width="4" fill="none" marker-end="url(#arrowhead)"/>
+  
+  <!-- Central spiral indicator -->
+  <path d="M 270 250 Q 250 280 270 310 Q 330 330 330 280 Q 310 250 280 260" 
+        stroke="#6b7280" stroke-width="2" fill="none" stroke-dasharray="5,5"/>
+  <text x="300" y="285" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#6b7280" text-anchor="middle">VICIOUS</text>
+  <text x="300" y="300" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#6b7280" text-anchor="middle">CYCLE</text>
+  
+  <!-- Break the cycle text -->
+  <rect x="200" y="480" width="200" height="40" fill="#10b981" stroke="#059669" stroke-width="2" rx="5"/>
+  <text x="300" y="495" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="white" text-anchor="middle">INTERVENTION NEEDED</text>
+  <text x="300" y="510" font-family="Arial, sans-serif" font-size="11" fill="white" text-anchor="middle">Break cycle with targeted therapy</text>
+  
+  <!-- Statistics -->
+  <text x="300" y="60" font-family="Arial, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">Affects 20-85% of older adults • 50% restrict activities due to fear</text>
+  
+  <!-- Arrow marker definition -->
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#374151"/>
+    </marker>
+  </defs>
+</svg>

@@ -1,0 +1,94 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600">
+  <!-- Background -->
+  <rect width="800" height="600" fill="#f8f9fa"/>
+  
+  <!-- Title -->
+  <text x="400" y="40" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="#1a365d" text-anchor="middle">Multifactorial Fall Risk Model</text>
+  
+  <!-- Central Fall Risk Circle -->
+  <circle cx="400" cy="300" r="80" fill="#dc2626" stroke="#b91c1c" stroke-width="3"/>
+  <text x="400" y="290" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="white" text-anchor="middle">FALL</text>
+  <text x="400" y="310" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="white" text-anchor="middle">RISK</text>
+  
+  <!-- Intrinsic Factors (Left) -->
+  <rect x="50" y="100" width="180" height="200" fill="#e8f4f8" stroke="#059669" stroke-width="2" rx="10"/>
+  <text x="140" y="125" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#059669" text-anchor="middle">INTRINSIC FACTORS</text>
+  <text x="60" y="150" font-family="Arial, sans-serif" font-size="12" fill="#374151">• Previous falls</text>
+  <text x="60" y="170" font-family="Arial, sans-serif" font-size="12" fill="#374151">• Muscle weakness</text>
+  <text x="60" y="190" font-family="Arial, sans-serif" font-size="12" fill="#374151">• Balance deficits</text>
+  <text x="60" y="210" font-family="Arial, sans-serif" font-size="12" fill="#374151">• Gait abnormalities</text>
+  <text x="60" y="230" font-family="Arial, sans-serif" font-size="12" fill="#374151">• Visual impairment</text>
+  <text x="60" y="250" font-family="Arial, sans-serif" font-size="12" fill="#374151">• Cognitive decline</text>
+  <text x="60" y="270" font-family="Arial, sans-serif" font-size="12" fill="#374151">• Chronic conditions</text>
+  <text x="60" y="290" font-family="Arial, sans-serif" font-size="12" fill="#374151">• Age-related changes</text>
+  
+  <!-- Arrow from Intrinsic to Center -->
+  <path d="M 230 200 L 320 260" stroke="#059669" stroke-width="3" fill="none" marker-end="url(#arrowhead-green)"/>
+  
+  <!-- Extrinsic Factors (Right) -->
+  <rect x="570" y="100" width="180" height="200" fill="#fff8e1" stroke="#f59e0b" stroke-width="2" rx="10"/>
+  <text x="660" y="125" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#f59e0b" text-anchor="middle">EXTRINSIC FACTORS</text>
+  <text x="580" y="150" font-family="Arial, sans-serif" font-size="12" fill="#374151">• Environmental hazards</text>
+  <text x="580" y="170" font-family="Arial, sans-serif" font-size="12" fill="#374151">• Poor lighting</text>
+  <text x="580" y="190" font-family="Arial, sans-serif" font-size="12" fill="#374151">• Unsafe footwear</text>
+  <text x="580" y="210" font-family="Arial, sans-serif" font-size="12" fill="#374151">• Home hazards</text>
+  <text x="580" y="230" font-family="Arial, sans-serif" font-size="12" fill="#374151">• Weather conditions</text>
+  <text x="580" y="250" font-family="Arial, sans-serif" font-size="12" fill="#374151">• Activity demands</text>
+  <text x="580" y="270" font-family="Arial, sans-serif" font-size="12" fill="#374151">• Assistive devices</text>
+  <text x="580" y="290" font-family="Arial, sans-serif" font-size="12" fill="#374151">• Unfamiliar environment</text>
+  
+  <!-- Arrow from Extrinsic to Center -->
+  <path d="M 570 200 L 480 260" stroke="#f59e0b" stroke-width="3" fill="none" marker-end="url(#arrowhead-yellow)"/>
+  
+  <!-- Behavioral Factors (Bottom) -->
+  <rect x="250" y="430" width="300" height="120" fill="#f0f9ff" stroke="#0ea5e9" stroke-width="2" rx="10"/>
+  <text x="400" y="455" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#0ea5e9" text-anchor="middle">BEHAVIORAL FACTORS</text>
+  <text x="260" y="480" font-family="Arial, sans-serif" font-size="12" fill="#374151">• Risk-taking behavior</text>
+  <text x="260" y="500" font-family="Arial, sans-serif" font-size="12" fill="#374151">• Activity avoidance</text>
+  <text x="260" y="520" font-family="Arial, sans-serif" font-size="12" fill="#374151">• Fear of falling</text>
+  <text x="420" y="480" font-family="Arial, sans-serif" font-size="12" fill="#374151">• Medication compliance</text>
+  <text x="420" y="500" font-family="Arial, sans-serif" font-size="12" fill="#374151">• Exercise participation</text>
+  <text x="420" y="520" font-family="Arial, sans-serif" font-size="12" fill="#374151">• Safety awareness</text>
+  
+  <!-- Arrow from Behavioral to Center -->
+  <path d="M 400 430 L 400 380" stroke="#0ea5e9" stroke-width="3" fill="none" marker-end="url(#arrowhead-blue)"/>
+  
+  <!-- Medication Factors (Top) -->
+  <rect x="250" y="50" width="300" height="80" fill="#fef2f2" stroke="#dc2626" stroke-width="2" rx="10"/>
+  <text x="400" y="75" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#dc2626" text-anchor="middle">MEDICATION FACTORS</text>
+  <text x="260" y="100" font-family="Arial, sans-serif" font-size="12" fill="#374151">• Polypharmacy (≥4 medications)</text>
+  <text x="260" y="120" font-family="Arial, sans-serif" font-size="12" fill="#374151">• Psychoactive medications</text>
+  <text x="430" y="100" font-family="Arial, sans-serif" font-size="12" fill="#374151">• Cardiovascular drugs</text>
+  <text x="430" y="120" font-family="Arial, sans-serif" font-size="12" fill="#374151">• Recent changes</text>
+  
+  <!-- Arrow from Medication to Center -->
+  <path d="M 400 130 L 400 220" stroke="#dc2626" stroke-width="3" fill="none" marker-end="url(#arrowhead-red)"/>
+  
+  <!-- Bidirectional arrows showing interaction -->
+  <path d="M 200 150 Q 100 50 300 60" stroke="#6b7280" stroke-width="2" fill="none" marker-end="url(#arrowhead-gray)" stroke-dasharray="5,5"/>
+  <path d="M 600 150 Q 700 50 500 60" stroke="#6b7280" stroke-width="2" fill="none" marker-end="url(#arrowhead-gray)" stroke-dasharray="5,5"/>
+  <path d="M 300 450 Q 150 350 200 250" stroke="#6b7280" stroke-width="2" fill="none" marker-end="url(#arrowhead-gray)" stroke-dasharray="5,5"/>
+  <path d="M 500 450 Q 650 350 600 250" stroke="#6b7280" stroke-width="2" fill="none" marker-end="url(#arrowhead-gray)" stroke-dasharray="5,5"/>
+  
+  <!-- Risk Accumulation Text -->
+  <text x="400" y="570" font-family="Arial, sans-serif" font-size="14" font-style="italic" fill="#6b7280" text-anchor="middle">Risk factors interact and accumulate - Multiple factors exponentially increase fall probability</text>
+  
+  <!-- Arrow markers -->
+  <defs>
+    <marker id="arrowhead-green" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#059669"/>
+    </marker>
+    <marker id="arrowhead-yellow" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#f59e0b"/>
+    </marker>
+    <marker id="arrowhead-blue" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#0ea5e9"/>
+    </marker>
+    <marker id="arrowhead-red" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#dc2626"/>
+    </marker>
+    <marker id="arrowhead-gray" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#6b7280"/>
+    </marker>
+  </defs>
+</svg>
