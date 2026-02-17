@@ -158,168 +158,8 @@
         }
 
         /* Main Content */
-        .main-layout {
-            display: grid;
-            grid-template-columns: 1fr 400px;
-            gap: 4rem;
-            max-width: 1280px;
-            margin: 0 auto;
-            padding: 3rem 2rem;
-            align-items: start;
-        }
-
-        @media (max-width: 1024px) {
-            .main-layout {
-                grid-template-columns: 1fr;
-                gap: 3rem;
-            }
-        }
-
-        /* Hero Section */
-        .hero {
-            padding: 2rem 0 4rem;
-        }
-
-        .hero h1 {
-            font-family: 'Playfair Display', Georgia, serif;
-            font-size: 3.5rem;
-            font-weight: 600;
-            color: var(--primary-navy);
-            margin-bottom: 2rem;
-            letter-spacing: -0.02em;
-            line-height: 1.1;
-        }
-
-        .hero-subtitle {
-            font-size: 1.25rem;
-            color: var(--neutral-600);
-            margin-bottom: 2rem;
-            font-weight: 400;
-            line-height: 1.6;
-        }
-
-        .hero-badges {
-            display: flex;
-            gap: 2rem;
-            margin-bottom: 3rem;
-            flex-wrap: wrap;
-        }
-
-        .badge {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            color: var(--success-dark);
-            font-weight: 600;
-            font-size: 1rem;
-        }
-
-        .badge::before {
-            content: '✓';
-            background: var(--accent-emerald);
-            color: white;
-            width: 24px;
-            height: 24px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.75rem;
-            font-weight: 700;
-        }
-
-        /* Account Creation Form */
-        .account-form {
-            background: white;
-            border-radius: 24px;
-            padding: 3rem;
-            box-shadow: var(--shadow-xl);
-            border: 1px solid var(--neutral-100);
-            position: sticky;
-            top: 140px;
-        }
-
-        .form-title {
-            font-family: 'Playfair Display', Georgia, serif;
-            font-size: 1.75rem;
-            font-weight: 600;
-            color: var(--primary-navy);
-            margin-bottom: 1rem;
-            text-align: center;
-        }
-
-        .form-subtitle {
-            color: var(--neutral-600);
-            text-align: center;
-            margin-bottom: 2rem;
-            font-size: 0.95rem;
-            line-height: 1.6;
-        }
-
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-
-        .form-label {
-            display: block;
-            margin-bottom: 0.75rem;
-            font-weight: 600;
-            color: var(--neutral-700);
-            font-size: 0.95rem;
-        }
-
-        .form-input {
-            width: 100%;
-            padding: 1rem 1.25rem;
-            border: 2px solid var(--neutral-200);
-            border-radius: 12px;
-            font-size: 1rem;
-            color: var(--neutral-800);
-            background: white;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            font-family: inherit;
-        }
-
-        .form-input:focus {
-            outline: none;
-            border-color: var(--accent-emerald);
-            box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.1);
-        }
-
-        .form-input::placeholder {
-            color: var(--neutral-400);
-        }
-
-        .password-hint {
-            font-size: 0.85rem;
-            color: var(--neutral-600);
-            margin-top: 0.5rem;
-            line-height: 1.5;
-        }
 
         /* Package Comparison */
-        .packages-section {
-            margin: 6rem 0;
-        }
-
-        .section-title {
-            font-family: 'Playfair Display', Georgia, serif;
-            font-size: 3rem;
-            font-weight: 600;
-            color: var(--primary-navy);
-            margin-bottom: 1.5rem;
-            text-align: center;
-            letter-spacing: -0.02em;
-        }
-
-        .section-subtitle {
-            font-size: 1.125rem;
-            color: var(--neutral-600);
-            text-align: center;
-            margin-bottom: 4rem;
-            font-weight: 300;
-            line-height: 1.7;
-        }
 
         .packages-grid {
             display: grid;
@@ -600,21 +440,9 @@
 
         /* Responsive Design */
         @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 2.75rem;
-            }
-
-            .section-title {
-                font-size: 2.25rem;
-            }
-
             .why-container {
                 grid-template-columns: 1fr;
                 gap: 2rem;
-            }
-
-            .account-form {
-                padding: 2rem;
             }
 
             .package-card {
@@ -625,9 +453,10 @@
                 gap: 1.5rem;
             }
 
-            .hero-badges {
-                justify-content: center;
-                text-align: center;
+            /* Mobile form layout */
+            section div div form div[style*="grid"] {
+                grid-template-columns: 1fr !important;
+                gap: 1rem !important;
             }
         }
 
@@ -677,58 +506,32 @@
 
     <!-- Main Content -->
     <main>
-        <!-- Hero with Account Creation -->
-        <section class="main-layout">
-            <div class="hero">
-                <h1>Professional Continuing Education</h1>
-                <p class="hero-subtitle">Quality CE courses for PTs, PTAs, OTs, and COTAs. From practicing clinicians who understand your needs.</p>
-                
-                <div class="hero-badges">
-                    <div class="badge">Board Approved</div>
-                    <div class="badge">Instant Certificates</div>
-                    <div class="badge">Practice-Ready Content</div>
+        <!-- Hero Section -->
+        <section style="padding: 4rem 2rem 2rem; text-align: center; max-width: 1280px; margin: 0 auto;">
+            <h1 style="font-family: 'Playfair Display', Georgia, serif; font-size: 3.5rem; font-weight: 600; color: var(--primary-navy); margin-bottom: 1.5rem; letter-spacing: -0.02em; line-height: 1.1;">Professional Continuing Education</h1>
+            <p style="font-size: 1.25rem; color: var(--neutral-600); margin-bottom: 2rem; font-weight: 400; line-height: 1.6;">Quality CE courses for PTs, PTAs, OTs, and COTAs. From practicing clinicians who understand your needs.</p>
+            
+            <div style="display: flex; gap: 2rem; justify-content: center; margin-bottom: 3rem; flex-wrap: wrap;">
+                <div style="display: flex; align-items: center; gap: 0.5rem; color: var(--success-dark); font-weight: 600; font-size: 1rem;">
+                    <span style="background: var(--accent-emerald); color: white; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 700;">✓</span>
+                    Board Approved
                 </div>
-            </div>
-
-            <!-- Account Creation Form -->
-            <div class="account-form">
-                <h2 class="form-title">Create Your Free Account</h2>
-                <p class="form-subtitle">New customers save $10 on bundles and save your course progress. Pick up right where you left off.</p>
-                <p style="color: var(--accent-emerald); font-weight: 600; text-align: center; margin-bottom: 2rem; font-size: 0.95rem;">Get a $10 credit on future purchases when you refer a colleague!</p>
-                
-                <form id="account-form">
-                    <div class="form-group">
-                        <label for="email" class="form-label">Email Address</label>
-                        <input type="email" id="email" name="email" class="form-input" placeholder="your.email@example.com" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="password" class="form-label">Password</label>
-                        <input type="password" id="password" name="password" class="form-input" placeholder="Create secure password" required>
-                        <p class="password-hint">Password must be at least 8 characters with mixed case, numbers, and symbols.</p>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="profession" class="form-label">Profession</label>
-                        <select id="profession" name="profession" class="form-input" required>
-                            <option value="">Select your profession</option>
-                            <option value="PT">Physical Therapist</option>
-                            <option value="PTA">Physical Therapist Assistant</option>
-                            <option value="OT">Occupational Therapist</option>
-                            <option value="COTA">Certified Occupational Therapy Assistant</option>
-                        </select>
-                    </div>
-                    
-                    <button type="submit" class="btn btn-primary">Create Free Account</button>
-                </form>
+                <div style="display: flex; align-items: center; gap: 0.5rem; color: var(--success-dark); font-weight: 600; font-size: 1rem;">
+                    <span style="background: var(--accent-emerald); color: white; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 700;">✓</span>
+                    Instant Certificates
+                </div>
+                <div style="display: flex; align-items: center; gap: 0.5rem; color: var(--success-dark); font-weight: 600; font-size: 1rem;">
+                    <span style="background: var(--accent-emerald); color: white; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 700;">✓</span>
+                    Practice-Ready Content
+                </div>
             </div>
         </section>
 
         <!-- Package Comparison -->
-        <section class="packages-section">
-            <div style="max-width: 1280px; margin: 0 auto; padding: 0 2rem;">
-                <h2 class="section-title">Choose Your Package</h2>
-                <p class="section-subtitle">Professional continuing education packages designed for your specific discipline and requirements</p>
+        <section style="padding: 2rem 2rem 4rem;">
+            <div style="max-width: 1280px; margin: 0 auto;">
+                <h2 style="font-family: 'Playfair Display', Georgia, serif; font-size: 3rem; font-weight: 600; color: var(--primary-navy); margin-bottom: 1.5rem; text-align: center; letter-spacing: -0.02em;">Choose Your Package</h2>
+                <p style="font-size: 1.125rem; color: var(--neutral-600); text-align: center; margin-bottom: 3rem; font-weight: 300; line-height: 1.7;">Professional continuing education packages designed for your specific discipline and requirements</p>
                 
                 <div class="packages-grid">
                     <!-- PT Package -->
@@ -922,6 +725,44 @@
                         
                         <button class="btn btn-primary" style="margin-top: 2rem;">Select This Package</button>
                     </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Account Creation Section -->
+        <section style="padding: 4rem 2rem; background: var(--neutral-50);">
+            <div style="max-width: 600px; margin: 0 auto;">
+                <div style="background: white; border-radius: 24px; padding: 3rem; box-shadow: var(--shadow-xl); border: 1px solid var(--neutral-100); text-align: center;">
+                    <h2 style="font-family: 'Playfair Display', Georgia, serif; font-size: 1.75rem; font-weight: 600; color: var(--primary-navy); margin-bottom: 1rem;">Create Your Free Account</h2>
+                    <p style="color: var(--neutral-600); margin-bottom: 1rem; font-size: 0.95rem; line-height: 1.6;">New customers save $10 on bundles and save your course progress. Pick up right where you left off.</p>
+                    <p style="color: var(--accent-emerald); font-weight: 600; margin-bottom: 2rem; font-size: 0.95rem;">Get a $10 credit on future purchases when you refer a colleague!</p>
+                    
+                    <form id="account-form">
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 1.5rem;">
+                            <div>
+                                <label style="display: block; margin-bottom: 0.75rem; font-weight: 600; color: var(--neutral-700); font-size: 0.95rem; text-align: left;">Email Address</label>
+                                <input type="email" id="email" name="email" style="width: 100%; padding: 1rem 1.25rem; border: 2px solid var(--neutral-200); border-radius: 12px; font-size: 1rem; color: var(--neutral-800); background: white; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); font-family: inherit;" placeholder="your.email@example.com" required>
+                            </div>
+                            <div>
+                                <label style="display: block; margin-bottom: 0.75rem; font-weight: 600; color: var(--neutral-700); font-size: 0.95rem; text-align: left;">Profession</label>
+                                <select id="profession" name="profession" style="width: 100%; padding: 1rem 1.25rem; border: 2px solid var(--neutral-200); border-radius: 12px; font-size: 1rem; color: var(--neutral-800); background: white; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); font-family: inherit;" required>
+                                    <option value="">Select your profession</option>
+                                    <option value="PT">Physical Therapist</option>
+                                    <option value="PTA">Physical Therapist Assistant</option>
+                                    <option value="OT">Occupational Therapist</option>
+                                    <option value="COTA">Certified Occupational Therapy Assistant</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div style="margin-bottom: 2rem;">
+                            <label style="display: block; margin-bottom: 0.75rem; font-weight: 600; color: var(--neutral-700); font-size: 0.95rem; text-align: left;">Password</label>
+                            <input type="password" id="password" name="password" style="width: 100%; padding: 1rem 1.25rem; border: 2px solid var(--neutral-200); border-radius: 12px; font-size: 1rem; color: var(--neutral-800); background: white; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); font-family: inherit;" placeholder="Create secure password" required>
+                            <p style="font-size: 0.85rem; color: var(--neutral-600); margin-top: 0.5rem; line-height: 1.5; text-align: left;">Password must be at least 8 characters with mixed case, numbers, and symbols.</p>
+                        </div>
+                        
+                        <button type="submit" style="display: inline-flex; align-items: center; justify-content: center; padding: 1.25rem 2rem; border-radius: 12px; text-decoration: none; font-weight: 600; font-size: 1rem; cursor: pointer; border: none; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); position: relative; overflow: hidden; width: 100%; background: linear-gradient(135deg, var(--accent-emerald) 0%, var(--accent-emerald-light) 100%); color: white; box-shadow: var(--shadow-md);">Create Free Account</button>
+                    </form>
                 </div>
             </div>
         </section>
