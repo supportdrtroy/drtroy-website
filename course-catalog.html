@@ -391,10 +391,10 @@
             <a href="index.html#packages" class="btn btn-primary">View Packages</a>
         </div>
 
-        <!-- Individual Sales Notice (Hidden by default) -->
-        <div class="individual-sales-notice hidden" id="individualSalesNotice">
-            <strong>Individual Course Sales Coming Soon!</strong> 
-            Currently available through packages only. Individual purchase options will be available soon.
+        <!-- Individual Sales Available Notice -->
+        <div class="individual-sales-notice" id="individualSalesNotice" style="background: #d1fae5; border: 1px solid #10b981; color: #065f46;">
+            <strong>Individual Course Sales Now Available!</strong> 
+            Purchase courses individually at our new competitive rates: 1 CCU = $9.99, 2 CCU = $18.99, 3 CCU = $27.99. Bundle packages still available for maximum savings.
         </div>
 
         <!-- PT-Specific Courses -->
@@ -441,7 +441,7 @@
                 description: 'Comprehensive MSK evaluation and treatment approaches across all body regions',
                 status: 'available',
                 approvalNumber: 'DRTROY-PT-MSK-001-2024',
-                individualPrice: 45,
+                individualPrice: 27.99,
                 category: 'pt-specific',
                 url: 'courses/pt-msk-001.html'
             },
@@ -451,7 +451,7 @@
                 description: 'Comprehensive management of hip, knee, and ankle arthroplasty from pre-op to long-term care',
                 status: 'available',
                 approvalNumber: 'DRTROY-JOINT-001-2024',
-                individualPrice: 45,
+                individualPrice: 27.99,
                 category: 'pt-specific',
                 url: 'courses/joint-replacement-001-progressive.html'
             },
@@ -463,7 +463,7 @@
                 description: 'Comprehensive ADL assessment and intervention strategies for occupational therapists',
                 status: 'coming-soon',
                 approvalNumber: 'DRTROY-OT-ADL-001-2024',
-                individualPrice: 45,
+                individualPrice: 27.99,
                 category: 'ot-specific',
                 url: '#'
             },
@@ -475,7 +475,7 @@
                 description: 'Evidence-based mobility assessment and fall prevention strategies across healthcare settings',
                 status: 'available',
                 approvalNumber: 'DRTROY-MOBILITY-001-2024',
-                individualPrice: 45,
+                individualPrice: 27.99,
                 category: 'core',
                 url: 'courses/mobility-fall-001-progressive.html'
             },
@@ -485,7 +485,7 @@
                 description: 'Assessment and treatment of balance and vestibular disorders in rehabilitation',
                 status: 'coming-soon',
                 approvalNumber: 'DRTROY-BALANCE-001-2024',
-                individualPrice: 45,
+                individualPrice: 27.99,
                 category: 'core',
                 url: '#'
             },
@@ -495,7 +495,7 @@
                 description: 'Post-operative rehabilitation and evidence-based exercise prescription',
                 status: 'coming-soon',
                 approvalNumber: 'DRTROY-EXERCISE-001-2024',
-                individualPrice: 45,
+                individualPrice: 27.99,
                 category: 'core',
                 url: '#'
             },
@@ -505,7 +505,7 @@
                 description: 'Comprehensive geriatric rehabilitation approaches for all care settings',
                 status: 'coming-soon',
                 approvalNumber: 'DRTROY-GERIATRIC-001-2024',
-                individualPrice: 45,
+                individualPrice: 27.99,
                 category: 'core',
                 url: '#'
             },
@@ -515,7 +515,7 @@
                 description: 'Clinical documentation standards and professional communication skills',
                 status: 'coming-soon',
                 approvalNumber: 'DRTROY-DOC-001-2024',
-                individualPrice: 45,
+                individualPrice: 27.99,
                 category: 'core',
                 url: '#'
             },
@@ -525,7 +525,7 @@
                 description: 'Therapeutic modalities and comprehensive wound care management',
                 status: 'coming-soon',
                 approvalNumber: 'DRTROY-MODALITIES-001-2024',
-                individualPrice: 45,
+                individualPrice: 27.99,
                 category: 'core',
                 url: '#'
             },
@@ -535,7 +535,7 @@
                 description: 'Comprehensive neurological rehabilitation covering stroke, TBI, SCI, Parkinson\'s, MS, and emerging technologies',
                 status: 'available',
                 approvalNumber: 'DRTROY-NEURO-001-2024',
-                individualPrice: 45,
+                individualPrice: 27.99,
                 category: 'core',
                 url: 'courses/pt-neuro-001-progressive.html'
             },
@@ -545,7 +545,7 @@
                 description: 'Infection prevention protocols and patient safety in healthcare settings',
                 status: 'coming-soon',
                 approvalNumber: 'DRTROY-INFECTION-001-2024',
-                individualPrice: 45,
+                individualPrice: 27.99,
                 category: 'core',
                 url: '#'
             },
@@ -555,7 +555,7 @@
                 description: 'Evidence-based strategies for effective patient education and health behavior change',
                 status: 'available',
                 approvalNumber: 'DRTROY-EDUCATION-001-2024',
-                individualPrice: 30,
+                individualPrice: 18.99,
                 category: 'core',
                 url: 'courses/patient-education-001-progressive.html'
             },
@@ -565,16 +565,24 @@
                 description: 'Comprehensive technology skills including EHR systems, HIPAA compliance, clinical documentation, interoperability, and emerging healthcare technologies',
                 status: 'available',
                 approvalNumber: 'DRTROY-HEALTHTECH-001-2024',
-                individualPrice: 23,
+                individualPrice: 14.99,
                 category: 'core',
                 url: 'courses/healthcare-technology-001-progressive.html'
             }
         };
 
-        // Individual Sales Configuration (Hidden until enabled)
+        // Individual Sales Configuration
         const INDIVIDUAL_SALES_CONFIG = {
-            enabled: false, // Set to true when ready to enable individual sales
-            newAccountDiscount: 10
+            enabled: true, // Individual sales now enabled
+            newAccountDiscount: 0 // No discount on individual courses (bundles only get $10 discount)
+        };
+
+        // Individual Course Pricing Structure
+        const INDIVIDUAL_PRICING = {
+            1: 9.99,    // 1 CCU = $9.99
+            1.5: 14.99, // 1.5 CCU = $14.99
+            2: 18.99,   // 2 CCU = $18.99
+            3: 27.99    // 3 CCU = $27.99
         };
 
         // Generate course cards
@@ -582,7 +590,7 @@
             const statusClass = course.status === 'available' ? 'status-available' : 'status-coming-soon';
             const statusText = course.status === 'available' ? 'Available Now' : 'Coming Soon';
             
-            // Individual pricing (hidden unless enabled)
+            // Individual pricing (now enabled)
             const individualPriceHtml = INDIVIDUAL_SALES_CONFIG.enabled ? 
                 `<div class="course-price">Individual: $${course.individualPrice}</div>` : 
                 `<div class="course-price hidden">Individual: $${course.individualPrice}</div>`;
@@ -592,7 +600,7 @@
             if (course.status === 'available') {
                 actionButtons = `<a href="${course.url}" class="btn btn-primary">View Course</a>`;
                 if (INDIVIDUAL_SALES_CONFIG.enabled) {
-                    actionButtons += `<button class="btn btn-outline" onclick="purchaseIndividual('${courseId}')">Buy Individual</button>`;
+                    actionButtons += `<button class="btn btn-outline" onclick="purchaseIndividual('${courseId}')" style="margin-left: 0.5rem;">Buy Individual - $${course.individualPrice}</button>`;
                 }
             } else {
                 actionButtons = `<button class="btn btn-secondary" disabled>Coming Soon</button>`;
@@ -646,24 +654,22 @@
             // Show individual sales notice if not enabled
             if (!INDIVIDUAL_SALES_CONFIG.enabled) {
                 document.getElementById('individualSalesNotice').classList.remove('hidden');
+            } else {
+                // Individual sales are enabled - hide the notice
+                document.getElementById('individualSalesNotice').classList.add('hidden');
             }
         }
 
-        // Individual course purchase (hidden until enabled)
+        // Individual course purchase
         function purchaseIndividual(courseId) {
-            if (!INDIVIDUAL_SALES_CONFIG.enabled) {
-                alert('Individual course sales are not yet available. Please purchase a package.');
+            const course = COURSE_CATALOG[courseId];
+            if (!course) {
+                alert('Course not found.');
                 return;
             }
-            
-            const course = COURSE_CATALOG[courseId];
-            if (!course) return;
 
-            // Check if user has account
-            const hasAccount = localStorage.getItem('drtroyAccount');
-            if (!hasAccount) {
-                alert('Please create an account first to purchase individual courses.');
-                window.location.href = 'index.html#signup';
+            if (course.status !== 'available') {
+                alert('This course is not yet available for purchase.');
                 return;
             }
 
@@ -673,9 +679,11 @@
                 title: course.title,
                 price: course.individualPrice,
                 credits: course.credits,
-                approvalNumber: course.approvalNumber
+                approvalNumber: course.approvalNumber,
+                type: 'individual'
             }));
 
+            // Redirect to checkout
             window.location.href = 'checkout.html?type=individual&course=' + courseId;
         }
 
