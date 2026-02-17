@@ -73,11 +73,28 @@ class ShoppingCart {
 
     // Remove item from cart
     removeItem(itemId, type = 'course') {
-        this.items = this.items.filter(item => 
-            !(item.type === type && 
-              (type === 'course' ? item.courseId === itemId : item.packageCode === itemId))
-        );
+        console.log('🗑️ Removing item:', { itemId, type });
+        console.log('📦 Current cart items before removal:', this.items);
+        
+        const beforeCount = this.items.length;
+        
+        this.items = this.items.filter(item => {
+            const shouldKeep = !(item.type === type && 
+              (type === 'course' ? item.courseId === itemId : item.packageCode === itemId));
+            
+            if (!shouldKeep) {
+                console.log('🎯 Removing item:', item);
+            }
+            
+            return shouldKeep;
+        });
+        
+        const afterCount = this.items.length;
+        console.log('📊 Items removed:', beforeCount - afterCount);
+        console.log('📦 Cart items after removal:', this.items);
+        
         this.saveCart();
+        console.log('✅ Remove operation completed');
     }
 
     // Update item quantity (courses only)
@@ -511,4 +528,21 @@ window.getCartTotal = function() {
 window.clearCart = function() {
     window.drtroyCart.clear();
     updateCartIcon();
+};
+
+// Global remove function for cart UI
+window.removeFromCart = function(itemId, type) {
+    console.log('🌐 Global removeFromCart called:', { itemId, type });
+    window.drtroyCart.removeItem(itemId, type);
+    window.updateCartIcon();
+    
+    // Trigger cart change event for any listeners
+    window.drtroyCart.notifyListeners();
+};
+
+// Global update quantity function
+window.updateCartQuantity = function(courseId, quantity) {
+    console.log('🌐 Global updateCartQuantity called:', { courseId, quantity });
+    window.drtroyCart.updateQuantity(courseId, quantity);
+    window.updateCartIcon();
 };

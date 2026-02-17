@@ -562,9 +562,9 @@
                 if (item.type === 'course' && item.quantity > 1) {
                     quantityControls = `
                         <div class="quantity-controls">
-                            <button class="qty-btn" onclick="updateQuantity('${item.courseId}', ${item.quantity - 1})">-</button>
+                            <button class="qty-btn" onclick="updateQuantityUI('${item.courseId}', ${item.quantity - 1})">-</button>
                             <span class="qty-display">${item.quantity}</span>
-                            <button class="qty-btn" onclick="updateQuantity('${item.courseId}', ${item.quantity + 1})">+</button>
+                            <button class="qty-btn" onclick="updateQuantityUI('${item.courseId}', ${item.quantity + 1})">+</button>
                         </div>
                     `;
                 }
@@ -582,7 +582,7 @@
                         <div class="item-actions">
                             <div class="item-price">$${(item.price * (item.quantity || 1)).toFixed(2)}</div>
                             ${quantityControls}
-                            <button class="remove-btn" onclick="removeFromCart('${item.type === 'course' ? item.courseId : item.packageCode}', '${item.type}')">
+                            <button class="remove-btn" onclick="removeFromCartUI('${item.type === 'course' ? item.courseId : item.packageCode}', '${item.type}')">
                                 Remove
                             </button>
                         </div>
@@ -609,16 +609,62 @@
             }
         }
         
-        // Remove item from cart
-        function removeFromCart(itemId, type) {
-            window.drtroyCart.removeItem(itemId, type);
-            populateCart();
+        // Remove item from cart with UI update
+        function removeFromCartUI(itemId, type) {
+            console.log('🛒 Cart UI: removeFromCartUI called with:', { itemId, type });
+            
+            try {
+                // Use global remove function
+                window.removeFromCart(itemId, type);
+                console.log('✅ Cart UI: Global removeFromCart completed, repopulating cart...');
+                
+                // Repopulate the cart display
+                populateCart();
+                console.log('✅ Cart UI: populateCart completed');
+                
+                // Show feedback
+                const notification = document.createElement('div');
+                notification.innerHTML = `
+                    <div style="
+                        position: fixed;
+                        top: 20px;
+                        right: 20px;
+                        background: #dc2626;
+                        color: white;
+                        padding: 1rem 1.5rem;
+                        border-radius: 8px;
+                        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+                        z-index: 10000;
+                        font-weight: 500;
+                    ">
+                        Item removed from cart
+                    </div>
+                `;
+                document.body.appendChild(notification);
+                setTimeout(() => notification.remove(), 3000);
+                
+            } catch (error) {
+                console.error('❌ Cart UI: Error removing item:', error);
+                alert('Error removing item from cart. Please try again.');
+            }
         }
         
-        // Update quantity
-        function updateQuantity(courseId, newQuantity) {
-            window.drtroyCart.updateQuantity(courseId, newQuantity);
-            populateCart();
+        // Update quantity with UI refresh
+        function updateQuantityUI(courseId, newQuantity) {
+            console.log('🛒 Cart UI: updateQuantityUI called with:', { courseId, newQuantity });
+            
+            try {
+                // Use global update function
+                window.updateCartQuantity(courseId, newQuantity);
+                console.log('✅ Cart UI: Global updateCartQuantity completed');
+                
+                // Repopulate the cart display
+                populateCart();
+                console.log('✅ Cart UI: populateCart completed');
+                
+            } catch (error) {
+                console.error('❌ Cart UI: Error updating quantity:', error);
+            }
         }
         
         // Clear cart
