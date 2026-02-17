@@ -42,4 +42,4 @@
 [[redirects]]
   from = "/courses"
   to = "/course-catalog.html"
-  status = 301/* Force rebuild */
+  status = 301
