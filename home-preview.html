@@ -684,7 +684,8 @@
             <!-- Account Creation Form -->
             <div class="account-form">
                 <h2 class="form-title">Create Your Free Account</h2>
-                <p class="form-subtitle">Get $10 off every package and save your course progress. Pick up right where you left off.</p>
+                <p class="form-subtitle">New customers save $10 on bundles and save your course progress. Pick up right where you left off.</p>
+                <p style="color: var(--accent-emerald); font-weight: 600; text-align: center; margin-bottom: 2rem; font-size: 0.95rem;">Get a $10 credit on future purchases when you refer a colleague!</p>
                 
                 <form id="account-form">
                     <div class="form-group">
@@ -1017,7 +1018,7 @@
             localStorage.setItem('drtroyAccount', JSON.stringify(accountData));
             
             // Show success message
-            alert('Account created successfully! You can now access courses and get $10 off bundle packages.');
+            alert('Account created successfully! New customers save $10 on bundles and can earn $10 credits for referrals.');
             
             // Redirect to course catalog
             window.location.href = 'course-catalog.html';
