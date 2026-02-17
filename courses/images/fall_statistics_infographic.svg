@@ -10,28 +10,28 @@
   
   <!-- Statistic 1: 3 million ED visits -->
   <rect x="50" y="120" width="320" height="180" fill="white" stroke="#e5e7eb" stroke-width="2" rx="8"/>
-  <text x="210" y="175" font-family="Arial, sans-serif" font-size="48" font-weight="bold" fill="#dc2626" text-anchor="middle">3M+</text>
-  <text x="210" y="200" font-family="Arial, sans-serif" font-size="16" font-weight="600" fill="#374151" text-anchor="middle">Older Adults</text>
-  <text x="210" y="220" font-family="Arial, sans-serif" font-size="13" fill="#6b7280" text-anchor="middle">treated in emergency</text>
-  <text x="210" y="235" font-family="Arial, sans-serif" font-size="13" fill="#6b7280" text-anchor="middle">departments annually</text>
-  <text x="210" y="250" font-family="Arial, sans-serif" font-size="13" fill="#6b7280" text-anchor="middle">for fall injuries</text>
+  <text x="210" y="190" font-family="Arial, sans-serif" font-size="48" font-weight="bold" fill="#dc2626" text-anchor="middle">3M+</text>
+  <text x="210" y="215" font-family="Arial, sans-serif" font-size="16" font-weight="600" fill="#374151" text-anchor="middle">Older Adults</text>
+  <text x="210" y="235" font-family="Arial, sans-serif" font-size="13" fill="#6b7280" text-anchor="middle">treated in emergency</text>
+  <text x="210" y="250" font-family="Arial, sans-serif" font-size="13" fill="#6b7280" text-anchor="middle">departments annually</text>
+  <text x="210" y="265" font-family="Arial, sans-serif" font-size="13" fill="#6b7280" text-anchor="middle">for fall injuries</text>
   
   <!-- Hospital icon for stat 1 -->
-  <circle cx="210" cy="275" r="12" fill="#dc2626"/>
-  <rect x="206" y="271" width="8" height="8" fill="white"/>
-  <rect x="207" y="273" width="6" height="1.5" fill="#dc2626"/>
-  <rect x="207" y="276" width="6" height="1.5" fill="#dc2626"/>
+  <circle cx="210" cy="285" r="10" fill="#dc2626"/>
+  <rect x="207" y="282" width="6" height="6" fill="white"/>
+  <rect x="208" y="283" width="4" height="1" fill="#dc2626"/>
+  <rect x="208" y="286" width="4" height="1" fill="#dc2626"/>
   
   <!-- Statistic 2: Leading cause of death -->
   <rect x="430" y="120" width="320" height="180" fill="white" stroke="#e5e7eb" stroke-width="2" rx="8"/>
-  <text x="590" y="175" font-family="Arial, sans-serif" font-size="36" font-weight="bold" fill="#b91c1c" text-anchor="middle">#1 CAUSE</text>
-  <text x="590" y="200" font-family="Arial, sans-serif" font-size="16" font-weight="600" fill="#374151" text-anchor="middle">of injury death</text>
-  <text x="590" y="220" font-family="Arial, sans-serif" font-size="13" fill="#6b7280" text-anchor="middle">in adults age 65+</text>
-  <text x="590" y="240" font-family="Arial, sans-serif" font-size="13" font-weight="600" fill="#dc2626" text-anchor="middle">LEADING KILLER</text>
+  <text x="590" y="185" font-family="Arial, sans-serif" font-size="36" font-weight="bold" fill="#b91c1c" text-anchor="middle">#1 CAUSE</text>
+  <text x="590" y="210" font-family="Arial, sans-serif" font-size="16" font-weight="600" fill="#374151" text-anchor="middle">of injury death</text>
+  <text x="590" y="230" font-family="Arial, sans-serif" font-size="13" fill="#6b7280" text-anchor="middle">in adults age 65+</text>
+  <text x="590" y="250" font-family="Arial, sans-serif" font-size="13" font-weight="600" fill="#dc2626" text-anchor="middle">LEADING KILLER</text>
   
   <!-- Warning icon for stat 2 -->
-  <polygon points="590,260 582,275 598,275" fill="#dc2626"/>
-  <text x="590" y="271" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="white" text-anchor="middle">!</text>
+  <polygon points="590,270 584,285 596,285" fill="#dc2626"/>
+  <text x="590" y="280" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="white" text-anchor="middle">!</text>
   
   <!-- Statistic 3: 1 in 4 falls -->
   <rect x="50" y="340" width="320" height="180" fill="white" stroke="#e5e7eb" stroke-width="2" rx="8"/>
