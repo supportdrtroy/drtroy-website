@@ -1,0 +1,1041 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DrTroy Continuing Education | Professional Healthcare CE Courses</title>
+    
+    <!-- Security Headers -->
+    <meta http-equiv="Content-Security-Policy" content="
+        default-src 'self';
+        script-src 'self' 'unsafe-inline';
+        style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
+        font-src 'self' https://fonts.gstatic.com;
+        img-src 'self' data: https:;
+        connect-src 'self' https://*.supabase.co;
+    ">
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta http-equiv="X-Frame-Options" content="DENY">
+    <meta http-equiv="X-XSS-Protection" content="1; mode=block">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Source+Sans+Pro:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-navy: #1a365d;
+            --accent-emerald: #059669;
+            --accent-emerald-light: #10b981;
+            --accent-emerald-dark: #047857;
+            --neutral-50: #fafafa;
+            --neutral-100: #f5f5f5;
+            --neutral-200: #e5e5e5;
+            --neutral-300: #d4d4d4;
+            --neutral-400: #a3a3a3;
+            --neutral-600: #525252;
+            --neutral-700: #404040;
+            --neutral-800: #262626;
+            --neutral-900: #171717;
+            --success-light: #dcfce7;
+            --success-dark: #166534;
+            --error-light: #fee2e2;
+            --error-dark: #dc2626;
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+            --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Source Sans Pro', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-weight: 400;
+            line-height: 1.6;
+            color: var(--neutral-800);
+            background: linear-gradient(135deg, var(--neutral-50) 0%, #ffffff 100%);
+            min-height: 100vh;
+        }
+
+        /* Header */
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--neutral-200);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 1.5rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo img {
+            height: 72px;
+            width: auto;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 2.5rem;
+        }
+
+        .nav-links a {
+            color: var(--neutral-600);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-navy);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--accent-emerald);
+            transform: scaleX(0);
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .nav-links a:hover::after {
+            transform: scaleX(1);
+        }
+
+        .cart-icon {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            color: var(--accent-emerald);
+            font-weight: 600;
+            font-size: 0.95rem;
+            position: relative;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .cart-icon:hover {
+            color: var(--accent-emerald-dark);
+        }
+
+        .cart-count {
+            background: var(--error-dark);
+            color: white;
+            border-radius: 50%;
+            width: 22px;
+            height: 22px;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            font-weight: 700;
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        /* Main Content */
+        .main-layout {
+            display: grid;
+            grid-template-columns: 1fr 400px;
+            gap: 4rem;
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+            align-items: start;
+        }
+
+        @media (max-width: 1024px) {
+            .main-layout {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 2rem 0 4rem;
+        }
+
+        .hero h1 {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: 3.5rem;
+            font-weight: 600;
+            color: var(--primary-navy);
+            margin-bottom: 2rem;
+            letter-spacing: -0.02em;
+            line-height: 1.1;
+        }
+
+        .hero-subtitle {
+            font-size: 1.25rem;
+            color: var(--neutral-600);
+            margin-bottom: 2rem;
+            font-weight: 400;
+            line-height: 1.6;
+        }
+
+        .hero-badges {
+            display: flex;
+            gap: 2rem;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .badge {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--success-dark);
+            font-weight: 600;
+            font-size: 1rem;
+        }
+
+        .badge::before {
+            content: '✓';
+            background: var(--accent-emerald);
+            color: white;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            font-weight: 700;
+        }
+
+        /* Account Creation Form */
+        .account-form {
+            background: white;
+            border-radius: 24px;
+            padding: 3rem;
+            box-shadow: var(--shadow-xl);
+            border: 1px solid var(--neutral-100);
+            position: sticky;
+            top: 140px;
+        }
+
+        .form-title {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: 1.75rem;
+            font-weight: 600;
+            color: var(--primary-navy);
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .form-subtitle {
+            color: var(--neutral-600);
+            text-align: center;
+            margin-bottom: 2rem;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.75rem;
+            font-weight: 600;
+            color: var(--neutral-700);
+            font-size: 0.95rem;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 1rem 1.25rem;
+            border: 2px solid var(--neutral-200);
+            border-radius: 12px;
+            font-size: 1rem;
+            color: var(--neutral-800);
+            background: white;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            font-family: inherit;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--accent-emerald);
+            box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.1);
+        }
+
+        .form-input::placeholder {
+            color: var(--neutral-400);
+        }
+
+        .password-hint {
+            font-size: 0.85rem;
+            color: var(--neutral-600);
+            margin-top: 0.5rem;
+            line-height: 1.5;
+        }
+
+        /* Package Comparison */
+        .packages-section {
+            margin: 6rem 0;
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: 3rem;
+            font-weight: 600;
+            color: var(--primary-navy);
+            margin-bottom: 1.5rem;
+            text-align: center;
+            letter-spacing: -0.02em;
+        }
+
+        .section-subtitle {
+            font-size: 1.125rem;
+            color: var(--neutral-600);
+            text-align: center;
+            margin-bottom: 4rem;
+            font-weight: 300;
+            line-height: 1.7;
+        }
+
+        .packages-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .package-card {
+            background: white;
+            border-radius: 20px;
+            padding: 3rem;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid var(--neutral-100);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .package-card:hover {
+            transform: translateY(-6px);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .package-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--accent-emerald);
+        }
+
+        .package-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .package-ccus {
+            font-size: 3rem;
+            font-family: 'Playfair Display', Georgia, serif;
+            font-weight: 700;
+            color: var(--accent-emerald);
+            margin-bottom: 0.5rem;
+            line-height: 1;
+        }
+
+        .package-title {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--primary-navy);
+            margin-bottom: 0.5rem;
+        }
+
+        .package-description {
+            color: var(--neutral-600);
+            font-size: 0.95rem;
+        }
+
+        .course-list {
+            margin: 2rem 0;
+            border-top: 1px solid var(--neutral-100);
+            padding-top: 2rem;
+        }
+
+        .course-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid var(--neutral-100);
+        }
+
+        .course-item:last-child {
+            border-bottom: none;
+        }
+
+        .course-name {
+            color: var(--neutral-700);
+            font-size: 0.95rem;
+            line-height: 1.4;
+        }
+
+        .course-ccus {
+            color: var(--accent-emerald);
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1.25rem 2rem;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            border: none;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            width: 100%;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent-emerald) 0%, var(--accent-emerald-light) 100%);
+            color: white;
+            box-shadow: var(--shadow-md);
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(135deg, var(--accent-emerald-dark) 0%, var(--accent-emerald) 100%);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--accent-emerald);
+            border: 2px solid var(--accent-emerald);
+        }
+
+        .btn-outline:hover {
+            background: var(--accent-emerald);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        /* Why DrTroy Section */
+        .why-section {
+            background: var(--neutral-50);
+            padding: 6rem 2rem;
+        }
+
+        .why-container {
+            max-width: 1280px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .why-content h2 {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: 2.5rem;
+            font-weight: 600;
+            color: var(--primary-navy);
+            margin-bottom: 2rem;
+        }
+
+        .why-content p {
+            font-size: 1.125rem;
+            color: var(--neutral-700);
+            line-height: 1.8;
+            margin-bottom: 2rem;
+        }
+
+        .founder-card {
+            background: white;
+            border-radius: 20px;
+            padding: 3rem;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid var(--neutral-100);
+            text-align: center;
+        }
+
+        .founder-title {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: 1.75rem;
+            font-weight: 600;
+            color: var(--primary-navy);
+            margin-bottom: 0.5rem;
+        }
+
+        .founder-subtitle {
+            color: var(--accent-emerald);
+            font-weight: 600;
+            margin-bottom: 2rem;
+        }
+
+        .founder-description {
+            color: var(--neutral-700);
+            line-height: 1.7;
+        }
+
+        /* Accreditation Section */
+        .accreditation-section {
+            padding: 4rem 2rem;
+            background: white;
+        }
+
+        .accreditation-container {
+            max-width: 1280px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .accreditation-title {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: 2.5rem;
+            font-weight: 600;
+            color: var(--primary-navy);
+            margin-bottom: 3rem;
+        }
+
+        .accreditation-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+        }
+
+        .accreditation-item {
+            background: var(--neutral-50);
+            padding: 2rem;
+            border-radius: 16px;
+            border: 2px solid var(--accent-emerald);
+            font-weight: 600;
+            color: var(--primary-navy);
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--neutral-900);
+            color: var(--neutral-400);
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+
+        .footer-container {
+            max-width: 1280px;
+            margin: 0 auto;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-section h3 {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: 1.25rem;
+            color: white;
+            margin-bottom: 1rem;
+        }
+
+        .footer-section p,
+        .footer-section a {
+            color: var(--neutral-400);
+            text-decoration: none;
+            line-height: 1.8;
+        }
+
+        .footer-section a:hover {
+            color: var(--accent-emerald-light);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid var(--neutral-700);
+            padding-top: 2rem;
+            font-size: 0.95rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.75rem;
+            }
+
+            .section-title {
+                font-size: 2.25rem;
+            }
+
+            .why-container {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .account-form {
+                padding: 2rem;
+            }
+
+            .package-card {
+                padding: 2rem;
+            }
+
+            .nav-links {
+                gap: 1.5rem;
+            }
+
+            .hero-badges {
+                justify-content: center;
+                text-align: center;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .package-card {
+            animation: fadeInUp 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .package-card:nth-child(2) { animation-delay: 0.2s; }
+        .package-card:nth-child(3) { animation-delay: 0.4s; }
+        .package-card:nth-child(4) { animation-delay: 0.6s; }
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-container">
+            <div class="logo">
+                <a href="index.html">
+                    <img src="courses/images/drtroy_logo_new.jpg" alt="DrTroy Continuing Education">
+                </a>
+            </div>
+            <nav class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="course-catalog.html">Courses</a>
+                <a href="#about">About</a>
+                <a href="#contact">Contact</a>
+                <a href="cart.html" class="cart-icon" id="cart-icon">
+                    🛒 Cart
+                    <span class="cart-count" id="cart-count">0</span>
+                </a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Hero with Account Creation -->
+        <section class="main-layout">
+            <div class="hero">
+                <h1>Professional Continuing Education</h1>
+                <p class="hero-subtitle">Quality CE courses for PTs, PTAs, OTs, and COTAs. From practicing clinicians who understand your needs.</p>
+                
+                <div class="hero-badges">
+                    <div class="badge">Board Approved</div>
+                    <div class="badge">Instant Certificates</div>
+                    <div class="badge">Practice-Ready Content</div>
+                </div>
+            </div>
+
+            <!-- Account Creation Form -->
+            <div class="account-form">
+                <h2 class="form-title">Create Your Free Account</h2>
+                <p class="form-subtitle">Get $10 off every package and save your course progress. Pick up right where you left off.</p>
+                
+                <form id="account-form">
+                    <div class="form-group">
+                        <label for="email" class="form-label">Email Address</label>
+                        <input type="email" id="email" name="email" class="form-input" placeholder="your.email@example.com" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="password" class="form-label">Password</label>
+                        <input type="password" id="password" name="password" class="form-input" placeholder="Create secure password" required>
+                        <p class="password-hint">Password must be at least 8 characters with mixed case, numbers, and symbols.</p>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="profession" class="form-label">Profession</label>
+                        <select id="profession" name="profession" class="form-input" required>
+                            <option value="">Select your profession</option>
+                            <option value="PT">Physical Therapist</option>
+                            <option value="PTA">Physical Therapist Assistant</option>
+                            <option value="OT">Occupational Therapist</option>
+                            <option value="COTA">Certified Occupational Therapy Assistant</option>
+                        </select>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary">Create Free Account</button>
+                </form>
+            </div>
+        </section>
+
+        <!-- Package Comparison -->
+        <section class="packages-section">
+            <div style="max-width: 1280px; margin: 0 auto; padding: 0 2rem;">
+                <h2 class="section-title">Choose Your Package</h2>
+                <p class="section-subtitle">Professional continuing education packages designed for your specific discipline and requirements</p>
+                
+                <div class="packages-grid">
+                    <!-- PT Package -->
+                    <div class="package-card">
+                        <div class="package-header">
+                            <div class="package-ccus">27</div>
+                            <div style="font-size: 0.9rem; color: var(--neutral-600); margin-bottom: 1rem;">Total CCUs</div>
+                            <h3 class="package-title">Back to the Basics Core Package</h3>
+                            <p class="package-description">(24 CCUs)</p>
+                        </div>
+                        
+                        <div class="course-list">
+                            <div class="course-item">
+                                <span class="course-name">Comprehensive Mobility and Fall Prevention</span>
+                                <span class="course-ccus">3</span>
+                            </div>
+                            <div class="course-item">
+                                <span class="course-name">Balance, Gait, and Vestibular Management</span>
+                                <span class="course-ccus">3</span>
+                            </div>
+                            <div class="course-item">
+                                <span class="course-name">Post-Surgical and Therapeutic Exercise</span>
+                                <span class="course-ccus">3</span>
+                            </div>
+                            <div class="course-item">
+                                <span class="course-name">Geriatric Care Across the Continuum</span>
+                                <span class="course-ccus">3</span>
+                            </div>
+                            <div class="course-item">
+                                <span class="course-name">Professional Documentation and Communication</span>
+                                <span class="course-ccus">3</span>
+                            </div>
+                            <div class="course-item">
+                                <span class="course-name">Physical Agents, Modalities, and Wound Care</span>
+                                <span class="course-ccus">3</span>
+                            </div>
+                            <div class="course-item">
+                                <span class="course-name">Neurological Rehabilitation</span>
+                                <span class="course-ccus">3</span>
+                            </div>
+                            <div class="course-item">
+                                <span class="course-name">Infection Control and Patient Safety</span>
+                                <span class="course-ccus">3</span>
+                            </div>
+                        </div>
+                        
+                        <div style="border-top: 1px solid var(--neutral-100); padding-top: 1.5rem; margin-top: 1.5rem;">
+                            <h4 style="color: var(--primary-navy); margin-bottom: 1rem;">PT-Specific Course (3 CCUs)</h4>
+                            <div class="course-item">
+                                <span class="course-name">PT Musculoskeletal Evaluation and Diagnosis</span>
+                                <span class="course-ccus">3</span>
+                            </div>
+                        </div>
+                        
+                        <button class="btn btn-primary" style="margin-top: 2rem;">Select This Package</button>
+                    </div>
+
+                    <!-- PTA Package -->
+                    <div class="package-card">
+                        <div class="package-header">
+                            <div class="package-ccus">17</div>
+                            <div style="font-size: 0.9rem; color: var(--neutral-600); margin-bottom: 1rem;">Total CCUs</div>
+                            <h3 class="package-title">Back to the Basics Complete Package</h3>
+                            <p class="package-description">(17 CCUs)</p>
+                        </div>
+                        
+                        <div class="course-list">
+                            <div class="course-item">
+                                <span class="course-name">Comprehensive Mobility and Fall Prevention</span>
+                                <span class="course-ccus">3</span>
+                            </div>
+                            <div class="course-item">
+                                <span class="course-name">Post-Surgical and Therapeutic Exercise</span>
+                                <span class="course-ccus">3</span>
+                            </div>
+                            <div class="course-item">
+                                <span class="course-name">Professional Documentation and Communication</span>
+                                <span class="course-ccus">3</span>
+                            </div>
+                            <div class="course-item">
+                                <span class="course-name">Physical Agents, Modalities, and Wound Care</span>
+                                <span class="course-ccus">3</span>
+                            </div>
+                            <div class="course-item">
+                                <span class="course-name">Infection Control and Patient Safety</span>
+                                <span class="course-ccus">3</span>
+                            </div>
+                            <div class="course-item">
+                                <span class="course-name">Patient Education and Health Promotion</span>
+                                <span class="course-ccus">2</span>
+                            </div>
+                        </div>
+                        
+                        <button class="btn btn-primary" style="margin-top: 2rem;">Select This Package</button>
+                    </div>
+
+                    <!-- OT Package -->
+                    <div class="package-card">
+                        <div class="package-header">
+                            <div class="package-ccus">23</div>
+                            <div style="font-size: 0.9rem; color: var(--neutral-600); margin-bottom: 1rem;">Total CCUs</div>
+                            <h3 class="package-title">Back to the Basics Core Package</h3>
+                            <p class="package-description">(20 CCUs)</p>
+                        </div>
+                        
+                        <div class="course-list">
+                            <div class="course-item">
+                                <span class="course-name">Comprehensive Mobility and Fall Prevention</span>
+                                <span class="course-ccus">3</span>
+                            </div>
+                            <div class="course-item">
+                                <span class="course-name">Balance, Gait, and Vestibular Management</span>
+                                <span class="course-ccus">3</span>
+                            </div>
+                            <div class="course-item">
+                                <span class="course-name">Post-Surgical and Therapeutic Exercise</span>
+                                <span class="course-ccus">3</span>
+                            </div>
+                            <div class="course-item">
+                                <span class="course-name">Professional Documentation and Communication</span>
+                                <span class="course-ccus">3</span>
+                            </div>
+                            <div class="course-item">
+                                <span class="course-name">Physical Agents, Modalities, and Wound Care</span>
+                                <span class="course-ccus">3</span>
+                            </div>
+                            <div class="course-item">
+                                <span class="course-name">Neurological Rehabilitation</span>
+                                <span class="course-ccus">3</span>
+                            </div>
+                            <div class="course-item">
+                                <span class="course-name">Patient Education and Health Promotion</span>
+                                <span class="course-ccus">2</span>
+                            </div>
+                        </div>
+                        
+                        <div style="border-top: 1px solid var(--neutral-100); padding-top: 1.5rem; margin-top: 1.5rem;">
+                            <h4 style="color: var(--primary-navy); margin-bottom: 1rem;">OT-Specific Course (3 CCUs)</h4>
+                            <div class="course-item">
+                                <span class="course-name">OT Evaluation and Assessment of ADLs</span>
+                                <span class="course-ccus">3</span>
+                            </div>
+                        </div>
+                        
+                        <button class="btn btn-primary" style="margin-top: 2rem;">Select This Package</button>
+                    </div>
+
+                    <!-- COTA Package -->
+                    <div class="package-card">
+                        <div class="package-header">
+                            <div class="package-ccus">23</div>
+                            <div style="font-size: 0.9rem; color: var(--neutral-600); margin-bottom: 1rem;">Total CCUs</div>
+                            <h3 class="package-title">Back to the Basics Complete Package</h3>
+                            <p class="package-description">(23 CCUs)</p>
+                        </div>
+                        
+                        <div class="course-list">
+                            <div class="course-item">
+                                <span class="course-name">Comprehensive Mobility and Fall Prevention</span>
+                                <span class="course-ccus">3</span>
+                            </div>
+                            <div class="course-item">
+                                <span class="course-name">Balance, Gait, and Vestibular Management</span>
+                                <span class="course-ccus">3</span>
+                            </div>
+                            <div class="course-item">
+                                <span class="course-name">Post-Surgical and Therapeutic Exercise</span>
+                                <span class="course-ccus">3</span>
+                            </div>
+                            <div class="course-item">
+                                <span class="course-name">Geriatric Care Across the Continuum</span>
+                                <span class="course-ccus">3</span>
+                            </div>
+                            <div class="course-item">
+                                <span class="course-name">Professional Documentation and Communication</span>
+                                <span class="course-name">3</span>
+                            </div>
+                            <div class="course-item">
+                                <span class="course-name">Physical Agents, Modalities, and Wound Care</span>
+                                <span class="course-ccus">3</span>
+                            </div>
+                            <div class="course-item">
+                                <span class="course-name">Neurological Rehabilitation</span>
+                                <span class="course-ccus">3</span>
+                            </div>
+                            <div class="course-item">
+                                <span class="course-name">Patient Education and Health Promotion</span>
+                                <span class="course-ccus">2</span>
+                            </div>
+                        </div>
+                        
+                        <button class="btn btn-primary" style="margin-top: 2rem;">Select This Package</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Why DrTroy Section -->
+        <section class="why-section" id="about">
+            <div class="why-container">
+                <div class="why-content">
+                    <h2>Why DrTroy?</h2>
+                    <p>We keep it simple. Quality CE courses at fair prices. No upsells, no hidden fees, no nonsense. Just the hours you need on an easy to use platform.</p>
+                    <p>Every course is designed with the busy healthcare professional in mind, providing evidence-based content that directly applies to daily practice across all care settings.</p>
+                </div>
+                
+                <div class="founder-card">
+                    <h3 class="founder-title">Dr. Troy Hounshell, PT, ScD</h3>
+                    <p class="founder-subtitle">Founder</p>
+                    <p class="founder-description">25+ years of clinical experience. Practice owner. Delivering practical continuing education that works in the real world.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Accreditation Section -->
+        <section class="accreditation-section">
+            <div class="accreditation-container">
+                <h2 class="accreditation-title">Accreditation & Approvals</h2>
+                
+                <div class="accreditation-grid">
+                    <div class="accreditation-item">Texas PT Board</div>
+                    <div class="accreditation-item">Texas OT Board</div>
+                    <div class="accreditation-item">APTA Approved</div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer" id="contact">
+        <div class="footer-container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>DrTroy Continuing Education</h3>
+                    <p>Professional development for healthcare professionals across all settings. Evidence-based courses designed by practicing clinicians.</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <p><a href="course-catalog.html">Course Catalog</a></p>
+                    <p><a href="cart.html">Shopping Cart</a></p>
+                    <p><a href="#about">About Dr. Troy</a></p>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Contact Information</h3>
+                    <p>Texas Therapy Pros</p>
+                    <p>Serving West Texas</p>
+                    <p>Professional continuing education nationwide</p>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2024 DrTroy Continuing Education. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Include cart system -->
+    <script src="js/cart.js"></script>
+    
+    <script>
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('🏠 Homepage preview initializing...');
+            
+            // Update cart icon if cart system is available
+            if (window.updateCartIcon) {
+                window.updateCartIcon();
+                
+                // Listen for cart changes
+                if (window.drtroyCart) {
+                    window.drtroyCart.addListener(function() {
+                        console.log('🔔 Cart changed, updating icon');
+                        window.updateCartIcon();
+                    });
+                }
+            }
+            
+            console.log('✅ Homepage preview initialized');
+        });
+
+        // Handle account creation form
+        document.getElementById('account-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(e.target);
+            const accountData = {
+                email: formData.get('email'),
+                password: formData.get('password'),
+                profession: formData.get('profession'),
+                created: new Date().toISOString()
+            };
+            
+            // Store account data (in production, this would be handled server-side)
+            localStorage.setItem('drtroyAccount', JSON.stringify(accountData));
+            
+            // Show success message
+            alert('Account created successfully! You can now access courses and get $10 off bundle packages.');
+            
+            // Redirect to course catalog
+            window.location.href = 'course-catalog.html';
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
