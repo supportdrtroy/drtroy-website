@@ -323,8 +323,14 @@
 
         .packages-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            grid-template-columns: repeat(2, 1fr);
             gap: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            .packages-grid {
+                grid-template-columns: 1fr;
+            }
         }
 
         .package-card {
@@ -336,6 +342,8 @@
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
             overflow: hidden;
+            display: flex;
+            flex-direction: column;
         }
 
         .package-card:hover {
@@ -384,6 +392,7 @@
             margin: 2rem 0;
             border-top: 1px solid var(--neutral-100);
             padding-top: 2rem;
+            flex-grow: 1;
         }
 
         .course-item {
@@ -727,8 +736,8 @@
                         <div class="package-header">
                             <div class="package-ccus">27</div>
                             <div style="font-size: 0.9rem; color: var(--neutral-600); margin-bottom: 1rem;">Total CCUs</div>
-                            <h3 class="package-title">Back to the Basics Core Package</h3>
-                            <p class="package-description">(24 CCUs)</p>
+                            <h3 class="package-title">PT Core Package</h3>
+                            <p class="package-description">(24 Core CCUs + 3 PT-Specific)</p>
                         </div>
                         
                         <div class="course-list">
@@ -777,52 +786,13 @@
                         <button class="btn btn-primary" style="margin-top: 2rem;">Select This Package</button>
                     </div>
 
-                    <!-- PTA Package -->
-                    <div class="package-card">
-                        <div class="package-header">
-                            <div class="package-ccus">17</div>
-                            <div style="font-size: 0.9rem; color: var(--neutral-600); margin-bottom: 1rem;">Total CCUs</div>
-                            <h3 class="package-title">Back to the Basics Complete Package</h3>
-                            <p class="package-description">(17 CCUs)</p>
-                        </div>
-                        
-                        <div class="course-list">
-                            <div class="course-item">
-                                <span class="course-name">Comprehensive Mobility and Fall Prevention</span>
-                                <span class="course-ccus">3</span>
-                            </div>
-                            <div class="course-item">
-                                <span class="course-name">Post-Surgical and Therapeutic Exercise</span>
-                                <span class="course-ccus">3</span>
-                            </div>
-                            <div class="course-item">
-                                <span class="course-name">Professional Documentation and Communication</span>
-                                <span class="course-ccus">3</span>
-                            </div>
-                            <div class="course-item">
-                                <span class="course-name">Physical Agents, Modalities, and Wound Care</span>
-                                <span class="course-ccus">3</span>
-                            </div>
-                            <div class="course-item">
-                                <span class="course-name">Infection Control and Patient Safety</span>
-                                <span class="course-ccus">3</span>
-                            </div>
-                            <div class="course-item">
-                                <span class="course-name">Patient Education and Health Promotion</span>
-                                <span class="course-ccus">2</span>
-                            </div>
-                        </div>
-                        
-                        <button class="btn btn-primary" style="margin-top: 2rem;">Select This Package</button>
-                    </div>
-
                     <!-- OT Package -->
                     <div class="package-card">
                         <div class="package-header">
                             <div class="package-ccus">23</div>
                             <div style="font-size: 0.9rem; color: var(--neutral-600); margin-bottom: 1rem;">Total CCUs</div>
-                            <h3 class="package-title">Back to the Basics Core Package</h3>
-                            <p class="package-description">(20 CCUs)</p>
+                            <h3 class="package-title">OT Core Package</h3>
+                            <p class="package-description">(20 Core CCUs + 3 OT-Specific)</p>
                         </div>
                         
                         <div class="course-list">
@@ -872,7 +842,7 @@
                         <div class="package-header">
                             <div class="package-ccus">23</div>
                             <div style="font-size: 0.9rem; color: var(--neutral-600); margin-bottom: 1rem;">Total CCUs</div>
-                            <h3 class="package-title">Back to the Basics Complete Package</h3>
+                            <h3 class="package-title">COTA Complete Package</h3>
                             <p class="package-description">(23 CCUs)</p>
                         </div>
                         
@@ -895,7 +865,7 @@
                             </div>
                             <div class="course-item">
                                 <span class="course-name">Professional Documentation and Communication</span>
-                                <span class="course-name">3</span>
+                                <span class="course-ccus">3</span>
                             </div>
                             <div class="course-item">
                                 <span class="course-name">Physical Agents, Modalities, and Wound Care</span>
@@ -903,6 +873,45 @@
                             </div>
                             <div class="course-item">
                                 <span class="course-name">Neurological Rehabilitation</span>
+                                <span class="course-ccus">3</span>
+                            </div>
+                            <div class="course-item">
+                                <span class="course-name">Patient Education and Health Promotion</span>
+                                <span class="course-ccus">2</span>
+                            </div>
+                        </div>
+                        
+                        <button class="btn btn-primary" style="margin-top: 2rem;">Select This Package</button>
+                    </div>
+
+                    <!-- PTA Package -->
+                    <div class="package-card">
+                        <div class="package-header">
+                            <div class="package-ccus">17</div>
+                            <div style="font-size: 0.9rem; color: var(--neutral-600); margin-bottom: 1rem;">Total CCUs</div>
+                            <h3 class="package-title">PTA Complete Package</h3>
+                            <p class="package-description">(17 CCUs)</p>
+                        </div>
+                        
+                        <div class="course-list">
+                            <div class="course-item">
+                                <span class="course-name">Comprehensive Mobility and Fall Prevention</span>
+                                <span class="course-ccus">3</span>
+                            </div>
+                            <div class="course-item">
+                                <span class="course-name">Post-Surgical and Therapeutic Exercise</span>
+                                <span class="course-ccus">3</span>
+                            </div>
+                            <div class="course-item">
+                                <span class="course-name">Professional Documentation and Communication</span>
+                                <span class="course-ccus">3</span>
+                            </div>
+                            <div class="course-item">
+                                <span class="course-name">Physical Agents, Modalities, and Wound Care</span>
+                                <span class="course-ccus">3</span>
+                            </div>
+                            <div class="course-item">
+                                <span class="course-name">Infection Control and Patient Safety</span>
                                 <span class="course-ccus">3</span>
                             </div>
                             <div class="course-item">
