@@ -73,28 +73,47 @@ class ShoppingCart {
 
     // Remove item from cart
     removeItem(itemId, type = 'course') {
-        console.log('🗑️ Removing item:', { itemId, type });
+        console.log('🗑️ ShoppingCart.removeItem called:', { itemId, type });
         console.log('📦 Current cart items before removal:', this.items);
         
+        // Validate inputs
+        if (!itemId || !type) {
+            console.error('❌ removeItem: Invalid parameters:', { itemId, type });
+            throw new Error('Invalid parameters for removeItem');
+        }
+        
         const beforeCount = this.items.length;
+        let removedItems = [];
         
         this.items = this.items.filter(item => {
-            const shouldKeep = !(item.type === type && 
-              (type === 'course' ? item.courseId === itemId : item.packageCode === itemId));
+            const matchesCourse = (type === 'course' && item.type === 'course' && item.courseId === itemId);
+            const matchesPackage = (type === 'package' && item.type === 'package' && item.packageCode === itemId);
+            const shouldKeep = !(matchesCourse || matchesPackage);
             
             if (!shouldKeep) {
                 console.log('🎯 Removing item:', item);
+                removedItems.push(item);
             }
             
             return shouldKeep;
         });
         
         const afterCount = this.items.length;
-        console.log('📊 Items removed:', beforeCount - afterCount);
+        const actuallyRemoved = beforeCount - afterCount;
+        
+        console.log('📊 Items removed:', actuallyRemoved, 'Expected: 1');
+        console.log('📋 Removed items:', removedItems);
         console.log('📦 Cart items after removal:', this.items);
         
+        if (actuallyRemoved === 0) {
+            console.warn('⚠️ No items were removed - item may not exist');
+            return { success: false, reason: 'Item not found in cart' };
+        }
+        
         this.saveCart();
-        console.log('✅ Remove operation completed');
+        console.log('✅ Remove operation completed successfully');
+        
+        return { success: true, removedCount: actuallyRemoved };
     }
 
     // Update item quantity (courses only)
@@ -533,11 +552,24 @@ window.clearCart = function() {
 // Global remove function for cart UI
 window.removeFromCart = function(itemId, type) {
     console.log('🌐 Global removeFromCart called:', { itemId, type });
-    window.drtroyCart.removeItem(itemId, type);
-    window.updateCartIcon();
     
-    // Trigger cart change event for any listeners
-    window.drtroyCart.notifyListeners();
+    try {
+        const result = window.drtroyCart.removeItem(itemId, type);
+        console.log('🌐 Global removeFromCart result:', result);
+        
+        if (result.success) {
+            window.updateCartIcon();
+            // Trigger cart change event for any listeners
+            window.drtroyCart.notifyListeners();
+            return result;
+        } else {
+            console.warn('⚠️ Global removeFromCart failed:', result.reason);
+            return result;
+        }
+    } catch (error) {
+        console.error('❌ Global removeFromCart error:', error);
+        return { success: false, reason: error.message };
+    }
 };
 
 // Global update quantity function
