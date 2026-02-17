@@ -561,7 +561,7 @@
         
         <div class="container">
             <div class="logo">
-                <img src="courses/images/drtroy_logo_transparent_final.png" alt="DrTroy Continuing Education" onerror="this.src='courses/images/drtroy_logo_new.jpg'">
+                <img src="courses/images/drtroy_logo_new.jpg" alt="DrTroy Continuing Education">
             </div>
             
             <div class="content-grid">
@@ -596,7 +596,7 @@
                     <div id="notify-message" style="margin-top: 15px; display: none;"></div>
                     
                     <div class="contact-info">
-                        <p>Questions? Contact us at <a href="mailto:info@drtroy.com">info@drtroy.com</a></p>
+                        <p>Questions? Contact us at <a href="mailto:support@drtroy.com">support@drtroy.com</a></p>
                         <p>&copy; 2026 DrTroy Continuing Education. All rights reserved.</p>
                     </div>
                 </div>
@@ -617,16 +617,18 @@
                 return;
             }
             
-            // Store email in localStorage for now (would integrate with backend later)
+            // Store email in localStorage for now (backend should send to support@drtroy.com with BCC to troy@drtroy.com)
             let notifyList = JSON.parse(localStorage.getItem('drtroy-notify-list') || '[]');
-            if (notifyList.includes(email)) {
+            if (notifyList.some(item => item.email === email)) {
                 showMessage('You\'re already on our notification list!', 'info');
                 return;
             }
             
             notifyList.push({
                 email: email,
-                timestamp: new Date().toISOString()
+                timestamp: new Date().toISOString(),
+                sendTo: 'support@drtroy.com',
+                bcc: 'troy@drtroy.com'
             });
             localStorage.setItem('drtroy-notify-list', JSON.stringify(notifyList));
             
