@@ -434,14 +434,26 @@
                 position: absolute;
                 left: 10px;
                 top: 8px;
-                width: 40%;
+                width: 35%;
                 padding-right: 10px;
                 white-space: nowrap;
                 font-weight: 600;
                 color: var(--navy);
-                font-size: 12px;
+                font-size: 11px;
                 text-transform: uppercase;
-                letter-spacing: 0.5px;
+                letter-spacing: 0.3px;
+            }
+
+            /* Fallback for tables without data-label - use nth-child */
+            table td:nth-child(1):before { content: "Item: " !important; }
+            table td:nth-child(2):before { content: "Value: " !important; }
+            table td:nth-child(3):before { content: "Details: " !important; }
+            table td:nth-child(4):before { content: "Notes: " !important; }
+            table td:nth-child(5):before { content: "Extra: " !important; }
+
+            /* Override for tables with proper data-labels */
+            table td[data-label]:before {
+                content: attr(data-label) ": " !important;
             }
 
             /* Specific styling for Economic Impact table */
@@ -449,11 +461,21 @@
                 border-left: 4px solid var(--gold);
             }
 
-            .mobile-responsive-table td[data-label="Annual Cost"],
-            .mobile-responsive-table td[data-label="Per Fall Incident"] {
+            .mobile-responsive-table td[data-label*="Cost"] {
                 font-weight: 600;
                 color: var(--gold);
                 font-size: 14px;
+            }
+
+            /* Better text positioning to avoid overlap */
+            table td {
+                padding: 8px 5px 8px 42%;
+                min-height: 35px;
+            }
+
+            table td:before {
+                width: 38%;
+                font-size: 10px;
             }
             }
             .module-status {
@@ -1079,11 +1101,39 @@
 
                 <h3>TUG Normative Data and Risk Stratification</h3>
                 <table>
-                    <tr><th>Age Group</th><th>Normal (sec)</th><th>Mild Risk (sec)</th><th>High Risk (sec)</th><th>Fall Risk Multiplier</th></tr>
-                    <tr><td>60-69 years</td><td>&lt;8.1</td><td>8.2-9.0</td><td>&gt;9.1</td><td>1.2x per second &gt;8.1</td></tr>
-                    <tr><td>70-79 years</td><td>&lt;9.2</td><td>9.3-10.2</td><td>&gt;10.3</td><td>1.3x per second &gt;9.2</td></tr>
-                    <tr><td>80+ years</td><td>&lt;11.3</td><td>11.4-14.0</td><td>&gt;14.1</td><td>1.4x per second &gt;11.3</td></tr>
-                    <tr><td>Community cutoff</td><td>&lt;10.0</td><td>10.0-13.9</td><td>&gt;14.0</td><td>Institutionalization risk</td></tr>
+                    <thead>
+                        <tr><th>Age Group</th><th>Normal (sec)</th><th>Mild Risk (sec)</th><th>High Risk (sec)</th><th>Fall Risk Multiplier</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td data-label="Age Group">60-69 years</td>
+                            <td data-label="Normal">&lt;8.1</td>
+                            <td data-label="Mild Risk">8.2-9.0</td>
+                            <td data-label="High Risk">&gt;9.1</td>
+                            <td data-label="Risk Multiplier">1.2x per second &gt;8.1</td>
+                        </tr>
+                        <tr>
+                            <td data-label="Age Group">70-79 years</td>
+                            <td data-label="Normal">&lt;9.2</td>
+                            <td data-label="Mild Risk">9.3-10.2</td>
+                            <td data-label="High Risk">&gt;10.3</td>
+                            <td data-label="Risk Multiplier">1.3x per second &gt;9.2</td>
+                        </tr>
+                        <tr>
+                            <td data-label="Age Group">80+ years</td>
+                            <td data-label="Normal">&lt;11.3</td>
+                            <td data-label="Mild Risk">11.4-14.0</td>
+                            <td data-label="High Risk">&gt;14.1</td>
+                            <td data-label="Risk Multiplier">1.4x per second &gt;11.3</td>
+                        </tr>
+                        <tr>
+                            <td data-label="Age Group">Community cutoff</td>
+                            <td data-label="Normal">&lt;10.0</td>
+                            <td data-label="Mild Risk">10.0-13.9</td>
+                            <td data-label="High Risk">&gt;14.0</td>
+                            <td data-label="Risk Multiplier">Institutionalization risk</td>
+                        </tr>
+                    </tbody>
                 </table>
 
                 <div class="caution-box">
@@ -1130,11 +1180,35 @@
                 </div>
 
                 <table>
-                    <tr><th>BBS Score</th><th>Fall Risk Level</th><th>Fall Rate (%)</th><th>Recommended Action</th></tr>
-                    <tr><td>45-56</td><td>Low risk</td><td>8-12</td><td>General fitness program</td></tr>
-                    <tr><td>36-44</td><td>Medium risk</td><td>25-30</td><td>Balance training indicated</td></tr>
-                    <tr><td>21-35</td><td>Medium-high risk</td><td>40-50</td><td>PT referral + home modifications</td></tr>
-                    <tr><td>0-20</td><td>High risk</td><td>&gt;70</td><td>Intensive intervention + safety measures</td></tr>
+                    <thead>
+                        <tr><th>BBS Score</th><th>Fall Risk Level</th><th>Fall Rate (%)</th><th>Recommended Action</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td data-label="BBS Score">45-56</td>
+                            <td data-label="Risk Level">Low risk</td>
+                            <td data-label="Fall Rate">8-12</td>
+                            <td data-label="Action">General fitness program</td>
+                        </tr>
+                        <tr>
+                            <td data-label="BBS Score">36-44</td>
+                            <td data-label="Risk Level">Medium risk</td>
+                            <td data-label="Fall Rate">25-30</td>
+                            <td data-label="Action">Balance training indicated</td>
+                        </tr>
+                        <tr>
+                            <td data-label="BBS Score">21-35</td>
+                            <td data-label="Risk Level">Medium-high risk</td>
+                            <td data-label="Fall Rate">40-50</td>
+                            <td data-label="Action">PT referral + home modifications</td>
+                        </tr>
+                        <tr>
+                            <td data-label="BBS Score">0-20</td>
+                            <td data-label="Risk Level">High risk</td>
+                            <td data-label="Fall Rate">&gt;70</td>
+                            <td data-label="Action">Intensive intervention + safety measures</td>
+                        </tr>
+                    </tbody>
                 </table>
 
                 <div class="success-box">
@@ -1331,12 +1405,46 @@
 
                 <h3>Normative Gait Speed Data</h3>
                 <table>
-                    <tr><th>Age Group</th><th>Men (m/s)</th><th>Women (m/s)</th><th>Fall Risk Cutoff</th><th>Institutionalization Risk</th></tr>
-                    <tr><td>65-69 years</td><td>1.34 ± 0.26</td><td>1.27 ± 0.21</td><td>&lt;1.0 m/s</td><td>&lt;0.6 m/s</td></tr>
-                    <tr><td>70-74 years</td><td>1.26 ± 0.25</td><td>1.13 ± 0.22</td><td>&lt;0.9 m/s</td><td>&lt;0.6 m/s</td></tr>
-                    <tr><td>75-79 years</td><td>1.18 ± 0.26</td><td>1.05 ± 0.21</td><td>&lt;0.8 m/s</td><td>&lt;0.6 m/s</td></tr>
-                    <tr><td>80-84 years</td><td>1.05 ± 0.25</td><td>0.94 ± 0.25</td><td>&lt;0.8 m/s</td><td>&lt;0.6 m/s</td></tr>
-                    <tr><td>85+ years</td><td>0.87 ± 0.27</td><td>0.78 ± 0.26</td><td>&lt;0.6 m/s</td><td>&lt;0.4 m/s</td></tr>
+                    <thead>
+                        <tr><th>Age Group</th><th>Men (m/s)</th><th>Women (m/s)</th><th>Fall Risk Cutoff</th><th>Institutionalization Risk</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td data-label="Age Group">65-69 years</td>
+                            <td data-label="Men">1.34 ± 0.26</td>
+                            <td data-label="Women">1.27 ± 0.21</td>
+                            <td data-label="Fall Risk">&lt;1.0 m/s</td>
+                            <td data-label="Institution Risk">&lt;0.6 m/s</td>
+                        </tr>
+                        <tr>
+                            <td data-label="Age Group">70-74 years</td>
+                            <td data-label="Men">1.26 ± 0.25</td>
+                            <td data-label="Women">1.13 ± 0.22</td>
+                            <td data-label="Fall Risk">&lt;0.9 m/s</td>
+                            <td data-label="Institution Risk">&lt;0.6 m/s</td>
+                        </tr>
+                        <tr>
+                            <td data-label="Age Group">75-79 years</td>
+                            <td data-label="Men">1.18 ± 0.26</td>
+                            <td data-label="Women">1.05 ± 0.21</td>
+                            <td data-label="Fall Risk">&lt;0.8 m/s</td>
+                            <td data-label="Institution Risk">&lt;0.6 m/s</td>
+                        </tr>
+                        <tr>
+                            <td data-label="Age Group">80-84 years</td>
+                            <td data-label="Men">1.05 ± 0.25</td>
+                            <td data-label="Women">0.94 ± 0.25</td>
+                            <td data-label="Fall Risk">&lt;0.8 m/s</td>
+                            <td data-label="Institution Risk">&lt;0.6 m/s</td>
+                        </tr>
+                        <tr>
+                            <td data-label="Age Group">85+ years</td>
+                            <td data-label="Men">0.87 ± 0.27</td>
+                            <td data-label="Women">0.78 ± 0.26</td>
+                            <td data-label="Fall Risk">&lt;0.6 m/s</td>
+                            <td data-label="Institution Risk">&lt;0.4 m/s</td>
+                        </tr>
+                    </tbody>
                 </table>
 
                 <div class="caution-box">
