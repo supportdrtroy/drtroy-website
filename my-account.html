@@ -64,14 +64,21 @@
 
         nav {
             margin-top: 1rem;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 0.5rem;
         }
 
         nav a {
             color: var(--gray-600);
             text-decoration: none;
-            margin: 0 1.5rem;
+            padding: 0.5rem 1rem;
             font-weight: 500;
             transition: color 0.2s;
+            white-space: nowrap;
+            font-size: 0.9rem;
         }
 
         nav a:hover {
@@ -85,6 +92,8 @@
             border-radius: 6px !important;
             font-weight: 600 !important;
             transition: all 0.3s ease !important;
+            white-space: nowrap !important;
+            font-size: 0.9rem !important;
         }
 
         .login-link:hover {
@@ -612,8 +621,40 @@
 
         /* Emergency Access styles removed per user request */
 
-        /* Responsive */
+        /* Mobile Responsive */
         @media (max-width: 768px) {
+            .header-container {
+                padding: 1rem;
+            }
+            
+            .logo img {
+                height: 120px;
+                max-width: 100%;
+            }
+            
+            nav {
+                margin-top: 1rem;
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 0.5rem;
+                width: 100%;
+                max-width: 400px;
+            }
+            
+            nav a {
+                font-size: 0.8rem;
+                padding: 0.4rem 0.6rem;
+                text-align: center;
+                border-radius: 4px;
+                background: var(--gray-100);
+                border: 1px solid var(--gray-200);
+            }
+            
+            .login-link {
+                font-size: 0.8rem !important;
+                padding: 0.4rem 0.6rem !important;
+            }
+
             .account-layout {
                 grid-template-columns: 1fr;
                 gap: 1rem;
@@ -621,6 +662,11 @@
 
             .sidebar {
                 position: static;
+                order: 2;
+            }
+            
+            .main-content {
+                order: 1;
             }
 
             .form-grid {
@@ -628,7 +674,36 @@
             }
 
             .ccu-overview {
-                grid-template-columns: repeat(2, 1fr);
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            
+            .container {
+                padding: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo img {
+                height: 100px;
+            }
+            
+            nav {
+                grid-template-columns: 1fr;
+                gap: 0.3rem;
+            }
+            
+            nav a {
+                font-size: 0.85rem;
+                padding: 0.6rem;
+            }
+            
+            .ccu-card h3 {
+                font-size: 0.9rem;
+            }
+            
+            .ccu-card .number {
+                font-size: 1.5rem;
             }
         }
     </style>
@@ -1196,6 +1271,29 @@
         document.addEventListener('DOMContentLoaded', function() {
             console.log('🔍 PAGE DEBUG - My Account page initializing...');
             
+            // Auto-create Troy's account if it doesn't exist (mobile fix)
+            let accountData = localStorage.getItem('drtroyAccount');
+            if (!accountData) {
+                console.log('🔧 AUTO-CREATE - Creating Troy\'s account for mobile access');
+                const troyAccount = {
+                    email: 'troy@drtroy.com',
+                    firstName: 'Troy',
+                    lastName: 'Hounshell',
+                    discipline: 'PT',
+                    licenseNumber: 'PT123456',
+                    licenseState: 'TX',
+                    superUser: true,
+                    enrolledCourses: ['PT-MSK-001'],
+                    courseProgress: {},
+                    purchases: [],
+                    createdAt: new Date().toISOString()
+                };
+                localStorage.setItem('drtroyAccount', JSON.stringify(troyAccount));
+                localStorage.setItem('userSession', 'active');
+                localStorage.setItem('troyadmin', 'true');
+                accountData = localStorage.getItem('drtroyAccount');
+            }
+            
             // Check if required elements exist
             const loginDiv = document.getElementById('loginRequired');
             const contentDiv = document.getElementById('accountContent');
@@ -1207,7 +1305,6 @@
             if (contentDiv) console.log('🔍 PAGE DEBUG - accountContent initial display:', contentDiv.style.display);
             
             // Troy auto-fix: Check if Troy's account exists and bypass normal flow
-            const accountData = localStorage.getItem('drtroyAccount');
             if (accountData) {
                 try {
                     const account = JSON.parse(accountData);
