@@ -788,19 +788,8 @@
                 </div>
                 
                 <div class="notify-section">
-                    <h3>Be the First to Know</h3>
-                    <p>Get notified when we launch and receive exclusive early access to our premium courses.</p>
-                    <form class="email-form" onsubmit="handleNotifySubmit(event)">
-                        <input 
-                            type="email" 
-                            class="email-input" 
-                            placeholder="Enter your email address" 
-                            required
-                            id="notifyEmail"
-                        >
-                        <button type="submit" class="notify-btn">Notify Me</button>
-                    </form>
-                    <div id="notify-message" style="margin-top: 15px; display: none;"></div>
+                    <h3>Check Back Soon</h3>
+                    <p>Our comprehensive continuing education platform is in final development. We'll be launching very soon with board-approved courses for rehabilitation professionals.</p>
                     
                     <div class="contact-info">
                         <p>Questions? Contact us at <a href="mailto:support@drtroy.com">support@drtroy.com</a></p>
@@ -812,56 +801,7 @@
     </div>
 
     <script>
-        function handleNotifySubmit(event) {
-            event.preventDefault();
-            const email = document.getElementById('notifyEmail').value;
-            const messageDiv = document.getElementById('notify-message');
-            
-            // Simple email validation
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!emailRegex.test(email)) {
-                showMessage('Please enter a valid email address.', 'error');
-                return;
-            }
-            
-            // Store email in localStorage for now (backend should send to support@drtroy.com with BCC to troy@drtroy.com)
-            let notifyList = JSON.parse(localStorage.getItem('drtroy-notify-list') || '[]');
-            if (notifyList.some(item => item.email === email)) {
-                showMessage('You\'re already on our notification list!', 'info');
-                return;
-            }
-            
-            notifyList.push({
-                email: email,
-                timestamp: new Date().toISOString(),
-                sendTo: 'support@drtroy.com',
-                bcc: 'troy@drtroy.com'
-            });
-            localStorage.setItem('drtroy-notify-list', JSON.stringify(notifyList));
-            
-            showMessage('Thank you! We\'ll notify you when we launch.', 'success');
-            document.getElementById('notifyEmail').value = '';
-        }
-        
-        function showMessage(message, type) {
-            const messageDiv = document.getElementById('notify-message');
-            messageDiv.style.display = 'block';
-            messageDiv.textContent = message;
-            
-            // Style based on type
-            messageDiv.style.color = type === 'success' ? 'var(--navy)' : 
-                                   type === 'error' ? '#d32f2f' : 'var(--gray-warm)';
-            messageDiv.style.fontWeight = '500';
-            messageDiv.style.fontSize = '0.95rem';
-            messageDiv.style.textAlign = 'center';
-            
-            // Hide after 5 seconds
-            setTimeout(() => {
-                messageDiv.style.display = 'none';
-            }, 5000);
-        }
-        
-        // Enhanced interactive effects with medical precision + mobile optimization
+        // Enhanced interactive effects with mobile optimization
         document.addEventListener('DOMContentLoaded', function() {
             const isMobile = window.innerWidth <= 768 || 'ontouchstart' in document.documentElement;
             
@@ -898,8 +838,8 @@
             
             // Mobile-specific optimizations
             if (isMobile) {
-                // Add touch feedback for buttons
-                const touchElements = document.querySelectorAll('.notify-btn, .feature');
+                // Add touch feedback for feature elements
+                const touchElements = document.querySelectorAll('.feature');
                 touchElements.forEach(element => {
                     element.addEventListener('touchstart', function() {
                         this.style.transform = 'scale(0.98)';
@@ -911,15 +851,6 @@
                         }, 100);
                     }, { passive: true });
                 });
-                
-                // Prevent double-tap zoom on form elements
-                const emailInput = document.getElementById('notifyEmail');
-                if (emailInput) {
-                    emailInput.addEventListener('touchend', function(e) {
-                        e.preventDefault();
-                        this.focus();
-                    });
-                }
             }
             
             // Handle orientation changes
@@ -929,18 +860,6 @@
                     window.scrollTo(0, window.scrollY);
                 }, 100);
             });
-            
-            // Improve form submission on mobile
-            const form = document.querySelector('.email-form');
-            if (form) {
-                form.addEventListener('submit', function(e) {
-                    // Blur input to hide mobile keyboard after submission
-                    const emailInput = document.getElementById('notifyEmail');
-                    if (emailInput && isMobile) {
-                        emailInput.blur();
-                    }
-                });
-            }
         });
     </script>
 </body>
