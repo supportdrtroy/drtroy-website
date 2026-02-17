@@ -21,39 +21,54 @@ class ShoppingCart {
     // Save cart to localStorage
     saveCart() {
         try {
+            console.log('💾 Saving cart to localStorage:', this.items);
             localStorage.setItem('drtroyCart', JSON.stringify(this.items));
+            console.log('✅ Cart saved successfully');
             this.notifyListeners();
+            console.log('📢 Cart listeners notified');
         } catch (e) {
-            console.error('Error saving cart:', e);
+            console.error('❌ Error saving cart:', e);
         }
     }
 
     // Add item to cart
     addItem(item) {
+        console.log('🛒 ShoppingCart.addItem called with:', item);
+        
         const existingIndex = this.items.findIndex(cartItem => 
             cartItem.type === item.type && 
             (item.type === 'course' ? cartItem.courseId === item.courseId : cartItem.packageCode === item.packageCode)
         );
 
+        console.log('🔍 Existing item index:', existingIndex);
+
         if (existingIndex >= 0) {
             // Item already in cart - update quantity or replace
             if (item.type === 'course') {
                 this.items[existingIndex].quantity = (this.items[existingIndex].quantity || 1) + 1;
+                console.log('➕ Updated quantity for existing course');
             } else {
                 // Packages don't have quantities - just replace
                 this.items[existingIndex] = { ...item };
+                console.log('🔄 Replaced existing package');
             }
         } else {
             // Add new item
-            this.items.push({ 
+            const newItem = { 
                 ...item, 
                 quantity: item.type === 'course' ? 1 : undefined,
                 addedAt: new Date().toISOString() 
-            });
+            };
+            this.items.push(newItem);
+            console.log('✨ Added new item to cart:', newItem);
         }
 
+        console.log('📦 Current cart items:', this.items);
         this.saveCart();
-        return this.items.length;
+        
+        const itemCount = this.items.length;
+        console.log('🔢 Returning item count:', itemCount);
+        return itemCount;
     }
 
     // Remove item from cart
@@ -328,32 +343,43 @@ window.drtroyCart = new ShoppingCart();
 
 // Cart helper functions
 window.addCourseToCart = function(courseId) {
+    console.log('🛒 Adding course to cart:', courseId);
+    console.log('📚 Available courses:', window.COURSE_CATALOG);
+    
     const course = window.COURSE_CATALOG[courseId];
     if (!course) {
+        console.error('❌ Course not found:', courseId);
         alert('Course not found.');
         return;
     }
 
     if (course.status !== 'available') {
+        console.error('❌ Course not available:', courseId);
         alert('This course is not yet available.');
         return;
     }
+
+    console.log('✅ Course found:', course);
 
     const cartItem = {
         type: 'course',
         courseId: courseId,
         title: course.title,
         credits: course.credits,
-        price: course.price,
+        price: course.individualPrice || course.price, // Handle both price formats
         courseNumber: course.courseNumber,
         category: course.category
     };
 
+    console.log('📦 Cart item created:', cartItem);
+
     const itemCount = window.drtroyCart.addItem(cartItem);
     
+    console.log('🔢 Items in cart:', itemCount);
+    
     // Show feedback
-    showCartNotification(`Added "${course.title}" to cart`);
-    updateCartIcon();
+    window.showCartNotification(`Added "${course.title}" to cart`);
+    window.updateCartIcon();
     
     return itemCount;
 };
@@ -386,6 +412,8 @@ window.addPackageToCart = function(packageCode) {
 
 // Cart notification
 window.showCartNotification = function(message) {
+    console.log('🔔 Showing cart notification:', message);
+    
     // Remove existing notification
     const existing = document.getElementById('cart-notification');
     if (existing) {
@@ -417,39 +445,58 @@ window.showCartNotification = function(message) {
     `;
 
     document.body.appendChild(notification);
+    console.log('✅ Notification added to DOM');
 
     // Auto-remove after 4 seconds
     setTimeout(() => {
         if (notification.parentNode) {
             notification.remove();
+            console.log('🗑️ Notification removed after 4 seconds');
         }
     }, 4000);
 };
 
 // Update cart icon in navigation
 window.updateCartIcon = function() {
+    console.log('🔄 Updating cart icon...');
+    
     const cartIcon = document.getElementById('cart-icon');
     const cartCount = document.getElementById('cart-count');
     
+    console.log('🎯 Cart elements found:', { cartIcon: !!cartIcon, cartCount: !!cartCount });
+    
     if (cartIcon && cartCount) {
         const count = window.drtroyCart.getItemCount();
+        console.log('📊 Cart count:', count);
+        
         if (count > 0) {
             cartCount.textContent = count;
             cartCount.style.display = 'inline-block';
+            console.log('✅ Cart count updated and shown');
         } else {
             cartCount.style.display = 'none';
+            console.log('👻 Cart count hidden (empty cart)');
         }
+    } else {
+        console.warn('⚠️ Cart icon elements not found in DOM');
     }
 };
 
 // Initialize cart on page load
 document.addEventListener('DOMContentLoaded', function() {
-    updateCartIcon();
+    console.log('🚀 Cart system initializing...');
+    console.log('🛒 Global cart instance:', window.drtroyCart);
+    console.log('📦 Current cart items:', window.drtroyCart.items);
+    
+    window.updateCartIcon();
     
     // Listen for cart changes
     window.drtroyCart.addListener(function() {
-        updateCartIcon();
+        console.log('🔔 Cart changed, updating icon');
+        window.updateCartIcon();
     });
+    
+    console.log('✅ Cart system initialized');
 });
 
 // Utility functions for other pages to use
