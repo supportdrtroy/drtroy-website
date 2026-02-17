@@ -613,50 +613,89 @@
         function removeFromCartUI(itemId, type) {
             console.log('🛒 Cart UI: removeFromCartUI called with:', { itemId, type });
             
+            // Validate inputs
+            if (!itemId || !type) {
+                console.error('❌ Cart UI: Invalid parameters:', { itemId, type });
+                return;
+            }
+
             try {
-                // Use global remove function
-                window.removeFromCart(itemId, type);
-                console.log('✅ Cart UI: Global removeFromCart completed, repopulating cart...');
+                // Check if cart exists
+                if (!window.drtroyCart) {
+                    console.error('❌ Cart UI: Cart instance not found');
+                    return;
+                }
+
+                // Use direct cart method instead of global function
+                window.drtroyCart.removeItem(itemId, type);
+                console.log('✅ Cart UI: removeItem completed, updating UI...');
+                
+                // Update cart icon
+                if (window.updateCartIcon) {
+                    window.updateCartIcon();
+                }
                 
                 // Repopulate the cart display
                 populateCart();
                 console.log('✅ Cart UI: populateCart completed');
                 
-                // Show feedback
-                const notification = document.createElement('div');
-                notification.innerHTML = `
-                    <div style="
-                        position: fixed;
-                        top: 20px;
-                        right: 20px;
-                        background: #dc2626;
-                        color: white;
-                        padding: 1rem 1.5rem;
-                        border-radius: 8px;
-                        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-                        z-index: 10000;
-                        font-weight: 500;
-                    ">
-                        Item removed from cart
-                    </div>
-                `;
-                document.body.appendChild(notification);
-                setTimeout(() => notification.remove(), 3000);
+                // Show simple success feedback
+                showRemoveNotification('Item removed from cart');
                 
             } catch (error) {
                 console.error('❌ Cart UI: Error removing item:', error);
-                alert('Error removing item from cart. Please try again.');
+                showRemoveNotification('Error removing item', true);
             }
+        }
+
+        // Simple notification function
+        function showRemoveNotification(message, isError = false) {
+            // Remove existing notification
+            const existing = document.getElementById('remove-notification');
+            if (existing) existing.remove();
+            
+            const notification = document.createElement('div');
+            notification.id = 'remove-notification';
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: ${isError ? '#dc2626' : '#059669'};
+                color: white;
+                padding: 1rem 1.5rem;
+                border-radius: 8px;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+                z-index: 10000;
+                font-weight: 500;
+            `;
+            notification.textContent = message;
+            
+            document.body.appendChild(notification);
+            setTimeout(() => {
+                if (notification.parentNode) {
+                    notification.remove();
+                }
+            }, 3000);
         }
         
         // Update quantity with UI refresh
         function updateQuantityUI(courseId, newQuantity) {
             console.log('🛒 Cart UI: updateQuantityUI called with:', { courseId, newQuantity });
             
+            if (!courseId || newQuantity < 0) {
+                console.error('❌ Cart UI: Invalid quantity parameters');
+                return;
+            }
+
             try {
-                // Use global update function
-                window.updateCartQuantity(courseId, newQuantity);
-                console.log('✅ Cart UI: Global updateCartQuantity completed');
+                // Use direct cart method
+                window.drtroyCart.updateQuantity(courseId, newQuantity);
+                console.log('✅ Cart UI: updateQuantity completed');
+                
+                // Update cart icon
+                if (window.updateCartIcon) {
+                    window.updateCartIcon();
+                }
                 
                 // Repopulate the cart display
                 populateCart();
@@ -664,14 +703,24 @@
                 
             } catch (error) {
                 console.error('❌ Cart UI: Error updating quantity:', error);
+                showRemoveNotification('Error updating quantity', true);
             }
         }
         
         // Clear cart
         function clearCart() {
             if (confirm('Are you sure you want to clear your cart?')) {
-                window.drtroyCart.clear();
-                populateCart();
+                try {
+                    window.drtroyCart.clear();
+                    if (window.updateCartIcon) {
+                        window.updateCartIcon();
+                    }
+                    populateCart();
+                    showRemoveNotification('Cart cleared');
+                } catch (error) {
+                    console.error('❌ Error clearing cart:', error);
+                    showRemoveNotification('Error clearing cart', true);
+                }
             }
         }
         
@@ -708,13 +757,28 @@
         
         // Initialize page
         document.addEventListener('DOMContentLoaded', function() {
+            console.log('🚀 Cart page initializing...');
+            
+            // Ensure cart system is ready
+            if (!window.drtroyCart) {
+                console.error('❌ Cart system not available');
+                return;
+            }
+            
+            console.log('✅ Cart system ready, populating page');
             populateCart();
             populateFeaturedPackages();
             
             // Listen for cart changes
-            window.drtroyCart.addListener(function() {
-                populateCart();
-            });
+            try {
+                window.drtroyCart.addListener(function() {
+                    console.log('🔔 Cart changed, repopulating page');
+                    populateCart();
+                });
+                console.log('✅ Cart change listener added');
+            } catch (error) {
+                console.error('❌ Error adding cart listener:', error);
+            }
         });
     </script>
 </body>
