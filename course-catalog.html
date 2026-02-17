@@ -440,7 +440,7 @@
                 credits: 3,
                 description: 'Comprehensive MSK evaluation and treatment approaches across all body regions',
                 status: 'available',
-                approvalNumber: 'DRTROY-PT-MSK-001-2024',
+                courseNumber: 'DRTROY-PT-MSK-001-2024',
                 individualPrice: 27.99,
                 category: 'pt-specific',
                 url: 'courses/pt-msk-001.html'
@@ -450,7 +450,7 @@
                 credits: 3,
                 description: 'Comprehensive management of hip, knee, and ankle arthroplasty from pre-op to long-term care',
                 status: 'available',
-                approvalNumber: 'DRTROY-JOINT-001-2024',
+                courseNumber: 'DRTROY-JOINT-001-2024',
                 individualPrice: 27.99,
                 category: 'pt-specific',
                 url: 'courses/joint-replacement-001-progressive.html'
@@ -462,7 +462,7 @@
                 credits: 3,
                 description: 'Comprehensive ADL assessment and intervention strategies for occupational therapists',
                 status: 'coming-soon',
-                approvalNumber: 'DRTROY-OT-ADL-001-2024',
+                courseNumber: 'DRTROY-OT-ADL-001-2024',
                 individualPrice: 27.99,
                 category: 'ot-specific',
                 url: '#'
@@ -474,7 +474,7 @@
                 credits: 3,
                 description: 'Evidence-based mobility assessment and fall prevention strategies across healthcare settings',
                 status: 'available',
-                approvalNumber: 'DRTROY-MOBILITY-001-2024',
+                courseNumber: 'DRTROY-MOBILITY-001-2024',
                 individualPrice: 27.99,
                 category: 'core',
                 url: 'courses/mobility-fall-001-progressive.html'
@@ -484,7 +484,7 @@
                 credits: 3,
                 description: 'Assessment and treatment of balance and vestibular disorders in rehabilitation',
                 status: 'coming-soon',
-                approvalNumber: 'DRTROY-BALANCE-001-2024',
+                courseNumber: 'DRTROY-BALANCE-001-2024',
                 individualPrice: 27.99,
                 category: 'core',
                 url: '#'
@@ -494,7 +494,7 @@
                 credits: 3,
                 description: 'Post-operative rehabilitation and evidence-based exercise prescription',
                 status: 'coming-soon',
-                approvalNumber: 'DRTROY-EXERCISE-001-2024',
+                courseNumber: 'DRTROY-EXERCISE-001-2024',
                 individualPrice: 27.99,
                 category: 'core',
                 url: '#'
@@ -504,7 +504,7 @@
                 credits: 3,
                 description: 'Comprehensive geriatric rehabilitation approaches for all care settings',
                 status: 'coming-soon',
-                approvalNumber: 'DRTROY-GERIATRIC-001-2024',
+                courseNumber: 'DRTROY-GERIATRIC-001-2024',
                 individualPrice: 27.99,
                 category: 'core',
                 url: '#'
@@ -514,7 +514,7 @@
                 credits: 3,
                 description: 'Clinical documentation standards and professional communication skills',
                 status: 'coming-soon',
-                approvalNumber: 'DRTROY-DOC-001-2024',
+                courseNumber: 'DRTROY-DOC-001-2024',
                 individualPrice: 27.99,
                 category: 'core',
                 url: '#'
@@ -524,7 +524,7 @@
                 credits: 3,
                 description: 'Therapeutic modalities and comprehensive wound care management',
                 status: 'coming-soon',
-                approvalNumber: 'DRTROY-MODALITIES-001-2024',
+                courseNumber: 'DRTROY-MODALITIES-001-2024',
                 individualPrice: 27.99,
                 category: 'core',
                 url: '#'
@@ -534,7 +534,7 @@
                 credits: 3,
                 description: 'Comprehensive neurological rehabilitation covering stroke, TBI, SCI, Parkinson\'s, MS, and emerging technologies',
                 status: 'available',
-                approvalNumber: 'DRTROY-NEURO-001-2024',
+                courseNumber: 'DRTROY-NEURO-001-2024',
                 individualPrice: 27.99,
                 category: 'core',
                 url: 'courses/pt-neuro-001-progressive.html'
@@ -544,7 +544,7 @@
                 credits: 3,
                 description: 'Infection prevention protocols and patient safety in healthcare settings',
                 status: 'coming-soon',
-                approvalNumber: 'DRTROY-INFECTION-001-2024',
+                courseNumber: 'DRTROY-INFECTION-001-2024',
                 individualPrice: 27.99,
                 category: 'core',
                 url: '#'
@@ -554,7 +554,7 @@
                 credits: 2,
                 description: 'Evidence-based strategies for effective patient education and health behavior change',
                 status: 'available',
-                approvalNumber: 'DRTROY-EDUCATION-001-2024',
+                courseNumber: 'DRTROY-EDUCATION-001-2024',
                 individualPrice: 18.99,
                 category: 'core',
                 url: 'courses/patient-education-001-progressive.html'
@@ -564,7 +564,7 @@
                 credits: 1.5,
                 description: 'Comprehensive technology skills including EHR systems, HIPAA compliance, clinical documentation, interoperability, and emerging healthcare technologies',
                 status: 'available',
-                approvalNumber: 'DRTROY-HEALTHTECH-001-2024',
+                courseNumber: 'DRTROY-HEALTHTECH-001-2024',
                 individualPrice: 14.99,
                 category: 'core',
                 url: 'courses/healthcare-technology-001-progressive.html'
@@ -615,7 +615,7 @@
                     <p class="course-description">${course.description}</p>
                     <div class="course-details">
                         <div class="course-credits">${course.credits} CCUs</div>
-                        <div class="course-approval">Approval #: ${course.approvalNumber}</div>
+                        <div class="course-approval">Course #: ${course.courseNumber}</div>
                         ${individualPriceHtml}
                     </div>
                     <div class="course-actions">
@@ -679,7 +679,7 @@
                 title: course.title,
                 price: course.individualPrice,
                 credits: course.credits,
-                approvalNumber: course.approvalNumber,
+                courseNumber: course.courseNumber,
                 type: 'individual'
             }));
 

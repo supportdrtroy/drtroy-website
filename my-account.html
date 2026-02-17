@@ -1844,7 +1844,7 @@
                 url: 'courses/pt-msk-001-progressive.html',
                 alternativeUrl: 'courses/pt-msk-001.html',
                 status: 'available',
-                approvalNumber: 'DRTROY-PT-MSK-001-2024',
+                courseNumber: 'DRTROY-PT-MSK-001-2024',
                 individualPrice: 27.99, // Updated pricing
                 provider: 'DrTroy Continuing Education',
                 duration: '180 minutes',
@@ -1859,7 +1859,7 @@
                 description: 'Comprehensive ADL assessment and intervention strategies',
                 url: '#',
                 status: 'coming-soon',
-                approvalNumber: 'DRTROY-OT-ADL-001-2024',
+                courseNumber: 'DRTROY-OT-ADL-001-2024',
                 individualPrice: 27.99,
                 provider: 'DrTroy Continuing Education'
             },
@@ -1870,7 +1870,7 @@
                 description: 'Evidence-based mobility assessment and fall prevention strategies',
                 url: '#',
                 status: 'coming-soon',
-                approvalNumber: 'DRTROY-MOBILITY-001-2024',
+                courseNumber: 'DRTROY-MOBILITY-001-2024',
                 individualPrice: 27.99,
                 provider: 'DrTroy Continuing Education'
             },
@@ -1880,7 +1880,7 @@
                 description: 'Assessment and treatment of balance and vestibular disorders',
                 url: '#',
                 status: 'coming-soon',
-                approvalNumber: 'DRTROY-BALANCE-001-2024',
+                courseNumber: 'DRTROY-BALANCE-001-2024',
                 individualPrice: 27.99,
                 provider: 'DrTroy Continuing Education'
             },
@@ -1890,7 +1890,7 @@
                 description: 'Post-operative rehabilitation and exercise prescription',
                 url: '#',
                 status: 'coming-soon',
-                approvalNumber: 'DRTROY-EXERCISE-001-2024',
+                courseNumber: 'DRTROY-EXERCISE-001-2024',
                 individualPrice: 27.99,
                 provider: 'DrTroy Continuing Education'
             },
@@ -1900,7 +1900,7 @@
                 description: 'Comprehensive geriatric rehabilitation approaches',
                 url: '#',
                 status: 'coming-soon',
-                approvalNumber: 'DRTROY-GERIATRIC-001-2024',
+                courseNumber: 'DRTROY-GERIATRIC-001-2024',
                 individualPrice: 27.99,
                 provider: 'DrTroy Continuing Education'
             },
@@ -1910,7 +1910,7 @@
                 description: 'Clinical documentation and professional communication skills',
                 url: '#',
                 status: 'coming-soon',
-                approvalNumber: 'DRTROY-DOC-001-2024',
+                courseNumber: 'DRTROY-DOC-001-2024',
                 individualPrice: 27.99,
                 provider: 'DrTroy Continuing Education'
             },
@@ -1920,7 +1920,7 @@
                 description: 'Therapeutic modalities and wound care management',
                 url: '#',
                 status: 'coming-soon',
-                approvalNumber: 'DRTROY-MODALITIES-001-2024',
+                courseNumber: 'DRTROY-MODALITIES-001-2024',
                 individualPrice: 27.99,
                 provider: 'DrTroy Continuing Education'
             },
@@ -1930,7 +1930,7 @@
                 description: 'Evidence-based neurological rehabilitation techniques',
                 url: '#',
                 status: 'coming-soon',
-                approvalNumber: 'DRTROY-NEURO-001-2024',
+                courseNumber: 'DRTROY-NEURO-001-2024',
                 individualPrice: 27.99,
                 provider: 'DrTroy Continuing Education'
             },
@@ -1940,7 +1940,7 @@
                 description: 'Infection prevention and patient safety protocols',
                 url: '#',
                 status: 'coming-soon',
-                approvalNumber: 'DRTROY-INFECTION-001-2024',
+                courseNumber: 'DRTROY-INFECTION-001-2024',
                 individualPrice: 27.99,
                 provider: 'DrTroy Continuing Education'
             },
@@ -1950,7 +1950,7 @@
                 description: 'Patient education strategies and health promotion',
                 url: '#',
                 status: 'coming-soon',
-                approvalNumber: 'DRTROY-EDUCATION-001-2024',
+                courseNumber: 'DRTROY-EDUCATION-001-2024',
                 individualPrice: 18.99, // Updated pricing
                 provider: 'DrTroy Continuing Education'
             }
@@ -2125,7 +2125,7 @@
                             <div class="course-credits"><strong>${course.credits} CCUs</strong> • ${course.duration || '180 minutes'}</div>
                             ${course.modules ? `<div class="course-format">${course.modules} Interactive Modules • ${course.format || 'Progressive Learning'}</div>` : ''}
                             ${course.instructor ? `<div class="course-instructor">Instructor: ${course.instructor}</div>` : ''}
-                            <div class="course-approval">Approval #: ${course.approvalNumber}</div>
+                            <div class="course-approval">Course #: ${course.courseNumber}</div>
                         </div>
                         <div class="course-actions">
                             ${actionButton}
@@ -2163,7 +2163,7 @@
                     <div class="course-purchase-details">
                         <p><strong>${course.title}</strong></p>
                         <p>${course.credits} CCUs</p>
-                        <p>Approval #: ${course.approvalNumber}</p>
+                        <p>Course #: ${course.courseNumber}</p>
                         <div class="price-breakdown">
                             <div>Course Price: $${basePrice}</div>
                             ${discountAmount > 0 ? `<div>New Account Discount: -$${discountAmount}</div>` : ''}
