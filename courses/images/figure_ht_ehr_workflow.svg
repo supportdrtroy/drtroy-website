@@ -1,0 +1,178 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 700" width="900" height="700">
+  <!-- Background -->
+  <rect width="900" height="700" fill="#f8fafc"/>
+  
+  <!-- Title -->
+  <text x="450" y="30" text-anchor="middle" font-family="Arial, sans-serif" font-size="22" font-weight="bold" fill="#1e3a8a">
+    Electronic Health Records Workflow in Physical Therapy Practice
+  </text>
+  
+  <!-- Patient Registration/Check-in -->
+  <g id="registration">
+    <rect x="50" y="70" width="150" height="100" fill="#dbeafe" stroke="#3b82f6" stroke-width="2" rx="10"/>
+    <text x="125" y="95" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#1e40af">Patient Registration</text>
+    <text x="125" y="115" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#1e40af">& Check-in</text>
+    
+    <!-- Registration details -->
+    <circle cx="80" cy="135" r="3" fill="#3b82f6"/>
+    <text x="90" y="140" font-family="Arial, sans-serif" font-size="10" fill="#1e40af">Demographics</text>
+    <circle cx="80" cy="150" r="3" fill="#3b82f6"/>
+    <text x="90" y="155" font-family="Arial, sans-serif" font-size="10" fill="#1e40af">Insurance verification</text>
+  </g>
+  
+  <!-- Initial Evaluation -->
+  <g id="evaluation">
+    <rect x="250" y="70" width="150" height="100" fill="#dcfce7" stroke="#22c55e" stroke-width="2" rx="10"/>
+    <text x="325" y="95" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#16a34a">Initial Evaluation</text>
+    <text x="325" y="115" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#16a34a">Documentation</text>
+    
+    <circle cx="280" cy="135" r="3" fill="#22c55e"/>
+    <text x="290" y="140" font-family="Arial, sans-serif" font-size="10" fill="#16a34a">History of present illness</text>
+    <circle cx="280" cy="150" r="3" fill="#22c55e"/>
+    <text x="290" y="155" font-family="Arial, sans-serif" font-size="10" fill="#16a34a">Objective measurements</text>
+  </g>
+  
+  <!-- Treatment Documentation -->
+  <g id="treatment">
+    <rect x="450" y="70" width="150" height="100" fill="#fef3c7" stroke="#f59e0b" stroke-width="2" rx="10"/>
+    <text x="525" y="95" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#d97706">Treatment</text>
+    <text x="525" y="115" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#d97706">Documentation</text>
+    
+    <circle cx="480" cy="135" r="3" fill="#f59e0b"/>
+    <text x="490" y="140" font-family="Arial, sans-serif" font-size="10" fill="#d97706">Interventions provided</text>
+    <circle cx="480" cy="150" r="3" fill="#f59e0b"/>
+    <text x="490" y="155" font-family="Arial, sans-serif" font-size="10" fill="#d97706">Patient response</text>
+  </g>
+  
+  <!-- Progress Notes -->
+  <g id="progress">
+    <rect x="650" y="70" width="150" height="100" fill="#f3e8ff" stroke="#8b5cf6" stroke-width="2" rx="10"/>
+    <text x="725" y="95" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#8b5cf6">Progress Notes</text>
+    <text x="725" y="115" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#8b5cf6">& Updates</text>
+    
+    <circle cx="680" cy="135" r="3" fill="#8b5cf6"/>
+    <text x="690" y="140" font-family="Arial, sans-serif" font-size="10" fill="#8b5cf6">Functional improvements</text>
+    <circle cx="680" cy="150" r="3" fill="#8b5cf6"/>
+    <text x="690" y="155" font-family="Arial, sans-serif" font-size="10" fill="#8b5cf6">Plan modifications</text>
+  </g>
+  
+  <!-- Central EHR System -->
+  <g id="ehr-system">
+    <rect x="300" y="220" width="300" height="120" fill="#ffffff" stroke="#1f2937" stroke-width="3" rx="15"/>
+    <text x="450" y="255" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="#1f2937">Electronic Health Record System</text>
+    <text x="450" y="275" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" fill="#6b7280">(Net Health, WebPT, EPIC, etc.)</text>
+    
+    <!-- EHR Features -->
+    <g id="ehr-features">
+      <rect x="320" y="290" width="80" height="35" fill="#f3f4f6" stroke="#d1d5db" stroke-width="1" rx="5"/>
+      <text x="360" y="305" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#374151">Templates</text>
+      <text x="360" y="318" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#374151">& Forms</text>
+      
+      <rect x="410" y="290" width="80" height="35" fill="#f3f4f6" stroke="#d1d5db" stroke-width="1" rx="5"/>
+      <text x="450" y="305" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#374151">Clinical</text>
+      <text x="450" y="318" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#374151">Decision Support</text>
+      
+      <rect x="500" y="290" width="80" height="35" fill="#f3f4f6" stroke="#d1d5db" stroke-width="1" rx="5"/>
+      <text x="540" y="305" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#374151">Reporting</text>
+      <text x="540" y="318" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#374151">& Analytics</text>
+    </g>
+  </g>
+  
+  <!-- Data Integration Layer -->
+  <g id="integration">
+    <rect x="150" y="380" width="600" height="80" fill="#f8fafc" stroke="#64748b" stroke-width="2" rx="10"/>
+    <text x="450" y="405" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#475569">Data Integration & Interoperability</text>
+    
+    <!-- Integration components -->
+    <rect x="170" y="415" width="100" height="35" fill="#ecfdf5" stroke="#10b981" stroke-width="1" rx="5"/>
+    <text x="220" y="430" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#059669">HL7 FHIR</text>
+    <text x="220" y="443" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#059669">Standards</text>
+    
+    <rect x="290" y="415" width="100" height="35" fill="#fef2f2" stroke="#dc2626" stroke-width="1" rx="5"/>
+    <text x="340" y="430" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#b91c1c">Insurance</text>
+    <text x="340" y="443" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#b91c1c">Claims API</text>
+    
+    <rect x="410" y="415" width="100" height="35" fill="#eff6ff" stroke="#2563eb" stroke-width="1" rx="5"/>
+    <text x="460" y="430" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#1d4ed8">Lab Results</text>
+    <text x="460" y="443" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#1d4ed8">Integration</text>
+    
+    <rect x="530" y="415" width="100" height="35" fill="#fefce8" stroke="#eab308" stroke-width="1" rx="5"/>
+    <text x="580" y="430" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#a16207">Physician</text>
+    <text x="580" y="443" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#a16207">Communication</text>
+    
+    <rect x="650" y="415" width="80" height="35" fill="#f5f3ff" stroke="#8b5cf6" stroke-width="1" rx="5"/>
+    <text x="690" y="430" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#7c3aed">Patient Portal</text>
+    <text x="690" y="443" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#7c3aed">Access</text>
+  </g>
+  
+  <!-- Output Systems -->
+  <g id="outputs">
+    <text x="450" y="510" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#1f2937">System Outputs & Reports</text>
+    
+    <!-- Billing -->
+    <rect x="50" y="530" width="150" height="80" fill="#fee2e2" stroke="#dc2626" stroke-width="2" rx="10"/>
+    <text x="125" y="555" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#dc2626">Billing & Claims</text>
+    <circle cx="80" cy="575" r="3" fill="#dc2626"/>
+    <text x="90" y="580" font-family="Arial, sans-serif" font-size="10" fill="#dc2626">ICD-10 coding</text>
+    <circle cx="80" cy="590" r="3" fill="#dc2626"/>
+    <text x="90" y="595" font-family="Arial, sans-serif" font-size="10" fill="#dc2626">CPT codes</text>
+  </g>
+  
+  <!-- Quality Measures -->
+  <rect x="225" y="530" width="150" height="80" fill="#dbeafe" stroke="#3b82f6" stroke-width="2" rx="10"/>
+  <text x="300" y="555" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#3b82f6">Quality Measures</text>
+  <circle cx="255" cy="575" r="3" fill="#3b82f6"/>
+  <text x="265" y="580" font-family="Arial, sans-serif" font-size="10" fill="#3b82f6">Outcome tracking</text>
+  <circle cx="255" cy="590" r="3" fill="#3b82f6"/>
+  <text x="265" y="595" font-family="Arial, sans-serif" font-size="10" fill="#3b82f6">Patient satisfaction</text>
+  
+  <!-- Clinical Reports -->
+  <rect x="400" y="530" width="150" height="80" fill="#dcfce7" stroke="#22c55e" stroke-width="2" rx="10"/>
+  <text x="475" y="555" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#22c55e">Clinical Reports</text>
+  <circle cx="430" cy="575" r="3" fill="#22c55e"/>
+  <text x="440" y="580" font-family="Arial, sans-serif" font-size="10" fill="#22c55e">Progress summaries</text>
+  <circle cx="430" cy="590" r="3" fill="#22c55e"/>
+  <text x="440" y="595" font-family="Arial, sans-serif" font-size="10" fill="#22c55e">Discharge reports</text>
+  
+  <!-- Compliance -->
+  <rect x="575" y="530" width="150" height="80" fill="#fef3c7" stroke="#f59e0b" stroke-width="2" rx="10"/>
+  <text x="650" y="555" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#f59e0b">Compliance</text>
+  <circle cx="605" cy="575" r="3" fill="#f59e0b"/>
+  <text x="615" y="580" font-family="Arial, sans-serif" font-size="10" fill="#f59e0b">HIPAA audit trails</text>
+  <circle cx="605" cy="590" r="3" fill="#f59e0b"/>
+  <text x="615" y="595" font-family="Arial, sans-serif" font-size="10" fill="#f59e0b">Regulatory reporting</text>
+  
+  <!-- Benefits Box -->
+  <g id="benefits">
+    <rect x="100" y="640" width="700" height="50" fill="#f0fdf4" stroke="#10b981" stroke-width="2" rx="10"/>
+    <text x="450" y="660" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#059669">Key EHR Benefits:</text>
+    <text x="120" y="680" font-family="Arial, sans-serif" font-size="11" fill="#047857">Improved accuracy • Reduced documentation time • Better care coordination • Enhanced patient safety • Streamlined billing</text>
+  </g>
+  
+  <!-- Arrows and Flow -->
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#6b7280"/>
+    </marker>
+  </defs>
+  
+  <!-- Horizontal flow arrows -->
+  <line x1="200" y1="120" x2="250" y2="120" stroke="#6b7280" stroke-width="2" marker-end="url(#arrowhead)"/>
+  <line x1="400" y1="120" x2="450" y2="120" stroke="#6b7280" stroke-width="2" marker-end="url(#arrowhead)"/>
+  <line x1="600" y1="120" x2="650" y2="120" stroke="#6b7280" stroke-width="2" marker-end="url(#arrowhead)"/>
+  
+  <!-- To EHR system -->
+  <line x1="125" y1="170" x2="350" y2="220" stroke="#6b7280" stroke-width="2" marker-end="url(#arrowhead)"/>
+  <line x1="325" y1="170" x2="420" y2="220" stroke="#6b7280" stroke-width="2" marker-end="url(#arrowhead)"/>
+  <line x1="525" y1="170" x2="480" y2="220" stroke="#6b7280" stroke-width="2" marker-end="url(#arrowhead)"/>
+  <line x1="725" y1="170" x2="550" y2="220" stroke="#6b7280" stroke-width="2" marker-end="url(#arrowhead)"/>
+  
+  <!-- From EHR to integration -->
+  <line x1="450" y1="340" x2="450" y2="380" stroke="#6b7280" stroke-width="2" marker-end="url(#arrowhead)"/>
+  
+  <!-- From integration to outputs -->
+  <line x1="200" y1="460" x2="125" y2="530" stroke="#6b7280" stroke-width="2" marker-end="url(#arrowhead)"/>
+  <line x1="350" y1="460" x2="300" y2="530" stroke="#6b7280" stroke-width="2" marker-end="url(#arrowhead)"/>
+  <line x1="500" y1="460" x2="475" y2="530" stroke="#6b7280" stroke-width="2" marker-end="url(#arrowhead)"/>
+  <line x1="650" y1="460" x2="650" y2="530" stroke="#6b7280" stroke-width="2" marker-end="url(#arrowhead)"/>
+</svg>

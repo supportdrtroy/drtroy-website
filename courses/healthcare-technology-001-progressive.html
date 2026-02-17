@@ -621,6 +621,12 @@
                     </ol>
                 </div>
 
+                <div class="figure-container">
+                    <span class="figure-number">FIGURE 1: Electronic Health Records Workflow in Physical Therapy Practice</span>
+                    <img src="images/figure_ht_ehr_workflow.svg" alt="EHR Workflow from Registration to Reports" onclick="zoomImage(this)">
+                    <div class="figure-caption">Comprehensive EHR workflow showing the integration of patient registration, clinical documentation, treatment records, and system outputs. Demonstrates data flow through the EHR system and interoperability with external systems for billing, quality measures, and compliance reporting.</div>
+                </div>
+
                 <!-- Knowledge check and module completion -->
                 <div class="knowledge-check">
                     <h3>Knowledge Check</h3>
@@ -640,7 +646,108 @@
             </div>
         </div>
 
-        <!-- Additional modules 2-9 would continue with similar expanded depth -->
+        <!-- Module 2: Telehealth Implementation -->
+        <div class="module" data-module="2">
+            <div class="module-header" onclick="toggleModule(2)">
+                <div class="module-title">Module 2: Telehealth Implementation and Best Practices (15 min)</div>
+            </div>
+            <div class="module-content">
+                <h2>2.1 Telehealth in Physical Therapy Practice</h2>
+                <p>Telehealth has emerged as a vital component of modern healthcare delivery, particularly accelerated by the COVID-19 pandemic. For physical therapy practices, telehealth offers opportunities to extend care access while presenting unique clinical and technical challenges.</p>
+                
+                <div class="highlight-box key-point">
+                    <strong>Telehealth Applications in PT:</strong>
+                    <ul>
+                        <li><strong>Initial evaluations:</strong> History taking, visual movement assessment, environmental evaluation</li>
+                        <li><strong>Follow-up visits:</strong> Progress monitoring, exercise instruction, plan modifications</li>
+                        <li><strong>Patient education:</strong> Disease education, self-management training, preventive care</li>
+                        <li><strong>Caregiver training:</strong> Family education, transfer training, home safety assessment</li>
+                        <li><strong>Group interventions:</strong> Exercise classes, education seminars, support groups</li>
+                    </ul>
+                </div>
+
+                <h3>Medicare and Insurance Requirements</h3>
+                <p>Understanding reimbursement requirements is crucial for successful telehealth implementation:</p>
+                <ul>
+                    <li><strong>Medicare codes:</strong> 95831 (PT eval), 95832 (PT re-eval), 95833 (PT treatment)</li>
+                    <li><strong>Place of service:</strong> Use modifier 02 or appropriate telehealth place of service code</li>
+                    <li><strong>State licensing:</strong> Must be licensed in the state where patient is located</li>
+                    <li><strong>Technology requirements:</strong> Real-time audio and video communication required</li>
+                </ul>
+
+                <div class="figure-container">
+                    <span class="figure-number">FIGURE 2: Telehealth Implementation Workflow</span>
+                    <img src="images/figure_ht_telehealth_workflow.svg" alt="Telehealth Workflow from Pre-Visit to Follow-up" onclick="zoomImage(this)">
+                    <div class="figure-caption">Comprehensive telehealth implementation workflow showing pre-visit preparation, virtual session delivery, documentation requirements, and follow-up care. Includes technology requirements, compliance considerations, and benefits/challenges analysis for successful telehealth program implementation.</div>
+                </div>
+
+                <h2>2.2 Technology Platform Selection and Setup</h2>
+                <p>Selecting the right telehealth platform is critical for HIPAA compliance, clinical effectiveness, and patient satisfaction.</p>
+
+                <div class="highlight-box clinical-tip">
+                    <strong>Platform Evaluation Criteria:</strong>
+                    <ul>
+                        <li><strong>HIPAA compliance:</strong> Business Associate Agreement (BAA), end-to-end encryption</li>
+                        <li><strong>Ease of use:</strong> Minimal technical barriers for patients</li>
+                        <li><strong>EHR integration:</strong> Seamless documentation and billing workflow</li>
+                        <li><strong>Recording capability:</strong> Session recording for documentation (with consent)</li>
+                        <li><strong>Mobile compatibility:</strong> Works on smartphones, tablets, computers</li>
+                        <li><strong>Customer support:</strong> Technical assistance for providers and patients</li>
+                    </ul>
+                </div>
+
+                <h3>Popular HIPAA-Compliant Platforms</h3>
+                <ul>
+                    <li><strong>Doxy.me:</strong> Simple interface, no software downloads required</li>
+                    <li><strong>SimplePractice:</strong> Integrated with practice management systems</li>
+                    <li><strong>Zoom for Healthcare:</strong> HIPAA-compliant version with BAA</li>
+                    <li><strong>VSee:</strong> Specialized for healthcare with clinical tools</li>
+                    <li><strong>Thera-LINK:</strong> Designed specifically for rehabilitation providers</li>
+                </ul>
+
+                <h2>2.3 Clinical Assessment via Telehealth</h2>
+                <p>Adapting traditional physical therapy assessment techniques for virtual delivery requires creativity and clinical reasoning skills.</p>
+
+                <div class="highlight-box key-point">
+                    <strong>Remote Assessment Strategies:</strong>
+                    <ul>
+                        <li><strong>Observation-based assessment:</strong> Posture, gait, functional movements</li>
+                        <li><strong>Patient-directed measurements:</strong> ROM using household items, pain scales</li>
+                        <li><strong>Functional testing:</strong> Sit-to-stand, balance challenges, endurance activities</li>
+                        <li><strong>Environmental assessment:</strong> Home safety, equipment needs, space limitations</li>
+                        <li><strong>Caregiver involvement:</strong> Training family members to assist with assessment</li>
+                    </ul>
+                </div>
+
+                <h3>Documentation Requirements</h3>
+                <p>Telehealth visits must be thoroughly documented to meet clinical and billing requirements:</p>
+                <ul>
+                    <li><strong>Technology verification:</strong> Platform used, patient consent obtained</li>
+                    <li><strong>Clinical assessment:</strong> Detailed observation findings, patient responses</li>
+                    <li><strong>Treatment provided:</strong> Exercise instruction, education delivery, home program updates</li>
+                    <li><strong>Patient response:</strong> Comprehension, compliance, questions or concerns</li>
+                    <li><strong>Plan modifications:</strong> Changes based on virtual assessment findings</li>
+                </ul>
+
+                <div class="knowledge-check">
+                    <h3>Knowledge Check</h3>
+                    <div class="question">
+                        <div class="question-text">Which Medicare code is used for physical therapy treatment delivered via telehealth?</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">A) 95831</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">B) 95832</div>
+                        <div class="answer-option" onclick="selectAnswer(this, true)">C) 95833</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">D) 97110</div>
+                    </div>
+                </div>
+
+                <div class="module-completion">
+                    <div>Estimated completion time: 15 minutes</div>
+                    <button class="complete-btn" onclick="completeModule(2)">Mark Complete</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Additional modules 3-6 would continue with similar expanded depth -->
 
         <!-- Certificate Section -->
         <div class="certificate-section" id="certificateSection">

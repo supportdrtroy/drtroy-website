@@ -1,0 +1,184 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 650" width="900" height="650">
+  <!-- Background -->
+  <rect width="900" height="650" fill="#f8fafc"/>
+  
+  <!-- Title -->
+  <text x="450" y="35" text-anchor="middle" font-family="Arial, sans-serif" font-size="22" font-weight="bold" fill="#1e3a8a">
+    Identifying and Overcoming Communication Barriers in Patient Education
+  </text>
+  
+  <!-- Physical Barriers Section -->
+  <g id="physical-barriers">
+    <rect x="50" y="80" width="180" height="120" fill="#fef2f2" stroke="#dc2626" stroke-width="2" rx="8"/>
+    <text x="140" y="105" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#dc2626">Physical Barriers</text>
+    
+    <!-- Hearing icon -->
+    <circle cx="90" cy="130" r="15" fill="none" stroke="#dc2626" stroke-width="2"/>
+    <path d="M 85 125 Q 90 120 95 125 Q 95 135 90 140 Q 85 135 85 125" fill="none" stroke="#dc2626" stroke-width="2"/>
+    <text x="110" y="135" font-family="Arial, sans-serif" font-size="12" fill="#dc2626">Hearing Loss</text>
+    
+    <!-- Vision icon -->
+    <ellipse cx="90" cy="160" rx="12" ry="8" fill="none" stroke="#dc2626" stroke-width="2"/>
+    <line x1="85" y1="155" x2="95" y2="165" stroke="#dc2626" stroke-width="2"/>
+    <text x="110" y="165" font-family="Arial, sans-serif" font-size="12" fill="#dc2626">Vision Impairment</text>
+    
+    <!-- Pain icon -->
+    <path d="M 85 180 L 95 190 M 95 180 L 85 190" stroke="#dc2626" stroke-width="2"/>
+    <circle cx="90" cy="185" r="8" fill="none" stroke="#dc2626" stroke-width="2"/>
+    <text x="110" y="190" font-family="Arial, sans-serif" font-size="12" fill="#dc2626">Pain/Discomfort</text>
+  </g>
+  
+  <!-- Cognitive Barriers Section -->
+  <g id="cognitive-barriers">
+    <rect x="270" y="80" width="180" height="120" fill="#fef9e7" stroke="#f59e0b" stroke-width="2" rx="8"/>
+    <text x="360" y="105" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#f59e0b">Cognitive Barriers</text>
+    
+    <!-- Brain icon -->
+    <ellipse cx="310" cy="130" rx="18" ry="12" fill="none" stroke="#f59e0b" stroke-width="2"/>
+    <path d="M 295 125 Q 300 120 305 125" fill="none" stroke="#f59e0b" stroke-width="1"/>
+    <path d="M 315 125 Q 320 120 325 125" fill="none" stroke="#f59e0b" stroke-width="1"/>
+    <text x="330" y="135" font-family="Arial, sans-serif" font-size="12" fill="#f59e0b">Memory Issues</text>
+    
+    <!-- Confusion icon -->
+    <text x="308" y="165" font-family="Arial, sans-serif" font-size="20" fill="#f59e0b">?</text>
+    <circle cx="310" cy="160" r="12" fill="none" stroke="#f59e0b" stroke-width="2"/>
+    <text x="330" y="165" font-family="Arial, sans-serif" font-size="12" fill="#f59e0b">Confusion</text>
+    
+    <!-- Low literacy icon -->
+    <rect x="305" y="175" width="10" height="12" fill="none" stroke="#f59e0b" stroke-width="2"/>
+    <line x1="308" y1="179" x2="312" y2="179" stroke="#f59e0b" stroke-width="1"/>
+    <line x1="308" y1="182" x2="312" y2="182" stroke="#f59e0b" stroke-width="1"/>
+    <text x="330" y="185" font-family="Arial, sans-serif" font-size="12" fill="#f59e0b">Low Health Literacy</text>
+  </g>
+  
+  <!-- Emotional Barriers Section -->
+  <g id="emotional-barriers">
+    <rect x="490" y="80" width="180" height="120" fill="#f3e8ff" stroke="#8b5cf6" stroke-width="2" rx="8"/>
+    <text x="580" y="105" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#8b5cf6">Emotional Barriers</text>
+    
+    <!-- Anxiety icon -->
+    <circle cx="530" cy="130" r="10" fill="none" stroke="#8b5cf6" stroke-width="2"/>
+    <path d="M 525 125 Q 530 120 535 125" fill="none" stroke="#8b5cf6" stroke-width="2"/>
+    <circle cx="527" cy="127" r="1" fill="#8b5cf6"/>
+    <circle cx="533" cy="127" r="1" fill="#8b5cf6"/>
+    <text x="545" y="135" font-family="Arial, sans-serif" font-size="12" fill="#8b5cf6">Anxiety/Fear</text>
+    
+    <!-- Depression icon -->
+    <circle cx="530" cy="160" r="10" fill="none" stroke="#8b5cf6" stroke-width="2"/>
+    <path d="M 525 165 Q 530 170 535 165" fill="none" stroke="#8b5cf6" stroke-width="2"/>
+    <text x="545" y="165" font-family="Arial, sans-serif" font-size="12" fill="#8b5cf6">Depression</text>
+    
+    <!-- Denial icon -->
+    <circle cx="530" cy="190" r="10" fill="none" stroke="#8b5cf6" stroke-width="2"/>
+    <line x1="525" y1="185" x2="535" y2="195" stroke="#8b5cf6" stroke-width="2"/>
+    <text x="545" y="195" font-family="Arial, sans-serif" font-size="12" fill="#8b5cf6">Denial/Resistance</text>
+  </g>
+  
+  <!-- Cultural/Language Barriers Section -->
+  <g id="cultural-barriers">
+    <rect x="710" y="80" width="180" height="120" fill="#ecfdf5" stroke="#10b981" stroke-width="2" rx="8"/>
+    <text x="800" y="105" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#10b981">Cultural/Language</text>
+    
+    <!-- Language icon -->
+    <circle cx="750" cy="130" r="12" fill="none" stroke="#10b981" stroke-width="2"/>
+    <text x="747" y="135" font-family="Arial, sans-serif" font-size="10" fill="#10b981">ABC</text>
+    <text x="765" y="135" font-family="Arial, sans-serif" font-size="12" fill="#10b981">Language Barriers</text>
+    
+    <!-- Culture icon -->
+    <circle cx="750" cy="165" r="8" fill="#10b981"/>
+    <circle cx="755" cy="165" r="8" fill="none" stroke="#10b981" stroke-width="2"/>
+    <text x="765" y="170" font-family="Arial, sans-serif" font-size="12" fill="#10b981">Cultural Beliefs</text>
+    
+    <!-- Religious icon -->
+    <path d="M 750 185 L 750 195 M 745 190 L 755 190" stroke="#10b981" stroke-width="2"/>
+    <text x="765" y="195" font-family="Arial, sans-serif" font-size="12" fill="#10b981">Religious Factors</text>
+  </g>
+  
+  <!-- Central Assessment Box -->
+  <g id="assessment-box">
+    <rect x="350" y="250" width="200" height="80" fill="#ffffff" stroke="#6b7280" stroke-width="3" rx="10"/>
+    <text x="450" y="275" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#374151">Barrier Assessment</text>
+    <text x="450" y="295" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" fill="#6b7280">Identify specific barriers</text>
+    <text x="450" y="310" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" fill="#6b7280">for each patient</text>
+    <text x="450" y="325" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" fill="#6b7280">during initial evaluation</text>
+  </g>
+  
+  <!-- Solution Strategies Section -->
+  <g id="solutions">
+    <text x="450" y="380" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="#1e3a8a">
+      Adaptation Strategies
+    </text>
+    
+    <!-- Physical Solutions -->
+    <rect x="50" y="400" width="180" height="180" fill="#f0f9ff" stroke="#0ea5e9" stroke-width="2" rx="8"/>
+    <text x="140" y="425" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#0ea5e9">Physical Adaptations</text>
+    
+    <text x="60" y="445" font-family="Arial, sans-serif" font-size="12" fill="#0369a1">• Use assistive listening devices</text>
+    <text x="60" y="460" font-family="Arial, sans-serif" font-size="12" fill="#0369a1">• Provide large print materials</text>
+    <text x="60" y="475" font-family="Arial, sans-serif" font-size="12" fill="#0369a1">• Ensure adequate lighting</text>
+    <text x="60" y="490" font-family="Arial, sans-serif" font-size="12" fill="#0369a1">• Schedule when pain is minimal</text>
+    <text x="60" y="505" font-family="Arial, sans-serif" font-size="12" fill="#0369a1">• Use demonstration models</text>
+    <text x="60" y="520" font-family="Arial, sans-serif" font-size="12" fill="#0369a1">• Face patient when speaking</text>
+    <text x="60" y="535" font-family="Arial, sans-serif" font-size="12" fill="#0369a1">• Speak clearly and slowly</text>
+    <text x="60" y="550" font-family="Arial, sans-serif" font-size="12" fill="#0369a1">• Use visual cues and gestures</text>
+    <text x="60" y="565" font-family="Arial, sans-serif" font-size="12" fill="#0369a1">• Minimize background noise</text>
+    
+    <!-- Cognitive Solutions -->
+    <rect x="270" y="400" width="180" height="180" fill="#fffbeb" stroke="#f59e0b" stroke-width="2" rx="8"/>
+    <text x="360" y="425" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#f59e0b">Cognitive Adaptations</text>
+    
+    <text x="280" y="445" font-family="Arial, sans-serif" font-size="12" fill="#d97706">• Break info into small chunks</text>
+    <text x="280" y="460" font-family="Arial, sans-serif" font-size="12" fill="#d97706">• Use simple, clear language</text>
+    <text x="280" y="475" font-family="Arial, sans-serif" font-size="12" fill="#d97706">• Repeat key information</text>
+    <text x="280" y="490" font-family="Arial, sans-serif" font-size="12" fill="#d97706">• Use teach-back method</text>
+    <text x="280" y="505" font-family="Arial, sans-serif" font-size="12" fill="#d97706">• Provide memory aids</text>
+    <text x="280" y="520" font-family="Arial, sans-serif" font-size="12" fill="#d97706">• Include family/caregivers</text>
+    <text x="280" y="535" font-family="Arial, sans-serif" font-size="12" fill="#d97706">• Check understanding frequently</text>
+    <text x="280" y="550" font-family="Arial, sans-serif" font-size="12" fill="#d97706">• Use analogies and examples</text>
+    <text x="280" y="565" font-family="Arial, sans-serif" font-size="12" fill="#d97706">• Provide written summaries</text>
+    
+    <!-- Emotional Solutions -->
+    <rect x="490" y="400" width="180" height="180" fill="#faf5ff" stroke="#8b5cf6" stroke-width="2" rx="8"/>
+    <text x="580" y="425" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#8b5cf6">Emotional Support</text>
+    
+    <text x="500" y="445" font-family="Arial, sans-serif" font-size="12" fill="#7c3aed">• Acknowledge fears/concerns</text>
+    <text x="500" y="460" font-family="Arial, sans-serif" font-size="12" fill="#7c3aed">• Provide emotional support</text>
+    <text x="500" y="475" font-family="Arial, sans-serif" font-size="12" fill="#7c3aed">• Use motivational interviewing</text>
+    <text x="500" y="490" font-family="Arial, sans-serif" font-size="12" fill="#7c3aed">• Build trust and rapport</text>
+    <text x="500" y="505" font-family="Arial, sans-serif" font-size="12" fill="#7c3aed">• Set realistic expectations</text>
+    <text x="500" y="520" font-family="Arial, sans-serif" font-size="12" fill="#7c3aed">• Celebrate small victories</text>
+    <text x="500" y="535" font-family="Arial, sans-serif" font-size="12" fill="#7c3aed">• Refer for counseling if needed</text>
+    <text x="500" y="550" font-family="Arial, sans-serif" font-size="12" fill="#7c3aed">• Allow time to process info</text>
+    <text x="500" y="565" font-family="Arial, sans-serif" font-size="12" fill="#7c3aed">• Normalize emotional responses</text>
+    
+    <!-- Cultural Solutions -->
+    <rect x="710" y="400" width="180" height="180" fill="#f0fdf4" stroke="#10b981" stroke-width="2" rx="8"/>
+    <text x="800" y="425" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#10b981">Cultural Competence</text>
+    
+    <text x="720" y="445" font-family="Arial, sans-serif" font-size="12" fill="#059669">• Use professional interpreters</text>
+    <text x="720" y="460" font-family="Arial, sans-serif" font-size="12" fill="#059669">• Respect cultural beliefs</text>
+    <text x="720" y="475" font-family="Arial, sans-serif" font-size="12" fill="#059669">• Ask about health traditions</text>
+    <text x="720" y="490" font-family="Arial, sans-serif" font-size="12" fill="#059669">• Involve family appropriately</text>
+    <text x="720" y="505" font-family="Arial, sans-serif" font-size="12" fill="#059669">• Provide culturally relevant examples</text>
+    <text x="720" y="520" font-family="Arial, sans-serif" font-size="12" fill="#059669">• Use translated materials</text>
+    <text x="720" y="535" font-family="Arial, sans-serif" font-size="12" fill="#059669">• Be aware of health disparities</text>
+    <text x="720" y="550" font-family="Arial, sans-serif" font-size="12" fill="#059669">• Learn about patient's culture</text>
+    <text x="720" y="565" font-family="Arial, sans-serif" font-size="12" fill="#059669">• Avoid assumptions</text>
+  </g>
+  
+  <!-- Connecting arrows -->
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#6b7280"/>
+    </marker>
+  </defs>
+  
+  <!-- Arrows pointing to assessment -->
+  <line x1="140" y1="200" x2="380" y2="250" stroke="#6b7280" stroke-width="2" marker-end="url(#arrowhead)"/>
+  <line x1="360" y1="200" x2="420" y2="250" stroke="#6b7280" stroke-width="2" marker-end="url(#arrowhead)"/>
+  <line x1="580" y1="200" x2="480" y2="250" stroke="#6b7280" stroke-width="2" marker-end="url(#arrowhead)"/>
+  <line x1="800" y1="200" x2="520" y2="250" stroke="#6b7280" stroke-width="2" marker-end="url(#arrowhead)"/>
+  
+  <!-- Arrow from assessment to solutions -->
+  <line x1="450" y1="330" x2="450" y2="370" stroke="#6b7280" stroke-width="3" marker-end="url(#arrowhead)"/>
+</svg>

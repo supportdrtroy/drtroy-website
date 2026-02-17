@@ -1,0 +1,206 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 800" width="1000" height="800">
+  <!-- Background -->
+  <rect width="1000" height="800" fill="#f8fafc"/>
+  
+  <!-- Title -->
+  <text x="500" y="30" text-anchor="middle" font-family="Arial, sans-serif" font-size="22" font-weight="bold" fill="#1e3a8a">
+    Joint Replacement Rehabilitation Timeline and Precautions
+  </text>
+  
+  <!-- Timeline Header -->
+  <rect x="50" y="60" width="900" height="40" fill="#1e3a8a" rx="5"/>
+  <text x="500" y="85" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="#ffffff">
+    Post-Operative Rehabilitation Phases
+  </text>
+  
+  <!-- Phase 1: Immediate Post-Op -->
+  <g id="phase1">
+    <rect x="70" y="120" width="180" height="120" fill="#fef2f2" stroke="#dc2626" stroke-width="2" rx="8"/>
+    <text x="160" y="145" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#dc2626">Phase 1: Immediate</text>
+    <text x="160" y="160" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#dc2626">Post-Operative</text>
+    <text x="160" y="180" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#b91c1c">(0-2 weeks)</text>
+    
+    <text x="80" y="200" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#991b1b">Goals:</text>
+    <text x="80" y="215" font-family="Arial, sans-serif" font-size="10" fill="#991b1b">• Pain/swelling control</text>
+    <text x="80" y="228" font-family="Arial, sans-serif" font-size="10" fill="#991b1b">• Wound healing</text>
+    <text x="80" y="241" font-family="Arial, sans-serif" font-size="10" fill="#991b1b">• Basic mobility</text>
+  </g>
+  
+  <!-- Phase 2: Early Recovery -->
+  <g id="phase2">
+    <rect x="270" y="120" width="180" height="120" fill="#fef9e7" stroke="#f59e0b" stroke-width="2" rx="8"/>
+    <text x="360" y="145" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#f59e0b">Phase 2: Early</text>
+    <text x="360" y="160" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#f59e0b">Recovery</text>
+    <text x="360" y="180" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#d97706">(2-6 weeks)</text>
+    
+    <text x="280" y="200" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#a16207">Goals:</text>
+    <text x="280" y="215" font-family="Arial, sans-serif" font-size="10" fill="#a16207">• ROM improvement</text>
+    <text x="280" y="228" font-family="Arial, sans-serif" font-size="10" fill="#a16207">• Strength initiation</text>
+    <text x="280" y="241" font-family="Arial, sans-serif" font-size="10" fill="#a16207">• Gait normalization</text>
+  </g>
+  
+  <!-- Phase 3: Intermediate Recovery -->
+  <g id="phase3">
+    <rect x="470" y="120" width="180" height="120" fill="#dbeafe" stroke="#3b82f6" stroke-width="2" rx="8"/>
+    <text x="560" y="145" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#3b82f6">Phase 3: Intermediate</text>
+    <text x="560" y="160" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#3b82f6">Recovery</text>
+    <text x="560" y="180" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#1e40af">(6-12 weeks)</text>
+    
+    <text x="480" y="200" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#1d4ed8">Goals:</text>
+    <text x="480" y="215" font-family="Arial, sans-serif" font-size="10" fill="#1d4ed8">• Functional strength</text>
+    <text x="480" y="228" font-family="Arial, sans-serif" font-size="10" fill="#1d4ed8">• Full ROM</text>
+    <text x="480" y="241" font-family="Arial, sans-serif" font-size="10" fill="#1d4ed8">• Advanced activities</text>
+  </g>
+  
+  <!-- Phase 4: Advanced Recovery -->
+  <g id="phase4">
+    <rect x="670" y="120" width="180" height="120" fill="#dcfce7" stroke="#22c55e" stroke-width="2" rx="8"/>
+    <text x="760" y="145" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#22c55e">Phase 4: Advanced</text>
+    <text x="760" y="160" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#22c55e">Recovery</text>
+    <text x="760" y="180" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#16a34a">(3-6 months)</text>
+    
+    <text x="680" y="200" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#15803d">Goals:</text>
+    <text x="680" y="215" font-family="Arial, sans-serif" font-size="10" fill="#15803d">• Return to activities</text>
+    <text x="680" y="228" font-family="Arial, sans-serif" font-size="10" fill="#15803d">• Sports (if appropriate)</text>
+    <text x="680" y="241" font-family="Arial, sans-serif" font-size="10" fill="#15803d">• Long-term maintenance</text>
+  </g>
+  
+  <!-- Hip vs Knee Specific Guidelines -->
+  <g id="joint-specific">
+    <text x="500" y="290" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="#1f2937">
+      Joint-Specific Precautions and Guidelines
+    </text>
+    
+    <!-- Hip Replacement Section -->
+    <rect x="50" y="310" width="420" height="220" fill="#f0fdf4" stroke="#10b981" stroke-width="2" rx="10"/>
+    <text x="260" y="340" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#059669">Total Hip Replacement (THR)</text>
+    
+    <!-- Hip Precautions -->
+    <text x="70" y="365" font-family="Arial, sans-serif" font-size="13" font-weight="bold" fill="#047857">Hip Precautions (First 6-12 weeks):</text>
+    
+    <g id="hip-precautions">
+      <!-- No Hip Flexion >90° -->
+      <circle cx="80" cy="385" r="15" fill="none" stroke="#dc2626" stroke-width="3"/>
+      <line x1="70" y1="375" x2="90" y2="395" stroke="#dc2626" stroke-width="3"/>
+      <path d="M 85 378 Q 95 385 85 392" fill="none" stroke="#dc2626" stroke-width="2"/>
+      <text x="105" y="390" font-family="Arial, sans-serif" font-size="11" fill="#dc2626">No hip flexion >90°</text>
+      
+      <!-- No Adduction -->
+      <circle cx="250" cy="385" r="15" fill="none" stroke="#dc2626" stroke-width="3"/>
+      <line x1="240" y1="375" x2="260" y2="395" stroke="#dc2626" stroke-width="3"/>
+      <path d="M 245 385 L 255 385" stroke="#dc2626" stroke-width="2"/>
+      <path d="M 250 380 L 250 390" stroke="#dc2626" stroke-width="2"/>
+      <text x="275" y="390" font-family="Arial, sans-serif" font-size="11" fill="#dc2626">No crossing legs</text>
+      
+      <!-- No Internal Rotation -->
+      <circle cx="80" cy="415" r="15" fill="none" stroke="#dc2626" stroke-width="3"/>
+      <line x1="70" y1="405" x2="90" y2="425" stroke="#dc2626" stroke-width="3"/>
+      <path d="M 82 408 A 8 8 0 0 1 82 422" fill="none" stroke="#dc2626" stroke-width="2"/>
+      <polygon points="80,408 75,410 78,415" fill="#dc2626"/>
+      <text x="105" y="420" font-family="Arial, sans-serif" font-size="11" fill="#dc2626">No internal rotation</text>
+      
+      <!-- Sleep positioning -->
+      <rect x="250" y="405" width="20" height="10" fill="none" stroke="#10b981" stroke-width="2"/>
+      <rect x="260" y="410" width="5" height="8" fill="#10b981"/>
+      <text x="275" y="420" font-family="Arial, sans-serif" font-size="11" fill="#10b981">Sleep with pillow between legs</text>
+    </g>
+    
+    <!-- Hip Progression -->
+    <text x="70" y="450" font-family="Arial, sans-serif" font-size="13" font-weight="bold" fill="#047857">Typical Progression:</text>
+    <text x="70" y="470" font-family="Arial, sans-serif" font-size="11" fill="#065f46">Week 1-2: Walker, weight bearing as tolerated (WBAT)</text>
+    <text x="70" y="485" font-family="Arial, sans-serif" font-size="11" fill="#065f46">Week 3-6: Transition to cane, ROM exercises</text>
+    <text x="70" y="500" font-family="Arial, sans-serif" font-size="11" fill="#065f46">Week 6-12: Strengthening, return to driving</text>
+    <text x="70" y="515" font-family="Arial, sans-serif" font-size="11" fill="#065f46">Month 3-6: Advanced activities, low-impact sports</text>
+    
+    <!-- Knee Replacement Section -->
+    <rect x="520" y="310" width="420" height="220" fill="#eff6ff" stroke="#2563eb" stroke-width="2" rx="10"/>
+    <text x="730" y="340" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#2563eb">Total Knee Replacement (TKR)</text>
+    
+    <!-- Knee Focus Areas -->
+    <text x="540" y="365" font-family="Arial, sans-serif" font-size="13" font-weight="bold" fill="#1d4ed8">Primary Focus Areas:</text>
+    
+    <g id="knee-focus">
+      <!-- ROM emphasis -->
+      <path d="M 550 385 A 15 15 0 0 1 580 385" fill="none" stroke="#2563eb" stroke-width="3"/>
+      <polygon points="575,382 580,385 575,388" fill="#2563eb"/>
+      <text x="590" y="390" font-family="Arial, sans-serif" font-size="11" fill="#2563eb">Range of Motion (0-120°+)</text>
+      
+      <!-- Swelling control -->
+      <ellipse cx="560" cy="410" rx="12" ry="8" fill="none" stroke="#3b82f6" stroke-width="2"/>
+      <path d="M 555 410 Q 560 405 565 410" stroke="#3b82f6" stroke-width="2"/>
+      <text x="580" y="415" font-family="Arial, sans-serif" font-size="11" fill="#2563eb">Swelling control (ice, elevation)</text>
+      
+      <!-- Quad strength -->
+      <rect x="550" y="430" width="20" height="8" fill="none" stroke="#2563eb" stroke-width="2"/>
+      <path d="M 555 434 L 565 434" stroke="#2563eb" stroke-width="3"/>
+      <text x="580" y="437" font-family="Arial, sans-serif" font-size="11" fill="#2563eb">Quadriceps strengthening</text>
+    </g>
+    
+    <!-- Knee Progression -->
+    <text x="540" y="465" font-family="Arial, sans-serif" font-size="13" font-weight="bold" fill="#1d4ed8">Typical Progression:</text>
+    <text x="540" y="485" font-family="Arial, sans-serif" font-size="11" fill="#1e40af">Week 1-2: Immediate ROM, WBAT with walker</text>
+    <text x="540" y="500" font-family="Arial, sans-serif" font-size="11" fill="#1e40af">Week 3-6: 0-90° ROM goal, gait normalization</text>
+    <text x="540" y="515" font-family="Arial, sans-serif" font-size="11" fill="#1e40af">Week 6-12: Full ROM, functional activities</text>
+    
+    <!-- Red flags for both -->
+    <rect x="50" y="550" width="890" height="80" fill="#fef2f2" stroke="#dc2626" stroke-width="2" rx="10"/>
+    <text x="500" y="575" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#dc2626">
+      Red Flags - Immediate Medical Attention Required
+    </text>
+    
+    <text x="70" y="600" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#b91c1c">Signs of Infection:</text>
+    <text x="200" y="600" font-family="Arial, sans-serif" font-size="11" fill="#991b1b">Fever, increasing pain, redness, drainage</text>
+    
+    <text x="480" y="600" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#b91c1c">DVT/PE Signs:</text>
+    <text x="570" y="600" font-family="Arial, sans-serif" font-size="11" fill="#991b1b">Calf pain/swelling, shortness of breath</text>
+    
+    <text x="70" y="620" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#b91c1c">Dislocation (Hip):</text>
+    <text x="180" y="620" font-family="Arial, sans-serif" font-size="11" fill="#991b1b">Sudden severe pain, leg length change</text>
+    
+    <text x="480" y="620" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#b91c1c">Excessive Swelling:</text>
+    <text x="590" y="620" font-family="Arial, sans-serif" font-size="11" fill="#991b1b">Not responding to elevation/ice</text>
+  </g>
+  
+  <!-- Weight Bearing Guidelines -->
+  <g id="weight-bearing">
+    <text x="500" y="680" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#1f2937">
+      Weight Bearing Terminology &amp; Progression
+    </text>
+    
+    <!-- WBAT -->
+    <rect x="50" y="700" width="180" height="60" fill="#dcfce7" stroke="#22c55e" stroke-width="2" rx="5"/>
+    <text x="140" y="720" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#16a34a">WBAT</text>
+    <text x="140" y="735" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#15803d">Weight Bearing</text>
+    <text x="140" y="748" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#15803d">As Tolerated</text>
+    
+    <!-- PWB -->
+    <rect x="250" y="700" width="180" height="60" fill="#fef9e7" stroke="#f59e0b" stroke-width="2" rx="5"/>
+    <text x="340" y="720" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#f59e0b">PWB</text>
+    <text x="340" y="735" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#d97706">Partial Weight Bearing</text>
+    <text x="340" y="748" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#d97706">(25-50% body weight)</text>
+    
+    <!-- TTWB -->
+    <rect x="450" y="700" width="180" height="60" fill="#fef3c7" stroke="#f59e0b" stroke-width="2" rx="5"/>
+    <text x="540" y="720" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#f59e0b">TTWB</text>
+    <text x="540" y="735" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#d97706">Toe Touch</text>
+    <text x="540" y="748" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#d97706">Weight Bearing</text>
+    
+    <!-- NWB -->
+    <rect x="650" y="700" width="180" height="60" fill="#fef2f2" stroke="#dc2626" stroke-width="2" rx="5"/>
+    <text x="740" y="720" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#dc2626">NWB</text>
+    <text x="740" y="735" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#b91c1c">Non-Weight Bearing</text>
+    <text x="740" y="748" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#b91c1c">(0% body weight)</text>
+  </g>
+  
+  <!-- Timeline arrows -->
+  <defs>
+    <marker id="arrowhead" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#6b7280"/>
+    </marker>
+  </defs>
+  
+  <!-- Phase progression arrows -->
+  <line x1="250" y1="180" x2="270" y2="180" stroke="#6b7280" stroke-width="2" marker-end="url(#arrowhead)"/>
+  <line x1="450" y1="180" x2="470" y2="180" stroke="#6b7280" stroke-width="2" marker-end="url(#arrowhead)"/>
+  <line x1="650" y1="180" x2="670" y2="180" stroke="#6b7280" stroke-width="2" marker-end="url(#arrowhead)"/>
+</svg>

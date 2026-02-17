@@ -1,0 +1,147 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600">
+  <!-- Background -->
+  <rect width="800" height="600" fill="#f8fafc"/>
+  
+  <!-- Title -->
+  <text x="400" y="30" text-anchor="middle" font-family="Arial, sans-serif" font-size="20" font-weight="bold" fill="#1e3a8a">
+    Health Literacy Assessment and Education Planning Process
+  </text>
+  
+  <!-- Step 1: Initial Screening -->
+  <g id="step1">
+    <rect x="50" y="70" width="150" height="80" fill="#dbeafe" stroke="#3b82f6" stroke-width="2" rx="10"/>
+    <text x="125" y="95" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#1e40af">STEP 1</text>
+    <text x="125" y="115" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#1e40af">Initial Health</text>
+    <text x="125" y="130" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#1e40af">Literacy Screening</text>
+    
+    <!-- Screening tools -->
+    <rect x="220" y="75" width="180" height="70" fill="#ffffff" stroke="#e5e7eb" stroke-width="1" rx="5"/>
+    <text x="230" y="95" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#374151">Quick Screening Questions:</text>
+    <text x="230" y="110" font-family="Arial, sans-serif" font-size="10" fill="#6b7280">• "How confident are you filling out</text>
+    <text x="235" y="125" font-family="Arial, sans-serif" font-size="10" fill="#6b7280">medical forms by yourself?"</text>
+    <text x="230" y="140" font-family="Arial, sans-serif" font-size="10" fill="#6b7280">• "How often do you need help reading</text>
+    <text x="235" y="155" font-family="Arial, sans-serif" font-size="10" fill="#6b7280">hospital materials?"</text>
+  </g>
+  
+  <!-- Step 2: Assessment Tools -->
+  <g id="step2">
+    <rect x="450" y="70" width="150" height="80" fill="#dcfce7" stroke="#22c55e" stroke-width="2" rx="10"/>
+    <text x="525" y="95" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#16a34a">STEP 2</text>
+    <text x="525" y="115" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#16a34a">Formal Assessment</text>
+    <text x="525" y="130" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#16a34a">Tools (if needed)</text>
+    
+    <!-- Assessment tools list -->
+    <rect x="620" y="75" width="150" height="70" fill="#ffffff" stroke="#e5e7eb" stroke-width="1" rx="5"/>
+    <text x="630" y="95" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#374151">Assessment Tools:</text>
+    <text x="630" y="110" font-family="Arial, sans-serif" font-size="10" fill="#6b7280">• REALM-SF</text>
+    <text x="630" y="125" font-family="Arial, sans-serif" font-size="10" fill="#6b7280">• NVS (Newest Vital Sign)</text>
+    <text x="630" y="140" font-family="Arial, sans-serif" font-size="10" fill="#6b7280">• TOFHLA-SF</text>
+  </g>
+  
+  <!-- Decision Diamond -->
+  <g id="decision">
+    <path d="M 400 200 L 450 230 L 400 260 L 350 230 Z" fill="#fef3c7" stroke="#f59e0b" stroke-width="2"/>
+    <text x="400" y="225" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#d97706">Health Literacy</text>
+    <text x="400" y="240" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#d97706">Level?</text>
+  </g>
+  
+  <!-- Low Health Literacy Path -->
+  <g id="low-literacy">
+    <rect x="50" y="320" width="200" height="100" fill="#fef2f2" stroke="#dc2626" stroke-width="2" rx="10"/>
+    <text x="150" y="345" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#dc2626">LOW Health Literacy</text>
+    <text x="150" y="365" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#dc2626">Adaptation Strategies</text>
+    
+    <text x="60" y="385" font-family="Arial, sans-serif" font-size="10" fill="#b91c1c">• Use simple, familiar words</text>
+    <text x="60" y="400" font-family="Arial, sans-serif" font-size="10" fill="#b91c1c">• Limit information per session</text>
+    <text x="60" y="415" font-family="Arial, sans-serif" font-size="10" fill="#b91c1c">• Use teach-back method</text>
+  </g>
+  
+  <!-- Moderate Health Literacy Path -->
+  <g id="moderate-literacy">
+    <rect x="300" y="320" width="200" height="100" fill="#fef9e7" stroke="#f59e0b" stroke-width="2" rx="10"/>
+    <text x="400" y="345" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#f59e0b">MODERATE Health Literacy</text>
+    <text x="400" y="365" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#f59e0b">Balanced Approach</text>
+    
+    <text x="310" y="385" font-family="Arial, sans-serif" font-size="10" fill="#d97706">• Mix simple and technical terms</text>
+    <text x="310" y="400" font-family="Arial, sans-serif" font-size="10" fill="#d97706">• Check understanding regularly</text>
+    <text x="310" y="415" font-family="Arial, sans-serif" font-size="10" fill="#d97706">• Provide visual aids</text>
+  </g>
+  
+  <!-- High Health Literacy Path -->
+  <g id="high-literacy">
+    <rect x="550" y="320" width="200" height="100" fill="#f0fdf4" stroke="#10b981" stroke-width="2" rx="10"/>
+    <text x="650" y="345" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#10b981">HIGH Health Literacy</text>
+    <text x="650" y="365" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#10b981">Comprehensive Education</text>
+    
+    <text x="560" y="385" font-family="Arial, sans-serif" font-size="10" fill="#059669">• Use detailed explanations</text>
+    <text x="560" y="400" font-family="Arial, sans-serif" font-size="10" fill="#059669">• Provide research references</text>
+    <text x="560" y="415" font-family="Arial, sans-serif" font-size="10" fill="#059669">• Encourage active participation</text>
+  </g>
+  
+  <!-- Universal Strategies -->
+  <g id="universal-strategies">
+    <rect x="150" y="460" width="500" height="120" fill="#f3f4f6" stroke="#6b7280" stroke-width="2" rx="10"/>
+    <text x="400" y="485" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#374151">Universal Health Literacy Strategies</text>
+    <text x="400" y="505" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#6b7280">(Apply to ALL patients regardless of literacy level)</text>
+    
+    <!-- Left column -->
+    <text x="160" y="530" font-family="Arial, sans-serif" font-size="11" fill="#4b5563">• Use plain language principles</text>
+    <text x="160" y="545" font-family="Arial, sans-serif" font-size="11" fill="#4b5563">• Organize information logically</text>
+    <text x="160" y="560" font-family="Arial, sans-serif" font-size="11" fill="#4b5563">• Focus on essential information</text>
+    
+    <!-- Middle column -->
+    <text x="320" y="530" font-family="Arial, sans-serif" font-size="11" fill="#4b5563">• Use visual aids and demonstrations</text>
+    <text x="320" y="545" font-family="Arial, sans-serif" font-size="11" fill="#4b5563">• Encourage questions</text>
+    <text x="320" y="560" font-family="Arial, sans-serif" font-size="11" fill="#4b5563">• Provide written summaries</text>
+    
+    <!-- Right column -->
+    <text x="480" y="530" font-family="Arial, sans-serif" font-size="11" fill="#4b5563">• Create shame-free environment</text>
+    <text x="480" y="545" font-family="Arial, sans-serif" font-size="11" fill="#4b5563">• Use multiple communication modes</text>
+    <text x="480" y="560" font-family="Arial, sans-serif" font-size="11" fill="#4b5563">• Follow up to ensure understanding</text>
+  </g>
+  
+  <!-- Red Flag Indicators Box -->
+  <g id="red-flags">
+    <rect x="50" y="180" width="250" height="60" fill="#fefce8" stroke="#eab308" stroke-width="2" rx="5"/>
+    <text x="60" y="200" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#a16207">⚠️ Red Flag Indicators of Low Health Literacy:</text>
+    <text x="60" y="215" font-family="Arial, sans-serif" font-size="10" fill="#a16207">• Frequently missed appointments</text>
+    <text x="60" y="230" font-family="Arial, sans-serif" font-size="10" fill="#a16207">• Incomplete forms or "forgot glasses" responses</text>
+  </g>
+  
+  <!-- Arrows and connections -->
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#6b7280"/>
+    </marker>
+    <marker id="arrowhead-red" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#dc2626"/>
+    </marker>
+    <marker id="arrowhead-yellow" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#f59e0b"/>
+    </marker>
+    <marker id="arrowhead-green" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#10b981"/>
+    </marker>
+  </defs>
+  
+  <!-- Flow arrows -->
+  <line x1="200" y1="110" x2="350" y2="110" stroke="#6b7280" stroke-width="2" marker-end="url(#arrowhead)"/>
+  <line x1="450" y1="110" x2="450" y2="110" stroke="#6b7280" stroke-width="2"/>
+  <line x1="525" y1="150" x2="425" y2="200" stroke="#6b7280" stroke-width="2" marker-end="url(#arrowhead)"/>
+  <line x1="125" y1="150" x2="375" y2="200" stroke="#6b7280" stroke-width="2" marker-end="url(#arrowhead)"/>
+  
+  <!-- Decision to paths -->
+  <line x1="370" y1="250" x2="170" y2="320" stroke="#dc2626" stroke-width="2" marker-end="url(#arrowhead-red)"/>
+  <text x="250" y="285" font-family="Arial, sans-serif" font-size="10" fill="#dc2626" transform="rotate(-25 250 285)">Low</text>
+  
+  <line x1="400" y1="260" x2="400" y2="320" stroke="#f59e0b" stroke-width="2" marker-end="url(#arrowhead-yellow)"/>
+  <text x="405" y="290" font-family="Arial, sans-serif" font-size="10" fill="#f59e0b">Moderate</text>
+  
+  <line x1="430" y1="250" x2="630" y2="320" stroke="#10b981" stroke-width="2" marker-end="url(#arrowhead-green)"/>
+  <text x="530" y="285" font-family="Arial, sans-serif" font-size="10" fill="#10b981" transform="rotate(25 530 285)">High</text>
+  
+  <!-- To universal strategies -->
+  <line x1="150" y1="420" x2="300" y2="460" stroke="#6b7280" stroke-width="2" marker-end="url(#arrowhead)"/>
+  <line x1="400" y1="420" x2="400" y2="460" stroke="#6b7280" stroke-width="2" marker-end="url(#arrowhead)"/>
+  <line x1="650" y1="420" x2="500" y2="460" stroke="#6b7280" stroke-width="2" marker-end="url(#arrowhead)"/>
+</svg>
