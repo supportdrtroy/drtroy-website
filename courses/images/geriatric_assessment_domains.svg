@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600">
+  <!-- Background -->
+  <rect width="800" height="600" fill="#f8f9fa"/>
+  
+  <!-- Title -->
+  <text x="400" y="30" font-family="Arial, sans-serif" font-size="20" font-weight="bold" fill="#1a365d" text-anchor="middle">Comprehensive Geriatric Assessment Domains</text>
+  
+  <!-- Central circle - Patient -->
+  <circle cx="400" cy="300" r="60" fill="#1a365d" stroke="#2c5282" stroke-width="3"/>
+  <text x="400" y="295" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="white" text-anchor="middle">Older Adult</text>
+  <text x="400" y="310" font-family="Arial, sans-serif" font-size="12" fill="white" text-anchor="middle">Patient</text>
+  
+  <!-- Domain 1: Physical Function -->
+  <circle cx="200" cy="150" r="50" fill="#059669" stroke="#047857" stroke-width="2"/>
+  <text x="200" y="145" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="white" text-anchor="middle">Physical</text>
+  <text x="200" y="160" font-family="Arial, sans-serif" font-size="12" fill="white" text-anchor="middle">Function</text>
+  <rect x="120" y="80" width="160" height="60" fill="#ecfdf5" stroke="#059669" stroke-width="2" rx="8"/>
+  <text x="130" y="100" font-family="Arial, sans-serif" font-size="10" fill="#047857">• Mobility • Balance</text>
+  <text x="130" y="115" font-family="Arial, sans-serif" font-size="10" fill="#047857">• Strength • Endurance</text>
+  <text x="130" y="130" font-family="Arial, sans-serif" font-size="10" fill="#047857">• ADL Performance</text>
+  
+  <!-- Domain 2: Cognitive Function -->
+  <circle cx="600" cy="150" r="50" fill="#3b82f6" stroke="#2563eb" stroke-width="2"/>
+  <text x="600" y="145" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="white" text-anchor="middle">Cognitive</text>
+  <text x="600" y="160" font-family="Arial, sans-serif" font-size="12" fill="white" text-anchor="middle">Function</text>
+  <rect x="520" y="80" width="160" height="60" fill="#eff6ff" stroke="#3b82f6" stroke-width="2" rx="8"/>
+  <text x="530" y="100" font-family="Arial, sans-serif" font-size="10" fill="#2563eb">• Memory • Attention</text>
+  <text x="530" y="115" font-family="Arial, sans-serif" font-size="10" fill="#2563eb">• Executive Function</text>
+  <text x="530" y="130" font-family="Arial, sans-serif" font-size="10" fill="#2563eb">• Decision Making</text>
+  
+  <!-- Domain 3: Psychological -->
+  <circle cx="150" cy="450" r="50" fill="#8b5cf6" stroke="#7c3aed" stroke-width="2"/>
+  <text x="150" y="445" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="white" text-anchor="middle">Psychological</text>
+  <text x="150" y="460" font-family="Arial, sans-serif" font-size="12" fill="white" text-anchor="middle">Health</text>
+  <rect x="70" y="480" width="160" height="60" fill="#f3e8ff" stroke="#8b5cf6" stroke-width="2" rx="8"/>
+  <text x="80" y="500" font-family="Arial, sans-serif" font-size="10" fill="#7c3aed">• Depression Screening</text>
+  <text x="80" y="515" font-family="Arial, sans-serif" font-size="10" fill="#7c3aed">• Anxiety Assessment</text>
+  <text x="80" y="530" font-family="Arial, sans-serif" font-size="10" fill="#7c3aed">• Motivation • Coping</text>
+  
+  <!-- Domain 4: Social Environment -->
+  <circle cx="650" cy="450" r="50" fill="#f59e0b" stroke="#d97706" stroke-width="2"/>
+  <text x="650" y="445" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="white" text-anchor="middle">Social</text>
+  <text x="650" y="460" font-family="Arial, sans-serif" font-size="12" fill="white" text-anchor="middle">Environment</text>
+  <rect x="570" y="480" width="160" height="60" fill="#fffbeb" stroke="#f59e0b" stroke-width="2" rx="8"/>
+  <text x="580" y="500" font-family="Arial, sans-serif" font-size="10" fill="#d97706">• Social Support</text>
+  <text x="580" y="515" font-family="Arial, sans-serif" font-size="10" fill="#d97706">• Living Situation</text>
+  <text x="580" y="530" font-family="Arial, sans-serif" font-size="10" fill="#d97706">• Caregiver Resources</text>
+  
+  <!-- Domain 5: Medical Status -->
+  <circle cx="400" cy="100" r="45" fill="#dc2626" stroke="#b91c1c" stroke-width="2"/>
+  <text x="400" y="95" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="white" text-anchor="middle">Medical</text>
+  <text x="400" y="110" font-family="Arial, sans-serif" font-size="11" fill="white" text-anchor="middle">Status</text>
+  <rect x="330" y="40" width="140" height="50" fill="#fef2f2" stroke="#dc2626" stroke-width="2" rx="8"/>
+  <text x="340" y="60" font-family="Arial, sans-serif" font-size="9" fill="#991b1b">• Comorbidities • Medications</text>
+  <text x="340" y="75" font-family="Arial, sans-serif" font-size="9" fill="#991b1b">• Pain • Nutritional Status</text>
+  
+  <!-- Domain 6: Functional Status -->
+  <circle cx="400" cy="500" r="45" fill="#10b981" stroke="#059669" stroke-width="2"/>
+  <text x="400" y="495" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="white" text-anchor="middle">Functional</text>
+  <text x="400" y="510" font-family="Arial, sans-serif" font-size="11" fill="white" text-anchor="middle">Status</text>
+  <rect x="330" y="520" width="140" height="50" fill="#d1fae5" stroke="#10b981" stroke-width="2" rx="8"/>
+  <text x="340" y="540" font-family="Arial, sans-serif" font-size="9" fill="#047857">• ADLs • IADLs</text>
+  <text x="340" y="555" font-family="Arial, sans-serif" font-size="9" fill="#047857">• Community Participation</text>
+  
+  <!-- Connecting lines from center to domains -->
+  <line x1="360" y1="260" x2="230" y2="180" stroke="#374151" stroke-width="2"/>
+  <line x1="440" y1="260" x2="570" y2="180" stroke="#374151" stroke-width="2"/>
+  <line x1="360" y1="340" x2="180" y2="420" stroke="#374151" stroke-width="2"/>
+  <line x1="440" y1="340" x2="620" y2="420" stroke="#374151" stroke-width="2"/>
+  <line x1="400" y1="240" x2="400" y2="145" stroke="#374151" stroke-width="2"/>
+  <line x1="400" y1="360" x2="400" y2="455" stroke="#374151" stroke-width="2"/>
+  
+  <!-- Assessment Integration Note -->
+  <rect x="250" y="570" width="300" height="25" fill="#e5e7eb" stroke="#6b7280" stroke-width="1" rx="4"/>
+  <text x="400" y="585" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#374151" text-anchor="middle">Integrative approach addresses all domains simultaneously</text>
+</svg>

@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600">
+  <!-- Background -->
+  <rect width="800" height="600" fill="#f8f9fa"/>
+  
+  <!-- Title -->
+  <text x="400" y="30" font-family="Arial, sans-serif" font-size="20" font-weight="bold" fill="#1a365d" text-anchor="middle">Neurological Assessment Framework</text>
+  
+  <!-- Initial Assessment Box -->
+  <rect x="300" y="60" width="200" height="60" fill="#059669" stroke="#047857" stroke-width="2" rx="8"/>
+  <text x="400" y="85" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="white" text-anchor="middle">Initial Assessment</text>
+  <text x="400" y="105" font-family="Arial, sans-serif" font-size="12" fill="white" text-anchor="middle">Medical History • Onset • Severity</text>
+  
+  <!-- Arrow down -->
+  <path d="M400 130 L400 150 M390 140 L400 150 L410 140" stroke="#374151" stroke-width="2" fill="none"/>
+  
+  <!-- Three main assessment domains -->
+  <rect x="50" y="170" width="180" height="80" fill="#3b82f6" stroke="#2563eb" stroke-width="2" rx="8"/>
+  <text x="140" y="195" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="white" text-anchor="middle">Motor Function</text>
+  <text x="140" y="215" font-family="Arial, sans-serif" font-size="11" fill="white" text-anchor="middle">• Strength Testing</text>
+  <text x="140" y="230" font-family="Arial, sans-serif" font-size="11" fill="white" text-anchor="middle">• Tone Assessment</text>
+  <text x="140" y="245" font-family="Arial, sans-serif" font-size="11" fill="white" text-anchor="middle">• Movement Patterns</text>
+  
+  <rect x="310" y="170" width="180" height="80" fill="#8b5cf6" stroke="#7c3aed" stroke-width="2" rx="8"/>
+  <text x="400" y="195" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="white" text-anchor="middle">Sensory Function</text>
+  <text x="400" y="215" font-family="Arial, sans-serif" font-size="11" fill="white" text-anchor="middle">• Light Touch</text>
+  <text x="400" y="230" font-family="Arial, sans-serif" font-size="11" fill="white" text-anchor="middle">• Proprioception</text>
+  <text x="400" y="245" font-family="Arial, sans-serif" font-size="11" fill="white" text-anchor="middle">• Pain/Temperature</text>
+  
+  <rect x="570" y="170" width="180" height="80" fill="#f59e0b" stroke="#d97706" stroke-width="2" rx="8"/>
+  <text x="660" y="195" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="white" text-anchor="middle">Cognitive Function</text>
+  <text x="660" y="215" font-family="Arial, sans-serif" font-size="11" fill="white" text-anchor="middle">• Attention</text>
+  <text x="660" y="230" font-family="Arial, sans-serif" font-size="11" fill="white" text-anchor="middle">• Memory</text>
+  <text x="660" y="245" font-family="Arial, sans-serif" font-size="11" fill="white" text-anchor="middle">• Executive Function</text>
+  
+  <!-- Arrows down from each -->
+  <path d="M140 260 L140 290 M130 280 L140 290 L150 280" stroke="#374151" stroke-width="2" fill="none"/>
+  <path d="M400 260 L400 290 M390 280 L400 290 L410 280" stroke="#374151" stroke-width="2" fill="none"/>
+  <path d="M660 260 L660 290 M650 280 L660 290 L670 280" stroke="#374151" stroke-width="2" fill="none"/>
+  
+  <!-- Functional Assessment -->
+  <rect x="250" y="310" width="300" height="60" fill="#dc2626" stroke="#b91c1c" stroke-width="2" rx="8"/>
+  <text x="400" y="335" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="white" text-anchor="middle">Functional Assessment</text>
+  <text x="400" y="355" font-family="Arial, sans-serif" font-size="12" fill="white" text-anchor="middle">ADLs • Mobility • Balance • Participation</text>
+  
+  <!-- Arrow down -->
+  <path d="M400 380 L400 400 M390 390 L400 400 L410 390" stroke="#374151" stroke-width="2" fill="none"/>
+  
+  <!-- Treatment Planning -->
+  <rect x="100" y="420" width="180" height="70" fill="#059669" stroke="#047857" stroke-width="2" rx="8"/>
+  <text x="190" y="440" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="white" text-anchor="middle">Impairment-Based</text>
+  <text x="190" y="455" font-family="Arial, sans-serif" font-size="10" fill="white" text-anchor="middle">• Strengthen weak muscles</text>
+  <text x="190" y="470" font-family="Arial, sans-serif" font-size="10" fill="white" text-anchor="middle">• Improve ROM</text>
+  <text x="190" y="485" font-family="Arial, sans-serif" font-size="10" fill="white" text-anchor="middle">• Reduce spasticity</text>
+  
+  <rect x="310" y="420" width="180" height="70" fill="#3b82f6" stroke="#2563eb" stroke-width="2" rx="8"/>
+  <text x="400" y="440" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="white" text-anchor="middle">Task-Specific</text>
+  <text x="400" y="455" font-family="Arial, sans-serif" font-size="10" fill="white" text-anchor="middle">• Gait training</text>
+  <text x="400" y="470" font-family="Arial, sans-serif" font-size="10" fill="white" text-anchor="middle">• Transfer practice</text>
+  <text x="400" y="485" font-family="Arial, sans-serif" font-size="10" fill="white" text-anchor="middle">• Functional activities</text>
+  
+  <rect x="520" y="420" width="180" height="70" fill="#8b5cf6" stroke="#7c3aed" stroke-width="2" rx="8"/>
+  <text x="610" y="440" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="white" text-anchor="middle">Compensatory</text>
+  <text x="610" y="455" font-family="Arial, sans-serif" font-size="10" fill="white" text-anchor="middle">• Adaptive equipment</text>
+  <text x="610" y="470" font-family="Arial, sans-serif" font-size="10" fill="white" text-anchor="middle">• Environmental mods</text>
+  <text x="610" y="485" font-family="Arial, sans-serif" font-size="10" fill="white" text-anchor="middle">• Caregiver training</text>
+  
+  <!-- Outcomes Monitoring -->
+  <rect x="300" y="520" width="200" height="50" fill="#374151" stroke="#1f2937" stroke-width="2" rx="8"/>
+  <text x="400" y="540" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="white" text-anchor="middle">Outcomes Monitoring</text>
+  <text x="400" y="555" font-family="Arial, sans-serif" font-size="11" fill="white" text-anchor="middle">Reassessment • Progress • Adjust Plan</text>
+  
+  <!-- Arrows to outcomes -->
+  <path d="M190 500 L350 530 M340 525 L350 530 L345 540" stroke="#374151" stroke-width="2" fill="none"/>
+  <path d="M400 500 L400 520 M390 510 L400 520 L410 510" stroke="#374151" stroke-width="2" fill="none"/>
+  <path d="M610 500 L450 530 M455 525 L450 530 L460 540" stroke="#374151" stroke-width="2" fill="none"/>
+</svg>
