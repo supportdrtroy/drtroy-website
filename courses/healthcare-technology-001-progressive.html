@@ -1,0 +1,1421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Healthcare Technology and Electronic Records - DrTroy CE</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        @page { size: letter; margin: 0.75in; @bottom-center { content: counter(page); font-size: 10pt; color: #666; } }
+        * { box-sizing: border-box; }
+
+        /* CSS Variables */
+        :root {
+            --navy: #1a365d;
+            --navy-light: #2c5282;
+            --gold: #059669;
+            --gold-light: #10b981;
+            --gray-50: #f7fafc;
+            --gray-100: #edf2f7;
+            --gray-200: #e5e7eb;
+            --gray-600: #4a5568;
+            --gray-800: #2d3748;
+            --gray-900: #111827;
+        }
+
+        /* Base styles */
+        body {
+            font-family: 'Georgia', 'Times New Roman', serif;
+            font-size: 16px;
+            line-height: 1.7;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            background: #f5f5f5;
+        }
+
+        /* Course Header Styles */
+        .course-header {
+            background: #ffffff;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 3px solid var(--gold);
+        }
+
+        .course-header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo img {
+            height: 60px;
+            width: auto;
+            max-width: 300px;
+        }
+
+        .course-nav {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .course-nav a {
+            color: var(--gray-600);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 14px;
+            transition: color 0.2s;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        .course-nav a:hover {
+            color: var(--navy);
+        }
+
+        .logout-btn {
+            background: var(--gold);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        .logout-btn:hover {
+            background: var(--gold-light);
+            transform: translateY(-2px);
+        }
+
+        /* Main Course Container */
+        .course-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            background: white;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            border-radius: 10px;
+            margin-top: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        /* Course Title Section */
+        .course-title-section {
+            text-align: center;
+            border-bottom: 2px solid var(--gray-200);
+            padding-bottom: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .course-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--navy);
+            margin: 0;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        .course-subtitle {
+            font-size: 1.1rem;
+            color: var(--gray-600);
+            margin: 1rem 0;
+            font-style: italic;
+        }
+
+        .course-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        .info-box {
+            background: var(--gray-50);
+            padding: 1rem;
+            border-radius: 8px;
+            text-align: center;
+            border-left: 4px solid var(--gold);
+        }
+
+        .info-box strong {
+            color: var(--navy);
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Progress Tracking */
+        .progress-container {
+            background: var(--gray-50);
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+            border: 2px solid var(--gold-light);
+        }
+
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        .progress-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--navy);
+        }
+
+        .progress-percentage {
+            font-size: 1rem;
+            color: var(--gold);
+            font-weight: 600;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 12px;
+            background: white;
+            border-radius: 6px;
+            overflow: hidden;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--gold) 0%, var(--gold-light) 100%);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        /* Module Styles */
+        .module {
+            margin-bottom: 3rem;
+            border: 1px solid var(--gray-200);
+            border-radius: 12px;
+            overflow: hidden;
+            background: white;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+        }
+
+        .module:hover {
+            box-shadow: 0 6px 25px rgba(0,0,0,0.1);
+        }
+
+        .module-header {
+            background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
+            color: white;
+            padding: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .module-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .module-header:hover::before {
+            left: 100%;
+        }
+
+        .module-header.completed {
+            background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%);
+        }
+
+        .module-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin: 0;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        .module-header.completed .module-title {
+            position: relative;
+        }
+
+        .module-header.completed .module-title::after {
+            content: ' ✓';
+            font-size: 1.2rem;
+            margin-left: 0.5rem;
+        }
+
+        .module-content {
+            padding: 2rem;
+            display: none;
+            background: white;
+        }
+
+        .module-content.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .module-content h2 {
+            color: var(--navy);
+            font-size: 1.4rem;
+            margin: 2rem 0 1rem 0;
+            font-weight: 600;
+            border-bottom: 2px solid var(--gold);
+            padding-bottom: 0.5rem;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        .module-content h3 {
+            color: var(--navy-light);
+            font-size: 1.2rem;
+            margin: 1.5rem 0 0.75rem 0;
+            font-weight: 600;
+        }
+
+        .module-content p {
+            margin-bottom: 1rem;
+            text-align: justify;
+        }
+
+        .module-content ul, .module-content ol {
+            margin: 1rem 0;
+            padding-left: 2rem;
+        }
+
+        .module-content li {
+            margin-bottom: 0.5rem;
+        }
+
+        /* Highlight boxes */
+        .highlight-box {
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            border-left: 5px solid var(--gold);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .highlight-box.clinical-tip {
+            background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+            border-left-color: var(--gold);
+        }
+
+        .highlight-box.key-point {
+            background: linear-gradient(135deg, #fef7cd 0%, #fef3c7 100%);
+            border-left-color: #d97706;
+        }
+
+        .highlight-box.caution {
+            background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%);
+            border-left-color: #dc2626;
+        }
+
+        .highlight-box.tech-focus {
+            background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
+            border-left-color: #6366f1;
+        }
+
+        /* Knowledge Check */
+        .knowledge-check {
+            background: linear-gradient(135deg, var(--gray-50) 0%, white 100%);
+            border: 2px solid var(--gold);
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 2rem 0;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+
+        .knowledge-check h3 {
+            color: var(--navy);
+            margin-top: 0;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        .question {
+            margin: 1.5rem 0;
+            padding: 1rem;
+            background: white;
+            border-radius: 8px;
+            border: 1px solid var(--gray-200);
+        }
+
+        .question-text {
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--navy);
+        }
+
+        .answer-option {
+            margin: 0.5rem 0;
+            padding: 0.5rem;
+            cursor: pointer;
+            border-radius: 6px;
+            transition: background 0.2s;
+        }
+
+        .answer-option:hover {
+            background: var(--gray-50);
+        }
+
+        .answer-option.correct {
+            background: #dcfce7 !important;
+            border-left: 4px solid var(--gold);
+            padding-left: 1rem;
+        }
+
+        .answer-option.incorrect {
+            background: #fee2e2 !important;
+            border-left: 4px solid #dc2626;
+            padding-left: 1rem;
+        }
+
+        /* Completion Tracking */
+        .module-completion {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem;
+            background: var(--gray-50);
+            border-top: 1px solid var(--gray-200);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        .complete-btn {
+            background: var(--gold);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        .complete-btn:hover {
+            background: var(--gold-light);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(5, 150, 105, 0.3);
+        }
+
+        .complete-btn:disabled {
+            background: var(--gray-600);
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .completed-badge {
+            background: var(--gold);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        /* Certificate Section */
+        .certificate-section {
+            background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
+            color: white;
+            text-align: center;
+            padding: 3rem;
+            border-radius: 12px;
+            margin: 3rem 0;
+            display: none;
+        }
+
+        .certificate-section.visible {
+            display: block;
+            animation: slideUp 0.5s ease;
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .certificate-btn {
+            background: var(--gold);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            margin-top: 1rem;
+        }
+
+        .certificate-btn:hover {
+            background: var(--gold-light);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(5, 150, 105, 0.4);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .course-container {
+                margin: 1rem;
+                padding: 1rem;
+            }
+
+            .course-title {
+                font-size: 2rem;
+            }
+
+            .module-title {
+                font-size: 1.1rem;
+            }
+
+            .course-info {
+                grid-template-columns: 1fr;
+            }
+
+            .progress-container {
+                padding: 1rem;
+            }
+        }
+
+        /* Print Styles */
+        @media print {
+            .course-header,
+            .progress-container,
+            .complete-btn,
+            .certificate-section {
+                display: none !important;
+            }
+
+            .module-content {
+                display: block !important;
+            }
+
+            .module {
+                break-inside: avoid;
+                margin-bottom: 2rem;
+            }
+
+            body {
+                background: white;
+                font-size: 11pt;
+                line-height: 1.4;
+            }
+
+            .course-container {
+                box-shadow: none;
+                margin: 0;
+                padding: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Course Header -->
+    <header class="course-header">
+        <div class="course-header-container">
+            <div class="logo">
+                <img src="images/drtroy_logo_new.jpg" alt="DrTroy CE">
+            </div>
+            <div class="course-nav">
+                <a href="../course-catalog.html">Course Catalog</a>
+                <a href="../my-account.html">My Account</a>
+                <button class="logout-btn" onclick="logout()">Logout</button>
+            </div>
+        </div>
+    </header>
+
+    <div class="course-container">
+        <!-- Course Title Section -->
+        <div class="course-title-section">
+            <h1 class="course-title">💻 Healthcare Technology and Electronic Records</h1>
+            <p class="course-subtitle">Essential Technology Skills for Modern Healthcare Practice</p>
+            
+            <div class="course-info">
+                <div class="info-box">
+                    <strong>Duration</strong>
+                    1.0 Hour (60 minutes)
+                </div>
+                <div class="info-box">
+                    <strong>Continuing Education</strong>
+                    1.0 CCU
+                </div>
+                <div class="info-box">
+                    <strong>Course ID</strong>
+                    HEALTHTECH-001
+                </div>
+                <div class="info-box">
+                    <strong>Approval #</strong>
+                    DRTROY-HEALTHTECH-001-2024
+                </div>
+            </div>
+        </div>
+
+        <!-- Progress Tracking -->
+        <div class="progress-container">
+            <div class="progress-header">
+                <div class="progress-title">Course Progress</div>
+                <div class="progress-percentage">0% Complete</div>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill"></div>
+            </div>
+        </div>
+
+        <!-- Module 1: Electronic Health Records Fundamentals -->
+        <div class="module" data-module="1">
+            <div class="module-header" onclick="toggleModule(1)">
+                <div class="module-title">Module 1: Electronic Health Records Fundamentals (10 min)</div>
+            </div>
+            <div class="module-content">
+                <h2>1.1 Definition and Core Components of EHR Systems</h2>
+                <p>Electronic Health Records (EHRs) are digital versions of patients' paper charts containing comprehensive health information that can be shared across healthcare organizations and care settings.</p>
+                
+                <div class="highlight-box key-point">
+                    <strong>EHR vs. EMR Distinction:</strong>
+                    <ul>
+                        <li><strong>EMR (Electronic Medical Record):</strong> Digital record within a single healthcare organization</li>
+                        <li><strong>EHR (Electronic Health Record):</strong> Comprehensive health record shared across multiple providers and organizations</li>
+                        <li><strong>PHR (Personal Health Record):</strong> Health information controlled and maintained by the patient</li>
+                    </ul>
+                </div>
+
+                <h3>Core EHR Functions</h3>
+                <p>The Institute of Medicine identifies eight core functions of EHRs:</p>
+                <ul>
+                    <li><strong>Health information and data management:</strong> Patient demographics, medical history, allergies, medications</li>
+                    <li><strong>Results management:</strong> Laboratory, radiology, and other diagnostic test results</li>
+                    <li><strong>Order entry and management:</strong> Electronic prescribing, laboratory orders, referrals</li>
+                    <li><strong>Decision support:</strong> Clinical guidelines, drug interactions, allergy alerts</li>
+                    <li><strong>Electronic communication and connectivity:</strong> Provider-to-provider and provider-to-patient communication</li>
+                    <li><strong>Patient support:</strong> Educational materials, self-management tools</li>
+                    <li><strong>Administrative processes:</strong> Scheduling, billing, insurance verification</li>
+                    <li><strong>Population health management:</strong> Public health reporting, quality measures</li>
+                </ul>
+
+                <h2>1.2 Historical Development and Adoption</h2>
+                <p>The transition from paper-based records to electronic systems has been driven by federal initiatives, meaningful use requirements, and the need for improved care coordination.</p>
+
+                <div class="highlight-box tech-focus">
+                    <strong>Key Milestones in EHR Adoption:</strong>
+                    <ul>
+                        <li><strong>2004:</strong> President Bush calls for universal EHR adoption by 2014</li>
+                        <li><strong>2009:</strong> HITECH Act provides $27 billion in incentives for EHR adoption</li>
+                        <li><strong>2011:</strong> Meaningful Use Stage 1 requirements begin</li>
+                        <li><strong>2014:</strong> Meaningful Use Stage 2 emphasizes clinical processes and outcomes</li>
+                        <li><strong>2018:</strong> Promoting Interoperability (formerly Meaningful Use) program continues</li>
+                    </ul>
+                </div>
+
+                <h3>Current Adoption Rates</h3>
+                <p>According to recent data from the Office of the National Coordinator for Health Information Technology:</p>
+                <ul>
+                    <li><strong>Hospitals:</strong> Over 95% have adopted certified EHR technology</li>
+                    <li><strong>Office-based physicians:</strong> Approximately 89% use some form of EHR system</li>
+                    <li><strong>Nursing homes:</strong> 85% have adopted electronic systems</li>
+                    <li><strong>Home health agencies:</strong> 88% use certified EHR technology</li>
+                </ul>
+
+                <h2>1.3 Benefits and Challenges of EHR Implementation</h2>
+
+                <h3>Clinical Benefits</h3>
+                <ul>
+                    <li><strong>Improved legibility:</strong> Eliminates handwriting interpretation issues</li>
+                    <li><strong>Better access:</strong> Multiple users can access records simultaneously</li>
+                    <li><strong>Clinical decision support:</strong> Real-time alerts and reminders improve patient safety</li>
+                    <li><strong>Care coordination:</strong> Seamless information sharing across providers</li>
+                    <li><strong>Quality reporting:</strong> Automated collection of quality measures and outcomes data</li>
+                </ul>
+
+                <h3>Operational Challenges</h3>
+                <div class="highlight-box caution">
+                    <strong>Common Implementation Challenges:</strong>
+                    <ul>
+                        <li><strong>High initial costs:</strong> Software licenses, hardware, training, and conversion expenses</li>
+                        <li><strong>Workflow disruption:</strong> Temporary productivity decreases during transition</li>
+                        <li><strong>Training requirements:</strong> Significant time investment for staff education</li>
+                        <li><strong>Technical issues:</strong> System downtime, connectivity problems, software bugs</li>
+                        <li><strong>Resistance to change:</strong> Staff reluctance to adopt new technologies and processes</li>
+                    </ul>
+                </div>
+
+                <div class="knowledge-check">
+                    <h3>Knowledge Check</h3>
+                    <div class="question">
+                        <div class="question-text">What is the primary difference between an EMR and an EHR?</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">A) EMRs are paper-based, EHRs are electronic</div>
+                        <div class="answer-option" onclick="selectAnswer(this, true)">B) EMRs are used within one organization, EHRs can be shared across multiple organizations</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">C) EMRs are for doctors, EHRs are for all healthcare providers</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">D) EMRs are older technology, EHRs are newer</div>
+                    </div>
+                </div>
+
+                <div class="module-completion">
+                    <div>Estimated completion time: 10 minutes</div>
+                    <button class="complete-btn" onclick="completeModule(1)">Mark Complete</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Module 2: HIPAA and Data Security -->
+        <div class="module" data-module="2">
+            <div class="module-header" onclick="toggleModule(2)">
+                <div class="module-title">Module 2: HIPAA Compliance and Data Security (10 min)</div>
+            </div>
+            <div class="module-content">
+                <h2>2.1 HIPAA Privacy and Security Rules</h2>
+                <p>The Health Insurance Portability and Accountability Act (HIPAA) establishes national standards for protecting patient health information in both paper and electronic formats.</p>
+
+                <div class="highlight-box key-point">
+                    <strong>HIPAA Key Components:</strong>
+                    <ul>
+                        <li><strong>Privacy Rule:</strong> Protects individual's medical records and personal health information</li>
+                        <li><strong>Security Rule:</strong> Sets standards for protecting electronic health information</li>
+                        <li><strong>Breach Notification Rule:</strong> Requires notification when protected health information is compromised</li>
+                        <li><strong>Enforcement Rule:</strong> Provides standards for investigation and penalties for violations</li>
+                    </ul>
+                </div>
+
+                <h3>Protected Health Information (PHI)</h3>
+                <p>PHI includes any individually identifiable health information held or transmitted in any format. The 18 identifiers that must be removed for information to be considered de-identified include:</p>
+                <ul>
+                    <li>Names, geographic subdivisions smaller than state, dates (except year)</li>
+                    <li>Phone numbers, fax numbers, email addresses</li>
+                    <li>Social Security numbers, medical record numbers, account numbers</li>
+                    <li>Certificate/license numbers, vehicle identifiers, device identifiers</li>
+                    <li>Web URLs, IP addresses, biometric identifiers, photographs</li>
+                </ul>
+
+                <h2>2.2 Electronic Security Requirements</h2>
+                <p>The HIPAA Security Rule requires covered entities to implement administrative, physical, and technical safeguards to protect electronic PHI (ePHI).</p>
+
+                <h3>Administrative Safeguards</h3>
+                <div class="highlight-box tech-focus">
+                    <strong>Required Administrative Controls:</strong>
+                    <ul>
+                        <li><strong>Security Officer:</strong> Designated individual responsible for security program</li>
+                        <li><strong>Workforce Training:</strong> Regular education on security policies and procedures</li>
+                        <li><strong>Access Management:</strong> Unique user identification and role-based access controls</li>
+                        <li><strong>Emergency Access:</strong> Procedures for accessing ePHI during emergencies</li>
+                        <li><strong>Automatic Logoff:</strong> Systems must terminate sessions after predetermined time</li>
+                    </ul>
+                </div>
+
+                <h3>Physical Safeguards</h3>
+                <ul>
+                    <li><strong>Facility Access Controls:</strong> Procedures to limit physical access to systems containing ePHI</li>
+                    <li><strong>Workstation Use:</strong> Procedures for proper use of workstations accessing ePHI</li>
+                    <li><strong>Device and Media Controls:</strong> Procedures for receipt and removal of hardware/software</li>
+                </ul>
+
+                <h3>Technical Safeguards</h3>
+                <ul>
+                    <li><strong>Access Control:</strong> Unique user identification, emergency access, automatic logoff, encryption</li>
+                    <li><strong>Audit Controls:</strong> Hardware, software, and procedural mechanisms for recording system access</li>
+                    <li><strong>Integrity:</strong> ePHI must not be improperly altered or destroyed</li>
+                    <li><strong>Transmission Security:</strong> Guard against unauthorized access to transmitted ePHI</li>
+                </ul>
+
+                <h2>2.3 Breach Prevention and Response</h2>
+                <p>Healthcare organizations must implement comprehensive strategies to prevent data breaches and respond appropriately when breaches occur.</p>
+
+                <div class="highlight-box caution">
+                    <strong>Common Breach Causes:</strong>
+                    <ul>
+                        <li><strong>Hacking/IT incidents (45%):</strong> External cyber attacks, malware, phishing</li>
+                        <li><strong>Unauthorized access/disclosure (23%):</strong> Employees accessing records inappropriately</li>
+                        <li><strong>Theft (12%):</strong> Physical theft of devices containing PHI</li>
+                        <li><strong>Improper disposal (8%):</strong> Failure to properly destroy PHI before disposal</li>
+                        <li><strong>Loss (7%):</strong> Unintentional loss of devices or records</li>
+                    </ul>
+                </div>
+
+                <h3>Breach Response Requirements</h3>
+                <p>When a breach affecting 500 or more individuals occurs, covered entities must:</p>
+                <ul>
+                    <li><strong>Notify HHS within 60 days:</strong> Report breach details to Department of Health and Human Services</li>
+                    <li><strong>Notify affected individuals within 60 days:</strong> Written notification of breach and steps being taken</li>
+                    <li><strong>Media notification:</strong> If breach affects 500+ people in same state/jurisdiction</li>
+                    <li><strong>Business associate notification:</strong> Inform relevant business associates of the breach</li>
+                </ul>
+
+                <div class="knowledge-check">
+                    <h3>Knowledge Check</h3>
+                    <div class="question">
+                        <div class="question-text">Which HIPAA safeguard category includes automatic logoff requirements?</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">A) Administrative safeguards only</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">B) Physical safeguards only</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">C) Technical safeguards only</div>
+                        <div class="answer-option" onclick="selectAnswer(this, true)">D) Both administrative and technical safeguards</div>
+                    </div>
+                </div>
+
+                <div class="module-completion">
+                    <div>Estimated completion time: 10 minutes</div>
+                    <button class="complete-btn" onclick="completeModule(2)">Mark Complete</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Module 3: Clinical Documentation Standards -->
+        <div class="module" data-module="3">
+            <div class="module-header" onclick="toggleModule(3)">
+                <div class="module-title">Module 3: Clinical Documentation Standards and Best Practices (10 min)</div>
+            </div>
+            <div class="module-content">
+                <h2>3.1 Legal and Regulatory Requirements</h2>
+                <p>Clinical documentation in electronic health records must meet strict legal, regulatory, and professional standards to ensure patient safety, support clinical decision-making, and facilitate appropriate reimbursement.</p>
+
+                <div class="highlight-box key-point">
+                    <strong>Documentation Principles:</strong>
+                    <ul>
+                        <li><strong>Accuracy:</strong> Information must be factual, complete, and error-free</li>
+                        <li><strong>Timeliness:</strong> Documentation should occur as close to the time of care as possible</li>
+                        <li><strong>Completeness:</strong> All relevant information necessary for patient care must be included</li>
+                        <li><strong>Objectivity:</strong> Focus on observable facts rather than subjective interpretations</li>
+                        <li><strong>Clarity:</strong> Use clear, professional language that can be understood by other healthcare providers</li>
+                    </ul>
+                </div>
+
+                <h3>Legal Significance of Medical Records</h3>
+                <p>Medical records serve as legal documents that can be used in court proceedings. Key legal considerations include:</p>
+                <ul>
+                    <li><strong>Evidence in malpractice cases:</strong> Records often determine case outcomes</li>
+                    <li><strong>Credibility indicator:</strong> Quality of documentation reflects provider competence</li>
+                    <li><strong>Defensibility:</strong> Well-documented care decisions are easier to defend legally</li>
+                    <li><strong>Continuity of care:</strong> Documentation enables safe transitions between providers</li>
+                </ul>
+
+                <h2>3.2 Electronic Documentation Best Practices</h2>
+                <p>Electronic documentation requires specific skills and strategies different from paper-based documentation.</p>
+
+                <h3>Efficient EHR Documentation Techniques</h3>
+                <div class="highlight-box clinical-tip">
+                    <strong>Time-Saving Strategies:</strong>
+                    <ul>
+                        <li><strong>Templates and macros:</strong> Use standardized templates for common conditions and procedures</li>
+                        <li><strong>Copy/paste carefully:</strong> Only copy relevant information and always review for accuracy</li>
+                        <li><strong>Voice recognition:</strong> Use speech-to-text software for faster data entry</li>
+                        <li><strong>Mobile devices:</strong> Document at point of care using tablets or smartphones</li>
+                        <li><strong>Batch documentation:</strong> Group similar documentation tasks for efficiency</li>
+                    </ul>
+                </div>
+
+                <h3>Common Documentation Errors in EHR Systems</h3>
+                <ul>
+                    <li><strong>Copy-paste errors:</strong> Outdated or incorrect information carried forward</li>
+                    <li><strong>Template over-reliance:</strong> Generic templates don't capture patient-specific details</li>
+                    <li><strong>Incomplete documentation:</strong> Rushing through required fields without adequate detail</li>
+                    <li><strong>Wrong patient selection:</strong> Documenting in incorrect patient record due to user error</li>
+                    <li><strong>Auto-population errors:</strong> System-generated data that doesn't reflect actual patient status</li>
+                </ul>
+
+                <h2>3.3 Coding and Classification Systems</h2>
+                <p>Modern healthcare relies on standardized coding systems to ensure consistent communication and accurate billing.</p>
+
+                <h3>ICD-10-CM/PCS</h3>
+                <p>The International Classification of Diseases, 10th Revision, Clinical Modification (ICD-10-CM) and Procedure Coding System (ICD-10-PCS) are used for:</p>
+                <ul>
+                    <li><strong>Diagnosis coding:</strong> Specific codes for patient conditions and symptoms</li>
+                    <li><strong>Procedure coding:</strong> Detailed codes for medical and surgical procedures</li>
+                    <li><strong>Statistical reporting:</strong> Population health monitoring and research</li>
+                    <li><strong>Reimbursement:</strong> Insurance claims processing and payment determination</li>
+                </ul>
+
+                <h3>CPT Codes</h3>
+                <p>Current Procedural Terminology (CPT) codes describe medical, surgical, and diagnostic services:</p>
+                <ul>
+                    <li><strong>Category I codes:</strong> Procedures and services commonly performed by physicians</li>
+                    <li><strong>Category II codes:</strong> Supplemental tracking codes for performance measurement</li>
+                    <li><strong>Category III codes:</strong> Temporary codes for emerging technologies and services</li>
+                </ul>
+
+                <div class="highlight-box tech-focus">
+                    <strong>EHR Coding Support Features:</strong>
+                    <ul>
+                        <li><strong>Code lookup tools:</strong> Search functions to find appropriate codes quickly</li>
+                        <li><strong>Clinical decision support:</strong> Alerts for missing or inconsistent codes</li>
+                        <li><strong>Auto-coding:</strong> Artificial intelligence that suggests codes based on documentation</li>
+                        <li><strong>Code validation:</strong> Real-time checking for code accuracy and completeness</li>
+                    </ul>
+                </div>
+
+                <div class="knowledge-check">
+                    <h3>Knowledge Check</h3>
+                    <div class="question">
+                        <div class="question-text">What is the primary risk of over-relying on copy-paste functionality in EHR documentation?</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">A) It takes too much time to complete documentation</div>
+                        <div class="answer-option" onclick="selectAnswer(this, true)">B) Outdated or incorrect information may be carried forward</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">C) It violates HIPAA privacy regulations</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">D) It prevents other users from accessing the record</div>
+                    </div>
+                </div>
+
+                <div class="module-completion">
+                    <div>Estimated completion time: 10 minutes</div>
+                    <button class="complete-btn" onclick="completeModule(3)">Mark Complete</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Module 4: Interoperability and Health Information Exchange -->
+        <div class="module" data-module="4">
+            <div class="module-header" onclick="toggleModule(4)">
+                <div class="module-title">Module 4: Interoperability and Health Information Exchange (10 min)</div>
+            </div>
+            <div class="module-content">
+                <h2>4.1 Interoperability Fundamentals</h2>
+                <p>Interoperability is the ability of different information systems, devices, and applications to connect and communicate in a coordinated way, allowing for the seamless exchange of health information.</p>
+
+                <div class="highlight-box key-point">
+                    <strong>Four Levels of Interoperability:</strong>
+                    <ul>
+                        <li><strong>Foundational:</strong> Systems can securely exchange data but the receiving system doesn't need to interpret it</li>
+                        <li><strong>Structural:</strong> Data exchange with common format and organization (syntax and structure)</li>
+                        <li><strong>Semantic:</strong> Systems can interpret exchanged data meaningfully (shared vocabulary and coding)</li>
+                        <li><strong>Organizational:</strong> Governance, policies, and procedures enable secure data exchange across organizations</li>
+                    </ul>
+                </div>
+
+                <h3>Benefits of Interoperability</h3>
+                <ul>
+                    <li><strong>Care coordination:</strong> Providers have complete patient information across settings</li>
+                    <li><strong>Reduced duplicate testing:</strong> Test results are available to all providers in network</li>
+                    <li><strong>Medication safety:</strong> Complete medication lists prevent dangerous interactions</li>
+                    <li><strong>Emergency care:</strong> Critical patient information available during emergencies</li>
+                    <li><strong>Population health:</strong> Aggregated data supports public health monitoring and research</li>
+                </ul>
+
+                <h2>4.2 Health Information Exchange (HIE)</h2>
+                <p>Health Information Exchange refers to both the technical capability and organizational structures that enable secure sharing of electronic health information across different healthcare systems.</p>
+
+                <h3>Types of Health Information Exchange</h3>
+                <div class="highlight-box clinical-tip">
+                    <strong>HIE Models:</strong>
+                    <ul>
+                        <li><strong>Directed Exchange:</strong> Secure point-to-point transmission (like secure email)</li>
+                        <li><strong>Query-Based Exchange:</strong> Search and retrieve specific patient information as needed</li>
+                        <li><strong>Consumer-Mediated Exchange:</strong> Patients control access to their health information</li>
+                    </ul>
+                </div>
+
+                <h3>Regional and State HIE Networks</h3>
+                <p>Many states and regions have established HIE networks to facilitate information sharing:</p>
+                <ul>
+                    <li><strong>State-designated entities:</strong> Government-supported HIE organizations</li>
+                    <li><strong>Regional collaboratives:</strong> Multi-state HIE partnerships</li>
+                    <li><strong>Private networks:</strong> Vendor-sponsored or health system-led HIEs</li>
+                    <li><strong>National networks:</strong> Connecting state and regional HIEs nationwide</li>
+                </ul>
+
+                <h2>4.3 Standards and Protocols</h2>
+                <p>Successful interoperability depends on adherence to technical standards and communication protocols that enable different systems to work together.</p>
+
+                <h3>Key Health IT Standards</h3>
+                <ul>
+                    <li><strong>HL7 FHIR:</strong> Fast Healthcare Interoperability Resources - modern API-based standard</li>
+                    <li><strong>HL7 v2:</strong> Messaging standard for clinical and administrative data</li>
+                    <li><strong>C-CDA:</strong> Consolidated Clinical Document Architecture for structured documents</li>
+                    <li><strong>DICOM:</strong> Digital Imaging and Communications in Medicine for medical images</li>
+                    <li><strong>SNOMED CT:</strong> Systematized Nomenclature of Medicine Clinical Terms</li>
+                    <li><strong>LOINC:</strong> Logical Observation Identifiers Names and Codes for lab data</li>
+                </ul>
+
+                <div class="highlight-box tech-focus">
+                    <strong>API-Based Interoperability:</strong>
+                    <p>Application Programming Interfaces (APIs) enable different software applications to communicate with each other. The 21st Century Cures Act requires certified EHR systems to support standardized APIs for patient access and provider-to-provider exchange.</p>
+                </div>
+
+                <h2>4.4 Challenges and Barriers</h2>
+                <p>Despite significant progress, several challenges continue to limit effective health information exchange.</p>
+
+                <h3>Technical Barriers</h3>
+                <ul>
+                    <li><strong>Legacy systems:</strong> Older systems may not support modern standards</li>
+                    <li><strong>Vendor lock-in:</strong> Proprietary systems that don't interoperate well</li>
+                    <li><strong>Data quality issues:</strong> Inconsistent or incomplete data affects exchange quality</li>
+                    <li><strong>Network reliability:</strong> System downtime disrupts information sharing</li>
+                </ul>
+
+                <h3>Organizational and Policy Barriers</h3>
+                <div class="highlight-box caution">
+                    <strong>Non-Technical Challenges:</strong>
+                    <ul>
+                        <li><strong>Information blocking:</strong> Intentional practices that limit data sharing</li>
+                        <li><strong>Privacy concerns:</strong> Fear of data breaches or inappropriate access</li>
+                        <li><strong>Competitive concerns:</strong> Organizations reluctant to share data with competitors</li>
+                        <li><strong>Cost considerations:</strong> Implementation and maintenance expenses</li>
+                        <li><strong>Governance challenges:</strong> Lack of clear policies and procedures</li>
+                    </ul>
+                </div>
+
+                <div class="knowledge-check">
+                    <h3>Knowledge Check</h3>
+                    <div class="question">
+                        <div class="question-text">Which level of interoperability allows systems to interpret exchanged data meaningfully using shared vocabulary?</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">A) Foundational</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">B) Structural</div>
+                        <div class="answer-option" onclick="selectAnswer(this, true)">C) Semantic</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">D) Organizational</div>
+                    </div>
+                </div>
+
+                <div class="module-completion">
+                    <div>Estimated completion time: 10 minutes</div>
+                    <button class="complete-btn" onclick="completeModule(4)">Mark Complete</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Module 5: Patient Engagement Technologies -->
+        <div class="module" data-module="5">
+            <div class="module-header" onclick="toggleModule(5)">
+                <div class="module-title">Module 5: Patient Engagement Technologies and Patient Portals (10 min)</div>
+            </div>
+            <div class="module-content">
+                <h2>5.1 Patient Portal Fundamentals</h2>
+                <p>Patient portals are secure online applications that give patients 24-hour access to their personal health information and enable electronic communication with healthcare providers.</p>
+
+                <div class="highlight-box key-point">
+                    <strong>Core Patient Portal Features:</strong>
+                    <ul>
+                        <li><strong>Health information access:</strong> Lab results, test results, medical history, medication lists</li>
+                        <li><strong>Secure messaging:</strong> Direct communication with healthcare providers</li>
+                        <li><strong>Appointment management:</strong> Schedule, reschedule, or cancel appointments online</li>
+                        <li><strong>Prescription refills:</strong> Request medication refills electronically</li>
+                        <li><strong>Bill payment:</strong> View and pay medical bills online</li>
+                        <li><strong>Educational resources:</strong> Access to condition-specific health information</li>
+                    </ul>
+                </div>
+
+                <h3>Patient Portal Benefits</h3>
+                <ul>
+                    <li><strong>Improved patient engagement:</strong> Patients become more involved in their healthcare</li>
+                    <li><strong>Better communication:</strong> Reduces phone calls and improves provider-patient communication</li>
+                    <li><strong>Increased convenience:</strong> 24/7 access to health information and services</li>
+                    <li><strong>Enhanced safety:</strong> Patients can review and correct health information</li>
+                    <li><strong>Care coordination:</strong> Facilitates communication between multiple providers</li>
+                </ul>
+
+                <h2>5.2 Mobile Health (mHealth) Technologies</h2>
+                <p>Mobile health technologies leverage smartphones, tablets, and wearable devices to support patient engagement and health monitoring.</p>
+
+                <h3>Types of mHealth Applications</h3>
+                <div class="highlight-box clinical-tip">
+                    <strong>mHealth Categories:</strong>
+                    <ul>
+                        <li><strong>Medication management:</strong> Apps for medication reminders, adherence tracking, drug interaction checking</li>
+                        <li><strong>Chronic disease management:</strong> Tools for diabetes, hypertension, heart disease self-monitoring</li>
+                        <li><strong>Fitness and wellness:</strong> Activity tracking, nutrition logging, sleep monitoring</li>
+                        <li><strong>Mental health support:</strong> Mood tracking, meditation apps, cognitive behavioral therapy tools</li>
+                        <li><strong>Telehealth platforms:</strong> Video consultations and remote monitoring</li>
+                    </ul>
+                </div>
+
+                <h3>Wearable Device Integration</h3>
+                <p>Wearable devices can automatically collect and transmit health data to EHR systems:</p>
+                <ul>
+                    <li><strong>Activity monitors:</strong> Steps, distance, calories burned, sleep patterns</li>
+                    <li><strong>Vital sign monitoring:</strong> Heart rate, blood pressure, blood glucose</li>
+                    <li><strong>Specialized devices:</strong> ECG monitors, pulse oximeters, medication adherence sensors</li>
+                    <li><strong>Emergency devices:</strong> Fall detection, medical alert systems</li>
+                </ul>
+
+                <h2>5.3 Telehealth and Remote Monitoring</h2>
+                <p>Telehealth technologies enable healthcare delivery across geographic distances using information and communication technologies.</p>
+
+                <h3>Telehealth Service Categories</h3>
+                <ul>
+                    <li><strong>Synchronous services:</strong> Real-time video consultations between patients and providers</li>
+                    <li><strong>Asynchronous services:</strong> Store-and-forward transmission of medical data for later review</li>
+                    <li><strong>Remote patient monitoring:</strong> Continuous collection and transmission of patient data</li>
+                    <li><strong>Mobile health:</strong> Health-related services delivered via mobile devices</li>
+                </ul>
+
+                <div class="highlight-box tech-focus">
+                    <strong>Remote Monitoring Benefits:</strong>
+                    <ul>
+                        <li><strong>Early intervention:</strong> Detect health changes before they require emergency care</li>
+                        <li><strong>Reduced hospitalizations:</strong> Monitor high-risk patients at home</li>
+                        <li><strong>Improved medication adherence:</strong> Real-time monitoring and alerts</li>
+                        <li><strong>Cost reduction:</strong> Decrease in emergency department visits and readmissions</li>
+                        <li><strong>Patient satisfaction:</strong> Care delivery in comfortable home environment</li>
+                    </ul>
+                </div>
+
+                <h2>5.4 Patient-Generated Health Data (PGHD)</h2>
+                <p>Patient-Generated Health Data includes health information created, recorded, or gathered by patients and their caregivers to help address health concerns.</p>
+
+                <h3>PGHD Integration Challenges</h3>
+                <div class="highlight-box caution">
+                    <strong>Integration Considerations:</strong>
+                    <ul>
+                        <li><strong>Data accuracy:</strong> Consumer devices may not meet medical-grade accuracy standards</li>
+                        <li><strong>Data volume:</strong> Large amounts of data can overwhelm providers and EHR systems</li>
+                        <li><strong>Clinical relevance:</strong> Determining which PGHD provides meaningful clinical insights</li>
+                        <li><strong>Workflow integration:</strong> Incorporating PGHD review into clinical workflows</li>
+                        <li><strong>Legal implications:</strong> Questions about liability and standard of care</li>
+                    </ul>
+                </div>
+
+                <h3>Successful PGHD Implementation Strategies</h3>
+                <ul>
+                    <li><strong>Selective integration:</strong> Focus on specific conditions and high-risk patients</li>
+                    <li><strong>Clinical decision support:</strong> Use algorithms to identify significant changes</li>
+                    <li><strong>Patient education:</strong> Train patients on proper device use and data interpretation</li>
+                    <li><strong>Provider training:</strong> Educate clinicians on PGHD value and limitations</li>
+                </ul>
+
+                <div class="knowledge-check">
+                    <h3>Knowledge Check</h3>
+                    <div class="question">
+                        <div class="question-text">What is the primary benefit of integrating wearable device data into EHR systems?</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">A) Reduced healthcare costs for all patients</div>
+                        <div class="answer-option" onclick="selectAnswer(this, true)">B) Early detection of health changes for timely intervention</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">C) Elimination of in-person healthcare visits</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">D) Automatic diagnosis of medical conditions</div>
+                    </div>
+                </div>
+
+                <div class="module-completion">
+                    <div>Estimated completion time: 10 minutes</div>
+                    <button class="complete-btn" onclick="completeModule(5)">Mark Complete</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Module 6: Future Trends and Emerging Technologies -->
+        <div class="module" data-module="6">
+            <div class="module-header" onclick="toggleModule(6)">
+                <div class="module-title">Module 6: Future Trends and Emerging Technologies (10 min)</div>
+            </div>
+            <div class="module-content">
+                <h2>6.1 Artificial Intelligence in Healthcare</h2>
+                <p>Artificial Intelligence (AI) and machine learning technologies are transforming healthcare delivery, clinical decision-making, and administrative processes.</p>
+
+                <div class="highlight-box key-point">
+                    <strong>AI Applications in Healthcare:</strong>
+                    <ul>
+                        <li><strong>Clinical decision support:</strong> AI-powered diagnostic assistance and treatment recommendations</li>
+                        <li><strong>Medical imaging:</strong> Computer-aided detection and diagnosis in radiology and pathology</li>
+                        <li><strong>Drug discovery:</strong> Accelerated pharmaceutical research and development</li>
+                        <li><strong>Predictive analytics:</strong> Risk stratification and early warning systems</li>
+                        <li><strong>Natural language processing:</strong> Automated documentation and data extraction</li>
+                    </ul>
+                </div>
+
+                <h3>Machine Learning in EHR Systems</h3>
+                <p>Machine learning algorithms can analyze large datasets to identify patterns and make predictions:</p>
+                <ul>
+                    <li><strong>Risk prediction models:</strong> Identify patients at risk for readmission, falls, or complications</li>
+                    <li><strong>Clinical documentation:</strong> Auto-generate clinical notes and suggest diagnosis codes</li>
+                    <li><strong>Quality improvement:</strong> Identify care gaps and opportunities for improvement</li>
+                    <li><strong>Resource optimization:</strong> Predict staffing needs and equipment utilization</li>
+                </ul>
+
+                <h2>6.2 Blockchain Technology</h2>
+                <p>Blockchain technology offers potential solutions for healthcare data security, interoperability, and patient control over health information.</p>
+
+                <h3>Blockchain Applications in Healthcare</h3>
+                <div class="highlight-box tech-focus">
+                    <strong>Potential Use Cases:</strong>
+                    <ul>
+                        <li><strong>Secure data sharing:</strong> Immutable records with patient-controlled access permissions</li>
+                        <li><strong>Drug supply chain:</strong> Track medications from manufacture to patient to prevent counterfeiting</li>
+                        <li><strong>Clinical trials:</strong> Ensure data integrity and prevent tampering</li>
+                        <li><strong>Provider credentialing:</strong> Secure, verifiable professional credentials</li>
+                        <li><strong>Insurance claims:</strong> Automated claims processing and fraud prevention</li>
+                    </ul>
+                </div>
+
+                <h3>Challenges and Limitations</h3>
+                <ul>
+                    <li><strong>Scalability:</strong> Current blockchain networks may not handle healthcare data volumes</li>
+                    <li><strong>Energy consumption:</strong> Some blockchain implementations require significant computing power</li>
+                    <li><strong>Regulatory uncertainty:</strong> Lack of clear regulatory framework for healthcare blockchain</li>
+                    <li><strong>Technical complexity:</strong> Implementation requires specialized knowledge and infrastructure</li>
+                </ul>
+
+                <h2>6.3 Internet of Things (IoT) in Healthcare</h2>
+                <p>The Internet of Things refers to the network of connected devices that can collect and exchange data automatically.</p>
+
+                <h3>Healthcare IoT Devices</h3>
+                <ul>
+                    <li><strong>Remote monitoring devices:</strong> Connected blood pressure cuffs, glucose monitors, pulse oximeters</li>
+                    <li><strong>Smart hospital infrastructure:</strong> Automated temperature monitoring, asset tracking, patient flow optimization</li>
+                    <li><strong>Medication management:</strong> Smart pill bottles with adherence monitoring and reminders</li>
+                    <li><strong>Environmental monitoring:</strong> Air quality sensors, infection control monitoring</li>
+                    <li><strong>Emergency response:</strong> Automated alerts for falls, cardiac events, or other emergencies</li>
+                </ul>
+
+                <div class="highlight-box clinical-tip">
+                    <strong>IoT Benefits:</strong>
+                    <ul>
+                        <li><strong>Continuous monitoring:</strong> Real-time health data collection without patient intervention</li>
+                        <li><strong>Improved outcomes:</strong> Early detection and intervention for health changes</li>
+                        <li><strong>Operational efficiency:</strong> Automated workflows and resource optimization</li>
+                        <li><strong>Cost reduction:</strong> Prevention of complications and hospitalizations</li>
+                    </ul>
+                </div>
+
+                <h2>6.4 Cloud Computing and Edge Computing</h2>
+                <p>Cloud and edge computing technologies are transforming how healthcare organizations store, process, and access health information.</p>
+
+                <h3>Cloud Computing Benefits</h3>
+                <ul>
+                    <li><strong>Scalability:</strong> Easily adjust computing resources based on demand</li>
+                    <li><strong>Cost efficiency:</strong> Reduce hardware and maintenance costs</li>
+                    <li><strong>Accessibility:</strong> Access data and applications from anywhere with internet</li>
+                    <li><strong>Disaster recovery:</strong> Robust backup and recovery capabilities</li>
+                    <li><strong>Innovation:</strong> Rapid deployment of new technologies and updates</li>
+                </ul>
+
+                <h3>Edge Computing in Healthcare</h3>
+                <p>Edge computing processes data closer to where it's generated, reducing latency and bandwidth requirements:</p>
+                <ul>
+                    <li><strong>Real-time processing:</strong> Immediate analysis of critical patient data</li>
+                    <li><strong>Reduced latency:</strong> Faster response times for time-sensitive applications</li>
+                    <li><strong>Privacy protection:</strong> Sensitive data can be processed locally</li>
+                    <li><strong>Bandwidth optimization:</strong> Only processed results transmitted to cloud</li>
+                </ul>
+
+                <h2>6.5 Regulatory and Ethical Considerations</h2>
+                <p>Emerging technologies raise new questions about regulation, ethics, and patient safety that healthcare organizations must address.</p>
+
+                <div class="highlight-box caution">
+                    <strong>Key Considerations:</strong>
+                    <ul>
+                        <li><strong>Algorithm bias:</strong> Ensuring AI systems don't discriminate against certain populations</li>
+                        <li><strong>Data ownership:</strong> Clarifying who owns and controls health data generated by new technologies</li>
+                        <li><strong>Liability questions:</strong> Determining responsibility when AI systems make errors</li>
+                        <li><strong>Privacy concerns:</strong> Protecting patient privacy as data collection becomes more pervasive</li>
+                        <li><strong>Professional competence:</strong> Ensuring healthcare providers can effectively use new technologies</li>
+                    </ul>
+                </div>
+
+                <div class="knowledge-check">
+                    <h3>Knowledge Check</h3>
+                    <div class="question">
+                        <div class="question-text">What is the primary advantage of edge computing over cloud computing for healthcare applications?</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">A) Lower cost for healthcare organizations</div>
+                        <div class="answer-option" onclick="selectAnswer(this, true)">B) Reduced latency for real-time processing</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">C) Better long-term data storage capabilities</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">D) Easier regulatory compliance</div>
+                    </div>
+                </div>
+
+                <div class="module-completion">
+                    <div>Estimated completion time: 10 minutes</div>
+                    <button class="complete-btn" onclick="completeModule(6)">Mark Complete</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Certificate Section -->
+        <div class="certificate-section" id="certificateSection">
+            <h2>💻 Congratulations!</h2>
+            <p>You have successfully completed the <strong>Healthcare Technology and Electronic Records</strong> course.</p>
+            <p>You have earned <strong>1.0 Continuing Education Unit</strong></p>
+            <button class="certificate-btn" onclick="generateCertificate()">Download Certificate</button>
+        </div>
+    </div>
+
+    <script>
+        // Course state management
+        let courseState = {
+            modulesCompleted: [],
+            totalModules: 6,
+            startTime: new Date(),
+            completionTime: null
+        };
+
+        // Load saved progress
+        function loadProgress() {
+            const saved = localStorage.getItem('healthTechProgress');
+            if (saved) {
+                courseState = JSON.parse(saved);
+                courseState.modulesCompleted.forEach(moduleNum => {
+                    const moduleHeader = document.querySelector(`[data-module="${moduleNum}"] .module-header`);
+                    if (moduleHeader) {
+                        moduleHeader.classList.add('completed');
+                    }
+                });
+                updateProgress();
+            }
+        }
+
+        // Save progress
+        function saveProgress() {
+            localStorage.setItem('healthTechProgress', JSON.stringify(courseState));
+        }
+
+        // Toggle module visibility
+        function toggleModule(moduleNum) {
+            const module = document.querySelector(`[data-module="${moduleNum}"]`);
+            const content = module.querySelector('.module-content');
+            const isActive = content.classList.contains('active');
+            
+            // Close all other modules
+            document.querySelectorAll('.module-content').forEach(c => {
+                c.classList.remove('active');
+            });
+            
+            // Toggle current module
+            if (!isActive) {
+                content.classList.add('active');
+            }
+        }
+
+        // Complete module
+        function completeModule(moduleNum) {
+            if (!courseState.modulesCompleted.includes(moduleNum)) {
+                courseState.modulesCompleted.push(moduleNum);
+                const moduleHeader = document.querySelector(`[data-module="${moduleNum}"] .module-header`);
+                moduleHeader.classList.add('completed');
+                
+                // Replace complete button with badge
+                const completion = document.querySelector(`[data-module="${moduleNum}"] .module-completion`);
+                completion.innerHTML = '<div>Module completed ✓</div><div class="completed-badge">Completed</div>';
+                
+                updateProgress();
+                saveProgress();
+                
+                // Check if all modules completed
+                if (courseState.modulesCompleted.length === courseState.totalModules) {
+                    courseState.completionTime = new Date();
+                    document.getElementById('certificateSection').classList.add('visible');
+                    saveProgress();
+                }
+            }
+        }
+
+        // Update progress bar
+        function updateProgress() {
+            const percentage = Math.round((courseState.modulesCompleted.length / courseState.totalModules) * 100);
+            document.querySelector('.progress-fill').style.width = percentage + '%';
+            document.querySelector('.progress-percentage').textContent = percentage + '% Complete';
+        }
+
+        // Handle quiz answers
+        function selectAnswer(element, isCorrect) {
+            // Remove previous selections
+            const question = element.parentElement;
+            question.querySelectorAll('.answer-option').forEach(opt => {
+                opt.classList.remove('correct', 'incorrect');
+            });
+            
+            // Mark selected answer
+            element.classList.add(isCorrect ? 'correct' : 'incorrect');
+            
+            // Show feedback
+            setTimeout(() => {
+                if (isCorrect) {
+                    element.innerHTML += ' ✓ Correct!';
+                } else {
+                    element.innerHTML += ' ✗ Incorrect';
+                    // Show correct answer
+                    question.querySelectorAll('.answer-option').forEach((opt, index) => {
+                        if (opt.onclick.toString().includes('true')) {
+                            opt.classList.add('correct');
+                            opt.innerHTML += ' ✓ Correct Answer';
+                        }
+                    });
+                }
+            }, 500);
+        }
+
+        // Generate certificate
+        function generateCertificate() {
+            const certificateContent = generateCertificateHTML();
+            const newWindow = window.open('', '_blank');
+            newWindow.document.write(certificateContent);
+            newWindow.document.close();
+            newWindow.print();
+        }
+
+        // Generate certificate HTML
+        function generateCertificateHTML() {
+            const completionDate = new Date().toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+            
+            return `
+                <!DOCTYPE html>
+                <html>
+                <head>
+                    <title>Certificate - Healthcare Technology and Electronic Records</title>
+                    <style>
+                        body { font-family: 'Georgia', serif; text-align: center; padding: 50px; background: #f8f9fa; }
+                        .certificate { background: white; padding: 60px; border: 10px solid #1a365d; max-width: 800px; margin: 0 auto; }
+                        .header { color: #1a365d; font-size: 36px; margin-bottom: 20px; }
+                        .title { font-size: 24px; color: #059669; margin: 30px 0; }
+                        .recipient { font-size: 28px; color: #333; margin: 20px 0; border-bottom: 2px solid #1a365d; padding-bottom: 10px; }
+                        .content { font-size: 18px; line-height: 1.6; margin: 30px 0; }
+                        .signature { margin-top: 60px; display: flex; justify-content: space-around; }
+                        .sig-line { border-top: 2px solid #333; width: 200px; padding-top: 10px; }
+                        .date { color: #666; margin-top: 20px; }
+                    </style>
+                </head>
+                <body>
+                    <div class="certificate">
+                        <div class="header">CERTIFICATE OF COMPLETION</div>
+                        <div class="title">Healthcare Technology and Electronic Records</div>
+                        <div class="content">
+                            This certifies that<br>
+                            <div class="recipient">[Participant Name]</div>
+                            has successfully completed the continuing education course<br>
+                            <strong>Healthcare Technology and Electronic Records</strong><br>
+                            consisting of 1.0 contact hour of instruction
+                        </div>
+                        <div class="signature">
+                            <div class="sig-line">Dr. Troy Hounshell, PT, ScD<br>Course Director</div>
+                            <div class="sig-line">DrTroy Continuing Education<br>Approved Provider</div>
+                        </div>
+                        <div class="date">Completed: ${completionDate}<br>Course ID: HEALTHTECH-001<br>Approval #: DRTROY-HEALTHTECH-001-2024</div>
+                    </div>
+                </body>
+                </html>
+            `;
+        }
+
+        // Logout function
+        function logout() {
+            localStorage.clear();
+            window.location.href = '../index.html';
+        }
+
+        // Initialize course
+        document.addEventListener('DOMContentLoaded', function() {
+            loadProgress();
+        });
+
+        // Auto-save progress periodically
+        setInterval(saveProgress, 30000); // Save every 30 seconds
+    </script>
+</body>
+</html>

@@ -1,0 +1,1714 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient Education and Health Promotion - DrTroy CE</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        @page { size: letter; margin: 0.75in; @bottom-center { content: counter(page); font-size: 10pt; color: #666; } }
+        * { box-sizing: border-box; }
+
+        /* CSS Variables */
+        :root {
+            --navy: #1a365d;
+            --navy-light: #2c5282;
+            --gold: #059669;
+            --gold-light: #10b981;
+            --gray-50: #f7fafc;
+            --gray-100: #edf2f7;
+            --gray-200: #e5e7eb;
+            --gray-600: #4a5568;
+            --gray-800: #2d3748;
+            --gray-900: #111827;
+        }
+
+        /* Base styles */
+        body {
+            font-family: 'Georgia', 'Times New Roman', serif;
+            font-size: 16px;
+            line-height: 1.7;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            background: #f5f5f5;
+        }
+
+        /* Course Header Styles */
+        .course-header {
+            background: #ffffff;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 3px solid var(--gold);
+        }
+
+        .course-header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo img {
+            height: 60px;
+            width: auto;
+            max-width: 300px;
+        }
+
+        .course-nav {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .course-nav a {
+            color: var(--gray-600);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 14px;
+            transition: color 0.2s;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        .course-nav a:hover {
+            color: var(--navy);
+        }
+
+        .logout-btn {
+            background: var(--gold);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        .logout-btn:hover {
+            background: var(--gold-light);
+            transform: translateY(-2px);
+        }
+
+        /* Main Course Container */
+        .course-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            background: white;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            border-radius: 10px;
+            margin-top: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        /* Course Title Section */
+        .course-title-section {
+            text-align: center;
+            border-bottom: 2px solid var(--gray-200);
+            padding-bottom: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .course-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--navy);
+            margin: 0;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        .course-subtitle {
+            font-size: 1.1rem;
+            color: var(--gray-600);
+            margin: 1rem 0;
+            font-style: italic;
+        }
+
+        .course-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        .info-box {
+            background: var(--gray-50);
+            padding: 1rem;
+            border-radius: 8px;
+            text-align: center;
+            border-left: 4px solid var(--gold);
+        }
+
+        .info-box strong {
+            color: var(--navy);
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Progress Tracking */
+        .progress-container {
+            background: var(--gray-50);
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+            border: 2px solid var(--gold-light);
+        }
+
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        .progress-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--navy);
+        }
+
+        .progress-percentage {
+            font-size: 1rem;
+            color: var(--gold);
+            font-weight: 600;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 12px;
+            background: white;
+            border-radius: 6px;
+            overflow: hidden;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--gold) 0%, var(--gold-light) 100%);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        /* Module Styles */
+        .module {
+            margin-bottom: 3rem;
+            border: 1px solid var(--gray-200);
+            border-radius: 12px;
+            overflow: hidden;
+            background: white;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+        }
+
+        .module:hover {
+            box-shadow: 0 6px 25px rgba(0,0,0,0.1);
+        }
+
+        .module-header {
+            background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
+            color: white;
+            padding: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .module-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .module-header:hover::before {
+            left: 100%;
+        }
+
+        .module-header.completed {
+            background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%);
+        }
+
+        .module-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin: 0;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        .module-header.completed .module-title {
+            position: relative;
+        }
+
+        .module-header.completed .module-title::after {
+            content: ' ✓';
+            font-size: 1.2rem;
+            margin-left: 0.5rem;
+        }
+
+        .module-content {
+            padding: 2rem;
+            display: none;
+            background: white;
+        }
+
+        .module-content.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .module-content h2 {
+            color: var(--navy);
+            font-size: 1.4rem;
+            margin: 2rem 0 1rem 0;
+            font-weight: 600;
+            border-bottom: 2px solid var(--gold);
+            padding-bottom: 0.5rem;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        .module-content h3 {
+            color: var(--navy-light);
+            font-size: 1.2rem;
+            margin: 1.5rem 0 0.75rem 0;
+            font-weight: 600;
+        }
+
+        .module-content p {
+            margin-bottom: 1rem;
+            text-align: justify;
+        }
+
+        .module-content ul, .module-content ol {
+            margin: 1rem 0;
+            padding-left: 2rem;
+        }
+
+        .module-content li {
+            margin-bottom: 0.5rem;
+        }
+
+        /* Highlight boxes */
+        .highlight-box {
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            border-left: 5px solid var(--gold);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .highlight-box.clinical-tip {
+            background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+            border-left-color: var(--gold);
+        }
+
+        .highlight-box.key-point {
+            background: linear-gradient(135deg, #fef7cd 0%, #fef3c7 100%);
+            border-left-color: #d97706;
+        }
+
+        .highlight-box.caution {
+            background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%);
+            border-left-color: #dc2626;
+        }
+
+        /* Knowledge Check */
+        .knowledge-check {
+            background: linear-gradient(135deg, var(--gray-50) 0%, white 100%);
+            border: 2px solid var(--gold);
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 2rem 0;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+
+        .knowledge-check h3 {
+            color: var(--navy);
+            margin-top: 0;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        .question {
+            margin: 1.5rem 0;
+            padding: 1rem;
+            background: white;
+            border-radius: 8px;
+            border: 1px solid var(--gray-200);
+        }
+
+        .question-text {
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--navy);
+        }
+
+        .answer-option {
+            margin: 0.5rem 0;
+            padding: 0.5rem;
+            cursor: pointer;
+            border-radius: 6px;
+            transition: background 0.2s;
+        }
+
+        .answer-option:hover {
+            background: var(--gray-50);
+        }
+
+        .answer-option.correct {
+            background: #dcfce7 !important;
+            border-left: 4px solid var(--gold);
+            padding-left: 1rem;
+        }
+
+        .answer-option.incorrect {
+            background: #fee2e2 !important;
+            border-left: 4px solid #dc2626;
+            padding-left: 1rem;
+        }
+
+        /* Completion Tracking */
+        .module-completion {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem;
+            background: var(--gray-50);
+            border-top: 1px solid var(--gray-200);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        .complete-btn {
+            background: var(--gold);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        .complete-btn:hover {
+            background: var(--gold-light);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(5, 150, 105, 0.3);
+        }
+
+        .complete-btn:disabled {
+            background: var(--gray-600);
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .completed-badge {
+            background: var(--gold);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        /* Certificate Section */
+        .certificate-section {
+            background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
+            color: white;
+            text-align: center;
+            padding: 3rem;
+            border-radius: 12px;
+            margin: 3rem 0;
+            display: none;
+        }
+
+        .certificate-section.visible {
+            display: block;
+            animation: slideUp 0.5s ease;
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .certificate-btn {
+            background: var(--gold);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            margin-top: 1rem;
+        }
+
+        .certificate-btn:hover {
+            background: var(--gold-light);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(5, 150, 105, 0.4);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .course-container {
+                margin: 1rem;
+                padding: 1rem;
+            }
+
+            .course-title {
+                font-size: 2rem;
+            }
+
+            .module-title {
+                font-size: 1.1rem;
+            }
+
+            .course-info {
+                grid-template-columns: 1fr;
+            }
+
+            .progress-container {
+                padding: 1rem;
+            }
+        }
+
+        /* Print Styles */
+        @media print {
+            .course-header,
+            .progress-container,
+            .complete-btn,
+            .certificate-section {
+                display: none !important;
+            }
+
+            .module-content {
+                display: block !important;
+            }
+
+            .module {
+                break-inside: avoid;
+                margin-bottom: 2rem;
+            }
+
+            body {
+                background: white;
+                font-size: 11pt;
+                line-height: 1.4;
+            }
+
+            .course-container {
+                box-shadow: none;
+                margin: 0;
+                padding: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Course Header -->
+    <header class="course-header">
+        <div class="course-header-container">
+            <div class="logo">
+                <img src="images/drtroy_logo_new.jpg" alt="DrTroy CE">
+            </div>
+            <div class="course-nav">
+                <a href="../course-catalog.html">Course Catalog</a>
+                <a href="../my-account.html">My Account</a>
+                <button class="logout-btn" onclick="logout()">Logout</button>
+            </div>
+        </div>
+    </header>
+
+    <div class="course-container">
+        <!-- Course Title Section -->
+        <div class="course-title-section">
+            <h1 class="course-title">🎓 Patient Education and Health Promotion</h1>
+            <p class="course-subtitle">Evidence-Based Strategies for Effective Patient Education and Health Behavior Change</p>
+            
+            <div class="course-info">
+                <div class="info-box">
+                    <strong>Duration</strong>
+                    2.0 Hours (120 minutes)
+                </div>
+                <div class="info-box">
+                    <strong>Continuing Education</strong>
+                    2.0 CCUs
+                </div>
+                <div class="info-box">
+                    <strong>Course ID</strong>
+                    EDUCATION-001
+                </div>
+                <div class="info-box">
+                    <strong>Approval #</strong>
+                    DRTROY-EDUCATION-001-2024
+                </div>
+            </div>
+        </div>
+
+        <!-- Progress Tracking -->
+        <div class="progress-container">
+            <div class="progress-header">
+                <div class="progress-title">Course Progress</div>
+                <div class="progress-percentage">0% Complete</div>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill"></div>
+            </div>
+        </div>
+
+        <!-- Module 1: Foundations of Patient Education -->
+        <div class="module" data-module="1">
+            <div class="module-header" onclick="toggleModule(1)">
+                <div class="module-title">Module 1: Foundations of Patient Education Theory (15 min)</div>
+            </div>
+            <div class="module-content">
+                <h2>1.1 Adult Learning Principles in Healthcare</h2>
+                <p>Adult learners in healthcare settings bring unique characteristics that influence their learning processes. Understanding these principles is fundamental to effective patient education delivery.</p>
+                
+                <div class="highlight-box key-point">
+                    <strong>Knowles' Adult Learning Theory (Andragogy):</strong>
+                    <ul>
+                        <li><strong>Self-concept:</strong> Adults are self-directed learners who prefer autonomy in their learning process</li>
+                        <li><strong>Experience:</strong> Adults draw upon their life experiences as a foundation for new learning</li>
+                        <li><strong>Readiness:</strong> Adults learn best when they perceive immediate relevance to their situation</li>
+                        <li><strong>Motivation:</strong> Internal motivation (quality of life, pain reduction) is more powerful than external motivation</li>
+                    </ul>
+                </div>
+
+                <h3>Learning Styles and Preferences</h3>
+                <p>Patients process information through different sensory channels and cognitive preferences. Effective patient educators must adapt their teaching methods to accommodate various learning styles:</p>
+
+                <ul>
+                    <li><strong>Visual Learners (65% of population):</strong> Benefit from diagrams, charts, anatomical models, and written instructions</li>
+                    <li><strong>Auditory Learners (30% of population):</strong> Learn best through verbal explanations, discussions, and audio materials</li>
+                    <li><strong>Kinesthetic Learners (5% of population):</strong> Require hands-on practice and physical demonstration</li>
+                </ul>
+
+                <h2>1.2 Health Behavior Change Models</h2>
+                <p>Successful patient education must address not only knowledge transfer but also behavior modification. Several theoretical models guide effective health behavior change interventions.</p>
+
+                <h3>Transtheoretical Model (Stages of Change)</h3>
+                <div class="highlight-box clinical-tip">
+                    <strong>The Six Stages:</strong>
+                    <ol>
+                        <li><strong>Precontemplation:</strong> Patient unaware of problem or need for change</li>
+                        <li><strong>Contemplation:</strong> Patient recognizes problem but ambivalent about change</li>
+                        <li><strong>Preparation:</strong> Patient intends to take action within next 30 days</li>
+                        <li><strong>Action:</strong> Patient has made specific behavioral modifications for less than 6 months</li>
+                        <li><strong>Maintenance:</strong> Patient has sustained behavior change for 6+ months</li>
+                        <li><strong>Termination:</strong> Patient has no temptation to return to old behavior (rarely achieved)</li>
+                    </ol>
+                </div>
+
+                <h3>Social Cognitive Theory</h3>
+                <p>Bandura's Social Cognitive Theory emphasizes the interplay between personal factors, environmental influences, and behavior. Key concepts include:</p>
+                <ul>
+                    <li><strong>Self-efficacy:</strong> Patient's confidence in their ability to perform specific behaviors</li>
+                    <li><strong>Outcome expectations:</strong> Patient's beliefs about consequences of behavior change</li>
+                    <li><strong>Modeling:</strong> Learning through observation of others' experiences</li>
+                    <li><strong>Goal setting:</strong> Establishing specific, measurable, achievable targets</li>
+                </ul>
+
+                <h2>1.3 Communication Theory in Healthcare</h2>
+                <p>Effective patient education requires mastery of therapeutic communication principles that build trust, promote understanding, and motivate behavior change.</p>
+
+                <div class="highlight-box key-point">
+                    <strong>Components of Effective Healthcare Communication:</strong>
+                    <ul>
+                        <li><strong>Active listening:</strong> Giving full attention to patient concerns and perspectives</li>
+                        <li><strong>Empathy:</strong> Understanding and acknowledging patient emotions and experiences</li>
+                        <li><strong>Clear language:</strong> Using appropriate vocabulary level and avoiding medical jargon</li>
+                        <li><strong>Non-verbal awareness:</strong> Managing body language, tone, and environmental factors</li>
+                        <li><strong>Cultural competence:</strong> Respecting diverse backgrounds and adapting approach accordingly</li>
+                    </ul>
+                </div>
+
+                <h3>Motivational Interviewing Principles</h3>
+                <p>Motivational interviewing is a collaborative communication style that strengthens patient motivation for positive health behavior change:</p>
+                <ul>
+                    <li><strong>Express empathy:</strong> Use reflective listening to understand patient perspective</li>
+                    <li><strong>Develop discrepancy:</strong> Help patient recognize gap between current behavior and goals</li>
+                    <li><strong>Roll with resistance:</strong> Avoid argumentation; explore ambivalence constructively</li>
+                    <li><strong>Support self-efficacy:</strong> Foster patient confidence in their ability to change</li>
+                </ul>
+
+                <div class="knowledge-check">
+                    <h3>Knowledge Check</h3>
+                    <div class="question">
+                        <div class="question-text">According to adult learning theory, which factor is MOST important for patient motivation?</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">A) External rewards and recognition</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">B) Fear of negative consequences</div>
+                        <div class="answer-option" onclick="selectAnswer(this, true)">C) Perceived relevance to immediate needs</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">D) Approval from healthcare providers</div>
+                    </div>
+                </div>
+
+                <div class="module-completion">
+                    <div>Estimated completion time: 15 minutes</div>
+                    <button class="complete-btn" onclick="completeModule(1)">Mark Complete</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Module 2: Assessment and Readiness -->
+        <div class="module" data-module="2">
+            <div class="module-header" onclick="toggleModule(2)">
+                <div class="module-title">Module 2: Patient Assessment and Learning Readiness (15 min)</div>
+            </div>
+            <div class="module-content">
+                <h2>2.1 Comprehensive Learning Assessment</h2>
+                <p>Before implementing any patient education intervention, healthcare providers must conduct a thorough assessment of the patient's learning needs, preferences, and barriers.</p>
+
+                <div class="highlight-box clinical-tip">
+                    <strong>Assessment Domains:</strong>
+                    <ul>
+                        <li><strong>Educational background:</strong> Literacy level, learning experience, preferred language</li>
+                        <li><strong>Cultural factors:</strong> Health beliefs, family dynamics, religious considerations</li>
+                        <li><strong>Physical capabilities:</strong> Vision, hearing, cognitive function, motor skills</li>
+                        <li><strong>Psychological readiness:</strong> Motivation level, anxiety, depression, coping mechanisms</li>
+                        <li><strong>Social support:</strong> Family involvement, caregiver availability, community resources</li>
+                    </ul>
+                </div>
+
+                <h3>Health Literacy Assessment</h3>
+                <p>Health literacy significantly impacts patient education outcomes. The Institute of Medicine defines health literacy as "the degree to which individuals have the capacity to obtain, process, and understand basic health information needed to make appropriate health decisions."</p>
+
+                <p><strong>Validated Health Literacy Assessment Tools:</strong></p>
+                <ul>
+                    <li><strong>REALM (Rapid Estimate of Adult Literacy in Medicine):</strong> Word recognition test, 2-3 minutes</li>
+                    <li><strong>TOFHLA (Test of Functional Health Literacy in Adults):</strong> Reading comprehension and numeracy, 12-22 minutes</li>
+                    <li><strong>S-TOFHLA (Short Test):</strong> Abbreviated version, 7 minutes</li>
+                    <li><strong>Single Item Literacy Screener:</strong> "How often do you need help reading hospital materials?"</li>
+                </ul>
+
+                <h2>2.2 Cultural Competence in Patient Education</h2>
+                <p>Cultural factors significantly influence health beliefs, treatment compliance, and learning preferences. Culturally competent patient education requires understanding and respecting diverse perspectives.</p>
+
+                <h3>Cultural Assessment Framework</h3>
+                <div class="highlight-box key-point">
+                    <strong>ETHNIC Framework for Cultural Assessment:</strong>
+                    <ul>
+                        <li><strong>E - Explanation:</strong> What does the patient believe caused their condition?</li>
+                        <li><strong>T - Treatment:</strong> What treatments has the patient tried? What do they think will help?</li>
+                        <li><strong>H - Healers:</strong> Who else is involved in the patient's healthcare decisions?</li>
+                        <li><strong>N - Negotiate:</strong> How can treatment plans accommodate cultural preferences?</li>
+                        <li><strong>I - Intervene:</strong> What culturally appropriate interventions can be implemented?</li>
+                        <li><strong>C - Collaborate:</strong> How can the healthcare team work with cultural healers/advisors?</li>
+                    </ul>
+                </div>
+
+                <h3>Language and Communication Barriers</h3>
+                <p>Effective communication with patients who have limited English proficiency requires specialized approaches:</p>
+                <ul>
+                    <li><strong>Professional interpreters:</strong> Trained medical interpreters vs. family members</li>
+                    <li><strong>Translated materials:</strong> Culturally adapted, not just linguistically translated</li>
+                    <li><strong>Visual aids:</strong> Universal symbols, pictures, and demonstrations</li>
+                    <li><strong>Cultural mediators:</strong> Community health workers from same cultural background</li>
+                </ul>
+
+                <h2>2.3 Motivation and Readiness Assessment</h2>
+                <p>Patient motivation and readiness to learn directly impact education effectiveness. Assessment tools help identify the patient's stage of change and tailor interventions accordingly.</p>
+
+                <h3>Readiness Assessment Tools</h3>
+                <p><strong>URICA (University of Rhode Island Change Assessment):</strong> 32-item questionnaire measuring stage of change across four domains:</p>
+                <ul>
+                    <li>Precontemplation subscale</li>
+                    <li>Contemplation subscale</li>
+                    <li>Action subscale</li>
+                    <li>Maintenance subscale</li>
+                </ul>
+
+                <div class="highlight-box clinical-tip">
+                    <strong>Readiness Indicators:</strong>
+                    <ul>
+                        <li><strong>High readiness:</strong> Asks questions, seeks information, expresses concern about condition</li>
+                        <li><strong>Moderate readiness:</strong> Shows interest but has competing priorities or concerns</li>
+                        <li><strong>Low readiness:</strong> Denies problem, shows resistance, focuses on external barriers</li>
+                    </ul>
+                </div>
+
+                <h2>2.4 Barrier Identification and Problem-Solving</h2>
+                <p>Systematic identification of potential barriers to learning and behavior change enables proactive intervention planning.</p>
+
+                <h3>Common Learning Barriers</h3>
+                <ul>
+                    <li><strong>Physical barriers:</strong> Pain, fatigue, sensory impairments, medication side effects</li>
+                    <li><strong>Cognitive barriers:</strong> Anxiety, depression, cognitive overload, attention deficits</li>
+                    <li><strong>Social barriers:</strong> Lack of support, conflicting advice from family, social isolation</li>
+                    <li><strong>Economic barriers:</strong> Cost of treatment, transportation, time off work</li>
+                    <li><strong>Environmental barriers:</strong> Noisy setting, interruptions, uncomfortable temperature</li>
+                </ul>
+
+                <div class="knowledge-check">
+                    <h3>Knowledge Check</h3>
+                    <div class="question">
+                        <div class="question-text">Which assessment tool is most appropriate for quickly screening health literacy in a busy clinical setting?</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">A) TOFHLA (22-minute version)</div>
+                        <div class="answer-option" onclick="selectAnswer(this, true)">B) Single Item Literacy Screener</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">C) REALM word recognition test</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">D) S-TOFHLA (7-minute version)</div>
+                    </div>
+                </div>
+
+                <div class="module-completion">
+                    <div>Estimated completion time: 15 minutes</div>
+                    <button class="complete-btn" onclick="completeModule(2)">Mark Complete</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Module 3: Educational Strategies and Methods -->
+        <div class="module" data-module="3">
+            <div class="module-header" onclick="toggleModule(3)">
+                <div class="module-title">Module 3: Educational Strategies and Teaching Methods (15 min)</div>
+            </div>
+            <div class="module-content">
+                <h2>3.1 Evidence-Based Teaching Strategies</h2>
+                <p>Effective patient education employs multiple teaching strategies tailored to individual patient needs and learning preferences. Research demonstrates that multimodal approaches yield superior outcomes.</p>
+
+                <div class="highlight-box key-point">
+                    <strong>The Learning Pyramid (Retention Rates):</strong>
+                    <ul>
+                        <li><strong>Teaching others (90%):</strong> Patient demonstrates technique to family member</li>
+                        <li><strong>Practice by doing (75%):</strong> Hands-on skill practice with feedback</li>
+                        <li><strong>Discussion (50%):</strong> Interactive conversation about condition management</li>
+                        <li><strong>Demonstration (30%):</strong> Provider shows technique, patient observes</li>
+                        <li><strong>Audio-visual (20%):</strong> Educational videos, computer programs</li>
+                        <li><strong>Reading (10%):</strong> Pamphlets, handouts, written instructions</li>
+                        <li><strong>Lecture (5%):</strong> One-way information delivery</li>
+                    </ul>
+                </div>
+
+                <h3>Interactive Teaching Methods</h3>
+                <p><strong>Demonstration and Return Demonstration:</strong></p>
+                <p>This method involves the educator demonstrating a skill or technique, then having the patient perform the same action while receiving guidance and feedback.</p>
+                <ul>
+                    <li><strong>Step 1:</strong> Explain the rationale and importance of the skill</li>
+                    <li><strong>Step 2:</strong> Demonstrate slowly with clear narration</li>
+                    <li><strong>Step 3:</strong> Have patient perform with guidance</li>
+                    <li><strong>Step 4:</strong> Provide corrective feedback and reinforcement</li>
+                    <li><strong>Step 5:</strong> Repeat until patient demonstrates competency</li>
+                </ul>
+
+                <h3>Socratic Teaching Method</h3>
+                <p>Using guided questioning to help patients discover information and draw conclusions independently:</p>
+                <ul>
+                    <li><strong>Open-ended questions:</strong> "What do you think might happen if...?"</li>
+                    <li><strong>Clarification:</strong> "Can you explain what you mean by...?"</li>
+                    <li><strong>Evidence examination:</strong> "What makes you think that?"</li>
+                    <li><strong>Perspective exploration:</strong> "How might someone else view this?"</li>
+                    <li><strong>Implication analysis:</strong> "If that's true, what would it mean for your treatment?"</li>
+                </ul>
+
+                <h2>3.2 Technology-Enhanced Patient Education</h2>
+                <p>Digital health technologies offer new opportunities for engaging, personalized, and accessible patient education delivery.</p>
+
+                <h3>Digital Education Platforms</h3>
+                <div class="highlight-box clinical-tip">
+                    <strong>Technology Options:</strong>
+                    <ul>
+                        <li><strong>Interactive websites:</strong> Self-paced learning modules with progress tracking</li>
+                        <li><strong>Mobile applications:</strong> Symptom tracking, medication reminders, exercise programs</li>
+                        <li><strong>Video conferencing:</strong> Remote education sessions and follow-up consultations</li>
+                        <li><strong>Virtual reality:</strong> Immersive experiences for anxiety reduction and skill practice</li>
+                        <li><strong>Gamification:</strong> Points, badges, and challenges to increase engagement</li>
+                    </ul>
+                </div>
+
+                <h3>Social Media and Online Communities</h3>
+                <p>Peer support through moderated online communities can enhance traditional patient education:</p>
+                <ul>
+                    <li><strong>Facebook groups:</strong> Condition-specific support communities</li>
+                    <li><strong>Patient forums:</strong> Question-and-answer platforms with expert moderation</li>
+                    <li><strong>Video sharing:</strong> Exercise demonstrations and patient success stories</li>
+                    <li><strong>Webinars:</strong> Live educational sessions with Q&A opportunities</li>
+                </ul>
+
+                <h2>3.3 Written Materials and Visual Aids</h2>
+                <p>Despite the growth of digital options, printed materials remain important components of comprehensive patient education programs.</p>
+
+                <h3>Effective Written Material Design</h3>
+                <div class="highlight-box key-point">
+                    <strong>Design Principles:</strong>
+                    <ul>
+                        <li><strong>Reading level:</strong> 6th-8th grade level for general population</li>
+                        <li><strong>Font selection:</strong> Sans-serif fonts (Arial, Calibri) 12-point minimum</li>
+                        <li><strong>White space:</strong> Adequate margins and spacing for visual clarity</li>
+                        <li><strong>Chunking:</strong> Break information into small, digestible sections</li>
+                        <li><strong>Action-oriented:</strong> Use active voice and specific instructions</li>
+                        <li><strong>Visual hierarchy:</strong> Headers, bullet points, and logical flow</li>
+                    </ul>
+                </div>
+
+                <h3>Visual Aid Selection</h3>
+                <p>Visual aids should complement and reinforce verbal instruction:</p>
+                <ul>
+                    <li><strong>Anatomical models:</strong> 3D representation for understanding body structures</li>
+                    <li><strong>Diagrams and illustrations:</strong> Step-by-step process visualization</li>
+                    <li><strong>Photographs:</strong> Real-world examples of proper technique or equipment use</li>
+                    <li><strong>Charts and graphs:</strong> Progress tracking and goal visualization</li>
+                    <li><strong>Infographics:</strong> Complex information presented in visually appealing format</li>
+                </ul>
+
+                <h2>3.4 Group Education Methods</h2>
+                <p>Group patient education can be cost-effective and provide peer support benefits while addressing common educational needs.</p>
+
+                <h3>Group Dynamics and Management</h3>
+                <p>Successful group education requires careful attention to group composition and facilitation skills:</p>
+                <ul>
+                    <li><strong>Homogeneous grouping:</strong> Similar conditions, functional levels, or cultural backgrounds</li>
+                    <li><strong>Optimal size:</strong> 6-10 participants for maximum interaction and personalization</li>
+                    <li><strong>Ground rules:</strong> Confidentiality, respect, participation guidelines</li>
+                    <li><strong>Inclusive facilitation:</strong> Encourage participation from quieter members</li>
+                </ul>
+
+                <div class="knowledge-check">
+                    <h3>Knowledge Check</h3>
+                    <div class="question">
+                        <div class="question-text">According to the Learning Pyramid, which teaching method typically results in the HIGHEST retention rate?</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">A) Demonstration by healthcare provider</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">B) Practice by doing</div>
+                        <div class="answer-option" onclick="selectAnswer(this, true)">C) Teaching others</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">D) Discussion and interaction</div>
+                    </div>
+                </div>
+
+                <div class="module-completion">
+                    <div>Estimated completion time: 15 minutes</div>
+                    <button class="complete-btn" onclick="completeModule(3)">Mark Complete</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Module 4: Health Behavior Change Interventions -->
+        <div class="module" data-module="4">
+            <div class="module-header" onclick="toggleModule(4)">
+                <div class="module-title">Module 4: Health Behavior Change Interventions (15 min)</div>
+            </div>
+            <div class="module-content">
+                <h2>4.1 Goal Setting and Action Planning</h2>
+                <p>Effective behavior change requires collaborative goal setting that creates specific, achievable targets with clear action steps.</p>
+
+                <div class="highlight-box clinical-tip">
+                    <strong>SMART Goals Framework:</strong>
+                    <ul>
+                        <li><strong>Specific:</strong> Clear, well-defined objectives (not "exercise more" but "walk for 30 minutes")</li>
+                        <li><strong>Measurable:</strong> Quantifiable outcomes with tracking methods</li>
+                        <li><strong>Achievable:</strong> Realistic given patient's current capabilities and resources</li>
+                        <li><strong>Relevant:</strong> Meaningful to patient's values and priorities</li>
+                        <li><strong>Time-bound:</strong> Specific deadlines and milestone dates</li>
+                    </ul>
+                </div>
+
+                <h3>Implementation Intentions</h3>
+                <p>Implementation intentions link specific situations to goal-directed behaviors using "if-then" planning:</p>
+                <ul>
+                    <li><strong>Example 1:</strong> "If it's 7 AM on weekdays, then I will take my blood pressure medication before breakfast"</li>
+                    <li><strong>Example 2:</strong> "If I feel knee pain during exercises, then I will reduce the repetitions by half and apply ice afterward"</li>
+                    <li><strong>Example 3:</strong> "If I forget to do my stretching routine in the morning, then I will do it before bedtime"</li>
+                </ul>
+
+                <h2>4.2 Self-Efficacy Enhancement</h2>
+                <p>Self-efficacy, the belief in one's capability to perform behaviors necessary to produce specific performance attainments, is a key predictor of behavior change success.</p>
+
+                <h3>Four Sources of Self-Efficacy</h3>
+                <div class="highlight-box key-point">
+                    <strong>Bandura's Self-Efficacy Sources:</strong>
+                    <ol>
+                        <li><strong>Mastery experiences:</strong> Success in performing the behavior builds confidence</li>
+                        <li><strong>Vicarious experiences:</strong> Observing others succeed at similar challenges</li>
+                        <li><strong>Verbal persuasion:</strong> Encouragement and positive feedback from credible sources</li>
+                        <li><strong>Physiological states:</strong> Managing anxiety and stress that can undermine confidence</li>
+                    </ol>
+                </div>
+
+                <h3>Building Self-Efficacy Strategies</h3>
+                <ul>
+                    <li><strong>Graduated exposure:</strong> Start with easier tasks and progressively increase difficulty</li>
+                    <li><strong>Skills training:</strong> Provide specific techniques and coping strategies</li>
+                    <li><strong>Peer modeling:</strong> Connect patients with successful role models</li>
+                    <li><strong>Problem-solving training:</strong> Help patients develop strategies for overcoming obstacles</li>
+                    <li><strong>Stress management:</strong> Teach relaxation and anxiety-reduction techniques</li>
+                </ul>
+
+                <h2>4.3 Habit Formation and Environmental Design</h2>
+                <p>Sustainable behavior change often requires creating new habits and modifying environmental cues that trigger desired behaviors.</p>
+
+                <h3>Habit Loop Components</h3>
+                <p>Charles Duhigg's habit loop consists of three components:</p>
+                <ul>
+                    <li><strong>Cue:</strong> Environmental trigger that initiates the behavior</li>
+                    <li><strong>Routine:</strong> The behavior itself</li>
+                    <li><strong>Reward:</strong> The benefit gained from performing the behavior</li>
+                </ul>
+
+                <div class="highlight-box clinical-tip">
+                    <strong>Environmental Modifications:</strong>
+                    <ul>
+                        <li><strong>Make it obvious:</strong> Place cues for desired behaviors in prominent locations</li>
+                        <li><strong>Make it attractive:</strong> Pair behaviors with immediately enjoyable activities</li>
+                        <li><strong>Make it easy:</strong> Reduce friction and barriers to behavior performance</li>
+                        <li><strong>Make it satisfying:</strong> Create immediate positive consequences</li>
+                    </ul>
+                </div>
+
+                <h2>4.4 Social Support and Family Involvement</h2>
+                <p>Social support significantly impacts patient education outcomes and long-term behavior maintenance.</p>
+
+                <h3>Types of Social Support</h3>
+                <ul>
+                    <li><strong>Emotional support:</strong> Empathy, caring, love, and trust from family and friends</li>
+                    <li><strong>Informational support:</strong> Advice, suggestions, and information that help decision-making</li>
+                    <li><strong>Instrumental support:</strong> Tangible aid such as transportation, financial assistance, or help with tasks</li>
+                    <li><strong>Appraisal support:</strong> Information that helps self-evaluation through feedback and affirmation</li>
+                </ul>
+
+                <h3>Family-Centered Education Strategies</h3>
+                <div class="highlight-box key-point">
+                    <strong>Family Involvement Approaches:</strong>
+                    <ul>
+                        <li><strong>Include key family members:</strong> Identify and involve supportive family members in education sessions</li>
+                        <li><strong>Address family concerns:</strong> Acknowledge and discuss family worries and misconceptions</li>
+                        <li><strong>Assign support roles:</strong> Give family members specific ways to help patient succeed</li>
+                        <li><strong>Cultural sensitivity:</strong> Respect family hierarchy and decision-making patterns</li>
+                        <li><strong>Communication training:</strong> Teach family members effective support and communication skills</li>
+                    </ul>
+                </div>
+
+                <div class="knowledge-check">
+                    <h3>Knowledge Check</h3>
+                    <div class="question">
+                        <div class="question-text">According to Bandura's self-efficacy theory, which source is typically MOST powerful for building patient confidence?</div>
+                        <div class="answer-option" onclick="selectAnswer(this, true)">A) Mastery experiences (personal success)</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">B) Vicarious experiences (observing others)</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">C) Verbal persuasion (encouragement)</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">D) Physiological states (managing anxiety)</div>
+                    </div>
+                </div>
+
+                <div class="module-completion">
+                    <div>Estimated completion time: 15 minutes</div>
+                    <button class="complete-btn" onclick="completeModule(4)">Mark Complete</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Module 5: Special Populations -->
+        <div class="module" data-module="5">
+            <div class="module-header" onclick="toggleModule(5)">
+                <div class="module-title">Module 5: Special Populations and Adaptation Strategies (15 min)</div>
+            </div>
+            <div class="module-content">
+                <h2>5.1 Pediatric Patient Education</h2>
+                <p>Patient education for children and adolescents requires developmental considerations and often involves parents or caregivers as primary partners in the education process.</p>
+
+                <div class="highlight-box clinical-tip">
+                    <strong>Developmental Considerations by Age:</strong>
+                    <ul>
+                        <li><strong>Preschool (3-5 years):</strong> Simple explanations, play-based learning, involve parents heavily</li>
+                        <li><strong>School-age (6-11 years):</strong> Concrete thinking, step-by-step instructions, visual aids</li>
+                        <li><strong>Adolescents (12-18 years):</strong> Abstract thinking, peer influence, increasing autonomy</li>
+                    </ul>
+                </div>
+
+                <h3>Child-Friendly Education Techniques</h3>
+                <ul>
+                    <li><strong>Medical play:</strong> Use dolls, toys, and games to explain procedures and conditions</li>
+                    <li><strong>Storytelling:</strong> Create narratives that help children understand their condition</li>
+                    <li><strong>Art and creativity:</strong> Drawing, coloring, and crafts to reinforce learning</li>
+                    <li><strong>Technology integration:</strong> Age-appropriate apps and interactive programs</li>
+                    <li><strong>Peer support groups:</strong> Connect children with others facing similar challenges</li>
+                </ul>
+
+                <h2>5.2 Geriatric Patient Considerations</h2>
+                <p>Older adults may face unique challenges in patient education, including sensory impairments, cognitive changes, polypharmacy, and social isolation.</p>
+
+                <h3>Age-Related Changes Affecting Learning</h3>
+                <div class="highlight-box key-point">
+                    <strong>Physical Changes:</strong>
+                    <ul>
+                        <li><strong>Vision:</strong> Decreased acuity, difficulty with glare, slower adaptation to light changes</li>
+                        <li><strong>Hearing:</strong> High-frequency hearing loss, difficulty filtering background noise</li>
+                        <li><strong>Processing speed:</strong> May require more time to absorb and respond to information</li>
+                        <li><strong>Motor skills:</strong> Decreased dexterity may affect ability to demonstrate skills</li>
+                    </ul>
+                </div>
+
+                <h3>Geriatric-Friendly Education Adaptations</h3>
+                <ul>
+                    <li><strong>Environmental modifications:</strong> Adequate lighting, minimal background noise, comfortable seating</li>
+                    <li><strong>Pacing adjustments:</strong> Allow more time, frequent breaks, and repetition</li>
+                    <li><strong>Large print materials:</strong> 14-point font minimum, high contrast colors</li>
+                    <li><strong>Simplified regimens:</strong> Reduce complexity, use pill organizers, clear schedules</li>
+                    <li><strong>Family involvement:</strong> Include adult children or caregivers when appropriate</li>
+                </ul>
+
+                <h2>5.3 Patients with Chronic Illness</h2>
+                <p>Chronic illness presents unique patient education challenges including disease progression, complex treatment regimens, and psychosocial adaptation.</p>
+
+                <h3>Chronic Care Model Components</h3>
+                <p>Wagner's Chronic Care Model emphasizes six essential elements for effective chronic disease management:</p>
+                <ul>
+                    <li><strong>Community resources:</strong> Linkages to community programs and support services</li>
+                    <li><strong>Health system organization:</strong> Leadership commitment to improving chronic care</li>
+                    <li><strong>Self-management support:</strong> Patient education and support for self-care activities</li>
+                    <li><strong>Delivery system design:</strong> Planned interactions between patients and care teams</li>
+                    <li><strong>Decision support:</strong> Evidence-based clinical practice guidelines</li>
+                    <li><strong>Clinical information systems:</strong> Patient registries and decision-support tools</li>
+                </ul>
+
+                <h3>Self-Management Education Focus Areas</h3>
+                <div class="highlight-box clinical-tip">
+                    <strong>Core Self-Management Skills:</strong>
+                    <ul>
+                        <li><strong>Medical management:</strong> Medication adherence, symptom monitoring, treatment plan follow-through</li>
+                        <li><strong>Role management:</strong> Maintaining activities and relationships important to the patient</li>
+                        <li><strong>Emotional management:</strong> Dealing with frustration, fear, anger, and depression</li>
+                    </ul>
+                </div>
+
+                <h2>5.4 Low Health Literacy Populations</h2>
+                <p>Patients with limited health literacy require specialized education approaches that accommodate their learning needs without stigmatization.</p>
+
+                <h3>Health Literacy-Appropriate Strategies</h3>
+                <ul>
+                    <li><strong>Plain language:</strong> Use common, everyday words instead of medical terminology</li>
+                    <li><strong>Teach-back method:</strong> Ask patients to repeat instructions in their own words</li>
+                    <li><strong>Chunk and check:</strong> Present small amounts of information and verify understanding</li>
+                    <li><strong>Visual aids:</strong> Use pictures, diagrams, and symbols to reinforce verbal information</li>
+                    <li><strong>Limit information:</strong> Focus on 3-5 key points per session</li>
+                </ul>
+
+                <div class="highlight-box caution">
+                    <strong>Avoiding Health Literacy Stigma:</strong>
+                    <ul>
+                        <li>Never use language that makes patients feel ashamed of their reading abilities</li>
+                        <li>Present simplified materials as standard practice for all patients</li>
+                        <li>Focus on clear communication as a provider skill, not patient deficit</li>
+                        <li>Use collaborative language: "Let me make sure I explained this clearly"</li>
+                    </ul>
+                </div>
+
+                <div class="knowledge-check">
+                    <h3>Knowledge Check</h3>
+                    <div class="question">
+                        <div class="question-text">When educating older adults, which environmental modification is MOST important for effective learning?</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">A) Background music to create a pleasant atmosphere</div>
+                        <div class="answer-option" onclick="selectAnswer(this, true)">B) Adequate lighting and minimal background noise</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">C) Cool temperature to keep patients alert</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">D) Colorful decorations to maintain visual interest</div>
+                    </div>
+                </div>
+
+                <div class="module-completion">
+                    <div>Estimated completion time: 15 minutes</div>
+                    <button class="complete-btn" onclick="completeModule(5)">Mark Complete</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Module 6: Technology and Digital Health -->
+        <div class="module" data-module="6">
+            <div class="module-header" onclick="toggleModule(6)">
+                <div class="module-title">Module 6: Technology Integration in Patient Education (15 min)</div>
+            </div>
+            <div class="module-content">
+                <h2>6.1 Digital Health Platforms and Tools</h2>
+                <p>Digital health technologies have revolutionized patient education delivery, offering personalized, accessible, and engaging learning experiences.</p>
+
+                <div class="highlight-box key-point">
+                    <strong>Digital Health Categories:</strong>
+                    <ul>
+                        <li><strong>Mobile health (mHealth):</strong> Smartphone apps, text messaging, wearable devices</li>
+                        <li><strong>Telehealth:</strong> Video consultations, remote monitoring, virtual care</li>
+                        <li><strong>Electronic health records:</strong> Patient portals, educational integration</li>
+                        <li><strong>Artificial intelligence:</strong> Chatbots, personalized recommendations</li>
+                        <li><strong>Virtual/Augmented reality:</strong> Immersive educational experiences</li>
+                    </ul>
+                </div>
+
+                <h3>Mobile Health Applications</h3>
+                <p>Smartphone apps offer convenient, personalized patient education and self-management support:</p>
+                <ul>
+                    <li><strong>Medication management:</strong> Reminder systems, drug interaction checks, adherence tracking</li>
+                    <li><strong>Symptom monitoring:</strong> Daily logs, trend analysis, automated alerts</li>
+                    <li><strong>Exercise programs:</strong> Video demonstrations, progress tracking, motivational features</li>
+                    <li><strong>Educational content:</strong> Condition-specific information, frequently updated resources</li>
+                    <li><strong>Social support:</strong> Peer networks, family sharing, healthcare team communication</li>
+                </ul>
+
+                <h2>6.2 Telehealth and Remote Patient Education</h2>
+                <p>Telehealth technologies enable patient education delivery regardless of geographic location, particularly valuable for rural and underserved populations.</p>
+
+                <h3>Synchronous vs. Asynchronous Education</h3>
+                <div class="highlight-box clinical-tip">
+                    <strong>Synchronous (Real-time) Methods:</strong>
+                    <ul>
+                        <li><strong>Video consultations:</strong> Face-to-face education sessions via secure platforms</li>
+                        <li><strong>Live webinars:</strong> Group education sessions with interactive Q&A</li>
+                        <li><strong>Virtual reality sessions:</strong> Shared immersive experiences</li>
+                        <li><strong>Real-time messaging:</strong> Immediate support and question answering</li>
+                    </ul>
+                </div>
+
+                <div class="highlight-box clinical-tip">
+                    <strong>Asynchronous (Self-paced) Methods:</strong>
+                    <ul>
+                        <li><strong>Pre-recorded videos:</strong> Educational content accessible anytime</li>
+                        <li><strong>Interactive modules:</strong> Self-paced learning with progress tracking</li>
+                        <li><strong>Email courses:</strong> Sequential educational content delivery</li>
+                        <li><strong>Discussion forums:</strong> Peer support and expert-moderated discussions</li>
+                    </ul>
+                </div>
+
+                <h2>6.3 Patient Portals and Electronic Health Record Integration</h2>
+                <p>Patient portals integrated with electronic health records provide personalized educational content based on individual patient conditions and treatment plans.</p>
+
+                <h3>Portal-Based Education Features</h3>
+                <ul>
+                    <li><strong>Personalized content:</strong> Educational materials tailored to patient's specific diagnoses</li>
+                    <li><strong>Test result interpretation:</strong> Explanations of lab values and diagnostic findings</li>
+                    <li><strong>Medication information:</strong> Drug-specific education, side effects, interactions</li>
+                    <li><strong>Appointment preparation:</strong> Pre-visit education and question prompts</li>
+                    <li><strong>Post-visit summaries:</strong> Reinforcement of key education points from appointments</li>
+                </ul>
+
+                <h2>6.4 Artificial Intelligence and Personalization</h2>
+                <p>AI-powered patient education tools can provide personalized, adaptive learning experiences that adjust to individual patient needs and preferences.</p>
+
+                <h3>AI Applications in Patient Education</h3>
+                <div class="highlight-box key-point">
+                    <strong>AI-Powered Features:</strong>
+                    <ul>
+                        <li><strong>Chatbots:</strong> 24/7 availability for patient questions and basic education</li>
+                        <li><strong>Content recommendation:</strong> Personalized educational materials based on patient profile</li>
+                        <li><strong>Language translation:</strong> Real-time translation of educational content</li>
+                        <li><strong>Predictive analytics:</strong> Identification of patients at risk for non-adherence</li>
+                        <li><strong>Natural language processing:</strong> Analysis of patient questions to provide relevant information</li>
+                    </ul>
+                </div>
+
+                <h2>6.5 Digital Divide Considerations</h2>
+                <p>While technology offers many advantages, healthcare providers must address disparities in technology access and digital literacy.</p>
+
+                <h3>Barriers to Digital Health Adoption</h3>
+                <ul>
+                    <li><strong>Economic barriers:</strong> Cost of devices, internet access, data plans</li>
+                    <li><strong>Age-related challenges:</strong> Lower comfort with technology among older adults</li>
+                    <li><strong>Education level:</strong> Digital literacy requirements for effective use</li>
+                    <li><strong>Physical limitations:</strong> Vision, hearing, or motor impairments affecting technology use</li>
+                    <li><strong>Language barriers:</strong> Limited availability of content in multiple languages</li>
+                </ul>
+
+                <div class="highlight-box caution">
+                    <strong>Ensuring Equitable Access:</strong>
+                    <ul>
+                        <li>Offer multiple education delivery methods, not just digital options</li>
+                        <li>Provide technology training and support for patients who want to use digital tools</li>
+                        <li>Partner with community organizations to improve technology access</li>
+                        <li>Consider loaner programs for devices needed for health management</li>
+                        <li>Ensure digital tools are accessible to users with disabilities</li>
+                    </ul>
+                </div>
+
+                <div class="knowledge-check">
+                    <h3>Knowledge Check</h3>
+                    <div class="question">
+                        <div class="question-text">Which type of telehealth education method is BEST for patients who have limited technology skills and prefer flexible scheduling?</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">A) Live video consultations</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">B) Real-time group webinars</div>
+                        <div class="answer-option" onclick="selectAnswer(this, true)">C) Pre-recorded educational videos</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">D) Virtual reality sessions</div>
+                    </div>
+                </div>
+
+                <div class="module-completion">
+                    <div>Estimated completion time: 15 minutes</div>
+                    <button class="complete-btn" onclick="completeModule(6)">Mark Complete</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Module 7: Evaluation and Quality Improvement -->
+        <div class="module" data-module="7">
+            <div class="module-header" onclick="toggleModule(7)">
+                <div class="module-title">Module 7: Program Evaluation and Quality Improvement (15 min)</div>
+            </div>
+            <div class="module-content">
+                <h2>7.1 Patient Education Evaluation Framework</h2>
+                <p>Systematic evaluation of patient education programs ensures effectiveness and guides continuous improvement efforts. Kirkpatrick's Four-Level Training Evaluation Model provides a comprehensive framework.</p>
+
+                <div class="highlight-box key-point">
+                    <strong>Kirkpatrick's Four Levels:</strong>
+                    <ul>
+                        <li><strong>Level 1 - Reaction:</strong> Patient satisfaction with the educational experience</li>
+                        <li><strong>Level 2 - Learning:</strong> Knowledge acquisition and skill development</li>
+                        <li><strong>Level 3 - Behavior:</strong> Application of learning in real-world settings</li>
+                        <li><strong>Level 4 - Results:</strong> Impact on health outcomes and organizational goals</li>
+                    </ul>
+                </div>
+
+                <h3>Process vs. Outcome Evaluation</h3>
+                <p><strong>Process Evaluation</strong> examines how education is delivered:</p>
+                <ul>
+                    <li><strong>Reach:</strong> What proportion of the target population participated?</li>
+                    <li><strong>Dose delivered:</strong> How much of the intended program was actually provided?</li>
+                    <li><strong>Dose received:</strong> How much of the program did participants actually engage with?</li>
+                    <li><strong>Fidelity:</strong> How well was the program implemented as designed?</li>
+                    <li><strong>Satisfaction:</strong> How did participants rate their experience?</li>
+                </ul>
+
+                <p><strong>Outcome Evaluation</strong> measures the effects of education:</p>
+                <ul>
+                    <li><strong>Short-term outcomes:</strong> Knowledge gains, skill acquisition, attitude changes</li>
+                    <li><strong>Medium-term outcomes:</strong> Behavior change, self-efficacy improvements</li>
+                    <li><strong>Long-term outcomes:</strong> Health status, quality of life, healthcare utilization</li>
+                </ul>
+
+                <h2>7.2 Data Collection Methods and Tools</h2>
+                <p>Multiple data collection methods provide comprehensive evaluation information from different perspectives.</p>
+
+                <h3>Quantitative Evaluation Tools</h3>
+                <div class="highlight-box clinical-tip">
+                    <strong>Knowledge Assessment:</strong>
+                    <ul>
+                        <li><strong>Pre/post tests:</strong> Multiple choice or true/false questions measuring knowledge gains</li>
+                        <li><strong>Skill checklists:</strong> Objective assessment of demonstrate competencies</li>
+                        <li><strong>Validated questionnaires:</strong> Standardized tools measuring health-related constructs</li>
+                        <li><strong>Physiological measures:</strong> Clinical indicators like blood pressure, weight, lab values</li>
+                    </ul>
+                </div>
+
+                <h3>Qualitative Evaluation Methods</h3>
+                <ul>
+                    <li><strong>Individual interviews:</strong> In-depth exploration of patient experiences and perspectives</li>
+                    <li><strong>Focus groups:</strong> Group discussions revealing shared experiences and diverse viewpoints</li>
+                    <li><strong>Observation:</strong> Direct observation of patient behavior during education sessions</li>
+                    <li><strong>Case studies:</strong> Detailed examination of individual patient journeys</li>
+                </ul>
+
+                <h2>7.3 Quality Improvement Methodologies</h2>
+                <p>Systematic quality improvement approaches help healthcare organizations enhance patient education programs based on evaluation findings.</p>
+
+                <h3>Plan-Do-Study-Act (PDSA) Cycles</h3>
+                <p>The PDSA method provides a structured approach to testing changes in patient education programs:</p>
+                <ul>
+                    <li><strong>Plan:</strong> Identify the change to be tested and develop implementation plan</li>
+                    <li><strong>Do:</strong> Implement the change on a small scale</li>
+                    <li><strong>Study:</strong> Analyze the results and compare to predictions</li>
+                    <li><strong>Act:</strong> Adopt, adapt, or abandon the change based on results</li>
+                </ul>
+
+                <div class="highlight-box key-point">
+                    <strong>PDSA Example - Improving Medication Education:</strong>
+                    <ul>
+                        <li><strong>Plan:</strong> Test teach-back method for medication instructions with 10 patients</li>
+                        <li><strong>Do:</strong> Train nurses on teach-back; implement with selected patients over 2 weeks</li>
+                        <li><strong>Study:</strong> Compare medication adherence rates and patient satisfaction scores</li>
+                        <li><strong>Act:</strong> If successful, expand teach-back training to all nursing staff</li>
+                    </ul>
+                </div>
+
+                <h2>7.4 Performance Metrics and Benchmarking</h2>
+                <p>Standardized metrics enable healthcare organizations to track progress and compare performance against internal targets and external benchmarks.</p>
+
+                <h3>Key Performance Indicators (KPIs)</h3>
+                <ul>
+                    <li><strong>Participation rates:</strong> Percentage of eligible patients who complete education programs</li>
+                    <li><strong>Completion rates:</strong> Percentage of participants who finish the entire program</li>
+                    <li><strong>Satisfaction scores:</strong> Patient-reported ratings of education quality and usefulness</li>
+                    <li><strong>Knowledge retention:</strong> Post-education assessment scores and follow-up testing</li>
+                    <li><strong>Behavior change rates:</strong> Percentage of patients demonstrating desired behavior modifications</li>
+                    <li><strong>Health outcomes:</strong> Clinical indicators affected by education (HbA1c, blood pressure, weight)</li>
+                    <li><strong>Healthcare utilization:</strong> Emergency department visits, readmissions, appointment adherence</li>
+                </ul>
+
+                <h3>Benchmarking Strategies</h3>
+                <div class="highlight-box clinical-tip">
+                    <strong>Types of Benchmarking:</strong>
+                    <ul>
+                        <li><strong>Internal benchmarking:</strong> Compare performance across departments or time periods</li>
+                        <li><strong>Competitive benchmarking:</strong> Compare with similar healthcare organizations</li>
+                        <li><strong>Functional benchmarking:</strong> Compare with best practices from other industries</li>
+                        <li><strong>Generic benchmarking:</strong> Compare fundamental processes regardless of industry</li>
+                    </ul>
+                </div>
+
+                <h2>7.5 Sustainability and Continuous Improvement</h2>
+                <p>Long-term success of patient education programs requires ongoing attention to sustainability and continuous improvement.</p>
+
+                <h3>Sustainability Planning</h3>
+                <ul>
+                    <li><strong>Leadership commitment:</strong> Ongoing support from organizational leaders</li>
+                    <li><strong>Resource allocation:</strong> Dedicated funding, staffing, and infrastructure</li>
+                    <li><strong>Staff development:</strong> Continuous training and competency maintenance</li>
+                    <li><strong>Integration:</strong> Embedding education into routine care processes</li>
+                    <li><strong>Adaptability:</strong> Flexibility to modify programs based on changing needs</li>
+                </ul>
+
+                <div class="knowledge-check">
+                    <h3>Knowledge Check</h3>
+                    <div class="question">
+                        <div class="question-text">According to Kirkpatrick's evaluation model, which level measures the ultimate impact of patient education on health outcomes?</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">A) Level 1 - Reaction (satisfaction)</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">B) Level 2 - Learning (knowledge gains)</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">C) Level 3 - Behavior (application)</div>
+                        <div class="answer-option" onclick="selectAnswer(this, true)">D) Level 4 - Results (health outcomes)</div>
+                    </div>
+                </div>
+
+                <div class="module-completion">
+                    <div>Estimated completion time: 15 minutes</div>
+                    <button class="complete-btn" onclick="completeModule(7)">Mark Complete</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Module 8: Legal and Ethical Considerations -->
+        <div class="module" data-module="8">
+            <div class="module-header" onclick="toggleModule(8)">
+                <div class="module-title">Module 8: Legal, Ethical, and Professional Standards (15 min)</div>
+            </div>
+            <div class="module-content">
+                <h2>8.1 Informed Consent and Patient Autonomy</h2>
+                <p>Patient education intersects with legal and ethical principles of informed consent and respect for patient autonomy. Healthcare providers must ensure patients have adequate information to make voluntary, informed decisions about their care.</p>
+
+                <div class="highlight-box key-point">
+                    <strong>Elements of Informed Consent:</strong>
+                    <ul>
+                        <li><strong>Disclosure:</strong> Provide relevant information about diagnosis, treatment options, risks, and benefits</li>
+                        <li><strong>Comprehension:</strong> Ensure patient understands the information presented</li>
+                        <li><strong>Voluntariness:</strong> Patient makes decision free from coercion or undue influence</li>
+                        <li><strong>Competence:</strong> Patient has cognitive capacity to make healthcare decisions</li>
+                    </ul>
+                </div>
+
+                <h3>Patient Rights in Healthcare</h3>
+                <ul>
+                    <li><strong>Right to information:</strong> Access to understandable health information and education</li>
+                    <li><strong>Right to participation:</strong> Active involvement in healthcare decisions</li>
+                    <li><strong>Right to refuse:</strong> Ability to decline treatments or educational interventions</li>
+                    <li><strong>Right to privacy:</strong> Confidentiality of personal health information</li>
+                    <li><strong>Right to dignity:</strong> Respectful treatment regardless of background or circumstances</li>
+                </ul>
+
+                <h2>8.2 Health Information Privacy and Security</h2>
+                <p>Patient education activities must comply with privacy regulations while promoting effective communication and learning.</p>
+
+                <h3>HIPAA Compliance in Patient Education</h3>
+                <div class="highlight-box caution">
+                    <strong>Privacy Considerations:</strong>
+                    <ul>
+                        <li><strong>Minimum necessary rule:</strong> Share only information essential for education purposes</li>
+                        <li><strong>Patient consent:</strong> Obtain authorization for using patient information in group settings</li>
+                        <li><strong>Confidential environments:</strong> Ensure private spaces for sensitive education topics</li>
+                        <li><strong>Digital security:</strong> Protect patient information in electronic education platforms</li>
+                        <li><strong>Third-party disclosure:</strong> Obtain permission before involving family members</li>
+                    </ul>
+                </div>
+
+                <h3>Technology and Privacy Concerns</h3>
+                <ul>
+                    <li><strong>Secure platforms:</strong> Use HIPAA-compliant video conferencing and communication tools</li>
+                    <li><strong>Data encryption:</strong> Ensure patient information is encrypted during transmission and storage</li>
+                    <li><strong>Access controls:</strong> Limit access to educational platforms based on need-to-know basis</li>
+                    <li><strong>Audit trails:</strong> Maintain records of who accessed patient information when and why</li>
+                </ul>
+
+                <h2>8.3 Cultural Competence and Non-Discrimination</h2>
+                <p>Ethical patient education requires cultural competence and adherence to non-discrimination principles to ensure equitable care for all patients.</p>
+
+                <h3>Legal Requirements for Accessible Care</h3>
+                <ul>
+                    <li><strong>Americans with Disabilities Act (ADA):</strong> Reasonable accommodations for patients with disabilities</li>
+                    <li><strong>Language access requirements:</strong> Interpreter services for limited English proficiency patients</li>
+                    <li><strong>Title VI compliance:</strong> Non-discrimination based on race, color, or national origin</li>
+                    <li><strong>Section 1557:</strong> Healthcare-specific non-discrimination provisions</li>
+                </ul>
+
+                <div class="highlight-box clinical-tip">
+                    <strong>Ethical Principles in Multicultural Education:</strong>
+                    <ul>
+                        <li><strong>Respect for diversity:</strong> Acknowledge and value different cultural perspectives on health</li>
+                        <li><strong>Avoid stereotyping:</strong> Treat each patient as an individual rather than assuming cultural practices</li>
+                        <li><strong>Power dynamics:</strong> Recognize and address power imbalances in healthcare relationships</li>
+                        <li><strong>Advocacy:</strong> Support patients in navigating healthcare systems and accessing resources</li>
+                    </ul>
+                </div>
+
+                <h2>8.4 Professional Scope of Practice</h2>
+                <p>Healthcare providers must deliver patient education within their professional scope of practice and recognize when referral to other professionals is appropriate.</p>
+
+                <h3>Discipline-Specific Considerations</h3>
+                <ul>
+                    <li><strong>Nursing:</strong> Patient education is core to nursing practice across all settings and specialties</li>
+                    <li><strong>Physical Therapy:</strong> Education focused on movement, exercise, injury prevention, and self-management</li>
+                    <li><strong>Occupational Therapy:</strong> Education related to activities of daily living, workplace modifications, adaptive equipment</li>
+                    <li><strong>Speech-Language Pathology:</strong> Communication strategies, swallowing safety, family training</li>
+                    <li><strong>Social Work:</strong> Psychosocial education, community resources, healthcare navigation</li>
+                </ul>
+
+                <h3>When to Refer</h3>
+                <div class="highlight-box caution">
+                    <strong>Referral Indicators:</strong>
+                    <ul>
+                        <li><strong>Complex psychological issues:</strong> Refer to mental health professionals for depression, anxiety, trauma</li>
+                        <li><strong>Specialized medical conditions:</strong> Refer to appropriate medical specialists for disease-specific education</li>
+                        <li><strong>Substance abuse concerns:</strong> Refer to addiction specialists or counselors</li>
+                        <li><strong>Legal questions:</strong> Refer to social services or legal aid for benefits and rights issues</li>
+                        <li><strong>Financial concerns:</strong> Refer to financial counselors or social workers for assistance programs</li>
+                    </ul>
+                </div>
+
+                <h2>8.5 Documentation and Liability Issues</h2>
+                <p>Proper documentation of patient education activities protects both patients and healthcare providers while supporting quality improvement efforts.</p>
+
+                <h3>Essential Documentation Elements</h3>
+                <ul>
+                    <li><strong>Content delivered:</strong> Specific topics covered and materials provided</li>
+                    <li><strong>Teaching methods:</strong> Educational strategies and tools used</li>
+                    <li><strong>Patient response:</strong> Level of understanding demonstrated and questions asked</li>
+                    <li><strong>Barriers identified:</strong> Factors that might impede learning or behavior change</li>
+                    <li><strong>Follow-up plans:</strong> Next steps and scheduled reinforcement activities</li>
+                    <li><strong>Family involvement:</strong> Who else was included and their level of participation</li>
+                </ul>
+
+                <h3>Legal Protection Strategies</h3>
+                <div class="highlight-box key-point">
+                    <strong>Risk Management:</strong>
+                    <ul>
+                        <li><strong>Evidence-based practice:</strong> Use educational interventions supported by research</li>
+                        <li><strong>Continuing education:</strong> Stay current with best practices and professional standards</li>
+                        <li><strong>Collaborative approach:</strong> Work within interdisciplinary teams when appropriate</li>
+                        <li><strong>Clear communication:</strong> Document communications clearly and avoid ambiguous language</li>
+                        <li><strong>Policy compliance:</strong> Follow organizational policies and professional practice guidelines</li>
+                    </ul>
+                </div>
+
+                <div class="knowledge-check">
+                    <h3>Knowledge Check</h3>
+                    <div class="question">
+                        <div class="question-text">Which element is MOST essential for valid informed consent in patient education?</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">A) Written documentation of consent</div>
+                        <div class="answer-option" onclick="selectAnswer(this, true)">B) Patient comprehension of information provided</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">C) Family member agreement with the plan</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">D) Provider certification in patient education</div>
+                    </div>
+                </div>
+
+                <div class="module-completion">
+                    <div>Estimated completion time: 15 minutes</div>
+                    <button class="complete-btn" onclick="completeModule(8)">Mark Complete</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Certificate Section -->
+        <div class="certificate-section" id="certificateSection">
+            <h2>🎓 Congratulations!</h2>
+            <p>You have successfully completed the <strong>Patient Education and Health Promotion</strong> course.</p>
+            <p>You have earned <strong>2.0 Continuing Education Units</strong></p>
+            <button class="certificate-btn" onclick="generateCertificate()">Download Certificate</button>
+        </div>
+    </div>
+
+    <script>
+        // Course state management
+        let courseState = {
+            modulesCompleted: [],
+            totalModules: 8,
+            startTime: new Date(),
+            completionTime: null
+        };
+
+        // Load saved progress
+        function loadProgress() {
+            const saved = localStorage.getItem('patientEducationProgress');
+            if (saved) {
+                courseState = JSON.parse(saved);
+                courseState.modulesCompleted.forEach(moduleNum => {
+                    const moduleHeader = document.querySelector(`[data-module="${moduleNum}"] .module-header`);
+                    if (moduleHeader) {
+                        moduleHeader.classList.add('completed');
+                    }
+                });
+                updateProgress();
+            }
+        }
+
+        // Save progress
+        function saveProgress() {
+            localStorage.setItem('patientEducationProgress', JSON.stringify(courseState));
+        }
+
+        // Toggle module visibility
+        function toggleModule(moduleNum) {
+            const module = document.querySelector(`[data-module="${moduleNum}"]`);
+            const content = module.querySelector('.module-content');
+            const isActive = content.classList.contains('active');
+            
+            // Close all other modules
+            document.querySelectorAll('.module-content').forEach(c => {
+                c.classList.remove('active');
+            });
+            
+            // Toggle current module
+            if (!isActive) {
+                content.classList.add('active');
+            }
+        }
+
+        // Complete module
+        function completeModule(moduleNum) {
+            if (!courseState.modulesCompleted.includes(moduleNum)) {
+                courseState.modulesCompleted.push(moduleNum);
+                const moduleHeader = document.querySelector(`[data-module="${moduleNum}"] .module-header`);
+                moduleHeader.classList.add('completed');
+                
+                // Replace complete button with badge
+                const completion = document.querySelector(`[data-module="${moduleNum}"] .module-completion`);
+                completion.innerHTML = '<div>Module completed ✓</div><div class="completed-badge">Completed</div>';
+                
+                updateProgress();
+                saveProgress();
+                
+                // Check if all modules completed
+                if (courseState.modulesCompleted.length === courseState.totalModules) {
+                    courseState.completionTime = new Date();
+                    document.getElementById('certificateSection').classList.add('visible');
+                    saveProgress();
+                }
+            }
+        }
+
+        // Update progress bar
+        function updateProgress() {
+            const percentage = Math.round((courseState.modulesCompleted.length / courseState.totalModules) * 100);
+            document.querySelector('.progress-fill').style.width = percentage + '%';
+            document.querySelector('.progress-percentage').textContent = percentage + '% Complete';
+        }
+
+        // Handle quiz answers
+        function selectAnswer(element, isCorrect) {
+            // Remove previous selections
+            const question = element.parentElement;
+            question.querySelectorAll('.answer-option').forEach(opt => {
+                opt.classList.remove('correct', 'incorrect');
+            });
+            
+            // Mark selected answer
+            element.classList.add(isCorrect ? 'correct' : 'incorrect');
+            
+            // Show feedback
+            setTimeout(() => {
+                if (isCorrect) {
+                    element.innerHTML += ' ✓ Correct!';
+                } else {
+                    element.innerHTML += ' ✗ Incorrect';
+                    // Show correct answer
+                    question.querySelectorAll('.answer-option').forEach((opt, index) => {
+                        if (opt.onclick.toString().includes('true')) {
+                            opt.classList.add('correct');
+                            opt.innerHTML += ' ✓ Correct Answer';
+                        }
+                    });
+                }
+            }, 500);
+        }
+
+        // Generate certificate
+        function generateCertificate() {
+            const certificateContent = generateCertificateHTML();
+            const newWindow = window.open('', '_blank');
+            newWindow.document.write(certificateContent);
+            newWindow.document.close();
+            newWindow.print();
+        }
+
+        // Generate certificate HTML
+        function generateCertificateHTML() {
+            const completionDate = new Date().toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+            
+            return `
+                <!DOCTYPE html>
+                <html>
+                <head>
+                    <title>Certificate - Patient Education and Health Promotion</title>
+                    <style>
+                        body { font-family: 'Georgia', serif; text-align: center; padding: 50px; background: #f8f9fa; }
+                        .certificate { background: white; padding: 60px; border: 10px solid #1a365d; max-width: 800px; margin: 0 auto; }
+                        .header { color: #1a365d; font-size: 36px; margin-bottom: 20px; }
+                        .title { font-size: 24px; color: #059669; margin: 30px 0; }
+                        .recipient { font-size: 28px; color: #333; margin: 20px 0; border-bottom: 2px solid #1a365d; padding-bottom: 10px; }
+                        .content { font-size: 18px; line-height: 1.6; margin: 30px 0; }
+                        .signature { margin-top: 60px; display: flex; justify-content: space-around; }
+                        .sig-line { border-top: 2px solid #333; width: 200px; padding-top: 10px; }
+                        .date { color: #666; margin-top: 20px; }
+                    </style>
+                </head>
+                <body>
+                    <div class="certificate">
+                        <div class="header">CERTIFICATE OF COMPLETION</div>
+                        <div class="title">Patient Education and Health Promotion</div>
+                        <div class="content">
+                            This certifies that<br>
+                            <div class="recipient">[Participant Name]</div>
+                            has successfully completed the continuing education course<br>
+                            <strong>Patient Education and Health Promotion</strong><br>
+                            consisting of 2.0 contact hours of instruction
+                        </div>
+                        <div class="signature">
+                            <div class="sig-line">Dr. Troy Hounshell, PT, ScD<br>Course Director</div>
+                            <div class="sig-line">DrTroy Continuing Education<br>Approved Provider</div>
+                        </div>
+                        <div class="date">Completed: ${completionDate}<br>Course ID: EDUCATION-001<br>Approval #: DRTROY-EDUCATION-001-2024</div>
+                    </div>
+                </body>
+                </html>
+            `;
+        }
+
+        // Logout function
+        function logout() {
+            localStorage.clear();
+            window.location.href = '../index.html';
+        }
+
+        // Initialize course
+        document.addEventListener('DOMContentLoaded', function() {
+            loadProgress();
+        });
+
+        // Auto-save progress periodically
+        setInterval(saveProgress, 30000); // Save every 30 seconds
+    </script>
+</body>
+</html>
