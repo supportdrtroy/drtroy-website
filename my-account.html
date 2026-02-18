@@ -1457,6 +1457,43 @@
 
                 currentAccount._supabaseEnrollments = enrollments;
 
+                // Inject enrolled courses into COURSE_DATABASE so super-user functions work
+                enrollments.forEach(e => {
+                    if (e.courses && !COURSE_DATABASE[e.course_id]) {
+                        COURSE_DATABASE[e.course_id] = {
+                            title: e.courses.title,
+                            credits: e.courses.ceu_hours || 1,
+                            description: e.courses.description || '',
+                            status: 'available',
+                            professions: e.courses.professions || [],
+                            url: `courses/${e.course_id}.html`
+                        };
+                    }
+                });
+
+                // Also fetch ALL courses from Supabase so superuser sees the full catalog
+                try {
+                    const allRes = await fetch(
+                        `${SUPA_URL}/rest/v1/courses?select=id,title,description,ceu_hours,professions`,
+                        { headers: { apikey: ANON_KEY, Authorization: `Bearer ${userJwt}` } }
+                    );
+                    const allCourses = await allRes.json();
+                    if (Array.isArray(allCourses)) {
+                        allCourses.forEach(c => {
+                            if (!COURSE_DATABASE[c.id]) {
+                                COURSE_DATABASE[c.id] = {
+                                    title: c.title,
+                                    credits: c.ceu_hours || 1,
+                                    description: c.description || '',
+                                    status: 'available',
+                                    professions: c.professions || [],
+                                    url: `courses/${c.id}.html`
+                                };
+                            }
+                        });
+                    }
+                } catch(e) { /* non-critical */ }
+
                 // Render courses directly into the DOM
                 renderSupabaseCourses(enrollments);
 
