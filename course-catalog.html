@@ -250,6 +250,8 @@
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
             overflow: hidden;
+            display: flex;
+            flex-direction: column;
         }
 
         .package-card:hover {
@@ -862,8 +864,8 @@
                         <span class="discounted-price">$${pkg.finalPrice} <span style="font-size:0.9rem;font-weight:400;">new member price</span></span>
                         <div class="savings">🎉 Save $${pkg.savings} when you create a free account!</div>
                     </div>
-                    <p class="package-description">${pkg.description}</p>
-                    <button class="btn btn-primary btn-block" onclick="addPackageToCartWithFeedback('${pkg.code}')">
+                    <p class="package-description" style="flex:1;">${pkg.description}</p>
+                    <button class="btn btn-primary btn-block" style="margin-top:auto;" onclick="addPackageToCartWithFeedback('${pkg.code}')">
                         Add Package to Cart
                     </button>
                 </div>
@@ -997,8 +999,10 @@
             const packageGrid = document.getElementById('package-grid');
             let packagesHtml = '';
             
-            Object.values(PACKAGE_CATALOG).forEach(pkg => {
-                if (pkg.featured) {
+            // PT → PTA → OT → COTA (grouped by discipline)
+            ['PT', 'PTA', 'OT', 'COTA'].forEach(code => {
+                const pkg = PACKAGE_CATALOG[code];
+                if (pkg && pkg.featured) {
                     packagesHtml += generatePackageCard(pkg);
                 }
             });
