@@ -1392,46 +1392,86 @@
             loadAccountData();
             restoreActiveSection();
             restoreCachedRenewal();
+
+            // Re-render courses AFTER everything else runs (ensures we're not overwritten)
+            if (currentAccount._supabaseEnrollments?.length > 0) {
+                renderSupabaseCourses(currentAccount._supabaseEnrollments);
+            }
         }
 
-        // Load enrollments from Supabase and merge into currentAccount
+        // Load enrollments from Supabase via direct REST (no CDN dependency)
         async function loadSupabaseEnrollments(userId) {
-            if (!window.DrTroySupabase || !userId) return;
+            if (!userId) return;
 
-            const { data: enrollments } = await window.DrTroySupabase.getEnrollments(userId);
-            if (!enrollments || enrollments.length === 0) return;
+            const SUPA_URL  = 'https://pnqoxulxdmlmbywcpbyx.supabase.co';
+            const ANON_KEY  = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBucW94dWx4ZG1sbWJ5d2NwYnl4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzEzNjU3NTIsImV4cCI6MjA4Njk0MTc1Mn0.YEPrwIvINX_Q1AsbxyU0T5m5oxpV9M756yiSCzy6LTc';
 
-            // Merge enrolled course IDs into currentAccount
-            const supabaseCourseIds = enrollments
-                .filter(e => e.courses)
-                .map(e => {
-                    // Map Supabase course ID to local COURSE_DATABASE key
-                    // Supabase courses have a UUID; we try to match by title or use the ID directly
-                    return e.course_id;
-                });
-
-            // Build a rich supbase courses display list
-            currentAccount._supabaseEnrollments = enrollments;
-
-            // Merge with legacy enrolled courses
-            const existing = new Set(currentAccount.enrolledCourses || []);
-            supabaseCourseIds.forEach(id => existing.add(id));
-            currentAccount.enrolledCourses = Array.from(existing);
-
-            // Update course progress from Supabase course_progress
-            enrollments.forEach(e => {
-                if (e.course_progress && e.course_progress.length > 0) {
-                    const prog = e.course_progress[0];
-                    if (!currentAccount.courseProgress[e.course_id]) {
-                        currentAccount.courseProgress[e.course_id] = {
-                            enrolledAt: e.enrolled_at,
-                            completed: prog.status === 'completed',
-                            completedAt: prog.completed_at,
-                            progress: prog.progress_percent || 0
-                        };
+            // Get the current user's JWT — try SDK first, then localStorage, then anon
+            let userJwt = ANON_KEY;
+            try {
+                // Try Supabase SDK
+                const sb = window.DrTroySupabase?.getClient?.();
+                if (sb) {
+                    const { data } = await sb.auth.getSession();
+                    if (data?.session?.access_token) { userJwt = data.session.access_token; }
+                }
+                // Fallback: read from localStorage (Supabase persists token here)
+                if (userJwt === ANON_KEY) {
+                    const storageKey = Object.keys(localStorage).find(k => k.includes('auth-token') || k.includes('supabase'));
+                    if (storageKey) {
+                        const stored = JSON.parse(localStorage.getItem(storageKey) || '{}');
+                        const token = stored?.access_token || stored?.session?.access_token;
+                        if (token) userJwt = token;
                     }
                 }
+            } catch(e) { console.warn('JWT fetch fallback to anon:', e.message); }
+
+            try {
+                // Fetch enrollments + course data via REST
+                const select = encodeURIComponent('*,courses(id,title,description,ceu_hours,professions)');
+                const res = await fetch(
+                    `${SUPA_URL}/rest/v1/enrollments?user_id=eq.${userId}&select=${select}&order=purchased_at.desc`,
+                    { headers: { apikey: ANON_KEY, Authorization: `Bearer ${userJwt}` } }
+                );
+                const enrollments = await res.json();
+                if (!Array.isArray(enrollments) || enrollments.length === 0) return;
+
+                currentAccount._supabaseEnrollments = enrollments;
+
+                // Render courses directly into the DOM
+                renderSupabaseCourses(enrollments);
+
+            } catch(err) {
+                console.error('loadSupabaseEnrollments error:', err);
+            }
+        }
+
+        // Directly render Supabase enrollment cards into coursesList
+        function renderSupabaseCourses(enrollments) {
+            const coursesList = document.getElementById('coursesList');
+            if (!coursesList) return;
+
+            let html = '<div class="courses-grid">';
+            enrollments.forEach(e => {
+                const c = e.courses;
+                if (!c) return;
+                html += `
+                    <div class="course-card">
+                        <div class="course-header">
+                            <h3>${c.title}</h3>
+                            <span class="status-badge available">Available</span>
+                        </div>
+                        <p class="course-description">${c.description || ''}</p>
+                        <div class="course-details">
+                            <div class="course-credits"><strong>${c.ceu_hours} CCU${c.ceu_hours !== 1 ? 's' : ''}</strong></div>
+                        </div>
+                        <div class="course-actions">
+                            <button class="btn btn-primary" onclick="alert('Course content coming soon!')">Start Course</button>
+                        </div>
+                    </div>`;
             });
+            html += '</div>';
+            coursesList.innerHTML = html;
         }
 
         // Supabase Login Form Handler

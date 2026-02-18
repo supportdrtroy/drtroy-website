@@ -428,6 +428,9 @@ window.DrTroySupabase = {
     getCourseCompletionStats
 };
 
+// Expose raw client for advanced use
+window.DrTroySupabase.getClient = getSupabaseClient;
+
 // Convenience alias
 window.SB = window.DrTroySupabase;
 
