@@ -175,9 +175,9 @@ exports.handler = async (event) => {
         const enrollResult = await createEnrollment({
           user_id:                  userId,
           course_id:                courseId,
-          package_id:               packageId,
           stripe_payment_intent_id: paymentIntent,
-          amount_paid_cents:        itemType === 'package' ? 0 : amountPaid, // 0 for package sub-courses
+          amount_paid_cents:        amountPaid,
+          is_active:                true,
           purchased_at:             new Date().toISOString(),
         }, SUPABASE_URL, SERVICE_ROLE);
 
@@ -194,11 +194,12 @@ exports.handler = async (event) => {
         const enrollId = enrollResult.data?.[0]?.id;
         if (enrollId) {
           await createProgressRow({
-            user_id:       userId,
-            course_id:     courseId,
-            enrollment_id: enrollId,
-            status:        'not_started',
-            progress_pct:  0,
+            user_id:          userId,
+            course_id:        courseId,
+            enrollment_id:    enrollId,
+            module_id:        0,
+            status:           'not_started',
+            progress_percent: 0,
           }, SUPABASE_URL, SERVICE_ROLE);
         }
       }
