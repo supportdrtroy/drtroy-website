@@ -2412,52 +2412,23 @@
             updateSessionInfo();
         }
 
-        // Update session information
-        function updateSessionInfo() {
+        // Update session information — reads from live Supabase session (Supabase auth only)
+        async function updateSessionInfo() {
             try {
-                const adminSession = localStorage.getItem('drtroyAdminSession');
-                if (adminSession) {
-                    const session = JSON.parse(adminSession);
-                    const created = new Date(session.created);
-                    const expires = new Date(session.expires);
-                    const now = new Date();
-                    
-                    // Calculate session duration
-                    const durationMs = now - created;
-                    const hours = Math.floor(durationMs / (1000 * 60 * 60));
-                    const minutes = Math.floor((durationMs % (1000 * 60 * 60)) / (1000 * 60));
-                    
-                    // Calculate time until expiration
-                    const timeLeft = expires - now;
-                    const hoursLeft = Math.floor(timeLeft / (1000 * 60 * 60));
-                    const minutesLeft = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
-                    
-                    // Update header info
-                    const statusEl = document.querySelector('.status-indicator');
-                    if (statusEl && session.user) {
-                        statusEl.title = `Logged in as: ${session.user.username}\nSession duration: ${hours}h ${minutes}m\nExpires in: ${hoursLeft}h ${minutesLeft}m`;
-                    }
+                const sb = window.DrTroySupabase ? window.DrTroySupabase.getClient() : null;
+                if (!sb) return;
+                const { data: { session } } = await sb.auth.getSession();
+                if (!session) return;
+                const statusEl = document.querySelector('.status-indicator');
+                if (statusEl) {
+                    const expiresAt = new Date(session.expires_at * 1000);
+                    const minutesLeft = Math.round((expiresAt - Date.now()) / 60000);
+                    statusEl.title = `Logged in as: ${session.user.email}\nSession expires in: ${minutesLeft} min`;
                 }
-            } catch (error) {
-            }
+            } catch (e) { /* non-critical */ }
         }
 
-        // Extend session by 8 hours
-        function extendSession() {
-            try {
-                const adminSession = localStorage.getItem('drtroyAdminSession');
-                if (adminSession) {
-                    const session = JSON.parse(adminSession);
-                    session.expires = new Date(Date.now() + 8 * 60 * 60 * 1000).toISOString();
-                    localStorage.setItem('drtroyAdminSession', JSON.stringify(session));
-                    
-                    alert('✅ Session extended by 8 hours!');
-                    updateSessionInfo();
-                }
-            } catch (error) {
-                alert('❌ Failed to extend session. Please refresh the page.');
-            }
-        }
+        // extendSession — handled automatically by Supabase autoRefreshToken; no manual action needed.
 
         // Load data from localStorage
         function loadStoredData() {

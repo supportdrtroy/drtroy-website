@@ -14,11 +14,19 @@ const https = require('https');
 const SUPABASE_HOST = 'pnqoxulxdmlmbywcpbyx.supabase.co';
 const SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
-const CORS_HEADERS = {
-  'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'Content-Type, Authorization',
-  'Content-Type': 'application/json',
-};
+const ALLOWED_ORIGINS = ['https://drtroy.com', 'https://www.drtroy.com'];
+
+function getCorsHeaders(event) {
+  const origin = (event.headers && (event.headers.origin || event.headers.Origin)) || '';
+  const allowedOrigin = ALLOWED_ORIGINS.includes(origin) ? origin : ALLOWED_ORIGINS[0];
+  return {
+    'Access-Control-Allow-Origin': allowedOrigin,
+    'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+    'Access-Control-Allow-Methods': 'POST, OPTIONS',
+    'Content-Type': 'application/json',
+    'Vary': 'Origin',
+  };
+}
 
 /* ─── HTTP helper ─────────────────────────────────────────── */
 
@@ -242,13 +250,13 @@ async function removeEnrollment({ enrollmentId }) {
 
 exports.handler = async (event) => {
   if (event.httpMethod === 'OPTIONS') {
-    return { statusCode: 200, headers: CORS_HEADERS, body: '' };
+    return { statusCode: 200, headers: getCorsHeaders(event), body: '' };
   }
 
   if (event.httpMethod !== 'POST') {
     return {
       statusCode: 405,
-      headers: CORS_HEADERS,
+      headers: getCorsHeaders(event),
       body: JSON.stringify({ error: 'Method not allowed' }),
     };
   }
@@ -259,7 +267,7 @@ exports.handler = async (event) => {
   } catch {
     return {
       statusCode: 400,
-      headers: CORS_HEADERS,
+      headers: getCorsHeaders(event),
       body: JSON.stringify({ error: 'Invalid JSON body' }),
     };
   }
@@ -274,7 +282,7 @@ exports.handler = async (event) => {
     console.warn('[admin-actions] Auth failed:', adminCheck.reason);
     return {
       statusCode: 403,
-      headers: CORS_HEADERS,
+      headers: getCorsHeaders(event),
       body: JSON.stringify({ error: 'Unauthorized: ' + adminCheck.reason }),
     };
   }
@@ -292,21 +300,21 @@ exports.handler = async (event) => {
       default:
         return {
           statusCode: 400,
-          headers: CORS_HEADERS,
+          headers: getCorsHeaders(event),
           body: JSON.stringify({ error: `Unknown action: ${action}` }),
         };
     }
 
     return {
       statusCode: 200,
-      headers: CORS_HEADERS,
+      headers: getCorsHeaders(event),
       body: JSON.stringify({ success: true, data: result }),
     };
   } catch (err) {
     console.error(`[admin-actions] ${action} error:`, err.message);
     return {
       statusCode: 500,
-      headers: CORS_HEADERS,
+      headers: getCorsHeaders(event),
       body: JSON.stringify({ error: err.message }),
     };
   }

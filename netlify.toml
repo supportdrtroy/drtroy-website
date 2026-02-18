@@ -82,3 +82,93 @@
   from = "/logo-comparison.html"
   to = "/"
   status = 302
+
+# ── Block all internal/sensitive files ──────────────────────────────────────
+
+# Block markdown documentation files
+[[redirects]]
+  from = "/*.md"
+  to = "/"
+  status = 301
+  force = true
+
+# Block SQL schema files
+[[redirects]]
+  from = "/*.sql"
+  to = "/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/docs/*.sql"
+  to = "/"
+  status = 301
+  force = true
+
+# Block docs directory
+[[redirects]]
+  from = "/docs/*"
+  to = "/"
+  status = 301
+  force = true
+
+# Block development/test HTML files
+[[redirects]]
+  from = "/clear-account.html"
+  to = "/my-account.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/system-settings.html"
+  to = "/secure-admin-access-2026.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/download-tpta-submission.html"
+  to = "/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/secure-admin.html"
+  to = "/secure-admin-access-2026.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/supabase-config.js"
+  to = "/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/database-setup.sql"
+  to = "/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/schema-design.md"
+  to = "/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/courses/images/pelvis_si_joint_demo.html"
+  to = "/course-catalog.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/courses/images/test_bartleby.html"
+  to = "/course-catalog.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/courses/images/wiki_gray420.html"
+  to = "/course-catalog.html"
+  status = 301
+  force = true

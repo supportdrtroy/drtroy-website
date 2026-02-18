@@ -3,9 +3,42 @@
  * POST /.netlify/functions/send-waitlist-confirm
  * Sends a branded confirmation email via Resend REST API.
  * FROM: DrTroy Continuing Education <no-reply@drtroy.com>
+ *
+ * Security: validates email format + verifies email exists in waitlist DB
+ * before sending, preventing spam abuse of the email endpoint.
  */
 
 const https = require('https');
+
+// Basic RFC 5322 email check — reject obviously bogus addresses
+function isValidEmail(email) {
+    return typeof email === 'string' && /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email.trim());
+}
+
+// Verify email is in the waitlist table (prevents endpoint spam abuse)
+async function emailInWaitlist(email) {
+    const sbUrl  = process.env.SUPABASE_URL;
+    const sbKey  = process.env.SUPABASE_SERVICE_ROLE_KEY;
+    if (!sbUrl || !sbKey) return true; // If env missing, fail open (don't block legitimate sends)
+    return new Promise((resolve) => {
+        const path = `/rest/v1/waitlist?email=eq.${encodeURIComponent(email)}&select=email&limit=1`;
+        const url  = new URL(sbUrl + path);
+        const req  = https.request({
+            hostname: url.hostname,
+            path:     url.pathname + url.search,
+            method:   'GET',
+            headers:  { apikey: sbKey, Authorization: `Bearer ${sbKey}` }
+        }, (res) => {
+            let body = '';
+            res.on('data', c => body += c);
+            res.on('end', () => {
+                try { resolve(JSON.parse(body).length > 0); } catch { resolve(false); }
+            });
+        });
+        req.on('error', () => resolve(true)); // Fail open on network error
+        req.end();
+    });
+}
 
 function resendPost(apiKey, payload) {
     return new Promise((resolve, reject) => {
@@ -42,6 +75,14 @@ exports.handler = async (event) => {
 
     const { email, firstName, lastName, discipline } = body;
     if (!email) return { statusCode: 400, body: 'Missing email' };
+    if (!isValidEmail(email)) return { statusCode: 400, body: 'Invalid email address' };
+
+    // Anti-abuse: verify email is actually in the waitlist before sending
+    const exists = await emailInWaitlist(email.trim().toLowerCase());
+    if (!exists) {
+        console.warn('send-waitlist-confirm: email not in waitlist, refusing send:', email);
+        return { statusCode: 200, body: JSON.stringify({ sent: false, reason: 'not_in_waitlist' }) };
+    }
 
     const apiKey  = process.env.RESEND_API_KEY;
     if (!apiKey)  return { statusCode: 500, body: 'Email service not configured' };
