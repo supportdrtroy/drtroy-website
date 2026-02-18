@@ -1335,6 +1335,11 @@
 
                     if (isValid || isTroy) {
                         console.log('✅ Legacy session valid for', currentAccount.email);
+                        const _ls = localStorage.getItem('currentAccountSection');
+                        if (_ls && document.getElementById(_ls)) {
+                            document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
+                            document.getElementById(_ls).classList.add('active');
+                        }
                         showAccountContent();
                         loadAccountData();
                         restoreActiveSection();
@@ -1392,16 +1397,23 @@
             // Load real enrollments from Supabase
             await loadSupabaseEnrollments(user.id);
 
+            // Apply saved section BEFORE showing content — eliminates the overview flash
+            const _savedSection = localStorage.getItem('currentAccountSection');
+            if (_savedSection && document.getElementById(_savedSection)) {
+                document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
+                document.getElementById(_savedSection).classList.add('active');
+            }
+
             showAccountContent();
             loadAccountData();
             restoreCachedRenewal();
 
-            // Re-render courses AFTER everything else runs (ensures we're not overwritten)
+            // Re-render courses AFTER everything else runs
             if (currentAccount._supabaseEnrollments?.length > 0) {
                 renderSupabaseCourses(currentAccount._supabaseEnrollments);
             }
 
-            // Restore active section LAST so nothing overwrites it
+            // Final section restore — corrects nav highlight and any timer-triggered resets
             restoreActiveSection();
             window._accountInitialized = true;
         }
