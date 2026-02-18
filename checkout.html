@@ -675,6 +675,16 @@
                         <div id="card-errors" role="alert" style="color:#dc2626;margin-top:8px;font-size:14px;"></div>
                     </div>
 
+                    <!-- Marketing Opt-In -->
+                    <div style="margin-bottom: 1rem; padding: 1.25rem; background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 12px;">
+                        <label style="display: flex; align-items: flex-start; gap: .875rem; cursor: pointer;">
+                            <input type="checkbox" id="marketing-checkbox" checked style="margin-top: .25rem; width: 18px; height: 18px; accent-color: #059669; flex-shrink: 0; cursor: pointer;">
+                            <span style="font-size: .95rem; color: #404040; line-height: 1.6;">
+                                Yes, notify me about <strong>exclusive deals and new course offerings</strong> from DrTroy CE. You can unsubscribe at any time.
+                            </span>
+                        </label>
+                    </div>
+
                     <!-- Terms Agreement -->
                     <div style="margin-bottom: 1.5rem; padding: 1.25rem; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px;">
                         <label style="display: flex; align-items: flex-start; gap: .875rem; cursor: pointer;">
@@ -870,13 +880,14 @@
             // Get form data
             const formData = new FormData(form);
             const customerData = {
-                firstName:     formData.get('firstName'),
-                lastName:      formData.get('lastName'),
-                email:         formData.get('email'),
-                phone:         formData.get('phone'),
-                profession:    formData.get('profession'),
-                licenseNumber: formData.get('licenseNumber'),
-                licenseState:  formData.get('licenseState')
+                firstName:        formData.get('firstName'),
+                lastName:         formData.get('lastName'),
+                email:            formData.get('email'),
+                phone:            formData.get('phone'),
+                profession:       formData.get('profession'),
+                licenseNumber:    formData.get('licenseNumber'),
+                licenseState:     formData.get('licenseState'),
+                marketingConsent: document.getElementById('marketing-checkbox')?.checked ?? true
             };
 
             // Validate required fields
@@ -903,17 +914,23 @@
                     const session = await window.DrTroySupabase.getSession();
                     if (session && session.user) {
                         userId = session.user.id;
+                        // Update marketing consent for existing user
+                        try {
+                            const sb = window.DrTroySupabase.getClient ? window.DrTroySupabase.getClient() : null;
+                            if (sb) await sb.from('profiles').update({ marketing_consent: customerData.marketingConsent }).eq('id', userId);
+                        } catch(e) { /* non-blocking */ }
                     } else {
                         // New user — sign them up so we have a user_id for the enrollment
                         const tempPassword = Math.random().toString(36).slice(-10) + 'Aa1!';
                         const { data: signUpData, error: signUpErr } = await window.DrTroySupabase.signUp(
                             customerData.email, tempPassword,
                             {
-                                first_name:     customerData.firstName,
-                                last_name:      customerData.lastName,
-                                profession:     customerData.profession,
-                                license_number: customerData.licenseNumber,
-                                state:          customerData.licenseState
+                                first_name:        customerData.firstName,
+                                last_name:         customerData.lastName,
+                                profession:        customerData.profession,
+                                license_number:    customerData.licenseNumber,
+                                state:             customerData.licenseState,
+                                marketing_consent: customerData.marketingConsent
                             }
                         );
                         if (signUpData?.user) {
