@@ -308,6 +308,82 @@ async function getCourseCompletionStats() {
         .order('completed_at', { ascending: false });
 }
 
+/* ─── ADMIN ACTION HELPERS ──────────────────────────────────────────────────── */
+
+/**
+ * Call a privileged admin action via the admin-actions Netlify function.
+ * Automatically attaches the current user's JWT for server-side auth.
+ */
+async function adminAction(action, payload) {
+    const sb = getSupabaseClient();
+    if (!sb) return { error: 'Database unavailable' };
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) return { error: 'Not authenticated' };
+
+    try {
+        const resp = await fetch('/.netlify/functions/admin-actions', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + session.access_token
+            },
+            body: JSON.stringify({ action, payload })
+        });
+        const json = await resp.json();
+        if (!resp.ok) return { error: json.error || `HTTP ${resp.status}` };
+        return json;
+    } catch (err) {
+        return { error: err.message };
+    }
+}
+
+async function adminGetUserByEmail(email) {
+    const sb = getSupabaseClient();
+    if (!sb) return { data: null, error: 'Database unavailable' };
+    return await sb.from('profiles').select('*').eq('email', email).single();
+}
+
+async function adminGetUserEnrollments(userId) {
+    const sb = getSupabaseClient();
+    if (!sb) return { data: [], error: 'Database unavailable' };
+    return await sb.from('enrollments')
+        .select('*, courses(id, title, ceu_hours)')
+        .eq('user_id', userId)
+        .order('enrolled_at', { ascending: false });
+}
+
+async function adminGetAllCourses() {
+    const sb = getSupabaseClient();
+    if (!sb) return { data: [], error: 'Database unavailable' };
+    return await sb.from('courses')
+        .select('id, title, ceu_hours, is_active')
+        .order('title');
+}
+
+function adminExportUsersCSV(users) {
+    const headers = ['Email', 'First Name', 'Last Name', 'Profession', 'License #', 'State', 'Admin', 'Created'];
+    const rows = users.map(u => [
+        u.email,
+        u.first_name,
+        u.last_name,
+        u.profession,
+        u.license_number,
+        u.state,
+        u.is_admin ? 'Yes' : 'No',
+        u.created_at ? new Date(u.created_at).toLocaleDateString() : ''
+    ]);
+    const csv = [headers, ...rows]
+        .map(r => r.map(v => `"${(v || '').toString().replace(/"/g, '""')}"`).join(','))
+        .join('\n');
+    const blob = new Blob([csv], { type: 'text/csv' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'drtroy-users.csv';
+    a.click();
+    URL.revokeObjectURL(url);
+}
+
 /* ─── AUTH STATE LISTENER ───────────────────────────────────────────────────── */
 
 function onAuthStateChange(callback) {
@@ -421,11 +497,18 @@ window.DrTroySupabase = {
     // Discount Codes
     validateDiscountCode,
 
-    // Admin
+    // Admin (read)
     getAllUsers,
     getAllEnrollments,
     getRevenueSummary,
-    getCourseCompletionStats
+    getCourseCompletionStats,
+
+    // Admin (privileged actions via Netlify function)
+    adminAction,
+    adminGetUserByEmail,
+    adminGetUserEnrollments,
+    adminGetAllCourses,
+    adminExportUsersCSV,
 };
 
 // Expose raw client for advanced use

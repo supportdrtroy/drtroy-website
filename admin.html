@@ -877,6 +877,148 @@
                 grid-template-columns: 1fr;
             }
         }
+
+        /* ── User Management Modals ─────────────────────────── */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.6);
+            z-index: 1000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+        .modal-overlay.active { display: flex; }
+
+        .modal-box {
+            background: #fff;
+            border-radius: 12px;
+            padding: 2rem;
+            max-width: 700px;
+            width: 90%;
+            max-height: 85vh;
+            overflow-y: auto;
+            position: relative;
+        }
+        .modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #6b7280;
+            line-height: 1;
+        }
+        .modal-close:hover { color: #111827; }
+        .modal-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #1e3a8a;
+            margin-bottom: 1.5rem;
+        }
+        .modal-section {
+            margin-bottom: 1.5rem;
+        }
+        .modal-section h4 {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #374151;
+            margin-bottom: 0.75rem;
+            border-bottom: 1px solid #e5e7eb;
+            padding-bottom: 0.5rem;
+        }
+        .form-grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+        @media (max-width: 600px) { .form-grid-2 { grid-template-columns: 1fr; } }
+
+        .badge-admin {
+            background: #dbeafe;
+            color: #1e40af;
+            padding: 0.25rem 0.75rem;
+            border-radius: 999px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            display: inline-block;
+        }
+        .badge-user {
+            background: #f3f4f6;
+            color: #6b7280;
+            padding: 0.25rem 0.75rem;
+            border-radius: 999px;
+            font-size: 0.8rem;
+            display: inline-block;
+        }
+        .badge-suspended {
+            background: #fee2e2;
+            color: #dc2626;
+            padding: 0.25rem 0.75rem;
+            border-radius: 999px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            display: inline-block;
+        }
+        .enrollment-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #f3f4f6;
+        }
+        .enrollment-row:last-child { border-bottom: none; }
+        .btn-danger {
+            background: #dc2626;
+            color: #fff;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+        .btn-danger:hover { background: #b91c1c; }
+        .btn-warning {
+            background: #d97706;
+            color: #fff;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+        .btn-warning:hover { background: #b45309; }
+        .btn-success {
+            background: #059669 !important;
+            color: #fff !important;
+        }
+        .btn-success:hover { background: #047857 !important; }
+        .info-message {
+            background: #dbeafe;
+            border: 1px solid #93c5fd;
+            color: #1e40af;
+            padding: 0.75rem 1rem;
+            border-radius: 6px;
+            margin-bottom: 1rem;
+        }
+        /* Admin toast notification */
+        .admin-toast {
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            z-index: 9999;
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            animation: fadeInRight 0.3s ease;
+        }
+        @keyframes fadeInRight {
+            from { opacity: 0; transform: translateX(20px); }
+            to   { opacity: 1; transform: translateX(0); }
+        }
     </style>
 </head>
 <body>
@@ -1016,53 +1158,17 @@
                                 <tr>
                                     <th>Name</th>
                                     <th>Email</th>
-                                    <th>Discipline</th>
+                                    <th>Profession</th>
                                     <th>License #</th>
                                     <th>State</th>
-                                    <th>Expires</th>
-                                    <th>Status</th>
+                                    <th>Role</th>
                                     <th>Actions</th>
                                 </tr>
                             </thead>
                             <tbody id="usersTableBody">
-                                <!-- Sample users -->
                                 <tr>
-                                    <td>Dr. Sarah Johnson</td>
-                                    <td>sarah.johnson@email.com</td>
-                                    <td>PT</td>
-                                    <td>TX12345</td>
-                                    <td>TX</td>
-                                    <td>December 2026</td>
-                                    <td><span class="status-badge active">Active</span></td>
-                                    <td>
-                                        <button class="btn-small" onclick="viewUser('sarah.johnson@email.com')">View</button>
-                                        <button class="btn-small" onclick="emailUser('sarah.johnson@email.com')">Email</button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Michael Chen</td>
-                                    <td>m.chen@email.com</td>
-                                    <td>OT</td>
-                                    <td>CA67890</td>
-                                    <td>CA</td>
-                                    <td>March 2026</td>
-                                    <td><span class="status-badge warning">Renewal Soon</span></td>
-                                    <td>
-                                        <button class="btn-small" onclick="viewUser('m.chen@email.com')">View</button>
-                                        <button class="btn-small" onclick="emailUser('m.chen@email.com')">Email</button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Lisa Rodriguez</td>
-                                    <td>lisa.r@email.com</td>
-                                    <td>PTA</td>
-                                    <td>FL54321</td>
-                                    <td>FL</td>
-                                    <td>January 2026</td>
-                                    <td><span class="status-badge expired">Expired</span></td>
-                                    <td>
-                                        <button class="btn-small" onclick="viewUser('lisa.r@email.com')">View</button>
-                                        <button class="btn-small" onclick="emailUser('lisa.r@email.com')">Email</button>
+                                    <td colspan="7" style="text-align:center;color:#6b7280;padding:2rem;">
+                                        Loading users...
                                     </td>
                                 </tr>
                             </tbody>
@@ -1927,6 +2033,156 @@
 
     </div>
 
+    <!-- ═══════════════════════════════════════════════════════════
+         USER DETAIL MODAL
+    ══════════════════════════════════════════════════════════════ -->
+    <div class="modal-overlay" id="userDetailModal">
+        <div class="modal-box">
+            <button class="modal-close" onclick="closeUserDetailModal()" title="Close">×</button>
+            <div class="modal-title">👤 User Details</div>
+
+            <!-- Status message -->
+            <div id="udm-status" class="success-message" style="display:none;"></div>
+
+            <!-- Header info row -->
+            <div class="modal-section" style="background:#f9fafb;border-radius:8px;padding:1rem;margin-bottom:1.5rem;">
+                <h3 id="udm-name" style="color:#1e3a8a;margin:0 0 0.25rem 0;font-size:1.25rem;"></h3>
+                <div id="udm-email" style="color:#6b7280;font-size:0.9rem;margin-bottom:0.5rem;"></div>
+                <div style="display:flex;gap:0.5rem;flex-wrap:wrap;align-items:center;">
+                    <span id="udm-role-badge" class="badge-user"></span>
+                    <span id="udm-suspended-badge" class="badge-suspended" style="display:none;"></span>
+                    <span style="color:#9ca3af;font-size:0.8rem;">Member since: <span id="udm-created"></span></span>
+                </div>
+            </div>
+
+            <!-- Edit Profile Section -->
+            <div class="modal-section">
+                <h4>✏️ Edit Profile</h4>
+                <div class="form-grid-2">
+                    <div class="form-group">
+                        <label class="form-label">First Name</label>
+                        <input type="text" id="udm-first-name" class="form-input" placeholder="First name">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Last Name</label>
+                        <input type="text" id="udm-last-name" class="form-input" placeholder="Last name">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">License Number</label>
+                        <input type="text" id="udm-license" class="form-input" placeholder="TX12345">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">State</label>
+                        <input type="text" id="udm-state" class="form-input" placeholder="TX" maxlength="2"
+                            style="text-transform:uppercase;" oninput="this.value=this.value.toUpperCase()">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Profession</label>
+                    <select id="udm-profession" class="form-select">
+                        <option value="">Select profession...</option>
+                        <option value="PT">Physical Therapist (PT)</option>
+                        <option value="PTA">PT Assistant (PTA)</option>
+                        <option value="OT">Occupational Therapist (OT)</option>
+                        <option value="COTA">OT Assistant (COTA)</option>
+                    </select>
+                </div>
+                <button class="btn btn-primary" onclick="saveUserProfile()">💾 Save Profile Changes</button>
+            </div>
+
+            <!-- Account Actions Section -->
+            <div class="modal-section">
+                <h4>⚙️ Account Actions</h4>
+                <div style="display:flex;gap:0.75rem;flex-wrap:wrap;">
+                    <button id="udm-toggle-admin-btn" class="btn btn-primary" onclick="toggleAdmin()">🛡️ Toggle Admin</button>
+                    <button id="udm-suspend-btn" class="btn btn-warning" onclick="toggleSuspend()">⚠️ Suspend User</button>
+                    <button class="btn btn-danger" onclick="deleteUserAccount()">🗑️ Delete Account</button>
+                </div>
+            </div>
+
+            <!-- Enrollments Section -->
+            <div class="modal-section">
+                <h4>📚 Enrollments</h4>
+                <div id="udm-enrollments" style="margin-bottom:1.25rem;min-height:2rem;"></div>
+
+                <div id="udm-enroll-section">
+                    <h4 style="font-size:0.9rem;color:#374151;border:none;padding:0;margin-bottom:0.5rem;">Manually Enroll in Course</h4>
+                    <div style="display:flex;gap:0.75rem;align-items:center;">
+                        <select id="udm-course-select" class="form-select" style="flex:1;">
+                            <option value="">Loading courses...</option>
+                        </select>
+                        <button class="btn btn-success" onclick="manualEnroll()" style="white-space:nowrap;">
+                            ➕ Enroll
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         ADD USER MODAL
+    ══════════════════════════════════════════════════════════════ -->
+    <div class="modal-overlay" id="addUserModal">
+        <div class="modal-box">
+            <button class="modal-close" onclick="closeAddUserModal()" title="Close">×</button>
+            <div class="modal-title">👤 Create New User Account</div>
+
+            <div id="addUserError" class="error-message" style="display:none;"></div>
+            <div id="addUserSuccess" class="success-message" style="display:none;"></div>
+
+            <form id="addUserForm" onsubmit="event.preventDefault(); submitAddUser();">
+                <div class="form-grid-2">
+                    <div class="form-group">
+                        <label class="form-label">First Name *</label>
+                        <input type="text" id="au-first-name" class="form-input" placeholder="Sarah" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Last Name *</label>
+                        <input type="text" id="au-last-name" class="form-input" placeholder="Johnson" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Email Address *</label>
+                        <input type="email" id="au-email" class="form-input" placeholder="sarah@example.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Temporary Password *</label>
+                        <input type="password" id="au-password" class="form-input"
+                            placeholder="Min. 8 characters" minlength="8" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Profession *</label>
+                        <select id="au-profession" class="form-select" required>
+                            <option value="">Select profession...</option>
+                            <option value="PT">Physical Therapist (PT)</option>
+                            <option value="PTA">PT Assistant (PTA)</option>
+                            <option value="OT">Occupational Therapist (OT)</option>
+                            <option value="COTA">OT Assistant (COTA)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">License Number</label>
+                        <input type="text" id="au-license" class="form-input" placeholder="TX12345">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">State</label>
+                        <input type="text" id="au-state" class="form-input" placeholder="TX" maxlength="2"
+                            style="text-transform:uppercase;" oninput="this.value=this.value.toUpperCase()">
+                    </div>
+                </div>
+
+                <div class="info-box" style="margin-top:1rem;font-size:0.85rem;">
+                    The user will be created with a confirmed email and can log in immediately with the temporary password.
+                </div>
+
+                <div style="display:flex;gap:1rem;margin-top:1.5rem;">
+                    <button type="submit" id="au-submit-btn" class="btn btn-primary">✅ Create Account</button>
+                    <button type="button" class="btn btn-secondary" onclick="closeAddUserModal()">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <script>
         // ─── ADMIN AUTH (Supabase + legacy session) ──────────────────────────────
         let _adminUser   = null;
@@ -1998,6 +2254,10 @@
         let employeeCodes  = [];
         let marketingCodes = [];
         let analyticsData  = {};
+
+        // User management state
+        let _allUsers          = [];
+        let _currentViewedUser = null;
 
         // Initialize admin dashboard
         async function initAdmin() {
@@ -2701,53 +2961,453 @@
             if (el) el.textContent = '$' + total.toFixed(2);
         }
 
-        // User Management Functions
+        // ─── USER MANAGEMENT — REAL IMPLEMENTATIONS ───────────────────────────────
+
         async function loadUsers() {
-            console.log('Loading user data from Supabase...');
             if (!window.DrTroySupabase) return;
+            const tbody = document.getElementById('usersTableBody');
+            if (tbody) tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:#6b7280;padding:2rem;">Loading users from database...</td></tr>';
 
             const { data: users, error } = await window.DrTroySupabase.getAllUsers();
             if (error || !users) {
                 console.warn('Could not load users:', error?.message);
+                if (tbody) tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:#dc2626;padding:2rem;">Failed to load users. Check console for details.</td></tr>';
                 return;
             }
 
-            // Inject into user table if element exists
-            const tbody = document.getElementById('usersTableBody');
-            if (!tbody) return;
-
-            tbody.innerHTML = '';
-            users.forEach(u => {
-                const tr = document.createElement('tr');
-                tr.innerHTML = `
-                    <td>${u.email || ''}</td>
-                    <td>${u.first_name || ''} ${u.last_name || ''}</td>
-                    <td>${u.profession || ''}</td>
-                    <td>${u.state || ''}</td>
-                    <td>${u.license_number || ''}</td>
-                    <td>${u.is_admin ? '🛡️ Admin' : 'User'}</td>
-                    <td>
-                        <button class="btn btn-secondary" onclick="viewUser('${u.email}')" style="font-size:0.8rem;padding:0.25rem 0.5rem;">View</button>
-                    </td>`;
-                tbody.appendChild(tr);
-            });
+            _allUsers = users;
+            renderUsersTable(_allUsers);
             console.log(`✅ Loaded ${users.length} users from Supabase`);
         }
 
+        function renderUsersTable(users) {
+            const tbody = document.getElementById('usersTableBody');
+            if (!tbody) return;
+
+            if (!users || !users.length) {
+                tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:#6b7280;padding:2rem;">No users found.</td></tr>';
+                return;
+            }
+
+            tbody.innerHTML = '';
+            users.forEach(u => {
+                const name = [u.first_name, u.last_name].filter(Boolean).join(' ') || '(no name)';
+                const roleBadge = u.is_admin
+                    ? '<span class="badge-admin">Admin</span>'
+                    : '<span class="badge-user">User</span>';
+                const suspBadge = u.is_suspended
+                    ? ' <span class="badge-suspended">Suspended</span>'
+                    : '';
+                const safeEmail = (u.email || '').replace(/'/g, "\\'");
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${name}</td>
+                    <td style="font-size:0.9rem;">${u.email || '—'}</td>
+                    <td>${u.profession || '—'}</td>
+                    <td>${u.license_number || '—'}</td>
+                    <td>${u.state || '—'}</td>
+                    <td>${roleBadge}${suspBadge}</td>
+                    <td style="white-space:nowrap;">
+                        <button class="btn-small" onclick="viewUser('${safeEmail}')">👁️ View</button>
+                        <button class="btn-small ${u.is_admin ? 'warning' : ''}"
+                            onclick="quickToggleAdmin('${u.id}', ${!!u.is_admin})"
+                            style="margin-left:4px;">
+                            ${u.is_admin ? '🛡️ Remove Admin' : 'Make Admin'}
+                        </button>
+                    </td>`;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function filterUsers() {
+            const query      = (document.getElementById('userSearch')?.value || '').toLowerCase().trim();
+            const profFilter = document.getElementById('userFilter')?.value || 'all';
+
+            let filtered = _allUsers;
+            if (query) {
+                filtered = filtered.filter(u => {
+                    const name = [u.first_name, u.last_name].filter(Boolean).join(' ').toLowerCase();
+                    return name.includes(query)
+                        || (u.email || '').toLowerCase().includes(query)
+                        || (u.license_number || '').toLowerCase().includes(query);
+                });
+            }
+            if (profFilter !== 'all') {
+                filtered = filtered.filter(u => u.profession === profFilter);
+            }
+            renderUsersTable(filtered);
+        }
+
         function exportUsers() {
-            alert('📥 User export functionality would be implemented here.');
+            if (!_allUsers.length) {
+                showAdminToast('No users loaded yet — please wait for the table to populate.', 'error');
+                return;
+            }
+            window.DrTroySupabase.adminExportUsersCSV(_allUsers);
         }
 
         function showAddUserForm() {
-            alert('👤 Add user form would open here.');
+            document.getElementById('addUserModal').classList.add('active');
         }
 
-        function viewUser(email) {
-            alert(`👁️ Viewing user details for: ${email}`);
+        function closeAddUserModal() {
+            document.getElementById('addUserModal').classList.remove('active');
+            const form = document.getElementById('addUserForm');
+            if (form) form.reset();
+            document.getElementById('addUserError').style.display = 'none';
+            document.getElementById('addUserSuccess').style.display = 'none';
+            const btn = document.getElementById('au-submit-btn');
+            if (btn) { btn.disabled = false; btn.textContent = '✅ Create Account'; }
+        }
+
+        async function submitAddUser() {
+            const email       = document.getElementById('au-email').value.trim();
+            const password    = document.getElementById('au-password').value;
+            const firstName   = document.getElementById('au-first-name').value.trim();
+            const lastName    = document.getElementById('au-last-name').value.trim();
+            const profession  = document.getElementById('au-profession').value;
+            const licenseNumber = document.getElementById('au-license').value.trim();
+            const state       = (document.getElementById('au-state').value || '').trim().toUpperCase();
+
+            const errEl = document.getElementById('addUserError');
+            const okEl  = document.getElementById('addUserSuccess');
+            errEl.style.display = 'none';
+            okEl.style.display = 'none';
+
+            if (!email || !password || !firstName || !lastName || !profession) {
+                errEl.textContent = 'Please fill in all required fields (marked *).';
+                errEl.style.display = 'block';
+                return;
+            }
+            if (password.length < 8) {
+                errEl.textContent = 'Password must be at least 8 characters.';
+                errEl.style.display = 'block';
+                return;
+            }
+
+            const btn = document.getElementById('au-submit-btn');
+            btn.disabled = true;
+            btn.textContent = 'Creating account...';
+
+            const result = await window.DrTroySupabase.adminAction('create_user', {
+                email, password, firstName, lastName, profession, licenseNumber, state
+            });
+
+            btn.disabled = false;
+            btn.textContent = '✅ Create Account';
+
+            if (result.error) {
+                errEl.textContent = '❌ ' + result.error;
+                errEl.style.display = 'block';
+            } else {
+                okEl.textContent = '✅ Account created successfully! The user can now log in.';
+                okEl.style.display = 'block';
+                document.getElementById('addUserForm').reset();
+                await loadUsers();
+                setTimeout(closeAddUserModal, 3000);
+            }
+        }
+
+        // ─── VIEW USER DETAIL MODAL ────────────────────────────────────────────────
+
+        async function viewUser(email) {
+            const user = _allUsers.find(u => u.email === email);
+            if (!user) {
+                const { data, error } = await window.DrTroySupabase.adminGetUserByEmail(email);
+                if (error || !data) {
+                    showAdminToast('User not found: ' + email, 'error');
+                    return;
+                }
+                _currentViewedUser = data;
+            } else {
+                _currentViewedUser = user;
+            }
+            await populateUserDetailModal(_currentViewedUser);
+            document.getElementById('userDetailModal').classList.add('active');
+        }
+
+        function closeUserDetailModal() {
+            document.getElementById('userDetailModal').classList.remove('active');
+            _currentViewedUser = null;
+        }
+
+        async function populateUserDetailModal(user) {
+            // Header
+            const name = [user.first_name, user.last_name].filter(Boolean).join(' ') || '(no name)';
+            document.getElementById('udm-name').textContent    = name;
+            document.getElementById('udm-email').textContent   = user.email || '';
+            document.getElementById('udm-created').textContent = user.created_at
+                ? new Date(user.created_at).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })
+                : '—';
+
+            // Badges
+            const roleBadge = document.getElementById('udm-role-badge');
+            roleBadge.className = user.is_admin ? 'badge-admin' : 'badge-user';
+            roleBadge.textContent = user.is_admin ? 'Admin' : 'User';
+
+            const suspBadge = document.getElementById('udm-suspended-badge');
+            if (user.is_suspended) {
+                suspBadge.style.display = 'inline-block';
+                suspBadge.textContent = 'Suspended';
+            } else {
+                suspBadge.style.display = 'none';
+            }
+
+            // Editable fields
+            document.getElementById('udm-first-name').value  = user.first_name  || '';
+            document.getElementById('udm-last-name').value   = user.last_name   || '';
+            document.getElementById('udm-license').value     = user.license_number || '';
+            document.getElementById('udm-state').value       = user.state       || '';
+            document.getElementById('udm-profession').value  = user.profession  || '';
+
+            // Toggle Admin button
+            const adminBtn = document.getElementById('udm-toggle-admin-btn');
+            adminBtn.textContent = user.is_admin ? '🛡️ Remove Admin' : '🛡️ Grant Admin';
+            adminBtn.className   = user.is_admin ? 'btn btn-danger' : 'btn btn-primary';
+
+            // Suspend button
+            const suspBtn = document.getElementById('udm-suspend-btn');
+            suspBtn.textContent = user.is_suspended ? '✅ Unsuspend User' : '⚠️ Suspend User';
+            suspBtn.className   = user.is_suspended ? 'btn btn-success' : 'btn btn-warning';
+
+            // Clear status message
+            const statusEl = document.getElementById('udm-status');
+            statusEl.style.display = 'none';
+            statusEl.textContent = '';
+
+            // Enrollments
+            const { data: enrollments } = await window.DrTroySupabase.adminGetUserEnrollments(user.id);
+            renderUserEnrollments(enrollments || []);
+
+            // Course picker
+            await buildEnrollPicker(user.id, enrollments || []);
+        }
+
+        function renderUserEnrollments(enrollments) {
+            const container = document.getElementById('udm-enrollments');
+            if (!enrollments.length) {
+                container.innerHTML = '<p style="color:#6b7280;font-style:italic;">No enrollments yet.</p>';
+                return;
+            }
+            container.innerHTML = enrollments.map(e => {
+                const title    = e.courses?.title || 'Unknown Course';
+                const hours    = e.courses?.ceu_hours || 0;
+                const date     = e.enrolled_at ? new Date(e.enrolled_at).toLocaleDateString() : '—';
+                const paid     = parseFloat(e.amount_paid || 0).toFixed(2);
+                const method   = e.payment_method === 'admin_grant' ? 'Admin Grant' : ('$' + paid);
+                return `
+                    <div class="enrollment-row">
+                        <div>
+                            <strong>${title}</strong>
+                            <div style="font-size:0.82rem;color:#6b7280;">${hours} CEU hrs &bull; ${date} &bull; ${method}</div>
+                        </div>
+                        <button class="btn-small danger" onclick="removeEnrollment('${e.id}')">Remove</button>
+                    </div>`;
+            }).join('');
+        }
+
+        async function buildEnrollPicker(userId, existing) {
+            const section = document.getElementById('udm-enroll-section');
+            const { data: allCourses } = await window.DrTroySupabase.adminGetAllCourses();
+            const enrolledIds = (existing || []).map(e => e.course_id);
+            const available   = (allCourses || []).filter(c => !enrolledIds.includes(c.id));
+
+            if (!available.length) {
+                section.innerHTML = '<p style="color:#6b7280;font-style:italic;">User is enrolled in all available courses.</p>';
+                return;
+            }
+
+            const select = document.getElementById('udm-course-select');
+            select.innerHTML = '<option value="">Select a course...</option>';
+            available.forEach(c => {
+                const opt = document.createElement('option');
+                opt.value = c.id;
+                opt.textContent = `${c.title} (${c.ceu_hours} CEUs)`;
+                select.appendChild(opt);
+            });
+            section.style.display = '';
+        }
+
+        async function saveUserProfile() {
+            if (!_currentViewedUser) return;
+            const updates = {
+                first_name:     document.getElementById('udm-first-name').value.trim(),
+                last_name:      document.getElementById('udm-last-name').value.trim(),
+                license_number: document.getElementById('udm-license').value.trim(),
+                state:          document.getElementById('udm-state').value.trim().toUpperCase(),
+                profession:     document.getElementById('udm-profession').value,
+            };
+            showUDMStatus('Saving changes...', 'info');
+            const { error } = await window.DrTroySupabase.updateProfile(_currentViewedUser.id, updates);
+            if (error) {
+                showUDMStatus('❌ Save failed: ' + error.message, 'error');
+            } else {
+                Object.assign(_currentViewedUser, updates);
+                const idx = _allUsers.findIndex(u => u.id === _currentViewedUser.id);
+                if (idx >= 0) Object.assign(_allUsers[idx], updates);
+                renderUsersTable(_allUsers);
+                showUDMStatus('✅ Profile saved successfully!', 'success');
+            }
+        }
+
+        async function toggleAdmin() {
+            if (!_currentViewedUser) return;
+            const makeAdmin = !_currentViewedUser.is_admin;
+            const verb = makeAdmin ? 'grant admin access to' : 'remove admin from';
+            if (!confirm(`Are you sure you want to ${verb} ${_currentViewedUser.email}?`)) return;
+
+            showUDMStatus('Updating admin status...', 'info');
+            const result = await window.DrTroySupabase.adminAction('toggle_admin', {
+                userId: _currentViewedUser.id, makeAdmin
+            });
+            if (result.error) {
+                showUDMStatus('❌ Failed: ' + result.error, 'error');
+                return;
+            }
+            _currentViewedUser.is_admin = makeAdmin;
+            const idx = _allUsers.findIndex(u => u.id === _currentViewedUser.id);
+            if (idx >= 0) _allUsers[idx].is_admin = makeAdmin;
+
+            // Update modal UI
+            const roleBadge = document.getElementById('udm-role-badge');
+            roleBadge.className = makeAdmin ? 'badge-admin' : 'badge-user';
+            roleBadge.textContent = makeAdmin ? 'Admin' : 'User';
+            const adminBtn = document.getElementById('udm-toggle-admin-btn');
+            adminBtn.textContent = makeAdmin ? '🛡️ Remove Admin' : '🛡️ Grant Admin';
+            adminBtn.className   = makeAdmin ? 'btn btn-danger' : 'btn btn-primary';
+
+            renderUsersTable(_allUsers);
+            showUDMStatus(`✅ Admin ${makeAdmin ? 'granted' : 'removed'} successfully!`, 'success');
+        }
+
+        async function toggleSuspend() {
+            if (!_currentViewedUser) return;
+            const suspend = !_currentViewedUser.is_suspended;
+            const verb = suspend ? 'suspend' : 'unsuspend';
+            if (!confirm(`Are you sure you want to ${verb} ${_currentViewedUser.email}?`)) return;
+
+            showUDMStatus('Updating suspension status...', 'info');
+            const result = await window.DrTroySupabase.adminAction('suspend_user', {
+                userId: _currentViewedUser.id, suspend
+            });
+            if (result.error) {
+                showUDMStatus('❌ Failed: ' + result.error, 'error');
+                return;
+            }
+            _currentViewedUser.is_suspended = suspend;
+            const idx = _allUsers.findIndex(u => u.id === _currentViewedUser.id);
+            if (idx >= 0) _allUsers[idx].is_suspended = suspend;
+
+            const suspBadge = document.getElementById('udm-suspended-badge');
+            if (suspend) {
+                suspBadge.style.display = 'inline-block';
+                suspBadge.textContent = 'Suspended';
+            } else {
+                suspBadge.style.display = 'none';
+            }
+            const suspBtn = document.getElementById('udm-suspend-btn');
+            suspBtn.textContent = suspend ? '✅ Unsuspend User' : '⚠️ Suspend User';
+            suspBtn.className   = suspend ? 'btn btn-success' : 'btn btn-warning';
+
+            renderUsersTable(_allUsers);
+            showUDMStatus(`✅ User ${suspend ? 'suspended' : 'unsuspended'} successfully!`, 'success');
+        }
+
+        async function deleteUserAccount() {
+            if (!_currentViewedUser) return;
+            if (!confirm(`⚠️ Permanently delete ${_currentViewedUser.email}? This cannot be undone!`)) return;
+            if (!confirm('Final confirmation: this will delete the account and all associated data.')) return;
+
+            showUDMStatus('Deleting user account...', 'info');
+            const result = await window.DrTroySupabase.adminAction('delete_user', {
+                userId: _currentViewedUser.id
+            });
+            if (result.error) {
+                showUDMStatus('❌ Delete failed: ' + result.error, 'error');
+                return;
+            }
+            const deletedEmail = _currentViewedUser.email;
+            _allUsers = _allUsers.filter(u => u.id !== _currentViewedUser.id);
+            renderUsersTable(_allUsers);
+            closeUserDetailModal();
+            showAdminToast(`✅ User ${deletedEmail} has been permanently deleted.`, 'success');
+        }
+
+        async function manualEnroll() {
+            if (!_currentViewedUser) return;
+            const courseId = document.getElementById('udm-course-select')?.value;
+            if (!courseId) { showUDMStatus('Please select a course first.', 'error'); return; }
+
+            showUDMStatus('Enrolling user...', 'info');
+            const result = await window.DrTroySupabase.adminAction('manual_enroll', {
+                userId: _currentViewedUser.id, courseId
+            });
+            if (result.error) {
+                showUDMStatus('❌ Enrollment failed: ' + result.error, 'error');
+            } else {
+                showUDMStatus('✅ User enrolled successfully!', 'success');
+                // Reload the enrollments section
+                const { data: enrollments } = await window.DrTroySupabase.adminGetUserEnrollments(_currentViewedUser.id);
+                renderUserEnrollments(enrollments || []);
+                await buildEnrollPicker(_currentViewedUser.id, enrollments || []);
+            }
+        }
+
+        async function removeEnrollment(enrollmentId) {
+            if (!confirm('Remove this enrollment? The user will lose access to this course.')) return;
+            showUDMStatus('Removing enrollment...', 'info');
+            const result = await window.DrTroySupabase.adminAction('remove_enrollment', { enrollmentId });
+            if (result.error) {
+                showUDMStatus('❌ Failed: ' + result.error, 'error');
+            } else {
+                showUDMStatus('✅ Enrollment removed.', 'success');
+                const { data: enrollments } = await window.DrTroySupabase.adminGetUserEnrollments(_currentViewedUser.id);
+                renderUserEnrollments(enrollments || []);
+                await buildEnrollPicker(_currentViewedUser.id, enrollments || []);
+            }
+        }
+
+        async function quickToggleAdmin(userId, currentIsAdmin) {
+            const user = _allUsers.find(u => u.id === userId);
+            const verb = currentIsAdmin ? 'remove admin from' : 'grant admin to';
+            if (!confirm(`Are you sure you want to ${verb} ${user?.email || userId}?`)) return;
+
+            const result = await window.DrTroySupabase.adminAction('toggle_admin', {
+                userId, makeAdmin: !currentIsAdmin
+            });
+            if (result.error) {
+                showAdminToast('❌ ' + result.error, 'error');
+            } else {
+                const idx = _allUsers.findIndex(u => u.id === userId);
+                if (idx >= 0) _allUsers[idx].is_admin = !currentIsAdmin;
+                renderUsersTable(_allUsers);
+                showAdminToast(`✅ Admin ${!currentIsAdmin ? 'granted' : 'removed'} for ${user?.email || userId}`, 'success');
+            }
+        }
+
+        function showUDMStatus(message, type) {
+            const el = document.getElementById('udm-status');
+            if (!el) return;
+            el.textContent = message;
+            el.className = type === 'error' ? 'error-message' : type === 'success' ? 'success-message' : 'info-message';
+            el.style.display = 'block';
+            if (type === 'success') setTimeout(() => { el.style.display = 'none'; }, 4000);
+        }
+
+        function showAdminToast(message, type) {
+            const div = document.createElement('div');
+            div.textContent = message;
+            div.className = 'admin-toast';
+            div.style.cssText += type === 'error'
+                ? 'background:#fee2e2;color:#991b1b;border:1px solid #f87171;'
+                : 'background:#d1fae5;color:#065f46;border:1px solid #10b981;';
+            document.body.appendChild(div);
+            setTimeout(() => div.remove(), 4000);
         }
 
         function emailUser(email) {
-            alert(`📧 Opening email composer for: ${email}`);
+            // Opens mailto — future: could open a compose modal
+            window.location.href = 'mailto:' + email;
         }
 
         // Course Management Functions
@@ -3005,6 +3665,12 @@
         document.addEventListener('DOMContentLoaded', async function() {
             await initAdmin();
             restoreSavedTab();
+
+            // Live search / filter for user table
+            const userSearchEl = document.getElementById('userSearch');
+            if (userSearchEl) userSearchEl.addEventListener('input', filterUsers);
+            const userFilterEl = document.getElementById('userFilter');
+            if (userFilterEl) userFilterEl.addEventListener('change', filterUsers);
 
             // Update timestamps every minute
             setInterval(updateLastUpdate, 60000);
