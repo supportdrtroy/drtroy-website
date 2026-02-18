@@ -346,8 +346,8 @@ window.PACKAGE_CATALOG = window.PACKAGE_CATALOG || {
         code: 'PTA',
         credits: 17,
         description: 'Tailored CE package for Physical Therapist Assistants covering essential topics.',
-        originalPrice: 89,
-        finalPrice: 79, // With $10 new account discount
+        originalPrice: 99,
+        finalPrice: 89, // With $10 new account discount
         savings: 10,
         courses: ['MOBILITY-001', 'NEURO-001', 'EDUCATION-001', 'HEALTHTECH-001', 'GERIATRIC-001'],
         featured: true
@@ -368,8 +368,8 @@ window.PACKAGE_CATALOG = window.PACKAGE_CATALOG || {
         code: 'COTA',
         credits: 23,
         description: 'Tailored CE package for Certified Occupational Therapy Assistants.',
-        originalPrice: 89,
-        finalPrice: 79, // With $10 new account discount
+        originalPrice: 109,
+        finalPrice: 99, // With $10 new account discount
         savings: 10,
         courses: ['MOBILITY-001', 'NEURO-001', 'EDUCATION-001', 'HEALTHTECH-001', 'GERIATRIC-001'],
         featured: true
