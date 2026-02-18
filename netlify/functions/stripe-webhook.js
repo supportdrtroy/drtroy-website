@@ -123,7 +123,11 @@ exports.handler = async (event) => {
   const signature = event.headers['stripe-signature'];
   if (!signature) return { statusCode: 400, body: 'Missing stripe-signature header' };
 
-  const payload = event.body;
+  // Netlify may base64-encode the body — decode it so Stripe signature check works
+  const payload = event.isBase64Encoded
+    ? Buffer.from(event.body, 'base64').toString('utf8')
+    : event.body;
+
   if (!verifyStripeSignature(payload, signature, STRIPE_WEBHOOK_SECRET)) {
     console.error('[stripe-webhook] Invalid signature');
     return { statusCode: 400, body: 'Invalid signature' };
