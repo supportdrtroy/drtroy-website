@@ -83,14 +83,15 @@ exports.handler = async (event) => {
             tls: { rejectUnauthorized: false }
         });
 
-        await transporter.sendMail({
+        const info = await transporter.sendMail({
             from:    '"DrTroy Continuing Education" <no-reply@drtroy.com>',
             to:      email,
             subject: `You're on the list, ${name}! 🎉 DrTroy CE is coming`,
             html
         });
 
-        return { statusCode: 200, body: JSON.stringify({ sent: true }) };
+        console.log('SMTP response:', info.response, 'messageId:', info.messageId, 'accepted:', info.accepted);
+        return { statusCode: 200, body: JSON.stringify({ sent: true, messageId: info.messageId, response: info.response, accepted: info.accepted }) };
     } catch (err) {
         console.error('send-waitlist-confirm error:', err.message);
         return { statusCode: 500, body: JSON.stringify({ error: err.message }) };
