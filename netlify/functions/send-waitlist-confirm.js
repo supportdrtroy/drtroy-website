@@ -116,7 +116,7 @@ export default async (req, context) => {
 
     try {
         const transporter = nodemailer.createTransport({
-            host:   process.env.SMTP_HOST || 'smtpout.secureserver.net',
+            host:   process.env.SMTP_HOST || 'p3plzcpnl507574.prod.phx3.secureserver.net',
             port:   parseInt(process.env.SMTP_PORT || '465'),
             secure: true,
             auth: {
