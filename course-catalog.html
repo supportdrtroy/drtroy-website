@@ -237,8 +237,9 @@
 
         .package-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            grid-template-columns: repeat(2, 1fr);
             gap: 2rem;
+            align-items: stretch;
         }
 
         .package-card {
@@ -1054,8 +1055,8 @@
             const packageGrid = document.getElementById('package-grid');
             let packagesHtml = '';
             
-            // PT → PTA → OT → COTA (grouped by discipline)
-            ['PT', 'PTA', 'OT', 'COTA'].forEach(code => {
+            // PT | OT (top row), PTA | COTA (bottom row — directly under parent discipline)
+            ['PT', 'OT', 'PTA', 'COTA'].forEach(code => {
                 const pkg = PACKAGE_CATALOG[code];
                 if (pkg && pkg.featured) {
                     packagesHtml += generatePackageCard(pkg);
