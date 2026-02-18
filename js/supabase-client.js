@@ -157,11 +157,11 @@ async function getEnrollments(userId) {
                 id, title, description, ceu_hours, professions
             ),
             course_progress (
-                id, status, progress_pct, completed_at
+                id, status, progress_percent, completed_at
             )
         `)
         .eq('user_id', userId)
-        .order('enrolled_at', { ascending: false });
+        .order('purchased_at', { ascending: false });
 
     return { data: data || [], error };
 }

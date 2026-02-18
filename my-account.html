@@ -736,28 +736,34 @@
 
     <!-- Main Content -->
     <main class="container">
-        <!-- Login Required Message -->
+        <!-- Login Form -->
         <div id="loginRequired" class="login-required" style="display: none;">
-            <h2>🔐 Account Access Required</h2>
-            <p>Please log in or create an account to access your account dashboard.</p>
-            <p style="color: var(--gray-600); margin-top: 1rem;">If you're having trouble logging in, please return to the home page and try again.</p>
-            
-            <!-- Debug Info -->
-            <div style="margin: 1.5rem 0; padding: 1rem; background: #f8f9fa; border-radius: 6px; border: 1px solid #e9ecef;">
-                <button onclick="showDebugInfo()" class="btn btn-secondary" style="margin-bottom: 1rem; margin-right: 0.5rem;">🔍 Show Debug Info</button>
-                <button onclick="forceLogin()" class="btn btn-primary" style="margin-bottom: 1rem; margin-right: 0.5rem;">🔧 Force Login</button>
-                <button onclick="forceShowAccount()" class="btn btn-danger" style="margin-bottom: 1rem; margin-right: 0.5rem;">🚨 Force Display</button>
-                <button onclick="recalculateRenewal()" class="btn btn-success" style="margin-bottom: 1rem; margin-right: 0.5rem;">📅 Fix Renewal</button>
-                <button onclick="restoreCachedRenewal()" class="btn btn-secondary" style="margin-bottom: 1rem;">🔄 Restore Cached</button>
-                <div id="debugInfo" style="display: none;">
-                    <h4 style="margin-bottom: 0.5rem;">Debug Information:</h4>
-                    <div id="debugContent" style="font-family: monospace; font-size: 0.8rem; background: white; padding: 0.5rem; border-radius: 4px; overflow-x: auto;">
-                        Loading debug info...
+            <div style="max-width: 420px; margin: 3rem auto; background: white; border-radius: 12px; padding: 2.5rem; box-shadow: 0 4px 24px rgba(0,0,0,0.08);">
+                <h2 style="font-family: 'Playfair Display', serif; font-size: 1.75rem; margin-bottom: 0.5rem; color: #1a365d;">Welcome Back</h2>
+                <p style="color: #737373; margin-bottom: 2rem; font-size: 0.95rem;">Sign in to access your courses and certificates.</p>
+
+                <div id="loginError" style="display:none; background:#fef2f2; border:1px solid #fca5a5; color:#dc2626; padding:0.75rem 1rem; border-radius:8px; margin-bottom:1.25rem; font-size:0.9rem;"></div>
+
+                <form id="supabaseLoginForm" onsubmit="handleSupabaseLogin(event)">
+                    <div style="margin-bottom: 1.25rem;">
+                        <label style="display:block; font-weight:600; font-size:0.9rem; margin-bottom:0.4rem; color:#262626;">Email Address</label>
+                        <input type="email" id="loginEmail" required placeholder="you@example.com"
+                            style="width:100%; padding:0.75rem 1rem; border:1px solid #e5e5e5; border-radius:8px; font-size:1rem; box-sizing:border-box; outline:none;">
                     </div>
-                </div>
+                    <div style="margin-bottom: 1.75rem;">
+                        <label style="display:block; font-weight:600; font-size:0.9rem; margin-bottom:0.4rem; color:#262626;">Password</label>
+                        <input type="password" id="loginPassword" required placeholder="••••••••"
+                            style="width:100%; padding:0.75rem 1rem; border:1px solid #e5e5e5; border-radius:8px; font-size:1rem; box-sizing:border-box; outline:none;">
+                    </div>
+                    <button type="submit" id="loginSubmitBtn" class="btn btn-primary btn-block" style="width:100%; padding:0.85rem; font-size:1rem;">
+                        Sign In
+                    </button>
+                </form>
+
+                <p style="text-align:center; margin-top:1.25rem; font-size:0.875rem; color:#737373;">
+                    Don't have an account? <a href="course-catalog.html" style="color:#1a365d; font-weight:600;">Browse Courses</a>
+                </p>
             </div>
-            
-            <a href="index.html" class="btn btn-primary">Go to Home Page</a>
         </div>
 
         <!-- Account Content -->
@@ -1426,6 +1432,45 @@
                     }
                 }
             });
+        }
+
+        // Supabase Login Form Handler
+        async function handleSupabaseLogin(event) {
+            event.preventDefault();
+            const email    = document.getElementById('loginEmail').value.trim();
+            const password = document.getElementById('loginPassword').value;
+            const errEl    = document.getElementById('loginError');
+            const btnEl    = document.getElementById('loginSubmitBtn');
+
+            errEl.style.display = 'none';
+            btnEl.disabled = true;
+            btnEl.textContent = 'Signing in...';
+
+            if (!window.DrTroySupabase) {
+                errEl.textContent = 'Login service unavailable. Please refresh and try again.';
+                errEl.style.display = 'block';
+                btnEl.disabled = false;
+                btnEl.textContent = 'Sign In';
+                return;
+            }
+
+            const { data, error } = await window.DrTroySupabase.signIn(email, password);
+
+            if (error) {
+                errEl.textContent = error.message === 'Invalid login credentials'
+                    ? 'Incorrect email or password. Please try again.'
+                    : error.message;
+                errEl.style.display = 'block';
+                btnEl.disabled = false;
+                btnEl.textContent = 'Sign In';
+                return;
+            }
+
+            // Success — initAccountFromSupabase handles showing the dashboard
+            if (data?.user) {
+                currentSupabaseUser = data.user;
+                await initAccountFromSupabase(data.user);
+            }
         }
 
         // Logout — Supabase + legacy clear
