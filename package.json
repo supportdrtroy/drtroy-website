@@ -1,0 +1,28 @@
+{
+  "name": "drtroy-netlify-deploy",
+  "version": "1.0.0",
+  "description": "Professional continuing education platform for PT/OT/SLP professionals.",
+  "main": "supabase-config.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "build": "node build.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/supportdrtroy/drtroy-website.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/supportdrtroy/drtroy-website/issues"
+  },
+  "homepage": "https://github.com/supportdrtroy/drtroy-website#readme",
+  "devDependencies": {
+    "html-minifier-terser": "^7.2.0",
+    "terser": "^5.46.0"
+  }
+}
