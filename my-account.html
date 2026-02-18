@@ -786,25 +786,71 @@
 
                 <div id="loginError" style="display:none; background:#fef2f2; border:1px solid #fca5a5; color:#dc2626; padding:0.75rem 1rem; border-radius:8px; margin-bottom:1.25rem; font-size:0.9rem;"></div>
 
-                <form id="supabaseLoginForm" onsubmit="handleSupabaseLogin(event)">
-                    <div style="margin-bottom: 1.25rem;">
-                        <label style="display:block; font-weight:600; font-size:0.9rem; margin-bottom:0.4rem; color:#262626;">Email Address</label>
-                        <input type="email" id="loginEmail" required placeholder="you@example.com"
-                            style="width:100%; padding:0.75rem 1rem; border:1px solid #e5e5e5; border-radius:8px; font-size:1rem; box-sizing:border-box; outline:none;">
-                    </div>
-                    <div style="margin-bottom: 1.75rem;">
-                        <label style="display:block; font-weight:600; font-size:0.9rem; margin-bottom:0.4rem; color:#262626;">Password</label>
-                        <input type="password" id="loginPassword" required placeholder="••••••••"
-                            style="width:100%; padding:0.75rem 1rem; border:1px solid #e5e5e5; border-radius:8px; font-size:1rem; box-sizing:border-box; outline:none;">
-                    </div>
-                    <button type="submit" id="loginSubmitBtn" class="btn btn-primary btn-block" style="width:100%; padding:0.85rem; font-size:1rem;">
-                        Sign In
-                    </button>
-                </form>
+                <!-- Login Form Panel -->
+                <div id="loginPanel">
+                    <form id="supabaseLoginForm" onsubmit="handleSupabaseLogin(event)">
+                        <div style="margin-bottom: 1.25rem;">
+                            <label style="display:block; font-weight:600; font-size:0.9rem; margin-bottom:0.4rem; color:#262626;">Email Address</label>
+                            <input type="email" id="loginEmail" required placeholder="you@example.com"
+                                style="width:100%; padding:0.75rem 1rem; border:1px solid #e5e5e5; border-radius:8px; font-size:1rem; box-sizing:border-box; outline:none;">
+                        </div>
+                        <div style="margin-bottom: 0.5rem;">
+                            <label style="display:block; font-weight:600; font-size:0.9rem; margin-bottom:0.4rem; color:#262626;">Password</label>
+                            <input type="password" id="loginPassword" required placeholder="••••••••"
+                                style="width:100%; padding:0.75rem 1rem; border:1px solid #e5e5e5; border-radius:8px; font-size:1rem; box-sizing:border-box; outline:none;">
+                        </div>
+                        <div style="text-align:right; margin-bottom:1.5rem;">
+                            <a href="#" onclick="showForgotPassword(event)" style="font-size:0.875rem; color:#059669; font-weight:600; text-decoration:none;">Forgot password?</a>
+                        </div>
+                        <button type="submit" id="loginSubmitBtn" class="btn btn-primary btn-block" style="width:100%; padding:0.85rem; font-size:1rem;">
+                            Sign In
+                        </button>
+                    </form>
+                    <p style="text-align:center; margin-top:1.25rem; font-size:0.875rem; color:#737373;">
+                        Don't have an account? <a href="course-catalog.html" style="color:#1a365d; font-weight:600;">Browse Courses</a>
+                    </p>
+                </div>
 
-                <p style="text-align:center; margin-top:1.25rem; font-size:0.875rem; color:#737373;">
-                    Don't have an account? <a href="course-catalog.html" style="color:#1a365d; font-weight:600;">Browse Courses</a>
-                </p>
+                <!-- Forgot Password Panel -->
+                <div id="forgotPanel" style="display:none;">
+                    <h3 style="font-size:1.1rem;font-weight:600;color:#1a365d;margin-bottom:.5rem;">Reset Your Password</h3>
+                    <p style="color:#737373;font-size:.9rem;margin-bottom:1.5rem;line-height:1.6;">Enter your email and we'll send you a link to reset your password.</p>
+                    <div id="forgotError" style="display:none;background:#fef2f2;border:1px solid #fca5a5;color:#dc2626;padding:.75rem 1rem;border-radius:8px;margin-bottom:1rem;font-size:.9rem;"></div>
+                    <div id="forgotSuccess" style="display:none;background:#f0fdf4;border:1px solid #bbf7d0;color:#166534;padding:.75rem 1rem;border-radius:8px;margin-bottom:1rem;font-size:.9rem;"></div>
+                    <div style="margin-bottom:1.25rem;">
+                        <label style="display:block;font-weight:600;font-size:.9rem;margin-bottom:.4rem;color:#262626;">Email Address</label>
+                        <input type="email" id="forgotEmail" placeholder="you@example.com"
+                            style="width:100%;padding:.75rem 1rem;border:1px solid #e5e5e5;border-radius:8px;font-size:1rem;box-sizing:border-box;outline:none;">
+                    </div>
+                    <button onclick="sendPasswordReset()" id="forgotSubmitBtn"
+                        style="width:100%;padding:.85rem;background:linear-gradient(135deg,#059669,#10b981);color:white;border:none;border-radius:8px;font-size:1rem;font-weight:700;cursor:pointer;">
+                        Send Reset Link
+                    </button>
+                    <p style="text-align:center;margin-top:1rem;font-size:.875rem;">
+                        <a href="#" onclick="showLoginPanel(event)" style="color:#1a365d;font-weight:600;text-decoration:none;">← Back to Sign In</a>
+                    </p>
+                </div>
+
+                <!-- Set New Password Panel (shown after clicking reset link) -->
+                <div id="resetPanel" style="display:none;">
+                    <h3 style="font-size:1.1rem;font-weight:600;color:#1a365d;margin-bottom:.5rem;">Set New Password</h3>
+                    <p style="color:#737373;font-size:.9rem;margin-bottom:1.5rem;">Choose a strong new password for your account.</p>
+                    <div id="resetError" style="display:none;background:#fef2f2;border:1px solid #fca5a5;color:#dc2626;padding:.75rem 1rem;border-radius:8px;margin-bottom:1rem;font-size:.9rem;"></div>
+                    <div style="margin-bottom:1.25rem;">
+                        <label style="display:block;font-weight:600;font-size:.9rem;margin-bottom:.4rem;color:#262626;">New Password</label>
+                        <input type="password" id="newResetPassword" placeholder="At least 8 characters"
+                            style="width:100%;padding:.75rem 1rem;border:1px solid #e5e5e5;border-radius:8px;font-size:1rem;box-sizing:border-box;outline:none;">
+                    </div>
+                    <div style="margin-bottom:1.5rem;">
+                        <label style="display:block;font-weight:600;font-size:.9rem;margin-bottom:.4rem;color:#262626;">Confirm Password</label>
+                        <input type="password" id="confirmResetPassword" placeholder="Repeat new password"
+                            style="width:100%;padding:.75rem 1rem;border:1px solid #e5e5e5;border-radius:8px;font-size:1rem;box-sizing:border-box;outline:none;">
+                    </div>
+                    <button onclick="submitNewPassword()" id="resetSubmitBtn"
+                        style="width:100%;padding:.85rem;background:linear-gradient(135deg,#059669,#10b981);color:white;border:none;border-radius:8px;font-size:1rem;font-weight:700;cursor:pointer;">
+                        Update Password
+                    </button>
+                </div>
             </div>
         </div>
 
@@ -3314,6 +3360,87 @@
                 }, 5000);
             }
         }
+
+        // ── FORGOT / RESET PASSWORD ──────────────────────────────────────
+        function showForgotPassword(e) {
+            e.preventDefault();
+            document.getElementById('loginPanel').style.display   = 'none';
+            document.getElementById('forgotPanel').style.display  = 'block';
+            document.getElementById('resetPanel').style.display   = 'none';
+            const emailVal = document.getElementById('loginEmail').value;
+            if (emailVal) document.getElementById('forgotEmail').value = emailVal;
+        }
+
+        function showLoginPanel(e) {
+            if (e) e.preventDefault();
+            document.getElementById('loginPanel').style.display   = 'block';
+            document.getElementById('forgotPanel').style.display  = 'none';
+            document.getElementById('resetPanel').style.display   = 'none';
+        }
+
+        async function sendPasswordReset() {
+            const email  = document.getElementById('forgotEmail').value.trim();
+            const errEl  = document.getElementById('forgotError');
+            const succEl = document.getElementById('forgotSuccess');
+            const btn    = document.getElementById('forgotSubmitBtn');
+            errEl.style.display = 'none';
+            succEl.style.display = 'none';
+            if (!email) { errEl.textContent = 'Please enter your email address.'; errEl.style.display = 'block'; return; }
+            btn.disabled = true; btn.textContent = 'Sending…';
+            try {
+                const sb = window.DrTroySupabase?.getClient ? window.DrTroySupabase.getClient() : null;
+                if (!sb) throw new Error('System unavailable. Please try again.');
+                const { error } = await sb.auth.resetPasswordForEmail(email, {
+                    redirectTo: window.location.origin + '/my-account.html'
+                });
+                if (error) throw error;
+                succEl.textContent = '✓ Reset link sent! Check your email and click the link to set a new password.';
+                succEl.style.display = 'block';
+            } catch(e) {
+                errEl.textContent = e.message || 'Something went wrong. Please try again.';
+                errEl.style.display = 'block';
+            }
+            btn.disabled = false; btn.textContent = 'Send Reset Link';
+        }
+
+        async function submitNewPassword() {
+            const newPass  = document.getElementById('newResetPassword').value;
+            const confPass = document.getElementById('confirmResetPassword').value;
+            const errEl    = document.getElementById('resetError');
+            const btn      = document.getElementById('resetSubmitBtn');
+            errEl.style.display = 'none';
+            if (newPass.length < 8) { errEl.textContent = 'Password must be at least 8 characters.'; errEl.style.display = 'block'; return; }
+            if (newPass !== confPass) { errEl.textContent = 'Passwords do not match.'; errEl.style.display = 'block'; return; }
+            btn.disabled = true; btn.textContent = 'Updating…';
+            try {
+                const sb = window.DrTroySupabase?.getClient ? window.DrTroySupabase.getClient() : null;
+                const { error } = await sb.auth.updateUser({ password: newPass });
+                if (error) throw error;
+                document.getElementById('resetPanel').innerHTML = '<div style="text-align:center;padding:1rem;"><div style="font-size:2.5rem;margin-bottom:1rem;">✅</div><h3 style="color:#059669;margin-bottom:.5rem;">Password Updated!</h3><p style="color:#737373;font-size:.9rem;">Redirecting you to your account…</p></div>';
+                setTimeout(() => window.location.href = 'my-account.html', 2000);
+            } catch(e) {
+                errEl.textContent = e.message || 'Error updating password. Please try again.';
+                errEl.style.display = 'block';
+                btn.disabled = false; btn.textContent = 'Update Password';
+            }
+        }
+
+        // Check for password recovery token on page load
+        (function checkRecoveryToken() {
+            const hash   = window.location.hash;
+            const params = new URLSearchParams(hash.replace('#', '?'));
+            if (params.get('type') === 'recovery') {
+                // Show the login card with the reset panel visible
+                document.addEventListener('DOMContentLoaded', () => {
+                    const loginCard = document.getElementById('loginRequired');
+                    if (loginCard) loginCard.style.display = 'flex';
+                    document.getElementById('loginPanel').style.display  = 'none';
+                    document.getElementById('forgotPanel').style.display = 'none';
+                    document.getElementById('resetPanel').style.display  = 'block';
+                    document.getElementById('loginError') && (document.getElementById('loginError').style.display = 'none');
+                });
+            }
+        })();
 
         // ── CREDITS & REFERRALS ───────────────────────────────────────────
         async function loadCreditsSection() {
