@@ -1,6 +1,21 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-course-id="REPLACE_WITH_COURSE_ID">
 <head>
+    <!--
+    ====================================================================
+    🔐 COURSE GUARD — REQUIRED FOR EVERY NEW COURSE
+    ====================================================================
+    BEFORE PUBLISHING A NEW COURSE:
+    1. Set data-course-id on the <html> tag above to the course's
+       database ID (e.g. "pt-msk-001", "core-balance-001")
+       This MUST match the id column in the Supabase courses table.
+    2. Do NOT remove the Supabase CDN script or course-guard.js below.
+       Removing them makes the course freely accessible to anyone.
+    3. The guard checks: login → enrollment/admin → grant or redirect.
+    ====================================================================
+    -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+    <script src="../js/course-guard.js"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>[COURSE_TITLE] - DrTroy CE</title>
