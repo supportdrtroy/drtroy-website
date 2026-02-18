@@ -357,8 +357,8 @@
 
         <!-- Call to Action / Waitlist -->
         <div class="cta-section">
-            <h2 class="cta-title">Be First to Know When We Launch</h2>
-            <p class="cta-description">Drop your email below and we'll notify you the moment DrTroy CE goes live — including any exclusive early access pricing.</p>
+            <h2 class="cta-title" id="cta-title">Be First to Know When We Launch</h2>
+            <p class="cta-description" id="cta-desc">Drop your email below and we'll notify you the moment DrTroy CE goes live — including any exclusive early access pricing.</p>
 
             <div id="signup-form-wrap" style="max-width: 520px; margin: 2.5rem auto 0;">
                 <form id="waitlist-form" style="display: flex; flex-direction: column; gap: 1rem;">
@@ -409,7 +409,7 @@
                 </div>
             </div>
 
-            <p style="margin-top: 1.5rem; font-size: .85rem; color: rgba(255,255,255,.5);">No spam, ever. Unsubscribe at any time.</p>
+            <p id="cta-nospam" style="margin-top: 1.5rem; font-size: .85rem; color: rgba(255,255,255,.5);">No spam, ever. Unsubscribe at any time.</p>
         </div>
 
         <!-- Footer -->
@@ -420,6 +420,14 @@
     <script>
         const SUPA_URL  = 'https://pnqoxulxdmlmbywcpbyx.supabase.co';
         const SUPA_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBucW94dWx4ZG1sbWJ5d2NwYnl4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzEzNjU3NTIsImV4cCI6MjA4Njk0MTc1Mn0.YEPrwIvINX_Q1AsbxyU0T5m5oxpV9M756yiSCzy6LTc';
+
+        function showSuccess() {
+            document.getElementById('waitlist-form').style.display  = 'none';
+            document.getElementById('signup-success').style.display = 'block';
+            document.getElementById('cta-title').style.display      = 'none';
+            document.getElementById('cta-desc').style.display       = 'none';
+            document.getElementById('cta-nospam').style.display     = 'none';
+        }
 
         document.getElementById('waitlist-form').addEventListener('submit', async function(e) {
             e.preventDefault();
@@ -453,8 +461,7 @@
                 });
 
                 if (res.ok || res.status === 201) {
-                    document.getElementById('waitlist-form').style.display  = 'none';
-                    document.getElementById('signup-success').style.display = 'block';
+                    showSuccess();
                     // Send confirmation email (fire and forget — don't block UI)
                     fetch('/.netlify/functions/send-waitlist-confirm', {
                         method: 'POST',
@@ -463,8 +470,7 @@
                     }).catch(() => {});
                 } else if (res.status === 409) {
                     // Duplicate email — still show success, no email re-send
-                    document.getElementById('waitlist-form').style.display  = 'none';
-                    document.getElementById('signup-success').style.display = 'block';
+                    showSuccess();
                 } else {
                     throw new Error('Server error');
                 }
