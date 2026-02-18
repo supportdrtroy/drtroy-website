@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-course-id="core-balance-001">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -79,6 +79,8 @@
         @media(max-width:768px) { .course-container{margin:1rem;padding:1rem} .course-title{font-size:2rem} .module-title{font-size:1.1rem} .course-info{grid-template-columns:1fr} }
         @media print { .course-header,.progress-container,.complete-btn,.certificate-section{display:none!important} .module-content{display:block!important} .module{break-inside:avoid;margin-bottom:2rem} body{background:white;font-size:11pt;line-height:1.4} .course-container{box-shadow:none;margin:0;padding:0} }
     </style>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  <script src="../js/course-guard.js"></script>
 </head>
 <body>
     <header class="course-header">
