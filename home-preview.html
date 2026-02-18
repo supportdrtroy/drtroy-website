@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DrTroy Continuing Education | Professional Healthcare CE Courses</title>
+    <title>DrTroy Continuing Education | CE Courses for Texas PTs, OTs & More</title>
     
     <!-- Security Headers -->
     <meta http-equiv="Content-Security-Policy" content="
@@ -502,6 +502,191 @@
             text-decoration: none;
         }
         .nav-login-link:hover { background: #1e40af; }
+
+        /* Hero */
+        .hero-section {
+            padding: 5rem 2rem 3rem;
+            text-align: center;
+            max-width: 1280px;
+            margin: 0 auto;
+        }
+
+        .hero-section h1 {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: clamp(2.2rem, 5vw, 3.5rem);
+            font-weight: 600;
+            color: var(--primary-navy);
+            margin-bottom: 1.5rem;
+            letter-spacing: -0.02em;
+            line-height: 1.15;
+        }
+
+        .hero-section h1 span {
+            color: var(--accent-emerald);
+        }
+
+        .hero-subtitle {
+            font-size: 1.2rem;
+            color: var(--neutral-600);
+            margin-bottom: 2rem;
+            font-weight: 400;
+            line-height: 1.7;
+            max-width: 680px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero-checks {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 2.5rem;
+        }
+
+        .hero-check {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--success-dark);
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .hero-check-icon {
+            background: var(--accent-emerald);
+            color: white;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .hero-ctas {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-hero-primary {
+            background: linear-gradient(135deg, var(--accent-emerald) 0%, var(--accent-emerald-light) 100%);
+            color: white;
+            padding: 1.1rem 2.5rem;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 1.05rem;
+            text-decoration: none;
+            box-shadow: var(--shadow-md);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-hero-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-xl);
+            background: linear-gradient(135deg, var(--accent-emerald-dark) 0%, var(--accent-emerald) 100%);
+        }
+
+        .btn-hero-secondary {
+            background: transparent;
+            color: var(--primary-navy);
+            border: 2px solid var(--neutral-300);
+            padding: 1.1rem 2.5rem;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 1.05rem;
+            text-decoration: none;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-hero-secondary:hover {
+            border-color: var(--primary-navy);
+            background: var(--neutral-50);
+            transform: translateY(-2px);
+        }
+
+        /* Credibility Bar */
+        .credibility-bar {
+            background: var(--primary-navy);
+            color: white;
+            padding: 1.25rem 2rem;
+        }
+
+        .credibility-inner {
+            max-width: 1280px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .cred-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+            font-weight: 500;
+            opacity: 0.9;
+            white-space: nowrap;
+        }
+
+        .cred-item strong {
+            color: var(--accent-emerald-light);
+            font-weight: 700;
+        }
+
+        .cred-divider {
+            width: 1px;
+            height: 18px;
+            background: rgba(255,255,255,0.25);
+        }
+
+        @media (max-width: 768px) {
+            .cred-divider { display: none; }
+        }
+
+        /* Packages section heading */
+        .packages-section {
+            padding: 4rem 2rem 2rem;
+        }
+
+        .packages-section-inner {
+            max-width: 1280px;
+            margin: 0 auto;
+        }
+
+        .section-heading {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 600;
+            color: var(--primary-navy);
+            margin-bottom: 1rem;
+            text-align: center;
+            letter-spacing: -0.02em;
+        }
+
+        .section-subheading {
+            font-size: 1.1rem;
+            color: var(--neutral-600);
+            text-align: center;
+            margin-bottom: 3rem;
+            font-weight: 300;
+            line-height: 1.7;
+        }
+
     </style>
 </head>
 
@@ -533,33 +718,60 @@
 
     <!-- Main Content -->
     <main>
+
         <!-- Hero Section -->
-        <section style="padding: 4rem 2rem 2rem; text-align: center; max-width: 1280px; margin: 0 auto;">
-            <h1 style="font-family: 'Playfair Display', Georgia, serif; font-size: 3.5rem; font-weight: 600; color: var(--primary-navy); margin-bottom: 1.5rem; letter-spacing: -0.02em; line-height: 1.1;">Professional Continuing Education</h1>
-            <p style="font-size: 1.25rem; color: var(--neutral-600); margin-bottom: 2rem; font-weight: 400; line-height: 1.6;">Quality CE courses for PTs, PTAs, OTs, and COTAs. From practicing clinicians who understand your needs.</p>
-            
-            <div style="display: flex; gap: 2rem; justify-content: center; margin-bottom: 3rem; flex-wrap: wrap;">
-                <div style="display: flex; align-items: center; gap: 0.5rem; color: var(--success-dark); font-weight: 600; font-size: 1rem;">
-                    <span style="background: var(--accent-emerald); color: white; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 700;">✓</span>
-                    Professional Development
+        <section class="hero-section">
+            <h1>All Your Required CCUs.<br><span>One Place. Built by Therapists, for Therapists.</span></h1>
+            <p class="hero-subtitle">Discipline-specific CE packages for Texas PTs, PTAs, OTs, and COTAs — designed by a practicing clinician who understands what's relevant in the real world.</p>
+            <div class="hero-checks">
+                <div class="hero-check"><span class="hero-check-icon">✓</span> Instant Certificates</div>
+                <div class="hero-check"><span class="hero-check-icon">✓</span> Practice-Ready Content</div>
+                <div class="hero-check"><span class="hero-check-icon">✓</span> No Upsells or Hidden Fees</div>
+                <div class="hero-check"><span class="hero-check-icon">✓</span> Complete at Your Own Pace</div>
+            </div>
+            <div class="hero-ctas">
+                <a href="#packages" class="btn-hero-primary">Browse Packages →</a>
+                <a href="course-catalog.html" class="btn-hero-secondary">View All Courses</a>
+            </div>
+        </section>
+
+        <!-- Credibility Bar -->
+        <div class="credibility-bar">
+            <div class="credibility-inner">
+                <div class="cred-item"><strong>Dr. Troy Hounshell, PT, ScD</strong></div>
+                <div class="cred-divider"></div>
+                <div class="cred-item">25+ Years Clinical Experience</div>
+                <div class="cred-divider"></div>
+                <div class="cred-item">Practice Owner · West Texas</div>
+                <div class="cred-divider"></div>
+                <div class="cred-item">Evidence-Based Content</div>
+                <div class="cred-divider"></div>
+                <div class="cred-item">PTs · PTAs · OTs · COTAs</div>
+            </div>
+        </div>
+
+        <!-- Why DrTroy Section — Trust before purchase -->
+        <section class="why-section" id="about">
+            <div class="why-container">
+                <div class="why-content">
+                    <h2>Why DrTroy?</h2>
+                    <p>We keep it simple. Quality CE courses at fair prices. No upsells, no hidden fees, no nonsense. Just the hours you need on an easy to use platform.</p>
+                    <p>Every course is designed with the busy therapy professional in mind, providing evidence-based content that directly applies to daily practice across all care settings.</p>
                 </div>
-                <div style="display: flex; align-items: center; gap: 0.5rem; color: var(--success-dark); font-weight: 600; font-size: 1rem;">
-                    <span style="background: var(--accent-emerald); color: white; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 700;">✓</span>
-                    Instant Certificates
-                </div>
-                <div style="display: flex; align-items: center; gap: 0.5rem; color: var(--success-dark); font-weight: 600; font-size: 1rem;">
-                    <span style="background: var(--accent-emerald); color: white; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 700;">✓</span>
-                    Practice-Ready Content
+                <div class="founder-card">
+                    <h3 class="founder-title">Dr. Troy Hounshell, PT, ScD</h3>
+                    <p class="founder-subtitle">Founder</p>
+                    <p class="founder-description">25+ years of clinical experience. Practice owner. Delivering practical continuing education that works in the real world.</p>
                 </div>
             </div>
         </section>
 
         <!-- Package Comparison -->
-        <section style="padding: 2rem 2rem 4rem;">
-            <div style="max-width: 1280px; margin: 0 auto;">
-                <h2 style="font-family: 'Playfair Display', Georgia, serif; font-size: 3rem; font-weight: 600; color: var(--primary-navy); margin-bottom: 1.5rem; text-align: center; letter-spacing: -0.02em;">Choose Your Package</h2>
-                <p style="font-size: 1.125rem; color: var(--neutral-600); text-align: center; margin-bottom: 3rem; font-weight: 300; line-height: 1.7;">Professional continuing education packages designed for your specific discipline and requirements</p>
-                
+        <section class="packages-section" id="packages">
+            <div class="packages-section-inner">
+                <h2 class="section-heading">Choose Your Package</h2>
+                <p class="section-subheading">Discipline-specific packages designed to cover your required CCUs at a discounted bundle price</p>
+
                 <div class="packages-grid">
                     <!-- PT Package -->
                     <div class="package-card">
@@ -569,56 +781,26 @@
                             <h3 class="package-title">PT Core Package</h3>
                             <p class="package-description">(24 Core CCUs + 3 PT-Specific)</p>
                         </div>
-                        
                         <div class="course-list">
-                            <div class="course-item">
-                                <span class="course-name">Comprehensive Mobility and Fall Prevention</span>
-                                <span class="course-ccus">3</span>
-                            </div>
-                            <div class="course-item">
-                                <span class="course-name">Balance, Gait, and Vestibular Management</span>
-                                <span class="course-ccus">3</span>
-                            </div>
-                            <div class="course-item">
-                                <span class="course-name">Post-Surgical and Therapeutic Exercise</span>
-                                <span class="course-ccus">3</span>
-                            </div>
-                            <div class="course-item">
-                                <span class="course-name">Geriatric Care Across the Continuum</span>
-                                <span class="course-ccus">3</span>
-                            </div>
-                            <div class="course-item">
-                                <span class="course-name">Professional Documentation and Communication</span>
-                                <span class="course-ccus">3</span>
-                            </div>
-                            <div class="course-item">
-                                <span class="course-name">Physical Agents, Modalities, and Wound Care</span>
-                                <span class="course-ccus">3</span>
-                            </div>
-                            <div class="course-item">
-                                <span class="course-name">Neurological Rehabilitation</span>
-                                <span class="course-ccus">3</span>
-                            </div>
-                            <div class="course-item">
-                                <span class="course-name">Infection Control and Patient Safety</span>
-                                <span class="course-ccus">3</span>
-                            </div>
+                            <div class="course-item"><span class="course-name">Comprehensive Mobility and Fall Prevention</span><span class="course-ccus">3</span></div>
+                            <div class="course-item"><span class="course-name">Balance, Gait, and Vestibular Management</span><span class="course-ccus">3</span></div>
+                            <div class="course-item"><span class="course-name">Post-Surgical and Therapeutic Exercise</span><span class="course-ccus">3</span></div>
+                            <div class="course-item"><span class="course-name">Geriatric Care Across the Continuum</span><span class="course-ccus">3</span></div>
+                            <div class="course-item"><span class="course-name">Professional Documentation and Communication</span><span class="course-ccus">3</span></div>
+                            <div class="course-item"><span class="course-name">Physical Agents, Modalities, and Wound Care</span><span class="course-ccus">3</span></div>
+                            <div class="course-item"><span class="course-name">Neurological Rehabilitation</span><span class="course-ccus">3</span></div>
+                            <div class="course-item"><span class="course-name">Infection Control and Patient Safety</span><span class="course-ccus">3</span></div>
                         </div>
-                        
                         <div style="border-top: 1px solid var(--neutral-100); padding-top: 1.5rem; margin-top: 1.5rem;">
                             <h4 style="color: var(--primary-navy); margin-bottom: 1rem;">PT-Specific Course (3 CCUs)</h4>
-                            <div class="course-item">
-                                <span class="course-name">PT Musculoskeletal Evaluation and Diagnosis</span>
-                                <span class="course-ccus">3</span>
-                            </div>
+                            <div class="course-item"><span class="course-name">PT Musculoskeletal Evaluation and Diagnosis</span><span class="course-ccus">3</span></div>
                         </div>
-                        
                         <div style="margin-top:1.5rem;padding:1rem;background:#f8fafc;border-radius:8px;text-align:center;">
                             <div style="font-size:0.9rem;text-decoration:line-through;color:#94a3b8;">$149 regular price</div>
                             <div style="font-size:1.5rem;font-weight:700;color:#1e3a5f;">$139 <span style="font-size:0.85rem;font-weight:400;color:#16a34a;">new member price</span></div>
                             <div style="font-size:0.8rem;color:#16a34a;margin-top:0.25rem;">🎉 Save $10 when you create a free account</div>
                         </div>
-                        <button class="btn btn-primary" onclick="selectPackage('PT', 'PT Core Package')" style="margin-top: 1rem;">Select This Package</button>
+                        <button class="btn btn-primary" onclick="selectPackage('PT', 'PT Core Package')" style="margin-top: 1rem;">Get This Package →</button>
                     </div>
 
                     <!-- OT Package -->
@@ -629,104 +811,25 @@
                             <h3 class="package-title">OT Core Package</h3>
                             <p class="package-description">(20 Core CCUs + 3 OT-Specific)</p>
                         </div>
-                        
                         <div class="course-list">
-                            <div class="course-item">
-                                <span class="course-name">Comprehensive Mobility and Fall Prevention</span>
-                                <span class="course-ccus">3</span>
-                            </div>
-                            <div class="course-item">
-                                <span class="course-name">Balance, Gait, and Vestibular Management</span>
-                                <span class="course-ccus">3</span>
-                            </div>
-                            <div class="course-item">
-                                <span class="course-name">Post-Surgical and Therapeutic Exercise</span>
-                                <span class="course-ccus">3</span>
-                            </div>
-                            <div class="course-item">
-                                <span class="course-name">Professional Documentation and Communication</span>
-                                <span class="course-ccus">3</span>
-                            </div>
-                            <div class="course-item">
-                                <span class="course-name">Physical Agents, Modalities, and Wound Care</span>
-                                <span class="course-ccus">3</span>
-                            </div>
-                            <div class="course-item">
-                                <span class="course-name">Neurological Rehabilitation</span>
-                                <span class="course-ccus">3</span>
-                            </div>
-                            <div class="course-item">
-                                <span class="course-name">Patient Education and Health Promotion</span>
-                                <span class="course-ccus">2</span>
-                            </div>
+                            <div class="course-item"><span class="course-name">Comprehensive Mobility and Fall Prevention</span><span class="course-ccus">3</span></div>
+                            <div class="course-item"><span class="course-name">Balance, Gait, and Vestibular Management</span><span class="course-ccus">3</span></div>
+                            <div class="course-item"><span class="course-name">Post-Surgical and Therapeutic Exercise</span><span class="course-ccus">3</span></div>
+                            <div class="course-item"><span class="course-name">Professional Documentation and Communication</span><span class="course-ccus">3</span></div>
+                            <div class="course-item"><span class="course-name">Physical Agents, Modalities, and Wound Care</span><span class="course-ccus">3</span></div>
+                            <div class="course-item"><span class="course-name">Neurological Rehabilitation</span><span class="course-ccus">3</span></div>
+                            <div class="course-item"><span class="course-name">Patient Education and Health Promotion</span><span class="course-ccus">2</span></div>
                         </div>
-                        
                         <div style="border-top: 1px solid var(--neutral-100); padding-top: 1.5rem; margin-top: 1.5rem;">
                             <h4 style="color: var(--primary-navy); margin-bottom: 1rem;">OT-Specific Course (3 CCUs)</h4>
-                            <div class="course-item">
-                                <span class="course-name">OT Evaluation and Assessment of ADLs</span>
-                                <span class="course-ccus">3</span>
-                            </div>
+                            <div class="course-item"><span class="course-name">OT Evaluation and Assessment of ADLs</span><span class="course-ccus">3</span></div>
                         </div>
-                        
                         <div style="margin-top:1.5rem;padding:1rem;background:#f8fafc;border-radius:8px;text-align:center;">
                             <div style="font-size:0.9rem;text-decoration:line-through;color:#94a3b8;">$129 regular price</div>
                             <div style="font-size:1.5rem;font-weight:700;color:#1e3a5f;">$119 <span style="font-size:0.85rem;font-weight:400;color:#16a34a;">new member price</span></div>
                             <div style="font-size:0.8rem;color:#16a34a;margin-top:0.25rem;">🎉 Save $10 when you create a free account</div>
                         </div>
-                        <button class="btn btn-primary" onclick="selectPackage('OT', 'OT Core Package')" style="margin-top: 1rem;">Select This Package</button>
-                    </div>
-
-                    <!-- COTA Package -->
-                    <div class="package-card">
-                        <div class="package-header">
-                            <div class="package-ccus">23</div>
-                            <div style="font-size: 0.9rem; color: var(--neutral-600); margin-bottom: 1rem;">Total CCUs</div>
-                            <h3 class="package-title">COTA Complete Package</h3>
-                            <p class="package-description">(23 CCUs)</p>
-                        </div>
-                        
-                        <div class="course-list">
-                            <div class="course-item">
-                                <span class="course-name">Comprehensive Mobility and Fall Prevention</span>
-                                <span class="course-ccus">3</span>
-                            </div>
-                            <div class="course-item">
-                                <span class="course-name">Balance, Gait, and Vestibular Management</span>
-                                <span class="course-ccus">3</span>
-                            </div>
-                            <div class="course-item">
-                                <span class="course-name">Post-Surgical and Therapeutic Exercise</span>
-                                <span class="course-ccus">3</span>
-                            </div>
-                            <div class="course-item">
-                                <span class="course-name">Geriatric Care Across the Continuum</span>
-                                <span class="course-ccus">3</span>
-                            </div>
-                            <div class="course-item">
-                                <span class="course-name">Professional Documentation and Communication</span>
-                                <span class="course-ccus">3</span>
-                            </div>
-                            <div class="course-item">
-                                <span class="course-name">Physical Agents, Modalities, and Wound Care</span>
-                                <span class="course-ccus">3</span>
-                            </div>
-                            <div class="course-item">
-                                <span class="course-name">Neurological Rehabilitation</span>
-                                <span class="course-ccus">3</span>
-                            </div>
-                            <div class="course-item">
-                                <span class="course-name">Patient Education and Health Promotion</span>
-                                <span class="course-ccus">2</span>
-                            </div>
-                        </div>
-                        
-                        <div style="margin-top:1.5rem;padding:1rem;background:#f8fafc;border-radius:8px;text-align:center;">
-                            <div style="font-size:0.9rem;text-decoration:line-through;color:#94a3b8;">$109 regular price</div>
-                            <div style="font-size:1.5rem;font-weight:700;color:#1e3a5f;">$99 <span style="font-size:0.85rem;font-weight:400;color:#16a34a;">new member price</span></div>
-                            <div style="font-size:0.8rem;color:#16a34a;margin-top:0.25rem;">🎉 Save $10 when you create a free account</div>
-                        </div>
-                        <button class="btn btn-primary" onclick="selectPackage('COTA', 'COTA Complete Package')" style="margin-top: 1rem;">Select This Package</button>
+                        <button class="btn btn-primary" onclick="selectPackage('OT', 'OT Core Package')" style="margin-top: 1rem;">Get This Package →</button>
                     </div>
 
                     <!-- PTA Package -->
@@ -737,49 +840,54 @@
                             <h3 class="package-title">PTA Complete Package</h3>
                             <p class="package-description">(17 CCUs)</p>
                         </div>
-                        
                         <div class="course-list">
-                            <div class="course-item">
-                                <span class="course-name">Comprehensive Mobility and Fall Prevention</span>
-                                <span class="course-ccus">3</span>
-                            </div>
-                            <div class="course-item">
-                                <span class="course-name">Post-Surgical and Therapeutic Exercise</span>
-                                <span class="course-ccus">3</span>
-                            </div>
-                            <div class="course-item">
-                                <span class="course-name">Professional Documentation and Communication</span>
-                                <span class="course-ccus">3</span>
-                            </div>
-                            <div class="course-item">
-                                <span class="course-name">Physical Agents, Modalities, and Wound Care</span>
-                                <span class="course-ccus">3</span>
-                            </div>
-                            <div class="course-item">
-                                <span class="course-name">Infection Control and Patient Safety</span>
-                                <span class="course-ccus">3</span>
-                            </div>
-                            <div class="course-item">
-                                <span class="course-name">Patient Education and Health Promotion</span>
-                                <span class="course-ccus">2</span>
-                            </div>
+                            <div class="course-item"><span class="course-name">Comprehensive Mobility and Fall Prevention</span><span class="course-ccus">3</span></div>
+                            <div class="course-item"><span class="course-name">Post-Surgical and Therapeutic Exercise</span><span class="course-ccus">3</span></div>
+                            <div class="course-item"><span class="course-name">Professional Documentation and Communication</span><span class="course-ccus">3</span></div>
+                            <div class="course-item"><span class="course-name">Physical Agents, Modalities, and Wound Care</span><span class="course-ccus">3</span></div>
+                            <div class="course-item"><span class="course-name">Infection Control and Patient Safety</span><span class="course-ccus">3</span></div>
+                            <div class="course-item"><span class="course-name">Patient Education and Health Promotion</span><span class="course-ccus">2</span></div>
                         </div>
-                        
                         <div style="margin-top:1.5rem;padding:1rem;background:#f8fafc;border-radius:8px;text-align:center;">
                             <div style="font-size:0.9rem;text-decoration:line-through;color:#94a3b8;">$119 regular price</div>
                             <div style="font-size:1.5rem;font-weight:700;color:#1e3a5f;">$109 <span style="font-size:0.85rem;font-weight:400;color:#16a34a;">new member price</span></div>
                             <div style="font-size:0.8rem;color:#16a34a;margin-top:0.25rem;">🎉 Save $10 when you create a free account</div>
                         </div>
-                        <button class="btn btn-primary" onclick="selectPackage('PTA', 'PTA Complete Package')" style="margin-top: 1rem;">Select This Package</button>
+                        <button class="btn btn-primary" onclick="selectPackage('PTA', 'PTA Complete Package')" style="margin-top: 1rem;">Get This Package →</button>
+                    </div>
+
+                    <!-- COTA Package -->
+                    <div class="package-card">
+                        <div class="package-header">
+                            <div class="package-ccus">23</div>
+                            <div style="font-size: 0.9rem; color: var(--neutral-600); margin-bottom: 1rem;">Total CCUs</div>
+                            <h3 class="package-title">COTA Complete Package</h3>
+                            <p class="package-description">(23 CCUs)</p>
+                        </div>
+                        <div class="course-list">
+                            <div class="course-item"><span class="course-name">Comprehensive Mobility and Fall Prevention</span><span class="course-ccus">3</span></div>
+                            <div class="course-item"><span class="course-name">Balance, Gait, and Vestibular Management</span><span class="course-ccus">3</span></div>
+                            <div class="course-item"><span class="course-name">Post-Surgical and Therapeutic Exercise</span><span class="course-ccus">3</span></div>
+                            <div class="course-item"><span class="course-name">Geriatric Care Across the Continuum</span><span class="course-ccus">3</span></div>
+                            <div class="course-item"><span class="course-name">Professional Documentation and Communication</span><span class="course-ccus">3</span></div>
+                            <div class="course-item"><span class="course-name">Physical Agents, Modalities, and Wound Care</span><span class="course-ccus">3</span></div>
+                            <div class="course-item"><span class="course-name">Neurological Rehabilitation</span><span class="course-ccus">3</span></div>
+                            <div class="course-item"><span class="course-name">Patient Education and Health Promotion</span><span class="course-ccus">2</span></div>
+                        </div>
+                        <div style="margin-top:1.5rem;padding:1rem;background:#f8fafc;border-radius:8px;text-align:center;">
+                            <div style="font-size:0.9rem;text-decoration:line-through;color:#94a3b8;">$109 regular price</div>
+                            <div style="font-size:1.5rem;font-weight:700;color:#1e3a5f;">$99 <span style="font-size:0.85rem;font-weight:400;color:#16a34a;">new member price</span></div>
+                            <div style="font-size:0.8rem;color:#16a34a;margin-top:0.25rem;">🎉 Save $10 when you create a free account</div>
+                        </div>
+                        <button class="btn btn-primary" onclick="selectPackage('COTA', 'COTA Complete Package')" style="margin-top: 1rem;">Get This Package →</button>
                     </div>
                 </div>
-                
+
                 <!-- CCU Requirements Notice -->
                 <div style="max-width: 1280px; margin: 3rem auto 0; text-align: center;">
                     <div style="background: var(--neutral-50); border: 2px solid var(--accent-emerald); border-radius: 16px; padding: 2.5rem; box-shadow: var(--shadow-md);">
                         <h3 style="font-family: 'Playfair Display', Georgia, serif; font-size: 1.6rem; font-weight: 600; color: var(--primary-navy); margin-bottom: 1.5rem;">Professional Development for Texas Therapists</h3>
                         <p style="color: var(--neutral-700); font-size: 1.05rem; line-height: 1.6; margin-bottom: 2rem;">The total CCUs in each package allow for other required courses obtained outside of DrTroy:</p>
-                        
                         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; margin-bottom: 2rem;">
                             <div style="background: white; padding: 1.5rem; border-radius: 12px; box-shadow: var(--shadow-sm); border: 1px solid var(--neutral-200);">
                                 <div style="font-size: 2rem; color: var(--accent-emerald); font-weight: 700; margin-bottom: 0.5rem;">30</div>
@@ -802,14 +910,12 @@
                                 <div style="color: var(--neutral-600); font-size: 0.9rem; line-height: 1.4;">23 (package) + 1 trafficking</div>
                             </div>
                         </div>
-                        
                         <div style="background: white; padding: 1.5rem; border-radius: 12px; border-left: 4px solid var(--accent-emerald); margin-bottom: 1.5rem;">
                             <p style="color: var(--neutral-700); font-size: 0.95rem; margin: 0; text-align: left;">
                                 <strong>Ethics Requirement:</strong> PTs and PTAs need 2 CCUs via Jurisprudence Exam<br>
                                 <strong>Human Trafficking:</strong> All professions need 1 CCU from approved provider
                             </p>
                         </div>
-                        
                         <p style="color: var(--neutral-600); font-size: 0.95rem;">
                             <a href="https://www.hhs.texas.gov/sites/default/files/documents/hhs-approved-human-trafficking-training.pdf" target="_blank" style="color: var(--accent-emerald); text-decoration: none; font-weight: 600; border-bottom: 2px solid transparent; transition: border-color 0.3s;">View approved human trafficking training providers →</a>
                         </p>
@@ -818,14 +924,13 @@
             </div>
         </section>
 
-        <!-- Account Creation Section -->
+        <!-- Account Creation — lower-commitment fallback for visitors not ready to buy -->
         <section id="account-section" style="padding: 4rem 2rem; background: var(--neutral-50);">
             <div style="max-width: 600px; margin: 0 auto;">
                 <div id="account-form-container" style="background: white; border-radius: 24px; padding: 3rem; box-shadow: var(--shadow-xl); border: 1px solid var(--neutral-100); text-align: center; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);">
                     <h2 id="account-title" style="font-family: 'Playfair Display', Georgia, serif; font-size: 1.75rem; font-weight: 600; color: var(--primary-navy); margin-bottom: 1rem;">Create Your Free Account</h2>
                     <p style="color: var(--neutral-600); margin-bottom: 1rem; font-size: 0.95rem; line-height: 1.6;">New customers save $10 on bundles and save your course progress. Pick up right where you left off.</p>
                     <p style="color: var(--accent-emerald); font-weight: 600; margin-bottom: 2rem; font-size: 0.95rem;">Get a $10 credit on future purchases when you refer a colleague!</p>
-                    
                     <form id="account-form">
                         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 1.5rem;">
                             <div>
@@ -843,37 +948,17 @@
                                 </select>
                             </div>
                         </div>
-                        
                         <div style="margin-bottom: 2rem;">
                             <label style="display: block; margin-bottom: 0.75rem; font-weight: 600; color: var(--neutral-700); font-size: 0.95rem; text-align: left;">Password</label>
                             <input type="password" id="password" name="password" style="width: 100%; padding: 1rem 1.25rem; border: 2px solid var(--neutral-200); border-radius: 12px; font-size: 1rem; color: var(--neutral-800); background: white; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); font-family: inherit;" placeholder="Create secure password" required>
                             <p style="font-size: 0.85rem; color: var(--neutral-600); margin-top: 0.5rem; line-height: 1.5; text-align: left;">Password must be at least 8 characters with mixed case, numbers, and symbols.</p>
                         </div>
-                        
                         <button type="submit" style="display: inline-flex; align-items: center; justify-content: center; padding: 1.25rem 2rem; border-radius: 12px; text-decoration: none; font-weight: 600; font-size: 1rem; cursor: pointer; border: none; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); position: relative; overflow: hidden; width: 100%; background: linear-gradient(135deg, var(--accent-emerald) 0%, var(--accent-emerald-light) 100%); color: white; box-shadow: var(--shadow-md);">Create Free Account</button>
                     </form>
                 </div>
             </div>
         </section>
 
-        <!-- Why DrTroy Section -->
-        <section class="why-section" id="about">
-            <div class="why-container">
-                <div class="why-content">
-                    <h2>Why DrTroy?</h2>
-                    <p>We keep it simple. Quality CE courses at fair prices. No upsells, no hidden fees, no nonsense. Just the hours you need on an easy to use platform.</p>
-                    <p>Every course is designed with the busy healthcare professional in mind, providing evidence-based content that directly applies to daily practice across all care settings.</p>
-                </div>
-                
-                <div class="founder-card">
-                    <h3 class="founder-title">Dr. Troy Hounshell, PT, ScD</h3>
-                    <p class="founder-subtitle">Founder</p>
-                    <p class="founder-description">25+ years of clinical experience. Practice owner. Delivering practical continuing education that works in the real world.</p>
-                </div>
-            </div>
-        </section>
-
-        
     </main>
 
     <!-- Footer -->
