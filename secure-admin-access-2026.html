@@ -3,594 +3,436 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DrTroy.com - Secure Access</title>
-    
-    <!-- Security Headers -->
+    <title>DrTroy.com — Admin Access</title>
+
     <meta http-equiv="Content-Security-Policy" content="
         default-src 'self';
-        script-src 'self' 'unsafe-inline';
-        style-src 'self' 'unsafe-inline';
+        script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net;
+        style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
+        font-src https://fonts.gstatic.com;
         img-src 'self' data: https:;
+        connect-src 'self' https://*.supabase.co;
     ">
-    <meta http-equiv="X-Content-Type-Options" content="nosniff">
     <meta http-equiv="X-Frame-Options" content="DENY">
-    <meta http-equiv="X-XSS-Protection" content="1; mode=block">
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
     <meta http-equiv="Referrer-Policy" content="no-referrer">
-    
+
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Source+Sans+Pro:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
         :root {
-            --navy: #1e3a8a;
-            --gold: #d69e2e;
-            --gray-100: #f3f4f6;
-            --gray-200: #e5e7eb;
-            --gray-600: #6b7280;
-            --gray-900: #111827;
+            --navy:    #1a365d;
+            --navy-dk: #122540;
+            --emerald: #059669;
+            --gold:    #d69e2e;
+            --gray-50: #f9fafb;
+            --gray-100:#f3f4f6;
+            --gray-200:#e5e7eb;
+            --gray-400:#9ca3af;
+            --gray-600:#6b7280;
+            --gray-900:#111827;
+            --danger:  #dc2626;
+            --shadow:  0 4px 24px rgba(0,0,0,0.12);
+            --shadow-lg:0 20px 60px rgba(0,0,0,0.25);
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            background: linear-gradient(135deg, var(--navy) 0%, #1e40af 100%);
+            font-family: 'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(145deg, var(--navy-dk) 0%, var(--navy) 60%, #1e40af 100%);
             min-height: 100vh;
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding: 2rem;
+            padding: 1.5rem;
         }
 
-        .login-container {
-            background: white;
-            border-radius: 12px;
-            padding: 3rem;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        /* ─── Card ─── */
+        .card {
+            background: #fff;
+            border-radius: 16px;
+            padding: 3rem 2.5rem;
             width: 100%;
-            max-width: 400px;
+            max-width: 420px;
+            box-shadow: var(--shadow-lg);
             position: relative;
+            overflow: hidden;
         }
 
-        .security-badge {
+        .card::before {
+            content: '';
             position: absolute;
-            top: -10px;
-            right: -10px;
-            background: #059669;
-            color: white;
-            padding: 0.25rem 0.75rem;
-            border-radius: 12px;
-            font-size: 0.75rem;
-            font-weight: 600;
-            text-transform: uppercase;
+            top: 0; left: 0; right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--emerald), var(--gold));
         }
 
-        .logo {
+        /* ─── Header ─── */
+        .card-header {
             text-align: center;
             margin-bottom: 2rem;
         }
 
-        .logo img {
-            height: 60px;
-            margin-bottom: 1rem;
+        .logo-wrap {
+            margin-bottom: 1.25rem;
         }
 
-        .logo h1 {
+        .logo-wrap img {
+            height: 56px;
+            object-fit: contain;
+        }
+
+        .card-header h1 {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: 1.6rem;
+            font-weight: 600;
             color: var(--navy);
-            font-size: 1.75rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.35rem;
+            letter-spacing: -0.01em;
         }
 
-        .logo p {
-            color: var(--gray-600);
+        .card-header p {
             font-size: 0.9rem;
+            color: var(--gray-600);
         }
 
+        /* ─── Form ─── */
         .form-group {
-            margin-bottom: 1.5rem;
+            margin-bottom: 1.25rem;
         }
 
-        .form-label {
+        label {
             display: block;
-            margin-bottom: 0.5rem;
+            font-size: 0.85rem;
             font-weight: 600;
             color: var(--gray-900);
+            margin-bottom: 0.4rem;
+            letter-spacing: 0.01em;
         }
 
-        .form-input {
+        .input-wrap {
+            position: relative;
+        }
+
+        .input-icon {
+            position: absolute;
+            left: 0.9rem;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1rem;
+            pointer-events: none;
+            color: var(--gray-400);
+        }
+
+        input[type="email"],
+        input[type="password"] {
             width: 100%;
-            padding: 0.875rem 1rem;
-            border: 2px solid var(--gray-200);
+            padding: 0.85rem 1rem 0.85rem 2.5rem;
+            border: 1.5px solid var(--gray-200);
             border-radius: 8px;
             font-size: 1rem;
-            transition: all 0.2s ease;
-            background: white;
+            font-family: inherit;
+            color: var(--gray-900);
+            background: var(--gray-50);
+            transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
+            -webkit-appearance: none;
         }
 
-        .form-input:focus {
+        input:focus {
             outline: none;
             border-color: var(--navy);
-            box-shadow: 0 0 0 3px rgba(30, 58, 138, 0.1);
+            background: #fff;
+            box-shadow: 0 0 0 3px rgba(26,54,93,0.1);
         }
 
-        .form-input:disabled {
-            background: var(--gray-100);
+        input:disabled {
+            opacity: 0.6;
             cursor: not-allowed;
         }
 
+        /* ─── Button ─── */
         .btn-login {
             width: 100%;
             background: var(--navy);
-            color: white;
+            color: #fff;
             border: none;
-            padding: 1rem;
+            padding: 0.95rem 1.5rem;
             border-radius: 8px;
             font-size: 1rem;
             font-weight: 600;
+            font-family: inherit;
             cursor: pointer;
-            transition: all 0.3s ease;
-            margin-bottom: 1rem;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 0.5rem;
+            transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+            margin-top: 0.5rem;
+            letter-spacing: 0.01em;
         }
 
         .btn-login:hover:not(:disabled) {
-            background: #1e40af;
+            background: var(--navy-dk);
             transform: translateY(-1px);
-            box-shadow: 0 4px 12px rgba(30, 58, 138, 0.3);
+            box-shadow: 0 6px 20px rgba(26,54,93,0.3);
+        }
+
+        .btn-login:active:not(:disabled) {
+            transform: translateY(0);
         }
 
         .btn-login:disabled {
-            background: var(--gray-600);
+            opacity: 0.65;
             cursor: not-allowed;
             transform: none;
-            box-shadow: none;
         }
 
+        /* spinner */
         .spinner {
-            width: 20px;
-            height: 20px;
-            border: 2px solid transparent;
-            border-top: 2px solid white;
+            width: 18px; height: 18px;
+            border: 2px solid rgba(255,255,255,0.35);
+            border-top-color: #fff;
             border-radius: 50%;
-            animation: spin 1s linear infinite;
+            animation: spin 0.7s linear infinite;
             display: none;
+            flex-shrink: 0;
         }
+        .loading .spinner   { display: block; }
+        .loading .btn-label { display: none; }
+        @keyframes spin { to { transform: rotate(360deg); } }
 
-        .btn-login.loading .spinner {
-            display: block;
-        }
-
-        .btn-login.loading .btn-text {
+        /* ─── Messages ─── */
+        .alert {
+            padding: 0.75rem 1rem;
+            border-radius: 7px;
+            font-size: 0.9rem;
+            margin-bottom: 1.25rem;
             display: none;
+            line-height: 1.45;
         }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        .error-message {
-            background: #fee2e2;
-            border: 1px solid #f87171;
+        .alert-error {
+            background: #fef2f2;
+            border: 1px solid #fca5a5;
             color: #991b1b;
-            padding: 0.75rem 1rem;
-            border-radius: 6px;
-            margin-bottom: 1rem;
-            font-size: 0.9rem;
-            display: none;
         }
-
-        .success-message {
-            background: #d1fae5;
-            border: 1px solid #10b981;
-            color: #065f46;
-            padding: 0.75rem 1rem;
-            border-radius: 6px;
-            margin-bottom: 1rem;
-            font-size: 0.9rem;
-            display: none;
-        }
-
-        .info-box {
+        .alert-success {
             background: #ecfdf5;
-            border: 1px solid #10b981;
-            border-radius: 6px;
-            padding: 1rem;
-            margin-bottom: 1.5rem;
-            font-size: 0.85rem;
+            border: 1px solid #6ee7b7;
             color: #065f46;
-            text-align: center;
         }
 
-        .security-features {
+        /* ─── Security strip ─── */
+        .security-strip {
             margin-top: 2rem;
-            padding-top: 1.5rem;
+            padding-top: 1.25rem;
             border-top: 1px solid var(--gray-200);
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.4rem 1rem;
         }
 
-        .security-item {
+        .sec-item {
             display: flex;
             align-items: center;
-            gap: 0.5rem;
-            margin: 0.5rem 0;
-            font-size: 0.8rem;
+            gap: 0.4rem;
+            font-size: 0.78rem;
             color: var(--gray-600);
         }
 
-        .security-check {
-            color: #059669;
-            font-weight: 600;
+        .sec-check {
+            color: var(--emerald);
+            font-size: 0.85rem;
+            flex-shrink: 0;
         }
 
-        .footer {
+        /* ─── Footer ─── */
+        .page-footer {
+            margin-top: 1.75rem;
             text-align: center;
-            margin-top: 2rem;
             font-size: 0.8rem;
-            color: rgba(255, 255, 255, 0.8);
+            color: rgba(255,255,255,0.55);
         }
 
-        .footer a {
-            color: rgba(255, 255, 255, 0.9);
+        .page-footer a {
+            color: rgba(255,255,255,0.7);
             text-decoration: none;
         }
 
-        .access-info {
-            background: #fef3cd;
-            border: 1px solid #d69e2e;
-            color: #92400e;
-            padding: 0.75rem;
-            border-radius: 6px;
-            margin-bottom: 1rem;
-            font-size: 0.8rem;
-            text-align: center;
-        }
+        .page-footer a:hover { color: #fff; }
 
+        /* ─── Mobile ─── */
         @media (max-width: 480px) {
-            .login-container {
-                padding: 2rem;
-                margin: 1rem;
+            body { padding: 1rem; }
+
+            .card {
+                padding: 2rem 1.5rem;
+                border-radius: 12px;
             }
-            
-            .logo h1 {
-                font-size: 1.5rem;
+
+            .card-header h1 { font-size: 1.4rem; }
+
+            .security-strip {
+                grid-template-columns: 1fr;
             }
         }
     </style>
 </head>
 <body>
-    <div class="login-container">
-        <div class="security-badge">Secure Portal</div>
-        
-        <div class="logo">
-            <img src="courses/images/drtroy_logo_new.jpg" alt="DrTroy" onerror="this.style.display='none'">
-            <h1>Secure Admin Access</h1>
-            <p>DrTroy.com Administration Portal</p>
+
+    <div class="card">
+
+        <div class="card-header">
+            <div class="logo-wrap">
+                <img src="courses/images/drtroy_logo_new.jpg" alt="DrTroy Continuing Education" onerror="this.style.display='none'">
+            </div>
+            <h1>Admin Portal</h1>
+            <p>Sign in to the DrTroy.com admin dashboard</p>
         </div>
 
-        <div class="access-info">
-            ⚠️ <strong>Private Access Only:</strong> This portal is not accessible from the public website for enhanced security.
-        </div>
+        <div id="alertError"   class="alert alert-error"></div>
+        <div id="alertSuccess" class="alert alert-success"></div>
 
-        <div class="info-box">
-            🔐 <strong>Enterprise Security:</strong> This hidden admin portal manages discount codes, business analytics, and system settings for the DrTroy.com continuing education platform.
-        </div>
-
-        <form id="loginForm">
-            <div id="errorMessage" class="error-message"></div>
-            <div id="successMessage" class="success-message"></div>
-
+        <form id="loginForm" novalidate>
             <div class="form-group">
-                <label class="form-label">Username</label>
-                <input type="text" id="username" class="form-input" value="troyhounshell" required autocomplete="username">
+                <label for="email">Email Address</label>
+                <div class="input-wrap">
+                    <span class="input-icon">✉️</span>
+                    <input type="email" id="email" name="email"
+                           placeholder="your@email.com"
+                           autocomplete="email" required>
+                </div>
             </div>
 
             <div class="form-group">
-                <label class="form-label">Password</label>
-                <input type="password" id="password" class="form-input" placeholder="Enter your admin password" required autocomplete="current-password">
+                <label for="password">Password</label>
+                <div class="input-wrap">
+                    <span class="input-icon">🔒</span>
+                    <input type="password" id="password" name="password"
+                           placeholder="Enter your password"
+                           autocomplete="current-password" required>
+                </div>
             </div>
 
             <button type="submit" class="btn-login" id="loginBtn">
                 <div class="spinner"></div>
-                <span class="btn-text">🛡️ Access Admin Portal</span>
+                <span class="btn-label">Sign In to Admin</span>
             </button>
         </form>
 
-        <div class="security-features">
-            <div class="security-item">
-                <span class="security-check">✓</span>
-                <span>Hidden portal - not publicly discoverable</span>
-            </div>
-            <div class="security-item">
-                <span class="security-check">✓</span>
-                <span>Rate limiting & brute force protection</span>
-            </div>
-            <div class="security-item">
-                <span class="security-check">✓</span>
-                <span>Encrypted session management</span>
-            </div>
-            <div class="security-item">
-                <span class="security-check">✓</span>
-                <span>HTTPS secure connection</span>
-            </div>
-            <div class="security-item">
-                <span class="security-check">✓</span>
-                <span>Session timeout after 8 hours</span>
-            </div>
+        <div class="security-strip">
+            <div class="sec-item"><span class="sec-check">✓</span> Supabase Auth</div>
+            <div class="sec-item"><span class="sec-check">✓</span> Admin-only access</div>
+            <div class="sec-item"><span class="sec-check">✓</span> HTTPS encrypted</div>
+            <div class="sec-item"><span class="sec-check">✓</span> Session protected</div>
         </div>
-        
-        <div style="margin-top: 2rem; padding: 1rem; background: #f0f9ff; border: 1px solid #0ea5e9; border-radius: 6px; font-size: 0.9rem;">
-            <strong>💡 Login Issue?</strong> If you can't login, open browser console (F12) and type: <code>resetTroyLogin()</code>
-        </div>
+
     </div>
 
-    <div class="footer">
-        <p>&copy; 2026 DrTroy.com | <a href="index.html">Return to Website</a></p>
+    <div class="page-footer">
+        <p>&copy; 2026 DrTroy.com &nbsp;·&nbsp; <a href="index.html">Return to website</a></p>
     </div>
 
     <script>
-        // Enhanced rate limiting for secure portal
-        let loginAttempts = JSON.parse(localStorage.getItem('adminLoginAttempts') || '[]');
-        
-        function cleanupAttempts() {
-            const now = Date.now();
-            const maxAge = 15 * 60 * 1000; // 15 minutes
-            loginAttempts = loginAttempts.filter(time => now - time < maxAge);
-            localStorage.setItem('adminLoginAttempts', JSON.stringify(loginAttempts));
-        }
-        
-        function isRateLimited() {
-            cleanupAttempts();
-            return loginAttempts.length >= 3; // Stricter: Max 3 attempts per 15 minutes for secure portal
-        }
-        
-        function recordAttempt() {
-            loginAttempts.push(Date.now());
-            localStorage.setItem('adminLoginAttempts', JSON.stringify(loginAttempts));
+        const SUPABASE_URL      = 'https://pnqoxulxdmlmbywcpbyx.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBucW94dWx4ZG1sbWJ5d2NwYnl4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzEzNjU3NTIsImV4cCI6MjA4Njk0MTc1Mn0.YEPrwIvINX_Q1AsbxyU0T5m5oxpV9M756yiSCzy6LTc';
+
+        const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
+            auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: false }
+        });
+
+        // ─── helpers ─────────────────────────────────────────────────────────
+        function showError(msg) {
+            const el = document.getElementById('alertError');
+            el.textContent = msg;
+            el.style.display = 'block';
+            document.getElementById('alertSuccess').style.display = 'none';
         }
 
-        // Check if already logged in
-        function checkExistingSession() {
-            const adminSession = localStorage.getItem('drtroyAdminSession');
-            if (adminSession) {
-                try {
-                    const session = JSON.parse(adminSession);
-                    const now = new Date().getTime();
-                    const expiresTime = new Date(session.expires).getTime();
-                    
-                    if (now < expiresTime) {
-                        console.log('🔒 Valid admin session found, redirecting...');
-                        window.location.href = 'admin.html';
-                        return true;
-                    } else {
-                        console.log('🕒 Admin session expired, clearing...');
-                        localStorage.removeItem('drtroyAdminSession');
-                    }
-                } catch (error) {
-                    console.error('Session validation error:', error);
-                    localStorage.removeItem('drtroyAdminSession');
-                }
-            }
-            return false;
+        function showSuccess(msg) {
+            const el = document.getElementById('alertSuccess');
+            el.textContent = msg;
+            el.style.display = 'block';
+            document.getElementById('alertError').style.display = 'none';
         }
 
-        // Enhanced secure authentication
-        async function authenticateUser(username, password) {
-            try {
-                // Force reset to default credentials (Feb 17 fix for Troy)
-                const credentials = {
-                    username: 'troyhounshell',
-                    password: 'DrTroy2026!PT',
-                    created: new Date().toISOString()
-                };
-                
-                // Store the correct credentials
-                localStorage.setItem('drtroyAdminCredentials', JSON.stringify(credentials));
-                
-                // Simulate processing time for security (longer for secure portal)
-                await new Promise(resolve => setTimeout(resolve, 1200));
-                
-                // Validate credentials
-                if (username.toLowerCase().trim() === credentials.username.toLowerCase().trim() && 
-                    password === credentials.password) {
-                    
-                    // Log successful secure portal access
-                    console.log('🛡️ Secure portal access granted');
-                    
-                    return {
-                        success: true,
-                        user: {
-                            id: 'admin_001',
-                            username: credentials.username,
-                            role: 'administrator',
-                            accessMethod: 'secure_portal',
-                            lastLogin: new Date().toISOString()
-                        }
-                    };
-                } else {
-                    console.log('🚨 Failed secure portal access attempt');
-                    return {
-                        success: false,
-                        error: 'Invalid credentials for secure portal access'
-                    };
-                }
-            } catch (error) {
-                console.error('Secure portal authentication error:', error);
-                return {
-                    success: false,
-                    error: 'Secure portal temporarily unavailable'
-                };
+        function setLoading(on) {
+            const btn = document.getElementById('loginBtn');
+            btn.disabled = on;
+            btn.classList.toggle('loading', on);
+            document.getElementById('email').disabled    = on;
+            document.getElementById('password').disabled = on;
+        }
+
+        // ─── redirect if already authed + admin ──────────────────────────────
+        async function checkExisting() {
+            const { data: { session } } = await sb.auth.getSession();
+            if (!session) return;
+            const { data: profile } = await sb.from('profiles')
+                .select('is_admin')
+                .eq('id', session.user.id)
+                .single();
+            if (profile?.is_admin) {
+                window.location.replace('admin.html');
             }
         }
 
-        // Create admin session with enhanced security context
-        function createAdminSession(user) {
-            const session = {
-                user: user,
-                created: new Date().toISOString(),
-                expires: new Date(Date.now() + 8 * 60 * 60 * 1000).toISOString(), // 8 hours
-                fingerprint: btoa(navigator.userAgent.substring(0, 50) + window.location.href),
-                accessMethod: 'secure_portal',
-                version: '1.0'
-            };
-            
-            localStorage.setItem('drtroyAdminSession', JSON.stringify(session));
-            console.log('✅ Secure admin session created');
-            return session;
-        }
-
-        // Show message
-        function showMessage(message, isError = true) {
-            const errorEl = document.getElementById('errorMessage');
-            const successEl = document.getElementById('successMessage');
-            
-            if (isError) {
-                errorEl.textContent = message;
-                errorEl.style.display = 'block';
-                successEl.style.display = 'none';
-            } else {
-                successEl.textContent = message;
-                successEl.style.display = 'block';
-                errorEl.style.display = 'none';
-            }
-            
-            // Auto-hide after 5 seconds
-            setTimeout(() => {
-                errorEl.style.display = 'none';
-                successEl.style.display = 'none';
-            }, 5000);
-        }
-
-        // Handle form submission with enhanced security
-        document.getElementById('loginForm').addEventListener('submit', async function(e) {
+        // ─── form submit ──────────────────────────────────────────────────────
+        document.getElementById('loginForm').addEventListener('submit', async (e) => {
             e.preventDefault();
-            
-            const username = document.getElementById('username').value;
+
+            const email    = document.getElementById('email').value.trim();
             const password = document.getElementById('password').value;
-            const loginBtn = document.getElementById('loginBtn');
-            
-            // Validation
-            if (!username || !password) {
-                showMessage('Please enter both username and password');
+
+            if (!email || !password) {
+                showError('Please enter your email and password.');
                 return;
             }
-            
-            // Enhanced rate limiting check for secure portal
-            if (isRateLimited()) {
-                showMessage('Too many failed attempts. Secure portal access restricted for 15 minutes.');
-                return;
-            }
-            
-            // Show loading state
-            loginBtn.classList.add('loading');
-            loginBtn.disabled = true;
-            document.getElementById('username').disabled = true;
-            document.getElementById('password').disabled = true;
-            
+
+            setLoading(true);
+
             try {
-                // Authenticate user
-                const result = await authenticateUser(username, password);
-                
-                if (result.success) {
-                    // Clear any existing attempts on success
-                    localStorage.removeItem('adminLoginAttempts');
-                    loginAttempts = [];
-                    
-                    // Create session
-                    createAdminSession(result.user);
-                    
-                    // Show success message
-                    showMessage('✅ Secure access granted! Redirecting to admin dashboard...', false);
-                    
-                    // Redirect after short delay
-                    setTimeout(() => {
-                        window.location.href = 'admin.html';
-                    }, 1500);
-                    
-                } else {
-                    // Record failed attempt
-                    recordAttempt();
-                    
-                    // Show error with enhanced security messaging
-                    showMessage(result.error || 'Secure portal access denied. Check credentials.');
-                    
-                    // Reset form
+                // 1. Sign in
+                const { data, error: signInErr } = await sb.auth.signInWithPassword({ email, password });
+                if (signInErr) {
+                    showError('Incorrect email or password. Please try again.');
+                    setLoading(false);
                     document.getElementById('password').value = '';
                     document.getElementById('password').focus();
+                    return;
                 }
-                
-            } catch (error) {
-                console.error('Secure portal login error:', error);
-                recordAttempt();
-                showMessage('Secure portal is temporarily unavailable. Please try again.');
-            } finally {
-                // Reset loading state
-                loginBtn.classList.remove('loading');
-                loginBtn.disabled = false;
-                document.getElementById('username').disabled = false;
-                document.getElementById('password').disabled = false;
+
+                // 2. Verify admin flag
+                const { data: profile, error: profileErr } = await sb.from('profiles')
+                    .select('is_admin, first_name')
+                    .eq('id', data.user.id)
+                    .single();
+
+                if (profileErr || !profile?.is_admin) {
+                    await sb.auth.signOut();
+                    showError('Your account does not have admin access.');
+                    setLoading(false);
+                    return;
+                }
+
+                // 3. Success — redirect
+                const name = profile.first_name ? ` ${profile.first_name}` : '';
+                showSuccess(`Welcome back${name}! Redirecting to dashboard…`);
+                setTimeout(() => window.location.replace('admin.html'), 1200);
+
+            } catch (err) {
+                console.error('Login error:', err);
+                showError('Something went wrong. Please try again.');
+                setLoading(false);
             }
         });
 
-        // Initialize secure portal
-        function initializeSecurePortal() {
-            // Check for existing session
-            if (checkExistingSession()) {
-                return; // Will redirect if session exists
-            }
-            
-            // Focus password field if username is pre-filled
-            if (document.getElementById('username').value) {
-                document.getElementById('password').focus();
-            } else {
-                document.getElementById('username').focus();
-            }
-            
-            // Log secure portal access attempt (but don't expose in console in production)
-            if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
-                console.log('🛡️ Secure admin portal loaded');
-            }
-        }
-
-        // Initialize when page loads
-        document.addEventListener('DOMContentLoaded', initializeSecurePortal);
-        
-        // Emergency reset function for Troy (accessible via browser console)
-        window.resetTroyLogin = function() {
-            localStorage.removeItem('drtroyAdminCredentials');
-            localStorage.removeItem('drtroyAdminSession');
-            const credentials = {
-                username: 'troyhounshell',
-                password: 'DrTroy2026!PT',
-                created: new Date().toISOString()
-            };
-            localStorage.setItem('drtroyAdminCredentials', JSON.stringify(credentials));
-            console.log('✅ Troy\'s login credentials reset to default');
-            console.log('Username: troyhounshell');
-            console.log('Password: DrTroy2026!PT');
-            alert('Login credentials reset! Try logging in now.');
-        };
-        
-        // Handle browser back button and navigation
-        window.addEventListener('pageshow', function(event) {
-            if (event.persisted) {
-                checkExistingSession();
-            }
-        });
-
-        // Clear any references to this URL from browser history after login
-        // This is a basic security measure to reduce URL exposure
-        window.addEventListener('beforeunload', function() {
-            if (localStorage.getItem('drtroyAdminSession')) {
-                // Clear this page from history after successful login
-                if (window.history && window.history.replaceState) {
-                    window.history.replaceState({}, '', 'about:blank');
-                }
-            }
+        // ─── init ─────────────────────────────────────────────────────────────
+        document.addEventListener('DOMContentLoaded', () => {
+            checkExisting();
+            document.getElementById('email').focus();
         });
     </script>
 </body>
