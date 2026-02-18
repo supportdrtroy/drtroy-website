@@ -468,6 +468,8 @@
 
     // ─── Auto-redirect if already admin ─────────────────────────────────────
     async function checkExisting() {
+        // If this is a password recovery flow, never redirect — let the reset panel handle it
+        if (window.location.hash.includes('type=recovery')) return;
         const { data: { session } } = await sb.auth.getSession();
         if (!session) return;
         const { data: profile } = await sb.from('profiles')
@@ -480,6 +482,8 @@
     // ─── Listen for PASSWORD_RECOVERY event ─────────────────────────────────
     sb.auth.onAuthStateChange((event) => {
         if (event === 'PASSWORD_RECOVERY') {
+            // Clear the hash so a page refresh doesn't re-trigger recovery mode
+            history.replaceState(null, '', window.location.pathname);
             showPanel('reset');
         }
     });
