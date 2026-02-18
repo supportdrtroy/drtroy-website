@@ -335,8 +335,8 @@ window.PACKAGE_CATALOG = window.PACKAGE_CATALOG || {
         code: 'PT',
         credits: 27,
         description: 'Complete CE package designed for Physical Therapists. Includes core courses plus PT-specific specialties.',
-        originalPrice: 109,
-        finalPrice: 99, // With $10 new account discount
+        originalPrice: 149,
+        finalPrice: 139, // With $10 new member discount
         savings: 10,
         courses: ['PT-MSK-001', 'JOINT-001', 'MOBILITY-001', 'NEURO-001', 'EDUCATION-001', 'HEALTHTECH-001', 'BALANCE-001', 'EXERCISE-001', 'GERIATRIC-001'],
         featured: true
@@ -346,8 +346,8 @@ window.PACKAGE_CATALOG = window.PACKAGE_CATALOG || {
         code: 'PTA',
         credits: 17,
         description: 'Tailored CE package for Physical Therapist Assistants covering essential topics.',
-        originalPrice: 99,
-        finalPrice: 89, // With $10 new account discount
+        originalPrice: 119,
+        finalPrice: 109, // With $10 new member discount
         savings: 10,
         courses: ['MOBILITY-001', 'NEURO-001', 'EDUCATION-001', 'HEALTHTECH-001', 'GERIATRIC-001'],
         featured: true
@@ -357,8 +357,8 @@ window.PACKAGE_CATALOG = window.PACKAGE_CATALOG || {
         code: 'OT',
         credits: 23,
         description: 'Complete CE package designed for Occupational Therapists with OT-specific content.',
-        originalPrice: 109,
-        finalPrice: 99, // With $10 new account discount
+        originalPrice: 129,
+        finalPrice: 119, // With $10 new member discount
         savings: 10,
         courses: ['OT-ADL-001', 'MOBILITY-001', 'NEURO-001', 'EDUCATION-001', 'HEALTHTECH-001', 'GERIATRIC-001', 'INFECTION-001'],
         featured: true
@@ -369,7 +369,7 @@ window.PACKAGE_CATALOG = window.PACKAGE_CATALOG || {
         credits: 23,
         description: 'Tailored CE package for Certified Occupational Therapy Assistants.',
         originalPrice: 109,
-        finalPrice: 99, // With $10 new account discount
+        finalPrice: 99, // With $10 new member discount
         savings: 10,
         courses: ['MOBILITY-001', 'NEURO-001', 'EDUCATION-001', 'HEALTHTECH-001', 'GERIATRIC-001'],
         featured: true

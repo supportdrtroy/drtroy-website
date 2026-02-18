@@ -591,7 +591,12 @@
                             </div>
                         </div>
                         
-                        <button class="btn btn-primary" onclick="selectPackage('PT', 'PT Core Package')" style="margin-top: 2rem;">Select This Package</button>
+                        <div style="margin-top:1.5rem;padding:1rem;background:#f8fafc;border-radius:8px;text-align:center;">
+                            <div style="font-size:0.9rem;text-decoration:line-through;color:#94a3b8;">$149 regular price</div>
+                            <div style="font-size:1.5rem;font-weight:700;color:#1e3a5f;">$139 <span style="font-size:0.85rem;font-weight:400;color:#16a34a;">new member price</span></div>
+                            <div style="font-size:0.8rem;color:#16a34a;margin-top:0.25rem;">🎉 Save $10 when you create a free account</div>
+                        </div>
+                        <button class="btn btn-primary" onclick="selectPackage('PT', 'PT Core Package')" style="margin-top: 1rem;">Select This Package</button>
                     </div>
 
                     <!-- OT Package -->
@@ -642,7 +647,12 @@
                             </div>
                         </div>
                         
-                        <button class="btn btn-primary" onclick="selectPackage('OT', 'OT Core Package')" style="margin-top: 2rem;">Select This Package</button>
+                        <div style="margin-top:1.5rem;padding:1rem;background:#f8fafc;border-radius:8px;text-align:center;">
+                            <div style="font-size:0.9rem;text-decoration:line-through;color:#94a3b8;">$129 regular price</div>
+                            <div style="font-size:1.5rem;font-weight:700;color:#1e3a5f;">$119 <span style="font-size:0.85rem;font-weight:400;color:#16a34a;">new member price</span></div>
+                            <div style="font-size:0.8rem;color:#16a34a;margin-top:0.25rem;">🎉 Save $10 when you create a free account</div>
+                        </div>
+                        <button class="btn btn-primary" onclick="selectPackage('OT', 'OT Core Package')" style="margin-top: 1rem;">Select This Package</button>
                     </div>
 
                     <!-- COTA Package -->
@@ -689,7 +699,12 @@
                             </div>
                         </div>
                         
-                        <button class="btn btn-primary" onclick="selectPackage('COTA', 'COTA Complete Package')" style="margin-top: 2rem;">Select This Package</button>
+                        <div style="margin-top:1.5rem;padding:1rem;background:#f8fafc;border-radius:8px;text-align:center;">
+                            <div style="font-size:0.9rem;text-decoration:line-through;color:#94a3b8;">$109 regular price</div>
+                            <div style="font-size:1.5rem;font-weight:700;color:#1e3a5f;">$99 <span style="font-size:0.85rem;font-weight:400;color:#16a34a;">new member price</span></div>
+                            <div style="font-size:0.8rem;color:#16a34a;margin-top:0.25rem;">🎉 Save $10 when you create a free account</div>
+                        </div>
+                        <button class="btn btn-primary" onclick="selectPackage('COTA', 'COTA Complete Package')" style="margin-top: 1rem;">Select This Package</button>
                     </div>
 
                     <!-- PTA Package -->
@@ -728,7 +743,12 @@
                             </div>
                         </div>
                         
-                        <button class="btn btn-primary" onclick="selectPackage('PTA', 'PTA Complete Package')" style="margin-top: 2rem;">Select This Package</button>
+                        <div style="margin-top:1.5rem;padding:1rem;background:#f8fafc;border-radius:8px;text-align:center;">
+                            <div style="font-size:0.9rem;text-decoration:line-through;color:#94a3b8;">$119 regular price</div>
+                            <div style="font-size:1.5rem;font-weight:700;color:#1e3a5f;">$109 <span style="font-size:0.85rem;font-weight:400;color:#16a34a;">new member price</span></div>
+                            <div style="font-size:0.8rem;color:#16a34a;margin-top:0.25rem;">🎉 Save $10 when you create a free account</div>
+                        </div>
+                        <button class="btn btn-primary" onclick="selectPackage('PTA', 'PTA Complete Package')" style="margin-top: 1rem;">Select This Package</button>
                     </div>
                 </div>
                 
@@ -1017,6 +1037,8 @@
                         successMessage = `Account created! Check your email to confirm. Then come back to get your ${pkg.name}.`;
                         sessionStorage.removeItem('selectedPackage');
                     }
+                    // Flag new member so discount auto-applies at checkout
+                    localStorage.setItem('newMemberDiscount', 'NEWCUSTOMER10');
                     alert(successMessage);
                     window.location.href = 'course-catalog.html';
                 } else {

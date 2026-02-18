@@ -938,6 +938,17 @@
 
             populateCheckout();
 
+            // Auto-apply new member discount if flag is set from account creation
+            const newMemberCode = localStorage.getItem('newMemberDiscount');
+            if (newMemberCode) {
+                const codeInput = document.getElementById('discount-code-input');
+                if (codeInput) {
+                    codeInput.value = newMemberCode;
+                    // Small delay to let cart render first
+                    setTimeout(() => applyDiscountCode(), 300);
+                }
+            }
+
             // Pre-fill form from Supabase session if logged in
             if (window.DrTroySupabase) {
                 const session = await window.DrTroySupabase.getSession();

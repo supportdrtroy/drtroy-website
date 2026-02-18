@@ -771,8 +771,8 @@
                 code: 'PT',
                 credits: 27,
                 description: 'Complete CE package designed for Physical Therapists. Includes core courses plus PT-specific specialties covering MSK evaluation, joint replacements, and comprehensive rehabilitation approaches.',
-                originalPrice: 109,
-                finalPrice: 99,
+                originalPrice: 149,
+                finalPrice: 139,
                 savings: 10,
                 courses: ['PT-MSK-001', 'JOINT-001', 'MOBILITY-001', 'NEURO-001', 'EDUCATION-001', 'HEALTHTECH-001', 'BALANCE-001', 'EXERCISE-001', 'GERIATRIC-001'],
                 featured: true
@@ -782,8 +782,8 @@
                 code: 'OT',
                 credits: 23,
                 description: 'Complete CE package designed for Occupational Therapists with OT-specific content including ADL assessment, mobility training, and specialized interventions.',
-                originalPrice: 109,
-                finalPrice: 99,
+                originalPrice: 129,
+                finalPrice: 119,
                 savings: 10,
                 courses: ['OT-ADL-001', 'MOBILITY-001', 'NEURO-001', 'EDUCATION-001', 'HEALTHTECH-001', 'GERIATRIC-001', 'INFECTION-001'],
                 featured: true
@@ -793,8 +793,8 @@
                 code: 'PTA',
                 credits: 17,
                 description: 'Tailored CE package for Physical Therapist Assistants covering essential topics including mobility, neurological rehabilitation, and patient education.',
-                originalPrice: 99,
-                finalPrice: 89,
+                originalPrice: 119,
+                finalPrice: 109,
                 savings: 10,
                 courses: ['MOBILITY-001', 'NEURO-001', 'EDUCATION-001', 'HEALTHTECH-001', 'GERIATRIC-001'],
                 featured: true
@@ -858,9 +858,9 @@
                     <div class="package-title">${pkg.title}</div>
                     <div class="package-credits">${pkg.credits} Contact Hours</div>
                     <div class="package-pricing">
-                        <span class="original-price">$${pkg.originalPrice}</span>
-                        <span class="discounted-price">$${pkg.finalPrice}</span>
-                        <div class="savings">New Customers Save $${pkg.savings} On Bundles!</div>
+                        <span class="original-price">$${pkg.originalPrice} regular price</span>
+                        <span class="discounted-price">$${pkg.finalPrice} <span style="font-size:0.9rem;font-weight:400;">new member price</span></span>
+                        <div class="savings">🎉 Save $${pkg.savings} when you create a free account!</div>
                     </div>
                     <p class="package-description">${pkg.description}</p>
                     <button class="btn btn-primary btn-block" onclick="addPackageToCartWithFeedback('${pkg.code}')">
