@@ -712,6 +712,44 @@
                 font-size: 1.5rem;
             }
         }
+
+        /* Hamburger menu */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0.25rem;
+        }
+        .hamburger span {
+            display: block;
+            width: 24px;
+            height: 2px;
+            background: #1e3a8a;
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+        @media (max-width: 768px) {
+            .hamburger { display: flex; }
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: white;
+                flex-direction: column;
+                padding: 1rem 2rem;
+                box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+                z-index: 100;
+                border-top: 1px solid #e5e7eb;
+            }
+            .nav-links.active { display: flex; }
+            .nav-links a { padding: 0.75rem 0; border-bottom: 1px solid #f3f4f6; }
+            .header-container, header > div { position: relative; }
+        }
     </style>
 </head>
 <body>
@@ -723,7 +761,10 @@
                     <img src="courses/images/drtroy_logo_new.jpg" alt="DrTroy Continuing Education">
                 </a>
             </div>
-            <nav>
+            <button class="hamburger" aria-label="Open menu">
+                <span></span><span></span><span></span>
+            </button>
+            <nav class="nav-links">
                 <a href="home-preview.html">Home</a>
                 <a href="index.html#packages">Packages</a>
                 <a href="courses.html">Course Catalog</a>
@@ -3206,6 +3247,20 @@
                 }, 5000);
             }
         }
+    </script>
+
+    <script>
+        // Mobile hamburger menu
+        (function() {
+            const btn = document.querySelector('.hamburger');
+            const nav = document.querySelector('.nav-links, nav');
+            if (btn && nav) {
+                btn.addEventListener('click', () => { nav.classList.toggle('active'); });
+                nav.querySelectorAll('a').forEach(a => {
+                    a.addEventListener('click', () => nav.classList.remove('active'));
+                });
+            }
+        })();
     </script>
 </body>
 </html>
