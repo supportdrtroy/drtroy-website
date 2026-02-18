@@ -1427,7 +1427,7 @@
                             enrolledAt: e.enrolled_at,
                             completed: prog.status === 'completed',
                             completedAt: prog.completed_at,
-                            progress: prog.progress_pct || 0
+                            progress: prog.progress_percent || 0
                         };
                     }
                 }
@@ -2167,7 +2167,8 @@
             let coursesHTML = '<div class="courses-grid">';
             // Add Supabase-only cards first
             supabaseCards.forEach(card => { coursesHTML += card; });
-            
+
+            const enrolledCourses = localEnrolled.filter(id => !currentAccount._supabaseEnrollments?.find(e => e.course_id === id));
             enrolledCourses.forEach(courseId => {
                 const course = COURSE_DATABASE[courseId];
                 if (!course) return;
