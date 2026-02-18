@@ -931,11 +931,11 @@
                     <h2 id="account-title" style="font-family: 'Playfair Display', Georgia, serif; font-size: 1.75rem; font-weight: 600; color: var(--primary-navy); margin-bottom: 1rem;">Create Your Free Account</h2>
                     <p style="color: var(--neutral-600); margin-bottom: 1rem; font-size: 0.95rem; line-height: 1.6;">New customers save $10 on bundles and save your course progress. Pick up right where you left off.</p>
                     <p style="color: var(--accent-emerald); font-weight: 600; margin-bottom: 2rem; font-size: 0.95rem;">Get a $10 credit on future purchases when you refer a colleague!</p>
-                    <form id="account-form">
+                    <form id="account-form" autocomplete="off">
                         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 1.5rem;">
                             <div>
                                 <label style="display: block; margin-bottom: 0.75rem; font-weight: 600; color: var(--neutral-700); font-size: 0.95rem; text-align: left;">Email Address</label>
-                                <input type="email" id="email" name="email" style="width: 100%; padding: 1rem 1.25rem; border: 2px solid var(--neutral-200); border-radius: 12px; font-size: 1rem; color: var(--neutral-800); background: white; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); font-family: inherit;" placeholder="your.email@example.com" required>
+                                <input type="email" id="email" name="email" autocomplete="off" style="width: 100%; padding: 1rem 1.25rem; border: 2px solid var(--neutral-200); border-radius: 12px; font-size: 1rem; color: var(--neutral-800); background: white; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); font-family: inherit;" placeholder="your.email@example.com" required>
                             </div>
                             <div>
                                 <label style="display: block; margin-bottom: 0.75rem; font-weight: 600; color: var(--neutral-700); font-size: 0.95rem; text-align: left;">Profession</label>
@@ -950,7 +950,7 @@
                         </div>
                         <div style="margin-bottom: 2rem;">
                             <label style="display: block; margin-bottom: 0.75rem; font-weight: 600; color: var(--neutral-700); font-size: 0.95rem; text-align: left;">Password</label>
-                            <input type="password" id="password" name="password" style="width: 100%; padding: 1rem 1.25rem; border: 2px solid var(--neutral-200); border-radius: 12px; font-size: 1rem; color: var(--neutral-800); background: white; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); font-family: inherit;" placeholder="Create secure password" required>
+                            <input type="password" id="password" name="password" autocomplete="new-password" style="width: 100%; padding: 1rem 1.25rem; border: 2px solid var(--neutral-200); border-radius: 12px; font-size: 1rem; color: var(--neutral-800); background: white; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); font-family: inherit;" placeholder="Create secure password" required>
                             <p style="font-size: 0.85rem; color: var(--neutral-600); margin-top: 0.5rem; line-height: 1.5; text-align: left;">Password must be at least 8 characters with mixed case, numbers, and symbols.</p>
                         </div>
                         <button type="submit" style="display: inline-flex; align-items: center; justify-content: center; padding: 1.25rem 2rem; border-radius: 12px; text-decoration: none; font-weight: 600; font-size: 1rem; cursor: pointer; border: none; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); position: relative; overflow: hidden; width: 100%; background: linear-gradient(135deg, var(--accent-emerald) 0%, var(--accent-emerald-light) 100%); color: white; box-shadow: var(--shadow-md);">Create Free Account</button>
@@ -995,6 +995,17 @@
     <script src="js/cart.js"></script>
     
     <script>
+        // Clear autofill — browsers inject saved credentials after load,
+        // so we wipe the signup fields after a short delay on every page visit.
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                var e = document.getElementById('email');
+                var p = document.getElementById('password');
+                if (e) e.value = '';
+                if (p) p.value = '';
+            }, 100);
+        });
+
         // Initialize page
         document.addEventListener('DOMContentLoaded', function() {
             console.log('🏠 Homepage preview initializing...');
