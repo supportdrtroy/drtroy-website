@@ -699,9 +699,20 @@
 
     <script>
         // Hamburger menu
-        document.querySelector('.hamburger').addEventListener('click', function() {
-            document.querySelector('.nav-links').classList.toggle('active');
-        });
+        (function() {
+            const btn = document.querySelector('.hamburger');
+            const nav = document.querySelector('.nav-links');
+            if (btn && nav) {
+                btn.addEventListener('click', () => nav.classList.toggle('active'));
+                nav.querySelectorAll('a').forEach(a => {
+                    a.addEventListener('click', () => nav.classList.remove('active'));
+                });
+                window.addEventListener('scroll', () => nav.classList.remove('active'), {passive: true});
+                document.addEventListener('click', (e) => {
+                    if (!nav.contains(e.target) && !btn.contains(e.target)) nav.classList.remove('active');
+                });
+            }
+        })();
 
         // Scroll-triggered animations
         const observer = new IntersectionObserver((entries) => {
