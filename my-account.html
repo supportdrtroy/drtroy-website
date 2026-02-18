@@ -5,6 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Account | DrTroy.com</title>
     
+    <!-- Supabase JS v2 CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+    <!-- DrTroy Supabase client -->
+    <script src="js/supabase-client.js"></script>
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
     
@@ -1266,87 +1271,174 @@
     <script>
         // Global variables
         let currentAccount = null;
+        let currentSupabaseUser = null;
 
-        // Initialize page when loaded
-        document.addEventListener('DOMContentLoaded', function() {
-            console.log('🔍 PAGE DEBUG - My Account page initializing...');
-            
-            // Auto-create Troy's account if it doesn't exist (mobile fix)
-            let accountData = localStorage.getItem('drtroyAccount');
-            if (!accountData) {
-                console.log('🔧 AUTO-CREATE - Creating Troy\'s account for mobile access');
-                const troyAccount = {
-                    email: 'troy@drtroy.com',
-                    firstName: 'Troy',
-                    lastName: 'Hounshell',
-                    discipline: 'PT',
-                    licenseNumber: 'PT123456',
-                    licenseState: 'TX',
-                    superUser: true,
-                    enrolledCourses: ['PT-MSK-001'],
-                    courseProgress: {},
-                    purchases: [],
-                    createdAt: new Date().toISOString()
-                };
-                localStorage.setItem('drtroyAccount', JSON.stringify(troyAccount));
-                localStorage.setItem('userSession', 'active');
-                localStorage.setItem('troyadmin', 'true');
-                accountData = localStorage.getItem('drtroyAccount');
+        // ─── SUPABASE AUTH INIT ──────────────────────────────────────────────
+        // Initialize page when loaded — Supabase-first, localStorage fallback
+        document.addEventListener('DOMContentLoaded', async function() {
+            console.log('🔍 My Account page initializing (Supabase auth)...');
+
+            setupEventListeners();
+
+            // Listen for future auth state changes
+            if (window.DrTroySupabase) {
+                window.DrTroySupabase.onAuthStateChange((event, session) => {
+                    if (event === 'SIGNED_OUT') {
+                        showLoginRequired();
+                    } else if (event === 'SIGNED_IN' && session) {
+                        currentSupabaseUser = session.user;
+                        initAccountFromSupabase(session.user);
+                    }
+                });
             }
-            
-            // Check if required elements exist
-            const loginDiv = document.getElementById('loginRequired');
-            const contentDiv = document.getElementById('accountContent');
-            
-            console.log('🔍 PAGE DEBUG - loginRequired div exists:', !!loginDiv);
-            console.log('🔍 PAGE DEBUG - accountContent div exists:', !!contentDiv);
-            
-            if (loginDiv) console.log('🔍 PAGE DEBUG - loginRequired initial display:', loginDiv.style.display);
-            if (contentDiv) console.log('🔍 PAGE DEBUG - accountContent initial display:', contentDiv.style.display);
-            
-            // Troy auto-fix: Check if Troy's account exists and bypass normal flow
-            if (accountData) {
+
+            // Check existing session
+            await checkLoginStatus();
+        });
+
+        // Check login status — Supabase first, legacy localStorage fallback
+        async function checkLoginStatus() {
+            console.log('🔍 checkLoginStatus() — checking Supabase session...');
+
+            // ── Try Supabase session ──────────────────────────────────────────
+            if (window.DrTroySupabase) {
+                const session = await window.DrTroySupabase.getSession();
+                if (session && session.user) {
+                    console.log('✅ Supabase session active:', session.user.email);
+                    currentSupabaseUser = session.user;
+                    await initAccountFromSupabase(session.user);
+                    return;
+                }
+                console.log('ℹ️ No Supabase session found, checking localStorage...');
+            }
+
+            // ── Fallback: legacy localStorage session ─────────────────────────
+            const accountData = localStorage.getItem('drtroyAccount');
+            const sessionData  = localStorage.getItem('userSession');
+
+            if (accountData && sessionData) {
                 try {
-                    const account = JSON.parse(accountData);
-                    if (account.email === 'troy@drtroy.com') {
-                        console.log('🔧 TROY AUTO-FIX - Detected Troy\'s account, bypassing normal flow');
-                        // Short delay to ensure DOM is ready
-                        setTimeout(() => {
-                            forceShowAccount();
-                            restoreActiveSection();
-                            restoreCachedRenewal();
-                            
-                            // Force renewal calculation after everything loads
-                            setTimeout(() => {
-                                if (currentAccount && currentAccount.licenseExpiration) {
-                                    console.log('🔧 TROY AUTO-FIX - Forcing renewal recalculation');
-                                    recalculateRenewal();
-                                } else {
-                                    console.log('🔧 TROY AUTO-FIX - No renewal data, keeping cached value');
-                                }
-                            }, 200);
-                        }, 100);
-                        
-                        // Secondary fallback in case first attempt fails
-                        setTimeout(() => {
-                            const loginStillVisible = document.getElementById('loginRequired').style.display !== 'none';
-                            if (loginStillVisible) {
-                                console.log('🔧 TROY AUTO-FIX - Fallback trigger');
-                                forceShowAccount();
-                                restoreActiveSection();
-                            }
-                        }, 500);
-                        
-                        return; // Skip normal authentication flow
+                    currentAccount = JSON.parse(accountData);
+                    const session   = JSON.parse(sessionData);
+                    const isTroy    = currentAccount.email === 'troy@drtroy.com';
+                    const isValid   = session.expires > Date.now();
+
+                    if (isValid || isTroy) {
+                        console.log('✅ Legacy session valid for', currentAccount.email);
+                        showAccountContent();
+                        loadAccountData();
+                        restoreActiveSection();
+                        restoreCachedRenewal();
+                        return;
                     }
                 } catch (e) {
-                    console.error('Error checking Troy account:', e);
+                    console.error('Legacy session parse error:', e);
                 }
             }
-            
-            checkLoginStatus();
-            setupEventListeners();
-        });
+
+            // No valid session
+            showLoginRequired();
+        }
+
+        // Initialize account dashboard from a Supabase user object
+        async function initAccountFromSupabase(user) {
+            // Load profile from Supabase
+            let profile = null;
+            if (window.DrTroySupabase) {
+                const { data } = await window.DrTroySupabase.getProfile(user.id);
+                profile = data;
+            }
+
+            // Build currentAccount from Supabase data, falling back to localStorage
+            const legacyData = (() => {
+                try { return JSON.parse(localStorage.getItem('drtroyAccount') || '{}'); } catch { return {}; }
+            })();
+
+            currentAccount = {
+                id: user.id,
+                email: user.email,
+                firstName: profile?.first_name || legacyData.firstName || '',
+                lastName:  profile?.last_name  || legacyData.lastName  || '',
+                discipline: profile?.profession || legacyData.discipline || 'PT',
+                licenseNumber: profile?.license_number || legacyData.licenseNumber || '',
+                licenseState:  profile?.state          || legacyData.licenseState  || '',
+                phone:    legacyData.phone    || '',
+                address:  legacyData.address  || '',
+                city:     legacyData.city     || '',
+                state:    legacyData.state    || '',
+                zipCode:  legacyData.zipCode  || '',
+                licenseExpiration: legacyData.licenseExpiration || '',
+                licenseRenewalReminders: legacyData.licenseRenewalReminders !== false,
+                notifications: legacyData.notifications || {},
+                privacy:       legacyData.privacy       || {},
+                ethicsCCUs:    legacyData.ethicsCCUs    || { jurisprudenceCompleted: false, humanTrafficingCompleted: false, totalEthicsCCUs: 0 },
+                externalCCUs:  legacyData.externalCCUs  || [],
+                courseProgress: legacyData.courseProgress || {},
+                enrolledCourses: legacyData.enrolledCourses || [],
+                // Admin check from profile
+                superUser: profile?.is_admin === true || legacyData.superUser === true
+            };
+
+            // Load real enrollments from Supabase
+            await loadSupabaseEnrollments(user.id);
+
+            showAccountContent();
+            loadAccountData();
+            restoreActiveSection();
+            restoreCachedRenewal();
+        }
+
+        // Load enrollments from Supabase and merge into currentAccount
+        async function loadSupabaseEnrollments(userId) {
+            if (!window.DrTroySupabase || !userId) return;
+
+            const { data: enrollments } = await window.DrTroySupabase.getEnrollments(userId);
+            if (!enrollments || enrollments.length === 0) return;
+
+            // Merge enrolled course IDs into currentAccount
+            const supabaseCourseIds = enrollments
+                .filter(e => e.courses)
+                .map(e => {
+                    // Map Supabase course ID to local COURSE_DATABASE key
+                    // Supabase courses have a UUID; we try to match by title or use the ID directly
+                    return e.course_id;
+                });
+
+            // Build a rich supbase courses display list
+            currentAccount._supabaseEnrollments = enrollments;
+
+            // Merge with legacy enrolled courses
+            const existing = new Set(currentAccount.enrolledCourses || []);
+            supabaseCourseIds.forEach(id => existing.add(id));
+            currentAccount.enrolledCourses = Array.from(existing);
+
+            // Update course progress from Supabase course_progress
+            enrollments.forEach(e => {
+                if (e.course_progress && e.course_progress.length > 0) {
+                    const prog = e.course_progress[0];
+                    if (!currentAccount.courseProgress[e.course_id]) {
+                        currentAccount.courseProgress[e.course_id] = {
+                            enrolledAt: e.enrolled_at,
+                            completed: prog.status === 'completed',
+                            completedAt: prog.completed_at,
+                            progress: prog.progress_pct || 0
+                        };
+                    }
+                }
+            });
+        }
+
+        // Logout — Supabase + legacy clear
+        async function logout() {
+            if (window.DrTroySupabase) {
+                await window.DrTroySupabase.signOut();
+            }
+            localStorage.removeItem('drtroyAccount');
+            localStorage.removeItem('userSession');
+            localStorage.removeItem('troyadmin');
+            localStorage.removeItem('currentAccountSection');
+            window.location.href = 'index.html';
+        }
 
         // Restore the previously active section after page load
         function restoreActiveSection() {
@@ -1381,94 +1473,7 @@
             }
         }
 
-        // Check if user is logged in
-        function checkLoginStatus() {
-            console.log('🔍 DEBUG - My Account authentication check...');
-            
-            const accountData = localStorage.getItem('drtroyAccount');
-            const sessionData = localStorage.getItem('userSession');
-            
-            console.log('🔍 DEBUG - Account data exists:', !!accountData);
-            console.log('🔍 DEBUG - Session data exists:', !!sessionData);
-            
-            if (accountData) {
-                try {
-                    currentAccount = JSON.parse(accountData);
-                    let session = null;
-                    
-                    // Parse session data if it exists, otherwise create new session
-                    if (sessionData) {
-                        session = JSON.parse(sessionData);
-                    } else {
-                        console.log('🔧 No session found, creating new session for existing account...');
-                        session = {
-                            userId: currentAccount.id,
-                            email: currentAccount.email,
-                            loginTime: Date.now(),
-                            expires: Date.now() + (7 * 24 * 60 * 60 * 1000) // 7 days
-                        };
-                        localStorage.setItem('userSession', JSON.stringify(session));
-                    }
-                    
-                    console.log('🔍 DEBUG - Current account email:', currentAccount.email);
-                    console.log('🔍 DEBUG - Session expires:', new Date(session.expires));
-                    console.log('🔍 DEBUG - Current time:', new Date());
-                    console.log('🔍 DEBUG - Session valid:', session.expires > Date.now());
-                    
-                    // Check if session is still valid OR if it's Troy (temporary bypass)
-                    const sessionValid = session.expires > Date.now();
-                    const isTroy = currentAccount.email === 'troy@drtroy.com';
-                    
-                    console.log('🔍 AUTH DEBUG - Session valid check:', sessionValid);
-                    console.log('🔍 AUTH DEBUG - Is Troy check:', isTroy);
-                    console.log('🔍 AUTH DEBUG - Should allow access:', sessionValid || isTroy);
-                    
-                    if (sessionValid || isTroy) {
-                        console.log('✅ User is logged in:', currentAccount.firstName);
-                        console.log('🔍 AUTH DEBUG - About to call showAccountContent()');
-                        
-                        // If Troy's session expired, create a new one
-                        if (isTroy && !sessionValid) {
-                            console.log('🔧 Extending Troy\'s session...');
-                            const newSession = {
-                                userId: session.userId,
-                                email: session.email,
-                                loginTime: Date.now(),
-                                expires: Date.now() + (7 * 24 * 60 * 60 * 1000) // 7 days
-                            };
-                            localStorage.setItem('userSession', JSON.stringify(newSession));
-                        }
-                        
-                        console.log('🔍 AUTH DEBUG - Calling showAccountContent()');
-                        showAccountContent();
-                        
-                        console.log('🔍 AUTH DEBUG - Calling loadAccountData()');
-                        loadAccountData();
-                        
-                        console.log('🔍 AUTH DEBUG - Restoring active section');
-                        restoreActiveSection();
-                        
-                        console.log('🔍 AUTH DEBUG - Authentication complete');
-                    } else {
-                        console.log('❌ Session expired');
-                        console.log('🔍 AUTH DEBUG - Calling showLoginRequired()');
-                        showLoginRequired();
-                    }
-                } catch (error) {
-                    console.error('❌ Error parsing account data:', error);
-                    console.error('Account data:', accountData);
-                    console.error('Session data:', sessionData);
-                    showLoginRequired();
-                }
-            } else {
-                console.log('❌ No account data found');
-                console.log('Account data exists:', !!accountData);
-                
-                // For debugging, let's show what's actually in localStorage
-                console.log('🔍 All localStorage keys:', Object.keys(localStorage));
-                showLoginRequired();
-            }
-        }
+        // (checkLoginStatus is defined above in the Supabase auth init block)
 
         // Show account content
         function showAccountContent() {
@@ -1832,6 +1837,9 @@
             
             // Update courses display
             updateCoursesDisplay();
+
+            // Load Supabase certificates if available
+            loadSupabaseCertificates();
         }
 
         // Course Information Database (Enhanced with individual pricing & approval numbers)
@@ -2061,11 +2069,46 @@
         // Update the My Courses section
         function updateCoursesDisplay() {
             if (!currentAccount) return;
-            
+
             const coursesList = document.getElementById('coursesList');
-            const enrolledCourses = currentAccount.enrolledCourses || [];
-            
-            if (enrolledCourses.length === 0) {
+
+            // Build combined list: local COURSE_DATABASE IDs + Supabase enrollments
+            const localEnrolled = currentAccount.enrolledCourses || [];
+
+            // Build Supabase course cards (UUID-based, not in COURSE_DATABASE)
+            const supabaseCards = [];
+            if (currentAccount._supabaseEnrollments && currentAccount._supabaseEnrollments.length > 0) {
+                currentAccount._supabaseEnrollments.forEach(enrollment => {
+                    if (!enrollment.courses) return;
+                    const c = enrollment.courses;
+                    // Only add if not already in local COURSE_DATABASE
+                    if (COURSE_DATABASE[enrollment.course_id]) return;
+                    const prog = enrollment.course_progress?.[0] || {};
+                    const isCompleted = prog.status === 'completed';
+                    const inProgress  = prog.status === 'in_progress';
+                    let statusBadge = isCompleted ? '<span class="status-badge completed">✓ Completed</span>'
+                                    : inProgress  ? '<span class="status-badge in-progress">In Progress</span>'
+                                    : '<span class="status-badge available">Available</span>';
+                    let actionBtn = `<a href="courses/pt-msk-001-progressive.html" class="btn btn-primary">Start Course</a>`;
+                    if (isCompleted) actionBtn = `<button class="btn btn-secondary" onclick="viewCertificate('${enrollment.course_id}')">View Certificate</button>`;
+                    supabaseCards.push(`
+                        <div class="course-card">
+                            <div class="course-header">
+                                <h3>${c.title}</h3>
+                                ${statusBadge}
+                            </div>
+                            <p class="course-description">${c.description || ''}</p>
+                            <div class="course-details">
+                                <div class="course-credits"><strong>${c.ceu_hours || '?'} CCUs</strong></div>
+                            </div>
+                            <div class="course-actions">${actionBtn}</div>
+                        </div>
+                    `);
+                });
+            }
+
+            // If nothing enrolled at all
+            if (localEnrolled.length === 0 && supabaseCards.length === 0) {
                 coursesList.innerHTML = `
                     <div style="text-align: center; color: var(--gray-600); padding: 3rem;">
                         <h3>No Courses Yet</h3>
@@ -2075,8 +2118,10 @@
                 `;
                 return;
             }
-            
+
             let coursesHTML = '<div class="courses-grid">';
+            // Add Supabase-only cards first
+            supabaseCards.forEach(card => { coursesHTML += card; });
             
             enrolledCourses.forEach(courseId => {
                 const course = COURSE_DATABASE[courseId];
@@ -2233,70 +2278,83 @@
             event.target.classList.add('active');
         }
 
-        // Save personal information
-        function savePersonalInfo() {
+        // Save personal information — localStorage + Supabase sync
+        async function savePersonalInfo() {
             if (!currentAccount) return;
-            
+
             console.log('Saving personal information...');
-            
-            // Update account data
-            currentAccount.firstName = document.getElementById('firstName').value;
-            currentAccount.lastName = document.getElementById('lastName').value;
-            currentAccount.email = document.getElementById('email').value;
-            currentAccount.phone = document.getElementById('phone').value;
-            currentAccount.address = document.getElementById('address').value;
-            currentAccount.city = document.getElementById('city').value;
-            currentAccount.state = document.getElementById('state').value.toUpperCase();
-            currentAccount.zipCode = document.getElementById('zipCode').value;
-            currentAccount.licenseNumber = document.getElementById('licenseNumber').value;
-            currentAccount.licenseState = document.getElementById('licenseState').value.toUpperCase();
+
+            // Update in-memory account
+            currentAccount.firstName       = document.getElementById('firstName').value;
+            currentAccount.lastName        = document.getElementById('lastName').value;
+            currentAccount.email           = document.getElementById('email').value;
+            currentAccount.phone           = document.getElementById('phone').value;
+            currentAccount.address         = document.getElementById('address').value;
+            currentAccount.city            = document.getElementById('city').value;
+            currentAccount.state           = document.getElementById('state').value.toUpperCase();
+            currentAccount.zipCode         = document.getElementById('zipCode').value;
+            currentAccount.licenseNumber   = document.getElementById('licenseNumber').value;
+            currentAccount.licenseState    = document.getElementById('licenseState').value.toUpperCase();
             currentAccount.licenseExpiration = document.getElementById('licenseExpiration').value;
             currentAccount.licenseRenewalReminders = document.getElementById('renewalReminders').checked;
-            currentAccount.updatedAt = new Date().toISOString();
-            
-            // Save to localStorage
+            currentAccount.updatedAt       = new Date().toISOString();
+
+            // Persist to localStorage
             localStorage.setItem('drtroyAccount', JSON.stringify(currentAccount));
-            
-            // Update other localStorage items
             localStorage.setItem('customerName', `${currentAccount.firstName} ${currentAccount.lastName}`);
             localStorage.setItem('customerEmail', currentAccount.email);
-            
+
+            // Sync to Supabase profiles table if authenticated
+            if (window.DrTroySupabase && currentSupabaseUser) {
+                const { error } = await window.DrTroySupabase.updateProfile(currentSupabaseUser.id, {
+                    first_name:     currentAccount.firstName,
+                    last_name:      currentAccount.lastName,
+                    profession:     currentAccount.discipline,
+                    license_number: currentAccount.licenseNumber,
+                    state:          currentAccount.licenseState
+                });
+                if (error) console.warn('Supabase profile sync warning:', error.message);
+                else console.log('✅ Profile synced to Supabase');
+            }
+
             showAlert('Personal information updated successfully!', 'success');
-            console.log('🔍 SAVE DEBUG - License expiration saved:', currentAccount.licenseExpiration);
             updateCCUDashboard();
         }
 
-        // Change password
-        function changePassword() {
-            if (!currentAccount) return;
-            
-            const currentPassword = document.getElementById('currentPassword').value;
-            const newPassword = document.getElementById('newPassword').value;
+        // Change password — Supabase auth (no plain-text password in localStorage)
+        async function changePassword() {
+            const newPassword    = document.getElementById('newPassword').value;
             const confirmPassword = document.getElementById('confirmPassword').value;
-            
-            // Validate current password
-            if (currentAccount.password !== currentPassword) {
-                showAlert('Current password is incorrect.', 'danger');
-                return;
-            }
-            
-            // Validate new passwords match
+
             if (newPassword !== confirmPassword) {
                 showAlert('New passwords do not match.', 'danger');
                 return;
             }
-            
-            // Update password
-            currentAccount.password = newPassword;
-            currentAccount.updatedAt = new Date().toISOString();
-            
-            // Save to localStorage
-            localStorage.setItem('drtroyAccount', JSON.stringify(currentAccount));
-            
-            // Clear form
-            document.getElementById('passwordForm').reset();
-            
-            showAlert('Password changed successfully!', 'success');
+            if (newPassword.length < 8) {
+                showAlert('Password must be at least 8 characters.', 'danger');
+                return;
+            }
+
+            // Supabase password update
+            if (window.DrTroySupabase) {
+                const { error } = await window.DrTroySupabase.updatePassword(newPassword);
+                if (error) {
+                    showAlert('Password update failed: ' + error.message, 'danger');
+                    return;
+                }
+                document.getElementById('passwordForm').reset();
+                showAlert('Password changed successfully!', 'success');
+                return;
+            }
+
+            // Legacy fallback
+            if (currentAccount) {
+                currentAccount.password  = newPassword;
+                currentAccount.updatedAt = new Date().toISOString();
+                localStorage.setItem('drtroyAccount', JSON.stringify(currentAccount));
+                document.getElementById('passwordForm').reset();
+                showAlert('Password changed successfully!', 'success');
+            }
         }
 
         // Save notification preferences
@@ -2435,17 +2493,7 @@
             printWindow.print();
         }
 
-        // Logout function
-        function logout() {
-            if (confirm('Are you sure you want to log out?')) {
-                localStorage.removeItem('userSession');
-                localStorage.removeItem('customerName');
-                localStorage.removeItem('customerEmail');
-                localStorage.removeItem('customerDiscipline');
-                
-                window.location.href = 'index.html';
-            }
-        }
+        // logout() is defined above in Supabase auth init block
 
         // Emergency account function removed per user request
 
@@ -2929,6 +2977,38 @@
 • Chrome/Edge: F12 or Ctrl+Shift+I
 • Safari: Cmd+Option+I
 • Firefox: F12 or Ctrl+Shift+K`);
+        }
+
+        // View / download certificate
+        function viewCertificate(courseId) {
+            window.open('certificates/msk-certificate.html?course=' + courseId, '_blank');
+        }
+
+        // Load Supabase certificates into the CCU course history section
+        async function loadSupabaseCertificates() {
+            if (!window.DrTroySupabase || !currentSupabaseUser) return;
+            const { data: certs } = await window.DrTroySupabase.getCertificates(currentSupabaseUser.id);
+            if (!certs || certs.length === 0) return;
+
+            const historyDiv = document.getElementById('courseHistory');
+            if (!historyDiv) return;
+
+            let html = '<div style="display:flex;flex-direction:column;gap:0.5rem;">';
+            certs.forEach(cert => {
+                html += `
+                    <div class="external-ccu-entry">
+                        <div>
+                            <strong>${cert.courses?.title || 'Course'}</strong><br>
+                            <small>Certificate #${cert.certificate_number} · Issued ${new Date(cert.issued_at).toLocaleDateString()}</small>
+                        </div>
+                        <div>
+                            <strong>${cert.ceu_hours || cert.courses?.ceu_hours || '?'} CCUs</strong>
+                            ${cert.pdf_url ? `<a href="${cert.pdf_url}" target="_blank" class="btn btn-secondary" style="margin-left:0.5rem;font-size:0.8rem;padding:0.25rem 0.5rem;">📄 Download</a>` : ''}
+                        </div>
+                    </div>`;
+            });
+            html += '</div>';
+            historyDiv.innerHTML = html;
         }
 
         // Show alert message

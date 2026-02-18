@@ -8,7 +8,7 @@
     <!-- Security Headers -->
     <meta http-equiv="Content-Security-Policy" content="
         default-src 'self';
-        script-src 'self' 'unsafe-inline';
+        script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net;
         style-src 'self' 'unsafe-inline';
         img-src 'self' data: https:;
         connect-src 'self' https://*.supabase.co;
@@ -16,6 +16,11 @@
     <meta http-equiv="X-Content-Type-Options" content="nosniff">
     <meta http-equiv="X-Frame-Options" content="DENY">
     <meta http-equiv="X-XSS-Protection" content="1; mode=block">
+
+    <!-- Supabase JS v2 CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+    <!-- DrTroy Supabase client -->
+    <script src="js/supabase-client.js"></script>
     
     <style>
         * {
@@ -1923,60 +1928,82 @@
     </div>
 
     <script>
-        // Authentication check - redirect to login if not authenticated
-        function checkAuthentication() {
+        // ─── ADMIN AUTH (Supabase + legacy session) ──────────────────────────────
+        let _adminUser   = null;
+        let _adminAuthed = false;
+
+        async function checkAuthentication() {
+            // ── Try Supabase session ──────────────────────────────────────────
+            if (window.DrTroySupabase) {
+                const session = await window.DrTroySupabase.getSession();
+                if (session && session.user) {
+                    const adminFlag = await window.DrTroySupabase.isAdmin(session.user.id);
+                    if (adminFlag) {
+                        _adminUser   = session.user;
+                        _adminAuthed = true;
+                        console.log('✅ Supabase admin session confirmed:', session.user.email);
+                        return true;
+                    }
+                    // Logged in but not admin
+                    alert('Access denied — your account does not have admin privileges.');
+                    await window.DrTroySupabase.signOut();
+                    window.location.href = 'secure-admin-access-2026.html';
+                    return false;
+                }
+            }
+
+            // ── Fallback: legacy localStorage session ─────────────────────────
             const adminSession = localStorage.getItem('drtroyAdminSession');
-            
             if (!adminSession) {
                 console.log('🚨 No admin session found, redirecting to login...');
                 window.location.href = 'secure-admin-access-2026.html';
                 return false;
             }
-            
+
             try {
-                const session = JSON.parse(adminSession);
-                const now = new Date().getTime();
-                const expiresTime = new Date(session.expires).getTime();
-                
-                if (now >= expiresTime) {
-                    console.log('🕒 Admin session expired, redirecting to login...');
+                const session   = JSON.parse(adminSession);
+                const now       = new Date().getTime();
+                const expiresAt = new Date(session.expires).getTime();
+
+                if (now >= expiresAt) {
+                    console.log('🕒 Admin session expired');
                     localStorage.removeItem('drtroyAdminSession');
                     window.location.href = 'secure-admin-access-2026.html';
                     return false;
                 }
-                
-                console.log('✅ Valid admin session found');
+
+                _adminAuthed = true;
+                console.log('✅ Legacy admin session valid');
                 return true;
-                
+
             } catch (error) {
-                console.error('Session validation error:', error);
                 localStorage.removeItem('drtroyAdminSession');
                 window.location.href = 'secure-admin-access-2026.html';
                 return false;
             }
         }
 
-        // Logout function
-        function logout() {
+        // Logout — Supabase + legacy clear
+        async function logout() {
             if (confirm('Are you sure you want to logout?')) {
+                if (window.DrTroySupabase) await window.DrTroySupabase.signOut();
                 localStorage.removeItem('drtroyAdminSession');
-                localStorage.removeItem('currentAdminTab'); // Clear saved tab on logout
+                localStorage.removeItem('currentAdminTab');
                 console.log('👋 Admin logged out');
                 window.location.href = 'secure-admin-access-2026.html';
             }
         }
 
         // Global data storage
-        let employeeCodes = [];
+        let employeeCodes  = [];
         let marketingCodes = [];
-        let analyticsData = {};
+        let analyticsData  = {};
 
         // Initialize admin dashboard
-        function initAdmin() {
-            // Check authentication first
-            if (!checkAuthentication()) {
-                return; // Will redirect to login
-            }
+        async function initAdmin() {
+            const authed = await checkAuthentication();
+            if (!authed) return;
+
             console.log('🚀 Initializing DrTroy Admin Dashboard...');
             updateLastUpdate();
             loadStoredData();
@@ -1984,6 +2011,12 @@
             updateStats();
             updateCodesTable();
             updateAnalytics();
+
+            // Load live Supabase data
+            await updateDashboard();
+            await loadUsers();
+            await loadSupabaseRevenue();
+
             console.log('✅ Admin dashboard ready');
         }
 
@@ -2625,16 +2658,80 @@
 
 
         // Dashboard Functions
-        function updateDashboard() {
-            document.getElementById('totalUsers').textContent = '267';
-            document.getElementById('monthlyRevenue').textContent = '$12,450';
-            document.getElementById('courseCompletions').textContent = '89';
-            document.getElementById('upcomingRenewals').textContent = '23';
+        // Dashboard stats — pull from Supabase
+        async function updateDashboard() {
+            if (!window.DrTroySupabase) return;
+
+            try {
+                const [usersRes, enrollRes, completionsRes] = await Promise.all([
+                    window.DrTroySupabase.getAllUsers(),
+                    window.DrTroySupabase.getAllEnrollments(),
+                    window.DrTroySupabase.getCourseCompletionStats()
+                ]);
+
+                const users       = usersRes.data       || [];
+                const enrollments = enrollRes.data       || [];
+                const completions = completionsRes.data  || [];
+
+                // Total revenue
+                const revenue = enrollments.reduce((sum, e) => sum + (parseFloat(e.amount_paid) || 0), 0);
+
+                // Update stat cards
+                const totalEl    = document.getElementById('totalUsers');
+                const revenueEl  = document.getElementById('monthlyRevenue');
+                const complEl    = document.getElementById('courseCompletions');
+
+                if (totalEl)   totalEl.textContent   = users.length;
+                if (revenueEl) revenueEl.textContent  = '$' + revenue.toLocaleString('en-US', {minimumFractionDigits:2, maximumFractionDigits:2});
+                if (complEl)   complEl.textContent    = completions.length;
+
+                console.log('✅ Admin dashboard updated from Supabase');
+            } catch (err) {
+                console.warn('Dashboard Supabase load error:', err.message);
+            }
+        }
+
+        // Load Supabase revenue into dashboard
+        async function loadSupabaseRevenue() {
+            if (!window.DrTroySupabase) return;
+            const { data: enrollments } = await window.DrTroySupabase.getAllEnrollments();
+            if (!enrollments) return;
+            const total = enrollments.reduce((sum, e) => sum + (parseFloat(e.amount_paid) || 0), 0);
+            const el = document.getElementById('totalRevenue');
+            if (el) el.textContent = '$' + total.toFixed(2);
         }
 
         // User Management Functions
-        function loadUsers() {
-            console.log('Loading user data...');
+        async function loadUsers() {
+            console.log('Loading user data from Supabase...');
+            if (!window.DrTroySupabase) return;
+
+            const { data: users, error } = await window.DrTroySupabase.getAllUsers();
+            if (error || !users) {
+                console.warn('Could not load users:', error?.message);
+                return;
+            }
+
+            // Inject into user table if element exists
+            const tbody = document.getElementById('usersTableBody');
+            if (!tbody) return;
+
+            tbody.innerHTML = '';
+            users.forEach(u => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${u.email || ''}</td>
+                    <td>${u.first_name || ''} ${u.last_name || ''}</td>
+                    <td>${u.profession || ''}</td>
+                    <td>${u.state || ''}</td>
+                    <td>${u.license_number || ''}</td>
+                    <td>${u.is_admin ? '🛡️ Admin' : 'User'}</td>
+                    <td>
+                        <button class="btn btn-secondary" onclick="viewUser('${u.email}')" style="font-size:0.8rem;padding:0.25rem 0.5rem;">View</button>
+                    </td>`;
+                tbody.appendChild(tr);
+            });
+            console.log(`✅ Loaded ${users.length} users from Supabase`);
         }
 
         function exportUsers() {
@@ -2905,24 +3002,18 @@
         }
 
         // Initialize when page loads
-        document.addEventListener('DOMContentLoaded', function() {
-            initAdmin();
-            restoreSavedTab(); // Restore the last active tab
-            
-            // Update timestamps and session info every minute
+        document.addEventListener('DOMContentLoaded', async function() {
+            await initAdmin();
+            restoreSavedTab();
+
+            // Update timestamps every minute
             setInterval(updateLastUpdate, 60000);
-            
-            // Update analytics every 5 minutes
-            setInterval(updateAnalytics, 300000);
-            
-            // Session timeout warning (7.5 hours = 30 minutes before expiration)
-            setTimeout(() => {
-                if (localStorage.getItem('drtroyAdminSession')) {
-                    if (confirm('⏰ Your admin session will expire in 30 minutes. Would you like to extend it by 8 hours?')) {
-                        extendSession();
-                    }
-                }
-            }, 7.5 * 60 * 60 * 1000); // 7.5 hours
+
+            // Refresh Supabase data every 5 minutes
+            setInterval(async () => {
+                await updateDashboard();
+                await loadUsers();
+            }, 300000);
         });
     </script>
 </body>

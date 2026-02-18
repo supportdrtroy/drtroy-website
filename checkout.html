@@ -8,7 +8,7 @@
     <!-- Security Headers -->
     <meta http-equiv="Content-Security-Policy" content="
         default-src 'self';
-        script-src 'self' 'unsafe-inline' https://js.stripe.com https://checkout.stripe.com;
+        script-src 'self' 'unsafe-inline' https://js.stripe.com https://checkout.stripe.com https://cdn.jsdelivr.net;
         style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
         font-src 'self' https://fonts.gstatic.com;
         img-src 'self' data: https:;
@@ -26,6 +26,11 @@
         }
     </script>
     
+    <!-- Supabase JS v2 CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+    <!-- DrTroy Supabase client -->
+    <script src="js/supabase-client.js"></script>
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Source+Sans+Pro:wght@300;400;500;600&display=swap" rel="stylesheet">
     <script src="https://js.stripe.com/v3/"></script>
@@ -749,7 +754,7 @@
         const form = document.getElementById('checkout-form');
         form.addEventListener('submit', async (event) => {
             event.preventDefault();
-            
+
             const submitButton = document.getElementById('submit-button');
             submitButton.disabled = true;
             submitButton.classList.add('loading');
@@ -758,19 +763,19 @@
             // Get form data
             const formData = new FormData(form);
             const customerData = {
-                firstName: formData.get('firstName'),
-                lastName: formData.get('lastName'),
-                email: formData.get('email'),
-                phone: formData.get('phone'),
-                profession: formData.get('profession'),
+                firstName:     formData.get('firstName'),
+                lastName:      formData.get('lastName'),
+                email:         formData.get('email'),
+                phone:         formData.get('phone'),
+                profession:    formData.get('profession'),
                 licenseNumber: formData.get('licenseNumber'),
-                licenseState: formData.get('licenseState')
+                licenseState:  formData.get('licenseState')
             };
 
             // Validate required fields
             const requiredFields = ['firstName', 'lastName', 'email', 'profession', 'licenseNumber', 'licenseState'];
-            const missingFields = requiredFields.filter(field => !customerData[field]);
-            
+            const missingFields  = requiredFields.filter(f => !customerData[f]);
+
             if (missingFields.length > 0) {
                 alert(`Please fill in all required fields: ${missingFields.join(', ')}`);
                 submitButton.disabled = false;
@@ -781,45 +786,118 @@
 
             // Get cart data
             const cartData = window.drtroyCart.getCheckoutData();
-            
+
             try {
-                // For demo purposes, we'll simulate a successful payment
-                // In production, you would create a payment intent on your server
-                
-                // Simulate payment processing
+                // ── Simulate payment processing (replace with real Stripe in production) ──
+                // NOTE: In production, create a PaymentIntent server-side via Netlify Function
+                // and confirm here with stripe.confirmCardPayment(clientSecret, {payment_method:{card:cardElement}})
                 await new Promise(resolve => setTimeout(resolve, 2000));
-                
-                // Store purchase data
+
+                const orderId   = 'ORDER-' + Date.now();
+                const paymentId = 'pay_simulated_' + Date.now();
+
+                // ── Build purchase record ─────────────────────────────────────────────────
                 const purchaseData = {
-                    orderId: 'ORDER-' + Date.now(),
+                    orderId,
                     customer: customerData,
-                    items: cartData.items,
+                    items:    cartData.items,
                     totals: {
                         subtotal: cartData.subtotal,
                         discount: cartData.discount,
-                        total: cartData.total
+                        total:    cartData.total
                     },
-                    purchaseDate: new Date().toISOString(),
+                    purchaseDate:  new Date().toISOString(),
                     paymentMethod: 'card'
                 };
-                
-                // Store in localStorage (in production, this would be handled server-side)
+
                 localStorage.setItem('lastPurchase', JSON.stringify(purchaseData));
-                
-                // Clear cart
+
+                // ── Supabase enrollment creation ──────────────────────────────────────────
+                if (window.DrTroySupabase) {
+                    let userId = null;
+
+                    // Check if user is already logged in
+                    const session = await window.DrTroySupabase.getSession();
+                    if (session && session.user) {
+                        userId = session.user.id;
+                    } else {
+                        // User not logged in — sign them up with the checkout email
+                        // Use a random password they can reset later
+                        const tempPassword = Math.random().toString(36).slice(-10) + 'Aa1!';
+                        const { data: signUpData, error: signUpErr } = await window.DrTroySupabase.signUp(
+                            customerData.email,
+                            tempPassword,
+                            {
+                                first_name:     customerData.firstName,
+                                last_name:      customerData.lastName,
+                                profession:     customerData.profession,
+                                license_number: customerData.licenseNumber,
+                                state:          customerData.licenseState
+                            }
+                        );
+
+                        if (signUpErr) {
+                            // If email already exists, just note it — enrollment still proceeds
+                            console.warn('Supabase signup note:', signUpErr.message);
+                        } else if (signUpData?.user) {
+                            userId = signUpData.user.id;
+                        }
+
+                        // Store temporary credentials hint in localStorage for account setup
+                        localStorage.setItem('pendingAccountSetup', JSON.stringify({
+                            email: customerData.email,
+                            message: 'Please check your email to confirm your account and set your password.'
+                        }));
+                    }
+
+                    // If we have a userId, create all enrollment records
+                    if (userId) {
+                        // Collect all course IDs from the cart
+                        const courseIdsToEnroll = [];
+                        let packageId = null;
+
+                        for (const item of cartData.items) {
+                            if (item.type === 'package' && item.courseIds) {
+                                packageId = item.id || null;
+                                item.courseIds.forEach(id => courseIdsToEnroll.push(id));
+                            } else if (item.supabaseCourseId) {
+                                courseIdsToEnroll.push(item.supabaseCourseId);
+                            } else if (item.courseId) {
+                                courseIdsToEnroll.push(item.courseId);
+                            }
+                        }
+
+                        if (courseIdsToEnroll.length > 0) {
+                            const result = await window.DrTroySupabase.processSuccessfulPurchase({
+                                userId,
+                                courseIds: courseIdsToEnroll,
+                                packageId,
+                                paymentId,
+                                amountPaidCents: Math.round(cartData.total * 100)
+                            });
+
+                            if (result.errors.length > 0) {
+                                console.warn('Some enrollment errors:', result.errors);
+                            } else {
+                                console.log('✅ Supabase enrollments created:', result.enrollments.length);
+                            }
+                        }
+
+                        // Store userId in localStorage so success page can fetch Supabase data
+                        localStorage.setItem('lastPurchaseUserId', userId);
+                    }
+                }
+
+                // Clear cart and redirect
                 window.drtroyCart.clear();
-                
-                // Redirect to success page
                 window.location.href = 'success.html';
-                
+
             } catch (error) {
-                console.error('Payment failed:', error);
-                
-                // Show error message
+                console.error('Checkout error:', error);
+
                 const displayError = document.getElementById('card-errors');
                 displayError.textContent = 'Payment failed. Please try again.';
-                
-                // Re-enable submit button
+
                 submitButton.disabled = false;
                 submitButton.classList.remove('loading');
                 submitButton.innerHTML = 'Complete Purchase';
@@ -827,18 +905,46 @@
         });
 
         // Initialize page
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', async function() {
             console.log('💳 Checkout page initializing...');
-            
+
             // Ensure cart system is ready
             if (!window.drtroyCart) {
                 console.error('❌ Cart system not available');
                 return;
             }
-            
-            console.log('✅ Cart system ready');
+
             populateCheckout();
-            
+
+            // Pre-fill form from Supabase session if logged in
+            if (window.DrTroySupabase) {
+                const session = await window.DrTroySupabase.getSession();
+                if (session && session.user) {
+                    const { data: profile } = await window.DrTroySupabase.getProfile(session.user.id);
+                    if (profile) {
+                        document.getElementById('firstName').value  = profile.first_name  || '';
+                        document.getElementById('lastName').value   = profile.last_name   || '';
+                        document.getElementById('email').value      = session.user.email  || '';
+                        document.getElementById('profession').value = profile.profession  || '';
+                        document.getElementById('licenseNumber').value = profile.license_number || '';
+                        document.getElementById('licenseState').value  = profile.state        || '';
+                        console.log('✅ Form pre-filled from Supabase profile');
+                    }
+                }
+            }
+
+            // Fallback: pre-fill from localStorage
+            const customerName  = localStorage.getItem('customerName')  || '';
+            const customerEmail = localStorage.getItem('customerEmail') || '';
+            if (customerName && !document.getElementById('firstName').value) {
+                const parts = customerName.split(' ');
+                document.getElementById('firstName').value = parts[0] || '';
+                document.getElementById('lastName').value  = parts.slice(1).join(' ') || '';
+            }
+            if (customerEmail && !document.getElementById('email').value) {
+                document.getElementById('email').value = customerEmail;
+            }
+
             console.log('✅ Checkout initialized');
         });
     </script>
