@@ -431,6 +431,8 @@
             border-radius: 8px;
             padding: 1.5rem;
             transition: box-shadow 0.2s ease;
+            display: flex;
+            flex-direction: column;
         }
 
         .course-card:hover {
@@ -496,6 +498,7 @@
             display: flex;
             gap: 0.5rem;
             flex-wrap: wrap;
+            margin-top: auto;
         }
 
         .btn-outline {
@@ -1291,7 +1294,8 @@
                 window.DrTroySupabase.onAuthStateChange((event, session) => {
                     if (event === 'SIGNED_OUT') {
                         showLoginRequired();
-                    } else if (event === 'SIGNED_IN' && session) {
+                    } else if (event === 'SIGNED_IN' && session && !window._accountInitialized) {
+                        // Only run if checkLoginStatus hasn't already initialized the account
                         currentSupabaseUser = session.user;
                         initAccountFromSupabase(session.user);
                     }
@@ -1390,13 +1394,16 @@
 
             showAccountContent();
             loadAccountData();
-            restoreActiveSection();
             restoreCachedRenewal();
 
             // Re-render courses AFTER everything else runs (ensures we're not overwritten)
             if (currentAccount._supabaseEnrollments?.length > 0) {
                 renderSupabaseCourses(currentAccount._supabaseEnrollments);
             }
+
+            // Restore active section LAST so nothing overwrites it
+            restoreActiveSection();
+            window._accountInitialized = true;
         }
 
         // Load enrollments from Supabase via direct REST (no CDN dependency)
