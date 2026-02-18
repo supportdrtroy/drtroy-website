@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Dr. Troy Hounshell, PT, ScD | DrTroy Continuing Education</title>
+    <meta name="description" content="25+ years of clinical expertise. Practice owner. Doctor of Science. Meet the clinician behind DrTroy CE.">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Source+Sans+Pro:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --navy:           #1a365d;
+            --navy-mid:       #2c5282;
+            --navy-light:     #3b6fa8;
+            --emerald:        #059669;
+            --emerald-light:  #10b981;
+            --emerald-dark:   #047857;
+            --gold:           #b7791f;
+            --gold-light:     #d69e2e;
+            --neutral-50:     #fafafa;
+            --neutral-100:    #f5f5f5;
+            --neutral-200:    #e5e5e5;
+            --neutral-400:    #a3a3a3;
+            --neutral-600:    #525252;
+            --neutral-700:    #404040;
+            --neutral-800:    #262626;
+            --neutral-900:    #171717;
+            --shadow-md:  0 4px 6px -1px rgb(0 0 0 / .1), 0 2px 4px -2px rgb(0 0 0 / .1);
+            --shadow-lg:  0 10px 15px -3px rgb(0 0 0 / .1), 0 4px 6px -4px rgb(0 0 0 / .1);
+            --shadow-xl:  0 20px 25px -5px rgb(0 0 0 / .1), 0 8px 10px -6px rgb(0 0 0 / .1);
+        }
+
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Source Sans Pro', -apple-system, sans-serif;
+            font-weight: 400;
+            line-height: 1.6;
+            color: var(--neutral-800);
+            background: #fff;
+        }
+
+        /* ── NAV ──────────────────────────────────────────────────────── */
+        .header {
+            background: rgba(255,255,255,.97);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--neutral-200);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .header-inner {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 1.25rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo img { height: 64px; width: auto; }
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 2.5rem;
+        }
+        .nav-links a {
+            color: var(--neutral-600);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: color .25s;
+        }
+        .nav-links a:hover { color: var(--navy); }
+        .nav-btn {
+            background: var(--navy);
+            color: white !important;
+            padding: .5rem 1.25rem;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: .9rem;
+            transition: background .2s;
+        }
+        .nav-btn:hover { background: var(--navy-mid) !important; }
+
+        /* Hamburger */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: .25rem;
+        }
+        .hamburger span {
+            display: block;
+            width: 24px; height: 2px;
+            background: var(--navy);
+            border-radius: 2px;
+            transition: all .3s;
+        }
+        @media (max-width: 768px) {
+            .hamburger { display: flex; }
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%; left: 0; right: 0;
+                background: white;
+                flex-direction: column;
+                padding: 1rem 2rem;
+                box-shadow: 0 4px 20px rgba(0,0,0,.1);
+                z-index: 100;
+                border-top: 1px solid #e5e7eb;
+            }
+            .nav-links.active { display: flex; }
+            .nav-links a { padding: .75rem 0; border-bottom: 1px solid #f3f4f6; }
+            .header-inner { position: relative; }
+        }
+
+        /* ── HERO ─────────────────────────────────────────────────────── */
+        .hero {
+            background: linear-gradient(150deg, var(--navy) 0%, var(--navy-mid) 60%, #1e4d8c 100%);
+            color: white;
+            padding: 5rem 2rem 4rem;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: -2px; left: 0; right: 0;
+            height: 80px;
+            background: white;
+            clip-path: ellipse(55% 100% at 50% 100%);
+        }
+        .hero-inner {
+            max-width: 1280px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 4rem;
+            align-items: center;
+        }
+        .hero-eyebrow {
+            font-size: .85rem;
+            font-weight: 600;
+            letter-spacing: .12em;
+            text-transform: uppercase;
+            color: var(--emerald-light);
+            margin-bottom: 1.25rem;
+        }
+        .hero-name {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: clamp(2.4rem, 5vw, 3.75rem);
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: .75rem;
+        }
+        .hero-credentials {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: 1.1rem;
+            font-style: italic;
+            color: rgba(255,255,255,.75);
+            margin-bottom: 2rem;
+        }
+        .hero-tagline {
+            font-size: 1.15rem;
+            color: rgba(255,255,255,.85);
+            line-height: 1.7;
+            max-width: 560px;
+        }
+        .hero-avatar {
+            width: 220px;
+            height: 220px;
+            border-radius: 50%;
+            background: rgba(255,255,255,.1);
+            border: 4px solid rgba(255,255,255,.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            overflow: hidden;
+        }
+        .hero-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .hero-avatar-initials {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: 4rem;
+            font-weight: 700;
+            color: rgba(255,255,255,.6);
+        }
+        @media (max-width: 768px) {
+            .hero-inner { grid-template-columns: 1fr; }
+            .hero-avatar { width: 140px; height: 140px; margin: 0 auto; }
+            .hero-avatar-initials { font-size: 2.5rem; }
+        }
+
+        /* ── STAT BAR ─────────────────────────────────────────────────── */
+        .stat-bar {
+            background: var(--neutral-50);
+            border-bottom: 1px solid var(--neutral-200);
+            padding: 2rem;
+        }
+        .stat-bar-inner {
+            max-width: 1280px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+            gap: 0;
+            flex-wrap: wrap;
+        }
+        .stat-item {
+            text-align: center;
+            padding: 1rem 3rem;
+            border-right: 1px solid var(--neutral-200);
+        }
+        .stat-item:last-child { border-right: none; }
+        .stat-num {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--navy);
+            line-height: 1;
+            margin-bottom: .25rem;
+        }
+        .stat-label {
+            font-size: .85rem;
+            color: var(--neutral-600);
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: .06em;
+        }
+        @media (max-width: 640px) {
+            .stat-item { padding: 1rem 1.5rem; border-right: none; border-bottom: 1px solid var(--neutral-200); width: 50%; }
+            .stat-item:nth-child(odd) { border-right: 1px solid var(--neutral-200); }
+        }
+
+        /* ── CONTENT ──────────────────────────────────────────────────── */
+        .content-wrapper {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 5rem 2rem;
+            display: grid;
+            grid-template-columns: 1fr 380px;
+            gap: 5rem;
+            align-items: start;
+        }
+        @media (max-width: 1024px) {
+            .content-wrapper { grid-template-columns: 1fr; gap: 3rem; }
+        }
+
+        /* Bio */
+        .bio-section h2 {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: 2rem;
+            font-weight: 600;
+            color: var(--navy);
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 1rem;
+        }
+        .bio-section h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 0;
+            width: 48px; height: 3px;
+            background: var(--emerald);
+            border-radius: 2px;
+        }
+        .bio-section p {
+            font-size: 1.1rem;
+            color: var(--neutral-700);
+            line-height: 1.85;
+            margin-bottom: 1.5rem;
+        }
+        .bio-section p:last-child { margin-bottom: 0; }
+
+        .pull-quote {
+            border-left: 4px solid var(--emerald);
+            padding: 1.25rem 1.75rem;
+            margin: 2.5rem 0;
+            background: var(--neutral-50);
+            border-radius: 0 12px 12px 0;
+        }
+        .pull-quote p {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: 1.25rem;
+            font-style: italic;
+            color: var(--navy);
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        /* Sidebar */
+        .sidebar { display: flex; flex-direction: column; gap: 2rem; }
+
+        .sidebar-card {
+            background: var(--neutral-50);
+            border: 1px solid var(--neutral-200);
+            border-radius: 16px;
+            padding: 2rem;
+        }
+        .sidebar-card-title {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--navy);
+            margin-bottom: 1.25rem;
+            display: flex;
+            align-items: center;
+            gap: .6rem;
+        }
+
+        /* Education timeline */
+        .edu-item {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.25rem;
+            padding-bottom: 1.25rem;
+            border-bottom: 1px solid var(--neutral-200);
+        }
+        .edu-item:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+        .edu-year {
+            font-size: .8rem;
+            font-weight: 700;
+            color: var(--emerald);
+            background: rgba(5,150,105,.1);
+            padding: .2rem .55rem;
+            border-radius: 4px;
+            height: fit-content;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+        .edu-degree {
+            font-weight: 600;
+            color: var(--neutral-800);
+            font-size: .95rem;
+            margin-bottom: .2rem;
+        }
+        .edu-school {
+            color: var(--neutral-600);
+            font-size: .88rem;
+        }
+
+        /* Settings list */
+        .settings-list {
+            display: flex;
+            flex-direction: column;
+            gap: .6rem;
+        }
+        .settings-item {
+            display: flex;
+            align-items: center;
+            gap: .6rem;
+            font-size: .95rem;
+            color: var(--neutral-700);
+        }
+        .settings-dot {
+            width: 8px; height: 8px;
+            background: var(--emerald);
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        /* Locations */
+        .locations-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: .6rem;
+        }
+        .location-chip {
+            background: white;
+            border: 1px solid var(--neutral-200);
+            border-radius: 8px;
+            padding: .5rem .75rem;
+            font-size: .88rem;
+            color: var(--neutral-700);
+            font-weight: 500;
+            text-align: center;
+        }
+
+        /* ── MISSION ──────────────────────────────────────────────────── */
+        .mission-section {
+            background: linear-gradient(135deg, var(--navy) 0%, var(--navy-mid) 100%);
+            color: white;
+            padding: 5rem 2rem;
+        }
+        .mission-inner {
+            max-width: 900px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        .mission-inner h2 {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: clamp(2rem, 4vw, 2.75rem);
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+        }
+        .mission-inner p {
+            font-size: 1.15rem;
+            color: rgba(255,255,255,.82);
+            line-height: 1.8;
+            margin-bottom: 1.25rem;
+        }
+
+        /* ── CTA ──────────────────────────────────────────────────────── */
+        .cta-section {
+            padding: 5rem 2rem;
+            text-align: center;
+            background: var(--neutral-50);
+        }
+        .cta-inner { max-width: 640px; margin: 0 auto; }
+        .cta-inner h2 {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: clamp(1.8rem, 4vw, 2.5rem);
+            font-weight: 600;
+            color: var(--navy);
+            margin-bottom: 1rem;
+        }
+        .cta-inner p {
+            font-size: 1.1rem;
+            color: var(--neutral-600);
+            line-height: 1.7;
+            margin-bottom: 2.5rem;
+        }
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, var(--emerald) 0%, var(--emerald-light) 100%);
+            color: white;
+            padding: 1.1rem 2.5rem;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 1.05rem;
+            text-decoration: none;
+            box-shadow: var(--shadow-md);
+            transition: all .3s cubic-bezier(.4,0,.2,1);
+            display: inline-flex;
+            align-items: center;
+            gap: .5rem;
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-xl);
+            background: linear-gradient(135deg, var(--emerald-dark) 0%, var(--emerald) 100%);
+        }
+        .btn-secondary {
+            background: transparent;
+            color: var(--navy);
+            border: 2px solid var(--neutral-300);
+            padding: 1.1rem 2.5rem;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 1.05rem;
+            text-decoration: none;
+            transition: all .3s cubic-bezier(.4,0,.2,1);
+            display: inline-flex;
+            align-items: center;
+        }
+        .btn-secondary:hover {
+            border-color: var(--navy);
+            background: white;
+            transform: translateY(-2px);
+        }
+
+        /* ── FOOTER ───────────────────────────────────────────────────── */
+        .footer {
+            background: var(--neutral-900);
+            color: var(--neutral-400);
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+        .footer-inner {
+            max-width: 1280px;
+            margin: 0 auto;
+        }
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+            margin-bottom: 1.5rem;
+        }
+        .footer-links a {
+            color: var(--neutral-400);
+            text-decoration: none;
+            font-size: .9rem;
+            transition: color .2s;
+        }
+        .footer-links a:hover { color: var(--emerald-light); }
+        .footer-copy { font-size: .85rem; }
+
+        /* ── ANIMATIONS ───────────────────────────────────────────────── */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(24px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+        .animate { animation: fadeInUp .7s cubic-bezier(.4,0,.2,1) both; }
+        .delay-1 { animation-delay: .1s; }
+        .delay-2 { animation-delay: .2s; }
+        .delay-3 { animation-delay: .3s; }
+    </style>
+</head>
+
+<body>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="header-inner">
+            <div class="logo">
+                <a href="home-preview.html">
+                    <img src="courses/images/drtroy_logo_new.jpg" alt="DrTroy Continuing Education">
+                </a>
+            </div>
+            <button class="hamburger" aria-label="Open menu">
+                <span></span><span></span><span></span>
+            </button>
+            <nav class="nav-links">
+                <a href="home-preview.html">Home</a>
+                <a href="course-catalog.html">Courses</a>
+                <a href="about.html" style="color: var(--navy); font-weight: 600;">About</a>
+                <a href="my-account.html" class="nav-btn">Log In</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="hero-inner">
+            <div class="animate">
+                <div class="hero-eyebrow">Meet the Clinician Behind DrTroy CE</div>
+                <h1 class="hero-name">Dr. Troy Hounshell</h1>
+                <p class="hero-credentials">PT, ScD &nbsp;·&nbsp; Physical Therapist &nbsp;·&nbsp; Practice Owner &nbsp;·&nbsp; Educator</p>
+                <p class="hero-tagline">25 years of hands-on clinical practice — from outpatient clinics to skilled nursing facilities across West Texas. Building continuing education that's actually useful in the real world.</p>
+            </div>
+            <div class="hero-avatar animate delay-2">
+                <div class="hero-avatar-initials">TH</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stat Bar -->
+    <div class="stat-bar">
+        <div class="stat-bar-inner">
+            <div class="stat-item">
+                <div class="stat-num">25+</div>
+                <div class="stat-label">Years Clinical Practice</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-num">5</div>
+                <div class="stat-label">Practice Locations</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-num">ScD</div>
+                <div class="stat-label">Doctor of Science</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-num">3</div>
+                <div class="stat-label">Disciplines Served</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bio + Sidebar -->
+    <div class="content-wrapper">
+
+        <!-- Bio -->
+        <div class="bio-section">
+            <h2>A Clinician Who's Done the Work</h2>
+
+            <p>Dr. Troy Hounshell has spent more than 25 years on the ground as a practicing physical therapist — working in outpatient clinics, acute care hospitals, skilled nursing facilities, and home health environments across West Texas. He didn't build DrTroy CE from a lecture hall. He built it from the bedside.</p>
+
+            <p>After earning his Master of Physical Therapy from Texas Tech University Health Sciences Center in 2000, Troy went to work. Fourteen years and thousands of patient encounters later, he returned to Texas Tech to complete his Doctor of Science in Physical Therapy — not to change careers, but to deepen his ability to apply evidence in the clinical settings he never left.</p>
+
+            <div class="pull-quote">
+                <p>"Continuing education should make you a better clinician on Monday morning. If it doesn't translate to the clinic floor, it's just check-the-box work."</p>
+            </div>
+
+            <p>Today Troy serves as CEO of Texas Therapy Pros, overseeing five therapy locations across Lubbock, Amarillo, Midland, Abilene, and San Angelo. The practice provides PT, OT, and SLP services across skilled nursing facilities, outpatient clinics, and home health — the same care settings that shaped every course on this platform.</p>
+
+            <p>DrTroy Continuing Education exists because Troy has sat through enough generic CE courses to know what doesn't work. Every course on this platform is built around content that practicing clinicians in real Texas settings — rural, underserved, and high-demand — actually need. Courses are authored by discipline-specific clinicians: OTs writing OT content, SLPs writing SLP content. No shortcuts.</p>
+
+            <h2 style="margin-top: 3rem;">Why West Texas Shapes Everything</h2>
+
+            <p>Practicing therapy in rural West Texas means doing more with less. Fewer specialists, longer drives, patients who have often waited too long to get care. It means being genuinely good at your job — not just credentialed.</p>
+
+            <p>That reality is baked into every course we offer. The clinical scenarios are real. The documentation standards are practical. The rehabilitation approaches work in facilities that don't have every resource an urban hospital does. If it holds up in West Texas, it holds up anywhere.</p>
+        </div>
+
+        <!-- Sidebar -->
+        <aside class="sidebar">
+
+            <!-- Education -->
+            <div class="sidebar-card">
+                <div class="sidebar-card-title">🎓 Education</div>
+                <div class="edu-item">
+                    <span class="edu-year">2005</span>
+                    <div>
+                        <div class="edu-degree">Doctor of Science in Physical Therapy</div>
+                        <div class="edu-school">Texas Tech University Health Sciences Center</div>
+                    </div>
+                </div>
+                <div class="edu-item">
+                    <span class="edu-year">2000</span>
+                    <div>
+                        <div class="edu-degree">Master of Physical Therapy</div>
+                        <div class="edu-school">Texas Tech University Health Sciences Center</div>
+                    </div>
+                </div>
+                <div class="edu-item">
+                    <span class="edu-year">UG</span>
+                    <div>
+                        <div class="edu-degree">Undergraduate Studies</div>
+                        <div class="edu-school">Angelo State University</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Clinical Settings -->
+            <div class="sidebar-card">
+                <div class="sidebar-card-title">🏥 Clinical Settings</div>
+                <div class="settings-list">
+                    <div class="settings-item"><span class="settings-dot"></span>Skilled Nursing Facilities (SNFs)</div>
+                    <div class="settings-item"><span class="settings-dot"></span>Outpatient Clinics</div>
+                    <div class="settings-item"><span class="settings-dot"></span>Inpatient / Acute Care</div>
+                    <div class="settings-item"><span class="settings-dot"></span>Home Health</div>
+                    <div class="settings-item"><span class="settings-dot"></span>Telehealth</div>
+                </div>
+            </div>
+
+            <!-- Practice Locations -->
+            <div class="sidebar-card">
+                <div class="sidebar-card-title">📍 Texas Therapy Pros Locations</div>
+                <div class="locations-grid">
+                    <div class="location-chip">Lubbock</div>
+                    <div class="location-chip">Amarillo</div>
+                    <div class="location-chip">Midland</div>
+                    <div class="location-chip">Abilene</div>
+                    <div class="location-chip">San Angelo</div>
+                </div>
+            </div>
+
+        </aside>
+    </div>
+
+    <!-- Mission -->
+    <section class="mission-section">
+        <div class="mission-inner">
+            <h2>Why This Platform Exists</h2>
+            <p>License renewal CE shouldn't be something you dread. It should be something that makes you a sharper clinician. DrTroy CE was built by therapists — for therapists — with one standard: if the content doesn't hold up in the clinic, it doesn't make the cut.</p>
+            <p>Every course is authored by a practicing clinician in the relevant discipline. Every hour of content is designed to be practical, evidence-based, and applicable across the care settings Texas therapy professionals actually work in.</p>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta-section">
+        <div class="cta-inner">
+            <h2>Ready to Get Your CCUs Done?</h2>
+            <p>Discipline-specific packages for Texas PTs, PTAs, OTs, and COTAs — designed to cover your required hours at one fair price.</p>
+            <div class="cta-buttons">
+                <a href="course-catalog.html" class="btn-primary">Browse CE Packages →</a>
+                <a href="course-catalog.html#courses-section" class="btn-secondary">View All Courses</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-inner">
+            <div class="footer-links">
+                <a href="home-preview.html">Home</a>
+                <a href="course-catalog.html">Courses</a>
+                <a href="about.html">About</a>
+                <a href="my-account.html">Log In</a>
+            </div>
+            <p class="footer-copy">&copy; 2026 DrTroy Continuing Education. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Hamburger menu
+        document.querySelector('.hamburger').addEventListener('click', function() {
+            document.querySelector('.nav-links').classList.toggle('active');
+        });
+
+        // Scroll-triggered animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(e => {
+                if (e.isIntersecting) {
+                    e.target.style.opacity = '1';
+                    e.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.sidebar-card, .bio-section h2, .pull-quote').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(20px)';
+            el.style.transition = 'opacity .6s ease, transform .6s ease';
+            observer.observe(el);
+        });
+    </script>
+
+</body>
+</html>
