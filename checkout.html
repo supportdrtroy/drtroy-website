@@ -789,12 +789,32 @@
                 }
 
                 // ── Step 2: Determine what's in the cart ──────────────────────────────────
-                // Pick the first item — most purchases are a single package or course
                 const firstItem = cartData.items[0];
                 if (!firstItem) throw new Error('Cart is empty');
 
-                const itemId       = firstItem.id || firstItem.courseId || firstItem.supabaseCourseId;
-                const itemType     = firstItem.type || 'course'; // 'package' or 'course'
+                const itemType = firstItem.type || 'course';
+
+                // Map cart IDs → Supabase IDs
+                // Packages: 'PT' → 'pt-package', 'PTA' → 'pta-package', etc.
+                // Courses:  'PT-MSK-001' → 'pt-msk-001' (lowercase)
+                const PACKAGE_ID_MAP = {
+                    'PT':   'pt-package',
+                    'PTA':  'pta-package',
+                    'OT':   'ot-package',
+                    'COTA': 'cota-package'
+                };
+
+                let itemId;
+                if (itemType === 'package') {
+                    const rawCode = firstItem.packageCode || firstItem.code || firstItem.id;
+                    itemId = PACKAGE_ID_MAP[rawCode] || (rawCode ? rawCode.toLowerCase() + '-package' : null);
+                } else {
+                    const rawId = firstItem.supabaseCourseId || firstItem.courseId || firstItem.id;
+                    itemId = rawId ? rawId.toLowerCase() : null;
+                }
+
+                if (!itemId) throw new Error('Could not identify item. Please clear your cart and try again.');
+
                 const discountCode = cartData.discountCode || '';
 
                 // Save cart state so success page can reference it
