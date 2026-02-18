@@ -84,6 +84,7 @@ exports.handler = async (event) => {
     });
 
     try {
+        // Send confirmation to the user
         await transporter.sendMail({
             from:    '"DrTroy Continuing Education" <no-reply@drtroy.com>',
             to:      email,
@@ -91,7 +92,24 @@ exports.handler = async (event) => {
             html
         });
 
-        console.log('Waitlist confirmation sent to:', email);
+        // Notify Troy
+        const disciplineLabel = discipline && discipline !== 'prefer_not' ? discipline : 'not specified';
+        await transporter.sendMail({
+            from:    '"DrTroy Continuing Education" <no-reply@drtroy.com>',
+            to:      'troy@drtroy.com',
+            subject: `🎉 Another therapist joined the waitlist!`,
+            html: `
+                <div style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;max-width:480px;margin:0 auto;padding:32px 24px;background:#f8fafc;border-radius:12px;">
+                    <h2 style="color:#1a365d;margin:0 0 16px;">New Waitlist Signup</h2>
+                    <p style="color:#374151;font-size:15px;margin:0 0 8px;"><strong>Name:</strong> ${name}</p>
+                    <p style="color:#374151;font-size:15px;margin:0 0 8px;"><strong>Email:</strong> ${email}</p>
+                    <p style="color:#374151;font-size:15px;margin:0 0 24px;"><strong>Discipline:</strong> ${disciplineLabel}</p>
+                    <p style="color:#6b7280;font-size:13px;margin:0;">DrTroy Continuing Education — drtroy.com</p>
+                </div>
+            `
+        });
+
+        console.log('Waitlist confirmation sent to:', email, '| Owner notified');
         return { statusCode: 200, body: JSON.stringify({ sent: true }) };
     } catch (err) {
         console.error('send-waitlist-confirm error:', err.message);
