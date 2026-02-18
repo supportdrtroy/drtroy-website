@@ -1194,6 +1194,22 @@
                             </div>
                         </div>
 
+                        <!-- Invite a Colleague -->
+                        <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:16px;padding:2rem;margin-bottom:2rem;">
+                            <h3 style="font-size:1.1rem;font-weight:700;color:#1a365d;margin-bottom:.5rem;">✉️ Invite a Colleague Directly</h3>
+                            <p style="color:#374151;font-size:.95rem;margin-bottom:1.25rem;line-height:1.6;">Enter their email and we'll send them a personal invitation with your referral link — they get <strong>$10 off</strong> their first package, you earn <strong>$10 credit</strong> when they purchase.</p>
+                            <div style="display:flex;gap:.75rem;flex-wrap:wrap;margin-bottom:.75rem;">
+                                <input type="email" id="inviteEmail" placeholder="colleague@email.com"
+                                    style="flex:1;min-width:220px;padding:.875rem 1rem;border:2px solid #e2e8f0;border-radius:10px;font-size:.95rem;font-family:inherit;outline:none;transition:border .2s;"
+                                    onfocus="this.style.borderColor='#059669'" onblur="this.style.borderColor='#e2e8f0'">
+                                <button onclick="sendColleagueInvite()"
+                                    style="padding:.875rem 1.75rem;background:linear-gradient(135deg,#1a365d,#2c5282);color:white;border:none;border-radius:10px;font-weight:700;font-size:.95rem;cursor:pointer;white-space:nowrap;">
+                                    Send Invitation
+                                </button>
+                            </div>
+                            <div id="inviteFeedback" style="display:none;font-size:.9rem;padding:.75rem 1rem;border-radius:8px;"></div>
+                        </div>
+
                         <!-- Transaction History -->
                         <div style="background:white;border:1px solid #e2e8f0;border-radius:16px;overflow:hidden;">
                             <div style="padding:1.25rem 1.5rem;border-bottom:1px solid #e2e8f0;background:#f8fafc;">
@@ -3485,6 +3501,58 @@
                         </div>
                     </div>`).join('');
             }
+        }
+
+        async function sendColleagueInvite() {
+            const email    = document.getElementById('inviteEmail').value.trim();
+            const feedback = document.getElementById('inviteFeedback');
+            feedback.style.display = 'none';
+
+            if (!email || !email.includes('@')) {
+                feedback.style.cssText = 'display:block;background:#fef2f2;border:1px solid #fca5a5;color:#991b1b;font-size:.9rem;padding:.75rem 1rem;border-radius:8px;';
+                feedback.textContent = 'Please enter a valid email address.';
+                return;
+            }
+            if (!currentAccount?.id) return;
+
+            const sb = window.DrTroySupabase?.getClient ? window.DrTroySupabase.getClient() : null;
+            if (!sb) return;
+
+            // Get or create referral code
+            const { data: code } = await sb.rpc('get_or_create_referral_code', { p_user_id: currentAccount.id });
+            if (!code) { feedback.style.cssText = 'display:block;background:#fef2f2;color:#991b1b;padding:.75rem 1rem;border-radius:8px;'; feedback.textContent = 'Could not load your referral code. Try again.'; return; }
+
+            const refLink = window.location.origin + '/course-catalog.html?ref=' + code;
+            const senderName = ((currentAccount.firstName || '') + ' ' + (currentAccount.lastName || '')).trim() || 'A colleague';
+
+            // Log invite to Supabase
+            await sb.from('referral_invitations').upsert({
+                sender_user_id: currentAccount.id,
+                sender_email:   currentAccount.email,
+                colleague_email: email,
+                referral_code:  code
+            }, { onConflict: 'sender_user_id,colleague_email' });
+
+            // Fire invite email via Netlify function
+            try {
+                const res = await fetch('/.netlify/functions/send-referral', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        to:          email,
+                        senderName:  senderName,
+                        refLink:     refLink,
+                        refCode:     code
+                    })
+                });
+                if (res.ok) {
+                    await sb.from('referral_invitations').update({ email_delivered: true }).eq('sender_user_id', currentAccount.id).eq('colleague_email', email);
+                }
+            } catch(e) { /* fire and forget — invite is logged regardless */ }
+
+            feedback.style.cssText = 'display:block;background:#f0fdf4;border:1px solid #bbf7d0;color:#166534;font-size:.9rem;padding:.75rem 1rem;border-radius:8px;';
+            feedback.textContent   = '✓ Invitation sent to ' + email + '!';
+            document.getElementById('inviteEmail').value = '';
         }
 
         function copyReferralLink() {
