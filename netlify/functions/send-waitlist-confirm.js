@@ -1,11 +1,34 @@
 /**
  * DrTroy CE Platform — Netlify Function: send-waitlist-confirm
  * POST /.netlify/functions/send-waitlist-confirm
- * Sends a branded confirmation email via GoDaddy SMTP (nodemailer).
- * NOTE: Temporary — will switch to Resend once domain verified.
+ * Sends a branded confirmation email via Resend REST API.
+ * FROM: DrTroy Continuing Education <no-reply@drtroy.com>
  */
 
-const nodemailer = require('nodemailer');
+const https = require('https');
+
+function resendPost(apiKey, payload) {
+    return new Promise((resolve, reject) => {
+        const data = JSON.stringify(payload);
+        const req = https.request({
+            hostname: 'api.resend.com',
+            path: '/emails',
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${apiKey}`,
+                'Content-Type': 'application/json',
+                'Content-Length': Buffer.byteLength(data)
+            }
+        }, (res) => {
+            let body = '';
+            res.on('data', c => body += c);
+            res.on('end', () => resolve({ status: res.statusCode, body }));
+        });
+        req.on('error', reject);
+        req.write(data);
+        req.end();
+    });
+}
 
 exports.handler = async (event) => {
     if (event.httpMethod !== 'POST') {
@@ -19,6 +42,9 @@ exports.handler = async (event) => {
 
     const { email, firstName, lastName, discipline } = body;
     if (!email) return { statusCode: 400, body: 'Missing email' };
+
+    const apiKey  = process.env.RESEND_API_KEY;
+    if (!apiKey)  return { statusCode: 500, body: 'Email service not configured' };
 
     const name     = (firstName || '').trim() || 'there';
     const fullName = [firstName, lastName].filter(Boolean).map(s => s.trim()).join(' ') || 'there';
@@ -74,43 +100,39 @@ exports.handler = async (event) => {
 </body>
 </html>`;
 
-    const transporter = nodemailer.createTransport({
-        host: 'p3plzcpnl507574.prod.phx3.secureserver.net',
-        port: 465,
-        secure: true,
-        auth: {
-            user: 'no-reply@drtroy.com',
-            pass: 'DrTroy2026!Mail#Send'
-        }
-    });
+    const ownerHtml = `
+        <div style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;max-width:480px;margin:0 auto;padding:32px 24px;background:#f8fafc;border-radius:12px;">
+            <h2 style="color:#1a365d;margin:0 0 16px;">New Waitlist Signup</h2>
+            <p style="color:#374151;font-size:15px;margin:0 0 8px;"><strong>Name:</strong> ${fullName}</p>
+            <p style="color:#374151;font-size:15px;margin:0 0 8px;"><strong>Email:</strong> ${email}</p>
+            <p style="color:#374151;font-size:15px;margin:0 0 24px;"><strong>Discipline:</strong> ${discipline && discipline !== 'prefer_not' ? discipline : 'not specified'}</p>
+            <p style="color:#6b7280;font-size:13px;margin:0;">DrTroy Continuing Education — drtroy.com</p>
+        </div>`;
 
     try {
-        // Send confirmation to the user
-        await transporter.sendMail({
-            from:    '"DrTroy Continuing Education" <no-reply@drtroy.com>',
-            to:      email,
+        // Send confirmation to signup
+        const r1 = await resendPost(apiKey, {
+            from:    'DrTroy Continuing Education <no-reply@drtroy.com>',
+            to:      [email],
             subject: `You're on the list, ${name}! 🎉 DrTroy CE is coming`,
             html
         });
 
         // Notify Troy
-        const disciplineLabel = discipline && discipline !== 'prefer_not' ? discipline : 'not specified';
-        await transporter.sendMail({
-            from:    '"DrTroy Continuing Education" <no-reply@drtroy.com>',
-            to:      'troy@drtroy.com',
-            subject: `🎉 Another therapist joined the waitlist!`,
-            html: `
-                <div style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;max-width:480px;margin:0 auto;padding:32px 24px;background:#f8fafc;border-radius:12px;">
-                    <h2 style="color:#1a365d;margin:0 0 16px;">New Waitlist Signup</h2>
-                    <p style="color:#374151;font-size:15px;margin:0 0 8px;"><strong>Name:</strong> ${fullName}</p>
-                    <p style="color:#374151;font-size:15px;margin:0 0 8px;"><strong>Email:</strong> ${email}</p>
-                    <p style="color:#374151;font-size:15px;margin:0 0 24px;"><strong>Discipline:</strong> ${disciplineLabel}</p>
-                    <p style="color:#6b7280;font-size:13px;margin:0;">DrTroy Continuing Education — drtroy.com</p>
-                </div>
-            `
+        const r2 = await resendPost(apiKey, {
+            from:    'DrTroy Continuing Education <no-reply@drtroy.com>',
+            to:      ['troy@drtroy.com'],
+            subject: `🎉 New waitlist signup — ${fullName}`,
+            html:    ownerHtml
         });
 
-        console.log('Waitlist confirmation sent to:', email, '| Owner notified');
+        console.log('Waitlist confirmation sent:', r1.status, '| Owner notified:', r2.status);
+
+        if (r1.status >= 400) {
+            console.error('Resend error (user):', r1.body);
+            return { statusCode: 500, body: JSON.stringify({ error: 'Email send failed' }) };
+        }
+
         return { statusCode: 200, body: JSON.stringify({ sent: true }) };
     } catch (err) {
         console.error('send-waitlist-confirm error:', err.message);

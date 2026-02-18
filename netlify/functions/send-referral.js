@@ -1,11 +1,34 @@
 /**
  * DrTroy CE Platform — Netlify Function: send-referral
  * POST /.netlify/functions/send-referral
- * Sends a branded colleague invitation email via GoDaddy SMTP (nodemailer).
- * NOTE: Temporary — will switch to Resend once domain verified.
+ * Sends a branded colleague invitation email via Resend REST API.
+ * FROM: DrTroy Continuing Education <no-reply@drtroy.com>
  */
 
-const nodemailer = require('nodemailer');
+const https = require('https');
+
+function resendPost(apiKey, payload) {
+    return new Promise((resolve, reject) => {
+        const data = JSON.stringify(payload);
+        const req = https.request({
+            hostname: 'api.resend.com',
+            path: '/emails',
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${apiKey}`,
+                'Content-Type': 'application/json',
+                'Content-Length': Buffer.byteLength(data)
+            }
+        }, (res) => {
+            let body = '';
+            res.on('data', c => body += c);
+            res.on('end', () => resolve({ status: res.statusCode, body }));
+        });
+        req.on('error', reject);
+        req.write(data);
+        req.end();
+    });
+}
 
 exports.handler = async (event) => {
     if (event.httpMethod !== 'POST') {
@@ -21,6 +44,9 @@ exports.handler = async (event) => {
     if (!to || !refLink) {
         return { statusCode: 400, body: 'Missing required fields' };
     }
+
+    const apiKey = process.env.RESEND_API_KEY;
+    if (!apiKey) return { statusCode: 500, body: 'Email service not configured' };
 
     const senderDisplay = (senderName || '').trim() || 'A colleague';
 
@@ -75,25 +101,21 @@ exports.handler = async (event) => {
 </body>
 </html>`;
 
-    const transporter = nodemailer.createTransport({
-        host: 'p3plzcpnl507574.prod.phx3.secureserver.net',
-        port: 465,
-        secure: true,
-        auth: {
-            user: 'no-reply@drtroy.com',
-            pass: 'DrTroy2026!Mail#Send'
-        }
-    });
-
     try {
-        await transporter.sendMail({
-            from:    '"DrTroy Continuing Education" <no-reply@drtroy.com>',
-            to,
+        const result = await resendPost(apiKey, {
+            from:    'DrTroy Continuing Education <no-reply@drtroy.com>',
+            to:      [to],
             subject: `${senderDisplay} invited you to DrTroy CE — $10 off your first package`,
             html
         });
 
-        console.log('Referral email sent to:', to);
+        console.log('Referral email sent to:', to, '| Status:', result.status);
+
+        if (result.status >= 400) {
+            console.error('Resend error:', result.body);
+            return { statusCode: 500, body: JSON.stringify({ error: 'Email send failed' }) };
+        }
+
         return { statusCode: 200, body: JSON.stringify({ sent: true }) };
     } catch (err) {
         console.error('send-referral error:', err.message);
