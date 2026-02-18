@@ -226,7 +226,7 @@ window.COURSE_CATALOG = window.COURSE_CATALOG || {
     'PT-MSK-001': {
         title: 'PT Musculoskeletal Evaluation and Diagnosis',
         credits: 3,
-        price: 27.99,
+        price: 34,
         courseNumber: 'DRTROY-PT-MSK-001-2024',
         category: 'pt-specific',
         status: 'available'
@@ -234,7 +234,7 @@ window.COURSE_CATALOG = window.COURSE_CATALOG || {
     'JOINT-001': {
         title: 'Considerations in Lower Extremity Joint Replacements',
         credits: 3,
-        price: 27.99,
+        price: 34,
         courseNumber: 'DRTROY-JOINT-001-2024',
         category: 'pt-specific',
         status: 'available'
@@ -242,7 +242,7 @@ window.COURSE_CATALOG = window.COURSE_CATALOG || {
     'OT-ADL-001': {
         title: 'OT Evaluation and Assessment of ADLs',
         credits: 3,
-        price: 27.99,
+        price: 34,
         courseNumber: 'DRTROY-OT-ADL-001-2024',
         category: 'ot-specific',
         status: 'coming-soon'
@@ -250,7 +250,7 @@ window.COURSE_CATALOG = window.COURSE_CATALOG || {
     'MOBILITY-001': {
         title: 'Comprehensive Mobility and Fall Prevention',
         credits: 3,
-        price: 27.99,
+        price: 29,
         courseNumber: 'DRTROY-MOBILITY-001-2024',
         category: 'core',
         status: 'available'
@@ -258,7 +258,7 @@ window.COURSE_CATALOG = window.COURSE_CATALOG || {
     'BALANCE-001': {
         title: 'Balance, Gait, and Vestibular Management',
         credits: 3,
-        price: 27.99,
+        price: 29,
         courseNumber: 'DRTROY-BALANCE-001-2024',
         category: 'core',
         status: 'coming-soon'
@@ -266,7 +266,7 @@ window.COURSE_CATALOG = window.COURSE_CATALOG || {
     'EXERCISE-001': {
         title: 'Post-Surgical and Therapeutic Exercise',
         credits: 3,
-        price: 27.99,
+        price: 29,
         courseNumber: 'DRTROY-EXERCISE-001-2024',
         category: 'core',
         status: 'coming-soon'
@@ -274,7 +274,7 @@ window.COURSE_CATALOG = window.COURSE_CATALOG || {
     'GERIATRIC-001': {
         title: 'Geriatric Care Across the Continuum',
         credits: 3,
-        price: 27.99,
+        price: 29,
         courseNumber: 'DRTROY-GERIATRIC-001-2024',
         category: 'core',
         status: 'coming-soon'
@@ -282,7 +282,7 @@ window.COURSE_CATALOG = window.COURSE_CATALOG || {
     'DOCUMENTATION-001': {
         title: 'Professional Documentation and Communication',
         credits: 3,
-        price: 27.99,
+        price: 29,
         courseNumber: 'DRTROY-DOC-001-2024',
         category: 'core',
         status: 'coming-soon'
@@ -290,7 +290,7 @@ window.COURSE_CATALOG = window.COURSE_CATALOG || {
     'MODALITIES-001': {
         title: 'Physical Agents, Modalities, and Wound Care',
         credits: 3,
-        price: 27.99,
+        price: 29,
         courseNumber: 'DRTROY-MODALITIES-001-2024',
         category: 'core',
         status: 'coming-soon'
@@ -298,7 +298,7 @@ window.COURSE_CATALOG = window.COURSE_CATALOG || {
     'NEURO-001': {
         title: 'Neurological Rehabilitation',
         credits: 3,
-        price: 27.99,
+        price: 29,
         courseNumber: 'DRTROY-NEURO-001-2024',
         category: 'core',
         status: 'available'
@@ -306,7 +306,7 @@ window.COURSE_CATALOG = window.COURSE_CATALOG || {
     'INFECTION-001': {
         title: 'Infection Control and Patient Safety',
         credits: 3,
-        price: 27.99,
+        price: 29,
         courseNumber: 'DRTROY-INFECTION-001-2024',
         category: 'core',
         status: 'coming-soon'
@@ -314,7 +314,7 @@ window.COURSE_CATALOG = window.COURSE_CATALOG || {
     'EDUCATION-001': {
         title: 'Patient Education and Health Promotion',
         credits: 2,
-        price: 18.99,
+        price: 22,
         courseNumber: 'DRTROY-EDUCATION-001-2024',
         category: 'core',
         status: 'available'
@@ -322,7 +322,7 @@ window.COURSE_CATALOG = window.COURSE_CATALOG || {
     'HEALTHTECH-001': {
         title: 'Healthcare Technology and Electronic Records',
         credits: 1.5,
-        price: 14.99,
+        price: 14,
         courseNumber: 'DRTROY-HEALTHTECH-001-2024',
         category: 'core',
         status: 'available'
