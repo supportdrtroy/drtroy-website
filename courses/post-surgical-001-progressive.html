@@ -1,0 +1,1040 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Post-Surgical and Therapeutic Exercise - DrTroy CE</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        @page { size: letter; margin: 0.75in; }
+        * { box-sizing: border-box; }
+        :root { --navy:#1a365d; --navy-light:#2c5282; --gold:#059669; --gold-light:#10b981; --gray-50:#f7fafc; --gray-100:#edf2f7; --gray-200:#e5e7eb; --gray-600:#4a5568; --gray-800:#2d3748; --gray-900:#111827; }
+        body { font-family:'Georgia','Times New Roman',serif; font-size:16px; line-height:1.7; color:#333; margin:0; padding:0; background:#f5f5f5; }
+        .course-header { background:#fff; box-shadow:0 2px 10px rgba(0,0,0,0.05); position:sticky; top:0; z-index:1000; border-bottom:3px solid var(--gold); }
+        .course-header-container { max-width:1200px; margin:0 auto; padding:1rem 2rem; display:flex; justify-content:space-between; align-items:center; }
+        .logo img { height:60px; width:auto; max-width:300px; }
+        .course-nav { display:flex; align-items:center; gap:1.5rem; }
+        .course-nav a { color:var(--gray-600); text-decoration:none; font-weight:500; font-size:14px; font-family:'Inter',sans-serif; }
+        .course-nav a:hover { color:var(--navy); }
+        .logout-btn { background:var(--gold); color:white; border:none; padding:0.5rem 1rem; border-radius:6px; font-weight:600; font-size:14px; cursor:pointer; font-family:'Inter',sans-serif; }
+        .logout-btn:hover { background:var(--gold-light); }
+        .course-container { max-width:1200px; margin:2rem auto; padding:2rem; background:white; box-shadow:0 10px 30px rgba(0,0,0,0.1); border-radius:10px; margin-bottom:2rem; }
+        .course-title-section { text-align:center; border-bottom:2px solid var(--gray-200); padding-bottom:2rem; margin-bottom:3rem; }
+        .course-title { font-size:2.5rem; font-weight:700; color:var(--navy); margin:0; font-family:'Inter',sans-serif; }
+        .course-subtitle { font-size:1.1rem; color:var(--gray-600); margin:1rem 0; font-style:italic; }
+        .course-info { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:1rem; margin:2rem 0; font-family:'Inter',sans-serif; }
+        .info-box { background:var(--gray-50); padding:1rem; border-radius:8px; text-align:center; border-left:4px solid var(--gold); }
+        .info-box strong { color:var(--navy); display:block; margin-bottom:0.5rem; }
+        .progress-container { background:var(--gray-50); padding:1.5rem; border-radius:10px; margin-bottom:2rem; border:2px solid var(--gold-light); }
+        .progress-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem; font-family:'Inter',sans-serif; }
+        .progress-title { font-size:1.2rem; font-weight:600; color:var(--navy); }
+        .progress-percentage { font-size:1rem; color:var(--gold); font-weight:600; }
+        .progress-bar { width:100%; height:12px; background:white; border-radius:6px; overflow:hidden; }
+        .progress-fill { height:100%; background:linear-gradient(90deg,var(--gold),var(--gold-light)); width:0%; transition:width 0.3s ease; }
+        .module { margin-bottom:3rem; border:1px solid var(--gray-200); border-radius:12px; overflow:hidden; background:white; box-shadow:0 4px 15px rgba(0,0,0,0.05); }
+        .module-header { background:linear-gradient(135deg,var(--navy),var(--navy-light)); color:white; padding:1.5rem; cursor:pointer; }
+        .module-header.completed { background:linear-gradient(135deg,var(--gold),var(--gold-light)); }
+        .module-title { font-size:1.3rem; font-weight:600; margin:0; font-family:'Inter',sans-serif; }
+        .module-header.completed .module-title::after { content:' ✓'; }
+        .module-content { padding:2rem; display:none; background:white; }
+        .module-content.active { display:block; animation:fadeIn 0.3s ease; }
+        @keyframes fadeIn { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:translateY(0)} }
+        .module-content h2 { color:var(--navy); font-size:1.4rem; margin:2rem 0 1rem; font-weight:600; border-bottom:2px solid var(--gold); padding-bottom:0.5rem; font-family:'Inter',sans-serif; }
+        .module-content h3 { color:var(--navy-light); font-size:1.2rem; margin:1.5rem 0 0.75rem; font-weight:600; }
+        .module-content p { margin-bottom:1rem; text-align:justify; }
+        .module-content ul, .module-content ol { margin:1rem 0; padding-left:2rem; }
+        .module-content li { margin-bottom:0.5rem; }
+        .highlight-box { border-left:5px solid var(--gold); padding:1.5rem; margin:1.5rem 0; border-radius:0 8px 8px 0; }
+        .highlight-box.clinical-tip { background:linear-gradient(135deg,#f0fdf4,#dcfce7); border-left-color:var(--gold); }
+        .highlight-box.key-point { background:linear-gradient(135deg,#fef7cd,#fef3c7); border-left-color:#d97706; }
+        .highlight-box.caution { background:linear-gradient(135deg,#fef2f2,#fee2e2); border-left-color:#dc2626; }
+        .knowledge-check { background:linear-gradient(135deg,var(--gray-50),white); border:2px solid var(--gold); border-radius:12px; padding:2rem; margin:2rem 0; }
+        .knowledge-check h3 { color:var(--navy); margin-top:0; font-family:'Inter',sans-serif; }
+        .question { margin:1.5rem 0; padding:1rem; background:white; border-radius:8px; border:1px solid var(--gray-200); }
+        .question-text { font-weight:600; margin-bottom:1rem; color:var(--navy); }
+        .answer-option { margin:0.5rem 0; padding:0.5rem; cursor:pointer; border-radius:6px; }
+        .answer-option:hover { background:var(--gray-50); }
+        .answer-option.correct { background:#dcfce7!important; border-left:4px solid var(--gold); padding-left:1rem; }
+        .answer-option.incorrect { background:#fee2e2!important; border-left:4px solid #dc2626; padding-left:1rem; }
+        .module-completion { display:flex; justify-content:space-between; align-items:center; padding:1.5rem; background:var(--gray-50); border-top:1px solid var(--gray-200); font-family:'Inter',sans-serif; }
+        .complete-btn { background:var(--gold); color:white; border:none; padding:0.75rem 1.5rem; border-radius:8px; font-weight:600; cursor:pointer; font-family:'Inter',sans-serif; }
+        .complete-btn:hover { background:var(--gold-light); }
+        .completed-badge { background:var(--gold); color:white; padding:0.5rem 1rem; border-radius:20px; font-size:0.9rem; font-weight:600; }
+        .certificate-section { background:linear-gradient(135deg,var(--navy),var(--navy-light)); color:white; text-align:center; padding:3rem; border-radius:12px; margin:3rem 0; display:none; }
+        .certificate-section.visible { display:block; }
+        .certificate-btn { background:var(--gold); color:white; border:none; padding:1rem 2rem; border-radius:8px; font-size:1.1rem; font-weight:600; cursor:pointer; margin-top:1rem; font-family:'Inter',sans-serif; }
+        @media(max-width:768px){ .course-container{margin:1rem;padding:1rem} .course-title{font-size:2rem} }
+        @media print{ .course-header,.progress-container,.complete-btn,.certificate-section{display:none!important} .module-content{display:block!important} }
+    </style>
+</head>
+<body>
+
+<header class="course-header">
+    <div class="course-header-container">
+        <div class="logo"><img src="../images/drtroy_logo_new.jpg" alt="DrTroy CE"></div>
+        <div class="course-nav">
+            <a href="../course-catalog.html">Course Catalog</a>
+            <a href="../my-account.html">My Account</a>
+            <button class="logout-btn" onclick="logout()">Logout</button>
+        </div>
+    </div>
+</header>
+
+<div class="course-container">
+
+    <!-- TITLE SECTION -->
+    <div class="course-title-section">
+        <div style="font-size:3rem;margin-bottom:1rem;">💪</div>
+        <h1 class="course-title">Post-Surgical and Therapeutic Exercise</h1>
+        <p class="course-subtitle">Evidence-Based Rehabilitation and Exercise Prescription for Post-Operative Patients</p>
+        <div class="course-info">
+            <div class="info-box"><strong>Course ID</strong>EXERCISE-001</div>
+            <div class="info-box"><strong>Approval #</strong>DRTROY-EXERCISE-001-2024</div>
+            <div class="info-box"><strong>Duration</strong>3.0 Hours (180 min)</div>
+            <div class="info-box"><strong>CCUs</strong>3.0</div>
+            <div class="info-box"><strong>Modules</strong>12 Modules (15 min each)</div>
+        </div>
+    </div>
+
+    <!-- PROGRESS BAR -->
+    <div class="progress-container">
+        <div class="progress-header">
+            <span class="progress-title">Course Progress</span>
+            <span class="progress-percentage" id="progressText">0 of 12 modules completed (0%)</span>
+        </div>
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressFill"></div>
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- MODULE 1: Principles of Tissue Healing and Surgical Repair   -->
+    <!-- ============================================================ -->
+    <div class="module" id="module-1">
+        <div class="module-header" id="header-1" onclick="toggleModule(1)">
+            <div class="module-title">Module 1: Principles of Tissue Healing and Surgical Repair</div>
+            <div style="font-size:0.9rem;opacity:0.85;margin-top:0.4rem;font-family:'Inter',sans-serif;">15 minutes · Tissue Biology &amp; Healing Phases</div>
+        </div>
+        <div class="module-content" id="content-1">
+
+            <h2>The Biology of Wound Healing</h2>
+            <p>A fundamental understanding of tissue healing is the cornerstone of all post-surgical rehabilitation. Every clinical decision — from the timing of range-of-motion exercises to the progression of resistive loading — must be anchored in the biological reality of what is occurring at the cellular and extracellular matrix level following surgical intervention. Violating these biological timelines by progressing too aggressively risks mechanical disruption of healing tissue; being overly conservative leads to maladaptive fibrosis, muscle atrophy, and delayed functional return.</p>
+            <p>Healing unfolds in three overlapping but clinically distinct phases: the inflammatory phase, the proliferative phase, and the remodeling (maturation) phase. Understanding the cellular events within each phase allows the physical therapist to design interventions that complement rather than disrupt the body's intrinsic repair cascade.</p>
+
+            <h2>Phase 1: Inflammatory Phase (Days 0–5)</h2>
+            <p>Immediately following surgical incision or tissue repair, vasoconstriction occurs for 5–10 minutes followed by vasodilation mediated by histamine, serotonin, and prostaglandins. Platelets aggregate at the wound site and release growth factors including platelet-derived growth factor (PDGF), transforming growth factor-beta (TGF-β), and vascular endothelial growth factor (VEGF). These signals recruit neutrophils within 6–24 hours, followed by macrophages by 48–72 hours, which are the primary drivers of debridement and cytokine signaling for the next phase.</p>
+            <p>Clinically, this phase is characterized by the cardinal signs of inflammation: rubor (redness), tumor (swelling), calor (heat), dolor (pain), and functio laesa (loss of function). Therapeutic interventions during this phase focus on controlling edema through elevation, compression, and gentle active muscle pumping, while protecting the surgical repair from excessive mechanical stress.</p>
+
+            <div class="highlight-box clinical-tip">
+                <strong>💡 Clinical Tip:</strong> RICE (Rest, Ice, Compression, Elevation) remains appropriate in the first 48–72 hours post-operatively. However, prolonged immobilization beyond the initial inflammatory phase is counterproductive — early, protected motion is superior for cartilage nutrition and preventing adhesion formation.
+            </div>
+
+            <h2>Phase 2: Proliferative Phase (Days 4–21)</h2>
+            <p>Beginning around day 4 and extending to approximately 3 weeks, fibroblasts migrate into the wound and begin synthesizing type III collagen (immature, disorganized collagen). Angiogenesis is driven by VEGF, establishing new capillary networks essential for tissue oxygenation. This new collagen matrix — called granulation tissue — is highly vascular but mechanically weak, with tensile strength reaching only 15–20% of normal by the end of this phase.</p>
+            <p>The proliferative phase represents the critical window for early protected motion. Controlled mechanical stress applied to healing collagen during this phase promotes fiber alignment along lines of tension (Wolff's Law applied to soft tissue), producing a stronger, more organized repair. Completely immobilized tissue heals with randomly oriented collagen fibers that are biomechanically inferior.</p>
+
+            <h2>Phase 3: Remodeling Phase (3 Weeks to 2 Years)</h2>
+            <p>During the remodeling phase, type III collagen is gradually replaced by type I collagen — the more mechanically robust form found in tendons, ligaments, and fascia. Collagen fibers remodel along the lines of mechanical stress through the action of matrix metalloproteinases (MMPs). Scar tissue matures and contracts. Full tensile strength is not achieved until 12–24 months post-injury, even when clinical function appears restored. This is particularly important in rotator cuff and ACL repair, where premature return to high-demand activity risks re-rupture despite subjective patient confidence.</p>
+
+            <div class="highlight-box key-point">
+                <strong>🔑 Key Point:</strong> Tissue healing timelines for specific structures: Skin/subcutaneous tissue: 6–8 weeks for initial strength. Tendons/ligaments: 3–6 months for functional strength, 12–24 months for full maturation. Bone (fracture): 6–12 weeks for bony union, 12–18 months for complete remodeling. Cartilage: Extremely limited intrinsic healing capacity; surgical procedures (microfracture, ACI) create fibrocartilage, not hyaline cartilage.
+            </div>
+
+            <h2>Surgical Repair Considerations</h2>
+            <p>The type of surgical procedure significantly influences the healing timeline and exercise prescription. Primary repairs (suture of torn tissue) are protected more aggressively than reconstructions using autograft or allograft tissue. Soft tissue procedures (meniscal repair, rotator cuff repair) require strict load protection for 6–12 weeks. Bony procedures (osteotomy, arthrodesis) require radiographic evidence of healing before full weightbearing is permitted. Arthroplasty procedures (total joint replacement) replace biological tissue with prosthetic implants that undergo osseointegration rather than biological healing, fundamentally altering the rehabilitation approach.</p>
+
+            <div class="knowledge-check">
+                <h3>🧠 Knowledge Check — Module 1</h3>
+                <div class="question" id="q1">
+                    <div class="question-text">During which phase of healing do fibroblasts synthesize type III collagen to form granulation tissue?</div>
+                    <div class="answer-option" onclick="selectAnswer('q1','a','correct')">A. Proliferative phase (Days 4–21)</div>
+                    <div class="answer-option" onclick="selectAnswer('q1','b','incorrect')">B. Inflammatory phase (Days 0–5)</div>
+                    <div class="answer-option" onclick="selectAnswer('q1','c','incorrect')">C. Remodeling phase (Weeks 3+)</div>
+                    <div class="answer-option" onclick="selectAnswer('q1','d','incorrect')">D. Maturation phase (Months 6–24)</div>
+                </div>
+            </div>
+
+            <div class="module-completion">
+                <span style="color:var(--gray-600);font-size:0.95rem;">Complete this module to track your progress.</span>
+                <button class="complete-btn" onclick="completeModule(1)">Mark Complete ✓</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- MODULE 2: Pre-Operative Rehabilitation (Prehab)              -->
+    <!-- ============================================================ -->
+    <div class="module" id="module-2">
+        <div class="module-header" id="header-2" onclick="toggleModule(2)">
+            <div class="module-title">Module 2: Pre-Operative Rehabilitation: Prehab Principles and Evidence</div>
+            <div style="font-size:0.9rem;opacity:0.85;margin-top:0.4rem;font-family:'Inter',sans-serif;">15 minutes · Prehabilitation &amp; Surgical Optimization</div>
+        </div>
+        <div class="module-content" id="content-2">
+
+            <h2>The Case for Prehabilitation</h2>
+            <p>Prehabilitation — the process of enhancing a patient's functional capacity prior to a surgical procedure — has emerged as one of the most evidence-supported yet underutilized interventions in perioperative care. The foundational premise is straightforward: patients who enter surgery in better physical condition recover more rapidly, achieve superior functional outcomes, and experience fewer complications than their deconditioned counterparts. The pre-operative window represents an opportunity to "bank" physical capacity that will be drawn upon during the inevitable post-operative decline.</p>
+            <p>A landmark 2014 meta-analysis by Kwok et al. in the British Journal of Sports Medicine demonstrated that patients undergoing prehabilitation prior to total knee arthroplasty achieved significantly better early quadriceps strength and functional performance compared to controls. Similarly, Carli et al. demonstrated that colorectal surgery patients who completed a 4-week prehabilitation program recovered walking capacity faster than those who did not. The evidence base continues to grow across orthopedic, cardiac, and abdominal surgical populations.</p>
+
+            <h2>Physiological Rationale</h2>
+            <p>Post-operative muscle weakness is universal and disproportionate to the degree of surgical intervention. Following total knee arthroplasty, quadriceps strength deficits of 50–70% compared to the contralateral limb have been documented within the first week post-operatively — deficits that can persist for 6–12 months without targeted rehabilitation. This "arthrogenic muscle inhibition" (AMI) is driven by afferent neural signals from the joint capsule that reflexively inhibit motor neuron pools, compounding surgical pain and edema. Patients with greater pre-operative quadriceps strength demonstrate less severe and shorter-duration AMI.</p>
+            <p>Additionally, aerobic deconditioning increases the physiological cost of post-operative mobility. A patient who is functionally deconditioned before surgery faces a steeper hill to climb during recovery. Cardiovascular prehabilitation — even low-intensity walking programs sustained for 4–6 weeks pre-operatively — improves VO₂ peak and reduces post-operative fatigue burden.</p>
+
+            <div class="highlight-box clinical-tip">
+                <strong>💡 Clinical Tip:</strong> Recommend prehabilitation at the time of surgical scheduling, not at the pre-operative appointment. Even 2–4 weeks of targeted strengthening can produce meaningful pre-operative strength gains that translate to faster recovery trajectories.
+            </div>
+
+            <h2>Key Components of a Prehabilitation Program</h2>
+            <h3>Strength Training</h3>
+            <p>Target the primary muscle groups that will be challenged post-operatively. For lower extremity surgery (TKA, THA, ACL reconstruction), this includes quadriceps, hip abductors, hip extensors, and calf musculature. Progressive resistance training at 60–80% of 1-rep maximum (1RM), 2–3 sessions per week, for a minimum of 4–6 weeks, produces clinically meaningful strength gains. Emphasize closed-chain exercises (leg press, step-ups, terminal knee extension) over open-chain when joint pathology permits.</p>
+            <h3>Aerobic Conditioning</h3>
+            <p>Low to moderate intensity aerobic exercise (walking, cycling, aquatic exercise) at 60–75% of maximum heart rate, 3–5 days per week, improves cardiovascular reserve, reduces systemic inflammation, and optimizes metabolic health. In patients with osteoarthritis, aquatic exercise reduces joint loading while maintaining aerobic stimulus.</p>
+            <h3>Patient Education and Goal Setting</h3>
+            <p>Patients who understand the post-operative rehabilitation trajectory — including realistic timelines, expected milestones, and the role of home exercise — demonstrate higher adherence, lower pain catastrophizing, and better surgical outcomes. Establish functional goals collaboratively before surgery so patients have a clear target to work toward during recovery.</p>
+            <h3>Neuromuscular Training</h3>
+            <p>Balance, proprioception, and neuromuscular control training are particularly important prior to lower extremity procedures. Proprioceptive deficits associated with joint pathology can persist post-operatively even after pain relief; pre-operative neuromuscular training accelerates the restoration of joint position sense.</p>
+
+            <div class="highlight-box key-point">
+                <strong>🔑 Key Point:</strong> Ideal prehabilitation duration is 4–8 weeks. Even 2 weeks of targeted exercise produces measurable strength gains and improves patient readiness. Do not delay prehabilitation referral waiting for the "ideal" timeframe — some training is always better than none.
+            </div>
+
+            <h2>Special Populations and Prehab Modifications</h2>
+            <p>Frail elderly patients scheduled for hip arthroplasty benefit from multimodal prehabilitation including nutritional optimization, resistance training emphasizing hip extensors and abductors, and fall prevention training. Patients with severe osteoarthritis limiting land-based exercise should be offered aquatic prehabilitation. Pre-operative optimization of comorbidities — particularly diabetes, obesity, and smoking cessation — is associated with reduced surgical site infection rates and improved healing capacity.</p>
+
+            <div class="knowledge-check">
+                <h3>🧠 Knowledge Check — Module 2</h3>
+                <div class="question" id="q2">
+                    <div class="question-text">What is "arthrogenic muscle inhibition" (AMI) and when does it most significantly impact post-operative recovery?</div>
+                    <div class="answer-option" onclick="selectAnswer('q2','a','incorrect')">A. A pre-operative condition caused by disuse atrophy in patients with chronic arthritis</div>
+                    <div class="answer-option" onclick="selectAnswer('q2','b','correct')">B. Reflex inhibition of motor neurons driven by afferent signals from the joint capsule, causing disproportionate post-operative muscle weakness</div>
+                    <div class="answer-option" onclick="selectAnswer('q2','c','incorrect')">C. A medication side effect from post-operative opioids that reduces voluntary muscle activation</div>
+                    <div class="answer-option" onclick="selectAnswer('q2','d','incorrect')">D. Surgical damage to the motor nerve supply of the quadriceps during arthroplasty</div>
+                </div>
+            </div>
+
+            <div class="module-completion">
+                <span style="color:var(--gray-600);font-size:0.95rem;">Complete this module to track your progress.</span>
+                <button class="complete-btn" onclick="completeModule(2)">Mark Complete ✓</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- MODULE 3: Post-Op Phase I — Acute Phase                      -->
+    <!-- ============================================================ -->
+    <div class="module" id="module-3">
+        <div class="module-header" id="header-3" onclick="toggleModule(3)">
+            <div class="module-title">Module 3: Post-Operative Phase I — Acute Phase Management (Days 0–2 Weeks)</div>
+            <div style="font-size:0.9rem;opacity:0.85;margin-top:0.4rem;font-family:'Inter',sans-serif;">15 minutes · Early Post-Op Care &amp; Protection</div>
+        </div>
+        <div class="module-content" id="content-3">
+
+            <h2>Goals and Framework of Acute Phase Rehabilitation</h2>
+            <p>The acute phase of post-operative rehabilitation — spanning from the day of surgery through approximately two weeks — is characterized by the interplay of three competing priorities: protecting the surgical repair, controlling the inflammatory response, and initiating early controlled mobility. Historically, extended immobilization was the norm; contemporary evidence strongly supports early mobilization as beneficial for tissue healing, joint nutrition, cardiovascular health, and patient psychology when performed within appropriate parameters.</p>
+            <p>The physical therapist's role in Phase I is both protective and activating. Protection means understanding the specific surgical procedure, the integrity of the repair, the surgeon's precautions, and the weight-bearing status prescribed. Activation means initiating muscle activation exercises, edema control, pain management, and protected range of motion as early as tissue healing allows.</p>
+
+            <h2>Pain and Edema Management</h2>
+            <p>Pain and edema are the primary barriers to early mobility and must be aggressively managed. Edema increases intra-articular pressure, reduces cartilage nutrition via synovial fluid disruption, and contributes to arthrogenic muscle inhibition. Effective edema control strategies include:</p>
+            <ul>
+                <li><strong>Elevation:</strong> Affected extremity elevated above heart level for 20–30 minutes per hour during waking hours in the first 48–72 hours.</li>
+                <li><strong>Cryotherapy:</strong> Ice application (with barrier) for 15–20 minutes every 2–3 hours reduces tissue temperature, metabolic activity, and inflammatory mediator production. Cryotherapy is most effective in the first 48–72 hours.</li>
+                <li><strong>Compression:</strong> Elastic bandage wrapping or compressive garments reduce fluid accumulation. Ensure distal to proximal wrapping technique.</li>
+                <li><strong>Active muscle pumping:</strong> Ankle pumps (20 repetitions every waking hour) activate the venous pump mechanism, reducing DVT risk and facilitating lymphatic drainage.</li>
+            </ul>
+
+            <div class="highlight-box caution">
+                <strong>⚠️ Caution:</strong> Screen all post-operative patients for deep vein thrombosis (DVT) risk. Calf pain, erythema, warmth, and asymmetric swelling warrant immediate referral. Most post-surgical patients are on pharmacological DVT prophylaxis — ensure early ambulation is initiated as prescribed by the surgical team to reduce thrombotic risk.
+            </div>
+
+            <h2>Early Mobility and Weight-Bearing Progression</h2>
+            <p>Weight-bearing status post-operatively is determined by the surgical procedure and must be followed precisely. Classifications include: Non-Weight-Bearing (NWB), Toe-Touch Weight-Bearing (TTWB, &lt;10% body weight), Partial Weight-Bearing (PWB, typically 25–50% body weight), Weight-Bearing as Tolerated (WBAT), and Full Weight-Bearing (FWB). Deviation from prescribed weight-bearing can disrupt bony fixation, stress fracture repairs, and soft tissue healing.</p>
+            <p>Ambulation training with appropriate assistive devices begins as early as the day of surgery for most total joint arthroplasty and many soft-tissue procedure patients. Gait training focuses on restoring a normalized gait pattern — targeting full knee extension at heel strike and appropriate step length — even before strength and pain are fully resolved, as abnormal gait patterns established early can persist.</p>
+
+            <h2>Phase I Exercise Prescription</h2>
+            <h3>Isometric Exercises</h3>
+            <p>Isometric muscle activation protects healing tissue while maintaining neural drive and preventing disuse atrophy. Quadriceps sets, gluteal sets, and ankle pumps are initiated immediately post-operatively. Patients are typically instructed to perform 10–20 repetitions hourly. Co-contraction exercises (simultaneous quadriceps and hamstring activation) improve joint stability without joint motion.</p>
+            <h3>Early Range of Motion</h3>
+            <p>Passive and active-assisted range of motion (AAROM) is initiated within the parameters established by the surgeon. For total knee arthroplasty, early flexion to 90° within the first week is a primary goal. For rotator cuff repairs, passive motion only (no active elevation) for the first 4–6 weeks depending on repair size and integrity. Continuous Passive Motion (CPM) devices have demonstrated mixed evidence; when used, they should supplement — not replace — active exercise.</p>
+
+            <div class="highlight-box clinical-tip">
+                <strong>💡 Clinical Tip:</strong> Establish communication with the surgical team before initiating Phase I rehabilitation. Confirm weight-bearing status, range of motion limits, activity restrictions, and the specific technique/fixation method used. A rotator cuff repaired with a single-row technique has fundamentally different loading tolerance than a double-row repair.
+            </div>
+
+            <h2>Patient Education in Phase I</h2>
+            <p>Patient education is one of the highest-value interventions in Phase I. Patients who understand why pain management is essential for participation, why elevation reduces edema, and why early mobility is safe despite discomfort demonstrate higher compliance and better early outcomes. Address pain catastrophizing, set realistic expectations for the recovery timeline, and empower patients as active participants in their recovery.</p>
+
+            <div class="knowledge-check">
+                <h3>🧠 Knowledge Check — Module 3</h3>
+                <div class="question" id="q3">
+                    <div class="question-text">Which weight-bearing classification allows approximately 25–50% of body weight through the affected limb?</div>
+                    <div class="answer-option" onclick="selectAnswer('q3','a','incorrect')">A. Toe-Touch Weight-Bearing (TTWB)</div>
+                    <div class="answer-option" onclick="selectAnswer('q3','b','correct')">B. Partial Weight-Bearing (PWB)</div>
+                    <div class="answer-option" onclick="selectAnswer('q3','c','incorrect')">C. Weight-Bearing as Tolerated (WBAT)</div>
+                    <div class="answer-option" onclick="selectAnswer('q3','d','incorrect')">D. Full Weight-Bearing (FWB)</div>
+                </div>
+            </div>
+
+            <div class="module-completion">
+                <span style="color:var(--gray-600);font-size:0.95rem;">Complete this module to track your progress.</span>
+                <button class="complete-btn" onclick="completeModule(3)">Mark Complete ✓</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- MODULE 4: Post-Op Phase II — Subacute Rehabilitation          -->
+    <!-- ============================================================ -->
+    <div class="module" id="module-4">
+        <div class="module-header" id="header-4" onclick="toggleModule(4)">
+            <div class="module-title">Module 4: Post-Operative Phase II — Subacute Rehabilitation (Weeks 2–6)</div>
+            <div style="font-size:0.9rem;opacity:0.85;margin-top:0.4rem;font-family:'Inter',sans-serif;">15 minutes · Subacute Phase &amp; ROM Restoration</div>
+        </div>
+        <div class="module-content" id="content-4">
+
+            <h2>Transition to the Subacute Phase</h2>
+            <p>The subacute rehabilitation phase, spanning weeks 2 through 6 post-operatively, marks the transition from protection-dominant care to active restoration of mobility, strength, and neuromuscular control. By week 2, the inflammatory phase has subsided substantially, surgical incisions are closed and early healing is established, and the patient has typically been cleared from inpatient or immediate post-acute care. Rehabilitation focus shifts toward maximizing range of motion, initiating progressive strengthening, normalizing gait, and preparing tissue for the loading demands of Phase III.</p>
+            <p>The subacute phase coincides with the proliferative phase of tissue healing — the window of greatest opportunity for influencing the mechanical organization of healing collagen. Controlled, progressive mechanical loading applied during this phase produces better-aligned, stronger collagen matrices compared to immobilization. The clinician must balance the therapeutic benefit of loading against the risk of overwhelming tissue that still lacks full mechanical integrity.</p>
+
+            <h2>Range of Motion Restoration</h2>
+            <p>Restoring full, or functionally adequate, range of motion is a primary goal of Phase II. Scar tissue formation and joint capsule tightening occur rapidly during the early healing phases and become progressively more resistant to stretching as collagen cross-linking matures. Early, consistent range of motion work is far more effective than attempting to restore ROM after fibrosis has consolidated.</p>
+            <h3>Techniques for ROM Restoration</h3>
+            <ul>
+                <li><strong>Active-Assisted ROM (AAROM):</strong> Patient uses the contralateral extremity, gravity, or a wand/strap to assist motion through available range, gradually expanding the limit.</li>
+                <li><strong>Passive ROM:</strong> Therapist-applied motion within prescribed limits; useful for gaining end-range motion and assessing capsular end-feel.</li>
+                <li><strong>Joint Mobilization:</strong> Grades I–II for pain inhibition; Grades III–IV for restricted joint mobility secondary to capsular tightness. Mobilization contraindicated over healing bone fracture sites or immediately adjacent to repaired tendons/ligaments until healing permits.</li>
+                <li><strong>Scar Mobilization:</strong> Initiated once the incision is fully closed (typically 2–3 weeks). Transverse friction massage and scar tissue mobilization prevent adhesion to underlying structures and maintain tissue extensibility.</li>
+                <li><strong>Low-Load Prolonged Stretch (LLPS):</strong> 20–30 minutes of sustained, low-load stretch at end range is more effective than brief high-load stretching for viscoelastic tissue elongation. Dynamic splinting or serial casting can be used in resistant cases.</li>
+            </ul>
+
+            <div class="highlight-box key-point">
+                <strong>🔑 Key Point:</strong> ROM gains are most efficiently achieved when the tissue is warm. Perform range of motion exercises after gentle aerobic warm-up or thermal modality application. Aquatic therapy during Phase II reduces gravitational joint loading while providing resistance and thermal benefits simultaneously.
+            </div>
+
+            <h2>Progressive Strengthening in Phase II</h2>
+            <p>Strengthening during Phase II begins with low-resistance, high-repetition exercise to restore neuromuscular activation patterns without exceeding tissue stress tolerance. The goal is not maximal strength development (that occurs in Phase III) but rather re-establishing the neural pathways for coordinated muscle activation around the surgical joint.</p>
+            <p>Closed-chain exercises (leg press at partial range, mini-squats, step-ups, heel raises) are preferred over open-chain for lower extremity rehabilitation because they produce lower shear forces on surgical structures while engaging functional, co-contraction muscle patterns. Open-chain exercises (straight leg raises, short-arc quads) are added based on surgical precautions — for example, open-chain knee extension is delayed following ACL reconstruction to protect the graft during the ligamentization process.</p>
+
+            <h2>Aquatic Therapy in the Subacute Phase</h2>
+            <p>Aquatic therapy is a highly effective modality during Phase II, particularly for patients with significant pain, obesity, or weight-bearing restrictions. Buoyancy reduces effective body weight by approximately 90% at neck depth, 75% at chest depth, and 50% at hip depth, allowing early ambulation and exercise in patients who cannot yet tolerate full body weight. Hydrostatic pressure provides compressive edema control. Water resistance provides progressive, velocity-dependent resistance to movement without the impact forces of land-based exercise. Aquatic walking, range of motion exercises, and resistance exercises using pool jets or aquatic equipment are effective Phase II interventions.</p>
+
+            <div class="highlight-box caution">
+                <strong>⚠️ Caution:</strong> Aquatic therapy is contraindicated in patients with open wounds, active infection, uncontrolled incontinence, or when wound healing is incomplete. Confirm surgical incision closure (typically 2–3 weeks, with suture removal) before initiating aquatic therapy.
+            </div>
+
+            <div class="knowledge-check">
+                <h3>🧠 Knowledge Check — Module 4</h3>
+                <div class="question" id="q4">
+                    <div class="question-text">Which ROM technique involves sustained, low-intensity stretching over 20–30 minutes and is most effective for viscoelastic tissue elongation?</div>
+                    <div class="answer-option" onclick="selectAnswer('q4','a','incorrect')">A. High-load brief stretch (HLBS)</div>
+                    <div class="answer-option" onclick="selectAnswer('q4','b','incorrect')">B. Ballistic stretching</div>
+                    <div class="answer-option" onclick="selectAnswer('q4','c','correct')">C. Low-load prolonged stretch (LLPS)</div>
+                    <div class="answer-option" onclick="selectAnswer('q4','d','incorrect')">D. Contract-relax proprioceptive neuromuscular facilitation (PNF)</div>
+                </div>
+            </div>
+
+            <div class="module-completion">
+                <span style="color:var(--gray-600);font-size:0.95rem;">Complete this module to track your progress.</span>
+                <button class="complete-btn" onclick="completeModule(4)">Mark Complete ✓</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- MODULE 5: Phase III — Progressive Strengthening              -->
+    <!-- ============================================================ -->
+    <div class="module" id="module-5">
+        <div class="module-header" id="header-5" onclick="toggleModule(5)">
+            <div class="module-title">Module 5: Post-Operative Phase III — Progressive Strengthening and Neuromuscular Re-education</div>
+            <div style="font-size:0.9rem;opacity:0.85;margin-top:0.4rem;font-family:'Inter',sans-serif;">15 minutes · Strength &amp; Neuromuscular Training</div>
+        </div>
+        <div class="module-content" id="content-5">
+
+            <h2>Characteristics of Phase III Rehabilitation</h2>
+            <p>Phase III typically begins at 6 weeks post-operatively and extends through 3–4 months, representing the transition from tissue protection to active performance development. By this point, surgical structures have achieved sufficient mechanical integrity to tolerate progressive loading. The goals of Phase III are: developing strength sufficient for functional daily activities, restoring neuromuscular control and joint position sense, improving cardiovascular endurance, and preparing the patient for the functional demands of Phase IV.</p>
+            <p>The hallmark of Phase III is systematic progressive overload — the application of gradually increasing training stimuli to drive physiological adaptation. This principle, fundamental to exercise science, applies equally to post-surgical rehabilitation. Muscles, tendons, and bone must be progressively loaded beyond current capacity to stimulate adaptation; insufficient loading fails to drive strength gains, while excessive loading beyond tissue tolerance risks re-injury.</p>
+
+            <h2>Principles of Progressive Resistance Training</h2>
+            <h3>The FITT Principle Applied to Rehabilitation</h3>
+            <ul>
+                <li><strong>Frequency:</strong> 2–3 sessions per week for targeted strengthening, with at least 48 hours between sessions to allow tissue recovery and adaptation.</li>
+                <li><strong>Intensity:</strong> Begin at 60–70% of 1RM for muscular strength development; 30–50% of 1RM for endurance-focused protocols. Use the Rate of Perceived Exertion (RPE) scale when 1RM testing is not clinically appropriate.</li>
+                <li><strong>Time (Volume):</strong> 3 sets of 8–12 repetitions for hypertrophy and strength. Higher repetition ranges (15–20) with lower loads for initial Phase III entry or endurance goals.</li>
+                <li><strong>Type:</strong> Progress from closed-chain to open-chain exercises. Integrate multi-joint, functional movement patterns that mirror the patient's occupational and recreational demands.</li>
+            </ul>
+
+            <div class="highlight-box clinical-tip">
+                <strong>💡 Clinical Tip:</strong> Use objective limb symmetry indices (LSI) to guide progression decisions. An LSI of ≥90% on isokinetic testing or handheld dynamometry is a commonly used threshold before clearing patients for higher-demand activities. Do not rely solely on time since surgery — biological healing and strength recovery are highly individual.
+            </div>
+
+            <h2>Neuromuscular Re-education</h2>
+            <p>Neuromuscular control — the ability of the nervous system to generate coordinated, efficient muscle activation patterns in response to sensory input — is frequently compromised following joint surgery. This disruption arises from damage to mechanoreceptors within the joint capsule and surrounding soft tissue, post-operative pain and swelling causing altered afferent signaling, and the period of reduced activity and altered movement patterns during early recovery.</p>
+            <h3>Proprioceptive Training Progression</h3>
+            <ol>
+                <li><strong>Static balance on stable surface:</strong> Single-leg stance, eyes open, progressing to eyes closed. Goal: 30 seconds without compensation.</li>
+                <li><strong>Static balance on unstable surface:</strong> Balance board, BOSU ball, foam pad. Challenges ankle and hip proprioceptors.</li>
+                <li><strong>Dynamic balance:</strong> Star excursion balance test directions, lateral stepping, tandem walking.</li>
+                <li><strong>Perturbation training:</strong> Unexpected surface or limb perturbations while maintaining balance; most directly trains reactive neuromuscular control.</li>
+                <li><strong>Task-specific training:</strong> Balance challenges integrated into functional movements (single-leg squat, step-down, sport-specific patterns).</li>
+            </ol>
+
+            <h2>Addressing Persistent Muscle Weakness</h2>
+            <p>Quadriceps weakness following knee surgery, and gluteal weakness following hip surgery, are notoriously persistent. Targeted neuromuscular electrical stimulation (NMES) over the quadriceps — particularly when combined with voluntary activation — has Level I evidence for accelerating strength recovery after TKA. Blood flow restriction training (BFR) — application of partial venous occlusion proximal to the exercising limb during low-load resistance exercise (20–30% 1RM) — produces muscle hypertrophy and strength gains comparable to high-load training at significantly lower joint stress, making it particularly valuable in Phase III when tissue loading capacity is still limited.</p>
+
+            <div class="highlight-box key-point">
+                <strong>🔑 Key Point:</strong> Blood flow restriction (BFR) training applies a tourniquet at 40–80% of limb occlusion pressure. Combined with loads of 20–30% 1RM, it generates significant metabolic stress and growth hormone response, producing strength and hypertrophy gains with minimal joint loading — ideal for Phase III post-surgical rehabilitation.
+            </div>
+
+            <div class="knowledge-check">
+                <h3>🧠 Knowledge Check — Module 5</h3>
+                <div class="question" id="q5">
+                    <div class="question-text">What limb symmetry index (LSI) is commonly used as a threshold before clearing post-surgical patients for higher-demand functional activities?</div>
+                    <div class="answer-option" onclick="selectAnswer('q5','a','incorrect')">A. ≥70%</div>
+                    <div class="answer-option" onclick="selectAnswer('q5','b','incorrect')">B. ≥80%</div>
+                    <div class="answer-option" onclick="selectAnswer('q5','c','correct')">C. ≥90%</div>
+                    <div class="answer-option" onclick="selectAnswer('q5','d','incorrect')">D. ≥95%</div>
+                </div>
+            </div>
+
+            <div class="module-completion">
+                <span style="color:var(--gray-600);font-size:0.95rem;">Complete this module to track your progress.</span>
+                <button class="complete-btn" onclick="completeModule(5)">Mark Complete ✓</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- MODULE 6: Phase IV — Functional and Sport-Specific Return     -->
+    <!-- ============================================================ -->
+    <div class="module" id="module-6">
+        <div class="module-header" id="header-6" onclick="toggleModule(6)">
+            <div class="module-title">Module 6: Post-Operative Phase IV — Functional and Sport-Specific Return</div>
+            <div style="font-size:0.9rem;opacity:0.85;margin-top:0.4rem;font-family:'Inter',sans-serif;">15 minutes · Return to Sport &amp; Function Criteria</div>
+        </div>
+        <div class="module-content" id="content-6">
+
+            <h2>The Challenge of Return-to-Function Decision Making</h2>
+            <p>Phase IV rehabilitation focuses on the final transition from structured rehabilitation to independent, functional, or athletic performance. This phase is arguably the most consequential and most frequently mismanaged, as it involves the complex decision of when a patient has recovered sufficiently to return to high-demand activities. Premature return — guided by time alone rather than objective criteria — is a primary driver of re-injury. Evidence from ACL reconstruction literature demonstrates re-rupture rates of 15–23% in young athletes who return to sport before meeting objective strength and neuromuscular criteria.</p>
+            <p>The shift in evidence-based practice has been decisive: time-based return-to-sport criteria are insufficient. Multi-criteria discharge frameworks that integrate strength symmetry, functional performance testing, psychological readiness, and tissue healing timelines are the current standard of care.</p>
+
+            <h2>Functional Performance Testing</h2>
+            <p>A battery of functional performance tests provides objective data to guide Phase IV progression and return-to-activity clearance. These tests assess the integration of strength, power, neuromuscular control, and confidence that cannot be captured by isolated strength testing alone.</p>
+            <h3>Lower Extremity Functional Testing Battery</h3>
+            <ul>
+                <li><strong>Single-Leg Hop for Distance:</strong> Measures limb power and confidence. LSI ≥90% required. Average values: males ~170–200 cm, females ~150–180 cm.</li>
+                <li><strong>Triple Hop for Distance:</strong> Three consecutive hops; tests repeated power production. LSI ≥90%.</li>
+                <li><strong>6-Meter Timed Hop:</strong> Timed completion of 6 hops in one direction; tests speed and consistency.</li>
+                <li><strong>Crossover Triple Hop:</strong> Three hops crossing a line; tests frontal and transverse plane control.</li>
+                <li><strong>Single-Leg Squat Quality:</strong> Assessed for knee-over-toe alignment, trunk stability, contralateral hip drop (Trendelenburg pattern).</li>
+                <li><strong>Y-Balance Test:</strong> Dynamic balance assessment in anterior, posteromedial, and posterolateral reach directions. Composite score asymmetry &gt;4 cm is associated with increased injury risk.</li>
+            </ul>
+
+            <h2>Sport-Specific Rehabilitation</h2>
+            <p>Phase IV exercise prescription is individualized to the patient's functional goals. For a recreational runner post-ACL reconstruction, progressive return-to-running protocols (e.g., Cooke Protocol: 12-week walk-to-run progression starting with 1-minute run intervals at week 10) are implemented. For overhead athletes post-rotator cuff repair, an interval throwing program progresses from short toss at low intensity to full-distance throwing over 3–6 months. For athletes in cutting sports (soccer, basketball), agility, deceleration, and change-of-direction training must be systematically incorporated.</p>
+
+            <div class="highlight-box clinical-tip">
+                <strong>💡 Clinical Tip:</strong> Use a structured return-to-sport continuum: Return to Participation → Return to Sport → Return to Performance. Many patients achieve "return to sport" (competing again) but never achieve "return to performance" (pre-injury performance level). Set expectations clearly and continue targeted training through all three stages.
+            </div>
+
+            <h2>Psychological Readiness for Return to Sport</h2>
+            <p>Psychological readiness is an independent predictor of re-injury and performance outcomes. The Anterior Cruciate Ligament Return to Sport after Injury (ACL-RSI) scale and the Tampa Scale of Kinesiophobia (TSK) are validated tools for assessing fear of re-injury, confidence, and psychological readiness. Athletes who score low on ACL-RSI despite meeting physical criteria have higher re-injury rates. Psychological rehabilitation strategies include graded exposure to feared movements, cognitive reframing of risk, visualization, and confidence-building task progression.</p>
+
+            <div class="highlight-box key-point">
+                <strong>🔑 Key Point:</strong> A comprehensive return-to-sport framework should include: (1) Time since surgery meeting biological healing minimums, (2) Limb symmetry index ≥90% on strength testing, (3) Functional hop test battery LSI ≥90%, (4) Psychological readiness scale scores above threshold, (5) Surgeon clearance, and (6) Sport-specific skill assessment.
+            </div>
+
+            <div class="knowledge-check">
+                <h3>🧠 Knowledge Check — Module 6</h3>
+                <div class="question" id="q6">
+                    <div class="question-text">Which validated scale is used to assess psychological readiness for return to sport following ACL reconstruction?</div>
+                    <div class="answer-option" onclick="selectAnswer('q6','a','incorrect')">A. Tampa Scale of Kinesiophobia (TSK)</div>
+                    <div class="answer-option" onclick="selectAnswer('q6','b','correct')">B. ACL Return to Sport after Injury scale (ACL-RSI)</div>
+                    <div class="answer-option" onclick="selectAnswer('q6','c','incorrect')">C. Fear-Avoidance Beliefs Questionnaire (FABQ)</div>
+                    <div class="answer-option" onclick="selectAnswer('q6','d','incorrect')">D. Patient-Specific Functional Scale (PSFS)</div>
+                </div>
+            </div>
+
+            <div class="module-completion">
+                <span style="color:var(--gray-600);font-size:0.95rem;">Complete this module to track your progress.</span>
+                <button class="complete-btn" onclick="completeModule(6)">Mark Complete ✓</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- MODULE 7: Total Knee Arthroplasty Rehabilitation              -->
+    <!-- ============================================================ -->
+    <div class="module" id="module-7">
+        <div class="module-header" id="header-7" onclick="toggleModule(7)">
+            <div class="module-title">Module 7: Total Knee Arthroplasty Rehabilitation Protocol</div>
+            <div style="font-size:0.9rem;opacity:0.85;margin-top:0.4rem;font-family:'Inter',sans-serif;">15 minutes · TKA Protocol &amp; Clinical Milestones</div>
+        </div>
+        <div class="module-content" id="content-7">
+
+            <h2>Overview of Total Knee Arthroplasty</h2>
+            <p>Total knee arthroplasty (TKA) is one of the most commonly performed elective surgical procedures in the United States, with over 700,000 procedures annually. TKA replaces damaged articular surfaces of the femur, tibia, and patella with prosthetic implants. Unlike soft tissue repairs, TKA does not involve healing of injured biological tissue — rather, the prosthetic components undergo osseointegration (bony ingrowth into porous implant surfaces), and surrounding soft tissue structures (quadriceps mechanism, joint capsule, collateral ligaments) recover from the surgical approach and manipulation.</p>
+            <p>The rehabilitation approach following TKA is therefore distinct from ligament or meniscal repair protocols. There are generally no articular cartilage or ligamentous healing constraints; rather, the primary limiting factors are quadriceps weakness and inhibition, pain and swelling, and range of motion restrictions. Knee flexion of ≥120° is required for most functional activities including stair climbing and rising from a low chair; full knee extension (0°) is essential for gait normalization.</p>
+
+            <h2>TKA Rehabilitation by Phase</h2>
+            <h3>Phase I: Acute Hospital/Early Outpatient (Days 0–14)</h3>
+            <p>Contemporary TKA patients are mobilized on the day of surgery with a physical therapist and discharged within 1–2 days in most cases. Day 1 goals include: sitting edge of bed, standing with assistive device, and walking 10–20 meters. Exercises initiated include: ankle pumps, quadriceps sets, gluteal sets, heel slides (active-assisted knee flexion), and straight leg raises. Knee flexion goal of 90° by the end of week 1 is a standard benchmark.</p>
+            <h3>Phase II: Early Outpatient (Weeks 2–6)</h3>
+            <p>Outpatient physical therapy focuses on progressive ROM (target 110–120° flexion), gait normalization, and early strengthening. Exercises progress to: short arc quads, leg press (0–60° range), mini-squats, step-ups to 4-inch step, and stationary cycling when ≥100° flexion is achieved. Patients typically wean from walker to cane to no device during this phase. Scar mobilization is initiated at 2–3 weeks.</p>
+            <h3>Phase III: Progressive Strengthening (Weeks 6–12)</h3>
+            <p>Progressive resistance training: leg press, leg extension (full range now permitted in most protocols), step-ups to 8-inch step, lateral band walks, and terminal knee extension. Neuromuscular training: single-leg balance, mini-squat perturbation. Stair climbing (step-over-step) typically achieved by 6–8 weeks.</p>
+            <h3>Phase IV: Return to Function (Months 3–6+)</h3>
+            <p>Goals include: return to driving (typically 4–6 weeks after right TKA, 2 weeks after left TKA with automatic transmission), return to recreational activities (walking, cycling, swimming, golf), and optimization of long-term implant function through continued exercise adherence.</p>
+
+            <div class="highlight-box caution">
+                <strong>⚠️ Caution:</strong> Stiffness following TKA — defined as knee flexion &lt;90° at 12 weeks — affects approximately 1–5% of patients and may require manipulation under anesthesia (MUA). Aggressive early ROM work and low-load prolonged stretch are the primary preventive interventions. Flexion deficits are far more common than extension deficits.
+            </div>
+
+            <div class="highlight-box clinical-tip">
+                <strong>💡 Clinical Tip:</strong> The "rule of threes" is a useful clinical heuristic: 3 days to regain standing, 3 weeks for basic mobility, 3 months for functional independence, 3 years for maximal implant performance. Counsel patients that full recovery is a multi-year process, even when formal physical therapy concludes at 3 months.
+            </div>
+
+            <h2>Activity Restrictions Following TKA</h2>
+            <p>Implant longevity depends significantly on activity patterns. High-impact activities — running, jumping, heavy contact sports — significantly increase implant wear and are generally discouraged. Recommended lifelong activities include: walking, cycling, swimming, low-impact aerobics, golf, doubles tennis, and hiking on moderate terrain. Implant survivorship at 15–20 years is &gt;90% with appropriate activity modification and adherence to a lifelong exercise program.</p>
+
+            <div class="knowledge-check">
+                <h3>🧠 Knowledge Check — Module 7</h3>
+                <div class="question" id="q7">
+                    <div class="question-text">What is the minimum knee flexion typically required for functional activities such as stair climbing and rising from a low chair following TKA?</div>
+                    <div class="answer-option" onclick="selectAnswer('q7','a','incorrect')">A. 90°</div>
+                    <div class="answer-option" onclick="selectAnswer('q7','b','incorrect')">B. 100°</div>
+                    <div class="answer-option" onclick="selectAnswer('q7','c','correct')">C. 120°</div>
+                    <div class="answer-option" onclick="selectAnswer('q7','d','incorrect')">D. 135°</div>
+                </div>
+            </div>
+
+            <div class="module-completion">
+                <span style="color:var(--gray-600);font-size:0.95rem;">Complete this module to track your progress.</span>
+                <button class="complete-btn" onclick="completeModule(7)">Mark Complete ✓</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- MODULE 8: Total Hip Arthroplasty Rehabilitation               -->
+    <!-- ============================================================ -->
+    <div class="module" id="module-8">
+        <div class="module-header" id="header-8" onclick="toggleModule(8)">
+            <div class="module-title">Module 8: Total Hip Arthroplasty Rehabilitation: Precautions and Progressions</div>
+            <div style="font-size:0.9rem;opacity:0.85;margin-top:0.4rem;font-family:'Inter',sans-serif;">15 minutes · THA Protocol &amp; Dislocation Precautions</div>
+        </div>
+        <div class="module-content" id="content-8">
+
+            <h2>Total Hip Arthroplasty: Surgical Approaches and Their Implications</h2>
+            <p>Total hip arthroplasty (THA) replaces the damaged femoral head and acetabular socket with prosthetic components. Unlike TKA, the THA rehabilitation protocol is significantly influenced by the surgical approach used, because different approaches violate different soft tissue structures and create different dislocation risk patterns.</p>
+            <ul>
+                <li><strong>Posterior approach (most common):</strong> Requires division of the short external rotators and posterior capsule. Creates posterior dislocation risk with hip flexion &gt;90°, adduction past neutral, and internal rotation. Standard hip precautions apply.</li>
+                <li><strong>Anterolateral/Modified Hardinge approach:</strong> Partial division of the gluteus medius and minimus anteriorly. Creates anterior dislocation risk with hip extension and external rotation. Anterior precautions required.</li>
+                <li><strong>Direct anterior approach (DAA):</strong> Muscle-sparing; accesses the hip between muscle planes without significant muscle division. Significantly reduced dislocation risk. Many surgeons do not impose formal hip precautions with DAA, allowing earlier full mobility.</li>
+            </ul>
+
+            <h2>Standard Hip Precautions (Posterior Approach)</h2>
+            <p>Patients undergoing posterior approach THA are typically maintained on "hip precautions" for 6–12 weeks to allow posterior capsular healing and reduce dislocation risk. Standard posterior hip precautions include:</p>
+            <ul>
+                <li>No hip flexion beyond 90°</li>
+                <li>No hip adduction past neutral (no crossing legs)</li>
+                <li>No hip internal rotation</li>
+                <li>Toilet seat raised to avoid deep hip flexion</li>
+                <li>Avoiding low chairs or sofas</li>
+                <li>Sleeping on back or non-operative side with pillow between legs</li>
+            </ul>
+
+            <div class="highlight-box caution">
+                <strong>⚠️ Caution:</strong> Hip dislocation occurs in 0.5–3% of primary THA cases, most commonly in the first 3 months. Educate patients and caregivers thoroughly on precautions. Key dislocation scenarios: bending forward to tie shoes, crossing legs while seated, twisting pivoting movements. Dislocation requires urgent reduction, often under anesthesia, and risks implant damage and future instability.
+            </div>
+
+            <h2>THA Rehabilitation Protocol</h2>
+            <h3>Phase I: Acute Phase (Days 0–14)</h3>
+            <p>Day of surgery: Ambulation with walker 10–30 meters, WBAT with posterior approach THA. Exercises: ankle pumps, quadriceps sets, gluteal sets, standing hip abduction (within precautions), knee flexion/extension. Precaution education is delivered pre-operatively and reinforced post-operatively. Discharge home or to skilled nursing facility typically day 1–2 post-operatively.</p>
+            <h3>Phase II: Early Outpatient (Weeks 2–6)</h3>
+            <p>Progress ambulation from walker to cane to no device. Gait normalization targeting elimination of Trendelenburg gait (hip abductor weakness pattern). Key exercises: side-lying hip abduction, standing hip abduction at wall, mini-squats (within precautions), stationary cycling. Precautions remain in effect; hip flexion limited to 90° during all exercises.</p>
+            <h3>Phase III: Progressive Strengthening (Weeks 6–12)</h3>
+            <p>Most patients cleared from formal precautions at 6–12 weeks. Progressive hip abductor and extensor strengthening: leg press, lateral band walks, resisted hip extension, step-ups. Balance training and gait normalization. Introduction of functional activities previously restricted.</p>
+
+            <div class="highlight-box clinical-tip">
+                <strong>💡 Clinical Tip:</strong> Trendelenburg gait (pelvis drops to contralateral side during single-leg stance) is a hallmark of hip abductor weakness and is present in most THA patients early post-operatively. Aggressive gluteus medius rehabilitation with side-lying abduction, clamshells, and lateral band walks is essential for gait normalization and long-term hip stability.
+            </div>
+
+            <h2>Long-Term Activity Guidelines Following THA</h2>
+            <p>THA patients can expect excellent long-term functional outcomes. Recommended activities: walking, cycling, swimming, low-impact aerobics, golf, and light hiking. High-impact activities and contact sports are discouraged due to implant wear and dislocation risk. Implant survival at 20 years exceeds 85% with modern prosthetics and appropriate activity guidelines.</p>
+
+            <div class="knowledge-check">
+                <h3>🧠 Knowledge Check — Module 8</h3>
+                <div class="question" id="q8">
+                    <div class="question-text">Which surgical approach for total hip arthroplasty is associated with significantly reduced dislocation risk and often does not require formal hip precautions?</div>
+                    <div class="answer-option" onclick="selectAnswer('q8','a','incorrect')">A. Posterior approach</div>
+                    <div class="answer-option" onclick="selectAnswer('q8','b','incorrect')">B. Anterolateral (Modified Hardinge) approach</div>
+                    <div class="answer-option" onclick="selectAnswer('q8','c','correct')">C. Direct anterior approach (DAA)</div>
+                    <div class="answer-option" onclick="selectAnswer('q8','d','incorrect')">D. Lateral transtrochanteric approach</div>
+                </div>
+            </div>
+
+            <div class="module-completion">
+                <span style="color:var(--gray-600);font-size:0.95rem;">Complete this module to track your progress.</span>
+                <button class="complete-btn" onclick="completeModule(8)">Mark Complete ✓</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- MODULE 9: Rotator Cuff Repair and Shoulder Arthroplasty       -->
+    <!-- ============================================================ -->
+    <div class="module" id="module-9">
+        <div class="module-header" id="header-9" onclick="toggleModule(9)">
+            <div class="module-title">Module 9: Rotator Cuff Repair and Shoulder Arthroplasty Rehabilitation</div>
+            <div style="font-size:0.9rem;opacity:0.85;margin-top:0.4rem;font-family:'Inter',sans-serif;">15 minutes · Shoulder Rehabilitation Protocols</div>
+        </div>
+        <div class="module-content" id="content-9">
+
+            <h2>Rotator Cuff Anatomy and Surgical Repair</h2>
+            <p>The rotator cuff consists of four muscles and their tendons (supraspinatus, infraspinatus, teres minor, subscapularis) that provide dynamic glenohumeral stability and enable controlled shoulder elevation, rotation, and depression of the humeral head. Rotator cuff tears — particularly supraspinatus — are among the most common shoulder pathologies, with full-thickness tears repaired surgically when conservative management fails.</p>
+            <p>Rotator cuff repair involves suturing the torn tendon back to the greater tuberosity via anchors, either arthroscopically or through open/mini-open techniques. Repair integrity — whether it heals successfully — is the paramount concern in post-operative rehabilitation. Re-tear rates range from 15% to &gt;50% depending on tear size, tissue quality, patient age, and rehabilitation compliance. The rehabilitation timeline is therefore significantly more conservative than total joint arthroplasty.</p>
+
+            <h2>Rotator Cuff Repair: Healing Timeline and Restrictions</h2>
+            <p>Tendon-to-bone healing following rotator cuff repair progresses through the same inflammatory, proliferative, and remodeling phases as other soft tissue healing, but is inherently slow due to the limited vascularity of tendons at their bony insertion. Critical protection windows are:</p>
+            <ul>
+                <li><strong>Weeks 0–6:</strong> Passive motion only. No active shoulder elevation against gravity. The repair site cannot tolerate active muscle force. Sling worn continuously except for prescribed exercises and hygiene.</li>
+                <li><strong>Weeks 6–12:</strong> Active-assisted range of motion initiated. Progressive active elevation below 90° by 8–10 weeks. No resistance. Pendulum exercises for gravity-assisted distraction and motion.</li>
+                <li><strong>Weeks 12–20:</strong> Active range of motion to full elevation. Initiate gentle resistive exercises in plane of scapula. Rotator cuff strengthening with elastic resistance bands.</li>
+                <li><strong>Months 5–12:</strong> Progressive strengthening. Sport/work-specific training. Full return to overhead activities after 6–12 months depending on repair size.</li>
+            </ul>
+
+            <div class="highlight-box caution">
+                <strong>⚠️ Caution:</strong> Active shoulder elevation before 6 weeks post rotator cuff repair places direct tensile load on the healing tendon-to-bone interface and dramatically increases re-tear risk. Educate patients that wearing the sling and avoiding active use is not optional — it is essential for repair success. Patients who experience a re-tear require surgical revision, which has significantly poorer outcomes than primary repair.
+            </div>
+
+            <h2>Shoulder Arthroplasty: Total vs. Reverse</h2>
+            <p>Two primary types of shoulder arthroplasty are encountered in rehabilitation practice:</p>
+            <h3>Total Shoulder Arthroplasty (TSA)</h3>
+            <p>TSA replaces both the humeral head and glenoid articular surface. Requires an intact rotator cuff — specifically subscapularis, which is typically repaired during the anterior approach. Rehabilitation is similar to rotator cuff repair for the first 6 weeks (subscapularis protection), then progresses to active motion and strengthening. Excellent outcomes in appropriate patients with preserved cuff function.</p>
+            <h3>Reverse Total Shoulder Arthroplasty (RTSA)</h3>
+            <p>RTSA inverts the normal ball-and-socket geometry, placing the ball on the glenoid side and the socket on the humeral side. Designed for patients with massive irreparable rotator cuff tears, rotator cuff arthropathy, or failed TSA. RTSA uses the deltoid muscle — rather than the rotator cuff — as the primary elevator, fundamentally altering the rehabilitation approach. Active elevation is initiated earlier (4–6 weeks) compared to TSA because the construct does not depend on rotator cuff healing. Deltoid strengthening is the primary Phase III focus.</p>
+
+            <div class="highlight-box clinical-tip">
+                <strong>💡 Clinical Tip:</strong> Scapular dyskinesis — abnormal scapular movement during shoulder elevation — is extremely common following shoulder surgery and is associated with impingement, re-tear risk, and poor functional outcomes. Serratus anterior and lower trapezius strengthening must be prioritized throughout all phases of shoulder rehabilitation to restore optimal scapulohumeral rhythm.
+            </div>
+
+            <div class="knowledge-check">
+                <h3>🧠 Knowledge Check — Module 9</h3>
+                <div class="question" id="q9">
+                    <div class="question-text">Following standard rotator cuff repair, active shoulder elevation against gravity is generally restricted until approximately:</div>
+                    <div class="answer-option" onclick="selectAnswer('q9','a','incorrect')">A. 2 weeks post-operatively</div>
+                    <div class="answer-option" onclick="selectAnswer('q9','b','incorrect')">B. 4 weeks post-operatively</div>
+                    <div class="answer-option" onclick="selectAnswer('q9','c','correct')">C. 6 weeks post-operatively</div>
+                    <div class="answer-option" onclick="selectAnswer('q9','d','incorrect')">D. 12 weeks post-operatively</div>
+                </div>
+            </div>
+
+            <div class="module-completion">
+                <span style="color:var(--gray-600);font-size:0.95rem;">Complete this module to track your progress.</span>
+                <button class="complete-btn" onclick="completeModule(9)">Mark Complete ✓</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- MODULE 10: Spinal Surgery Rehabilitation                       -->
+    <!-- ============================================================ -->
+    <div class="module" id="module-10">
+        <div class="module-header" id="header-10" onclick="toggleModule(10)">
+            <div class="module-title">Module 10: Spinal Surgery Rehabilitation: Laminectomy, Fusion, and Discectomy</div>
+            <div style="font-size:0.9rem;opacity:0.85;margin-top:0.4rem;font-family:'Inter',sans-serif;">15 minutes · Spinal Post-Op Care &amp; Core Stability</div>
+        </div>
+        <div class="module-content" id="content-10">
+
+            <h2>Overview of Common Spinal Surgical Procedures</h2>
+            <p>Spinal surgery encompasses a broad spectrum of procedures with fundamentally different rehabilitation implications. The three most commonly encountered in outpatient physical therapy practice are: microdiscectomy/discectomy (removal of herniated disc material), laminectomy/laminotomy (removal of the lamina to decompress the spinal canal), and spinal fusion (arthrodesis of vertebral segments to eliminate motion at an unstable or painful segment). Understanding the specific procedure, the spinal level involved, and any hardware used guides the entire rehabilitation approach.</p>
+
+            <h2>Microdiscectomy and Lumbar Discectomy</h2>
+            <p>Discectomy removes herniated nuclear material compressing a nerve root. It is the most common spinal procedure and has the most rapid rehabilitation trajectory. The intervertebral disc itself is not replaced; the annular defect remains. Rehabilitation focus is on nerve root recovery, restoration of spinal mobility, and core stabilization to reduce stress on the remaining disc.</p>
+            <h3>Post-Discectomy Rehabilitation Protocol</h3>
+            <ul>
+                <li><strong>Days 0–14:</strong> Walking immediately post-operatively. Avoid prolonged sitting (&lt;20 minutes). Posture education — neutral spine maintenance. Gentle walking program: 5–10 minutes hourly, progressing as tolerated.</li>
+                <li><strong>Weeks 2–6:</strong> Core stabilization program initiated: transversus abdominis activation, diaphragmatic breathing, pelvic tilts, supine bridging. Avoid trunk flexion loads. McKenzie assessment to determine directional preference.</li>
+                <li><strong>Weeks 6–12:</strong> Progressive core and lumbar extensor strengthening. Begin trunk flexion carefully. Stationary cycling, water walking, progressive ambulation program.</li>
+                <li><strong>Months 3–6:</strong> Return to full activity including heavy lifting. Ergonomic training for occupational demands.</li>
+            </ul>
+
+            <h2>Lumbar Laminectomy and Decompression</h2>
+            <p>Laminectomy removes the posterior bony arch (lamina) to decompress the spinal canal, typically for spinal stenosis. The procedure does not fuse spinal segments, so motion is preserved but spinal stability is dependent on the remaining facet joints, ligaments, and musculature. Post-laminectomy rehabilitation is similar to discectomy but with slightly greater emphasis on spinal extension mobility, as many patients with stenosis have significant lumbar flexion posture that compresses the neural elements.</p>
+
+            <div class="highlight-box clinical-tip">
+                <strong>💡 Clinical Tip:</strong> Lumbar spinal stenosis patients typically experience symptom relief with flexion (neurogenic claudication pattern). Post-laminectomy, extension mobility should be cautiously restored as the surgical decompression has addressed the structural cause. Progressive lumbar extension exercises (prone press-ups, McKenzie extension) are often beneficial 4–6 weeks post-operatively.
+            </div>
+
+            <h2>Lumbar Spinal Fusion</h2>
+            <p>Spinal fusion (arthrodesis) permanently stabilizes one or more spinal segments using pedicle screws, rods, cages, and bone graft (autograft or allograft). Fusion may be anterior (ALIF), posterior (PLIF/TLIF), or combined. The rehabilitation timeline is significantly longer than decompression procedures because bony fusion must occur radiographically before the segment can be loaded progressively. Solid fusion typically requires 3–6 months, with remodeling continuing for 12–24 months.</p>
+            <h3>Fusion Rehabilitation Protocol</h3>
+            <ul>
+                <li><strong>Weeks 0–6:</strong> Walking program, posture education, log-roll technique for bed mobility, avoidance of trunk rotation and forward flexion. No lifting &gt;5–10 lbs.</li>
+                <li><strong>Weeks 6–12:</strong> Begin core activation exercises — lumbar multifidus activation, transversus abdominis training, supported bridges. No resisted trunk exercises.</li>
+                <li><strong>Months 3–6 (after radiographic evidence of fusion):</strong> Progressive resistance core training, lumbar extension strengthening, deadlift progressions, return to functional activities.</li>
+            </ul>
+
+            <div class="highlight-box caution">
+                <strong>⚠️ Caution:</strong> "Adjacent segment disease" — accelerated degeneration at spinal levels immediately above or below a fusion — is a long-term concern. Encourage mobility at unfused segments through thoracic mobility exercises and hip flexibility training. Core stabilization reduces stress transmission to adjacent segments and is a lifelong recommendation post-fusion.
+            </div>
+
+            <div class="knowledge-check">
+                <h3>🧠 Knowledge Check — Module 10</h3>
+                <div class="question" id="q10">
+                    <div class="question-text">Following lumbar spinal fusion, progressive resistance core training is typically initiated after which condition is met?</div>
+                    <div class="answer-option" onclick="selectAnswer('q10','a','incorrect')">A. Patient reports complete absence of pain</div>
+                    <div class="answer-option" onclick="selectAnswer('q10','b','incorrect')">B. Surgeon clearance at the 6-week post-operative appointment</div>
+                    <div class="answer-option" onclick="selectAnswer('q10','c','correct')">C. Radiographic evidence of bony fusion, typically at 3–6 months</div>
+                    <div class="answer-option" onclick="selectAnswer('q10','d','incorrect')">D. Completion of 12 weeks of walking program</div>
+                </div>
+            </div>
+
+            <div class="module-completion">
+                <span style="color:var(--gray-600);font-size:0.95rem;">Complete this module to track your progress.</span>
+                <button class="complete-btn" onclick="completeModule(10)">Mark Complete ✓</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- MODULE 11: Therapeutic Exercise Prescription                   -->
+    <!-- ============================================================ -->
+    <div class="module" id="module-11">
+        <div class="module-header" id="header-11" onclick="toggleModule(11)">
+            <div class="module-title">Module 11: Therapeutic Exercise Prescription: Intensity, Volume, Frequency, Progression</div>
+            <div style="font-size:0.9rem;opacity:0.85;margin-top:0.4rem;font-family:'Inter',sans-serif;">15 minutes · Evidence-Based Exercise Prescription</div>
+        </div>
+        <div class="module-content" id="content-11">
+
+            <h2>The Science of Exercise Prescription</h2>
+            <p>Therapeutic exercise prescription is a clinical science requiring the same precision as pharmacological dosing. Just as a medication prescribed at the wrong dose — too low for efficacy, too high for toxicity — fails the patient, exercise prescribed without attention to intensity, volume, frequency, type, and progression produces suboptimal outcomes. The post-surgical rehabilitation context demands evidence-based prescription decisions that account for tissue healing stage, individual patient characteristics, functional goals, and the progressive overload principle.</p>
+            <p>The American College of Sports Medicine (ACSM) provides foundational exercise prescription guidelines that serve as the starting point for therapeutic exercise programs. Post-surgical modifications to these guidelines are required in each rehabilitation phase to balance the therapeutic stimulus against healing tissue protection.</p>
+
+            <h2>Intensity</h2>
+            <p>Exercise intensity refers to the magnitude of the training stimulus. For resistance training, intensity is typically expressed as a percentage of one-repetition maximum (1RM). For aerobic exercise, intensity is expressed as percentage of maximal heart rate (%HRmax), VO₂max, or the Rate of Perceived Exertion (RPE) on the Borg scale (6–20) or modified Borg scale (0–10).</p>
+            <h3>Resistance Training Intensity Guidelines</h3>
+            <ul>
+                <li><strong>Muscular endurance:</strong> &lt;50% 1RM, 15–20+ repetitions per set. Appropriate for Phase I–early Phase II.</li>
+                <li><strong>Muscular hypertrophy:</strong> 67–85% 1RM, 6–12 repetitions per set. Appropriate for Phase III.</li>
+                <li><strong>Muscular strength:</strong> &gt;85% 1RM, 1–5 repetitions per set. Appropriate for advanced Phase III–IV in young, athletic patients.</li>
+                <li><strong>BFR training:</strong> 20–30% 1RM with partial venous occlusion; produces hypertrophy and strength gains comparable to high-load training. Ideal post-surgical when full loading is contraindicated.</li>
+            </ul>
+
+            <h2>Volume</h2>
+            <p>Training volume is the product of sets × repetitions × load. Total weekly volume is the primary driver of hypertrophy. For post-surgical patients, volume is initially low (1–2 sets per exercise) to limit tissue stress and soreness, then progressively increased over weeks to months. ACSM recommends 3–5 sets per muscle group per session for strength development; post-surgical protocols typically begin at 2 sets and progress over 4–6 weeks.</p>
+            <p>Volume monitoring is clinically important: a post-surgical patient who reports significant increased pain, swelling, or fatigue following a session has exceeded their current volume tolerance. The "24-hour rule" — any exercise-induced increase in pain or swelling that persists beyond 24 hours indicates volume or intensity was excessive and should be reduced.</p>
+
+            <div class="highlight-box key-point">
+                <strong>🔑 Key Point — The 24-Hour Rule:</strong> Post-surgical exercise should not produce pain or swelling that persists beyond 24 hours after the session. If symptoms are elevated at the next treatment session, the previous session's volume or intensity exceeded the patient's current tissue tolerance. Reduce by 20–30% and progress more gradually.
+            </div>
+
+            <h2>Frequency</h2>
+            <p>The ACSM recommends resistance training 2–4 days per week per muscle group, with 48 hours of recovery between sessions targeting the same muscle group. Aerobic exercise can be performed daily at moderate intensity. In post-surgical rehabilitation, frequency must be balanced against tissue recovery demands. Patients recovering from major reconstructive surgery may require 48–72 hours of recovery between sessions in early Phase III; as fitness improves and tissue tolerance increases, frequency can be increased.</p>
+
+            <h2>Progression: The Foundation of Adaptive Stimulus</h2>
+            <p>Progressive overload — gradually increasing the training stimulus to continue driving physiological adaptation — is the cornerstone principle of all exercise prescription. Without progression, adaptation ceases. The classic 2-for-2 rule: when a patient can complete 2 repetitions beyond the target repetition range across 2 consecutive sessions, increase load by 5% for upper extremity and 10% for lower extremity exercises.</p>
+            <h3>Progression Hierarchy</h3>
+            <ol>
+                <li>First, increase repetitions within the target range</li>
+                <li>Then, increase sets</li>
+                <li>Then, increase resistance load</li>
+                <li>Then, progress exercise difficulty (single-leg, unstable surface, increased ROM)</li>
+                <li>Finally, increase speed/power demand</li>
+            </ol>
+
+            <div class="highlight-box clinical-tip">
+                <strong>💡 Clinical Tip:</strong> Home exercise program (HEP) adherence is the single greatest modifiable predictor of rehabilitation outcomes. Design HEPs with no more than 5–7 exercises, clear visual instructions, and realistic time requirements (20–30 minutes). Follow up on HEP completion at every session and troubleshoot barriers to adherence.
+            </div>
+
+            <div class="knowledge-check">
+                <h3>🧠 Knowledge Check — Module 11</h3>
+                <div class="question" id="q11">
+                    <div class="question-text">The "24-Hour Rule" in post-surgical exercise prescription states that:</div>
+                    <div class="answer-option" onclick="selectAnswer('q11','a','incorrect')">A. Patients should exercise for 24 hours after surgery before beginning formal therapy</div>
+                    <div class="answer-option" onclick="selectAnswer('q11','b','incorrect')">B. Ice should be applied for 24 hours continuously following a therapy session</div>
+                    <div class="answer-option" onclick="selectAnswer('q11','c','correct')">C. Exercise-induced pain or swelling that persists beyond 24 hours indicates volume or intensity was excessive and should be reduced</div>
+                    <div class="answer-option" onclick="selectAnswer('q11','d','incorrect')">D. At least 24 hours must pass between sessions for tissue recovery in all post-surgical patients</div>
+                </div>
+            </div>
+
+            <div class="module-completion">
+                <span style="color:var(--gray-600);font-size:0.95rem;">Complete this module to track your progress.</span>
+                <button class="complete-btn" onclick="completeModule(11)">Mark Complete ✓</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- MODULE 12: Outcome Measures and Return-to-Function Criteria   -->
+    <!-- ============================================================ -->
+    <div class="module" id="module-12">
+        <div class="module-header" id="header-12" onclick="toggleModule(12)">
+            <div class="module-title">Module 12: Outcome Measures and Return-to-Function Criteria</div>
+            <div style="font-size:0.9rem;opacity:0.85;margin-top:0.4rem;font-family:'Inter',sans-serif;">15 minutes · Clinical Measurement &amp; Discharge Criteria</div>
+        </div>
+        <div class="module-content" id="content-12">
+
+            <h2>The Importance of Objective Outcome Measurement</h2>
+            <p>Outcome measurement in post-surgical rehabilitation serves multiple critical functions: it quantifies baseline impairment, tracks progress objectively, guides clinical decision-making about progression and discharge, communicates patient status to referring physicians and payers, and contributes to the evidence base through clinical research. In an era of value-based healthcare, documenting meaningful functional improvement using validated outcome measures is not optional — it is a professional and regulatory expectation.</p>
+            <p>The selection of outcome measures should be guided by three criteria: the measure must be clinically relevant to the patient's condition and goals, it must have established psychometric properties (reliability, validity, responsiveness), and it must be feasible to administer in the clinical setting. Clinicians should use a hierarchical approach — selecting from internationally recognized, condition-specific validated measures first, then supplementing with functional performance tests.</p>
+
+            <h2>Patient-Reported Outcome Measures (PROMs)</h2>
+            <p>PROMs capture the patient's subjective experience of function, pain, and quality of life. They are essential complements to clinician-measured performance tests because they reflect the outcomes that matter most to patients.</p>
+            <h3>Knee-Specific PROMs</h3>
+            <ul>
+                <li><strong>KOOS (Knee Injury and Osteoarthritis Outcome Score):</strong> 42-item questionnaire covering pain, symptoms, ADLs, sport/recreation, and quality of life. KOOS-JR (7-item short form) used for TKA. MDC (Minimal Detectable Change): 10–14 points per subscale.</li>
+                <li><strong>Oxford Knee Score (OKS):</strong> 12-item TKA-specific PROM; widely used in UK and international research.</li>
+                <li><strong>IKDC (International Knee Documentation Committee):</strong> 18-item questionnaire for younger, more active knee patients (ACL reconstruction, meniscal surgery).</li>
+            </ul>
+            <h3>Hip-Specific PROMs</h3>
+            <ul>
+                <li><strong>HOOS (Hip Disability and Osteoarthritis Outcome Score):</strong> Hip counterpart to KOOS; 40-item questionnaire. HOOS-JR (6-item) for THA.</li>
+                <li><strong>Oxford Hip Score (OHS):</strong> 12-item THA-specific measure.</li>
+            </ul>
+            <h3>Shoulder-Specific PROMs</h3>
+            <ul>
+                <li><strong>DASH (Disabilities of Arm, Shoulder and Hand):</strong> 30-item upper extremity disability measure; widely validated across diagnoses.</li>
+                <li><strong>ASES (American Shoulder and Elbow Surgeons) Score:</strong> Combines patient-reported pain and function; frequently used in rotator cuff and arthroplasty research.</li>
+                <li><strong>PENN Shoulder Score:</strong> 100-point scale combining pain, satisfaction, and function.</li>
+            </ul>
+            <h3>Spine-Specific PROMs</h3>
+            <ul>
+                <li><strong>Oswestry Disability Index (ODI):</strong> 10-item lumbar spine disability measure. 0–20% = minimal disability; 21–40% = moderate; 41–60% = severe; 61–80% = crippling; 81–100% = bed-bound. MDC: 10 points.</li>
+                <li><strong>Neck Disability Index (NDI):</strong> 10-item cervical spine counterpart to the ODI.</li>
+                <li><strong>PROMIS (Patient-Reported Outcomes Measurement Information System):</strong> Computerized adaptive testing platform yielding T-scores (mean 50, SD 10). Increasingly used across all diagnoses for standardized comparison.</li>
+            </ul>
+
+            <div class="highlight-box key-point">
+                <strong>🔑 Key Point:</strong> Minimal Clinically Important Difference (MCID) — the smallest change in a score that patients perceive as meaningful — is distinct from Minimal Detectable Change (MDC). Both must be considered when interpreting outcome score changes. A statistically significant change is meaningless if it does not reach the MCID threshold for patient-perceived benefit.
+            </div>
+
+            <h2>Clinician-Administered Performance Tests</h2>
+            <h3>Strength Testing</h3>
+            <p>Handheld dynamometry (HHD) provides reliable, quantitative muscle strength measurement in clinical settings. Limb Symmetry Index (LSI = operative limb / non-operative limb × 100) is computed for bilateral comparisons. Isokinetic dynamometry (Biodex, Cybex) is the gold standard for knee extension/flexion torque measurement — particularly relevant for ACL reconstruction return-to-sport criteria. Grip strength dynamometry is standard for upper extremity functional assessment.</p>
+            <h3>Functional Performance Tests</h3>
+            <ul>
+                <li><strong>Timed Up and Go (TUG):</strong> Time to rise from chair, walk 3 meters, turn, return, and sit. Normal &lt;12 seconds; values &gt;12 seconds indicate fall risk. Widely used for TKA and THA outcomes.</li>
+                <li><strong>30-Second Chair Stand Test:</strong> Number of sit-to-stand repetitions in 30 seconds. Age-normative values available. Tests lower extremity power and endurance.</li>
+                <li><strong>6-Minute Walk Test (6MWT):</strong> Distance walked in 6 minutes; reflects cardiovascular endurance and functional mobility. MCID for TKA: 61 meters.</li>
+                <li><strong>Stair Climb Test:</strong> Time to ascend and descend a standard staircase; tests power and confidence.</li>
+                <li><strong>Single-Leg Hop Battery:</strong> As described in Module 6. LSI ≥90% required for return-to-sport clearance.</li>
+            </ul>
+
+            <h2>Return-to-Function Criteria: A Multi-Domain Framework</h2>
+            <p>Discharge from formal physical therapy and clearance for return to functional activities should be guided by a multi-domain framework rather than time-based criteria alone. The following domains should be assessed:</p>
+            <ol>
+                <li><strong>Pain:</strong> Resting pain ≤2/10 VAS; activity-related pain at acceptable, manageable levels.</li>
+                <li><strong>Swelling:</strong> No significant post-activity effusion; limb girth measurements within 1–2 cm of contralateral.</li>
+                <li><strong>Range of Motion:</strong> Functional ROM achieved for all required daily activities.</li>
+                <li><strong>Strength:</strong> LSI ≥90% on dynamometry or functional test battery for activity-demanding discharge.</li>
+                <li><strong>Neuromuscular Control:</strong> Single-leg stance ≥30 seconds, Y-Balance within 4 cm of contralateral.</li>
+                <li><strong>Functional Performance:</strong> Meets age-normative values on TUG, 6MWT, or hop tests.</li>
+                <li><strong>PROM Scores:</strong> Achieve MCID improvement from baseline on condition-specific measure.</li>
+                <li><strong>Patient Goals:</strong> Patient reports ability to perform self-identified functional goals.</li>
+            </ol>
+
+            <div class="highlight-box clinical-tip">
+                <strong>💡 Clinical Tip:</strong> Document baseline outcome measures at the initial evaluation and repeat at 4–6 week intervals and at discharge. This demonstrates measurable progress for payer justification, provides data for clinical decision-making, and ensures patients can see their objective improvement — a powerful motivational tool, particularly when pain and effort are high.
+            </div>
+
+            <div class="knowledge-check">
+                <h3>🧠 Knowledge Check — Module 12</h3>
+                <div class="question" id="q12">
+                    <div class="question-text">What does MCID stand for, and why is it clinically important when interpreting outcome measure scores?</div>
+                    <div class="answer-option" onclick="selectAnswer('q12','a','incorrect')">A. Maximal Clinical Improvement Determination — the largest possible score improvement on any validated outcome measure</div>
+                    <div class="answer-option" onclick="selectAnswer('q12','b','incorrect')">B. Minimal Change in Disease — the threshold at which a condition is considered resolved</div>
+                    <div class="answer-option" onclick="selectAnswer('q12','c','correct')">C. Minimal Clinically Important Difference — the smallest change in score that patients perceive as meaningful, distinguishing statistical significance from patient-perceived benefit</div>
+                    <div class="answer-option" onclick="selectAnswer('q12','d','incorrect')">D. Maximum Criteria for Inpatient Discharge — criteria defining when a patient no longer requires inpatient rehabilitation</div>
+                </div>
+            </div>
+
+            <div class="module-completion">
+                <span style="color:var(--gray-600);font-size:0.95rem;">Complete this module to track your progress.</span>
+                <button class="complete-btn" onclick="completeModule(12)">Mark Complete ✓</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- CERTIFICATE SECTION -->
+    <div class="certificate-section" id="certificateSection">
+        <div style="font-size:3rem;margin-bottom:1rem;">🎓</div>
+        <h2 style="font-size:2rem;margin:0 0 1rem;font-family:'Inter',sans-serif;">Congratulations!</h2>
+        <p style="font-size:1.2rem;opacity:0.9;margin-bottom:0.5rem;">You have successfully completed</p>
+        <p style="font-size:1.5rem;font-weight:700;margin:0.5rem 0;font-family:'Inter',sans-serif;">💪 Post-Surgical and Therapeutic Exercise</p>
+        <p style="opacity:0.85;margin-bottom:2rem;">3.0 CCUs · Course ID: EXERCISE-001 · Approval #: DRTROY-EXERCISE-001-2024</p>
+        <button class="certificate-btn" onclick="generateCertificate()">🏆 Generate Certificate of Completion</button>
+    </div>
+
+</div><!-- end .course-container -->
+
+<script>
+const TOTAL_MODULES = 12;
+const STORAGE_KEY = 'postSurgicalProgress';
+
+function loadProgress() {
+    try {
+        const saved = localStorage.getItem(STORAGE_KEY);
+        return saved ? JSON.parse(saved) : {};
+    } catch(e) { return {}; }
+}
+
+function saveProgress(progress) {
+    try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
+    } catch(e) {}
+}
+
+function toggleModule(num) {
+    const content = document.getElementById('content-' + num);
+    const isActive = content.classList.contains('active');
+    // Close all
+    for (let i = 1; i <= TOTAL_MODULES; i++) {
+        document.getElementById('content-' + i).classList.remove('active');
+    }
+    // Toggle clicked
+    if (!isActive) {
+        content.classList.add('active');
+        content.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+}
+
+function completeModule(num) {
+    const progress = loadProgress();
+    progress['module_' + num] = true;
+    saveProgress(progress);
+
+    const header = document.getElementById('header-' + num);
+    header.classList.add('completed');
+
+    const content = document.getElementById('content-' + num);
+    const btn = content.querySelector('.complete-btn');
+    const completionRow = content.querySelector('.module-completion');
+    if (btn) btn.style.display = 'none';
+    const badge = document.createElement('span');
+    badge.className = 'completed-badge';
+    badge.textContent = '✓ Module Complete';
+    completionRow.appendChild(badge);
+
+    updateProgress(progress);
+
+    // Auto-open next module
+    if (num < TOTAL_MODULES) {
+        setTimeout(() => toggleModule(num + 1), 400);
+    }
+}
+
+function updateProgress(progress) {
+    const completed = Object.values(progress).filter(Boolean).length;
+    const pct = Math.round((completed / TOTAL_MODULES) * 100);
+    document.getElementById('progressFill').style.width = pct + '%';
+    document.getElementById('progressText').textContent = completed + ' of ' + TOTAL_MODULES + ' modules completed (' + pct + '%)';
+
+    if (completed === TOTAL_MODULES) {
+        document.getElementById('certificateSection').classList.add('visible');
+        document.getElementById('certificateSection').scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+}
+
+function selectAnswer(questionId, selectedKey, correctness) {
+    const question = document.getElementById(questionId);
+    if (question.dataset.answered) return;
+    question.dataset.answered = 'true';
+    const options = question.querySelectorAll('.answer-option');
+    options.forEach(function(opt) {
+        opt.style.pointerEvents = 'none';
+    });
+    const optionMap = ['a','b','c','d'];
+    options.forEach(function(opt, idx) {
+        if (optionMap[idx] === selectedKey) {
+            opt.classList.add(correctness === 'correct' ? 'correct' : 'incorrect');
+        }
+        // Also highlight the correct answer if wrong was selected
+        if (correctness === 'incorrect') {
+            const onclickAttr = opt.getAttribute('onclick') || '';
+            if (onclickAttr.indexOf("'correct'") !== -1) {
+                opt.classList.add('correct');
+            }
+        }
+    });
+}
+
+function generateCertificate() {
+    const name = prompt("Please enter your full name for the certificate:", "");
+    if (!name || name.trim() === '') return;
+    const date = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+    const certWin = window.open('', '_blank', 'width=900,height=680');
+    certWin.document.write(`<!DOCTYPE html><html><head><title>Certificate of Completion - DrTroy CE</title>
+    <style>
+        body { font-family:'Georgia','Times New Roman',serif; background:#f5f0e8; display:flex; align-items:center; justify-content:center; min-height:100vh; margin:0; }
+        .cert { background:white; border:12px double #1a365d; padding:3rem; max-width:800px; width:90%; text-align:center; box-shadow:0 20px 60px rgba(0,0,0,0.2); }
+        .cert-logo { font-size:1.5rem; font-weight:700; color:#1a365d; letter-spacing:2px; margin-bottom:1rem; font-family:'Arial',sans-serif; }
+        .cert-title { font-size:2.5rem; color:#1a365d; margin:1rem 0 0.5rem; }
+        .cert-subtitle { font-size:1rem; color:#4a5568; margin-bottom:2rem; }
+        .cert-body { font-size:1.1rem; color:#333; margin:1.5rem 0; line-height:2; }
+        .cert-name { font-size:2rem; color:#059669; font-style:italic; border-bottom:2px solid #059669; display:inline-block; padding:0 2rem 0.25rem; margin:0.5rem 0; }
+        .cert-course { font-size:1.3rem; color:#1a365d; font-weight:bold; }
+        .cert-details { font-size:0.95rem; color:#4a5568; margin:1.5rem 0; }
+        .cert-seal { font-size:4rem; margin:1rem 0; }
+        .print-btn { background:#059669; color:white; border:none; padding:0.75rem 2rem; border-radius:6px; font-size:1rem; cursor:pointer; margin-top:1rem; font-family:Arial,sans-serif; }
+    </style></head><body>
+    <div class="cert">
+        <div class="cert-logo">DrTroy CE</div>
+        <div class="cert-seal">🏆</div>
+        <div class="cert-title">Certificate of Completion</div>
+        <div class="cert-subtitle">Continuing Education for Physical Therapists</div>
+        <div class="cert-body">
+            This certifies that<br>
+            <span class="cert-name">${name.trim()}</span><br>
+            has successfully completed
+        </div>
+        <div class="cert-course">💪 Post-Surgical and Therapeutic Exercise</div>
+        <div class="cert-details">
+            Evidence-Based Rehabilitation and Exercise Prescription for Post-Operative Patients<br><br>
+            <strong>CCUs Earned:</strong> 3.0 &nbsp;|&nbsp; <strong>Duration:</strong> 3.0 Hours (180 Minutes)<br>
+            <strong>Course ID:</strong> EXERCISE-001 &nbsp;|&nbsp; <strong>Approval #:</strong> DRTROY-EXERCISE-001-2024<br>
+            <strong>Date of Completion:</strong> ${date}
+        </div>
+        <button class="print-btn" onclick="window.print()">🖨 Print Certificate</button>
+    </div>
+    </body></html>`);
+    certWin.document.close();
+}
+
+function logout() {
+    if (confirm('Are you sure you want to logout?')) {
+        window.location.href = '../index.html';
+    }
+}
+
+// Initialize on page load
+(function init() {
+    const progress = loadProgress();
+    let completed = 0;
+    for (let i = 1; i <= TOTAL_MODULES; i++) {
+        if (progress['module_' + i]) {
+            completed++;
+            const header = document.getElementById('header-' + i);
+            header.classList.add('completed');
+            const content = document.getElementById('content-' + i);
+            const btn = content.querySelector('.complete-btn');
+            const completionRow = content.querySelector('.module-completion');
+            if (btn) btn.style.display = 'none';
+            const badge = document.createElement('span');
+            badge.className = 'completed-badge';
+            badge.textContent = '✓ Module Complete';
+            completionRow.appendChild(badge);
+        }
+    }
+    updateProgress(progress);
+    // Open first incomplete module
+    for (let i = 1; i <= TOTAL_MODULES; i++) {
+        if (!progress['module_' + i]) {
+            toggleModule(i);
+            break;
+        }
+    }
+})();
+</script>
+
+</body>
+</html>

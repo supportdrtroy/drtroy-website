@@ -1,0 +1,1351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>OT Evaluation and Assessment of ADLs | DrTroy CE</title>
+<style>
+  :root {
+    --navy: #1a365d;
+    --navy-light: #2c5282;
+    --gold: #059669;
+    --gold-light: #10b981;
+    --bg: #f8fafc;
+    --card: #ffffff;
+    --text: #1e293b;
+    --muted: #64748b;
+    --border: #e2e8f0;
+    --caution: #dc2626;
+    --caution-bg: #fef2f2;
+    --key-bg: #fefce8;
+    --key-border: #ca8a04;
+    --radius: 10px;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: Georgia, 'Times New Roman', serif; background: var(--bg); color: var(--text); line-height: 1.75; font-size: 16px; }
+  a { color: var(--navy-light); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  /* ── HEADER ── */
+  header {
+    position: sticky; top: 0; z-index: 100;
+    background: var(--navy);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 28px; height: 64px;
+    box-shadow: 0 2px 8px rgba(0,0,0,.35);
+  }
+  header .logo img { height: 44px; display: block; }
+  header nav { display: flex; gap: 20px; align-items: center; }
+  header nav a {
+    font-family: 'Inter', 'Segoe UI', sans-serif; font-size: 13.5px; font-weight: 500;
+    color: rgba(255,255,255,.85); padding: 6px 14px; border-radius: 6px; transition: background .2s;
+  }
+  header nav a:hover { background: rgba(255,255,255,.12); text-decoration: none; color: #fff; }
+  header nav .logout-btn {
+    background: rgba(255,255,255,.1); color: rgba(255,255,255,.8); border: 1px solid rgba(255,255,255,.2);
+    cursor: pointer; font-family: 'Inter', 'Segoe UI', sans-serif; font-size: 13.5px; font-weight: 500;
+    padding: 6px 14px; border-radius: 6px; transition: background .2s;
+  }
+  header nav .logout-btn:hover { background: rgba(255,255,255,.2); }
+
+  /* ── HERO ── */
+  .hero {
+    background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
+    color: #fff; padding: 56px 28px 48px;
+    text-align: center;
+  }
+  .hero .emoji { font-size: 52px; margin-bottom: 16px; }
+  .hero h1 { font-size: 2rem; font-weight: 700; margin-bottom: 10px; line-height: 1.25; }
+  .hero .subtitle { font-family: 'Inter','Segoe UI',sans-serif; font-size: 1rem; color: rgba(255,255,255,.78); max-width: 620px; margin: 0 auto 22px; }
+  .hero .meta { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; }
+  .hero .badge {
+    font-family: 'Inter','Segoe UI',sans-serif; font-size: 12.5px; font-weight: 600;
+    background: rgba(255,255,255,.15); border: 1px solid rgba(255,255,255,.25);
+    color: #fff; padding: 5px 14px; border-radius: 20px;
+  }
+
+  /* ── PROGRESS ── */
+  .progress-section { background: var(--card); border-bottom: 1px solid var(--border); padding: 20px 28px; }
+  .progress-header { font-family: 'Inter','Segoe UI',sans-serif; display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+  .progress-label { font-size: 13.5px; font-weight: 600; color: var(--navy); }
+  .progress-count { font-size: 13.5px; color: var(--muted); }
+  .progress-bar { height: 10px; background: #e2e8f0; border-radius: 10px; overflow: hidden; }
+  .progress-fill { height: 100%; width: 0%; background: linear-gradient(90deg, var(--gold), var(--gold-light)); border-radius: 10px; transition: width .5s ease; }
+
+  /* ── MAIN ── */
+  .container { max-width: 860px; margin: 0 auto; padding: 36px 20px 60px; }
+
+  /* ── MODULE BLOCK ── */
+  .module-block {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: var(--radius); margin-bottom: 18px;
+    box-shadow: 0 1px 4px rgba(0,0,0,.06); overflow: hidden;
+  }
+  .module-block.completed { border-left: 4px solid var(--gold); }
+  .module-header {
+    display: flex; align-items: center; gap: 14px;
+    padding: 18px 22px; cursor: pointer;
+    transition: background .15s;
+  }
+  .module-header:hover { background: #f1f5f9; }
+  .module-number {
+    font-family: 'Inter','Segoe UI',sans-serif;
+    min-width: 34px; height: 34px; border-radius: 50%;
+    background: var(--navy); color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; font-weight: 700; flex-shrink: 0;
+  }
+  .module-block.completed .module-number { background: var(--gold); }
+  .module-title-wrap { flex: 1; }
+  .module-title { font-size: 1rem; font-weight: 700; color: var(--navy); line-height: 1.3; }
+  .module-duration { font-family: 'Inter','Segoe UI',sans-serif; font-size: 12px; color: var(--muted); margin-top: 2px; }
+  .module-status { font-family: 'Inter','Segoe UI',sans-serif; font-size: 12px; font-weight: 600; color: var(--muted); flex-shrink: 0; }
+  .module-block.completed .module-status { color: var(--gold); }
+  .chevron { font-size: 18px; color: var(--muted); transition: transform .25s; flex-shrink: 0; }
+  .module-block.open .chevron { transform: rotate(180deg); }
+
+  .module-content { display: none; padding: 0 28px 28px; border-top: 1px solid var(--border); }
+  .module-block.open .module-content { display: block; }
+  .module-content h3 { font-size: 1.1rem; color: var(--navy); margin: 22px 0 10px; }
+  .module-content p { margin-bottom: 14px; }
+  .module-content ul, .module-content ol { padding-left: 22px; margin-bottom: 14px; }
+  .module-content li { margin-bottom: 6px; }
+
+  /* ── HIGHLIGHT BOXES ── */
+  .highlight-box {
+    border-radius: 8px; padding: 16px 18px; margin: 18px 0;
+    font-size: 15px;
+  }
+  .highlight-box strong { display: block; font-family: 'Inter','Segoe UI',sans-serif; font-size: 12px; font-weight: 700; letter-spacing: .6px; text-transform: uppercase; margin-bottom: 6px; }
+  .clinical-tip { background: #ecfdf5; border-left: 4px solid var(--gold); }
+  .clinical-tip strong { color: var(--gold); }
+  .key-point { background: var(--key-bg); border-left: 4px solid var(--key-border); }
+  .key-point strong { color: var(--key-border); }
+  .caution { background: var(--caution-bg); border-left: 4px solid var(--caution); }
+  .caution strong { color: var(--caution); }
+
+  /* ── KNOWLEDGE CHECK ── */
+  .knowledge-check { background: #f8fafc; border: 1px solid var(--border); border-radius: 8px; padding: 20px 22px; margin: 22px 0 20px; }
+  .knowledge-check h4 { font-family: 'Inter','Segoe UI',sans-serif; font-size: 13px; font-weight: 700; letter-spacing: .6px; text-transform: uppercase; color: var(--navy-light); margin-bottom: 10px; }
+  .knowledge-check .question { font-size: 15px; font-weight: 600; margin-bottom: 14px; }
+  .answer-option {
+    display: flex; align-items: flex-start; gap: 10px;
+    padding: 10px 14px; border-radius: 6px; margin-bottom: 8px;
+    border: 1.5px solid var(--border); cursor: pointer; transition: all .15s;
+    font-family: 'Inter','Segoe UI',sans-serif; font-size: 14px;
+  }
+  .answer-option:hover { border-color: var(--navy-light); background: #eff6ff; }
+  .answer-option.correct { border-color: var(--gold); background: #ecfdf5; color: #065f46; }
+  .answer-option.incorrect { border-color: var(--caution); background: var(--caution-bg); color: #7f1d1d; }
+  .answer-option .icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+  .answer-feedback { font-family: 'Inter','Segoe UI',sans-serif; font-size: 13px; margin-top: 10px; padding: 8px 12px; border-radius: 6px; display: none; }
+  .answer-feedback.show { display: block; }
+  .answer-feedback.correct-msg { background: #ecfdf5; color: #065f46; }
+  .answer-feedback.incorrect-msg { background: var(--caution-bg); color: #7f1d1d; }
+
+  /* ── MODULE COMPLETION ── */
+  .module-completion { padding: 0 28px 24px; }
+  .complete-btn {
+    font-family: 'Inter','Segoe UI',sans-serif; font-size: 15px; font-weight: 700;
+    background: var(--gold); color: #fff; border: none;
+    padding: 13px 30px; border-radius: 8px; cursor: pointer; transition: background .2s;
+  }
+  .complete-btn:hover { background: #047857; }
+  .complete-btn:disabled { background: #94a3b8; cursor: default; }
+  .completion-done {
+    font-family: 'Inter','Segoe UI',sans-serif; font-size: 14px; font-weight: 600;
+    color: var(--gold); display: flex; align-items: center; gap: 8px;
+  }
+
+  /* ── CERTIFICATE ── */
+  #certificate-section {
+    display: none; background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
+    color: #fff; border-radius: var(--radius); padding: 40px 36px; text-align: center;
+    margin-top: 32px;
+  }
+  #certificate-section.show { display: block; }
+  #certificate-section .cert-icon { font-size: 56px; margin-bottom: 14px; }
+  #certificate-section h2 { font-size: 1.7rem; margin-bottom: 10px; }
+  #certificate-section p { color: rgba(255,255,255,.82); margin-bottom: 22px; font-size: 15px; }
+  .cert-btn {
+    font-family: 'Inter','Segoe UI',sans-serif; font-weight: 700; font-size: 15px;
+    background: #fff; color: var(--navy); border: none;
+    padding: 13px 32px; border-radius: 8px; cursor: pointer; transition: opacity .2s;
+  }
+  .cert-btn:hover { opacity: .88; }
+
+  /* ── RESPONSIVE ── */
+  @media(max-width:600px) {
+    header { padding: 0 14px; }
+    .hero { padding: 36px 16px 32px; }
+    .hero h1 { font-size: 1.45rem; }
+    .container { padding: 24px 12px 48px; }
+    .module-content { padding: 0 16px 20px; }
+    .module-completion { padding: 0 16px 20px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════════
+     HEADER
+══════════════════════════════════════════════════ -->
+<header>
+  <div class="logo">
+    <a href="../course-catalog.html">
+      <img src="../images/drtroy_logo_new.jpg" alt="DrTroy CE" />
+    </a>
+  </div>
+  <nav>
+    <a href="../course-catalog.html">Course Catalog</a>
+    <a href="../my-account.html">My Account</a>
+    <button class="logout-btn" onclick="logout()">Log Out</button>
+  </nav>
+</header>
+
+<!-- ══════════════════════════════════════════════════
+     HERO
+══════════════════════════════════════════════════ -->
+<div class="hero">
+  <div class="emoji">🌿</div>
+  <h1>OT Evaluation and Assessment of ADLs</h1>
+  <p class="subtitle">Comprehensive ADL Evaluation, Occupational Performance Assessment, and Evidence-Based Intervention Strategies</p>
+  <div class="meta">
+    <span class="badge">Course ID: OT-ADL-001</span>
+    <span class="badge">Approval: DRTROY-OT-ADL-001-2024</span>
+    <span class="badge">3.0 CCUs</span>
+    <span class="badge">12 Modules · 15 min each</span>
+    <span class="badge">Occupational Therapy</span>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════
+     PROGRESS BAR
+══════════════════════════════════════════════════ -->
+<div class="progress-section">
+  <div class="progress-header">
+    <span class="progress-label">Course Progress</span>
+    <span class="progress-count" id="progress-text">0 of 12 modules complete</span>
+  </div>
+  <div class="progress-bar">
+    <div class="progress-fill" id="progress-fill"></div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════
+     MODULES
+══════════════════════════════════════════════════ -->
+<div class="container">
+
+  <!-- ══ MODULE 1 ══ -->
+  <div class="module-block" id="module-1" data-module="1">
+    <div class="module-header" onclick="toggleModule(1)">
+      <div class="module-number">1</div>
+      <div class="module-title-wrap">
+        <div class="module-title">Foundations of Occupational Therapy: Models of Practice and the ADL Framework</div>
+        <div class="module-duration">⏱ 15 minutes</div>
+      </div>
+      <div class="module-status" id="status-1">Not Started</div>
+      <div class="chevron">▾</div>
+    </div>
+    <div class="module-content">
+      <h3>Overview</h3>
+      <p>Occupational therapy (OT) is a client-centered health profession concerned with promoting health and well-being through occupation. The primary goal of OT is to enable people to participate in the activities of everyday life. Activities of daily living (ADLs) occupy a central place in OT practice — they represent the fundamental self-care tasks that human beings perform as part of daily existence, including bathing, dressing, grooming, feeding, toileting, and functional mobility. Understanding how OT models of practice frame ADL assessment allows clinicians to apply consistent, evidence-based reasoning to every patient encounter.</p>
+
+      <h3>Core Models of Practice</h3>
+      <p>The <strong>Model of Human Occupation (MOHO)</strong>, developed by Gary Kielhofner, conceptualizes occupational behavior through three interacting subsystems: volition (motivation), habituation (routines and roles), and performance capacity (physical and mental abilities). When evaluating ADLs under MOHO, the therapist examines not only whether a task can be completed, but whether the patient values performing it, whether it fits their routines, and whether their physical systems support completion. MOHO's Occupational Performance History Interview (OPHI-II) and Model of Human Occupation Screening Tool (MOHOST) are two structured assessments derived from this framework.</p>
+      <p>The <strong>Person-Environment-Occupation (PEO) Model</strong> emphasizes the dynamic fit among the person, their environment, and the occupations they wish to perform. ADL performance is understood as the intersection of personal factors (strength, cognition, motivation), environmental factors (physical layout, social support, cultural context), and occupation-specific demands. A low person-environment-occupation fit results in diminished occupational performance. Therapists using PEO prioritize identifying and modifying environmental barriers as frequently as they remediate personal deficits.</p>
+      <p>The <strong>Occupational Adaptation Model</strong> holds that humans are intrinsically motivated to achieve mastery and that occupational challenges trigger an internal adaptive response. In ADL contexts, this framework supports graded challenges — presenting tasks at the edge of a client's current capacity to stimulate adaptive responses and build functional independence over time.</p>
+      <p>The <strong>Canadian Model of Occupational Performance and Engagement (CMOP-E)</strong> positions the person as a spiritual being with physical, affective, and cognitive components engaged in self-care, productivity, and leisure occupations within the environment. The COPM, discussed later in Module 3, was designed specifically from this model.</p>
+
+      <h3>The ADL Framework in OT Practice</h3>
+      <p>The American Occupational Therapy Association (AOTA) Occupational Therapy Practice Framework (OTPF), now in its fourth edition, categorizes activities of daily living as basic ADLs (BADLs) and instrumental ADLs (IADLs). BADLs include bathing/showering, bowel and bladder management, dressing, eating, feeding, functional mobility, personal device care, personal hygiene and grooming, sexual activity, and toilet hygiene. IADLs encompass home management, meal preparation, community mobility, financial management, health management, and caregiver roles, among others.</p>
+      <p>Within the OTPF, the evaluation process begins with the occupational profile — a structured interview identifying the client's occupational history, daily patterns, values, needs, and priorities. The analysis of occupational performance follows, using standardized and non-standardized assessments to identify performance skills, performance patterns, client factors, and contextual influences that support or hinder ADL independence.</p>
+
+      <div class="highlight-box clinical-tip">
+        <strong>Clinical Tip</strong>
+        Begin every ADL evaluation with the occupational profile. A patient who rates dressing as their top priority will be far more motivated during assessment and intervention than one whose goals have been assumed by the clinician. Client-centered goal-setting is not a formality — it is the mechanism through which engagement and outcomes are optimized.
+      </div>
+
+      <div class="highlight-box key-point">
+        <strong>Key Point</strong>
+        OT models of practice do not exist in isolation — skilled clinicians blend MOHO, PEO, and CMOP-E concepts fluidly within a single patient encounter, selecting the lens that best illuminates the barriers to occupational performance at any given moment.
+      </div>
+
+      <div class="highlight-box caution">
+        <strong>Caution</strong>
+        Applying a single model rigidly without considering contextual factors can lead to incomplete evaluation. A patient's inability to dress independently may stem from motor deficits, cognitive impairment, environmental barriers, or motivational deficits — or all four simultaneously. Use models as conceptual tools, not diagnostic algorithms.
+      </div>
+
+      <h3>Clinical Implications</h3>
+      <p>When conducting ADL evaluations, therapists must recognize that occupational identity — who a person is through what they do — is deeply tied to self-concept. Loss of ADL independence is not merely a functional problem; it is an existential disruption. Models like MOHO and CMOP-E help therapists hold this complexity, ensuring that intervention extends beyond motor training to encompass meaning, role restoration, and quality of life. Evidence consistently shows that client-centered, model-driven OT practice produces superior functional outcomes across diagnostic populations including stroke, TBI, joint replacement, and progressive neurological disease.</p>
+
+      <!-- KNOWLEDGE CHECK -->
+      <div class="knowledge-check">
+        <h4>Knowledge Check</h4>
+        <p class="question">Which OT model of practice emphasizes the dynamic interaction among the person, environment, and occupation as the primary driver of occupational performance?</p>
+        <div class="answer-option" onclick="selectAnswer(this, false)">
+          <span class="icon">○</span>
+          <span>Model of Human Occupation (MOHO)</span>
+        </div>
+        <div class="answer-option" onclick="selectAnswer(this, true)">
+          <span class="icon">○</span>
+          <span>Person-Environment-Occupation (PEO) Model</span>
+        </div>
+        <div class="answer-option" onclick="selectAnswer(this, false)">
+          <span class="icon">○</span>
+          <span>Occupational Adaptation Model</span>
+        </div>
+        <div class="answer-option" onclick="selectAnswer(this, false)">
+          <span class="icon">○</span>
+          <span>Biomechanical Model</span>
+        </div>
+        <div class="answer-feedback" id="feedback-1"></div>
+      </div>
+    </div>
+    <div class="module-completion">
+      <button class="complete-btn" id="btn-1" onclick="completeModule(1)">Mark Module Complete ✓</button>
+    </div>
+  </div>
+
+  <!-- ══ MODULE 2 ══ -->
+  <div class="module-block" id="module-2" data-module="2">
+    <div class="module-header" onclick="toggleModule(2)">
+      <div class="module-number">2</div>
+      <div class="module-title-wrap">
+        <div class="module-title">Activity Analysis: Breaking Down ADLs and IADLs for Clinical Reasoning</div>
+        <div class="module-duration">⏱ 15 minutes</div>
+      </div>
+      <div class="module-status" id="status-2">Not Started</div>
+      <div class="chevron">▾</div>
+    </div>
+    <div class="module-content">
+      <h3>What Is Activity Analysis?</h3>
+      <p>Activity analysis is the systematic process of breaking down an occupation or task into its component steps, examining the skills, demands, and contextual requirements inherent in performance. For occupational therapists, activity analysis is not a theoretical exercise — it is the clinical reasoning mechanism that allows a therapist to identify precisely where performance breaks down, what capacities are required, how those capacities can be modified, and which adaptive strategies or equipment might restore function. Every ADL and IADL can be analyzed across multiple dimensions: motor, process, and social interaction skills, as well as environmental, temporal, and cultural demands.</p>
+
+      <h3>Dimensions of Activity Analysis</h3>
+      <p><strong>Motor Skills</strong> required for ADLs include stabilizing, aligning, positioning, reaching, bending, gripping, manipulating, lifting, moving, enduring, and calibrating force. Dressing, for example, requires sustained trunk stability, bilateral upper extremity coordination, fine motor manipulation for buttons and zippers, standing balance or seated weight shifting, and sufficient ROM at the hip, knee, and shoulder. A therapist analyzing dressing deficits must identify which motor components are impaired to design a precise intervention.</p>
+      <p><strong>Process Skills</strong> involve the cognitive operations underlying task performance: initiating, sequencing, pacing, organizing materials, attending, adapting to errors, and terminating when complete. A patient with executive dysfunction may have sufficient motor capacity to dress but cannot sequence garments correctly or self-correct when a shirt is on inside-out. Activity analysis reveals this distinction, preventing the clinical error of treating a cognitive deficit with a motor intervention.</p>
+      <p><strong>Social Interaction Skills</strong> become relevant in IADLs such as shopping, using public transportation, or navigating healthcare appointments. These skills include turn-taking, initiating communication, maintaining appropriate social proximity, and reading social cues — all of which may be disrupted by acquired brain injury, autism spectrum disorder, or psychiatric conditions.</p>
+
+      <h3>Task Grading and Adaptation</h3>
+      <p>Activity analysis underpins two core OT intervention strategies: grading and adaptation. <strong>Grading</strong> involves systematically increasing or decreasing the demands of an activity to match the client's current capacity and promote therapeutic challenge. For example, a patient recovering from hip arthroplasty may begin dressing seated on a high surface (reduced hip flexion demand), progress to a standard chair, then to a low surface, grading the activity as range of motion and confidence improve. <strong>Adaptation</strong> involves modifying the task, environment, or tools to compensate for a persistent deficit — using a reacher and sock aid to eliminate the need for hip flexion altogether.</p>
+
+      <div class="highlight-box clinical-tip">
+        <strong>Clinical Tip</strong>
+        When a patient fails an ADL task, resist the impulse to immediately offer assistance. Observe silently for 30–60 seconds. Watch where the breakdown occurs: Is the patient unable to initiate? Do they reach the right place but lack grip strength? Do they attempt the wrong sequence? The failure point reveals the treatment target.
+      </div>
+
+      <h3>IADL Complexity</h3>
+      <p>IADLs carry significantly higher complexity than basic ADLs, requiring integration of multiple skill domains simultaneously. Meal preparation, for instance, demands: executive function (planning and sequencing steps), working memory (tracking cook times, checking quantities), sustained attention, bilateral hand use and fine motor skill, standing tolerance, safety awareness near heat sources, and problem-solving when ingredients are unavailable. An OT performing activity analysis of meal preparation must inventory all of these demands before designing a treatment plan or home recommendation.</p>
+      <p>Community mobility — including driving, using buses or ride-shares, and navigating unfamiliar environments — imposes additional demands: visual processing, reaction time, spatial orientation, financial transaction skills, and social communication. For patients with TBI, stroke, or age-related cognitive decline, community mobility IA analysis often requires collaboration with driving rehabilitation specialists and neuropsychologists.</p>
+
+      <div class="highlight-box key-point">
+        <strong>Key Point</strong>
+        Activity analysis is not completed once at evaluation — it is an ongoing clinical reasoning process applied at every treatment session. As the patient's status changes, so do the activity demands most likely to challenge and build their capacity.
+      </div>
+
+      <div class="highlight-box caution">
+        <strong>Caution</strong>
+        Avoid performing activity analysis from memory alone. Each patient's unique presentation — body dimensions, comorbidities, cognitive profile, cultural practices — alters the demands of even routine tasks. Always observe the actual patient performing the actual task before drawing conclusions about the limiting factor.
+      </div>
+
+      <h3>Documenting Activity Analysis Findings</h3>
+      <p>Clinical documentation should reflect the depth of the therapist's activity analysis. Rather than writing "patient requires maximum assistance for dressing," documentation should specify: "Patient requires maximum assistance for upper body dressing secondary to inability to maintain seated trunk stability beyond 10 seconds without upper extremity support, combined with impaired bilateral coordination limiting ability to thread arms through sleeves. Lower body dressing deferred pending seated balance progression." This level of specificity supports skilled care determination, justifies continued treatment, and guides the next session's intervention focus.</p>
+
+      <div class="knowledge-check">
+        <h4>Knowledge Check</h4>
+        <p class="question">A patient with executive dysfunction can physically perform all dressing movements but cannot sequence garments correctly. Which activity analysis domain is most directly impaired?</p>
+        <div class="answer-option" onclick="selectAnswer(this, false)">
+          <span class="icon">○</span>
+          <span>Motor skills</span>
+        </div>
+        <div class="answer-option" onclick="selectAnswer(this, true)">
+          <span class="icon">○</span>
+          <span>Process skills</span>
+        </div>
+        <div class="answer-option" onclick="selectAnswer(this, false)">
+          <span class="icon">○</span>
+          <span>Social interaction skills</span>
+        </div>
+        <div class="answer-option" onclick="selectAnswer(this, false)">
+          <span class="icon">○</span>
+          <span>Environmental demand</span>
+        </div>
+        <div class="answer-feedback" id="feedback-2"></div>
+      </div>
+    </div>
+    <div class="module-completion">
+      <button class="complete-btn" id="btn-2" onclick="completeModule(2)">Mark Module Complete ✓</button>
+    </div>
+  </div>
+
+  <!-- ══ MODULE 3 ══ -->
+  <div class="module-block" id="module-3" data-module="3">
+    <div class="module-header" onclick="toggleModule(3)">
+      <div class="module-number">3</div>
+      <div class="module-title-wrap">
+        <div class="module-title">ADL Assessment Tools: FIM, Barthel Index, COPM, WeeFIM, AM-PAC</div>
+        <div class="module-duration">⏱ 15 minutes</div>
+      </div>
+      <div class="module-status" id="status-3">Not Started</div>
+      <div class="chevron">▾</div>
+    </div>
+    <div class="module-content">
+      <h3>Introduction to Standardized ADL Assessment</h3>
+      <p>Standardized assessment tools provide a common language for describing function, tracking change over time, predicting rehabilitation outcomes, and communicating across disciplines. In OT practice, ADL assessment tools vary considerably in scope, psychometric properties, population validity, and clinical utility. This module reviews the most widely used tools across acute care, rehabilitation, home health, and pediatric settings, equipping therapists to select the assessment best suited to each clinical scenario.</p>
+
+      <h3>Functional Independence Measure (FIM)</h3>
+      <p>The FIM is the most widely used functional assessment tool in inpatient rehabilitation settings in the United States. It assesses 18 items across two domains: motor (13 items covering self-care, sphincter control, transfers, and locomotion) and cognitive (5 items covering communication and social cognition). Each item is scored on a 7-point ordinal scale from 1 (total assistance — patient contributes less than 25% of effort) to 7 (complete independence — no assistance needed, no device, completed safely and timely). Scores range from 18 to 126, with higher scores indicating greater independence.</p>
+      <p>The FIM demonstrates strong inter-rater reliability when trained raters are used (ICC typically 0.93–0.96) and has been validated as a predictor of discharge destination, length of stay, and rehabilitation outcomes. FIM Efficiency — the change in FIM score per rehabilitation day — is used by facilities to benchmark program effectiveness. <strong>Important limitation:</strong> The FIM does not assess IADLs, does not capture quality of performance, and its sensitivity to change at the extremes (very low or very high function) is reduced due to floor and ceiling effects.</p>
+
+      <h3>Barthel Index (BI)</h3>
+      <p>The Barthel Index is a 10-item assessment measuring independence in feeding, bathing, grooming, dressing, bowel/bladder control, toilet use, chair/bed transfers, ambulation, and stair climbing. Items are weighted, with scores ranging from 0 to 100. A score of 100 indicates complete independence in assessed ADLs but does not imply complete independence in community living. The BI is widely used in stroke rehabilitation and long-term care settings, and its simplicity makes it ideal for quick clinical screening. The Modified Barthel Index (MBI) adjusts item weighting and has demonstrated improved sensitivity in detecting functional change among sub-acute rehabilitation populations.</p>
+
+      <h3>Canadian Occupational Performance Measure (COPM)</h3>
+      <p>The COPM is a semi-structured interview tool designed to detect self-perceived changes in occupational performance over time. Derived from the CMOP-E framework, the COPM asks clients to identify occupational performance problems in self-care, productivity, and leisure; rate the importance of each problem (1–10); then rate their current performance and satisfaction with that performance (both 1–10). The COPM is client-centered by design, captures subjective experience of function, and is responsive to clinically meaningful change — a change of 2 or more points on performance or satisfaction is considered clinically significant. It is appropriate for use across the lifespan and diagnoses.</p>
+
+      <div class="highlight-box clinical-tip">
+        <strong>Clinical Tip</strong>
+        Use the COPM at evaluation and re-evaluate at discharge. This not only documents outcomes but is deeply validating for clients who articulate, in their own words, how much they have improved in the areas that matter most to them.
+      </div>
+
+      <h3>WeeFIM</h3>
+      <p>The WeeFIM (Functional Independence Measure for Children) applies the FIM framework to children aged 6 months through 7 years (or with developmental delays up to age 18). It assesses the same 18 domains as the adult FIM, with scoring reflecting expected developmental performance for age. The WeeFIM is particularly useful in pediatric rehabilitation, early intervention, and school-based OT to document functional status, measure change, and justify service intensity. Training and certification are required for reliable administration.</p>
+
+      <h3>AM-PAC (Activity Measure for Post-Acute Care)</h3>
+      <p>The AM-PAC was developed to assess functional status across the post-acute care continuum, addressing a known gap between acute care FIM assessment and community-level functional demands. It contains three domains: Basic Mobility, Daily Activity, and Applied Cognitive Function. The "6-Clicks" short form is increasingly used in acute care settings for rapid daily functional assessment, predicting discharge disposition and appropriate level of care placement. The AM-PAC demonstrates strong psychometric properties in stroke, orthopedic, and general medical populations and is highly sensitive to daily functional change during acute hospitalization.</p>
+
+      <div class="highlight-box key-point">
+        <strong>Key Point</strong>
+        No single assessment tool captures the full complexity of ADL performance. Best practice involves selecting tools based on clinical purpose: use the FIM for inpatient rehabilitation benchmarking, COPM for client-centered goal-setting, Barthel for stroke rehabilitation tracking, WeeFIM for pediatric populations, and AM-PAC for acute care disposition planning.
+      </div>
+
+      <div class="highlight-box caution">
+        <strong>Caution</strong>
+        FIM scoring requires formal training and inter-rater calibration. Untrained scoring introduces significant error. Many facilities require annual FIM credentialing. Do not rely on FIM scores generated by uncredentialed staff for clinical or reimbursement decisions.
+      </div>
+
+      <div class="knowledge-check">
+        <h4>Knowledge Check</h4>
+        <p class="question">A clinically significant change on the COPM performance or satisfaction subscale is defined as a change of at least how many points?</p>
+        <div class="answer-option" onclick="selectAnswer(this, false)">
+          <span class="icon">○</span>
+          <span>1 point</span>
+        </div>
+        <div class="answer-option" onclick="selectAnswer(this, true)">
+          <span class="icon">○</span>
+          <span>2 points</span>
+        </div>
+        <div class="answer-option" onclick="selectAnswer(this, false)">
+          <span class="icon">○</span>
+          <span>3 points</span>
+        </div>
+        <div class="answer-option" onclick="selectAnswer(this, false)">
+          <span class="icon">○</span>
+          <span>5 points</span>
+        </div>
+        <div class="answer-feedback" id="feedback-3"></div>
+      </div>
+    </div>
+    <div class="module-completion">
+      <button class="complete-btn" id="btn-3" onclick="completeModule(3)">Mark Module Complete ✓</button>
+    </div>
+  </div>
+
+  <!-- ══ MODULE 4 ══ -->
+  <div class="module-block" id="module-4" data-module="4">
+    <div class="module-header" onclick="toggleModule(4)">
+      <div class="module-number">4</div>
+      <div class="module-title-wrap">
+        <div class="module-title">Upper Extremity Assessment in ADL Performance</div>
+        <div class="module-duration">⏱ 15 minutes</div>
+      </div>
+      <div class="module-status" id="status-4">Not Started</div>
+      <div class="chevron">▾</div>
+    </div>
+    <div class="module-content">
+      <h3>The Role of Upper Extremity Function in ADLs</h3>
+      <p>The upper extremity serves as the primary instrument of ADL performance. Most basic ADLs — feeding, grooming, dressing, bathing — require sophisticated integration of shoulder mobility, elbow stability, forearm rotation, wrist positioning, and hand function. Upper extremity (UE) deficits are among the most prevalent causes of ADL dependence across diagnostic populations, including stroke (approximately 80% of survivors have acute UE impairment), rotator cuff pathology, hand trauma, peripheral neuropathy, rheumatoid arthritis, and progressive neurological conditions such as ALS and MS. Thorough UE assessment is therefore foundational to ADL evaluation.</p>
+
+      <h3>Range of Motion Assessment</h3>
+      <p>Goniometric measurement of active (AROM) and passive (PROM) range of motion quantifies joint mobility deficits and guides intervention planning. Functional ROM benchmarks for ADL tasks include: shoulder flexion 120° (reaching into a cabinet), shoulder abduction 90° (donning a pullover shirt), elbow flexion 130° (bringing food to mouth), forearm supination 50° (using utensils), wrist extension 35° (weight-bearing through the hand), and opposition of thumb to all fingers (buttoning, pinching). When AROM falls below these functional thresholds, the therapist must determine whether the limitation is remediable through intervention or requires adaptive compensation.</p>
+
+      <h3>Muscle Strength Assessment</h3>
+      <p>Manual muscle testing (MMT) using the 0–5 Medical Research Council grading scale quantifies muscle strength at individual joints. Functional strength thresholds for ADL performance include: shoulder flexion and abduction of at least grade 3 (active movement against gravity) for basic self-care reach, elbow flexion of grade 3+ for sustained feeding, and pinch strength greater than 2 kg for managing clothing fasteners. Dynamometry (grip and pinch) provides more objective, quantifiable strength data and is preferred for documentation and outcome tracking. Lateral pinch, tip pinch, and three-jaw chuck pinch should each be assessed when hand function is a concern.</p>
+
+      <h3>Coordination and Fine Motor Assessment</h3>
+      <p>Coordination assessments include the Nine-Hole Peg Test (9-HPT), Box and Block Test (BBT), and Purdue Pegboard. The 9-HPT measures fine motor dexterity and is widely used in MS, stroke, and hand therapy populations — normative data allows comparison to age-matched peers and detection of change over time. The Box and Block Test assesses gross manual dexterity — the number of blocks transferred from one compartment to another in 60 seconds — with strong normative data across age groups. These assessments directly correlate with the ability to perform fine motor ADL tasks such as buttoning, zipping, turning keys, handling coins, and manipulating medication containers.</p>
+
+      <div class="highlight-box clinical-tip">
+        <strong>Clinical Tip</strong>
+        Observe bilateral hand use during naturalistic ADL performance rather than relying solely on structured assessments. The patient who scores adequately on 9-HPT may still struggle to hold a bowl steady with one hand while spooning with the other — bilateral integration is a distinct skill set not fully captured by unilateral peg tests.
+      </div>
+
+      <h3>Sensation and Proprioception</h3>
+      <p>Somatosensory integrity profoundly affects ADL performance, particularly for tasks requiring tactile feedback — identifying objects in a bag, adjusting grip force on fragile items, detecting temperature. Assessment should include light touch (Semmes-Weinstein monofilaments), sharp/dull discrimination, two-point discrimination (normal fingertip: &lt;5mm), proprioception (joint position sense), and stereognosis. Patients with significant sensory loss require heightened visual compensation strategies and are at elevated risk for burns, lacerations, and pressure injuries during ADL performance.</p>
+
+      <h3>Spasticity and Tone</h3>
+      <p>The Modified Ashworth Scale (MAS) rates upper extremity spasticity from 0 (no increase in tone) to 4 (affected part rigid in flexion or extension). Spasticity in the elbow flexors, wrist flexors, and finger flexors — the classic post-stroke pattern — directly limits reach, grasp release, and manipulation. The MAS is used to track spasticity, guide referral for pharmacological management (botulinum toxin, baclofen), and document response to positioning and stretching programs. Spasticity management goals should always be linked to functional ADL outcomes rather than tone normalization alone.</p>
+
+      <div class="highlight-box key-point">
+        <strong>Key Point</strong>
+        UE assessment is most clinically meaningful when findings are directly linked to specific ADL task breakdowns. A finding of "limited shoulder AROM to 85° flexion" is only useful when connected to "unable to reach into overhead cabinet for medication management" — this functional link drives goal-writing and justifies skilled OT intervention.
+      </div>
+
+      <div class="highlight-box caution">
+        <strong>Caution</strong>
+        Do not perform passive ROM assessment without first screening for contraindications, including recent fractures, heterotopic ossification, complex regional pain syndrome, acute bursitis, or post-surgical precautions. Forcing ROM in the presence of these conditions can cause serious harm.
+      </div>
+
+      <div class="knowledge-check">
+        <h4>Knowledge Check</h4>
+        <p class="question">Which upper extremity assessment tool measures fine motor dexterity and has established normative data commonly used in stroke and MS populations?</p>
+        <div class="answer-option" onclick="selectAnswer(this, false)">
+          <span class="icon">○</span>
+          <span>Modified Ashworth Scale</span>
+        </div>
+        <div class="answer-option" onclick="selectAnswer(this, false)">
+          <span class="icon">○</span>
+          <span>Purdue Pegboard only</span>
+        </div>
+        <div class="answer-option" onclick="selectAnswer(this, true)">
+          <span class="icon">○</span>
+          <span>Nine-Hole Peg Test (9-HPT)</span>
+        </div>
+        <div class="answer-option" onclick="selectAnswer(this, false)">
+          <span class="icon">○</span>
+          <span>Semmes-Weinstein Monofilament Test</span>
+        </div>
+        <div class="answer-feedback" id="feedback-4"></div>
+      </div>
+    </div>
+    <div class="module-completion">
+      <button class="complete-btn" id="btn-4" onclick="completeModule(4)">Mark Module Complete ✓</button>
+    </div>
+  </div>
+
+  <!-- ══ MODULE 5 ══ -->
+  <div class="module-block" id="module-5" data-module="5">
+    <div class="module-header" onclick="toggleModule(5)">
+      <div class="module-number">5</div>
+      <div class="module-title-wrap">
+        <div class="module-title">Cognitive and Perceptual Evaluation: Impact on ADL Independence</div>
+        <div class="module-duration">⏱ 15 minutes</div>
+      </div>
+      <div class="module-status" id="status-5">Not Started</div>
+      <div class="chevron">▾</div>
+    </div>
+    <div class="module-content">
+      <h3>Cognition and ADL Performance</h3>
+      <p>Cognitive and perceptual deficits are among the strongest predictors of ADL dependence after acquired brain injury, and they are frequently underidentified in settings that emphasize physical rehabilitation. Occupational therapists possess specialized training in observing how cognitive processing failures manifest during actual task performance — a skill that distinguishes OT assessment from neuropsychological testing alone. This module reviews the cognitive and perceptual domains most directly affecting ADL independence and the clinical tools used to evaluate them.</p>
+
+      <h3>Executive Function</h3>
+      <p>Executive function encompasses the higher-order cognitive processes governing goal-directed behavior: planning, initiation, sequencing, monitoring, error detection, flexibility, and inhibition. Executive dysfunction is prevalent in TBI, stroke involving frontal lobe systems, Parkinson's disease, and dementia. In ADL contexts, executive dysfunction manifests as: inability to initiate grooming without external prompting, failure to sequence dressing steps, inability to recognize when a task is complete, perseverative errors (repeating a step that has already been done), and safety failures from poor judgment. The Executive Function Performance Test (EFPT) directly assesses executive function within functional tasks — cooking, telephone use, bill payment, and medication management — making it particularly ecologically valid for OT practice.</p>
+
+      <h3>Attention</h3>
+      <p>Attention is not a single construct but a hierarchy: sustained attention (maintaining focus over time), selective attention (filtering distractions), alternating attention (shifting focus between tasks), and divided attention (managing two tasks simultaneously). Meal preparation requires divided attention; bathing in a noisy environment requires selective attention; completing a multi-step morning routine requires sustained attention for 20–45 minutes. The Test of Everyday Attention (TEA) assesses multiple attention subtypes with ecologically valid tasks. Clinically, attentional deficits are identified by observing increased error rates, delayed task completion, task abandonment, or failure to respond to relevant environmental cues during ADL performance.</p>
+
+      <h3>Memory</h3>
+      <p>Working memory supports the temporary storage and manipulation of information needed during task performance — remembering the next step in a sequence, tracking what has already been done. Prospective memory — remembering to perform a future action — is critical for medication management and appointment-keeping. Episodic memory deficits in Alzheimer's disease create profound ADL impairment because patients cannot retain new learning or remember completing tasks (leading to repeated medication dosing, leaving appliances on, etc.). OT intervention for memory impairment includes external compensatory strategies (visual schedules, checklists, alarm reminders, smart home technology) rather than memory retraining.</p>
+
+      <div class="highlight-box clinical-tip">
+        <strong>Clinical Tip</strong>
+        The Rivermead Behavioural Memory Test (RBMT) and the Allen Cognitive Level Screen (ACLS) are particularly useful in OT practice. The ACLS uses a leather lacing task to estimate cognitive level on Allen's 0–6 scale, providing practical guidance for identifying the level of environmental structure and caregiver support a patient requires for safe ADL performance.
+      </div>
+
+      <h3>Perceptual Deficits</h3>
+      <p>Perceptual deficits affect how the brain processes and interprets sensory input, even when the sensory organs themselves are intact. Key perceptual impairments affecting ADL performance include:</p>
+      <ul>
+        <li><strong>Unilateral neglect:</strong> Failure to attend to one side of space — the patient dresses only the non-neglected side, shaves only half their face, eats only from one side of the plate. Most common after right hemisphere stroke.</li>
+        <li><strong>Visual field deficits (hemianopsia):</strong> Loss of a visual field quadrant or half, requiring compensatory head-scanning strategies for safe ADL and community mobility.</li>
+        <li><strong>Apraxia:</strong> Inability to perform learned, purposeful movements despite intact motor and sensory function. Ideomotor apraxia disrupts tool use (unable to demonstrate using a toothbrush); ideational apraxia disrupts multi-step task sequencing.</li>
+        <li><strong>Figure-ground discrimination:</strong> Difficulty distinguishing objects from their backgrounds — locating a white washcloth in a white sink, finding buttons against patterned fabric.</li>
+        <li><strong>Depth perception:</strong> Misjudging distances — relevant for safe transfers, stair navigation, and reaching for objects.</li>
+      </ul>
+
+      <div class="highlight-box key-point">
+        <strong>Key Point</strong>
+        Cognitive-perceptual deficits often masquerade as motor deficits in clinical observation. The patient who "can't" don a shirt may lack the motor capacity — or may have unilateral neglect, apraxia, or a sequencing deficit. Systematic cognitive-perceptual screening ensures accurate differential analysis and appropriate intervention targeting.
+      </div>
+
+      <div class="highlight-box caution">
+        <strong>Caution</strong>
+        Never assume a patient's cognitive status from their verbal behavior alone. Many patients with significant cognitive-perceptual deficits communicate fluently and present as oriented. Functional task observation and standardized cognitive assessment are required for accurate clinical determination of ADL safety and independence.
+      </div>
+
+      <div class="knowledge-check">
+        <h4>Knowledge Check</h4>
+        <p class="question">A patient after right hemisphere stroke dresses only the left side of their body and eats only from the left side of their plate. This is most consistent with which perceptual deficit?</p>
+        <div class="answer-option" onclick="selectAnswer(this, false)">
+          <span class="icon">○</span>
+          <span>Ideomotor apraxia</span>
+        </div>
+        <div class="answer-option" onclick="selectAnswer(this, false)">
+          <span class="icon">○</span>
+          <span>Figure-ground discrimination deficit</span>
+        </div>
+        <div class="answer-option" onclick="selectAnswer(this, true)">
+          <span class="icon">○</span>
+          <span>Unilateral neglect</span>
+        </div>
+        <div class="answer-option" onclick="selectAnswer(this, false)">
+          <span class="icon">○</span>
+          <span>Depth perception impairment</span>
+        </div>
+        <div class="answer-feedback" id="feedback-5"></div>
+      </div>
+    </div>
+    <div class="module-completion">
+      <button class="complete-btn" id="btn-5" onclick="completeModule(5)">Mark Module Complete ✓</button>
+    </div>
+  </div>
+
+  <!-- ══ MODULE 6 ══ -->
+  <div class="module-block" id="module-6" data-module="6">
+    <div class="module-header" onclick="toggleModule(6)">
+      <div class="module-number">6</div>
+      <div class="module-title-wrap">
+        <div class="module-title">Bathing, Dressing, and Grooming: Assessment, Intervention, and Adaptive Equipment</div>
+        <div class="module-duration">⏱ 15 minutes</div>
+      </div>
+      <div class="module-status" id="status-6">Not Started</div>
+      <div class="chevron">▾</div>
+    </div>
+    <div class="module-content">
+      <h3>Clinical Significance</h3>
+      <p>Bathing, dressing, and grooming are among the most personally significant and most commonly impaired ADLs across rehabilitation populations. They represent the daily rituals through which individuals express personal identity, cultural values, and self-regard. Loss of independence in these tasks is consistently associated with diminished self-esteem, social withdrawal, and caregiver burden. OT intervention for personal hygiene and grooming ADLs requires integration of motor, cognitive, perceptual, and environmental assessment findings into a coordinated, patient-centered plan.</p>
+
+      <h3>Bathing Assessment</h3>
+      <p>Bathing may occur in a tub, stand-up shower, roll-in shower, or at a bedside basin — each presenting distinct physical demands. Assessment should occur in or near the patient's actual bathing environment whenever possible. Key factors include: balance during wet surface weight-shifting and transitions (sit to stand from tub edge), ability to reach all body surfaces (limited by ROM, trunk mobility, or pain), grip on wet surfaces (soapy hands, wet handles), cognitive sequencing of bathing steps, and safety awareness around water temperature and fall risk. The presence of dysphagia precautions, wounds, or orthopedic precautions may impose additional constraints on bathing positioning. Equipment commonly recommended includes tub transfer benches, shower chairs, handheld shower heads, long-handled bath sponges, and non-slip mats.</p>
+
+      <h3>Dressing Assessment</h3>
+      <p>Dressing is functionally divided into upper body dressing (UBD) and lower body dressing (LBD), each with distinct motor demands. UBD requires shoulder ROM (particularly in flexion and internal/external rotation for donning shirts and fastening back closures), bilateral hand coordination for fastening, and trunk stability during forward reach. LBD requires hip flexion beyond 90° for sock and shoe donning (often restricted by hip replacement precautions), dynamic seated or standing balance during lower limb weight shifting, and hip abduction control.</p>
+      <p>Assessment should observe both the task sequence and the patient's compensatory strategies. Does the patient attempt the hemiplegic arm first when donning a shirt (correct strategy)? Do they place the foot correctly before pulling on a sock? Can they manage various fastener types (elastic waistbands vs. buttons vs. zippers vs. hooks)? Clothing style preferences and cultural norms around dress should be explicitly incorporated into goal-setting.</p>
+
+      <div class="highlight-box clinical-tip">
+        <strong>Clinical Tip</strong>
+        For patients post-stroke with hemiplegia, teach the "affected limb first" rule for donning and "unaffected limb first" for doffing. A simple mnemonic for patients: "Dress the weaker side first, undress the stronger side first." This rule applies to shirts, pants, shoes, and socks and significantly reduces the cognitive load of dressing adaptation.
+      </div>
+
+      <h3>Grooming Assessment</h3>
+      <p>Grooming tasks — oral hygiene, hair care, face washing, shaving, nail care, makeup application — require fine motor precision, sustained hand-to-face reach, and visual guidance of hand movements. For patients with hemiplegia, weak grip, or tremor, grooming tasks may be more functional and motivating early in rehabilitation than formal exercise because they are personally meaningful and provide immediate visual feedback. Electric razors, suction-cup nail brushes, weighted utensils, built-up handle toothbrushes, and long-handled combs are among the adaptive options most frequently introduced.</p>
+
+      <h3>Adaptive Equipment</h3>
+      <p>Key adaptive equipment for bathing, dressing, and grooming includes:</p>
+      <ul>
+        <li>Tub transfer bench and shower chair for seated bathing</li>
+        <li>Handheld shower head (flexible hose, adjustable temperature control)</li>
+        <li>Long-handled bath sponge and brush for distal reach</li>
+        <li>Dressing stick and reacher for lower body dressing with hip precautions</li>
+        <li>Sock aid for donning socks without hip flexion</li>
+        <li>Button hook and zipper pull for fastener management</li>
+        <li>Elastic shoelaces or hook-and-loop closures for shoe independence</li>
+        <li>Built-up handle grooming tools for weak or arthritic grip</li>
+        <li>Suction-cup denture brush and nail brush for one-handed use</li>
+      </ul>
+
+      <div class="highlight-box key-point">
+        <strong>Key Point</strong>
+        Adaptive equipment prescription must be preceded by thorough assessment and followed by training. Providing equipment without instruction frequently results in non-use. Each device should be introduced, practiced in context, and documented with the patient's demonstrated competency and stated plan for home use.
+      </div>
+
+      <div class="highlight-box caution">
+        <strong>Caution</strong>
+        Hip arthroplasty precautions (typically no hip flexion beyond 90°, no adduction past midline, no internal rotation) directly affect lower body dressing and bathing technique. Always confirm current precaution status with the surgical team before training any movement pattern. Precautions vary by surgical approach and surgeon preference.
+      </div>
+
+      <div class="knowledge-check">
+        <h4>Knowledge Check</h4>
+        <p class="question">When teaching a patient with left hemiplegia to don a pullover shirt, which of the following is the correct sequence?</p>
+        <div class="answer-option" onclick="selectAnswer(this, false)">
+          <span class="icon">○</span>
+          <span>Unaffected (right) arm first, then affected (left) arm</span>
+        </div>
+        <div class="answer-option" onclick="selectAnswer(this, true)">
+          <span class="icon">○</span>
+          <span>Affected (left) arm first, then unaffected (right) arm</span>
+        </div>
+        <div class="answer-option" onclick="selectAnswer(this, false)">
+          <span class="icon">○</span>
+          <span>Either arm first — sequence does not matter</span>
+        </div>
+        <div class="answer-option" onclick="selectAnswer(this, false)">
+          <span class="icon">○</span>
+          <span>Head first, then both arms simultaneously</span>
+        </div>
+        <div class="answer-feedback" id="feedback-6"></div>
+      </div>
+    </div>
+    <div class="module-completion">
+      <button class="complete-btn" id="btn-6" onclick="completeModule(6)">Mark Module Complete ✓</button>
+    </div>
+  </div>
+
+  <!-- ══ MODULE 7 ══ -->
+  <div class="module-block" id="module-7" data-module="7">
+    <div class="module-header" onclick="toggleModule(7)">
+      <div class="module-number">7</div>
+      <div class="module-title-wrap">
+        <div class="module-title">Transfers, Mobility, and Positioning in ADL Performance</div>
+        <div class="module-duration">⏱ 15 minutes</div>
+      </div>
+      <div class="module-status" id="status-7">Not Started</div>
+      <div class="chevron">▾</div>
+    </div>
+    <div class="module-content">
+      <h3>Transfers as ADL Enablers</h3>
+      <p>The ability to transfer safely — to move between surfaces (bed, chair, toilet, shower, car) — is the functional prerequisite for most ADL participation. A patient who cannot transfer independently cannot bathe, toilet, or dress without caregiver assistance. Transfer training is therefore a core OT competency, and transfer assessment is foundational to ADL evaluation. OTs assess transfers within the context of ADL function: How does the patient get from bed to bathroom? How do they transition from wheelchair to toilet? Can they manage car transfers for community independence?</p>
+
+      <h3>Transfer Assessment Framework</h3>
+      <p>Transfer assessment should evaluate: (1) <strong>Level of assistance required</strong> — independent, setup only, supervision, minimal assist, moderate assist, maximum assist, or dependent; (2) <strong>Technique</strong> — does the patient use safe biomechanics (scoot to edge, lean forward, push to standing) or compensatory strategies (bed rail use, raised surfaces, transfer boards); (3) <strong>Equipment needs</strong> — standard transfers, sit-to-stand lifts, ceiling track lifts, hydraulic floor lifts, sliding boards; (4) <strong>Caregiver capacity</strong> — can the identified caregiver safely perform the required assist level without injury risk to themselves or the patient.</p>
+      <p>Transfer types assessed include: bed mobility (rolling, supine to sit, sitting edge of bed balance), bed-to-chair transfer, chair-to-stand, toilet transfer, tub/shower transfer, floor-to-stand (critical for fall safety), and car transfer. Each has specific physical demands and associated risk factors.</p>
+
+      <h3>Functional Mobility</h3>
+      <p>Functional mobility within the context of ADL performance includes ambulation within the home environment, wheelchair mobility, and the ability to navigate environmental challenges (thresholds, carpeting, narrow doorways, outdoor terrain). OTs assess functional mobility from an ADL lens: Can the patient ambulate to the bathroom in time for toileting? Can they propel their wheelchair to the kitchen for meal preparation? Can they navigate safely in low light during a nighttime bathroom trip?</p>
+      <p>The Timed Up and Go (TUG) test measures functional mobility — the patient rises from a standard chair, walks 3 meters, turns, returns, and sits — with times over 12 seconds associated with fall risk in community-dwelling older adults. The Dynamic Gait Index (DGI) assesses gait under challenging conditions relevant to real-world mobility, including walking with head turns, stepping over obstacles, and navigating stairs.</p>
+
+      <div class="highlight-box clinical-tip">
+        <strong>Clinical Tip</strong>
+        Always assess toilet transfers specifically, not just generic chair transfers. Toilet height, proximity to grab bars, toilet paper location, and the need to manage clothing during the transfer all add complexity. Many patients who complete chair transfers independently require assistance for toilet transfers due to these additional demands.
+      </div>
+
+      <h3>Positioning for ADL Performance</h3>
+      <p>Therapeutic positioning supports ADL participation for patients who cannot achieve or maintain upright postures independently. Proper sitting alignment — pelvis neutral, hips at 90°, feet supported, trunk supported as needed — optimizes upper extremity function during feeding, grooming, and upper body dressing. Poor positioning (sacral sitting, trunk lean, foot drop) increases energy expenditure, reduces UE reach, and creates secondary injury risk (pressure injuries, shoulder subluxation in hemiplegia).</p>
+      <p>For patients using wheelchairs, seating assessment ensures appropriate cushion selection (pressure relief, positioning, comfort), seat dimensions, back support configuration, and footrest height. Improper wheelchair configuration directly impairs ADL function: a seat that is too low prevents safe transfers; a back that is too reclined causes the patient to lean forward for reach, increasing spinal load and fall risk during ADL tasks.</p>
+
+      <div class="highlight-box key-point">
+        <strong>Key Point</strong>
+        Transfer training is not the sole domain of physical therapy. OTs address transfers as they relate to ADL function — specifically toilet, shower, and car transfers within the broader context of self-care independence. Interdisciplinary collaboration ensures patients receive comprehensive coverage without gaps.
+      </div>
+
+      <div class="highlight-box caution">
+        <strong>Caution</strong>
+        Never attempt a transfer assist without first assessing the patient's weight, weight-bearing status, precautions, and available equipment. Back injuries from unsafe patient handling are the leading occupational injury in healthcare workers. Use safe patient handling principles, appropriate equipment, and request assistance for high-assist transfers.
+      </div>
+
+      <div class="knowledge-check">
+        <h4>Knowledge Check</h4>
+        <p class="question">A TUG (Timed Up and Go) score above what threshold is associated with fall risk in community-dwelling older adults?</p>
+        <div class="answer-option" onclick="selectAnswer(this, false)">
+          <span class="icon">○</span>
+          <span>8 seconds</span>
+        </div>
+        <div class="answer-option" onclick="selectAnswer(this, false)">
+          <span class="icon">○</span>
+          <span>10 seconds</span>
+        </div>
+        <div class="answer-option" onclick="selectAnswer(this, true)">
+          <span class="icon">○</span>
+          <span>12 seconds</span>
+        </div>
+        <div class="answer-option" onclick="selectAnswer(this, false)">
+          <span class="icon">○</span>
+          <span>15 seconds</span>
+        </div>
+        <div class="answer-feedback" id="feedback-7"></div>
+      </div>
+    </div>
+    <div class="module-completion">
+      <button class="complete-btn" id="btn-7" onclick="completeModule(7)">Mark Module Complete ✓</button>
+    </div>
+  </div>
+
+  <!-- ══ MODULE 8 ══ -->
+  <div class="module-block" id="module-8" data-module="8">
+    <div class="module-header" onclick="toggleModule(8)">
+      <div class="module-number">8</div>
+      <div class="module-title-wrap">
+        <div class="module-title">Feeding, Swallowing Precautions, and Mealtime Independence</div>
+        <div class="module-duration">⏱ 15 minutes</div>
+      </div>
+      <div class="module-status" id="status-8">Not Started</div>
+      <div class="chevron">▾</div>
+    </div>
+    <div class="module-content">
+      <h3>OT Scope of Practice in Feeding</h3>
+      <p>Feeding — the act of bringing food to the mouth and managing it during the oral phase — falls within OT's core scope of practice. Swallowing (deglutition) is a related but distinct domain, typically co-managed with speech-language pathology (SLP), and OTs must understand how dysphagia precautions affect the feeding process and mealtime setup. OTs focus on the occupation of eating as a whole: the physical mechanics of self-feeding, the adaptive equipment and environmental modifications that support independence, and the social and cultural meaning of mealtimes.</p>
+
+      <h3>Assessment of Self-Feeding</h3>
+      <p>Self-feeding assessment observes the patient managing a meal in a realistic context. Domains evaluated include: reaching and grasping utensils, scooping and spearing food items, bringing the utensil to the mouth without spillage, managing cup/glass for drinking, cutting food, opening containers, and applying condiments. Upper extremity function (ROM, strength, coordination, tremor), seating and trunk support, cognitive status (does the patient initiate eating? recognize food?), and sensory status (visual, tactile, proprioceptive) all contribute to self-feeding independence.</p>
+      <p>Key observations: Does the patient eat only from one side of the plate (neglect)? Do they use appropriate bite size and rate (safety with dysphagia)? Do they require verbal cues to initiate each bite (frontal lobe or severe dementia pattern)? Can they manage the full variety of food textures and consistencies prescribed on their diet? These observations directly inform adaptive equipment selection, positioning recommendations, and caregiver training.</p>
+
+      <h3>Dysphagia Precautions and OT's Role</h3>
+      <p>When dysphagia (swallowing impairment) has been identified by SLP, OTs must implement prescribed diet texture modifications and thickened liquid protocols during all feeding-related ADL sessions. The IDDSI (International Dysphagia Diet Standardisation Initiative) framework describes 8 levels of food texture (0–7) and 4 liquid consistency levels. Common OT responsibilities include: ensuring the patient's diet tray reflects the prescribed IDDSI level, positioning the patient appropriately for safe swallowing (typically upright at 90°, chin slightly tucked), following prescribed swallowing strategies (double swallowing, dry swallowing, effortful swallow), and educating caregivers on aspiration precautions.</p>
+
+      <div class="highlight-box caution">
+        <strong>Caution</strong>
+        OTs do not conduct instrumental swallowing studies (modified barium swallow or FEES) — these are performed by SLP. If an OT observes signs of aspiration during feeding (coughing during/after swallowing, wet/gurgly vocal quality, unexplained recurrent pneumonia), immediately halt oral feeding and report to SLP and the medical team. Silent aspiration occurs without overt coughing — heightened vigilance is required.
+      </div>
+
+      <h3>Adaptive Equipment for Feeding Independence</h3>
+      <p>A wide range of adaptive equipment supports self-feeding independence for patients with motor, sensory, or cognitive impairments:</p>
+      <ul>
+        <li><strong>Built-up handle utensils:</strong> Enlarged, non-slip handles reduce grip force requirements for patients with arthritis, weakness, or tremor.</li>
+        <li><strong>Weighted utensils:</strong> Added weight dampens tremor during eating — useful in essential tremor and Parkinson's disease.</li>
+        <li><strong>Rocker knives and rocking pizza cutters:</strong> Allow one-handed cutting with a rocking motion rather than requiring bilateral stabilization.</li>
+        <li><strong>Dycem/non-slip mats:</strong> Stabilize plates and bowls for one-handed management.</li>
+        <li><strong>Plate guards and scoop dishes:</strong> Provide a raised edge for loading the utensil without bilateral hand use.</li>
+        <li><strong>Angled utensils and swivel spoons:</strong> Compensate for limited forearm supination or elbow flexion.</li>
+        <li><strong>Long-handled spoons and forks:</strong> Extend reach for patients with limited elbow flexion.</li>
+        <li><strong>Drinking aids:</strong> Nosey cups (cutout rim for chin tucking), drinking straws, and lids with spouts for controlled drinking.</li>
+      </ul>
+
+      <h3>Mealtime Environment and Social Context</h3>
+      <p>Mealtimes are deeply social occupations. Eating in isolation, receiving feeding assistance in a medicalized manner, or being unable to participate in family meals has documented negative effects on quality of life, nutrition status, and mood. OTs consider the social context of eating as part of intervention: Can the patient eat at the table with their family? Can they manage a restaurant meal? Can they maintain conversation while eating (attentional demands)? Mealtime independence goals should include the full occupational scope — not merely the mechanics of utensil use.</p>
+
+      <div class="highlight-box key-point">
+        <strong>Key Point</strong>
+        Nutrition and hydration are directly affected by ADL intervention. Patients who cannot self-feed adequately and who experience mealtimes as distressing often reduce oral intake, increasing risk for malnutrition, dehydration, pressure injury, and aspiration pneumonia. OT intervention in feeding is a patient safety issue, not merely a quality-of-life consideration.
+      </div>
+
+      <div class="knowledge-check">
+        <h4>Knowledge Check</h4>
+        <p class="question">A patient with Parkinson's disease tremor has difficulty keeping food on their utensil during eating. Which adaptive equipment would MOST directly address this problem?</p>
+        <div class="answer-option" onclick="selectAnswer(this, false)">
+          <span class="icon">○</span>
+          <span>Plate guard</span>
+        </div>
+        <div class="answer-option" onclick="selectAnswer(this, true)">
+          <span class="icon">○</span>
+          <span>Weighted utensils</span>
+        </div>
+        <div class="answer-option" onclick="selectAnswer(this, false)">
+          <span class="icon">○</span>
+          <span>Rocker knife</span>
+        </div>
+        <div class="answer-option" onclick="selectAnswer(this, false)">
+          <span class="icon">○</span>
+          <span>Dycem mat</span>
+        </div>
+        <div class="answer-feedback" id="feedback-8"></div>
+      </div>
+    </div>
+    <div class="module-completion">
+      <button class="complete-btn" id="btn-8" onclick="completeModule(8)">Mark Module Complete ✓</button>
+    </div>
+  </div>
+
+  <!-- ══ MODULE 9 ══ -->
+  <div class="module-block" id="module-9" data-module="9">
+    <div class="module-header" onclick="toggleModule(9)">
+      <div class="module-number">9</div>
+      <div class="module-title-wrap">
+        <div class="module-title">Home Environment Assessment: Safety, Accessibility, and Modification Recommendations</div>
+        <div class="module-duration">⏱ 15 minutes</div>
+      </div>
+      <div class="module-status" id="status-9">Not Started</div>
+      <div class="chevron">▾</div>
+    </div>
+    <div class="module-content">
+      <h3>The Home as a Therapeutic Environment</h3>
+      <p>The home environment is the primary context for ADL performance, and its physical characteristics either support or impede independence. Research consistently demonstrates that home environment barriers — steps, narrow doorways, inadequate lighting, bathroom configuration — are independent predictors of ADL dependence and fall risk in older adults and individuals with physical disabilities. OTs are uniquely trained to assess the interaction between a person's functional capacities and their home environment, identifying barriers and recommending targeted modifications to maximize safety and independence.</p>
+
+      <h3>Home Assessment Process</h3>
+      <p>Home environment assessment may be conducted in person (on-site home visit — the gold standard) or via structured interview, video walkthrough, or validated questionnaire when in-person assessment is not feasible. The Home Fast (Home Falls and Accidents Screening Tool), the Safety Assessment of Function and the Environment for Rehabilitation (SAFER-HOME), and the Westmead Home Safety Assessment (WeHSA) are validated tools for structured home safety evaluation. The In-Home Occupational Performance Evaluation (I-HOPE) captures client-identified environmental barriers and their impact on occupational performance priorities.</p>
+      <p>During an on-site home visit, the OT systematically assesses: exterior access (steps, ramp availability, walkway condition, lighting), entryway (door width, threshold height, lock/handle type), living and dining areas (furniture arrangement, flooring type, electrical cords, lighting), kitchen (appliance accessibility, storage height, counter height, floor surfaces), bedroom (bed height, transfer space, nighttime lighting, path to bathroom), bathroom (tub/shower configuration, toilet height and grab bar availability, floor surface, vanity height), and stairway access (handrail height, step depth, lighting).</p>
+
+      <h3>Common Environmental Barriers and Modifications</h3>
+      <p><strong>Entryway:</strong> Steps without handrails → install bilateral handrails; consider threshold ramp or temporary portable ramp for single steps; widen doors for wheelchair access (standard wheelchair requires 32–36 inch clearance); replace knob hardware with lever handles.</p>
+      <p><strong>Bathroom:</strong> Tub-only configuration → install tub transfer bench or conversion to roll-in shower; add grab bars at toilet (offset placement 33–36 inches from floor), tub entry, and shower walls; raise toilet height with raised toilet seat or comfort height toilet; apply non-slip decals in tub/shower; ensure 60-inch turning radius for wheelchair users.</p>
+      <p><strong>Bedroom:</strong> Adjust bed height to optimize transfers (bed height = knee height in sitting for most patients); clear path from bed to bathroom; install nightlight or motion-activated lighting for nighttime safety; remove scatter rugs; relocate frequently used items to accessible heights.</p>
+      <p><strong>Kitchen:</strong> Lower frequently used items to accessible shelves; install pull-out shelving and lazy Susans; add D-ring or loop handles to cabinet doors; install lever faucets; ensure adequate seating for kitchen task completion if standing tolerance is limited.</p>
+
+      <div class="highlight-box clinical-tip">
+        <strong>Clinical Tip</strong>
+        When recommending grab bar installation, specify exact placement in your documentation — height from floor, distance from toilet centerline, horizontal vs. angled orientation. Grab bars installed at incorrect locations by well-meaning family members can create new hazards rather than reducing them. Provide a written recommendation with measurements.
+      </div>
+
+      <h3>Funding and Resources for Home Modification</h3>
+      <p>Home modifications represent a significant financial burden for many patients. OTs should be familiar with local and national resources: Area Agencies on Aging (AAA) may offer modification programs; Medicaid Home and Community-Based Waivers fund modifications in many states; the VA provides home modification grants for eligible veterans (SAH and SHA grants); Habitat for Humanity's Home Preservation programs assist qualifying homeowners; and many states have assistive technology act programs with low-interest loan programs for home modifications. Connecting patients with community resources is an evidence-based OT intervention that improves outcomes and prevents premature institutionalization.</p>
+
+      <div class="highlight-box key-point">
+        <strong>Key Point</strong>
+        Home modification is among the highest-value, lowest-cost interventions available to OTs. Studies demonstrate that targeted home modifications combined with OT training reduce falls in high-risk older adults by up to 36% (Gitlin et al., 2006). The evidence base is strong — document environmental recommendations as a skilled OT intervention.
+      </div>
+
+      <div class="highlight-box caution">
+        <strong>Caution</strong>
+        Do not make specific contractor referrals or product endorsements without your facility's policy guidance. Ensure that modification recommendations are clearly framed as clinical recommendations, not guarantees, and that patients and caregivers understand their role in implementation and follow-through.
+      </div>
+
+      <div class="knowledge-check">
+        <h4>Knowledge Check</h4>
+        <p class="question">The recommended height for toilet grab bars (side wall placement) is approximately how many inches from the floor?</p>
+        <div class="answer-option" onclick="selectAnswer(this, false)">
+          <span class="icon">○</span>
+          <span>24–28 inches</span>
+        </div>
+        <div class="answer-option" onclick="selectAnswer(this, false)">
+          <span class="icon">○</span>
+          <span>28–32 inches</span>
+        </div>
+        <div class="answer-option" onclick="selectAnswer(this, true)">
+          <span class="icon">○</span>
+          <span>33–36 inches</span>
+        </div>
+        <div class="answer-option" onclick="selectAnswer(this, false)">
+          <span class="icon">○</span>
+          <span>38–42 inches</span>
+        </div>
+        <div class="answer-feedback" id="feedback-9"></div>
+      </div>
+    </div>
+    <div class="module-completion">
+      <button class="complete-btn" id="btn-9" onclick="completeModule(9)">Mark Module Complete ✓</button>
+    </div>
+  </div>
+
+  <!-- ══ MODULE 10 ══ -->
+  <div class="module-block" id="module-10" data-module="10">
+    <div class="module-header" onclick="toggleModule(10)">
+      <div class="module-number">10</div>
+      <div class="module-title-wrap">
+        <div class="module-title">Adaptive Equipment and Assistive Technology for ADL Independence</div>
+        <div class="module-duration">⏱ 15 minutes</div>
+      </div>
+      <div class="module-status" id="status-10">Not Started</div>
+      <div class="chevron">▾</div>
+    </div>
+    <div class="module-content">
+      <h3>Defining Adaptive Equipment and Assistive Technology</h3>
+      <p>Adaptive equipment (AE) refers to low-tech devices modified or designed to support ADL performance — reachers, button hooks, sock aids, built-up handles, long-handled tools. Assistive technology (AT) encompasses the broader spectrum of technology-based solutions — from simple (magnifying glass, rubber jar opener) to high-tech (voice-activated home control systems, powered mobility, communication devices, smart home integration). The Assistive Technology Act of 2004 defines AT as "any item, piece of equipment, or product system…used to increase, maintain, or improve functional capabilities of individuals with disabilities." OTs are primary prescribers and trainers of both AE and AT across the continuum of care.</p>
+
+      <h3>Principles of Effective Adaptive Equipment Prescription</h3>
+      <p>Effective AE prescription requires: (1) thorough assessment of the performance gap — precisely what task demand the patient cannot meet with current capacities; (2) equipment trial in context — the patient tries the device during actual task performance, not in the abstract; (3) matching to specific needs, preferences, and cognitive capacity — complex devices are useless if the patient cannot learn to operate them; (4) caregiver training where applicable; (5) documentation of demonstration of need, training provided, and patient/caregiver competency; (6) follow-up to assess carryover and problem-solve barriers to use. Studies consistently show that equipment abandonment rates are high (20–30%) when prescription occurs without adequate assessment, training, and follow-up.</p>
+
+      <h3>Adaptive Equipment Categories</h3>
+      <p><strong>Bathing and grooming:</strong> Tub benches, shower chairs, handheld shower heads, long-handled sponges/brushes, non-slip mats, suction-cup nail brushes, electric toothbrushes and shavers, built-up handle grooming tools.</p>
+      <p><strong>Dressing:</strong> Reachers (various lengths — 19" for car use, 26-32" for floor-level), dressing sticks, sock aids, button hooks, zipper pulls, elastic shoelaces, Velcro fastener modifications.</p>
+      <p><strong>Feeding:</strong> Built-up handle and weighted utensils, plate guards, scoop dishes, non-slip mats, rocker knives, swivel spoons, nosey cups.</p>
+      <p><strong>Home management:</strong> Jar openers (under-cabinet mounted and rubber), loop scissors, one-handed cutting boards with stainless steel prongs and corner guards, easy-grip kitchen tools, kettle tippers, lever door handles, large-print labeling.</p>
+      <p><strong>Medication management:</strong> Large-print pill organizers, automatic pill dispensers with alarms, medication reminder apps, blister packs, easy-open lids.</p>
+
+      <h3>High-Technology Assistive Technology</h3>
+      <p>High-tech AT solutions are transforming ADL independence possibilities for individuals with severe physical disabilities. <strong>Environmental control units (ECUs)</strong> allow individuals with very limited motor function to control lights, thermostats, entertainment systems, door locks, and appliances through switch access, voice commands, or eye gaze. <strong>Smart home integration</strong> (Amazon Alexa, Google Home) provides voice-activated control of home systems — extremely valuable for patients with tetraplegia, severe MS, or ALS. <strong>Powered wheelchairs with specialized drive controls</strong> (sip-and-puff, head array, eye gaze) enable independent mobility for individuals with profound motor impairment. <strong>Robotic arm systems</strong> (e.g., JACO arm, Kinova) mount to powered wheelchairs, providing reach and manipulation capability for feeding, grooming, and object manipulation.</p>
+
+      <div class="highlight-box clinical-tip">
+        <strong>Clinical Tip</strong>
+        Before recommending high-tech AT solutions, assess the patient's cognitive capacity to learn and operate the technology, their motivation and openness to technological solutions, available caregiver technical support, and funding pathways. The most sophisticated device is ineffective if the patient cannot operate it safely and consistently.
+      </div>
+
+      <h3>Funding for Adaptive Equipment and AT</h3>
+      <p>Funding pathways include: Medicare Part B (durable medical equipment — DME — for medically necessary items meeting specific criteria); Medicaid waivers; Veterans Affairs (extensive AT coverage for qualifying veterans); private insurance; state AT programs; equipment loan libraries (available through many state AT programs and ALS/MS societies); manufacturer loaner programs; and charitable organizations specific to diagnosis (Muscular Dystrophy Association, United Spinal Association, ALS Association).</p>
+
+      <div class="highlight-box key-point">
+        <strong>Key Point</strong>
+        Documentation of medical necessity is the OT's critical contribution to equipment funding. Vague language ("patient needs a shower chair") is frequently denied. Specific language ("patient has bilateral lower extremity weakness, falls risk, and inability to maintain unsupported standing beyond 30 seconds required for bathing — shower chair is medically necessary to prevent falls and enable safe ADL performance") supports coverage determination.
+      </div>
+
+      <div class="highlight-box caution">
+        <strong>Caution</strong>
+        Adaptive equipment is a clinical intervention, not a consumer product recommendation. OTs bear professional responsibility for the appropriateness of equipment prescribed. A reacher given to a patient with poor judgment or cognitive impairment may increase fall risk. Match the tool to the patient's full clinical profile.
+      </div>
+
+      <div class="knowledge-check">
+        <h4>Knowledge Check</h4>
+        <p class="question">Research indicates that adaptive equipment abandonment rates are approximately how high when prescribed without adequate assessment, training, and follow-up?</p>
+        <div class="answer-option" onclick="selectAnswer(this, false)">
+          <span class="icon">○</span>
+          <span>5–10%</span>
+        </div>
+        <div class="answer-option" onclick="selectAnswer(this, true)">
+          <span class="icon">○</span>
+          <span>20–30%</span>
+        </div>
+        <div class="answer-option" onclick="selectAnswer(this, false)">
+          <span class="icon">○</span>
+          <span>40–50%</span>
+        </div>
+        <div class="answer-option" onclick="selectAnswer(this, false)">
+          <span class="icon">○</span>
+          <span>60–70%</span>
+        </div>
+        <div class="answer-feedback" id="feedback-10"></div>
+      </div>
+    </div>
+    <div class="module-completion">
+      <button class="complete-btn" id="btn-10" onclick="completeModule(10)">Mark Module Complete ✓</button>
+    </div>
+  </div>
+
+  <!-- ══ MODULE 11 ══ -->
+  <div class="module-block" id="module-11" data-module="11">
+    <div class="module-header" onclick="toggleModule(11)">
+      <div class="module-number">11</div>
+      <div class="module-title-wrap">
+        <div class="module-title">IADLs: Cooking, Home Management, Community Mobility, and Caregiver Training</div>
+        <div class="module-duration">⏱ 15 minutes</div>
+      </div>
+      <div class="module-status" id="status-11">Not Started</div>
+      <div class="chevron">▾</div>
+    </div>
+    <div class="module-content">
+      <h3>IADLs in the OT Practice Scope</h3>
+      <p>Instrumental activities of daily living represent the complex, multi-step tasks that support independent living in the community. While BADLs are typically addressed across inpatient and outpatient rehabilitation settings, IADLs become the primary focus in home health, outpatient, and community-based OT practice. For many patients — particularly those recovering from TBI, stroke, or joint replacement — the ultimate rehabilitation goal is not merely to dress independently but to return to managing their household, cooking for their family, accessing their community, and fulfilling their roles as parents, spouses, workers, and community members. IADL assessment and intervention is where OT's occupational focus truly distinguishes the profession from other rehabilitation disciplines.</p>
+
+      <h3>Cooking and Meal Preparation</h3>
+      <p>Meal preparation is among the most cognitively and physically demanding IADLs. Activity analysis reveals demands across motor (standing tolerance, bilateral hand use, fine motor manipulation of utensils and packaging, reaching to varied heights), process (recipe sequencing, multi-tasking multiple items, timing, error monitoring), and safety (heat, sharp implements, slippery surfaces, fire risk) domains. OT evaluation of cooking may use the Executive Function Performance Test (EFPT) — cooking subtask — or direct observation during a kitchen task specific to the patient's typical role (e.g., preparing a simple family meal vs. managing complex multi-dish cooking).</p>
+      <p>Intervention strategies include: breaking recipes into simplified step-by-step written or visual formats, using a timer system for multi-item cooking, reorganizing the kitchen environment to place frequently used items at accessible heights, introducing adaptive kitchen tools (one-handed cutting board, loop scissors, jar openers, electric can opener, kettle tipper), training energy conservation strategies (seated cooking, meal prep batching), and introducing meal delivery services or semi-prepared meal kits as adaptive alternatives for those with significant ongoing limitations.</p>
+
+      <h3>Home Management</h3>
+      <p>Home management IADLs include housecleaning, laundry, home maintenance, financial management, and health management. OTs assess these through interview, structured tools (COPM, Role Checklist), and direct observation. Energy conservation and joint protection principles are critical for patients with arthritis, COPD, cardiac conditions, or post-surgical fatigue. Work simplification strategies — eliminating non-essential steps, using wheeled carts to transport items, sitting for tasks traditionally performed standing, organizing work areas for efficiency — directly translate to improved IADL function without requiring changes in underlying impairment.</p>
+
+      <h3>Community Mobility</h3>
+      <p>Community mobility encompasses the ability to access transportation and navigate the community environment — driving, using public transit, walking in community settings, and using ride-sharing services. Driving rehabilitation is a specialized area of OT practice requiring additional training and certification (Certified Driver Rehabilitation Specialist — CDRS). For patients who cannot or do not drive, OTs assess and train alternative transportation strategies: bus/paratransit routes, community dial-a-ride programs, ride-share apps (and adaptive technology for accessing them), and pedestrian safety skills.</p>
+      <p>For patients who do drive, OTs screen for fitness-to-drive concerns using tools such as the Occupational Therapy — Driver Off Road Assessment (OT-DORA) or Trail Making Test (TMT), and make appropriate referrals to certified driving rehabilitation specialists when concerns are identified. Never provide driving clearance without proper assessment — this is a patient safety and legal liability issue.</p>
+
+      <div class="highlight-box clinical-tip">
+        <strong>Clinical Tip</strong>
+        When a patient's goal is return to driving, manage the conversation carefully. An OT should not tell a patient they "cannot drive" — instead, explain that a formal driving evaluation by a CDRS is required to ensure safety. Document the recommendation for driving evaluation clearly in the medical record, and ensure the referring physician is aware.
+      </div>
+
+      <h3>Caregiver Training</h3>
+      <p>Caregiver training is an evidence-based OT intervention that reduces caregiver burden, reduces patient falls and adverse events, and improves caregiver confidence and the patient's quality of care. Effective caregiver training includes: demonstration and return-demonstration of all required assist techniques (transfer assists, grooming and dressing assists, meal preparation adaptations); education on the patient's diagnosis, deficits, and expected trajectory; instruction in recognizing and responding to safety emergencies (falls, aspiration events, medical emergencies); training in adaptive equipment use; and education on caregiver self-care and available community support resources.</p>
+
+      <div class="highlight-box key-point">
+        <strong>Key Point</strong>
+        IADL goals are the goals that drive meaning and community reintegration. "Patient will independently prepare a light meal in the home kitchen using adaptive techniques" is a goal that transforms a person's life in a way that "patient will improve shoulder flexion ROM by 15 degrees" does not. Write IADL goals aggressively — they reflect OT's unique contribution to rehabilitation.
+      </div>
+
+      <div class="highlight-box caution">
+        <strong>Caution</strong>
+        Caregiver training is a billable, documentable skilled intervention — not an informal add-on at the end of a session. Document: what was taught, to whom, how (demonstration, written materials, video), and the caregiver's demonstrated return-demonstration competency. This documentation supports both the value of OT and the patient's safe discharge plan.
+      </div>
+
+      <div class="knowledge-check">
+        <h4>Knowledge Check</h4>
+        <p class="question">Which of the following is the appropriate OT response when a patient recovering from TBI requests clearance to resume driving?</p>
+        <div class="answer-option" onclick="selectAnswer(this, false)">
+          <span class="icon">○</span>
+          <span>Conduct a standard clinical OT evaluation and provide written driving clearance if the patient is oriented and cooperative</span>
+        </div>
+        <div class="answer-option" onclick="selectAnswer(this, false)">
+          <span class="icon">○</span>
+          <span>Tell the patient they cannot drive and restrict their license</span>
+        </div>
+        <div class="answer-option" onclick="selectAnswer(this, true)">
+          <span class="icon">○</span>
+          <span>Screen for fitness-to-drive concerns and refer to a Certified Driver Rehabilitation Specialist for formal evaluation</span>
+        </div>
+        <div class="answer-option" onclick="selectAnswer(this, false)">
+          <span class="icon">○</span>
+          <span>Defer the question entirely to the patient's physician</span>
+        </div>
+        <div class="answer-feedback" id="feedback-11"></div>
+      </div>
+    </div>
+    <div class="module-completion">
+      <button class="complete-btn" id="btn-11" onclick="completeModule(11)">Mark Module Complete ✓</button>
+    </div>
+  </div>
+
+  <!-- ══ MODULE 12 ══ -->
+  <div class="module-block" id="module-12" data-module="12">
+    <div class="module-header" onclick="toggleModule(12)">
+      <div class="module-number">12</div>
+      <div class="module-title-wrap">
+        <div class="module-title">Functional Goal Writing, Outcomes Measurement, and Discharge Planning in OT</div>
+        <div class="module-duration">⏱ 15 minutes</div>
+      </div>
+      <div class="module-status" id="status-12">Not Started</div>
+      <div class="chevron">▾</div>
+    </div>
+    <div class="module-content">
+      <h3>The Role of Goal Writing in OT Practice</h3>
+      <p>Functional goal writing is the clinical skill that connects OT evaluation findings to the intervention plan and, ultimately, to documented outcomes. In the current healthcare environment — characterized by value-based care, utilization review scrutiny, and third-party payer oversight — well-written, measurable, occupation-centered goals are not merely good clinical practice; they are the mechanism through which OT services are authorized, reimbursed, and defended. A goal that is vague, non-measurable, or disconnected from functional ADL performance will not survive payer review. A goal that is specific, measurable, time-bound, and occupation-centered tells a compelling clinical story.</p>
+
+      <h3>The SMART Goal Framework</h3>
+      <p>SMART goals are Specific, Measurable, Achievable, Relevant, and Time-bound. In OT ADL practice, SMART goals should additionally be occupation-centered — linked to a specific ADL or IADL task that is meaningful to the patient. The anatomy of a strong OT ADL goal includes:</p>
+      <ul>
+        <li><strong>Subject:</strong> "Patient will…"</li>
+        <li><strong>Performance:</strong> [specific ADL task and component — "independently don a pullover shirt"]</li>
+        <li><strong>Condition:</strong> [circumstances — "in the home bathroom, from a seated position"]</li>
+        <li><strong>Assist level:</strong> [FIM or descriptive — "with setup assistance only"]</li>
+        <li><strong>Adaptive strategy/equipment:</strong> [if applicable — "using the affected-arm-first technique"]</li>
+        <li><strong>Timeframe:</strong> ["within 4 weeks"]</li>
+      </ul>
+      <p><strong>Example strong goal:</strong> "Within 3 weeks, patient will independently complete upper body dressing including shirt and bra donning/doffing using the affected-arm-first technique and button hook for fasteners, requiring no physical assistance, in the home bedroom setting." This goal is specific enough to guide treatment, measure progress, and justify continued skilled OT services.</p>
+
+      <h3>Outcomes Measurement</h3>
+      <p>Outcomes measurement quantifies the effect of OT intervention on functional ADL status. Outcome measures used in OT ADL practice include the standardized tools covered in Module 3 (FIM, Barthel, COPM) plus diagnosis-specific and setting-specific measures. The Stroke Rehabilitation Assessment of Movement (STREAM), Wolf Motor Function Test (WMFT), and Upper Extremity Fugl-Meyer are used in stroke-specific OT practice. The Functional Assessment of Multiple Sclerosis (FAMS) and MS Quality of Life Inventory serve MS populations. The Patient-Reported Outcomes Measurement Information System (PROMIS) Physical Function scales provide patient-reported, norm-referenced functional status data applicable across diagnoses.</p>
+      <p>Repeated outcomes measurement — at evaluation, midpoint, and discharge — documents the trajectory of functional change and supports both clinical decision-making and program evaluation. FIM efficiency (FIM gain ÷ length of stay) and COPM change scores are commonly used metrics for inpatient and outpatient OT program quality reporting.</p>
+
+      <div class="highlight-box clinical-tip">
+        <strong>Clinical Tip</strong>
+        Use the patient's own words from the occupational profile when writing goals. A goal that says "patient will return to cooking simple meals for her grandchildren weekly" captures the occupational meaning of functional recovery in a way that motivates both the patient and the care team. Payers see evidence of skilled, individualized care; patients see their life reflected in their goals.
+      </div>
+
+      <h3>Discharge Planning in OT</h3>
+      <p>Discharge planning is an OT-driven process that begins at evaluation and culminates in a safe, supported transition from the current care setting to the next. Effective discharge planning requires: accurate prediction of the patient's discharge functional status; identification of remaining functional gaps and the support systems needed to manage them; caregiver training and confidence assessment; home environment assessment and modification recommendations; adaptive equipment procurement and training; and clear communication of the OT discharge summary to the receiving care setting, patient, and caregiver.</p>
+      <p>Discharge destination options — home with no services, home with community OT or home health, skilled nursing facility, assisted living, long-term acute care — depend on the patient's functional status, caregiver availability and capability, home environment accessibility, and medical complexity. OTs are primary contributors to the interdisciplinary discharge planning discussion, advocating for the least restrictive environment that allows safe ADL function.</p>
+
+      <h3>Communicating Outcomes to Stakeholders</h3>
+      <p>OTs must communicate ADL outcomes persuasively to multiple audiences: payers (medical necessity, functional progress, skilled service need); physicians and case managers (discharge readiness, recommendations); patients and families (progress, plans, expectations); and within the profession (program evaluation, quality improvement, research). The most effective OT documentation tells a coherent story from evaluation findings → functional goals → skilled interventions → measurable progress → discharge plan. Each note should answer the implicit question: "Why does this patient need a skilled OT today, and what did OT accomplish?"</p>
+
+      <div class="highlight-box key-point">
+        <strong>Key Point</strong>
+        Discharge planning is not a last-day event — it is a continuous process. At every session, the OT should be asking: "What is this patient's trajectory? What does safe discharge require? What barriers exist, and how are we addressing them?" This forward-thinking orientation ensures that discharge is smooth, timely, and safe for every patient.
+      </div>
+
+      <div class="highlight-box caution">
+        <strong>Caution</strong>
+        Overly optimistic discharge plans create serious patient safety risk. Document honestly when a patient's functional gains are insufficient for safe home discharge. Advocate for appropriate placement even when it conflicts with family or patient preference — the OT's professional and ethical obligation is to patient safety, not to discharge convenience.
+      </div>
+
+      <div class="knowledge-check">
+        <h4>Knowledge Check</h4>
+        <p class="question">Which of the following is the BEST example of a well-written, occupation-centered OT ADL goal?</p>
+        <div class="answer-option" onclick="selectAnswer(this, false)">
+          <span class="icon">○</span>
+          <span>Patient will improve ADL status within 4 weeks.</span>
+        </div>
+        <div class="answer-option" onclick="selectAnswer(this, false)">
+          <span class="icon">○</span>
+          <span>Patient will increase shoulder flexion ROM to 110° within 3 weeks.</span>
+        </div>
+        <div class="answer-option" onclick="selectAnswer(this, true)">
+          <span class="icon">○</span>
+          <span>Within 3 weeks, patient will independently complete upper body dressing using the affected-arm-first technique and button hook, requiring no physical assistance, in the home bedroom.</span>
+        </div>
+        <div class="answer-option" onclick="selectAnswer(this, false)">
+          <span class="icon">○</span>
+          <span>Patient will tolerate 30 minutes of OT without complaints of fatigue.</span>
+        </div>
+        <div class="answer-feedback" id="feedback-12"></div>
+      </div>
+    </div>
+    <div class="module-completion">
+      <button class="complete-btn" id="btn-12" onclick="completeModule(12)">Mark Module Complete ✓</button>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════
+       CERTIFICATE SECTION
+  ══════════════════════════════════════════════════ -->
+  <div id="certificate-section">
+    <div class="cert-icon">🏆</div>
+    <h2>Congratulations! Course Complete</h2>
+    <p>You have successfully completed <strong>OT Evaluation and Assessment of ADLs</strong> (OT-ADL-001) — 3.0 CCUs.<br>Approval Code: DRTROY-OT-ADL-001-2024</p>
+    <button class="cert-btn" onclick="generateCertificate()">🖨 Print Certificate of Completion</button>
+  </div>
+
+</div><!-- /container -->
+
+<!-- ══════════════════════════════════════════════════
+     JAVASCRIPT
+══════════════════════════════════════════════════ -->
+<script>
+  const STORAGE_KEY = 'otAdlProgress';
+  const TOTAL_MODULES = 12;
+  let completedModules = new Set();
+  let openModules = new Set();
+
+  /* ── LOAD ── */
+  function loadProgress() {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (raw) {
+        const data = JSON.parse(raw);
+        if (data.completed && Array.isArray(data.completed)) {
+          completedModules = new Set(data.completed);
+        }
+      }
+    } catch(e) { console.warn('loadProgress error', e); }
+    applyProgress();
+    updateProgress();
+  }
+
+  /* ── SAVE ── */
+  function saveProgress() {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify({
+        completed: Array.from(completedModules),
+        savedAt: new Date().toISOString()
+      }));
+    } catch(e) { console.warn('saveProgress error', e); }
+  }
+
+  /* ── APPLY STATE TO DOM ── */
+  function applyProgress() {
+    for (let i = 1; i <= TOTAL_MODULES; i++) {
+      if (completedModules.has(i)) markComplete(i, false);
+    }
+  }
+
+  /* ── TOGGLE MODULE ── */
+  function toggleModule(n) {
+    const block = document.getElementById('module-' + n);
+    if (!block) return;
+    const isOpen = block.classList.contains('open');
+    if (isOpen) {
+      block.classList.remove('open');
+      openModules.delete(n);
+    } else {
+      block.classList.add('open');
+      openModules.add(n);
+    }
+  }
+
+  /* ── COMPLETE MODULE ── */
+  function completeModule(n) {
+    if (completedModules.has(n)) return;
+    completedModules.add(n);
+    markComplete(n, true);
+    updateProgress();
+    saveProgress();
+    if (completedModules.size === TOTAL_MODULES) {
+      document.getElementById('certificate-section').classList.add('show');
+      document.getElementById('certificate-section').scrollIntoView({ behavior: 'smooth', block: 'center' });
+    } else {
+      const next = n + 1;
+      if (next <= TOTAL_MODULES) {
+        setTimeout(() => {
+          const nextBlock = document.getElementById('module-' + next);
+          if (nextBlock) {
+            nextBlock.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            if (!nextBlock.classList.contains('open')) toggleModule(next);
+          }
+        }, 500);
+      }
+    }
+  }
+
+  /* ── MARK COMPLETE (DOM) ── */
+  function markComplete(n, animate) {
+    const block = document.getElementById('module-' + n);
+    const btn = document.getElementById('btn-' + n);
+    const status = document.getElementById('status-' + n);
+    if (!block) return;
+    block.classList.add('completed');
+    if (btn) {
+      btn.disabled = true;
+      btn.textContent = '✓ Module Complete';
+      const wrap = btn.parentElement;
+      wrap.innerHTML = '<div class="completion-done">✅ Module ' + n + ' Complete</div>';
+    }
+    if (status) status.textContent = '✓ Complete';
+  }
+
+  /* ── UPDATE PROGRESS BAR ── */
+  function updateProgress() {
+    const count = completedModules.size;
+    const pct = Math.round((count / TOTAL_MODULES) * 100);
+    const fill = document.getElementById('progress-fill');
+    const text = document.getElementById('progress-text');
+    if (fill) fill.style.width = pct + '%';
+    if (text) text.textContent = count + ' of ' + TOTAL_MODULES + ' modules complete';
+  }
+
+  /* ── SELECT ANSWER ── */
+  function selectAnswer(el, isCorrect) {
+    const check = el.closest('.knowledge-check');
+    if (!check) return;
+    if (check.dataset.answered) return;
+    check.dataset.answered = '1';
+    const options = check.querySelectorAll('.answer-option');
+    options.forEach(opt => {
+      opt.style.pointerEvents = 'none';
+    });
+    const feedback = check.querySelector('.answer-feedback');
+    if (isCorrect) {
+      el.classList.add('correct');
+      el.querySelector('.icon').textContent = '✓';
+      if (feedback) {
+        feedback.textContent = '✓ Correct! Well done.';
+        feedback.className = 'answer-feedback show correct-msg';
+      }
+    } else {
+      el.classList.add('incorrect');
+      el.querySelector('.icon').textContent = '✗';
+      options.forEach(opt => {
+        if (opt.onclick && opt.onclick.toString().includes('true')) {
+          opt.classList.add('correct');
+          opt.querySelector('.icon').textContent = '✓';
+        }
+      });
+      if (feedback) {
+        feedback.textContent = '✗ Incorrect — review the module content and select the highlighted correct answer.';
+        feedback.className = 'answer-feedback show incorrect-msg';
+      }
+    }
+  }
+
+  /* ── GENERATE CERTIFICATE ── */
+  function generateCertificate() {
+    const name = prompt('Enter your full name for the certificate:') || 'Healthcare Professional';
+    const date = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+    const win = window.open('', '_blank', 'width=900,height=650');
+    win.document.write(`<!DOCTYPE html>
+<html>
+<head>
+<title>Certificate of Completion — DrTroy CE</title>
+<style>
+  body { font-family: Georgia, serif; background: #f8fafc; margin: 0; padding: 40px; }
+  .cert { max-width: 800px; margin: 0 auto; background: #fff; border: 8px solid #1a365d; border-radius: 12px; padding: 60px 70px; text-align: center; box-shadow: 0 4px 24px rgba(0,0,0,.12); }
+  .logo-line { font-size: 26px; font-weight: 700; color: #1a365d; letter-spacing: 1px; margin-bottom: 6px; }
+  .org { font-size: 14px; color: #64748b; margin-bottom: 30px; }
+  h1 { font-size: 34px; color: #1a365d; margin: 0 0 10px; }
+  .awarded { font-size: 16px; color: #64748b; margin-bottom: 28px; }
+  .name { font-size: 42px; color: #059669; font-style: italic; border-bottom: 2px solid #059669; display: inline-block; padding-bottom: 8px; margin-bottom: 28px; }
+  .course-title { font-size: 18px; font-weight: 700; color: #1a365d; margin-bottom: 8px; }
+  .course-sub { font-size: 13px; color: #64748b; margin-bottom: 28px; }
+  .details { display: flex; justify-content: center; gap: 40px; margin-bottom: 32px; }
+  .detail-item { text-align: center; }
+  .detail-label { font-size: 11px; text-transform: uppercase; letter-spacing: .8px; color: #94a3b8; }
+  .detail-value { font-size: 15px; font-weight: 700; color: #1a365d; margin-top: 4px; }
+  .footer { font-size: 12px; color: #94a3b8; margin-top: 32px; border-top: 1px solid #e2e8f0; padding-top: 20px; }
+  @media print { body { padding: 0; } .cert { box-shadow: none; } }
+</style>
+</head>
+<body>
+<div class="cert">
+  <div class="logo-line">🌿 DrTroy CE</div>
+  <div class="org">Continuing Education for Healthcare Professionals</div>
+  <h1>Certificate of Completion</h1>
+  <p class="awarded">This certifies that</p>
+  <div class="name">${name}</div>
+  <div class="course-title">OT Evaluation and Assessment of ADLs</div>
+  <div class="course-sub">Comprehensive ADL Evaluation, Occupational Performance Assessment, and Evidence-Based Intervention Strategies</div>
+  <div class="details">
+    <div class="detail-item">
+      <div class="detail-label">Course ID</div>
+      <div class="detail-value">OT-ADL-001</div>
+    </div>
+    <div class="detail-item">
+      <div class="detail-label">Approval Code</div>
+      <div class="detail-value">DRTROY-OT-ADL-001-2024</div>
+    </div>
+    <div class="detail-item">
+      <div class="detail-label">Credit Hours</div>
+      <div class="detail-value">3.0 CCUs</div>
+    </div>
+    <div class="detail-item">
+      <div class="detail-label">Completion Date</div>
+      <div class="detail-value">${date}</div>
+    </div>
+  </div>
+  <div class="footer">DrTroy CE | drtroy.com | Approval: DRTROY-OT-ADL-001-2024 | This certificate should be retained for your professional development records.</div>
+</div>
+<script>window.onload = function(){ window.print(); }<\/script>
+</body>
+</html>`);
+    win.document.close();
+  }
+
+  /* ── LOGOUT ── */
+  function logout() {
+    if (confirm('Log out of DrTroy CE?')) {
+      window.location.href = '../my-account.html';
+    }
+  }
+
+  /* ── INIT ── */
+  document.addEventListener('DOMContentLoaded', function() {
+    loadProgress();
+    setInterval(saveProgress, 30000);
+  });
+</script>
+
+</body>
+</html>

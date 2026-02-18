@@ -1,0 +1,1269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Physical Agents, Modalities, and Wound Care - DrTroy CE</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        @page { size: letter; margin: 0.75in; @bottom-center { content: counter(page); font-size: 10pt; color: #666; } }
+        * { box-sizing: border-box; }
+        :root {
+            --navy: #1a365d;
+            --navy-light: #2c5282;
+            --gold: #059669;
+            --gold-light: #10b981;
+            --gray-50: #f7fafc;
+            --gray-100: #edf2f7;
+            --gray-200: #e5e7eb;
+            --gray-600: #4a5568;
+            --gray-800: #2d3748;
+            --gray-900: #111827;
+        }
+        body {
+            font-family: 'Georgia', 'Times New Roman', serif;
+            font-size: 16px;
+            line-height: 1.7;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            background: #f5f5f5;
+        }
+        .course-header {
+            background: #ffffff;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 3px solid var(--gold);
+        }
+        .course-header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo img {
+            height: 60px;
+            width: auto;
+            max-width: 300px;
+        }
+        .course-nav {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+        .course-nav a {
+            color: var(--gray-600);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 14px;
+            transition: color 0.2s;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+        .course-nav a:hover { color: var(--navy); }
+        .logout-btn {
+            background: var(--gold);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+        .logout-btn:hover { background: var(--gold-light); transform: translateY(-2px); }
+        .course-container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: white;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            border-radius: 10px;
+            margin-bottom: 2rem;
+        }
+        .course-title-section {
+            text-align: center;
+            border-bottom: 2px solid var(--gray-200);
+            padding-bottom: 2rem;
+            margin-bottom: 3rem;
+        }
+        .course-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--navy);
+            margin: 0;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+        .course-subtitle {
+            font-size: 1.1rem;
+            color: var(--gray-600);
+            margin: 1rem 0;
+            font-style: italic;
+        }
+        .course-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+        .info-box {
+            background: var(--gray-50);
+            padding: 1rem;
+            border-radius: 8px;
+            text-align: center;
+            border-left: 4px solid var(--gold);
+        }
+        .info-box strong { color: var(--navy); display: block; margin-bottom: 0.5rem; }
+        .progress-container {
+            background: var(--gray-50);
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+            border: 2px solid var(--gold-light);
+        }
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+        .progress-title { font-size: 1.2rem; font-weight: 600; color: var(--navy); }
+        .progress-percentage { font-size: 1rem; color: var(--gold); font-weight: 600; }
+        .progress-bar {
+            width: 100%;
+            height: 12px;
+            background: white;
+            border-radius: 6px;
+            overflow: hidden;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--gold) 0%, var(--gold-light) 100%);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+        .module {
+            margin-bottom: 3rem;
+            border: 1px solid var(--gray-200);
+            border-radius: 12px;
+            overflow: hidden;
+            background: white;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+        }
+        .module:hover { box-shadow: 0 6px 25px rgba(0,0,0,0.1); }
+        .module-header {
+            background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
+            color: white;
+            padding: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .module-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            transition: left 0.6s ease;
+        }
+        .module-header:hover::before { left: 100%; }
+        .module-header.completed {
+            background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%);
+        }
+        .module-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin: 0;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+        .module-header.completed .module-title::after { content: ' ✓'; font-size: 1.2rem; margin-left: 0.5rem; }
+        .module-content {
+            padding: 2rem;
+            display: none;
+            background: white;
+        }
+        .module-content.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .module-content h2 {
+            color: var(--navy);
+            font-size: 1.4rem;
+            margin: 2rem 0 1rem 0;
+            font-weight: 600;
+            border-bottom: 2px solid var(--gold);
+            padding-bottom: 0.5rem;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+        .module-content h3 {
+            color: var(--navy-light);
+            font-size: 1.2rem;
+            margin: 1.5rem 0 0.75rem 0;
+            font-weight: 600;
+        }
+        .module-content p { margin-bottom: 1rem; text-align: justify; }
+        .module-content ul, .module-content ol { margin: 1rem 0; padding-left: 2rem; }
+        .module-content li { margin-bottom: 0.5rem; }
+        .highlight-box {
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            border-left: 5px solid var(--gold);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        .highlight-box.clinical-tip {
+            background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+            border-left-color: var(--gold);
+        }
+        .highlight-box.key-point {
+            background: linear-gradient(135deg, #fef7cd 0%, #fef3c7 100%);
+            border-left-color: #d97706;
+        }
+        .highlight-box.caution {
+            background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%);
+            border-left-color: #dc2626;
+        }
+        .knowledge-check {
+            background: linear-gradient(135deg, var(--gray-50) 0%, white 100%);
+            border: 2px solid var(--gold);
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 2rem 0;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+        .knowledge-check h3 { color: var(--navy); margin-top: 0; font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; }
+        .question {
+            margin: 1.5rem 0;
+            padding: 1rem;
+            background: white;
+            border-radius: 8px;
+            border: 1px solid var(--gray-200);
+        }
+        .question-text { font-weight: 600; margin-bottom: 1rem; color: var(--navy); }
+        .answer-option {
+            margin: 0.5rem 0;
+            padding: 0.5rem;
+            cursor: pointer;
+            border-radius: 6px;
+            transition: background 0.2s;
+        }
+        .answer-option:hover { background: var(--gray-50); }
+        .answer-option.correct {
+            background: #dcfce7 !important;
+            border-left: 4px solid var(--gold);
+            padding-left: 1rem;
+        }
+        .answer-option.incorrect {
+            background: #fee2e2 !important;
+            border-left: 4px solid #dc2626;
+            padding-left: 1rem;
+        }
+        .module-completion {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem;
+            background: var(--gray-50);
+            border-top: 1px solid var(--gray-200);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+        .complete-btn {
+            background: var(--gold);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+        .complete-btn:hover {
+            background: var(--gold-light);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(5, 150, 105, 0.3);
+        }
+        .complete-btn:disabled { background: var(--gray-600); cursor: not-allowed; transform: none; }
+        .completed-badge {
+            background: var(--gold);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+        .certificate-section {
+            background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
+            color: white;
+            text-align: center;
+            padding: 3rem;
+            border-radius: 12px;
+            margin: 3rem 0;
+            display: none;
+        }
+        .certificate-section.visible {
+            display: block;
+            animation: slideUp 0.5s ease;
+        }
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .certificate-btn {
+            background: var(--gold);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            margin-top: 1rem;
+        }
+        .certificate-btn:hover {
+            background: var(--gold-light);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(5, 150, 105, 0.4);
+        }
+        @media (max-width: 768px) {
+            .course-container { margin: 1rem; padding: 1rem; }
+            .course-title { font-size: 2rem; }
+            .module-title { font-size: 1.1rem; }
+            .course-info { grid-template-columns: 1fr; }
+        }
+        @media print {
+            .course-header, .progress-container, .complete-btn, .certificate-section { display: none !important; }
+            .module-content { display: block !important; }
+            .module { break-inside: avoid; margin-bottom: 2rem; }
+            body { background: white; font-size: 11pt; line-height: 1.4; }
+            .course-container { box-shadow: none; margin: 0; padding: 0; }
+        }
+    </style>
+</head>
+<body>
+    <header class="course-header">
+        <div class="course-header-container">
+            <div class="logo">
+                <img src="../images/drtroy_logo_new.jpg" alt="DrTroy CE">
+            </div>
+            <div class="course-nav">
+                <a href="../course-catalog.html">Course Catalog</a>
+                <a href="../my-account.html">My Account</a>
+                <button class="logout-btn" onclick="logout()">Logout</button>
+            </div>
+        </div>
+    </header>
+
+    <div class="course-container">
+        <div class="course-title-section">
+            <h1 class="course-title">⚡ Physical Agents, Modalities, and Wound Care</h1>
+            <p class="course-subtitle">Evidence-Based Application of Therapeutic Modalities and Comprehensive Wound Care Management</p>
+            <div class="course-info">
+                <div class="info-box"><strong>Duration</strong>3.0 Hours (180 minutes)</div>
+                <div class="info-box"><strong>Continuing Education</strong>3.0 CCUs</div>
+                <div class="info-box"><strong>Course ID</strong>MODALITIES-001</div>
+                <div class="info-box"><strong>Approval #</strong>DRTROY-MODALITIES-001-2024</div>
+            </div>
+        </div>
+
+        <div class="progress-container">
+            <div class="progress-header">
+                <div class="progress-title">Course Progress</div>
+                <div class="progress-percentage">0% Complete</div>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill"></div>
+            </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════════════════════════ -->
+        <!-- MODULE 1 -->
+        <!-- ═══════════════════════════════════════════════════════════ -->
+        <div class="module" data-module="1">
+            <div class="module-header" onclick="toggleModule(1)">
+                <div class="module-title">Module 1: Principles of Biophysics — Heat Transfer, Electrical Stimulation, and Sound Waves (15 min)</div>
+            </div>
+            <div class="module-content">
+                <h2>1.1 Foundations of Physical Agent Application</h2>
+                <p>Physical agents are forms of energy applied to the body for therapeutic purposes. Before selecting any modality, the clinician must understand the biophysical mechanisms that govern how energy is transmitted to, absorbed by, and converted within biological tissues. These mechanisms determine the physiological effects achieved, the depth of penetration, and the appropriateness for a given clinical condition.</p>
+                <p>Three primary energy domains are encountered in physical therapy practice: thermal energy (heat transfer), electromagnetic energy (electrical stimulation and light), and mechanical energy (sound waves and mechanical force). Mastery of these principles enables the practitioner to reason through any clinical scenario rather than relying on rote memorization of protocols.</p>
+
+                <h2>1.2 Mechanisms of Heat Transfer</h2>
+                <p>Heat energy moves along a thermal gradient — from higher to lower temperature regions. Four mechanisms are clinically relevant:</p>
+                <ul>
+                    <li><strong>Conduction:</strong> Direct transfer of thermal energy through physical contact between objects of differing temperatures. Hot packs and cold packs rely on conduction. The rate of transfer depends on the temperature difference, the contact area, and the thermal conductivity of the intervening medium (e.g., towel layers).</li>
+                    <li><strong>Convection:</strong> Heat transfer through the movement of a fluid (liquid or gas) across the body surface. Fluidotherapy uses warm cellulose particles in an air stream. Whirlpool uses moving water. Convection is more efficient than conduction alone because fresh, unheated medium continuously contacts the skin.</li>
+                    <li><strong>Radiation:</strong> Transfer of heat as electromagnetic waves, without a medium. Infrared lamps heat by radiation. The Stefan-Boltzmann law dictates that radiative heat increases with the fourth power of temperature.</li>
+                    <li><strong>Evaporation:</strong> Heat loss via conversion of liquid to vapor. Vapocoolant sprays cool tissue via rapid evaporation. Clinicians must account for evaporative cooling when heating adjacent regions.</li>
+                </ul>
+
+                <div class="highlight-box key-point">
+                    <strong>Key Point — Specific Heat Capacity:</strong> Water has a high specific heat (4.18 J/g°C), making it an excellent medium for thermal transfer. Tissues with high water content (muscle) absorb more heat per unit volume than fat. Fat is a poor thermal conductor, which limits superficial heat penetration to 1–2 cm.
+                </div>
+
+                <h2>1.3 Principles of Electrical Stimulation</h2>
+                <p>Electrical stimulation applies exogenous electrical current to excitable tissues (nerve and muscle) to achieve therapeutic effects. Current is the rate of charge flow (amperes), driven by voltage across a resistance (Ohm's Law: V = IR). In biological tissue, impedance — the frequency-dependent resistance — determines current flow.</p>
+                <p>Waveform characteristics define the clinical application. Waveform shape (sinusoidal, rectangular, spiked), phase duration (microseconds to milliseconds), amplitude, frequency (pulses per second), and duty cycle (on:off ratio) each influence which nerve fiber populations are recruited. Larger-diameter, myelinated A-beta fibers have the lowest threshold and are targeted by TENS for pain modulation. Motor fibers (A-alpha) require higher amplitudes or longer phase durations. C-fibers (pain, sympathetic) respond to chemical stimuli and are modulated indirectly.</p>
+                <p>The charge per phase (amplitude × phase duration) determines the likelihood of membrane depolarization. The strength-duration curve describes the minimum amplitude required to depolarize tissue at a given phase duration. Chronaxie (the phase duration at twice rheobase amplitude) is a tissue-specific constant useful in parameter selection.</p>
+
+                <h2>1.4 Acoustic Energy — Principles of Therapeutic Ultrasound</h2>
+                <p>Therapeutic ultrasound employs high-frequency mechanical pressure waves (0.5–3 MHz) generated by piezoelectric transducer crystals undergoing reverse piezoelectric effect. Unlike audible sound, ultrasound waves above 20 kHz are inaudible; clinical frequencies of 1 and 3 MHz are most common.</p>
+                <p>Wave propagation depends on the acoustic impedance of the medium. Ultrasound travels well through soft tissue but is largely reflected at bone surfaces and poorly transmitted through air — hence the necessity for coupling gels. Absorption coefficient varies with tissue type and frequency: higher frequencies (3 MHz) are absorbed in superficial tissues (1–2 cm), while lower frequencies (1 MHz) penetrate to 4–5 cm.</p>
+                <p>The spatial average temporal average (SATA) intensity, expressed in W/cm², is the primary dosimetric parameter. The beam nonuniformity ratio (BNR) describes hot spots within the beam; a lower BNR (closer to 1.0) is preferred for patient safety. The effective radiating area (ERA) of the transducer should be matched to the treatment area.</p>
+
+                <div class="highlight-box clinical-tip">
+                    <strong>Clinical Tip:</strong> When selecting between 1 MHz and 3 MHz ultrasound, think depth: "1 MHz goes deep, 3 MHz stays shallow." Use 3 MHz for superficial tendons and bursa; use 1 MHz for deep muscle bellies, joint capsules, and scar tissue at depth.
+                </div>
+
+                <div class="highlight-box caution">
+                    <strong>Caution — Acoustic Cavitation:</strong> Stable cavitation (oscillation of dissolved gas bubbles) produces beneficial microstreaming. Unstable (transient) cavitation, caused by high intensities or stationary technique, can cause tissue damage. Always move the transducer in slow, overlapping circles to prevent focal energy accumulation.
+                </div>
+
+                <div class="knowledge-check">
+                    <h3>📝 Knowledge Check — Module 1</h3>
+                    <div class="question">
+                        <div class="question-text">Which mechanism of heat transfer is primarily responsible for the therapeutic effect of fluidotherapy?</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">A. Conduction only, via direct contact with cellulose particles</div>
+                        <div class="answer-option" onclick="selectAnswer(this, true)">B. Convection, as warm moving particles continuously contact the skin</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">C. Radiation from the heated chamber walls</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">D. Evaporation of moisture from the skin surface</div>
+                    </div>
+                </div>
+
+                <div class="module-completion">
+                    <div>Estimated time: 15 minutes</div>
+                    <button class="complete-btn" onclick="completeModule(1)">Mark Module Complete ✓</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════════════════════════ -->
+        <!-- MODULE 2 -->
+        <!-- ═══════════════════════════════════════════════════════════ -->
+        <div class="module" data-module="2">
+            <div class="module-header" onclick="toggleModule(2)">
+                <div class="module-title">Module 2: Superficial Heat Agents — Hot Packs, Paraffin, Fluidotherapy (15 min)</div>
+            </div>
+            <div class="module-content">
+                <h2>2.1 Physiological Effects of Superficial Heat</h2>
+                <p>Superficial heat agents raise tissue temperature in the skin and superficial subcutaneous layers, typically penetrating no deeper than 1–2 cm in the presence of subcutaneous fat. Despite this limitation, the physiological cascade they produce is clinically meaningful. Elevated local temperatures of 40–45°C produce vasodilation through direct smooth muscle relaxation and axon-reflex-mediated release of histamine and bradykinin from mast cells. The result is increased local blood flow, tissue extensibility, metabolic rate, and enzymatic activity.</p>
+                <p>Pain relief from superficial heat results from multiple mechanisms: gate control (thermal input activates A-beta fibers that inhibit nociceptive C-fiber transmission in the dorsal horn), decreased muscle spindle sensitivity (reducing muscle guarding), and increased pain threshold through endorphin release. Heat also decreases joint stiffness and increases collagen extensibility, making it particularly valuable before stretching procedures.</p>
+                <p>Optimal therapeutic temperature range is 40–45°C at the tissue interface. Temperatures below 40°C produce subtherapeutic effects; temperatures above 45°C risk thermal burns. Physiological adaptation (accommodation) occurs after approximately 20 minutes, diminishing vasodilatory response — hence most treatments are limited to 15–20 minutes.</p>
+
+                <h2>2.2 Hot Packs (Hydrocollator Packs)</h2>
+                <p>Hot packs are canvas-covered silica gel packs stored in thermostatically controlled water at 70–80°C. When applied, they deliver heat primarily through conduction. The standard treatment setup includes 6–8 layers of commercial terry-cloth toweling between the pack and skin, or equivalent commercial hot pack covers, to maintain skin temperature in the therapeutic range (40–45°C) and prevent burns.</p>
+                <p>Treatment parameters: 15–20 minutes duration; patient positioned for comfort with the pack resting on the body (not vice versa, to prevent pressure); reassessment of skin color and patient report every 5 minutes. The pack cools progressively during treatment, and heat output diminishes after 20–25 minutes.</p>
+                <p>Indications include subacute and chronic musculoskeletal pain, muscle guarding, joint stiffness, prior to ROM exercise or manual therapy, and preparation for stretching. Hot packs should not be the sole intervention — they serve best as preparatory agents.</p>
+
+                <div class="highlight-box caution">
+                    <strong>Caution — Hot Pack Contraindications:</strong> Do NOT apply over: areas of impaired sensation, open wounds, areas of active infection or malignancy, over the abdomen during pregnancy, acute inflammation or hemorrhage, or over deep vein thrombosis. Impaired circulation is a precaution (not absolute contraindication) — reduce intensity and monitor closely.
+                </div>
+
+                <h2>2.3 Paraffin Wax Therapy</h2>
+                <p>Paraffin wax (melting point ~52°C) is combined with mineral oil in a 7:1 ratio, reducing its melting point to a therapeutically safe 47–54°C. The bath is maintained at 47–52°C. Paraffin has a low specific heat capacity, allowing safe application at temperatures that would cause burns from water at equivalent temperatures.</p>
+                <p>Three application methods exist: (1) <strong>Dip-and-wrap</strong> — the extremity is dipped 8–10 times to build multiple layers, then wrapped in plastic and a towel to retain heat for 15–20 minutes; (2) <strong>Dip-and-reimmerse</strong> — continuous reimmersion for 15–20 minutes, providing the most intense heat; and (3) <strong>Paint method</strong> — wax is brushed on and wrapped, useful for irregular surfaces or when immersion is impractical.</p>
+                <p>Paraffin is particularly effective for distal extremity conditions: rheumatoid arthritis of the hands, scleroderma, hand contractures, post-surgical stiffness, and chronic wrist/hand pain. The occlusive wrap also promotes skin hydration, which is beneficial for xerotic or scarred skin.</p>
+
+                <h2>2.4 Fluidotherapy</h2>
+                <p>Fluidotherapy uses a heated air stream to suspend finely divided cellulose particles (similar in texture to sand), creating a semi-fluid medium around the immersed extremity. Treatment temperatures range from 38.8–47.8°C. Unlike paraffin, fluidotherapy allows simultaneous active exercise of the extremity during treatment, providing both thermal and tactile stimulation.</p>
+                <p>The combination of convective heating, mechanical stimulation of cutaneous receptors, and ability to exercise makes fluidotherapy especially useful in desensitization programs for hypersensitive extremities (e.g., complex regional pain syndrome, post-amputation hypersensitivity, peripheral neuropathy). Treatment durations are 15–20 minutes. Open wounds require protective covering or avoidance.</p>
+
+                <div class="highlight-box clinical-tip">
+                    <strong>Clinical Tip — Choosing the Right Superficial Heat Agent:</strong> Use hot packs for large body regions (low back, shoulder), paraffin for the distal extremities with skin involvement (arthritic hands, scleroderma), and fluidotherapy when sensory desensitization or simultaneous exercise is desired. Consider that only fluidotherapy permits active movement during treatment.
+                </div>
+
+                <div class="knowledge-check">
+                    <h3>📝 Knowledge Check — Module 2</h3>
+                    <div class="question">
+                        <div class="question-text">Why can paraffin wax be applied at temperatures (47–52°C) that would cause burns if water were used at the same temperature?</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">A. Paraffin is a better thermal conductor than water</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">B. Paraffin produces an insulating air layer that prevents heat transfer</div>
+                        <div class="answer-option" onclick="selectAnswer(this, true)">C. Paraffin has a lower specific heat capacity, transferring less heat per degree than water</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">D. The mineral oil lowers the temperature at the skin surface below therapeutic range</div>
+                    </div>
+                </div>
+
+                <div class="module-completion">
+                    <div>Estimated time: 15 minutes</div>
+                    <button class="complete-btn" onclick="completeModule(2)">Mark Module Complete ✓</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════════════════════════ -->
+        <!-- MODULE 3 -->
+        <!-- ═══════════════════════════════════════════════════════════ -->
+        <div class="module" data-module="3">
+            <div class="module-header" onclick="toggleModule(3)">
+                <div class="module-title">Module 3: Cryotherapy — Physiological Effects, Indications, Application Techniques (15 min)</div>
+            </div>
+            <div class="module-content">
+                <h2>3.1 Physiological Responses to Cooling</h2>
+                <p>Cryotherapy encompasses the therapeutic application of cold to reduce tissue temperature for clinical benefit. When tissue temperature falls below normal (37°C), a cascade of physiological responses occurs in a predictable sequence. Initially (0–3 minutes), cold sensation predominates as Aδ fibers are activated. This transitions to aching (3–7 minutes) as the cold penetrates deeper, then burning sensation (7–12 minutes), and finally analgesia (numbing, 12–15 minutes) as neural conduction slows sufficiently to blunt sensation.</p>
+                <p>Cold-induced vasoconstriction is the primary hemodynamic response, mediated by local smooth muscle contraction and reduced sympathetic tone. This reduces blood flow, metabolic demand, and inflammatory mediator delivery to the region. The lymphocytic response is attenuated, limiting the magnitude of the acute inflammatory cascade. For acute injuries, this is advantageous: reducing secondary hypoxic injury and edema formation.</p>
+                <p>Neuromuscular effects include decreased nerve conduction velocity across all fiber types, reduced muscle spindle activity (gamma efferent suppression), and reduced spastic motor neuron excitability. These effects make cryotherapy useful in spasticity management. The temperature must be reduced sufficiently (below 15°C at the muscle belly) to decrease spindle sensitivity — a target not always achievable with brief surface applications alone.</p>
+
+                <h2>3.2 The PRICE/POLICE Framework and Cryotherapy's Role</h2>
+                <p>Immediate care of musculoskeletal injury has evolved from RICE (Rest, Ice, Compression, Elevation) to PRICE (Protection added) to the modern POLICE (Protection, Optimal Loading, Ice, Compression, Elevation) framework. Ice application in the acute phase (0–72 hours post-injury) reduces pain, limits hemorrhage, and may attenuate secondary enzymatic tissue damage. However, evidence confirms that ice alone does not accelerate healing — its primary benefit is analgesic, supporting earlier mobilization.</p>
+                <p>Cryotherapy is appropriate in the inflammatory phase for pain control, in subacute phases for post-exercise soreness, and chronically for conditions where heat aggravates symptoms (active synovitis, bursitis flares). It is also used therapeutically for spasticity reduction, pre-stretching in spastic cerebral palsy, and desensitization in hypersensitivity conditions.</p>
+
+                <h2>3.3 Application Methods and Parameters</h2>
+                <p><strong>Ice packs (crushed ice in a wet towel):</strong> Applied for 15–20 minutes with 1–2 towel layers to prevent frostbite. Crushed ice conforms better than cubed and maintains lower skin temperature longer. Commercial gel packs reach lower temperatures and carry higher frostbite risk — always use a barrier.</p>
+                <p><strong>Ice massage:</strong> Ice cup applied directly to skin in slow, overlapping strokes for 5–10 minutes. Allows the clinician to monitor tissue response. Produces faster analgesia than ice pack due to direct contact. Used for trigger points, localized tendinopathy, and pre-needling analgesia.</p>
+                <p><strong>Vapocoolant sprays (e.g., ethyl chloride, fluoromethane):</strong> Applied 30–60 cm from the skin in sweeping strokes along the muscle from origin to insertion. Used in spray-and-stretch technique for trigger point therapy. Short-acting superficial analgesia enables brief passive stretching before reflexive guarding returns.</p>
+                <p><strong>Contrast baths:</strong> Alternating immersion in warm (38–44°C) and cold (10–18°C) water, typically beginning and ending with warm. Produces alternating vasodilation and vasoconstriction, theorized to create a "vascular pumping" effect that reduces edema and increases circulation. Evidence is moderate; commonly used for subacute foot and ankle conditions.</p>
+
+                <div class="highlight-box caution">
+                    <strong>Caution — Cryotherapy Contraindications:</strong> Absolute contraindications include Raynaud's phenomenon, cold urticaria, cryoglobulinemia, paroxysmal cold hemoglobinuria, and areas of impaired sensation or circulation. Over the region of a superficial peripheral nerve (e.g., common fibular nerve at the fibular head), prolonged cold may cause neuropraxia — limit duration and monitor carefully.
+                </div>
+
+                <div class="highlight-box clinical-tip">
+                    <strong>Clinical Tip — Cryotherapy vs. Heat Decision:</strong> A simple rule: acute injury (within 72 hours) with heat, swelling, or redness → cold. Subacute/chronic stiffness, muscle guarding, or pre-exercise preparation → heat. Post-exercise soreness → cold. Spasticity (CNS origin) → cold. Both modalities may relieve pain through different mechanisms; patient preference in chronic conditions often guides selection effectively.
+                </div>
+
+                <div class="knowledge-check">
+                    <h3>📝 Knowledge Check — Module 3</h3>
+                    <div class="question">
+                        <div class="question-text">In the sequence of sensations experienced during therapeutic cold application, which sensation indicates sufficient analgesia has been achieved?</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">A. Initial cold sensation at 0–3 minutes</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">B. Aching at 3–7 minutes</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">C. Burning/stinging at 7–12 minutes</div>
+                        <div class="answer-option" onclick="selectAnswer(this, true)">D. Numbness/analgesia at 12–15 minutes</div>
+                    </div>
+                </div>
+
+                <div class="module-completion">
+                    <div>Estimated time: 15 minutes</div>
+                    <button class="complete-btn" onclick="completeModule(3)">Mark Module Complete ✓</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════════════════════════ -->
+        <!-- MODULE 4 -->
+        <!-- ═══════════════════════════════════════════════════════════ -->
+        <div class="module" data-module="4">
+            <div class="module-header" onclick="toggleModule(4)">
+                <div class="module-title">Module 4: Ultrasound — Thermal and Non-Thermal Effects, Parameters, Clinical Applications (15 min)</div>
+            </div>
+            <div class="module-content">
+                <h2>4.1 Mechanisms of Therapeutic Ultrasound</h2>
+                <p>Therapeutic ultrasound produces two distinct categories of physiological effects: thermal and non-thermal (mechanical). Understanding the conditions that favor each allows the clinician to select parameters that optimize outcomes for the specific tissue pathology being treated.</p>
+                <p><strong>Thermal effects</strong> result from the absorption of ultrasound energy as heat. Tissues with high protein content (collagen) absorb ultrasound readily, making tendons, joint capsules, scar tissue, and ligaments primary targets. Continuous-wave (CW) ultrasound at 100% duty cycle maximizes thermal accumulation. Therapeutic tissue heating to 40–45°C for more than 5 minutes increases collagen extensibility, reduces viscosity of ground substance, facilitates scar remodeling, and increases local blood flow. Ultrasound heats deeper structures (up to 4–5 cm at 1 MHz) that superficial modalities cannot reach.</p>
+                <p><strong>Non-thermal (mechanical) effects</strong> predominate with pulsed ultrasound (typically 20% duty cycle). Acoustic streaming — the unidirectional movement of fluids along cell membranes — increases membrane permeability and ion transport. Stable cavitation oscillates microscopic gas bubbles, generating microstreaming currents that stimulate fibroblast activity, promote mast cell degranulation, and increase growth factor release. These effects accelerate the early proliferative phase of tissue healing and are indicated when thermal effects are undesirable (e.g., acute injury, over epiphyseal plates, near implants with thermal risk).</p>
+
+                <h2>4.2 Ultrasound Parameters</h2>
+                <p><strong>Frequency:</strong> 1 MHz for deep tissue (4–5 cm depth); 3 MHz for superficial tissue (1–2 cm depth). Frequency determines absorption depth — higher frequency is absorbed more superficially.</p>
+                <p><strong>Intensity (W/cm²):</strong> SATA (spatial average temporal average) intensity is the standard measure. Typical ranges: 0.5–1.0 W/cm² for non-thermal effects; 1.0–2.0 W/cm² for thermal effects. Begin conservatively (0.5 W/cm²) and progress based on response. Never exceed 3.0 W/cm² in most clinical scenarios.</p>
+                <p><strong>Duty cycle:</strong> Ratio of on-time to total cycle time. 100% = continuous (thermal); 20% = pulsed (non-thermal preferred). Some units offer 10%, 25%, and 50% options. Note that SATA intensity accounts for duty cycle, but the peak intensity during the on phase equals SATA ÷ duty cycle — important when using high-intensity pulsed US.</p>
+                <p><strong>Treatment duration:</strong> Calculated using ERA and treatment area. Standard recommendation: treat each ERA-sized area for ~2 minutes. Move transducer slowly (3–4 cm/sec) to distribute energy and avoid hot spots.</p>
+                <p><strong>Coupling medium:</strong> Gel, gel pads, or water immersion. Air is an acoustic insulator — bubbles under the transducer produce zero transmission. Use sufficient gel, avoid entrapment of air, and ensure complete contact. Water bath technique (transducer 0.5–1 cm from skin in water) is used for irregular surfaces (hands, feet).</p>
+
+                <h2>4.3 Clinical Applications</h2>
+                <p>Ultrasound is well-supported for calcific tendinitis of the rotator cuff (HIFU-like cavitation may fragment calcium deposits), plantar fasciitis (1 MHz, 1.0–1.5 W/cm², continuous, with stretching), carpal tunnel syndrome (non-thermal pulsed to promote median nerve healing), lateral epicondylosis, and scar tissue management. It is used as an adjunct to facilitate joint mobilization by pre-heating capsular tissue, particularly in the glenohumeral and hip joints.</p>
+
+                <div class="highlight-box caution">
+                    <strong>Caution — Ultrasound Contraindications:</strong> Do NOT apply over: active malignancy, thrombophlebitis, bleeding disorders, pacemakers, eyes, reproductive organs, gravid uterus, epiphyseal plates in children (thermal mode), skull/brain, or spinal cord (laminectomy sites). Use extreme care over metal implants — most modern implants do not heat significantly, but cement interfaces may. Always check manufacturer guidance.
+                </div>
+
+                <div class="highlight-box key-point">
+                    <strong>Key Point — Continuous vs. Pulsed Ultrasound:</strong> Continuous (100% duty cycle) = THERMAL effect = scar tissue, chronic conditions, pre-stretching. Pulsed (20% duty cycle) = NON-THERMAL = acute healing, wound repair, inflammation reduction, situations where heat is contraindicated.
+                </div>
+
+                <div class="knowledge-check">
+                    <h3>📝 Knowledge Check — Module 4</h3>
+                    <div class="question">
+                        <div class="question-text">A patient presents with a subacute Achilles tendon injury (10 days post-strain). Which ultrasound parameters are most appropriate to promote healing without inducing thermal damage?</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">A. 1 MHz, 1.5 W/cm², 100% duty cycle (continuous)</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">B. 3 MHz, 2.0 W/cm², 100% duty cycle (continuous)</div>
+                        <div class="answer-option" onclick="selectAnswer(this, true)">C. 3 MHz, 0.5 W/cm², 20% duty cycle (pulsed)</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">D. 1 MHz, 2.0 W/cm², 50% duty cycle</div>
+                    </div>
+                </div>
+
+                <div class="module-completion">
+                    <div>Estimated time: 15 minutes</div>
+                    <button class="complete-btn" onclick="completeModule(4)">Mark Module Complete ✓</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════════════════════════ -->
+        <!-- MODULE 5 -->
+        <!-- ═══════════════════════════════════════════════════════════ -->
+        <div class="module" data-module="5">
+            <div class="module-header" onclick="toggleModule(5)">
+                <div class="module-title">Module 5: Electrical Stimulation — TENS, NMES, IFC, Russian Current, FES (15 min)</div>
+            </div>
+            <div class="module-content">
+                <h2>5.1 Overview of Clinical Electrical Stimulation</h2>
+                <p>Electrical stimulation encompasses a broad family of modalities that differ in waveform, frequency, amplitude, and therapeutic target. The clinician must understand the neurophysiological basis for each type to match the modality to the clinical goal. The three primary applications are pain modulation, muscle strengthening/re-education, and edema/wound management.</p>
+
+                <h2>5.2 Transcutaneous Electrical Nerve Stimulation (TENS)</h2>
+                <p>TENS is the most widely used electrical modality for pain management. It employs low-voltage, alternating or pulsed current delivered via surface electrodes, targeting cutaneous and subcutaneous sensory nerves. Three primary modes exist:</p>
+                <ul>
+                    <li><strong>Conventional TENS (High-frequency TENS):</strong> Frequency 80–150 Hz, pulse duration 50–80 μs, amplitude at sensory threshold (strong but comfortable tingling — no muscle contraction). Analgesia via Gate Control Theory (A-beta fiber activation inhibits C-fiber transmission in dorsal horn). Onset is rapid (minutes), duration brief (ceases with stimulation). Used for acute/chronic pain, post-surgical pain.</li>
+                    <li><strong>Acupuncture-like TENS (Low-frequency TENS):</strong> Frequency 1–4 Hz, pulse duration 150–250 μs, amplitude at motor threshold (visible muscle twitch). Analgesia via endogenous opioid release (endorphins, enkephalins). Onset slower (20–30 min), duration longer (persists hours after treatment). Used for chronic pain, fibromyalgia.</li>
+                    <li><strong>Brief Intense TENS:</strong> High frequency AND high amplitude — used for 15–30 minutes to produce intense analgesia for painful procedures (wound debridement, joint mobilization). Not for routine pain management due to rapid accommodation.</li>
+                </ul>
+
+                <h2>5.3 Neuromuscular Electrical Stimulation (NMES)</h2>
+                <p>NMES applies current at sufficient amplitude and phase duration to depolarize motor nerve axons, producing muscle contraction. Target parameters: frequency 25–50 Hz (to produce tetanic contraction), phase duration 200–400 μs, amplitude above motor threshold. The on:off ratio (duty cycle) is critical for muscle fatigue management — a 1:3 ratio (e.g., 10 seconds on, 30 seconds off) is standard early in rehabilitation, progressing toward 1:1 as strength improves.</p>
+                <p>Clinical applications: quadriceps re-education post-ACL reconstruction or total knee arthroplasty (combined with voluntary contraction for superior outcomes), prevention of muscle atrophy during immobilization, shoulder subluxation management in hemiplegia, and dorsiflexor strengthening. NMES is most effective when combined with active patient effort — the volitional drive potentiates the electrically-evoked contraction and drives cortical plasticity.</p>
+
+                <h2>5.4 Interferential Current (IFC)</h2>
+                <p>IFC uses two medium-frequency sinusoidal currents (typically 4,000 Hz carriers) applied simultaneously via two pairs of electrodes oriented perpendicular to each other. Where the currents intersect within tissue, they beat together, producing a low-frequency amplitude modulation (typically 1–150 Hz) in the target region. The physiological benefits mirror TENS (pain control at low beat frequencies, motor effects at higher beat frequencies), but the medium-frequency carrier penetrates tissue with lower impedance and greater comfort.</p>
+                <p>The "sweep" function varies the beat frequency through a programmed range to minimize accommodation. Standard setup: four electrodes placed around the painful region with the target tissue at the intersection point. IFC is popular for deep tissue pain (low back pain, hip/knee osteoarthritis) and edema reduction via muscle pumping action.</p>
+
+                <h2>5.5 Russian Current and Functional Electrical Stimulation (FES)</h2>
+                <p><strong>Russian Current:</strong> Sinusoidal AC at 2,500 Hz, delivered in 10 ms bursts at 50 bursts/second (50 Hz envelope). Developed by Soviet sports scientist Yakov Kots, originally claimed to produce superior muscle force compared to DC-based NMES. Subsequent research shows comparable outcomes to conventional NMES for muscle strength. Still used in clinical practice for comfortable motor stimulation.</p>
+                <p><strong>Functional Electrical Stimulation (FES):</strong> NMES applied to produce purposeful movement in neurologically impaired individuals. Electrodes are triggered during the functional task — for example, activating dorsiflexors during the swing phase of gait in foot drop patients, or activating hand extensors to open a closed spastic hand. FES drives cortical reorganization (neuroplasticity) when paired with voluntary intent, making it a powerful neurorehabilitation tool for stroke, spinal cord injury, and cerebral palsy.</p>
+
+                <div class="highlight-box key-point">
+                    <strong>Key Point — TENS Electrode Placement:</strong> For conventional TENS: electrodes over or surrounding the painful area, or over corresponding dermatomes/trigger points. For acupuncture-like TENS: electrodes at acupuncture points, motor points, or trigger points remote from the pain site. Always start with paraspinal placement for radicular pain and adjust based on patient response.
+                </div>
+
+                <div class="highlight-box caution">
+                    <strong>Caution — Electrical Stimulation Contraindications:</strong> All forms: over demand-type cardiac pacemakers, over the carotid sinus, transcranially, over the gravid uterus. Additionally for NMES/FES: avoid stimulating antagonist muscles in spastic conditions; use caution with osteoporosis (tetanic contractions may cause fracture). Always screen for metal implants, skin irritation, and allergies to electrode adhesive.
+                </div>
+
+                <div class="knowledge-check">
+                    <h3>📝 Knowledge Check — Module 5</h3>
+                    <div class="question">
+                        <div class="question-text">Which form of TENS relies primarily on endogenous opioid release for analgesia and produces muscle twitching during application?</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">A. Conventional TENS (high-frequency, sensory-level)</div>
+                        <div class="answer-option" onclick="selectAnswer(this, true)">B. Acupuncture-like TENS (low-frequency, motor-level)</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">C. Brief Intense TENS</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">D. Interferential current at 150 Hz beat frequency</div>
+                    </div>
+                </div>
+
+                <div class="module-completion">
+                    <div>Estimated time: 15 minutes</div>
+                    <button class="complete-btn" onclick="completeModule(5)">Mark Module Complete ✓</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════════════════════════ -->
+        <!-- MODULE 6 -->
+        <!-- ═══════════════════════════════════════════════════════════ -->
+        <div class="module" data-module="6">
+            <div class="module-header" onclick="toggleModule(6)">
+                <div class="module-title">Module 6: Iontophoresis and Phonophoresis — Drug Delivery via Physical Agents (15 min)</div>
+            </div>
+            <div class="module-content">
+                <h2>6.1 Principles of Transdermal Drug Delivery</h2>
+                <p>Iontophoresis and phonophoresis are advanced physical agent applications that use electrical current and ultrasound, respectively, to enhance the transdermal delivery of pharmacological agents into superficial target tissues. Both techniques bypass systemic absorption and hepatic first-pass metabolism, delivering medication directly to the site of pathology with reduced systemic side effects.</p>
+                <p>The skin's stratum corneum — a lipophilic, densely packed layer of corneocytes — is the primary barrier to topical drug absorption. Both modalities work by temporarily increasing permeability of this barrier, though by distinct mechanisms.</p>
+
+                <h2>6.2 Iontophoresis</h2>
+                <p>Iontophoresis drives ionic medications across the skin using direct current (DC). Ions are repelled from an electrode of the same charge: a positively charged drug is placed under the positive electrode (anode) and driven into tissue by electrostatic repulsion; a negatively charged drug is placed under the negative electrode (cathode). The driving mechanism is electromigration (charge repulsion) and electroosmosis (bulk water flow carrying uncharged molecules).</p>
+                <p><strong>Key parameters:</strong> Current density should not exceed 0.5 mA/cm² to prevent galvanic burns (chemical burns from electrode pH changes). Total charge delivered (mA × minutes = mA·min) determines drug dose — typical dose is 40–80 mA·min. Treatment duration varies: 10–20 mA for 10–20 minutes. Use only DC-compatible equipment; AC or pulsed current is not appropriate for iontophoresis.</p>
+                <p><strong>Common drugs and indications:</strong></p>
+                <ul>
+                    <li><strong>Dexamethasone (−):</strong> Anti-inflammatory; lateral epicondylosis, plantar fasciitis, tendinopathy, bursitis. Place under cathode (negative electrode).</li>
+                    <li><strong>Lidocaine (+):</strong> Local analgesia; myofascial pain, joint injections, wound debridement preparation. Place under anode (positive electrode).</li>
+                    <li><strong>Acetic acid (−):</strong> Calcium mobilization; calcific tendinitis. Place under cathode.</li>
+                    <li><strong>Magnesium sulfate (+):</strong> Muscle spasm, myofascial pain. Place under anode.</li>
+                    <li><strong>Salicylate (−):</strong> Anti-inflammatory/analgesic in acute MSK conditions. Place under cathode.</li>
+                </ul>
+
+                <div class="highlight-box caution">
+                    <strong>Caution — Iontophoresis Burn Prevention:</strong> Galvanic burns occur from accumulated ions at the electrode-skin interface, not from current itself. Use buffered electrodes (silver-silver chloride), ensure adequate surface area, limit current density to ≤0.5 mA/cm², place electrodes on intact skin only, and inspect skin before and after each session. Drug allergies must be screened — ask about NSAIDs, local anesthetics, and corticosteroids before treatment.
+                </div>
+
+                <h2>6.3 Phonophoresis</h2>
+                <p>Phonophoresis (also called sonophoresis) uses therapeutic ultrasound to enhance topical drug penetration. The acoustic cavitation and streaming effects temporarily disrupt stratum corneum lipid bilayers (sonoporation), creating transient aqueous channels through which hydrophilic molecules penetrate. This is distinct from standard ultrasound — the topical drug replaces the gel coupling medium or is incorporated into a medicated gel.</p>
+                <p><strong>Drug selection:</strong> The drug must be acoustically transparent (transmit ultrasound well) and must be in appropriate formulation. Studies support enhanced penetration for: hydrocortisone (1% or 10%), dexamethasone, diclofenac sodium, ketoprofen, and lidocaine. The gel or ointment should have a transmission coefficient >0.8 for effective ultrasound delivery.</p>
+                <p><strong>Parameters:</strong> Both continuous and pulsed modes enhance penetration, though mechanisms differ. Standard ultrasound parameters for the underlying condition apply; the addition of medicated gel does not significantly alter dosimetry if the coupling medium is acoustically equivalent. Treat for 5–10 minutes over the target area.</p>
+                <p><strong>Evidence base:</strong> Phonophoresis evidence is mixed. Several RCTs demonstrate benefit for lateral epicondylosis, plantar fasciitis, and supraspinatus tendinopathy. Studies are limited by variability in drug, formulation, US parameters, and outcome measures. The FDA does not specifically regulate phonophoresis, but the applied drug must be used within its approved labeling unless under appropriate prescription protocol.</p>
+
+                <div class="highlight-box clinical-tip">
+                    <strong>Clinical Tip — Iontophoresis vs. Phonophoresis Selection:</strong> Iontophoresis is preferred for ionic drugs (dexamethasone, lidocaine) and when precise dosing is important. Phonophoresis is preferred for non-ionic or poorly ionized drugs (hydrocortisone cream, diclofenac gel), or when concomitant ultrasound effects (thermal or mechanical) on the underlying tissue are also desired. Both require intact skin and patient consent regarding the medication being applied.
+                </div>
+
+                <div class="knowledge-check">
+                    <h3>📝 Knowledge Check — Module 6</h3>
+                    <div class="question">
+                        <div class="question-text">When applying iontophoresis with dexamethasone sodium phosphate for lateral epicondylosis, which electrode configuration is correct?</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">A. Dexamethasone placed under the positive electrode (anode); dispersive electrode distally</div>
+                        <div class="answer-option" onclick="selectAnswer(this, true)">B. Dexamethasone placed under the negative electrode (cathode); dispersive electrode proximally or distally</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">C. Dexamethasone placed under either electrode — polarity does not matter</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">D. AC current used; dexamethasone alternates between both electrodes</div>
+                    </div>
+                </div>
+
+                <div class="module-completion">
+                    <div>Estimated time: 15 minutes</div>
+                    <button class="complete-btn" onclick="completeModule(6)">Mark Module Complete ✓</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════════════════════════ -->
+        <!-- MODULE 7 -->
+        <!-- ═══════════════════════════════════════════════════════════ -->
+        <div class="module" data-module="7">
+            <div class="module-header" onclick="toggleModule(7)">
+                <div class="module-title">Module 7: Mechanical Traction — Cervical and Lumbar Indications, Parameters, Contraindications (15 min)</div>
+            </div>
+            <div class="module-content">
+                <h2>7.1 Mechanisms of Therapeutic Traction</h2>
+                <p>Mechanical traction applies a distractive force to the spinal column, producing a separation of vertebral bodies and intervertebral foramina. The therapeutic rationale encompasses multiple proposed mechanisms, and the clinical evidence supports traction most strongly when nerve root irritation (radiculopathy) is the primary driver of symptoms.</p>
+                <p><strong>Primary mechanical effects:</strong> Vertebral body separation increases intervertebral foramen (IVF) diameter, reducing mechanical compression on the exiting nerve root. Intradiscal pressure is reduced, theoretically allowing centralization of disc nuclear material and reducing pressure on posterior annular fibers and the posterior longitudinal ligament. Joint capsule distraction reduces nociceptive input from facet joint mechanoreceptors.</p>
+                <p><strong>Secondary physiological effects:</strong> Cyclic (intermittent) traction produces rhythmic compression and distraction of the disc, potentially improving nutritional diffusion into avascular disc tissue. Stretching of paravertebral muscles and ligaments may relax protective muscle guarding. Stimulation of spinal mechanoreceptors may modulate nociceptive processing via gate control mechanisms.</p>
+
+                <h2>7.2 Cervical Traction</h2>
+                <p>Cervical traction targets the C3–C7 segment most commonly and is indicated for: cervical radiculopathy with dermatomal symptoms, cervical disc herniation with neurocompressive signs, cervical foraminal stenosis, and cervical hypomobility contributing to local pain. Contraindications include rheumatoid arthritis (atlantoaxial instability risk), osteoporosis, acute cervical fracture or instability, cord compression/myelopathy, vertebral artery disease, and active infection.</p>
+                <p><strong>Position:</strong> Supine (preferred) — reduces paravertebral muscle activity, allowing lower traction forces to achieve adequate distraction. Seated traction (over-the-door traction devices) is less effective and may increase compressive forces. Cervical flexion of 20–30° maximizes IVF opening; neutral or extension positions target the disc.</p>
+                <p><strong>Parameters:</strong></p>
+                <ul>
+                    <li><strong>Force:</strong> Begin at 8–12 lbs (3.6–5.4 kg); progress to 10–20% of body weight for distraction effect. Minimum distraction force ≈ 10–14 lbs to overcome soft tissue resistance. Maximum force typically 30 lbs (13.6 kg).</li>
+                    <li><strong>Mode:</strong> Static (continuous) for acute radiculopathy; intermittent (on:off cycles) for chronic pain and hypomobility.</li>
+                    <li><strong>Duration:</strong> 15–20 minutes per session; 3–5 sessions per week.</li>
+                    <li><strong>Hold/relax (intermittent):</strong> Typical cycle: 60 seconds on, 20 seconds off.</li>
+                </ul>
+
+                <h2>7.3 Lumbar Traction</h2>
+                <p>Lumbar traction requires significantly higher forces due to the larger muscle mass and ligamentous structures of the lumbar spine. Indications parallel cervical: lumbar radiculopathy (sciatica), lumbar disc herniation with neural signs, lumbar foraminal stenosis, and degenerative joint disease contributing to radicular symptoms. Evidence from the Philadelphia Panel and Cochrane reviews suggests moderate short-term benefit for radiculopathy over sham, but limited long-term advantage over exercise alone.</p>
+                <p><strong>Position:</strong> Supine with hips and knees flexed (90/90 position) flattens lumbar lordosis and opens the posterior disc space, directing distraction force posteriorly — most beneficial for posterior disc pathology. A thoracic vest (upper body harness) anchors the upper trunk while the pelvic harness applies distraction force to the lower body. Friction of the table against the patient is addressed by a split-table design.</p>
+                <p><strong>Parameters:</strong></p>
+                <ul>
+                    <li><strong>Force:</strong> 25–50% of body weight; minimum 65–95 lbs (29–43 kg) to achieve measurable vertebral separation. Begin at 25% and progress.</li>
+                    <li><strong>Mode:</strong> Intermittent (2:1 or 3:1 on:off ratio) for most conditions; static for acute HNP.</li>
+                    <li><strong>Duration:</strong> 15–20 minutes.</li>
+                </ul>
+
+                <div class="highlight-box caution">
+                    <strong>Caution — Critical Lumbar Traction Contraindications:</strong> ABSOLUTE: cauda equina syndrome (emergency — immediate surgical referral), acute fracture/instability, osteoporosis (severe), aortic aneurysm, tumor or infection of the spine. PRECAUTIONS: claustrophobia, hypertension, hiatal hernia (abdominal harness pressure), pregnancy. Always screen for red flags before initiating spinal traction.
+                </div>
+
+                <div class="highlight-box clinical-tip">
+                    <strong>Clinical Tip — Positional Test for Traction Candidacy:</strong> Before initiating lumbar traction, ask the patient to lie supine with hips and knees flexed (the traction position). If symptoms improve or centralize in this position, traction is more likely to be effective. If symptoms worsen in this position, traction may aggravate rather than relieve.
+                </div>
+
+                <div class="knowledge-check">
+                    <h3>📝 Knowledge Check — Module 7</h3>
+                    <div class="question">
+                        <div class="question-text">A patient presents with acute cauda equina syndrome (bilateral leg weakness, saddle anesthesia, bladder dysfunction) following a lumbar disc herniation. What is the appropriate physical therapy response?</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">A. Initiate lumbar traction immediately at high force to decompress the neural structures</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">B. Apply TENS for pain management and schedule follow-up in one week</div>
+                        <div class="answer-option" onclick="selectAnswer(this, true)">C. This is a medical emergency — immediately refer to physician/emergency services for surgical evaluation</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">D. Apply lumbar traction at low force (25% body weight) with caution</div>
+                    </div>
+                </div>
+
+                <div class="module-completion">
+                    <div>Estimated time: 15 minutes</div>
+                    <button class="complete-btn" onclick="completeModule(7)">Mark Module Complete ✓</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════════════════════════ -->
+        <!-- MODULE 8 -->
+        <!-- ═══════════════════════════════════════════════════════════ -->
+        <div class="module" data-module="8">
+            <div class="module-header" onclick="toggleModule(8)">
+                <div class="module-title">Module 8: Laser and Light Therapy — Low-Level Laser, Infrared, UV Applications (15 min)</div>
+            </div>
+            <div class="module-content">
+                <h2>8.1 Principles of Photobiomodulation</h2>
+                <p>Photobiomodulation (PBM), formerly termed low-level laser therapy (LLLT) or low-level light therapy (LLLT), refers to the therapeutic application of non-ionizing electromagnetic radiation in the red and near-infrared spectrum (600–1100 nm) to stimulate biological tissue responses without generating significant thermal effects. The defining characteristic is that the dosage produces photochemical reactions without tissue heating — distinguishing PBM from surgical or ablative laser applications.</p>
+                <p>The mechanism of PBM is mediated primarily through cytochrome c oxidase (CCO), the terminal enzyme of the mitochondrial electron transport chain. CCO contains photosensitive chromophores that absorb red and near-infrared photons, increasing mitochondrial respiration, ATP production, and reducing oxidative stress. This initiates a cascade: increased reactive oxygen species (at low, signaling levels), activation of transcription factors (NF-κB, AP-1), upregulation of growth factors (TGF-β, VEGF, FGF), and enhanced cellular proliferation and migration. Additionally, direct effects on cell membranes, ion channels, and mast cell degranulation contribute to the anti-inflammatory and analgesic responses.</p>
+
+                <h2>8.2 Laser Dosimetry and Parameters</h2>
+                <p>PBM dose is expressed in joules per centimeter squared (J/cm²) — the energy density, also called fluence. The dose delivered equals power density (mW/cm²) × time (seconds). Optimal dose windows for PBM follow an inverted U-shaped curve (Arndt-Schulz law): too little produces no effect, the optimal range produces benefit, and excessive doses may inhibit healing. General therapeutic ranges: 1–4 J/cm² for superficial acute conditions; 4–8 J/cm² for chronic or deeper conditions.</p>
+                <p><strong>Wavelength selection:</strong> 630–700 nm (red) — penetrates 2–3 mm, targets superficial wound beds, skin conditions, and mucosal surfaces. 780–1100 nm (near-infrared, NIR) — penetrates 3–5+ cm, targets deeper structures (joint capsules, tendons, nerve tissue). Most clinical devices offer 780–860 nm or 904 nm (GaAs pulsed diodes) or 810 nm (InGaAlP/GaAlAs diodes).</p>
+                <p><strong>Power and application:</strong> Class 3B devices (power &lt;500 mW) are used in most clinical settings. Class 4 devices (&gt;500 mW) treat larger areas more efficiently but require greater caution. Point-by-point application over anatomical targets or wound margins; scanning technique for larger areas.</p>
+
+                <h2>8.3 Clinical Applications of PBM/LLLT</h2>
+                <p>The evidence base for PBM has expanded substantially. High-quality trials and systematic reviews support benefit for: neck pain (with or without radiculopathy), lateral epicondylosis, Achilles tendinopathy, plantar fasciitis, knee osteoarthritis (pain and function), temporomandibular joint dysfunction, oral mucositis prevention in chemotherapy patients, and wound healing (particularly chronic non-healing wounds and pressure injuries).</p>
+                <p>For wound care specifically, PBM stimulates fibroblast migration and proliferation, increases collagen synthesis, promotes angiogenesis via VEGF upregulation, and may inhibit bacterial biofilm formation. It is applied around (not over) wound margins, with low fluences (1–2 J/cm²) to avoid inhibiting the healing cascade.</p>
+
+                <h2>8.4 Infrared and Ultraviolet Therapy</h2>
+                <p><strong>Infrared (IR) lamps:</strong> Apply radiant heat (750–15,000 nm spectrum) to the skin surface, primarily through radiation. Near-infrared (750–1500 nm) penetrates 2–3 cm; far-infrared (&gt;3000 nm) is largely absorbed at the skin surface. IR lamps are positioned 45–75 cm from the skin; treatment duration 20–30 minutes. Produces effects similar to superficial thermal agents. Rarely used in modern clinical practice due to availability of more precise modalities.</p>
+                <p><strong>Ultraviolet (UV) therapy:</strong> UV-A (315–400 nm), UV-B (280–315 nm), and UV-C (200–280 nm) each have distinct biological effects. UV-B stimulates vitamin D synthesis and is used in phototherapy for psoriasis and eczema (under dermatology supervision). UV-C (germicidal) has antibacterial effects and was historically used for infected wounds — largely replaced by modern wound care practices and evidence of cytotoxic effects on healing cells. UV therapy requires protective eyewear, careful dosimetry using minimum erythema dose (MED), and specialist oversight.</p>
+
+                <div class="highlight-box caution">
+                    <strong>Caution — Laser and Light Safety:</strong> Always protect the eyes — both patient and clinician must wear wavelength-appropriate protective goggles during laser treatment. Class 3B and 4 lasers require controlled access environments. Never direct the beam at reflective surfaces. PBM is contraindicated directly over active malignancy, thyroid gland, gravid uterus, and growth plates in children.
+                </div>
+
+                <div class="knowledge-check">
+                    <h3>📝 Knowledge Check — Module 8</h3>
+                    <div class="question">
+                        <div class="question-text">Which molecular target in the mitochondria is primarily responsible for initiating the photobiomodulation cascade following red/near-infrared light absorption?</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">A. ATP synthase (Complex V)</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">B. NADH dehydrogenase (Complex I)</div>
+                        <div class="answer-option" onclick="selectAnswer(this, true)">C. Cytochrome c oxidase (Complex IV)</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">D. Succinate dehydrogenase (Complex II)</div>
+                    </div>
+                </div>
+
+                <div class="module-completion">
+                    <div>Estimated time: 15 minutes</div>
+                    <button class="complete-btn" onclick="completeModule(8)">Mark Module Complete ✓</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════════════════════════ -->
+        <!-- MODULE 9 -->
+        <!-- ═══════════════════════════════════════════════════════════ -->
+        <div class="module" data-module="9">
+            <div class="module-header" onclick="toggleModule(9)">
+                <div class="module-title">Module 9: Wound Care Fundamentals — Wound Assessment, Staging, and Healing Phases (15 min)</div>
+            </div>
+            <div class="module-content">
+                <h2>9.1 Anatomy of the Integumentary System</h2>
+                <p>The skin is the largest organ of the human body, comprising approximately 15% of total body weight. Its three primary layers — epidermis, dermis, and hypodermis (subcutaneous tissue) — each play distinct roles in wound classification and healing. The epidermis (0.05–1.5 mm thick) provides the primary barrier function and houses keratinocytes responsible for re-epithelialization. The dermis contains collagen and elastin fibers, blood and lymphatic vessels, nerve endings, sweat glands, hair follicles, and fibroblasts. The hypodermis contains adipose tissue and larger vessels.</p>
+                <p>Understanding which layers are involved in a wound determines healing capacity, expected timeline, and treatment approach. Superficial wounds (epidermis only) heal rapidly via regeneration. Partial-thickness wounds (epidermis + partial dermis) heal by re-epithelialization from remaining dermal appendages. Full-thickness wounds (through dermis into hypodermis or deeper) heal primarily by repair — scar formation — and take significantly longer, often requiring more aggressive intervention.</p>
+
+                <h2>9.2 Phases of Wound Healing</h2>
+                <p>Wound healing occurs in four overlapping phases. Understanding these phases guides modality selection and helps the clinician recognize when healing is progressing normally versus becoming chronic or stalled.</p>
+                <ul>
+                    <li><strong>Phase 1 — Hemostasis (0–3 hours):</strong> Vasoconstriction followed by platelet aggregation and fibrin clot formation. Platelets release growth factors (PDGF, TGF-β, EGF) that signal subsequent phases. Goal: stop bleeding and establish a scaffold for cell migration.</li>
+                    <li><strong>Phase 2 — Inflammation (1–6 days):</strong> Vasodilation and increased vascular permeability allow neutrophils (first 1–3 days) and macrophages (days 2–5) to enter the wound bed. Neutrophils phagocytize bacteria and debris. Macrophages orchestrate the healing process — secreting growth factors, stimulating angiogenesis, recruiting fibroblasts. Classical signs: erythema, warmth, edema, pain (necessary and beneficial if self-limiting).</li>
+                    <li><strong>Phase 3 — Proliferation (day 4 – week 3+):</strong> Fibroblasts synthesize collagen (type III initially → type I in remodeling). Angiogenesis produces new capillary buds (granulation tissue — red, moist, beefy). Epithelial cells migrate across the wound surface (epithelialization). Wound contraction occurs via myofibroblasts. This phase is the target of most physical agent interventions.</li>
+                    <li><strong>Phase 4 — Remodeling/Maturation (week 3 – 2+ years):</strong> Type III collagen is gradually replaced by stronger type I collagen, crosslinked for tensile strength. Maximum tensile strength reaches only 80% of pre-injury. Scar matures, flattens, and lightens. Duration and outcome determine scar quality.</li>
+                </ul>
+
+                <div class="highlight-box key-point">
+                    <strong>Key Point — Chronic Wounds:</strong> A wound is classified as "chronic" when it fails to progress through the normal healing phases in a timely manner (generally defined as &gt;4 weeks without significant healing progress). Chronic wounds are typically "stuck" in the inflammatory phase — characterized by high levels of matrix metalloproteinases (MMPs), low growth factor levels, bacterial biofilm, and senescent fibroblasts. Treatment focuses on addressing these barriers rather than simply covering the wound.
+                </div>
+
+                <h2>9.3 Wound Assessment</h2>
+                <p>Systematic wound assessment documents baseline status and tracks healing trajectory. A complete wound assessment includes:</p>
+                <ul>
+                    <li><strong>Location:</strong> Anatomical description; relation to bony prominences, vascular territories</li>
+                    <li><strong>Size:</strong> Length × width × depth (cm); undermining and tunneling (document clock position and depth)</li>
+                    <li><strong>Wound bed:</strong> Tissue type using RYBP classification — Red (granulation, healthy), Yellow (slough, fibrinous), Black (eschar, necrotic), Pink (epithelialization). Estimate percentage of each tissue type.</li>
+                    <li><strong>Exudate:</strong> Amount (none/scant/moderate/copious), consistency (serous/serosanguinous/sanguineous/purulent), and odor</li>
+                    <li><strong>Periwound tissue:</strong> Erythema, induration, maceration, callus, edema, skin temperature, hyperpigmentation</li>
+                    <li><strong>Wound edges:</strong> Attached or unattached, rolled (epibole), hyperkeratotic, or actively epithelializing</li>
+                    <li><strong>Signs of infection:</strong> Increased pain, warmth, erythema extending ≥2 cm beyond wound edge, purulent drainage, wound deterioration, systemic signs (fever, elevated WBC)</li>
+                </ul>
+
+                <h2>9.4 Pressure Injury Staging (NPUAP)</h2>
+                <p>The National Pressure Injury Advisory Panel (NPIAP, formerly NPUAP) provides the gold-standard staging classification: Stage 1 (non-blanchable erythema, intact skin), Stage 2 (partial-thickness loss — shallow open ulcer or blister), Stage 3 (full-thickness loss, subcutaneous fat visible, no bone/tendon/muscle visible), Stage 4 (full-thickness loss, bone/tendon/muscle exposed), Unstageable (full-thickness, obscured by slough/eschar — cannot stage until debrided), and Deep Tissue Injury (DTI — purple/maroon discoloration or blood-filled blister over intact or broken skin, indicating deep tissue damage).</p>
+
+                <div class="highlight-box clinical-tip">
+                    <strong>Clinical Tip — RYBP Wound Bed Classification:</strong> When documenting, estimate percentages of each tissue type: "Wound bed is 60% red granulation tissue, 30% yellow slough, 10% black eschar." This standardized description allows accurate comparison across visits and between clinicians, tracking healing progress objectively without solely relying on measurement.
+                </div>
+
+                <div class="knowledge-check">
+                    <h3>📝 Knowledge Check — Module 9</h3>
+                    <div class="question">
+                        <div class="question-text">During which phase of wound healing do fibroblasts synthesize collagen, myofibroblasts produce wound contraction, and new capillary networks form granulation tissue?</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">A. Hemostasis phase (0–3 hours)</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">B. Inflammatory phase (days 1–6)</div>
+                        <div class="answer-option" onclick="selectAnswer(this, true)">C. Proliferative phase (days 4 through week 3+)</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">D. Remodeling/maturation phase (weeks to years)</div>
+                    </div>
+                </div>
+
+                <div class="module-completion">
+                    <div>Estimated time: 15 minutes</div>
+                    <button class="complete-btn" onclick="completeModule(9)">Mark Module Complete ✓</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════════════════════════ -->
+        <!-- MODULE 10 -->
+        <!-- ═══════════════════════════════════════════════════════════ -->
+        <div class="module" data-module="10">
+            <div class="module-header" onclick="toggleModule(10)">
+                <div class="module-title">Module 10: Wound Care Interventions — Debridement, Dressing Selection, Electrical Stimulation (15 min)</div>
+            </div>
+            <div class="module-content">
+                <h2>10.1 The Wound Care TIME Framework</h2>
+                <p>The TIME framework (Tissue management, Infection/Inflammation control, Moisture balance, Edge advancement) provides a structured approach to chronic wound management. Each component identifies a barrier to healing and directs a corresponding intervention. This framework, introduced by Schultz and colleagues (2003) and widely adopted internationally, helps clinicians systematically address the root causes of wound chronicity rather than simply selecting dressings.</p>
+                <p><strong>Tissue:</strong> Non-viable tissue (necrotic, slough, eschar, biofilm) must be removed to allow re-epithelialization and reduce bacterial burden. Debridement is the first intervention in most chronic wounds.</p>
+                <p><strong>Infection/Inflammation:</strong> Distinguish between contamination (surface bacteria without host response), colonization (bacteria present, no harm), critical colonization (bacteria impair healing), and infection (bacteria invade tissue with host response). Only infection and critical colonization require active antimicrobial treatment.</p>
+                <p><strong>Moisture:</strong> The wound bed should be moist — not wet (maceration) and not dry (desiccation). Exudate management through dressing selection is central.</p>
+                <p><strong>Edge:</strong> Wound edges that are undermined, rolled (epibolic), hyperkeratotic, or indurated will not advance. Mechanical interventions (debridement of wound edges, peri-wound stretching, negative pressure wound therapy) address edge advancement.</p>
+
+                <h2>10.2 Debridement Methods</h2>
+                <p>Debridement — removal of non-viable, necrotic, or contaminated tissue — is fundamental to wound bed preparation. Physical therapists trained in wound care may perform several types:</p>
+                <ul>
+                    <li><strong>Sharp/surgical debridement:</strong> Use of scalpel, scissors, or curette to remove devitalized tissue. Most rapid and selective method. Requires specialized training, appropriate scope of practice (varies by state), and patient consent. Used for urgent removal of infected/gangrenous tissue. May cause bleeding.</li>
+                    <li><strong>Mechanical debridement (wet-to-dry dressings):</strong> Moist gauze allowed to dry and adhere to wound; removal pulls away necrotic tissue. Non-selective — removes healthy granulation tissue too. Painful. Largely discouraged in modern practice; useful only for limited, specific situations with heavy necrotic burden.</li>
+                    <li><strong>Autolytic debridement:</strong> Occlusive or semi-occlusive dressings (hydrogels, hydrocolloids) maintain a moist environment that allows the body's endogenous enzymes (MMPs, collagenases) to liquefy necrotic tissue. Slowest method; painless; contraindicated in infected wounds. Most patient-friendly and widely applicable.</li>
+                    <li><strong>Enzymatic debridement:</strong> Topical application of exogenous enzymes (collagenase — Santyl® in US) to digest collagen in the wound bed. Selective for necrotic collagen when applied correctly (applied to necrotic tissue only, not periwound skin). Moderate speed; useful when sharp debridement is not feasible.</li>
+                    <li><strong>Larval (maggot) therapy:</strong> Sterile Lucilia sericata larvae secrete enzymes that liquefy and ingest necrotic tissue while avoiding viable tissue. Highly selective; evidence supports effectiveness for sloughy and necrotic wounds including MRSA-infected wounds. FDA-cleared; niche application.</li>
+                    <li><strong>Hydrotherapy:</strong> Pulsed lavage with suction (PLWS) delivers saline at controlled pressure (4–15 psi) to mechanically debride and irrigate the wound. Highly effective for large, heavily exudative or contaminated wounds. Produces aerosol — requires PPE. Whirlpool is less precise and associated with cross-contamination risk; generally replaced by PLWS in modern practice.</li>
+                </ul>
+
+                <h2>10.3 Wound Dressing Selection</h2>
+                <p>The ideal dressing maintains moist wound healing, manages exudate, prevents infection, is comfortable, cost-effective, and easy to change. No single dressing meets all criteria — selection depends on wound type, depth, exudate level, infection status, and periwound condition.</p>
+                <ul>
+                    <li><strong>Hydrogels:</strong> High water content; donate moisture to dry/desiccated wounds; aid autolytic debridement; soothing. For dry, necrotic wounds with minimal exudate. Avoid in infected wounds.</li>
+                    <li><strong>Hydrocolloids:</strong> Occlusive/semi-occlusive; maintain moist environment; support autolysis; fluid-handling capacity. For Stage 2 pressure injuries, partial-thickness wounds, moderate exudate. Change every 3–7 days. Avoid in infected wounds.</li>
+                    <li><strong>Foam dressings:</strong> Highly absorbent; manage moderate-to-heavy exudate; provide cushioning. For Stage 3–4 pressure injuries, venous ulcers, diabetic foot ulcers with exudate.</li>
+                    <li><strong>Alginate dressings:</strong> Derived from seaweed; form a gel on contact with exudate; highly absorbent; hemostatic properties. For heavily exudating wounds, sinus tracts, undermined cavities.</li>
+                    <li><strong>Antimicrobial dressings:</strong> Silver, iodine (cadexomer iodine), PHMB, honey (Medihoney). For critically colonized or infected wounds. Silver releases Ag+ ions with broad-spectrum antibacterial activity including MRSA and Pseudomonas.</li>
+                    <li><strong>Negative pressure wound therapy (NPWT/VAC):</strong> Sub-atmospheric pressure (typically −125 mmHg) applied via foam-filled wound covered with occlusive film; evacuates exudate, reduces edema, stimulates granulation tissue, draws wound edges together. For complex Stage 3–4 wounds, dehisced surgical wounds, diabetic foot ulcers, skin grafts.</li>
+                </ul>
+
+                <h2>10.4 Electrical Stimulation for Wound Healing</h2>
+                <p>High-voltage pulsed current (HVPC) is the most evidence-supported electrical stimulation approach for wound healing. Applied with the cathode (−) over the wound in the inflammatory phase (promotes neutrophil and macrophage migration toward the wound via galvanotaxis), then switching to anode (+) during the proliferative phase (promotes fibroblast and epithelial cell migration). Parameters: 100–150 V, 100 pps, 20–30 min, 5× per week. Evidence from multiple RCTs demonstrates accelerated healing in pressure injuries, venous ulcers, and diabetic foot ulcers.</p>
+
+                <div class="highlight-box clinical-tip">
+                    <strong>Clinical Tip — Dressing Change Frequency:</strong> More is not better. Excessive dressing changes disrupt granulation tissue, cause temperature fluctuations in the wound bed (wound takes 40 min to return to 37°C after dressing change), and increase cost. Follow manufacturer guidelines, but generally: hydrocolloids 3–7 days, foams 2–5 days, alginates when saturated (1–5 days), silver dressings 3–7 days.
+                </div>
+
+                <div class="knowledge-check">
+                    <h3>📝 Knowledge Check — Module 10</h3>
+                    <div class="question">
+                        <div class="question-text">When using high-voltage pulsed current (HVPC) for wound healing, which electrode polarity should be placed over the wound bed during the inflammatory phase to promote phagocytic cell migration?</div>
+                        <div class="answer-option" onclick="selectAnswer(this, true)">A. Cathode (negative electrode) — promotes migration of neutrophils and macrophages via galvanotaxis</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">B. Anode (positive electrode) — promotes migration of phagocytic cells</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">C. Either polarity — polarity does not affect cellular migration</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">D. Alternating polarity every 5 minutes throughout treatment</div>
+                    </div>
+                </div>
+
+                <div class="module-completion">
+                    <div>Estimated time: 15 minutes</div>
+                    <button class="complete-btn" onclick="completeModule(10)">Mark Module Complete ✓</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════════════════════════ -->
+        <!-- MODULE 11 -->
+        <!-- ═══════════════════════════════════════════════════════════ -->
+        <div class="module" data-module="11">
+            <div class="module-header" onclick="toggleModule(11)">
+                <div class="module-title">Module 11: Specialized Wound Management — Lymphedema, Diabetic Ulcers, Pressure Injuries (15 min)</div>
+            </div>
+            <div class="module-content">
+                <h2>11.1 Venous, Arterial, and Neuropathic Wound Differentiation</h2>
+                <p>Chronic wound etiology profoundly affects treatment approach. Physical therapists must distinguish among venous insufficiency ulcers, arterial insufficiency ulcers, and neuropathic (diabetic) ulcers, as inappropriate treatment can cause significant harm. Venous ulcers result from chronic venous hypertension, causing capillary leak, fibrin cuffing of vessels, edema, and hypoxia of peri-wound tissue. They are typically located on the medial gaiter region (medial malleolus area), are irregularly shaped with a ruddy, fibrin-covered base, associated with significant edema, lipodermatosclerosis, and hemosiderin staining. Compression therapy is the cornerstone of treatment. Arterial ulcers result from peripheral arterial disease (PAD); they occur on distal extremities, toes, and pressure points (lateral malleolus, heel), are well-demarcated with punched-out appearance, pale/necrotic base, minimal exudate, and extremely painful. Compression is CONTRAINDICATED with significant arterial disease (ABI &lt;0.6). ABI screening is essential before any lower extremity compression.</p>
+
+                <h2>11.2 Lymphedema and Complex Decongestive Therapy (CDT)</h2>
+                <p>Lymphedema is chronic swelling resulting from impaired lymphatic transport capacity relative to lymphatic load. Primary lymphedema is congenital (Milroy's disease, Meige disease). Secondary lymphedema results from lymphatic disruption — most commonly from cancer treatment (breast cancer-related lymphedema post-axillary lymph node dissection), infection (filariasis), trauma, or surgery.</p>
+                <p>Complex Decongestive Therapy (CDT) — the gold-standard treatment — comprises four components delivered in two phases:</p>
+                <ul>
+                    <li><strong>Manual Lymphatic Drainage (MLD):</strong> Gentle, rhythmic skin-stretching technique (pressure 30–40 mmHg, slow rhythm 6–12 strokes/min) that stimulates superficial lymphangions, opens collateral pathways, and reroutes lymph around obstructed regions. Always begins centrally (trunk) and works peripherally to first clear congested central lymph nodes.</li>
+                    <li><strong>Multilayer bandaging/compression:</strong> Short-stretch bandages (less elastic than standard ACE bandages) create high working pressure (active) and low resting pressure, optimally driving lymph during muscle pump activity without impeding venous return at rest. Applied from distal to proximal in layers.</li>
+                    <li><strong>Therapeutic exercise:</strong> Active muscle contractions within compression bandaging/garment drive the lymphatic pump. Diaphragmatic breathing promotes central lymph flow through the thoracic duct.</li>
+                    <li><strong>Skin care:</strong> pH-balanced moisturizers, meticulous hygiene, and prevention of cellulitis (infection dramatically worsens lymphedema).</li>
+                </ul>
+                <p>Pneumatic compression devices (PCDs) provide intermittent sequential compression and can supplement CDT but should not replace MLD-based intensive phase treatment. Advanced PCDs (gradient, multi-chamber) are preferred over older single-chamber devices.</p>
+
+                <h2>11.3 Diabetic Foot Ulcers (DFUs)</h2>
+                <p>Diabetic foot ulcers affect 15–25% of people with diabetes over their lifetime and are the leading cause of non-traumatic lower extremity amputation worldwide. The pathophysiology is triad: peripheral neuropathy (loss of protective sensation), peripheral vascular disease (impaired healing), and immune dysfunction (impaired infection response). Charcot neuroarthropathy — progressive joint destruction from repetitive unrecognized trauma — creates severe foot deformity and massively elevated plantar pressures.</p>
+                <p><strong>Classification:</strong> Wagner classification (0–5) based on wound depth; University of Texas classification adds ischemia and infection axes, which better predict amputation risk. Most physical therapy intervention targets Wagner Grade 1–2 DFUs (superficial to full thickness without deep structure involvement).</p>
+                <p><strong>Offloading</strong> is the single most critical intervention for plantar DFUs. Total contact casting (TCC) — the gold standard — distributes pressure across the entire plantar surface, reducing peak pressures by 50–90%. Removable cast walkers (RCWs) offer equivalent pressure relief but compliance is poor (average wear time ~28% of steps). The "instant TCC" (RCW made irremovable) overcomes compliance issues. Adequate offloading can heal Grade 1–2 DFUs in 6–14 weeks.</p>
+                <p>Physical therapy interventions for DFUs include offloading education, HVPC electrical stimulation, NPWT for larger wounds, PBM for analgesia and healing promotion, and gait/footwear assessment to prevent recurrence.</p>
+
+                <h2>11.4 Pressure Injuries — Prevention and Treatment</h2>
+                <p>Pressure injuries (previously called decubitus ulcers or pressure sores) result from sustained pressure, shear, friction, and microclimate (moisture/temperature) at the interface between skin/tissue and a supporting surface. Prolonged pressure exceeds capillary closing pressure (~32 mmHg), causing ischemia and tissue necrosis. Shear is particularly damaging — sliding forces in the skin create different vectors than surface pressure, stretching perforating vessels and causing deep tissue injury while the surface may appear intact (DTI).</p>
+                <p><strong>Prevention priorities (NPUAP recommendations):</strong> Reposition every 2 hours in bed (30° tilt preferred over 90° lateral — minimizes trochanteric pressure); every 1 hour in chair. Pressure-redistribution support surfaces (dynamic air mattresses, foam replacement mattresses) for high-risk patients. Nutrition optimization (protein 1.2–1.5 g/kg/day, zinc, vitamin C). Incontinence management (moisture-associated skin damage accelerates pressure injury development). Risk stratification using Braden Scale (&lt;18 = at risk).</p>
+
+                <div class="highlight-box caution">
+                    <strong>Caution — Compression in Arterial Insufficiency:</strong> NEVER apply compression therapy (bandaging, compression stockings, pneumatic compression) when ABI (ankle-brachial index) is below 0.6 without vascular surgery clearance. Measure ABI on all patients with lower extremity wounds before initiating compression. ABI 0.8–1.2 = normal; 0.6–0.8 = mild-moderate PAD (reduced compression acceptable); &lt;0.6 = severe PAD (compression contraindicated); &gt;1.3 = non-compressible vessels (falsely elevated — toe-brachial index or toe pressure required).
+                </div>
+
+                <div class="knowledge-check">
+                    <h3>📝 Knowledge Check — Module 11</h3>
+                    <div class="question">
+                        <div class="question-text">Which offloading device for diabetic foot ulcers has the strongest evidence and is considered the gold standard for reducing plantar pressure during ambulation?</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">A. Removable cast walker (RCW) worn consistently</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">B. Custom-molded orthotic insoles inside therapeutic shoes</div>
+                        <div class="answer-option" onclick="selectAnswer(this, true)">C. Total contact cast (TCC)</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">D. Forefoot offloading post-surgical shoe</div>
+                    </div>
+                </div>
+
+                <div class="module-completion">
+                    <div>Estimated time: 15 minutes</div>
+                    <button class="complete-btn" onclick="completeModule(11)">Mark Module Complete ✓</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════════════════════════ -->
+        <!-- MODULE 12 -->
+        <!-- ═══════════════════════════════════════════════════════════ -->
+        <div class="module" data-module="12">
+            <div class="module-header" onclick="toggleModule(12)">
+                <div class="module-title">Module 12: Contraindications, Precautions, and Safety Standards for Physical Agents (15 min)</div>
+            </div>
+            <div class="module-content">
+                <h2>12.1 The Framework for Safe Physical Agent Use</h2>
+                <p>Safety in physical agent application requires systematic screening — not merely recall of a list. The clinician must understand WHY each contraindication exists (the underlying mechanism of harm) so that novel or ambiguous clinical situations can be reasoned through appropriately. Contraindications are conditions in which an agent must not be used because the risk of harm outweighs any possible benefit. Precautions are conditions requiring modified application parameters, enhanced monitoring, or careful benefit-risk weighing — but do not preclude use absolutely.</p>
+                <p>The Safe Use of Physical Agents framework encompasses: patient screening (medical history, medications, implants), appropriate parameter selection, setup and application technique, monitoring during treatment (patient reports, vital signs, skin inspection), post-treatment documentation, and appropriate follow-up. Every physical agent application should be preceded by an explanation of the procedure and acquisition of informed consent.</p>
+
+                <h2>12.2 Universal Contraindications Across Modalities</h2>
+                <p>Several contraindications apply broadly across electrical, thermal, and acoustic modalities:</p>
+                <ul>
+                    <li><strong>Active malignancy in the treatment area:</strong> Increased blood flow, cellular stimulation, or energy absorption may accelerate tumor growth or metastasis. Always screen for history of cancer and active treatment status. Some palliative applications (e.g., TENS for cancer pain) are exceptions.</li>
+                    <li><strong>Gravid uterus:</strong> Avoid all modalities over or near the uterus during pregnancy. Thermal effects may harm the fetus; electrical stimulation may trigger uterine contractions; ultrasound effects on fetal development are unknown. Cervical traction is also contraindicated due to positioning risks.</li>
+                    <li><strong>Implanted electronic devices (pacemakers, ICDs, cochlear implants, intrathecal pumps, neurostimulators):</strong> All electrical modalities risk electromagnetic interference with device function. The degree of risk varies by device type, distance, and current pathway. Consult with the patient's cardiologist/device specialist and device manufacturer before any electrical modality. Some modern devices (e.g., MRI-conditional pacemakers) have improved shielding, but blanket caution is appropriate.</li>
+                    <li><strong>Impaired sensation:</strong> Patients who cannot accurately report pain or temperature changes cannot provide the protective feedback necessary for safe application of thermal, cold, or electrical agents. This is not an absolute contraindication for all agents, but requires substantially reduced parameters and intensified clinician monitoring.</li>
+                    <li><strong>Impaired circulation:</strong> Inability to mount an adequate vascular response to thermal stress (vasodilation to heat, vasoconstriction to cold) creates risk of burn, frostbite, or ischemia. Apply with lower intensity, monitor closely.</li>
+                    <li><strong>Areas of active infection:</strong> Heating infected tissue (including via ultrasound) risks spreading infection or worsening cellulitis via increased blood flow to a bacteremic region. Treat surrounding areas and use modalities with antimicrobial rationale (UV-C, HVPC, topical iontophoresis) when indicated.</li>
+                    <li><strong>Hemorrhage or bleeding disorders:</strong> Heat increases blood flow and tissue metabolism, potentially worsening active bleeding. Cryotherapy is safer in this context. Patients on anticoagulants require careful monitoring, particularly for deep heating agents and during sharp debridement.</li>
+                </ul>
+
+                <h2>12.3 Modality-Specific Safety Summary</h2>
+                <p><strong>Ultrasound — Additional Contraindications:</strong> Over the skull/brain; over the spinal cord post-laminectomy; over the eyes; directly over the epiphyseal plates in skeletally immature patients (thermal mode); over thrombophlebitis; over the testes. Precautions: metal implants (heat at interfaces), breast implants.</p>
+                <p><strong>Electrical Stimulation — Additional Contraindications:</strong> Over the carotid sinus (baroreceptor stimulation can cause bradycardia/syncope); transcranially; over thrombophlebitis; in patients with uncontrolled epilepsy; over areas of skin irritation or open wounds (adjust electrode placement). Precaution: electrode placement near metal implants, over areas of impaired sensation.</p>
+                <p><strong>Thermal Agents (heat) — Additional Contraindications:</strong> Acute inflammation (first 72 hours); active hemorrhage; areas of impaired sensation; acute trauma; fever; DVT in the treatment region; over the eyes. Hot packs: never apply directly to skin; use adequate layering.</p>
+                <p><strong>Cryotherapy — Additional Contraindications:</strong> Raynaud's phenomenon; cold urticaria; cryoglobulinemia; cold hemoglobinuria; over a regenerating peripheral nerve; over superficial nerve at risk of frostbite neuropraxia (fibular nerve at fibular head). Duration limits essential.</p>
+                <p><strong>Traction — Additional Contraindications:</strong> Rheumatoid arthritis with atlantoaxial instability (cervical traction); cord compression/myelopathy; acute fracture; cauda equina syndrome (lumbar — emergency referral); aortic aneurysm; severe osteoporosis.</p>
+                <p><strong>Laser/PBM — Additional Contraindications:</strong> Direct irradiation of eyes (both patient and clinician — mandatory protective goggles); directly over malignancy; thyroid gland; epileptogenic regions; gravid uterus. Precautions: photosensitizing medications (certain antibiotics, NSAIDs, antipsychotics).</p>
+
+                <h2>12.4 Documentation Standards and Legal Considerations</h2>
+                <p>Documentation of physical agent interventions must include: the agent used, parameters (intensity, frequency, duration, mode), electrode/transducer placement, patient position, patient response during and after treatment, any adverse reactions, and modifications made. Documenting contraindication screening is particularly important in medicolegal contexts — if it was not documented, it was not done.</p>
+                <p>State practice acts vary in what physical agent modalities PTs and PTAs may independently apply, and which require physician referral or supervision. The APTA position paper on physical agents and electrotherapeutic modalities provides guidance, but individual state licensing boards have final authority. Always operate within your state's scope of practice and seek supervision or referral when in doubt.</p>
+
+                <div class="highlight-box caution">
+                    <strong>Caution — The "Precaution vs. Contraindication" Distinction:</strong> A contraindication means DO NOT USE in this situation. A precaution means USE WITH CAUTION — modify parameters, monitor more closely, document rationale, and obtain consent for the modified use. Confusing these two categories is a common clinical error. When in doubt, consult with the referring physician, a senior clinician, or the device manufacturer before proceeding.
+                </div>
+
+                <div class="highlight-box key-point">
+                    <strong>Key Point — Clinician Safety:</strong> Physical agents can harm clinicians too. Always wear appropriate PPE: wavelength-specific eyewear during laser therapy, moisture barriers during wound care, and maintain safe distances from ultrasound transducer beams (never point at yourself or others). Follow OSHA bloodborne pathogen standards for all wound care interventions — use gloves, mask, and gown when splashing is possible (pulsed lavage, whirlpool).
+                </div>
+
+                <div class="highlight-box clinical-tip">
+                    <strong>Clinical Tip — The 5 Rights of Physical Agent Application:</strong> Analogous to medication administration, apply these 5 rights before every modality treatment: Right Patient (correct diagnosis, screened contraindications), Right Agent (matched to the clinical goal), Right Parameters (dose, frequency, duration), Right Placement (electrode/transducer/pack location), Right Documentation (recorded before and after). This framework prevents errors and supports sound clinical reasoning.
+                </div>
+
+                <div class="knowledge-check">
+                    <h3>📝 Knowledge Check — Module 12</h3>
+                    <div class="question">
+                        <div class="question-text">A patient with a demand-type cardiac pacemaker presents for treatment of low back pain. Which physical agent modality is MOST LIKELY safe to apply in this patient?</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">A. Interferential current (IFC) applied to the lumbar spine</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">B. TENS applied over lumbar paraspinal muscles with electrodes spanning the mid-back</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">C. NMES to lumbar stabilizers for muscle re-education</div>
+                        <div class="answer-option" onclick="selectAnswer(this, true)">D. Hot pack applied to the lumbar spine with standard towel layering</div>
+                    </div>
+                </div>
+
+                <div class="module-completion">
+                    <div>Estimated time: 15 minutes</div>
+                    <button class="complete-btn" onclick="completeModule(12)">Mark Module Complete ✓</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════════════════════════ -->
+        <!-- CERTIFICATE SECTION -->
+        <!-- ═══════════════════════════════════════════════════════════ -->
+        <div class="certificate-section" id="certificateSection">
+            <h2>🎉 Congratulations! Course Complete!</h2>
+            <p style="font-size: 1.2rem; margin: 1rem 0;">You have successfully completed all 12 modules of</p>
+            <h3 style="color: var(--gold-light); font-size: 1.8rem; margin: 1rem 0;">⚡ Physical Agents, Modalities, and Wound Care</h3>
+            <p style="font-size: 1.1rem;">3.0 CCUs | Course ID: MODALITIES-001</p>
+            <p style="margin: 1.5rem 0;">Your certificate of completion is ready. Click below to generate and print your official CE certificate.</p>
+            <button class="certificate-btn" onclick="generateCertificate()">🏆 Generate Certificate of Completion</button>
+        </div>
+
+    </div><!-- end .course-container -->
+
+    <script>
+        const courseState = {
+            modulesCompleted: [],
+            totalModules: 12,
+            completionTime: null
+        };
+
+        function loadProgress() {
+            const saved = localStorage.getItem('physicalAgentsProgress');
+            if (saved) {
+                const parsed = JSON.parse(saved);
+                courseState.modulesCompleted = parsed.modulesCompleted || [];
+                courseState.completionTime = parsed.completionTime || null;
+
+                courseState.modulesCompleted.forEach(function(moduleNum) {
+                    const moduleHeader = document.querySelector('[data-module="' + moduleNum + '"] .module-header');
+                    if (moduleHeader) {
+                        moduleHeader.classList.add('completed');
+                    }
+                    const completion = document.querySelector('[data-module="' + moduleNum + '"] .module-completion');
+                    if (completion) {
+                        completion.innerHTML = '<div>Module completed ✓</div><div class="completed-badge">Completed</div>';
+                    }
+                });
+
+                updateProgress();
+
+                if (courseState.modulesCompleted.length === courseState.totalModules) {
+                    document.getElementById('certificateSection').classList.add('visible');
+                }
+            }
+        }
+
+        function saveProgress() {
+            localStorage.setItem('physicalAgentsProgress', JSON.stringify(courseState));
+        }
+
+        function toggleModule(moduleNum) {
+            const module = document.querySelector('[data-module="' + moduleNum + '"]');
+            const content = module.querySelector('.module-content');
+            const isActive = content.classList.contains('active');
+
+            document.querySelectorAll('.module-content').forEach(function(c) {
+                c.classList.remove('active');
+            });
+
+            if (!isActive) {
+                content.classList.add('active');
+                content.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }
+        }
+
+        function completeModule(moduleNum) {
+            if (!courseState.modulesCompleted.includes(moduleNum)) {
+                courseState.modulesCompleted.push(moduleNum);
+
+                const moduleHeader = document.querySelector('[data-module="' + moduleNum + '"] .module-header');
+                if (moduleHeader) {
+                    moduleHeader.classList.add('completed');
+                }
+
+                const completion = document.querySelector('[data-module="' + moduleNum + '"] .module-completion');
+                if (completion) {
+                    completion.innerHTML = '<div>Module completed ✓</div><div class="completed-badge">Completed</div>';
+                }
+
+                updateProgress();
+                saveProgress();
+
+                if (courseState.modulesCompleted.length === courseState.totalModules) {
+                    courseState.completionTime = new Date().toISOString();
+                    saveProgress();
+                    document.getElementById('certificateSection').classList.add('visible');
+                    document.getElementById('certificateSection').scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            }
+        }
+
+        function updateProgress() {
+            const percentage = Math.round((courseState.modulesCompleted.length / courseState.totalModules) * 100);
+            document.querySelector('.progress-fill').style.width = percentage + '%';
+            document.querySelector('.progress-percentage').textContent = percentage + '% Complete';
+        }
+
+        function selectAnswer(element, isCorrect) {
+            const question = element.parentElement;
+            question.querySelectorAll('.answer-option').forEach(function(opt) {
+                opt.classList.remove('correct', 'incorrect');
+                opt.style.pointerEvents = 'none';
+            });
+
+            element.classList.add(isCorrect ? 'correct' : 'incorrect');
+
+            if (isCorrect) {
+                element.innerHTML += ' <strong>✓ Correct!</strong>';
+            } else {
+                element.innerHTML += ' <strong>✗ Incorrect</strong>';
+                question.querySelectorAll('.answer-option').forEach(function(opt) {
+                    if (opt.getAttribute('onclick') && opt.getAttribute('onclick').includes('true')) {
+                        opt.classList.add('correct');
+                        opt.innerHTML += ' <strong>✓ Correct Answer</strong>';
+                    }
+                });
+            }
+        }
+
+        function generateCertificate() {
+            const completionDate = new Date().toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+
+            const certHTML = '<!DOCTYPE html>' +
+                '<html><head><title>Certificate - Physical Agents, Modalities, and Wound Care</title>' +
+                '<style>' +
+                'body { font-family: Georgia, serif; text-align: center; padding: 40px; background: #f8f9fa; margin: 0; }' +
+                '.certificate { background: white; padding: 60px; border: 12px double #1a365d; max-width: 850px; margin: 0 auto; box-shadow: 0 10px 40px rgba(0,0,0,0.15); }' +
+                '.cert-header { color: #1a365d; font-size: 14px; letter-spacing: 4px; text-transform: uppercase; margin-bottom: 10px; }' +
+                '.cert-title { font-size: 32px; color: #1a365d; margin: 20px 0 10px; font-weight: bold; }' +
+                '.cert-subtitle { font-size: 13px; color: #059669; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 30px; }' +
+                '.cert-awarded { font-size: 14px; color: #666; margin: 20px 0 5px; }' +
+                '.cert-name { font-size: 32px; color: #333; margin: 10px 0 30px; border-bottom: 2px solid #1a365d; padding-bottom: 15px; min-height: 50px; }' +
+                '.cert-course { font-size: 20px; color: #059669; margin: 20px 0; font-style: italic; }' +
+                '.cert-body { font-size: 16px; line-height: 1.8; color: #444; margin: 20px 0; }' +
+                '.cert-hours { font-size: 22px; color: #1a365d; font-weight: bold; margin: 20px 0; }' +
+                '.cert-sigs { margin-top: 50px; display: flex; justify-content: space-around; }' +
+                '.sig-block { text-align: center; width: 220px; }' +
+                '.sig-line { border-top: 2px solid #333; padding-top: 10px; font-size: 13px; color: #555; }' +
+                '.cert-footer { margin-top: 30px; font-size: 12px; color: #888; border-top: 1px solid #ddd; padding-top: 15px; }' +
+                '.gold-bar { height: 6px; background: linear-gradient(90deg, #059669, #10b981, #059669); margin: 20px 0; border-radius: 3px; }' +
+                '</style></head><body>' +
+                '<div class="certificate">' +
+                '<div class="gold-bar"></div>' +
+                '<div class="cert-header">DrTroy Continuing Education</div>' +
+                '<div class="cert-title">Certificate of Completion</div>' +
+                '<div class="cert-subtitle">Continuing Education for Healthcare Professionals</div>' +
+                '<div class="gold-bar"></div>' +
+                '<div class="cert-awarded">This certifies that</div>' +
+                '<div class="cert-name">&nbsp;</div>' +
+                '<div class="cert-body">has successfully completed all required modules of the continuing education course:</div>' +
+                '<div class="cert-course">⚡ Physical Agents, Modalities, and Wound Care</div>' +
+                '<div class="cert-body">Evidence-Based Application of Therapeutic Modalities and Comprehensive Wound Care Management</div>' +
+                '<div class="cert-hours">3.0 Continuing Competence Units (CCUs)</div>' +
+                '<div class="cert-body">12 Modules | 180 Minutes of Instruction</div>' +
+                '<div class="cert-sigs">' +
+                '<div class="sig-block"><div class="sig-line">Troy Hounshell, PT, ScD<br>Course Director<br>DrTroy CE</div></div>' +
+                '<div class="sig-block"><div class="sig-line">DrTroy Continuing Education<br>Approved CE Provider</div></div>' +
+                '</div>' +
+                '<div class="cert-footer">' +
+                'Completion Date: ' + completionDate + ' &nbsp;|&nbsp; ' +
+                'Course ID: MODALITIES-001 &nbsp;|&nbsp; ' +
+                'Approval #: DRTROY-MODALITIES-001-2024' +
+                '</div>' +
+                '<div class="gold-bar"></div>' +
+                '</div>' +
+                '<script>window.onload = function() { window.print(); };<\/script>' +
+                '</body></html>';
+
+            const newWindow = window.open('', '_blank');
+            if (newWindow) {
+                newWindow.document.write(certHTML);
+                newWindow.document.close();
+            }
+        }
+
+        function logout() {
+            if (confirm('Are you sure you want to logout? Your progress has been saved.')) {
+                window.location.href = '../index.html';
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            loadProgress();
+        });
+
+        setInterval(saveProgress, 30000);
+    </script>
+</body>
+</html>

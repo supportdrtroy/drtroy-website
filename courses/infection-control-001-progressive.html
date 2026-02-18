@@ -1,0 +1,1494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Infection Control and Patient Safety | DrTroy CE</title>
+<style>
+  :root {
+    --navy: #1a365d;
+    --navy-light: #2c5282;
+    --gold: #059669;
+    --gold-light: #10b981;
+    --bg: #f7fafc;
+    --card: #ffffff;
+    --text: #2d3748;
+    --text-light: #718096;
+    --border: #e2e8f0;
+    --shadow: 0 2px 8px rgba(0,0,0,0.08);
+    --shadow-lg: 0 8px 32px rgba(0,0,0,0.12);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: Georgia, 'Times New Roman', serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+  }
+  /* HEADER */
+  header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--navy);
+    box-shadow: var(--shadow-lg);
+    padding: 0 24px;
+  }
+  .header-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 68px;
+  }
+  .logo-wrap { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+  .logo-wrap img { height: 44px; border-radius: 6px; }
+  .logo-wrap span {
+    font-family: 'Inter', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: 0.3px;
+  }
+  nav { display: flex; gap: 8px; align-items: center; }
+  nav a {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: rgba(255,255,255,0.85);
+    text-decoration: none;
+    padding: 7px 14px;
+    border-radius: 6px;
+    transition: background 0.2s, color 0.2s;
+  }
+  nav a:hover { background: rgba(255,255,255,0.15); color: #fff; }
+  .logout-btn {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 500;
+    background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.25);
+    color: rgba(255,255,255,0.85);
+    padding: 7px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .logout-btn:hover { background: rgba(255,255,255,0.22); }
+  /* PROGRESS BAR */
+  .progress-bar-wrap {
+    background: var(--navy);
+    padding: 0 24px 12px;
+    border-bottom: 3px solid var(--gold);
+  }
+  .progress-bar-inner { max-width: 1100px; margin: 0 auto; }
+  .progress-labels {
+    font-family: 'Inter', sans-serif;
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.8rem;
+    color: rgba(255,255,255,0.7);
+    margin-bottom: 6px;
+  }
+  .progress-track {
+    height: 8px;
+    background: rgba(255,255,255,0.15);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--gold), var(--gold-light));
+    border-radius: 4px;
+    transition: width 0.5s ease;
+    width: 0%;
+  }
+  /* HERO */
+  .hero {
+    background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
+    color: #fff;
+    padding: 48px 24px 40px;
+    text-align: center;
+  }
+  .hero-emoji { font-size: 3.5rem; margin-bottom: 12px; }
+  .hero h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+    line-height: 1.3;
+  }
+  .hero-subtitle {
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    color: rgba(255,255,255,0.8);
+    max-width: 700px;
+    margin: 0 auto 20px;
+  }
+  .hero-meta {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.85rem;
+  }
+  .hero-meta span {
+    background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.2);
+    padding: 5px 14px;
+    border-radius: 20px;
+    color: rgba(255,255,255,0.9);
+  }
+  /* MAIN */
+  main { max-width: 1100px; margin: 0 auto; padding: 32px 24px 60px; }
+  .section-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--gold);
+    margin-bottom: 16px;
+  }
+  /* MODULE CARDS */
+  .module-block {
+    background: var(--card);
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow);
+    margin-bottom: 16px;
+    overflow: hidden;
+    transition: box-shadow 0.2s;
+  }
+  .module-block:hover { box-shadow: var(--shadow-lg); }
+  .module-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 20px 24px;
+    cursor: pointer;
+    user-select: none;
+    transition: background 0.15s;
+  }
+  .module-header:hover { background: #f0f7ff; }
+  .module-num {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: #fff;
+    background: var(--navy-light);
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .module-num.completed { background: var(--gold); }
+  .module-title-wrap { flex: 1; }
+  .module-title {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 2px;
+  }
+  .module-meta {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.78rem;
+    color: var(--text-light);
+  }
+  .module-status {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 4px 12px;
+    border-radius: 12px;
+    background: #f0f4f8;
+    color: var(--text-light);
+    flex-shrink: 0;
+  }
+  .module-status.done { background: #d1fae5; color: #065f46; }
+  .chevron {
+    font-size: 0.9rem;
+    color: var(--text-light);
+    transition: transform 0.3s;
+    flex-shrink: 0;
+  }
+  .module-block.open .chevron { transform: rotate(180deg); }
+  /* MODULE CONTENT */
+  .module-content {
+    display: none;
+    padding: 0 24px 24px;
+    border-top: 1px solid var(--border);
+  }
+  .module-block.open .module-content { display: block; }
+  .module-content h2 {
+    font-size: 1.25rem;
+    color: var(--navy);
+    margin: 20px 0 12px;
+  }
+  .module-content h3 {
+    font-size: 1.05rem;
+    color: var(--navy-light);
+    margin: 16px 0 8px;
+  }
+  .module-content p { margin-bottom: 14px; font-size: 0.97rem; }
+  .module-content ul, .module-content ol {
+    padding-left: 22px;
+    margin-bottom: 14px;
+  }
+  .module-content li { margin-bottom: 6px; font-size: 0.97rem; }
+  /* HIGHLIGHT BOXES */
+  .highlight-box {
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin: 18px 0;
+    border-left: 4px solid;
+  }
+  .highlight-box .box-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    margin-bottom: 6px;
+  }
+  .highlight-box p { margin-bottom: 0; font-size: 0.93rem; }
+  .clinical-tip {
+    background: #d1fae5;
+    border-color: var(--gold);
+  }
+  .clinical-tip .box-label { color: #065f46; }
+  .key-point {
+    background: #fef3c7;
+    border-color: #d97706;
+  }
+  .key-point .box-label { color: #92400e; }
+  .caution {
+    background: #fee2e2;
+    border-color: #dc2626;
+  }
+  .caution .box-label { color: #991b1b; }
+  /* KNOWLEDGE CHECK */
+  .knowledge-check {
+    background: #f8fafc;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px;
+    margin: 22px 0 18px;
+  }
+  .knowledge-check h4 {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--navy);
+    margin-bottom: 10px;
+  }
+  .knowledge-check .question {
+    font-size: 0.97rem;
+    font-weight: 600;
+    margin-bottom: 14px;
+    color: var(--text);
+  }
+  .answer-options { display: flex; flex-direction: column; gap: 8px; }
+  .answer-option {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.9rem;
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 10px 16px;
+    cursor: pointer;
+    transition: background 0.15s, border-color 0.15s;
+    text-align: left;
+  }
+  .answer-option:hover { background: #eff6ff; border-color: var(--navy-light); }
+  .answer-option.correct { background: #d1fae5; border-color: var(--gold); color: #065f46; font-weight: 600; }
+  .answer-option.incorrect { background: #fee2e2; border-color: #dc2626; color: #991b1b; }
+  .answer-feedback {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.85rem;
+    margin-top: 10px;
+    padding: 8px 12px;
+    border-radius: 6px;
+    display: none;
+  }
+  .answer-feedback.show { display: block; }
+  .answer-feedback.correct-fb { background: #d1fae5; color: #065f46; }
+  .answer-feedback.incorrect-fb { background: #fee2e2; color: #991b1b; }
+  /* COMPLETION */
+  .module-completion {
+    background: linear-gradient(135deg, #f0fdf4, #d1fae5);
+    border: 1px solid #6ee7b7;
+    border-radius: 10px;
+    padding: 20px;
+    margin-top: 20px;
+    text-align: center;
+  }
+  .module-completion p {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.9rem;
+    color: #065f46;
+    margin-bottom: 12px;
+  }
+  .complete-btn {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 700;
+    background: var(--gold);
+    color: #fff;
+    border: none;
+    padding: 12px 28px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.1s;
+  }
+  .complete-btn:hover { background: var(--gold-light); transform: translateY(-1px); }
+  .complete-btn:disabled {
+    background: #6ee7b7;
+    cursor: default;
+    transform: none;
+  }
+  /* CERTIFICATE */
+  #certificate-section {
+    display: none;
+    background: linear-gradient(135deg, var(--navy), var(--navy-light));
+    border-radius: 16px;
+    padding: 48px 32px;
+    text-align: center;
+    color: #fff;
+    margin-top: 32px;
+  }
+  #certificate-section.visible { display: block; }
+  #certificate-section h2 { font-size: 1.8rem; margin-bottom: 12px; }
+  #certificate-section p {
+    font-family: 'Inter', sans-serif;
+    color: rgba(255,255,255,0.85);
+    margin-bottom: 24px;
+    font-size: 1rem;
+  }
+  .cert-btn {
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, var(--gold), var(--gold-light));
+    color: #fff;
+    border: none;
+    padding: 16px 36px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: opacity 0.2s, transform 0.1s;
+    box-shadow: 0 4px 16px rgba(5,150,105,0.4);
+  }
+  .cert-btn:hover { opacity: 0.9; transform: translateY(-2px); }
+  /* Print */
+  @media print {
+    header, .progress-bar-wrap, nav, .logout-btn { display: none !important; }
+  }
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <a href="../index.html" class="logo-wrap">
+      <img src="../images/drtroy_logo_new.jpg" alt="DrTroy CE Logo">
+      <span>DrTroy CE</span>
+    </a>
+    <nav>
+      <a href="../course-catalog.html">Course Catalog</a>
+      <a href="../my-account.html">My Account</a>
+      <button class="logout-btn" onclick="logout()">Log Out</button>
+    </nav>
+  </div>
+</header>
+
+<div class="progress-bar-wrap">
+  <div class="progress-bar-inner">
+    <div class="progress-labels">
+      <span>Course Progress</span>
+      <span id="progress-text">0 of 12 modules complete</span>
+    </div>
+    <div class="progress-track">
+      <div class="progress-fill" id="progress-fill"></div>
+    </div>
+  </div>
+</div>
+
+<div class="hero">
+  <div class="hero-emoji">🛡️</div>
+  <h1>Infection Control and Patient Safety</h1>
+  <p class="hero-subtitle">Evidence-Based Infection Prevention, Control Protocols, and Patient Safety Standards in Rehabilitation Settings</p>
+  <div class="hero-meta">
+    <span>📋 Course ID: INFECTION-001</span>
+    <span>✅ Approval: DRTROY-INFECTION-001-2024</span>
+    <span>🎓 3.0 CCUs</span>
+    <span>📚 12 Modules × 15 min</span>
+  </div>
+</div>
+
+<main>
+  <div class="section-label">Course Modules</div>
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       MODULE 1 — Chain of Infection
+  ═══════════════════════════════════════════════════════════════ -->
+  <div class="module-block" id="module-1" data-module="1">
+    <div class="module-header" onclick="toggleModule(1)">
+      <div class="module-num" id="num-1">1</div>
+      <div class="module-title-wrap">
+        <div class="module-title">Chain of Infection: Pathogens, Transmission, and Host Susceptibility</div>
+        <div class="module-meta">Module 1 · 15 minutes</div>
+      </div>
+      <div class="module-status" id="status-1">Not Started</div>
+      <div class="chevron">▼</div>
+    </div>
+    <div class="module-content">
+      <h2>Understanding the Chain of Infection</h2>
+      <p>Infection does not occur randomly. It follows a predictable sequence — a chain with six interconnected links — and breaking any one of those links stops the spread of disease. For rehabilitation clinicians working in hospitals, skilled nursing facilities, outpatient clinics, and home health environments, this model is not merely academic. It is the operational framework behind every precaution you take, every protocol you follow, and every moment you pause to don gloves or wash your hands.</p>
+
+      <h3>The Six Links Explained</h3>
+      <p><strong>1. Infectious Agent (Pathogen):</strong> The chain begins with a microorganism capable of causing disease. These include bacteria (Staphylococcus aureus, Clostridioides difficile), viruses (influenza, SARS-CoV-2), fungi (Candida, Aspergillus), and parasites. Each pathogen differs in virulence — the ability to cause harm — and in infectivity, the ability to establish infection. Understanding pathogen type guides precaution selection.</p>
+
+      <p><strong>2. Reservoir:</strong> The reservoir is the environment where the pathogen lives and multiplies. Reservoirs include human hosts (patients, staff, visitors), animals, water, soil, and inanimate objects (fomites) such as therapy equipment, bed rails, and treatment tables. In rehabilitation settings, shared equipment is a critical reservoir that is frequently overlooked during busy clinical shifts.</p>
+
+      <p><strong>3. Portal of Exit:</strong> Pathogens must leave the reservoir to spread. Common exit portals include the respiratory tract (coughing, sneezing), the gastrointestinal tract (fecal matter), the genitourinary tract, skin or wound drainage, and blood or other body fluids. A patient on your therapy caseload with an actively draining wound presents a clear, ongoing portal of exit that demands consistent wound precaution management.</p>
+
+      <p><strong>4. Mode of Transmission:</strong> This is how the pathogen travels from the reservoir to a new host. The four primary modes are contact (direct skin-to-skin or indirect via contaminated surfaces), droplet (large respiratory particles expelled within 3–6 feet), airborne (smaller particles suspended in air for extended periods), and vector-borne (via insects or animals, rare in healthcare). Most healthcare-associated infections (HAIs) spread via contact and droplet routes, making hand hygiene and surface cleaning paramount.</p>
+
+      <p><strong>5. Portal of Entry:</strong> Even a virulent pathogen must gain entry to a susceptible host. Entry portals mirror exit portals: broken skin, mucous membranes, the respiratory tract, the gastrointestinal tract, and invasive devices (catheters, IV lines). Rehabilitation clinicians routinely encounter patients with multiple open entry portals — postoperative incisions, pressure injuries, tracheostomies — making every interaction a potential transmission event if precautions lapse.</p>
+
+      <p><strong>6. Susceptible Host:</strong> Not every person exposed to a pathogen becomes infected. Host susceptibility is determined by immune status, age, underlying chronic conditions, nutritional status, medications (particularly immunosuppressants or broad-spectrum antibiotics), and prior exposure or vaccination. Rehabilitation patients are among the most vulnerable populations in any healthcare setting, often presenting with multiple risk factors simultaneously.</p>
+
+      <div class="highlight-box clinical-tip">
+        <div class="box-label">🟢 Clinical Tip</div>
+        <p>When treating a patient with an unknown infection status, mentally walk through the chain. Ask: What is likely the reservoir in this room? What is the transmission mode? Does this patient have open skin, a device, or an immune deficit? This rapid mental audit keeps your precautions active and proportionate.</p>
+      </div>
+
+      <h3>Breaking the Chain: Rehab Clinician Responsibilities</h3>
+      <p>As a rehabilitation clinician, your interventions touch multiple links simultaneously. Hand hygiene disrupts the mode of transmission. PPE creates a barrier at the portal of entry. Environmental cleaning eliminates the reservoir. Vaccination programs reduce host susceptibility. Wound management controls portals of exit. No single action is sufficient — chain-breaking requires a layered, consistent approach across the entire care episode.</p>
+
+      <div class="highlight-box key-point">
+        <div class="box-label">⚠️ Key Point</div>
+        <p>In rehabilitation settings, patient transport is a high-risk transmission event. Moving a patient from an isolation room through hallways, elevators, and shared gym spaces can contaminate multiple surfaces. Always follow facility transport protocols and communicate isolation status to all receiving areas before and during transport.</p>
+      </div>
+
+      <p>Rehabilitation clinicians have extended, hands-on patient contact that often exceeds that of other healthcare providers. A physical or occupational therapist may provide 30–60 minutes of direct physical contact per session. This prolonged exposure, combined with the physical demands of transfer training and exercise, increases perspiration, skin-to-skin contact, and respiratory proximity. Understanding the chain of infection is not background knowledge — it is your primary occupational safety framework.</p>
+
+      <div class="knowledge-check">
+        <h4>📝 Knowledge Check</h4>
+        <p class="question">A rehabilitation clinician is treating a patient with MRSA colonization in a shared gym setting. Which link in the chain of infection is MOST directly addressed by disinfecting shared equipment between patients?</p>
+        <div class="answer-options" id="answers-1">
+          <button class="answer-option" onclick="selectAnswer(this, false)">A. Susceptible host — reducing patient vulnerability to MRSA</button>
+          <button class="answer-option" onclick="selectAnswer(this, false)">B. Portal of exit — preventing MRSA from leaving the patient's body</button>
+          <button class="answer-option" onclick="selectAnswer(this, true)">C. Reservoir — eliminating the environment where MRSA survives on surfaces</button>
+          <button class="answer-option" onclick="selectAnswer(this, false)">D. Infectious agent — destroying the virulence of the pathogen</button>
+        </div>
+        <div class="answer-feedback" id="feedback-1"></div>
+      </div>
+
+      <div class="module-completion">
+        <p>You have reviewed all content in Module 1. Mark complete to record your progress.</p>
+        <button class="complete-btn" id="btn-1" onclick="completeModule(1)">✓ Mark Module 1 Complete</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       MODULE 2 — Standard Precautions
+  ═══════════════════════════════════════════════════════════════ -->
+  <div class="module-block" id="module-2" data-module="2">
+    <div class="module-header" onclick="toggleModule(2)">
+      <div class="module-num" id="num-2">2</div>
+      <div class="module-title-wrap">
+        <div class="module-title">Standard Precautions: Hand Hygiene, PPE, and Universal Application</div>
+        <div class="module-meta">Module 2 · 15 minutes</div>
+      </div>
+      <div class="module-status" id="status-2">Not Started</div>
+      <div class="chevron">▼</div>
+    </div>
+    <div class="module-content">
+      <h2>Standard Precautions: The Foundation of Infection Prevention</h2>
+      <p>Standard precautions represent the minimum level of infection prevention practices that apply to ALL patients, in ALL healthcare settings, at ALL times — regardless of suspected or confirmed infection status. This principle emerged from the evolution of universal precautions in the late 1980s and was expanded by the CDC in the 1990s to address all body fluids, not just blood. The fundamental assumption is radical and necessary: every patient is a potential source of infection.</p>
+
+      <h3>Components of Standard Precautions</h3>
+      <p>Standard precautions encompass six core elements that rehabilitation clinicians must implement consistently across every patient encounter.</p>
+
+      <p><strong>Hand Hygiene — The Single Most Important Practice:</strong> The World Health Organization's "Five Moments for Hand Hygiene" provides a clear framework: (1) before touching a patient, (2) before a clean or aseptic procedure, (3) after body fluid exposure risk, (4) after touching a patient, and (5) after touching patient surroundings. Rehabilitation clinicians frequently skip Moment 5 — after touching the environment — because the contact seems incidental. Bed rails, call buttons, armrests, and therapy equipment are all patient surroundings that demand post-contact hygiene.</p>
+
+      <p>Alcohol-based hand rub (ABHR) is the preferred method for most clinical situations, requiring 20–30 seconds of coverage of all hand surfaces. Soap and water is required when hands are visibly soiled, when caring for patients with C. difficile (alcohol does not kill spores), and after removing gloves contaminated with spore-forming organisms. The minimum effective hand washing duration with soap and water is 40–60 seconds.</p>
+
+      <div class="highlight-box clinical-tip">
+        <div class="box-label">🟢 Clinical Tip</div>
+        <p>In rehabilitation gyms, place ABHR dispensers at every therapy station, not just at room entries. Clinicians performing mat work, gait training, and therapeutic exercise should perform hand hygiene between each patient contact, even during group sessions. Carry a personal ABHR bottle for home health and community visits.</p>
+      </div>
+
+      <p><strong>Personal Protective Equipment (PPE):</strong> PPE selection is risk-based, not routine-based. The type of PPE required depends on the anticipated exposure, not the patient's diagnosis alone. Gloves are required for contact with blood, body fluids, mucous membranes, non-intact skin, or potentially contaminated surfaces. Gowns are required when clothing or skin contact with blood or body fluids is anticipated. Masks and eye protection (goggles or face shields) are required when splashing or spraying of body fluids is possible.</p>
+
+      <p>Donning order: gown → mask → goggles/face shield → gloves. Doffing order (critical for preventing self-contamination): gloves → goggles/face shield → gown → mask, with hand hygiene performed after each removal. The doffing sequence is where most contamination events occur — hurried doffing is the rule in busy clinical environments and the leading cause of self-inoculation.</p>
+
+      <p><strong>Respiratory Hygiene and Cough Etiquette:</strong> Cover coughs and sneezes with a tissue or elbow. Dispose of tissues immediately and perform hand hygiene. Patients and visitors with respiratory symptoms should be offered masks upon arrival. In rehabilitation waiting areas and gyms, maintain physical separation of symptomatic individuals whenever possible.</p>
+
+      <p><strong>Safe Injection Practices:</strong> Though less common in rehabilitation, sharps use in trigger point injections, dry needling, and medication administration require single-use needles and syringes, never re-entry of multi-dose vials with used needles, and immediate sharp disposal in approved containers.</p>
+
+      <p><strong>Safe Handling of Potentially Contaminated Equipment and Surfaces:</strong> All patient care equipment that contacts mucous membranes or non-intact skin requires disinfection between patients. Rehabilitation equipment — therapy mats, parallel bars, transfer boards, crutches, walkers, and exercise equipment — falls into this category without exception.</p>
+
+      <div class="highlight-box caution">
+        <div class="box-label">🔴 Caution</div>
+        <p>Double-gloving does NOT substitute for proper technique. Studies show that inner gloves are contaminated in 15–25% of outer glove failures. PPE compliance is behavioral, not equipment-dependent. The most protective PPE is only as effective as the discipline applied in its use and removal.</p>
+      </div>
+
+      <h3>Standard Precautions in Rehabilitation-Specific Contexts</h3>
+      <p>Rehabilitation presents unique challenges to standard precautions. Physical proximity during transfers, hands-on manual techniques, and the therapeutic necessity of touching multiple body regions per session create far more frequent exposure opportunities than most clinical encounters. Establishing consistent personal routines — rather than task-dependent reminders — is the most effective strategy for maintaining compliance across a full clinical day.</p>
+
+      <div class="highlight-box key-point">
+        <div class="box-label">⚠️ Key Point</div>
+        <p>Standard precautions apply to blood, all body fluids (except sweat), non-intact skin, and mucous membranes. They do NOT differentiate between infected and non-infected patients. A patient who appears healthy and has no isolation orders may still be colonized with a transmissible pathogen. Standard precautions are always in effect.</p>
+      </div>
+
+      <div class="knowledge-check">
+        <h4>📝 Knowledge Check</h4>
+        <p class="question">A physical therapist is about to perform manual therapy on a patient with no isolation precautions and no visible wounds. The therapist's hands are clean and dry. According to standard precautions, what is the FIRST action required before initiating patient contact?</p>
+        <div class="answer-options" id="answers-2">
+          <button class="answer-option" onclick="selectAnswer(this, false)">A. Don gloves because all patient contact requires glove use</button>
+          <button class="answer-option" onclick="selectAnswer(this, true)">B. Perform hand hygiene before touching the patient</button>
+          <button class="answer-option" onclick="selectAnswer(this, false)">C. Review isolation orders to determine if precautions are needed</button>
+          <button class="answer-option" onclick="selectAnswer(this, false)">D. Apply gown and mask as contact with skin is anticipated</button>
+        </div>
+        <div class="answer-feedback" id="feedback-2"></div>
+      </div>
+
+      <div class="module-completion">
+        <p>You have reviewed all content in Module 2. Mark complete to record your progress.</p>
+        <button class="complete-btn" id="btn-2" onclick="completeModule(2)">✓ Mark Module 2 Complete</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       MODULE 3 — Transmission-Based Precautions
+  ═══════════════════════════════════════════════════════════════ -->
+  <div class="module-block" id="module-3" data-module="3">
+    <div class="module-header" onclick="toggleModule(3)">
+      <div class="module-num" id="num-3">3</div>
+      <div class="module-title-wrap">
+        <div class="module-title">Transmission-Based Precautions: Contact, Droplet, Airborne Isolation</div>
+        <div class="module-meta">Module 3 · 15 minutes</div>
+      </div>
+      <div class="module-status" id="status-3">Not Started</div>
+      <div class="chevron">▼</div>
+    </div>
+    <div class="module-content">
+      <h2>Transmission-Based Precautions: Beyond Standard Care</h2>
+      <p>When standard precautions alone are insufficient to interrupt the spread of a known or suspected infectious agent, transmission-based precautions are added as a second tier of protection. These precautions are pathogen- and route-specific, and are designed to address the particular mechanisms by which certain organisms spread. Understanding the distinctions between the three categories — contact, droplet, and airborne — is essential for every rehabilitation clinician, as the specific PPE, room requirements, and transport protocols differ substantially.</p>
+
+      <h3>Contact Precautions</h3>
+      <p>Contact precautions are indicated for pathogens transmitted by direct contact with the patient's skin or body fluids, or indirect contact with contaminated surfaces in the patient's environment. Common organisms requiring contact precautions in rehabilitation settings include MRSA (skin/wound colonization), VRE (gastrointestinal/urinary), C. difficile (fecal-oral via spores), CRE (multi-drug resistant gram-negatives), norovirus, RSV, and scabies.</p>
+
+      <p>Required PPE: gloves and gown upon entering the patient's room. PPE must be donned BEFORE entering and removed and discarded INSIDE or immediately outside the room. Hand hygiene with soap and water is required after caring for patients with C. difficile, as ABHR does not kill spores. Patient placement in a single room is preferred; if unavailable, cohorting patients with the same organism is acceptable.</p>
+
+      <p>For rehabilitation: limit equipment brought into the room. Stethoscopes, blood pressure cuffs, gait belts, and exercise equipment used inside contact isolation rooms must be dedicated to that patient or thoroughly disinfected before leaving the room. Do not carry therapy bags or clipboards into contact isolation rooms — place them outside on a clean surface.</p>
+
+      <div class="highlight-box clinical-tip">
+        <div class="box-label">🟢 Clinical Tip</div>
+        <p>When performing gait training with a contact precaution patient in a hallway or gym, the patient must wear a clean gown or clothing covering their lesions or drainage sites. The clinician must maintain gloves and gown throughout the session. Return the patient directly to their room — do not linger in common areas.</p>
+      </div>
+
+      <h3>Droplet Precautions</h3>
+      <p>Droplet precautions apply to pathogens transmitted via large respiratory droplets (>5 microns) generated during coughing, sneezing, talking, or procedures. These droplets travel no more than 3–6 feet and settle quickly on surfaces. Common organisms requiring droplet precautions include influenza, COVID-19 (in some protocols combined with airborne), pertussis, meningococcal disease, group A streptococcal pharyngitis, and rubella.</p>
+
+      <p>Required PPE: surgical mask upon entering the patient's room. Eye protection (goggles or face shield) is recommended when within 3 feet of the patient during procedures that may generate respiratory droplets. A private room is preferred; if unavailable, maintain at least 3 feet of spatial separation from other patients.</p>
+
+      <p>Rehabilitation implications: respiratory exercises, incentive spirometry coaching, singing-based speech therapy, and aerobic exercise all increase droplet generation. During these activities with droplet precaution patients, clinicians should wear a surgical or procedure mask and consider eye protection, particularly during any activity that increases the patient's respiratory rate or involves vocalization.</p>
+
+      <h3>Airborne Precautions</h3>
+      <p>Airborne precautions are the most stringent category, required for organisms transmitted via small droplet nuclei (<5 microns) that remain suspended in the air for extended periods and can travel beyond 3 feet — sometimes throughout an entire ward. Major organisms requiring airborne precautions include Mycobacterium tuberculosis (TB), measles (rubeola), varicella (chickenpox), and disseminated herpes zoster.</p>
+
+      <p>Required: N95 respirator (or higher) — NOT a surgical mask. N95 respirators must be fit-tested annually per OSHA standards. A negative-pressure airborne infection isolation room (AIIR) is required, with the door kept closed at all times. Room air must exchange at a minimum of 12 times per hour and exhaust directly outdoors or through HEPA filtration. Patient transport must be minimized; if transport is necessary, the patient wears a surgical mask to contain respiratory secretions.</p>
+
+      <div class="highlight-box caution">
+        <div class="box-label">🔴 Caution</div>
+        <p>Surgical masks do NOT protect against airborne organisms. Only fit-tested N95 or higher respirators provide adequate filtration for TB, measles, or varicella. If you have not been fit-tested, you must not enter an airborne isolation room. Report unfit-tested status to your supervisor immediately and arrange for testing before the clinical situation arises.</p>
+      </div>
+
+      <h3>Combination and Enhanced Precautions</h3>
+      <p>Some pathogens require simultaneous application of multiple precaution categories. COVID-19, for example, often triggers both droplet and contact precautions in many facility protocols. Ebola requires full contact and airborne precautions with enhanced PPE. SARS and MERS historically triggered contact, droplet, and airborne simultaneously. When multiple precaution categories are ordered, apply the PPE requirements for all categories concurrently.</p>
+
+      <div class="highlight-box key-point">
+        <div class="box-label">⚠️ Key Point</div>
+        <p>Isolation precautions are prescribed by infection control or the treating physician based on clinical and laboratory findings. However, rehabilitation clinicians should be aware of clinical presentations that suggest the need for precautions even before orders are written: unexplained diarrhea, new productive cough, draining wounds of unknown etiology, or fever with rash. When in doubt, apply standard precautions plus contact precautions and consult the charge nurse or infection control officer.</p>
+      </div>
+
+      <div class="knowledge-check">
+        <h4>📝 Knowledge Check</h4>
+        <p class="question">A speech-language pathologist is scheduled to treat a patient with confirmed pulmonary tuberculosis. The patient is in an AIIR room. What is the MINIMUM respiratory protection required for the clinician to enter the room?</p>
+        <div class="answer-options" id="answers-3">
+          <button class="answer-option" onclick="selectAnswer(this, false)">A. A standard surgical mask, worn properly over the nose and mouth</button>
+          <button class="answer-option" onclick="selectAnswer(this, false)">B. A double-layered surgical mask for enhanced filtration</button>
+          <button class="answer-option" onclick="selectAnswer(this, true)">C. A fit-tested N95 respirator or higher-level respiratory protection</button>
+          <button class="answer-option" onclick="selectAnswer(this, false)">D. No respiratory protection is needed if the door remains open for ventilation</button>
+        </div>
+        <div class="answer-feedback" id="feedback-3"></div>
+      </div>
+
+      <div class="module-completion">
+        <p>You have reviewed all content in Module 3. Mark complete to record your progress.</p>
+        <button class="complete-btn" id="btn-3" onclick="completeModule(3)">✓ Mark Module 3 Complete</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       MODULE 4 — HAIs: MRSA, C. diff, VRE, CRE
+  ═══════════════════════════════════════════════════════════════ -->
+  <div class="module-block" id="module-4" data-module="4">
+    <div class="module-header" onclick="toggleModule(4)">
+      <div class="module-num" id="num-4">4</div>
+      <div class="module-title-wrap">
+        <div class="module-title">Healthcare-Associated Infections (HAIs): MRSA, C. difficile, VRE, CRE</div>
+        <div class="module-meta">Module 4 · 15 minutes</div>
+      </div>
+      <div class="module-status" id="status-4">Not Started</div>
+      <div class="chevron">▼</div>
+    </div>
+    <div class="module-content">
+      <h2>Healthcare-Associated Infections: The Clinician's Guide</h2>
+      <p>Healthcare-associated infections (HAIs) are infections that patients acquire during the course of receiving healthcare treatment for other conditions. The CDC estimates that on any given day, approximately 1 in 31 hospital patients has at least one HAI. In the United States, HAIs affect approximately 1.7 million patients annually and contribute to nearly 99,000 deaths. For rehabilitation clinicians, who often assume care during or after acute illness, understanding the most prevalent and dangerous HAIs is not optional — it is a professional obligation.</p>
+
+      <h3>Methicillin-Resistant Staphylococcus aureus (MRSA)</h3>
+      <p>MRSA is a strain of Staphylococcus aureus that has developed resistance to methicillin and most other beta-lactam antibiotics. It is transmitted primarily through direct contact with colonized or infected individuals and contaminated surfaces. MRSA can colonize the skin, nares, wounds, and respiratory tract without causing active infection — colonized individuals may be asymptomatic reservoirs.</p>
+
+      <p>In rehabilitation settings, MRSA is encountered in postoperative patients, those with pressure injuries, individuals with urinary catheters, and anyone with a prior MRSA history. Signs of active MRSA infection include wound warmth, erythema, purulent drainage, fluctuance, and systemic signs of infection (fever, elevated WBC). Contact precautions are required for all MRSA-positive patients. Treatment options include vancomycin (IV) or linezolid, trimethoprim-sulfamethoxazole, or doxycycline for skin/soft tissue infections.</p>
+
+      <div class="highlight-box clinical-tip">
+        <div class="box-label">🟢 Clinical Tip</div>
+        <p>MRSA nasal decolonization with mupirocin ointment is used in many facilities pre-surgically and for recurrent carriers. If you observe a patient applying nasal ointment, this is likely a decolonization protocol — follow facility contact precaution policies regardless of whether active infection is present.</p>
+      </div>
+
+      <h3>Clostridioides difficile (C. diff)</h3>
+      <p>C. difficile is a spore-forming, toxin-producing bacterium that causes antibiotic-associated diarrhea and colitis. It is the most common HAI in U.S. hospitals. C. diff thrives after antibiotic use disrupts the normal gut flora, allowing spore germination and toxin production. Symptoms range from mild diarrhea to fulminant colitis, toxic megacolon, and death in severe cases.</p>
+
+      <p>C. diff spores are extraordinarily resilient — they survive on surfaces for months and are resistant to alcohol. Contact precautions with soap-and-water hand hygiene (not ABHR) are mandatory. Dedicated patient care equipment is required. Environmental cleaning must use EPA-registered sporicidal disinfectants (e.g., bleach-based products). Rehabilitation clinicians should be especially vigilant: a patient with unexplained diarrhea and recent antibiotic use is a high-probability C. diff case until proven otherwise.</p>
+
+      <h3>Vancomycin-Resistant Enterococcus (VRE)</h3>
+      <p>Enterococci are normal gut flora that become pathogenic in healthcare settings, particularly in immunocompromised or critically ill patients. VRE has developed resistance to vancomycin, leaving few treatment options (linezolid, daptomycin). VRE colonizes the gastrointestinal tract and urinary tract most commonly. Transmission is fecal-oral via contaminated hands and surfaces.</p>
+
+      <p>VRE is a particular concern in patients with urinary catheters, those who have had prolonged antibiotic courses, transplant recipients, and patients in ICUs or long-term acute care. Contact precautions are required. VRE can survive on dry surfaces for days to weeks, making environmental decontamination critical during rehabilitation of colonized patients.</p>
+
+      <h3>Carbapenem-Resistant Enterobacteriaceae (CRE)</h3>
+      <p>CRE represents a group of gram-negative bacteria (including Klebsiella pneumoniae and Escherichia coli) that have become resistant to carbapenems — the antibiotic class considered the "last resort" for serious gram-negative infections. CRE infections carry mortality rates of 40–50% in bloodstream infections. The most feared variant, Klebsiella pneumoniae carbapenemase (KPC), has spread globally.</p>
+
+      <p>CRE is transmitted via contact with colonized patients or contaminated surfaces. Contact precautions are required, and many facilities implement enhanced contact precautions or "CRE bundles" that include active surveillance cultures, patient cohorting, and dedicated staff assignments. Rehabilitation clinicians working in acute care or long-term acute care facilities will increasingly encounter CRE-positive patients as prevalence rises.</p>
+
+      <div class="highlight-box caution">
+        <div class="box-label">🔴 Caution</div>
+        <p>Colonization with any of these organisms — MRSA, C. diff, VRE, or CRE — does not mean active infection. However, colonized patients require the same precautions as infected patients, as they remain reservoirs for transmission. Never relax precautions simply because a patient "looks fine" or denies symptoms.</p>
+      </div>
+
+      <div class="highlight-box key-point">
+        <div class="box-label">⚠️ Key Point</div>
+        <p>The rehabilitation clinician's role in HAI prevention goes beyond precaution compliance. Early mobilization reduces HAI risk by preventing aspiration pneumonia, urinary tract infections from prolonged catheterization, and skin breakdown. Getting patients moving safely is itself an infection prevention strategy.</p>
+      </div>
+
+      <div class="knowledge-check">
+        <h4>📝 Knowledge Check</h4>
+        <p class="question">An occupational therapist completes a dressing activity session with a patient on C. difficile contact precautions. The therapist used gloves and gown throughout. What is the MOST appropriate hand hygiene action upon removing the gown and gloves at the room exit?</p>
+        <div class="answer-options" id="answers-4">
+          <button class="answer-option" onclick="selectAnswer(this, false)">A. Use alcohol-based hand rub, as it is the most effective option for all pathogens</button>
+          <button class="answer-option" onclick="selectAnswer(this, true)">B. Wash hands with soap and water, as ABHR does not kill C. difficile spores</button>
+          <button class="answer-option" onclick="selectAnswer(this, false)">C. Either ABHR or soap and water are equally effective for C. difficile</button>
+          <button class="answer-option" onclick="selectAnswer(this, false)">D. Hand hygiene is not required if gloves were worn for the entire session</button>
+        </div>
+        <div class="answer-feedback" id="feedback-4"></div>
+      </div>
+
+      <div class="module-completion">
+        <p>You have reviewed all content in Module 4. Mark complete to record your progress.</p>
+        <button class="complete-btn" id="btn-4" onclick="completeModule(4)">✓ Mark Module 4 Complete</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       MODULE 5 — Environmental Decontamination
+  ═══════════════════════════════════════════════════════════════ -->
+  <div class="module-block" id="module-5" data-module="5">
+    <div class="module-header" onclick="toggleModule(5)">
+      <div class="module-num" id="num-5">5</div>
+      <div class="module-title-wrap">
+        <div class="module-title">Environmental Decontamination: Equipment Cleaning, Disinfection, Sterilization</div>
+        <div class="module-meta">Module 5 · 15 minutes</div>
+      </div>
+      <div class="module-status" id="status-5">Not Started</div>
+      <div class="chevron">▼</div>
+    </div>
+    <div class="module-content">
+      <h2>Environmental Decontamination in Rehabilitation Settings</h2>
+      <p>The healthcare environment is a dynamic reservoir for pathogenic organisms. Studies consistently demonstrate that hospital rooms, therapy gyms, and rehabilitation equipment harbor organisms capable of causing infection. The Spaulding Classification System, developed in the 1960s and still the gold standard, provides a logical framework for selecting the appropriate level of decontamination based on the intended use of the item and its associated infection risk.</p>
+
+      <h3>The Spaulding Classification System</h3>
+      <p><strong>Critical Items</strong> enter sterile tissue or the vascular system and carry the highest infection risk. They require sterilization — the complete elimination of all microbial life including spores. Examples: surgical instruments, implants, intravascular catheters, needles. Sterilization methods include steam autoclave (most common), ethylene oxide gas (heat-sensitive items), dry heat, and hydrogen peroxide plasma.</p>
+
+      <p><strong>Semi-Critical Items</strong> contact mucous membranes or non-intact skin. They require high-level disinfection (HLD) at minimum, which kills all microorganisms except high numbers of bacterial spores. Examples: respiratory therapy equipment, laryngoscope blades, endoscopes, vaginal specula. HLD agents include glutaraldehyde, ortho-phthalaldehyde (OPA), and hydrogen peroxide vapor. In rehabilitation, spirometry mouthpieces and pulse oximeter probes used on non-intact skin fall into this category.</p>
+
+      <p><strong>Non-Critical Items</strong> contact intact skin only. They require low- to intermediate-level disinfection. Examples include blood pressure cuffs, therapy mats, parallel bars, crutches, walkers, transfer boards, and most rehabilitation equipment. EPA-registered hospital disinfectants are appropriate. The specific disinfectant must match the target organism — a quaternary ammonium compound effective against MRSA may not be effective against C. difficile spores.</p>
+
+      <div class="highlight-box key-point">
+        <div class="box-label">⚠️ Key Point</div>
+        <p>Cleaning must precede disinfection. Organic material (blood, wound drainage, body fluids) inactivates most disinfectants. The correct sequence is always: (1) Remove visible contamination with detergent and water, (2) Rinse thoroughly, (3) Apply appropriate disinfectant at the correct concentration, (4) Maintain wet contact for the required dwell time. Skipping cleaning or not allowing adequate dwell time renders disinfection ineffective.</p>
+      </div>
+
+      <h3>Rehabilitation Equipment Decontamination Protocols</h3>
+      <p>Therapy mats are among the most heavily contaminated surfaces in rehabilitation settings. Studies have isolated MRSA, VRE, and gram-negative organisms from therapy mat surfaces even after routine cleaning. Mats should be cleaned with an EPA-registered disinfectant between every patient use, using sufficient product to maintain surface wetness for the labeled dwell time (typically 1–10 minutes depending on the product). Paper or disposable barriers do not substitute for disinfection — they reduce visible contamination but do not prevent pathogen transfer to mat surfaces.</p>
+
+      <p>Parallel bars, handrails, and therapy benches require disinfection after each patient contact. Gait belts that contact patient skin should either be patient-dedicated or laundered/disinfected between patients. Resistance bands and exercise balls that contact multiple patients require disinfection between uses and should not be shared with isolation precaution patients without dedicated assignment.</p>
+
+      <p>Assistive devices — crutches, walkers, canes — that are dispensed from a facility pool must be disinfected before issuing to a new patient. The handgrips and axillary pads are primary contact surfaces and should receive particular attention. Document disinfection per facility protocol.</p>
+
+      <div class="highlight-box clinical-tip">
+        <div class="box-label">🟢 Clinical Tip</div>
+        <p>Create a visual system in your therapy gym: a red tag or color-coded marker indicates equipment that has been used but not yet disinfected. A green tag confirms cleaning and readiness for the next patient. This simple system prevents inadvertent use of contaminated equipment during busy clinical periods and creates accountability within the team.</p>
+      </div>
+
+      <h3>Disinfectant Selection and Chemical Safety</h3>
+      <p>Not all disinfectants are appropriate for all surfaces or pathogens. Bleach (sodium hypochlorite) at 1:10 dilution is highly effective against C. difficile spores, norovirus, and most HAI pathogens but is corrosive to metals and irritating to airways. Quaternary ammonium compounds (quats) are effective against MRSA and VRE but may be ineffective against non-enveloped viruses and C. difficile. Accelerated hydrogen peroxide products offer broad spectrum efficacy with lower toxicity. Always follow the manufacturer's SDS and the EPA registration label — using a product in a manner inconsistent with its labeling is a violation of federal law and may result in ineffective decontamination.</p>
+
+      <div class="highlight-box caution">
+        <div class="box-label">🔴 Caution</div>
+        <p>Never mix disinfectants. Bleach combined with ammonia-containing products produces toxic chloramine gases. Bleach combined with acids produces chlorine gas. Chemical exposure injuries in healthcare workers from improper disinfectant mixing occur annually. Read all product labels and follow facility protocols for chemical storage, use, and disposal.</p>
+      </div>
+
+      <div class="knowledge-check">
+        <h4>📝 Knowledge Check</h4>
+        <p class="question">According to the Spaulding Classification System, a therapy mat used for floor exercises with multiple patients is classified as which category, and what level of decontamination is required?</p>
+        <div class="answer-options" id="answers-5">
+          <button class="answer-option" onclick="selectAnswer(this, false)">A. Critical item — requires sterilization between each patient use</button>
+          <button class="answer-option" onclick="selectAnswer(this, false)">B. Semi-critical item — requires high-level disinfection with glutaraldehyde</button>
+          <button class="answer-option" onclick="selectAnswer(this, true)">C. Non-critical item — requires low- to intermediate-level disinfection between patient uses</button>
+          <button class="answer-option" onclick="selectAnswer(this, false)">D. Non-critical item — cleaning with detergent and water alone is sufficient</button>
+        </div>
+        <div class="answer-feedback" id="feedback-5"></div>
+      </div>
+
+      <div class="module-completion">
+        <p>You have reviewed all content in Module 5. Mark complete to record your progress.</p>
+        <button class="complete-btn" id="btn-5" onclick="completeModule(5)">✓ Mark Module 5 Complete</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       MODULE 6 — Sharps Safety and Bloodborne Pathogens
+  ═══════════════════════════════════════════════════════════════ -->
+  <div class="module-block" id="module-6" data-module="6">
+    <div class="module-header" onclick="toggleModule(6)">
+      <div class="module-num" id="num-6">6</div>
+      <div class="module-title-wrap">
+        <div class="module-title">Sharps Safety, Bloodborne Pathogens, and OSHA Standards</div>
+        <div class="module-meta">Module 6 · 15 minutes</div>
+      </div>
+      <div class="module-status" id="status-6">Not Started</div>
+      <div class="chevron">▼</div>
+    </div>
+    <div class="module-content">
+      <h2>Sharps Safety and Bloodborne Pathogens in Rehabilitation</h2>
+      <p>Needlestick and sharps injuries remain a significant occupational hazard in healthcare, with approximately 385,000 sharps injuries occurring annually among U.S. healthcare workers. Each injury represents a potential exposure to bloodborne pathogens including Hepatitis B virus (HBV), Hepatitis C virus (HCV), and Human Immunodeficiency Virus (HIV). OSHA's Bloodborne Pathogens Standard (29 CFR 1910.1030) establishes the legal framework for employer and employee obligations in managing bloodborne pathogen exposure risk.</p>
+
+      <h3>OSHA Bloodborne Pathogens Standard: Key Requirements</h3>
+      <p>Every healthcare employer must maintain an Exposure Control Plan (ECP) that is updated annually and accessible to all employees. The ECP must include an exposure determination (identifying which job classifications and tasks involve occupational exposure), implementation of engineering controls and work practice controls, provision of PPE at no cost to employees, Hepatitis B vaccination offered to all at-risk employees, post-exposure evaluation and follow-up, and annual training for all employees with occupational exposure.</p>
+
+      <p>Engineering controls take priority over PPE in the hierarchy of hazard control. Sharps with engineered sharps injury protections (SESIPs) — safety-engineered needles, retractable lancets, needleless IV systems — must be used whenever available. The Needlestick Safety and Prevention Act (2001) requires facilities to evaluate and implement these safer devices annually.</p>
+
+      <div class="highlight-box clinical-tip">
+        <div class="box-label">🟢 Clinical Tip</div>
+        <p>Rehabilitation clinicians who perform dry needling, acupuncture-based interventions, or therapeutic injections must receive specific bloodborne pathogen training for their scope of practice. Dry needling needles — though solid filiform and smaller than hollow-bore needles — still carry transmission risk if accidentally punctured. Always use sharps containers within arm's reach when performing any needling procedure.</p>
+      </div>
+
+      <h3>The Three Primary Bloodborne Pathogens</h3>
+      <p><strong>Hepatitis B Virus (HBV):</strong> HBV is the most transmissible bloodborne pathogen via needlestick — the risk of infection from a single needlestick with HBV-positive blood is 6–30% for unvaccinated individuals (versus 0.3% for HIV). HBV can survive on dry surfaces at room temperature for up to 7 days. Vaccination with the HBV three-dose series provides near-complete protection. Post-exposure prophylaxis (PEP) with Hepatitis B immune globulin (HBIG) and vaccination is available for unvaccinated individuals. Serologic testing post-vaccination confirms immunity.</p>
+
+      <p><strong>Hepatitis C Virus (HCV):</strong> HCV is transmitted through blood-to-blood contact. The needlestick transmission risk is approximately 1.8%. There is no vaccine for HCV, but curative direct-acting antiviral (DAA) therapies now achieve >95% cure rates. Post-exposure testing and follow-up are critical. Baseline HCV testing with follow-up at 3–6 months is the current standard after HCV-positive exposure.</p>
+
+      <p><strong>Human Immunodeficiency Virus (HIV):</strong> HIV needlestick transmission risk is approximately 0.3% for percutaneous exposure and 0.09% for mucous membrane exposure. Post-exposure prophylaxis (PEP) must begin within 72 hours of exposure (ideally within 2 hours) and is taken for 28 days. PEP significantly reduces transmission risk. HIV testing at baseline, 6 weeks, 3 months, and 6 months post-exposure is standard.</p>
+
+      <h3>Safe Sharps Practices for Rehabilitation Clinicians</h3>
+      <p>Never recap needles using a two-handed technique. If recapping is unavoidable, use a single-handed scoop technique or a mechanical recapping device. Never bend, break, or remove needles from syringes. Dispose of all sharps immediately after use in puncture-resistant, leak-proof sharps containers. Never overfill sharps containers beyond the marked fill line (typically 75% full). Do not reach into sharps containers.</p>
+
+      <p>Sharps containers must be placed at the point of use — adjacent to treatment tables, within patient rooms, and during any procedure where sharps are used. "Walking across the room" with an uncapped needle accounts for a significant percentage of healthcare worker needlestick injuries. If a sharps container is not within arm's reach, do not begin a procedure until one is positioned correctly.</p>
+
+      <div class="highlight-box caution">
+        <div class="box-label">🔴 Caution</div>
+        <p>Post-exposure response is time-critical. Report ALL sharps injuries immediately to your supervisor and occupational health department, regardless of perceived risk. The source patient should be tested for HBV, HCV, and HIV with consent. Do not delay reporting — PEP windows are short, and late reporting reduces treatment effectiveness and creates medicolegal complications.</p>
+      </div>
+
+      <h3>Exposure Incidents: What to Do</h3>
+      <p>Immediately wash the exposure site with soap and water for 15 minutes. For mucous membrane exposure, flush with large amounts of water, saline, or sterile eyewash. Do not squeeze or scrub the wound. Report immediately to your supervisor and facility occupational health service. Complete required incident documentation per facility policy. Source patient testing and PEP evaluation should occur within 2 hours of exposure for optimal outcomes.</p>
+
+      <div class="knowledge-check">
+        <h4>📝 Knowledge Check</h4>
+        <p class="question">A physical therapist performing dry needling sustains an accidental needlestick from a filiform needle used on a patient with unknown HIV status. What is the MOST time-critical action in the post-exposure response?</p>
+        <div class="answer-options" id="answers-6">
+          <button class="answer-option" onclick="selectAnswer(this, false)">A. Wait for source patient HIV test results before initiating any action</button>
+          <button class="answer-option" onclick="selectAnswer(this, false)">B. Begin PEP only if the source patient tests HIV-positive within 24 hours</button>
+          <button class="answer-option" onclick="selectAnswer(this, true)">C. Report immediately and consult occupational health for PEP evaluation within 2 hours</button>
+          <button class="answer-option" onclick="selectAnswer(this, false)">D. Document the exposure and follow up with occupational health at the next available appointment</button>
+        </div>
+        <div class="answer-feedback" id="feedback-6"></div>
+      </div>
+
+      <div class="module-completion">
+        <p>You have reviewed all content in Module 6. Mark complete to record your progress.</p>
+        <button class="complete-btn" id="btn-6" onclick="completeModule(6)">✓ Mark Module 6 Complete</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       MODULE 7 — Respiratory Infections
+  ═══════════════════════════════════════════════════════════════ -->
+  <div class="module-block" id="module-7" data-module="7">
+    <div class="module-header" onclick="toggleModule(7)">
+      <div class="module-num" id="num-7">7</div>
+      <div class="module-title-wrap">
+        <div class="module-title">Respiratory Infections: Influenza, COVID-19, TB — Rehab Implications</div>
+        <div class="module-meta">Module 7 · 15 minutes</div>
+      </div>
+      <div class="module-status" id="status-7">Not Started</div>
+      <div class="chevron">▼</div>
+    </div>
+    <div class="module-content">
+      <h2>Respiratory Infections in the Rehabilitation Setting</h2>
+      <p>Respiratory infections present a unique challenge in rehabilitation because the therapeutic interventions themselves — exercise, breathing training, mobilization, and vocalization tasks — can generate or amplify respiratory secretions and aerosols. Rehabilitation clinicians must balance the clinical imperative to provide early, intensive therapy with the infection control imperative to prevent nosocomial respiratory transmission. This module addresses the three most clinically significant respiratory pathogens for rehabilitation practice.</p>
+
+      <h3>Influenza</h3>
+      <p>Seasonal influenza causes 12,000–61,000 deaths annually in the United States, with the highest burden in adults over 65 and those with cardiopulmonary comorbidities — precisely the population most often encountered in rehabilitation settings. Influenza spreads via large droplets (within 6 feet) and, during high-aerosol-generating activities, potentially via smaller airborne particles. The incubation period is 1–4 days, and infected individuals are contagious 1 day before symptom onset through 5–7 days after.</p>
+
+      <p>Annual influenza vaccination is the most effective prevention strategy and is strongly recommended — and in many facilities required — for all healthcare workers. Vaccination rates among healthcare workers directly correlate with patient mortality reductions in long-term care facilities. Droplet precautions plus contact precautions are standard for hospitalized influenza patients. Oseltamivir (Tamiflu) can reduce illness duration if initiated within 48 hours of symptom onset.</p>
+
+      <p>Rehabilitation implications: exercise increases respiratory rate and volume, potentially increasing droplet and aerosol generation. Minimize aerosol-generating exercises (vigorous aerobic training, incentive spirometry) with confirmed influenza patients unless clinically necessary and appropriate precautions are in place. Group therapy sessions must be suspended or reconfigured during influenza outbreaks in rehabilitation units.</p>
+
+      <div class="highlight-box clinical-tip">
+        <div class="box-label">🟢 Clinical Tip</div>
+        <p>Post-influenza respiratory complications — including pneumonia, respiratory muscle weakness, and marked deconditioning — are a primary reason for rehabilitation referral. Pulmonary rehabilitation, breathing exercises, and progressive aerobic reconditioning are evidence-based interventions for post-influenza recovery. Ensure infection clearance is confirmed before initiating group-based pulmonary rehab.</p>
+      </div>
+
+      <h3>COVID-19 (SARS-CoV-2)</h3>
+      <p>The COVID-19 pandemic fundamentally reshaped infection control protocols across all healthcare settings. SARS-CoV-2 spreads via respiratory droplets, close contact, and — particularly in enclosed, poorly ventilated spaces — airborne transmission. Most current facility protocols apply droplet plus contact precautions for COVID-positive patients; some apply enhanced airborne precautions (N95) for aerosol-generating procedures or high-viral-load presentations.</p>
+
+      <p>Long COVID (post-acute sequelae of SARS-CoV-2, PASC) has created an enormous rehabilitation caseload of patients with fatigue, dyspnea, cognitive impairment, and post-exertional malaise (PEM). Rehabilitation clinicians must understand that PEM — symptom exacerbation following physical or cognitive exertion — requires modified, pacing-based therapy approaches rather than standard progressive exercise protocols used in other conditions.</p>
+
+      <p>COVID-19 isolation: patients are typically isolated for a minimum of 5–10 days from symptom onset or positive test, with return-to-care criteria based on fever resolution and symptom improvement. Testing-based de-isolation (negative antigen tests on days 5 and 6) is used in many facilities. Always follow current facility and local health department guidelines, as recommendations evolved rapidly and continue to be updated.</p>
+
+      <h3>Tuberculosis (TB)</h3>
+      <p>Mycobacterium tuberculosis (MTB) is transmitted via airborne droplet nuclei — small particles that can remain suspended in room air for hours. Active pulmonary TB requires airborne isolation in a negative-pressure AIIR. Rehabilitation clinicians should be aware of the epidemiology: TB disproportionately affects foreign-born individuals, those experiencing homelessness, persons with HIV, and individuals who have been incarcerated.</p>
+
+      <p>Annual TB screening (IGRA blood test or TST skin test) is required for all healthcare workers. Latent TB infection (LTBI) — positive test without active disease — does not require isolation but warrants treatment. Active pulmonary TB is highly infectious; a single cough can release thousands of droplet nuclei. Rehabilitation treatment of active TB patients must occur in negative-pressure rooms or be deferred until the patient is confirmed non-infectious (3 consecutive negative sputum smears).</p>
+
+      <div class="highlight-box caution">
+        <div class="box-label">🔴 Caution</div>
+        <p>Clinicians who are immunocompromised (HIV-positive, on immunosuppressant medications, pregnant) are at elevated risk from TB exposure. If you fall into any of these categories, inform your occupational health department and request appropriate risk mitigation — including possible reassignment away from suspected TB patients — before the clinical exposure occurs.</p>
+      </div>
+
+      <div class="highlight-box key-point">
+        <div class="box-label">⚠️ Key Point</div>
+        <p>Respiratory infections and rehabilitation intersect most intensely in pulmonary rehabilitation, post-ICU care, and long-term care settings. Understanding when to advance therapy aggressively (post-pneumonia, post-COVID stable phase) versus when to modify or defer (active infection, PEM, hemodynamic instability from sepsis) is a core clinical competency in respiratory rehabilitation.</p>
+      </div>
+
+      <div class="knowledge-check">
+        <h4>📝 Knowledge Check</h4>
+        <p class="question">A rehabilitation clinician is scheduled to treat a patient with confirmed active pulmonary tuberculosis who is still in isolation. The patient needs ambulation training in their room. What is the MOST appropriate respiratory protection for the clinician?</p>
+        <div class="answer-options" id="answers-7">
+          <button class="answer-option" onclick="selectAnswer(this, false)">A. A surgical mask is sufficient since the session will be brief</button>
+          <button class="answer-option" onclick="selectAnswer(this, false)">B. No respiratory protection is needed if the patient wears a mask</button>
+          <button class="answer-option" onclick="selectAnswer(this, true)">C. A fit-tested N95 respirator, as TB requires airborne precautions</button>
+          <button class="answer-option" onclick="selectAnswer(this, false)">D. Defer all rehabilitation until the patient is fully treated and cured</button>
+        </div>
+        <div class="answer-feedback" id="feedback-7"></div>
+      </div>
+
+      <div class="module-completion">
+        <p>You have reviewed all content in Module 7. Mark complete to record your progress.</p>
+        <button class="complete-btn" id="btn-7" onclick="completeModule(7)">✓ Mark Module 7 Complete</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       MODULE 8 — Wound Infection Recognition
+  ═══════════════════════════════════════════════════════════════ -->
+  <div class="module-block" id="module-8" data-module="8">
+    <div class="module-header" onclick="toggleModule(8)">
+      <div class="module-num" id="num-8">8</div>
+      <div class="module-title-wrap">
+        <div class="module-title">Wound Infection Recognition and Management in Rehabilitation</div>
+        <div class="module-meta">Module 8 · 15 minutes</div>
+      </div>
+      <div class="module-status" id="status-8">Not Started</div>
+      <div class="chevron">▼</div>
+    </div>
+    <div class="module-content">
+      <h2>Wound Infection Recognition and Management</h2>
+      <p>Rehabilitation clinicians are uniquely positioned to detect wound infections early. Unlike physicians who may see a patient briefly once daily, rehabilitation therapists often provide extended, hands-on treatment multiple times per week — and in many cases are the first to observe changes in wound appearance, patient behavior, or systemic status that signal infection. Early detection and communication are not ancillary responsibilities; they are clinical imperatives that directly affect patient outcomes.</p>
+
+      <h3>The Wound Infection Continuum</h3>
+      <p>Wounds exist along an infection continuum that ranges from contamination (presence of organisms without host response) through colonization (organisms present but not causing injury) to critical colonization (organisms present in quantities producing delayed healing without classic infection signs) to infection (organisms causing tissue damage and host response).</p>
+
+      <p>Understanding this continuum is important because not every wound with bacteria is infected, and not every infected wound shows the classic signs of infection. Rehabilitation clinicians should understand the signs that indicate a wound has moved from colonization to infection, requiring immediate medical consultation.</p>
+
+      <h3>Classic Signs of Wound Infection (NERDS/STONEES Framework)</h3>
+      <p>The NERDS criteria indicate critical colonization (superficial wound infection): Non-healing despite treatment, Exudate increase, Red friable granulation tissue, Debris (necrotic tissue, slough), Smell/odor. The STONEES criteria indicate deep wound infection: Size increasing, Temperature elevated (>1°C warmer than surrounding tissue), Os (probes to bone), New areas of breakdown, Erythema/edema, Exudate (purulent), Smell.</p>
+
+      <p>Systemic signs of wound infection include fever (temperature >38°C/100.4°F), elevated heart rate, leukocytosis, and in severe cases, the systemic inflammatory response syndrome (SIRS) criteria suggesting wound-source sepsis. Any patient with a wound who develops fever, tachycardia, or altered mental status requires immediate nursing notification and medical evaluation.</p>
+
+      <div class="highlight-box clinical-tip">
+        <div class="box-label">🟢 Clinical Tip</div>
+        <p>During functional mobility training, the act of repositioning or transferring a patient often provides a natural opportunity to visually inspect pressure-bearing surfaces (sacrum, heels, greater trochanters). Rehabilitation clinicians should incorporate brief wound surveillance into every mobility session and document and report any new or worsening skin breakdown immediately.</p>
+      </div>
+
+      <h3>Common Wound Types in Rehabilitation and Associated Infection Risks</h3>
+      <p><strong>Surgical wounds:</strong> Post-operative incisions are at highest risk in the first 72–96 hours. Signs of surgical site infection (SSI) include increasing incisional pain after initial improvement, wound edge separation, erythema extending beyond the incision margins, seropurulent drainage, and fever. SSIs are classified as superficial incisional, deep incisional, or organ/space infections. Any concern for SSI requires surgical consultation.</p>
+
+      <p><strong>Pressure injuries:</strong> Stage 3, 4, and unstageable pressure injuries are open wounds at high infection risk. Wound cultures from superficial swabs are often misleading (reflecting surface colonization, not true infection). Tissue biopsy or quantitative wound culture provides the most accurate bacteriology. MRSA, Pseudomonas, and polymicrobial infections are common in chronic pressure injuries.</p>
+
+      <p><strong>Diabetic foot wounds:</strong> Neuropathic and ischemic wounds in diabetic patients carry particularly high infection risk due to impaired immune response, poor vascularity, and frequent polymicrobial contamination. The Wagner and University of Texas wound classification systems grade severity. Osteomyelitis — bone infection complicating diabetic foot wounds — is diagnosed by the "probe-to-bone" test (95% PPV for osteomyelitis) or MRI.</p>
+
+      <div class="highlight-box caution">
+        <div class="box-label">🔴 Caution</div>
+        <p>Rehabilitation clinicians should never independently debride, irrigate, pack, or change wound dressings unless operating within their facility's scope-of-practice protocols and with appropriate training. Unauthorized wound manipulation can introduce organisms, disrupt fragile granulation tissue, and delay healing. Always communicate wound concerns through appropriate channels and document observations clearly.</p>
+      </div>
+
+      <h3>Infection Prevention in Wound Management</h3>
+      <p>When working near or around wounds, rehabilitation clinicians should maintain gloves throughout the session when wound drainage is present or anticipated, avoid placing contaminated equipment on wound dressings or near the wound bed, wash hands immediately after removing wound-contact gloves, and communicate any dressing displacement or excessive drainage to nursing staff before leaving the patient's room.</p>
+
+      <div class="knowledge-check">
+        <h4>📝 Knowledge Check</h4>
+        <p class="question">During a transfer training session, a physical therapist notices that a patient's sacral wound has new surrounding erythema extending 3 cm beyond the wound edge, increased purulent exudate, and the patient reports increasing pain. What is the MOST appropriate immediate action?</p>
+        <div class="answer-options" id="answers-8">
+          <button class="answer-option" onclick="selectAnswer(this, false)">A. Continue the therapy session and document findings in the medical record at end of shift</button>
+          <button class="answer-option" onclick="selectAnswer(this, false)">B. Apply a new dressing with antimicrobial solution and monitor for 48 hours</button>
+          <button class="answer-option" onclick="selectAnswer(this, true)">C. Notify the charge nurse immediately, document findings, and suspend mobility training pending medical evaluation</button>
+          <button class="answer-option" onclick="selectAnswer(this, false)">D. Obtain a wound culture swab and send to the lab before contacting nursing</button>
+        </div>
+        <div class="answer-feedback" id="feedback-8"></div>
+      </div>
+
+      <div class="module-completion">
+        <p>You have reviewed all content in Module 8. Mark complete to record your progress.</p>
+        <button class="complete-btn" id="btn-8" onclick="completeModule(8)">✓ Mark Module 8 Complete</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       MODULE 9 — Antibiotic Stewardship
+  ═══════════════════════════════════════════════════════════════ -->
+  <div class="module-block" id="module-9" data-module="9">
+    <div class="module-header" onclick="toggleModule(9)">
+      <div class="module-num" id="num-9">9</div>
+      <div class="module-title-wrap">
+        <div class="module-title">Antibiotic Stewardship and Resistant Organisms: What Every Clinician Must Know</div>
+        <div class="module-meta">Module 9 · 15 minutes</div>
+      </div>
+      <div class="module-status" id="status-9">Not Started</div>
+      <div class="chevron">▼</div>
+    </div>
+    <div class="module-content">
+      <h2>Antibiotic Stewardship: A Clinician Responsibility</h2>
+      <p>Antibiotic resistance has been declared a global public health emergency by the World Health Organization. In the United States, more than 2.8 million antibiotic-resistant infections occur annually, causing over 35,000 deaths. The CDC estimates that antibiotics are inappropriately prescribed in 30% of outpatient visits and up to 50% of inpatient prescriptions. Antibiotic stewardship — the coordinated effort to optimize antibiotic use — is no longer the exclusive domain of infectious disease physicians. Every clinician who cares for patients taking antibiotics has a role.</p>
+
+      <h3>Why Antibiotic Resistance Happens</h3>
+      <p>Bacteria develop resistance through multiple mechanisms: production of enzymes that destroy antibiotics (beta-lactamases, carbapenemases), modification of the antibiotic target (altered penicillin-binding proteins in MRSA), efflux pumps that expel antibiotics from bacterial cells, and reduced membrane permeability. Resistance genes are shared between bacteria through horizontal gene transfer (conjugation, transformation, transduction) — meaning resistance can spread rapidly across bacterial species.</p>
+
+      <p>Antibiotic selection pressure is the primary driver of resistance development. Every antibiotic exposure — appropriate or inappropriate — exerts pressure that selects for resistant organisms. Broad-spectrum antibiotics (carbapenems, fluoroquinolones) are particularly disruptive to normal flora and favor selection of highly resistant organisms. C. difficile infection, for example, is a predictable consequence of disrupting the gut microbiome with broad-spectrum antibiotics.</p>
+
+      <div class="highlight-box key-point">
+        <div class="box-label">⚠️ Key Point</div>
+        <p>Rehabilitation clinicians are not prescribers, but they ARE influential members of the care team. Recognizing antibiotic side effects that affect therapy (diarrhea from C. diff, myopathy from fluoroquinolones, tendon complications from ciprofloxacin), communicating relevant clinical observations, and supporting antibiotic stewardship culture all fall within the rehabilitation clinician's professional purview.</p>
+      </div>
+
+      <h3>Fluoroquinolone-Associated Tendinopathy: A Direct Rehabilitation Concern</h3>
+      <p>Fluoroquinolone antibiotics (ciprofloxacin, levofloxacin, moxifloxacin) are among the most commonly prescribed antibiotics in the United States and carry an FDA black box warning for tendinopathy and tendon rupture. Fluoroquinolone-associated tendinopathy (FQAT) most commonly affects the Achilles tendon (75% of cases), followed by the rotator cuff, quadriceps, and other tendons. Risk is increased with age >60, corticosteroid use, renal disease, and organ transplant history.</p>
+
+      <p>Rehabilitation clinicians must ask patients about fluoroquinolone use when treating tendinopathies, especially in cases with atypical presentation, minimal mechanism of injury, or poor response to conventional therapy. If a patient is actively on a fluoroquinolone and presents with new tendon pain, modify loading protocols, educate the patient on rupture risk, and communicate concerns to the prescribing provider.</p>
+
+      <h3>Recognizing Antibiotic-Associated C. difficile in Rehab Patients</h3>
+      <p>Any patient on or recently off antibiotic therapy who develops diarrhea (≥3 loose stools in 24 hours) should be treated as C. diff-suspect until proven otherwise. Risk factors include age >65, recent hospitalization, exposure to clindamycin, cephalosporins, fluoroquinolones, or carbapenems, and use of proton pump inhibitors. Rehabilitation clinicians should immediately notify nursing when a patient on antibiotics develops diarrhea, implement contact precautions until diagnosis is excluded, and document observations in the medical record.</p>
+
+      <h3>The Rehabilitation Clinician's Role in Stewardship</h3>
+      <p>Stewardship behaviors for rehabilitation clinicians include: accurately documenting wound appearance changes that may guide antibiotic duration decisions; communicating therapy observations regarding infection signs to the medical team; understanding which antibiotics affect rehabilitation participation (IV antibiotics requiring prolonged infusion times, medications with neuromuscular side effects); and educating patients who are requesting antibiotics for viral infections that antibiotics do not treat viruses and that inappropriate use contributes to resistance.</p>
+
+      <div class="highlight-box caution">
+        <div class="box-label">🔴 Caution</div>
+        <p>Patients on aminoglycoside antibiotics (gentamicin, tobramycin) are at risk for ototoxicity (hearing loss, vestibular dysfunction) and nephrotoxicity. Rehabilitation clinicians evaluating balance and gait in these patients should be alert for new vestibular symptoms and communicate these promptly. Vestibular rehabilitation may be an appropriate referral once the offending drug is discontinued.</p>
+      </div>
+
+      <div class="knowledge-check">
+        <h4>📝 Knowledge Check</h4>
+        <p class="question">A 68-year-old patient being treated for a UTI with ciprofloxacin reports new right Achilles pain during gait training. The patient has no history of prior Achilles symptoms. What is the MOST appropriate clinical response?</p>
+        <div class="answer-options" id="answers-9">
+          <button class="answer-option" onclick="selectAnswer(this, false)">A. Continue gait training as prescribed and add Achilles stretching to the program</button>
+          <button class="answer-option" onclick="selectAnswer(this, false)">B. Discontinue the antibiotic and resume therapy when the patient is off all medications</button>
+          <button class="answer-option" onclick="selectAnswer(this, true)">C. Modify loading, educate the patient on fluoroquinolone-associated tendon rupture risk, and communicate findings to the prescribing provider</button>
+          <button class="answer-option" onclick="selectAnswer(this, false)">D. Defer treatment until MRI of the Achilles tendon confirms or rules out tendinopathy</button>
+        </div>
+        <div class="answer-feedback" id="feedback-9"></div>
+      </div>
+
+      <div class="module-completion">
+        <p>You have reviewed all content in Module 9. Mark complete to record your progress.</p>
+        <button class="complete-btn" id="btn-9" onclick="completeModule(9)">✓ Mark Module 9 Complete</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       MODULE 10 — Patient Safety Culture
+  ═══════════════════════════════════════════════════════════════ -->
+  <div class="module-block" id="module-10" data-module="10">
+    <div class="module-header" onclick="toggleModule(10)">
+      <div class="module-num" id="num-10">10</div>
+      <div class="module-title-wrap">
+        <div class="module-title">Patient Safety Culture: Reporting Systems, Near Misses, and Root Cause Analysis</div>
+        <div class="module-meta">Module 10 · 15 minutes</div>
+      </div>
+      <div class="module-status" id="status-10">Not Started</div>
+      <div class="chevron">▼</div>
+    </div>
+    <div class="module-content">
+      <h2>Patient Safety Culture in Healthcare Organizations</h2>
+      <p>Patient safety culture refers to the shared values, beliefs, attitudes, and behaviors within a healthcare organization that collectively determine the commitment to, and proficiency in, safety and error prevention. The landmark Institute of Medicine report "To Err Is Human" (1999) estimated that 44,000–98,000 Americans die annually from preventable medical errors — a figure that has since been revised upward substantially. Infection control failures represent a significant subset of these preventable adverse events. Building and maintaining a strong patient safety culture is foundational to effective infection prevention.</p>
+
+      <h3>The Anatomy of a Safety Culture</h3>
+      <p>High-reliability organizations (HROs) — entities that operate in complex, high-risk environments with remarkably low failure rates — share five characteristic behaviors: preoccupation with failure (treating near misses as signals, not lucky outcomes), reluctance to simplify (probing the "why" behind events rather than accepting surface explanations), sensitivity to operations (front-line workers feel empowered to raise safety concerns), commitment to resilience (organizations recover quickly from errors and learn from them), and deference to expertise (decisions migrate to those with the most relevant knowledge, regardless of hierarchy).</p>
+
+      <p>In infection control, HRO principles translate directly: a culture that treats a single handwashing lapse as a near miss worthy of investigation is fundamentally safer than one that treats it as an isolated, inconsequential lapse. Every process deviation is a signal about system weaknesses, not just individual failures.</p>
+
+      <h3>Incident Reporting Systems</h3>
+      <p>Voluntary incident reporting systems — whether paper-based or electronic — are the primary mechanism for capturing safety events, near misses, and hazardous conditions within healthcare organizations. The Joint Commission, CMS, and state health departments have varying mandatory reporting requirements for sentinel events and serious infections. Voluntary systems supplement mandatory reporting by capturing the far larger universe of minor events and near misses that contain the richest learning opportunities.</p>
+
+      <p>Studies consistently show that infection-related near misses (e.g., a patient transported from isolation to a therapy gym without proper notification) are underreported by 80–90%. Fear of blame, time constraints, skepticism about whether reports lead to change, and lack of feedback to reporters all suppress reporting rates. Psychological safety — the belief that reporting will not result in punishment or embarrassment — is the single strongest predictor of reporting behavior.</p>
+
+      <div class="highlight-box clinical-tip">
+        <div class="box-label">🟢 Clinical Tip</div>
+        <p>As a rehabilitation clinician, you are likely the first to observe near misses during patient transport, shared equipment use, and interdisciplinary team transitions. Report every infection control near miss using your facility's system. Strong reporting cultures reduce actual infection rates — this is empirically supported and not merely aspirational.</p>
+      </div>
+
+      <h3>Near Miss Analysis: Learning Before Harm Occurs</h3>
+      <p>A near miss is an event or situation that could have resulted in harm but did not, by chance or timely intervention. In infection control, near misses include: an isolation room entered without PPE, a therapy mat used without disinfection between patients, a contaminated gait belt transferred to a new patient, or an isolation precaution miscommunicated during patient handoff. Near misses provide the same information about system vulnerabilities as adverse events, but without the patient harm — making them invaluable learning opportunities.</p>
+
+      <h3>Root Cause Analysis (RCA)</h3>
+      <p>Root cause analysis is a systematic process for identifying the fundamental causes of adverse events or near misses. The goal is not to identify the person who made an error, but to identify the system conditions that made the error possible, likely, or inevitable. Effective RCA asks "why" repeatedly (the "5 Whys" technique) until the root cause — a system-level factor — is identified.</p>
+
+      <p>Example: A patient acquires MRSA wound infection post-surgery. Why? → Wound contacted contaminated therapy equipment. Why? → Equipment was not disinfected between patients. Why? → Clinician ran out of disinfectant wipes at the therapy station. Why? → No restocking system was in place. Why? → No staff member had accountability for supply monitoring. Root cause: absence of a defined supply accountability system. The solution targets the system (accountability, restocking protocols), not the individual clinician who ran out of wipes.</p>
+
+      <div class="highlight-box key-point">
+        <div class="box-label">⚠️ Key Point</div>
+        <p>Just culture principles distinguish between blameless human error, at-risk behavior (choosing to take a shortcut), and reckless behavior (knowingly disregarding risk). Infection control lapses most often fall into the "at-risk" category — clinicians take shortcuts under time and workload pressure without recognizing the risk. Just culture responds to at-risk behavior with coaching and system redesign, not punishment.</p>
+      </div>
+
+      <div class="knowledge-check">
+        <h4>📝 Knowledge Check</h4>
+        <p class="question">A rehabilitation clinician witnesses a colleague bring a shared gait belt from a VRE-positive patient's room into the hallway without disinfecting it. The colleague is rushed and unaware of the lapse. What is the MOST appropriate response aligned with patient safety culture principles?</p>
+        <div class="answer-options" id="answers-10">
+          <button class="answer-option" onclick="selectAnswer(this, false)">A. Do not intervene, as correcting colleagues creates an uncomfortable work environment</button>
+          <button class="answer-option" onclick="selectAnswer(this, false)">B. Report the colleague to the infection control department for a disciplinary review</button>
+          <button class="answer-option" onclick="selectAnswer(this, true)">C. Immediately alert the colleague, disinfect the gait belt, file an incident report, and support system-level follow-up to prevent recurrence</button>
+          <button class="answer-option" onclick="selectAnswer(this, false)">D. Monitor the situation and report only if the patient develops a VRE infection</button>
+        </div>
+        <div class="answer-feedback" id="feedback-10"></div>
+      </div>
+
+      <div class="module-completion">
+        <p>You have reviewed all content in Module 10. Mark complete to record your progress.</p>
+        <button class="complete-btn" id="btn-10" onclick="completeModule(10)">✓ Mark Module 10 Complete</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       MODULE 11 — Facility-Specific Protocols
+  ═══════════════════════════════════════════════════════════════ -->
+  <div class="module-block" id="module-11" data-module="11">
+    <div class="module-header" onclick="toggleModule(11)">
+      <div class="module-num" id="num-11">11</div>
+      <div class="module-title-wrap">
+        <div class="module-title">Facility-Specific Infection Control: SNF, Home Health, Outpatient Clinic Protocols</div>
+        <div class="module-meta">Module 11 · 15 minutes</div>
+      </div>
+      <div class="module-status" id="status-11">Not Started</div>
+      <div class="chevron">▼</div>
+    </div>
+    <div class="module-content">
+      <h2>Infection Control Across Rehabilitation Practice Settings</h2>
+      <p>Infection control principles are universal, but their application varies significantly across the diverse settings in which rehabilitation clinicians practice. The infection risk profile, available resources, regulatory requirements, and patient population characteristics differ substantially between acute care hospitals, skilled nursing facilities (SNFs), home health agencies, and outpatient clinics. Clinicians who practice across multiple settings — increasingly common in today's healthcare landscape — must maintain setting-specific competency for each environment.</p>
+
+      <h3>Skilled Nursing Facility (SNF) Infection Control</h3>
+      <p>SNFs house some of the most vulnerable patients in the healthcare system: elderly individuals with multiple comorbidities, residents on immunosuppressant medications, and patients recovering from acute illness. CMS requires all Medicare- and Medicaid-certified SNFs to maintain an infection prevention and control program (IPCP) with a designated infection preventionist (IP). Rehabilitation departments in SNFs are typically high-risk areas due to shared equipment, shared spaces, and high patient throughput.</p>
+
+      <p>Key SNF infection control considerations for rehabilitation: group therapy in SNFs creates unique exposure dynamics — multiple residents in a shared gym environment share equipment, surfaces, and air. Group sessions require enhanced disinfection protocols between exercises, hand hygiene stations within the group therapy area, and separation of residents with known infectious organisms. Residents with MRSA or VRE should not participate in group therapy sessions while on active contact precautions without facility-specific clearance protocols.</p>
+
+      <p>SNF outbreak management: CMS requires facilities to report confirmed outbreaks to state and local health departments. Gastrointestinal illness (≥3 cases of similar GI illness in a 72-hour period) and respiratory illness outbreaks trigger mandatory reporting and enhanced infection control responses. Rehabilitation services may be temporarily suspended or modified during active facility-wide outbreaks.</p>
+
+      <div class="highlight-box clinical-tip">
+        <div class="box-label">🟢 Clinical Tip</div>
+        <p>In SNFs, establish a daily "infection control brief" habit before beginning your caseload. Check the nursing communication board, isolation signage updates, and any new positive culture results. A 90-second morning review prevents the costly error of treating a newly isolated patient without appropriate precautions.</p>
+      </div>
+
+      <h3>Home Health Infection Control</h3>
+      <p>Home health presents the most complex infection control environment because the clinician has minimal control over the physical environment, supply availability, and household member behaviors. Standard precautions apply in every home visit without exception. Home health clinicians must carry all necessary PPE (gloves, gowns, masks) and hand hygiene supplies in their clinical bag, as the home environment may not provide them.</p>
+
+      <p>Key home health infection control practices: use a designated "clean" and "dirty" system within your clinical bag — never place used equipment or supplies in contact with clean supplies. Perform hand hygiene before entering the patient's home (ABHR on hands before exiting your vehicle), before and after all patient contact, and upon leaving the home. Wash your hands at the patient's sink before patient contact when hands are visibly soiled. Dispose of sharps in approved sharps containers that you bring with you — do not use household sharps disposal containers unless facility protocol permits.</p>
+
+      <p>Home environment assessment for infection risk: assess for pets that may access wound sites or equipment, household members with communicable illness, presence of functioning sink with soap and running water, and cleanliness of surfaces on which you will place equipment. Document environmental barriers to infection control and report significant concerns to your supervisor.</p>
+
+      <h3>Outpatient Clinic Infection Control</h3>
+      <p>Outpatient rehabilitation clinics treat a high volume of patients with intact immune systems and without acute illness — but this does not eliminate infection risk. High-touch surfaces (treatment tables, exercise equipment, whirlpool handles, ultrasound probes) and close clinician-patient contact during manual therapy create transmission opportunities.</p>
+
+      <p>Outpatient-specific considerations: triage symptomatic patients. Post signage at entry asking patients with fever, active respiratory symptoms, or known contagious illness to notify staff before entering. Maintain appropriate distancing in waiting areas. Implement single-use linen or laundered linen protocols for treatment tables. Ultrasound probe covers (for intimate contact areas) and disinfection protocols between patients are required. Aquatic therapy pools require water chemistry testing (chlorine, pH) per facility protocol and do not substitute for individual patient equipment disinfection.</p>
+
+      <div class="highlight-box caution">
+        <div class="box-label">🔴 Caution</div>
+        <p>Outpatient rehabilitation staff are at unique risk for occupational exposure because patients presenting for care are not screened with the same rigor as admitted hospital patients. A patient with undiagnosed active TB, influenza, or MRSA skin infection may present for orthopedic rehabilitation without any isolation precautions in place. Maintain standard precautions universally and implement enhanced precautions when clinical presentation warrants.</p>
+      </div>
+
+      <div class="knowledge-check">
+        <h4>📝 Knowledge Check</h4>
+        <p class="question">A home health physical therapist arrives at a patient's home for a scheduled visit and finds that the patient's caregiver is currently sick with fever and cough. The patient, who has a healing surgical wound, is otherwise well. What is the MOST appropriate action?</p>
+        <div class="answer-options" id="answers-11">
+          <button class="answer-option" onclick="selectAnswer(this, false)">A. Proceed with the visit as planned using standard gloves for wound care only</button>
+          <button class="answer-option" onclick="selectAnswer(this, false)">B. Cancel the visit immediately and reschedule for when the caregiver is well</button>
+          <button class="answer-option" onclick="selectAnswer(this, true)">C. Proceed with the visit using standard precautions plus a surgical mask; advise the caregiver to wear a mask and minimize proximity to the patient during the session</button>
+          <button class="answer-option" onclick="selectAnswer(this, false)">D. Complete the wound assessment only without performing physical therapy to minimize exposure time</button>
+        </div>
+        <div class="answer-feedback" id="feedback-11"></div>
+      </div>
+
+      <div class="module-completion">
+        <p>You have reviewed all content in Module 11. Mark complete to record your progress.</p>
+        <button class="complete-btn" id="btn-11" onclick="completeModule(11)">✓ Mark Module 11 Complete</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       MODULE 12 — Emergency Preparedness and Outbreak Management
+  ═══════════════════════════════════════════════════════════════ -->
+  <div class="module-block" id="module-12" data-module="12">
+    <div class="module-header" onclick="toggleModule(12)">
+      <div class="module-num" id="num-12">12</div>
+      <div class="module-title-wrap">
+        <div class="module-title">Emergency Preparedness and Outbreak Management in Healthcare Settings</div>
+        <div class="module-meta">Module 12 · 15 minutes</div>
+      </div>
+      <div class="module-status" id="status-12">Not Started</div>
+      <div class="chevron">▼</div>
+    </div>
+    <div class="module-content">
+      <h2>Emergency Preparedness and Outbreak Management</h2>
+      <p>Healthcare-associated infection outbreaks and infectious disease emergencies — whether localized to a single facility unit or cascading to a community-wide or global pandemic scale — require a structured, coordinated response that differs fundamentally from routine infection prevention practice. Rehabilitation clinicians, as integral members of the healthcare team, have defined roles in facility emergency preparedness plans and must understand both the escalation triggers for outbreak declaration and the operational modifications required during active outbreak response.</p>
+
+      <h3>Defining an Outbreak</h3>
+      <p>An outbreak is defined as the occurrence of cases of an illness, specific health-related behavior, or other health-related events in excess of what is normally expected in a defined community, geographic area, or season. In healthcare facilities, threshold criteria vary by pathogen and setting. Common outbreak definitions include: two or more cases of C. difficile on a single unit within a 30-day period, three or more cases of a GI illness in a 72-hour period in a SNF, or any single case of a Category A bioterrorism agent (anthrax, smallpox, plague).</p>
+
+      <p>The outbreak recognition-to-response timeline is critical. Every hour of delayed action allows additional exposures. Facility infection preventionists, charge nurses, and medical directors play primary roles in outbreak declaration. Rehabilitation directors and frontline clinicians play critical roles in early detection and communication.</p>
+
+      <h3>Healthcare Emergency Preparedness: The HICS Framework</h3>
+      <p>The Hospital Incident Command System (HICS) provides the organizational framework for healthcare facility emergency response, including infectious disease emergencies. Under HICS, the Incident Commander directs response activities across four functional sections: Operations, Planning, Logistics, and Finance/Administration. During an infectious disease emergency, an Infection Control Officer typically operates within the Operations Section, directing clinical response activities.</p>
+
+      <p>Rehabilitation departments should have pre-established protocols for: suspension or modification of group therapy during outbreak periods, reallocation of rehabilitation staff to support outbreak response (e.g., patient cohorting, enhanced environmental cleaning), PPE surge capacity management, and communication trees for rapid staff notification of outbreak status changes.</p>
+
+      <div class="highlight-box key-point">
+        <div class="box-label">⚠️ Key Point</div>
+        <p>During active outbreaks, rehabilitation services are often among the first to be suspended or modified — but they are equally among the most important to restore quickly. Early mobility prevents secondary complications (aspiration pneumonia, pressure injuries, deconditioning) that can complicate and prolong the outbreak's impact on patients. Advocate for evidence-based, risk-stratified return to rehabilitation services as outbreak control is achieved.</p>
+      </div>
+
+      <h3>Pandemic Preparedness: Lessons from COVID-19</h3>
+      <p>The COVID-19 pandemic exposed critical gaps in healthcare emergency preparedness across all settings. Key lessons for rehabilitation departments include: PPE stockpiling and supply chain redundancy (facilities that pre-positioned 90-day PPE reserves fared significantly better in the early pandemic weeks), staff cross-training (rehabilitation clinicians trained in basic nursing support functions provided essential surge capacity), telehealth infrastructure (facilities with established telehealth capabilities maintained patient care continuity when in-person services were suspended), and communication protocols (clear, consistent, evidence-based communication to staff and patients reduced fear-driven non-compliance with infection control measures).</p>
+
+      <p>Telerehabilitation emerged as a critical service delivery modality during the pandemic and demonstrated equivalent outcomes to in-person care for a significant subset of rehabilitation conditions. Maintaining telehealth competency and infrastructure between public health emergencies ensures preparedness for the next one.</p>
+
+      <h3>Bioterrorism Awareness for Healthcare Clinicians</h3>
+      <p>Healthcare workers may be the first to recognize a bioterrorism event through unusual patterns of illness. Category A bioterrorism agents — including anthrax (inhalational), smallpox, plague, botulism, tularemia, and viral hemorrhagic fevers — can produce clinical presentations that initially mimic more common illnesses. The key indicator is an unusual cluster: multiple patients presenting with similar severe respiratory illness, rash, or neurological symptoms without an obvious epidemiological explanation.</p>
+
+      <p>Rehabilitation clinicians should report any unusual clinical patterns to the charge nurse or facility administration immediately. Do not attempt independent diagnosis of suspected bioterrorism agents. Follow facility emergency response protocols, contact local and state public health authorities as directed, and maintain personal PPE use until the nature of the agent is characterized.</p>
+
+      <div class="highlight-box caution">
+        <div class="box-label">🔴 Caution</div>
+        <p>During infectious disease emergencies, misinformation spreads as rapidly as the pathogen. Rehabilitation clinicians should rely exclusively on evidence-based sources — CDC, WHO, IDSA, state/local health departments — for clinical guidance. Do not modify PPE use, patient screening practices, or infection control protocols based on social media, lay press reports, or anecdotal information from colleagues. When guidance conflicts, escalate to your infection control department for facility-specific clarification.</p>
+      </div>
+
+      <h3>Personal Preparedness for Rehabilitation Clinicians</h3>
+      <p>Personal preparedness complements facility-level emergency planning. Clinicians should maintain current vaccinations (influenza annually, COVID-19 per current recommendations, HBV series completed with confirmed immunity, Tdap booster, and MMR as indicated), know their facility's emergency response plan and their specific role within it, complete annual fit testing for N95 respirators, maintain competency in full PPE donning/doffing including powered air-purifying respirators (PAPRs) if relevant to their setting, and have a personal emergency plan for managing work responsibilities during a prolonged public health emergency.</p>
+
+      <div class="knowledge-check">
+        <h4>📝 Knowledge Check</h4>
+        <p class="question">A rehabilitation director at a SNF is notified that 5 residents developed fever, vomiting, and diarrhea within the past 24 hours across two different units. No etiology has been identified yet. What is the MOST appropriate immediate action for the rehabilitation department?</p>
+        <div class="answer-options" id="answers-12">
+          <button class="answer-option" onclick="selectAnswer(this, false)">A. Continue all scheduled group and individual therapy sessions while monitoring for additional cases</button>
+          <button class="answer-option" onclick="selectAnswer(this, false)">B. Wait for laboratory confirmation of the causative organism before implementing any changes</button>
+          <button class="answer-option" onclick="selectAnswer(this, true)">C. Immediately suspend group therapy sessions, implement contact precautions for affected residents, notify the infection preventionist, and coordinate with facility leadership per outbreak response protocol</button>
+          <button class="answer-option" onclick="selectAnswer(this, false)">D. Restrict rehabilitation services to affected units only and continue therapy on unaffected units without modification</button>
+        </div>
+        <div class="answer-feedback" id="feedback-12"></div>
+      </div>
+
+      <div class="module-completion">
+        <p>You have reviewed all content in Module 12. Mark complete to record your progress.</p>
+        <button class="complete-btn" id="btn-12" onclick="completeModule(12)">✓ Mark Module 12 Complete</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- CERTIFICATE SECTION -->
+  <div id="certificate-section">
+    <div style="font-size:3rem; margin-bottom:16px;">🏆</div>
+    <h2>Congratulations! Course Complete!</h2>
+    <p>You have successfully completed all 12 modules of <strong>Infection Control and Patient Safety</strong>. You have earned <strong>3.0 Continuing Competency Units (CCUs)</strong>.</p>
+    <p style="font-size:0.85rem; opacity:0.7; margin-top:8px;">Course ID: INFECTION-001 | Approval: DRTROY-INFECTION-001-2024</p>
+    <button class="cert-btn" onclick="generateCertificate()">🎓 Generate & Print Certificate</button>
+  </div>
+
+</main>
+
+<script>
+// ── State ──────────────────────────────────────────────────────────────────
+const STORAGE_KEY = 'infectionControlProgress';
+let completedModules = new Set();
+let answeredQuestions = new Set();
+const TOTAL_MODULES = 12;
+
+// ── Load / Save ────────────────────────────────────────────────────────────
+function loadProgress() {
+  try {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (saved) {
+      const data = JSON.parse(saved);
+      if (data.completed && Array.isArray(data.completed)) {
+        completedModules = new Set(data.completed);
+      }
+      if (data.answered && Array.isArray(data.answered)) {
+        answeredQuestions = new Set(data.answered);
+      }
+    }
+  } catch(e) { console.warn('Could not load progress:', e); }
+  renderAllModuleStates();
+  updateProgress();
+}
+
+function saveProgress() {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify({
+      completed: [...completedModules],
+      answered: [...answeredQuestions],
+      timestamp: Date.now()
+    }));
+  } catch(e) { console.warn('Could not save progress:', e); }
+}
+
+// ── Toggle Module ──────────────────────────────────────────────────────────
+function toggleModule(n) {
+  const block = document.getElementById('module-' + n);
+  const isOpen = block.classList.contains('open');
+  // Close all
+  document.querySelectorAll('.module-block').forEach(b => b.classList.remove('open'));
+  if (!isOpen) block.classList.add('open');
+}
+
+// ── Complete Module ────────────────────────────────────────────────────────
+function completeModule(n) {
+  completedModules.add(n);
+  renderModuleState(n);
+  updateProgress();
+  saveProgress();
+  // Auto-scroll to next
+  const next = document.getElementById('module-' + (n + 1));
+  if (next) {
+    setTimeout(() => {
+      next.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      toggleModule(n + 1);
+    }, 400);
+  }
+  if (completedModules.size === TOTAL_MODULES) {
+    setTimeout(() => {
+      const cert = document.getElementById('certificate-section');
+      cert.classList.add('visible');
+      cert.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 600);
+  }
+}
+
+// ── Render State ───────────────────────────────────────────────────────────
+function renderModuleState(n) {
+  const done = completedModules.has(n);
+  const numEl = document.getElementById('num-' + n);
+  const statusEl = document.getElementById('status-' + n);
+  const btnEl = document.getElementById('btn-' + n);
+  if (numEl) {
+    numEl.textContent = done ? '✓' : n;
+    numEl.classList.toggle('completed', done);
+  }
+  if (statusEl) {
+    statusEl.textContent = done ? 'Complete' : 'Not Started';
+    statusEl.classList.toggle('done', done);
+  }
+  if (btnEl && done) {
+    btnEl.textContent = '✓ Completed';
+    btnEl.disabled = true;
+  }
+}
+
+function renderAllModuleStates() {
+  for (let i = 1; i <= TOTAL_MODULES; i++) renderModuleState(i);
+}
+
+// ── Progress Bar ───────────────────────────────────────────────────────────
+function updateProgress() {
+  const count = completedModules.size;
+  const pct = (count / TOTAL_MODULES) * 100;
+  const fill = document.getElementById('progress-fill');
+  const text = document.getElementById('progress-text');
+  if (fill) fill.style.width = pct + '%';
+  if (text) text.textContent = count + ' of ' + TOTAL_MODULES + ' modules complete';
+  if (count === TOTAL_MODULES) {
+    document.getElementById('certificate-section').classList.add('visible');
+  }
+}
+
+// ── Select Answer ──────────────────────────────────────────────────────────
+function selectAnswer(btn, isCorrect) {
+  const container = btn.closest('.answer-options');
+  if (!container || container.dataset.answered) return;
+  container.dataset.answered = 'true';
+  const feedbackEl = container.nextElementSibling;
+  const allBtns = container.querySelectorAll('.answer-option');
+  allBtns.forEach(b => b.disabled = true);
+  if (isCorrect) {
+    btn.classList.add('correct');
+    if (feedbackEl) {
+      feedbackEl.textContent = '✓ Correct! Great work applying this concept.';
+      feedbackEl.className = 'answer-feedback correct-fb show';
+    }
+  } else {
+    btn.classList.add('incorrect');
+    // Highlight the correct answer
+    allBtns.forEach(b => {
+      if (b.onclick && b.onclick.toString().includes('true')) b.classList.add('correct');
+    });
+    if (feedbackEl) {
+      feedbackEl.textContent = '✗ Not quite. Review the highlighted correct answer above.';
+      feedbackEl.className = 'answer-feedback incorrect-fb show';
+    }
+  }
+}
+
+// ── Generate Certificate ───────────────────────────────────────────────────
+function generateCertificate() {
+  const now = new Date();
+  const dateStr = now.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+  const win = window.open('', '_blank', 'width=900,height=700');
+  win.document.write(`<!DOCTYPE html>
+<html>
+<head>
+<title>Certificate of Completion — Infection Control and Patient Safety</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@400;500;600&display=swap');
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Inter', sans-serif; background: #f0f4f8; display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 20px; }
+  .cert {
+    background: #fff;
+    width: 800px;
+    padding: 60px;
+    border: 3px solid #1a365d;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+    text-align: center;
+    position: relative;
+  }
+  .cert::before {
+    content: '';
+    position: absolute;
+    inset: 10px;
+    border: 1px solid #059669;
+    pointer-events: none;
+  }
+  .cert-logo { font-size: 2.5rem; margin-bottom: 6px; }
+  .cert-org { font-family: 'Playfair Display', serif; font-size: 1.4rem; color: #1a365d; font-weight: 700; margin-bottom: 24px; }
+  .cert-title { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 3px; color: #059669; font-weight: 700; margin-bottom: 8px; }
+  .cert-of { font-family: 'Playfair Display', serif; font-size: 2.8rem; color: #1a365d; margin-bottom: 24px; line-height: 1.1; }
+  .cert-presented { font-size: 0.9rem; color: #718096; margin-bottom: 8px; }
+  .cert-name { font-family: 'Playfair Display', serif; font-size: 2rem; color: #2c5282; border-bottom: 2px solid #1a365d; display: inline-block; padding: 0 40px 8px; margin-bottom: 24px; }
+  .cert-for { font-size: 0.9rem; color: #718096; margin-bottom: 8px; }
+  .cert-course { font-family: 'Playfair Display', serif; font-size: 1.3rem; color: #1a365d; font-weight: 700; margin-bottom: 24px; }
+  .cert-meta { display: flex; justify-content: center; gap: 40px; margin: 24px 0; }
+  .cert-meta-item { text-align: center; }
+  .cert-meta-label { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 1px; color: #718096; margin-bottom: 4px; }
+  .cert-meta-value { font-size: 0.95rem; font-weight: 700; color: #1a365d; }
+  .cert-footer { margin-top: 32px; padding-top: 20px; border-top: 1px solid #e2e8f0; font-size: 0.75rem; color: #a0aec0; }
+  .print-btn { margin-top: 20px; padding: 12px 32px; background: #059669; color: #fff; border: none; border-radius: 8px; font-size: 1rem; font-weight: 700; cursor: pointer; display: block; margin-left: auto; margin-right: auto; }
+  @media print { .print-btn { display: none; } body { background: white; } }
+</style>
+</head>
+<body>
+<div>
+  <div class="cert">
+    <div class="cert-logo">🛡️</div>
+    <div class="cert-org">DrTroy Continuing Education</div>
+    <div class="cert-title">Certificate of Completion</div>
+    <div class="cert-of">Continuing Competency Achievement</div>
+    <div class="cert-presented">This certifies that</div>
+    <div class="cert-name">Healthcare Professional</div>
+    <div class="cert-for">has successfully completed</div>
+    <div class="cert-course">Infection Control and Patient Safety<br><span style="font-size:1rem; color:#059669;">Evidence-Based Infection Prevention, Control Protocols, and Patient Safety Standards in Rehabilitation Settings</span></div>
+    <div class="cert-meta">
+      <div class="cert-meta-item">
+        <div class="cert-meta-label">CCUs Earned</div>
+        <div class="cert-meta-value">3.0 CCUs</div>
+      </div>
+      <div class="cert-meta-item">
+        <div class="cert-meta-label">Course ID</div>
+        <div class="cert-meta-value">INFECTION-001</div>
+      </div>
+      <div class="cert-meta-item">
+        <div class="cert-meta-label">Approval</div>
+        <div class="cert-meta-value">DRTROY-INFECTION-001-2024</div>
+      </div>
+      <div class="cert-meta-item">
+        <div class="cert-meta-label">Completion Date</div>
+        <div class="cert-meta-value">${dateStr}</div>
+      </div>
+    </div>
+    <div class="cert-footer">DrTroy CE · drtroy.com · Approved for 3.0 Continuing Competency Units · 12 Modules × 15 Minutes</div>
+  </div>
+  <button class="print-btn" onclick="window.print()">🖨️ Print Certificate</button>
+</div>
+</body>
+</html>`);
+  win.document.close();
+}
+
+// ── Logout ─────────────────────────────────────────────────────────────────
+function logout() {
+  if (confirm('Are you sure you want to log out? Your progress has been saved.')) {
+    window.location.href = '../my-account.html';
+  }
+}
+
+// ── Init ───────────────────────────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', function() {
+  loadProgress();
+  setInterval(saveProgress, 30000);
+  // Open first incomplete module by default
+  let firstIncomplete = null;
+  for (let i = 1; i <= TOTAL_MODULES; i++) {
+    if (!completedModules.has(i)) { firstIncomplete = i; break; }
+  }
+  if (firstIncomplete) toggleModule(firstIncomplete);
+});
+</script>
+</body>
+</html>

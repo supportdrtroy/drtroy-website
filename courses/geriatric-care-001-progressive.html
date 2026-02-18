@@ -1,0 +1,1562 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Geriatric Care Across the Continuum - DrTroy CE</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        @page { size: letter; margin: 0.75in; @bottom-center { content: counter(page); font-size: 10pt; color: #666; } }
+        * { box-sizing: border-box; }
+
+        :root {
+            --navy: #1a365d;
+            --navy-light: #2c5282;
+            --gold: #059669;
+            --gold-light: #10b981;
+            --gray-50: #f7fafc;
+            --gray-100: #edf2f7;
+            --gray-200: #e5e7eb;
+            --gray-600: #4a5568;
+            --gray-800: #2d3748;
+            --gray-900: #111827;
+        }
+
+        body {
+            font-family: 'Georgia', 'Times New Roman', serif;
+            font-size: 16px;
+            line-height: 1.7;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            background: #f5f5f5;
+        }
+
+        .course-header {
+            background: #ffffff;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 3px solid var(--gold);
+        }
+
+        .course-header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo img {
+            height: 60px;
+            width: auto;
+            max-width: 300px;
+        }
+
+        .course-nav {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .course-nav a {
+            color: var(--gray-600);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 14px;
+            transition: color 0.2s;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        .course-nav a:hover { color: var(--navy); }
+
+        .logout-btn {
+            background: var(--gold);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        .logout-btn:hover { background: var(--gold-light); transform: translateY(-2px); }
+
+        .course-container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: white;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            border-radius: 10px;
+            margin-bottom: 2rem;
+        }
+
+        .course-title-section {
+            text-align: center;
+            border-bottom: 2px solid var(--gray-200);
+            padding-bottom: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .course-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--navy);
+            margin: 0;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        .course-subtitle {
+            font-size: 1.1rem;
+            color: var(--gray-600);
+            margin: 1rem 0;
+            font-style: italic;
+        }
+
+        .course-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        .info-box {
+            background: var(--gray-50);
+            padding: 1rem;
+            border-radius: 8px;
+            text-align: center;
+            border-left: 4px solid var(--gold);
+        }
+
+        .info-box strong {
+            color: var(--navy);
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .progress-container {
+            background: var(--gray-50);
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+            border: 2px solid var(--gold-light);
+        }
+
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        .progress-title { font-size: 1.2rem; font-weight: 600; color: var(--navy); }
+        .progress-percentage { font-size: 1rem; color: var(--gold); font-weight: 600; }
+
+        .progress-bar {
+            width: 100%;
+            height: 12px;
+            background: white;
+            border-radius: 6px;
+            overflow: hidden;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--gold) 0%, var(--gold-light) 100%);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .module {
+            margin-bottom: 3rem;
+            border: 1px solid var(--gray-200);
+            border-radius: 12px;
+            overflow: hidden;
+            background: white;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+        }
+
+        .module:hover { box-shadow: 0 6px 25px rgba(0,0,0,0.1); }
+
+        .module-header {
+            background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
+            color: white;
+            padding: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .module-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .module-header:hover::before { left: 100%; }
+
+        .module-header.completed {
+            background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%);
+        }
+
+        .module-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin: 0;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        .module-header.completed .module-title::after {
+            content: ' ✓';
+            font-size: 1.2rem;
+            margin-left: 0.5rem;
+        }
+
+        .module-content {
+            padding: 2rem;
+            display: none;
+            background: white;
+        }
+
+        .module-content.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .module-content h2 {
+            color: var(--navy);
+            font-size: 1.4rem;
+            margin: 2rem 0 1rem 0;
+            font-weight: 600;
+            border-bottom: 2px solid var(--gold);
+            padding-bottom: 0.5rem;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        .module-content h3 {
+            color: var(--navy-light);
+            font-size: 1.2rem;
+            margin: 1.5rem 0 0.75rem 0;
+            font-weight: 600;
+        }
+
+        .module-content p { margin-bottom: 1rem; text-align: justify; }
+
+        .module-content ul, .module-content ol { margin: 1rem 0; padding-left: 2rem; }
+        .module-content li { margin-bottom: 0.5rem; }
+
+        .highlight-box {
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            border-left: 5px solid var(--gold);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .highlight-box.clinical-tip {
+            background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+            border-left-color: var(--gold);
+        }
+
+        .highlight-box.key-point {
+            background: linear-gradient(135deg, #fef7cd 0%, #fef3c7 100%);
+            border-left-color: #d97706;
+        }
+
+        .highlight-box.caution {
+            background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%);
+            border-left-color: #dc2626;
+        }
+
+        .knowledge-check {
+            background: linear-gradient(135deg, var(--gray-50) 0%, white 100%);
+            border: 2px solid var(--gold);
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 2rem 0;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+
+        .knowledge-check h3 {
+            color: var(--navy);
+            margin-top: 0;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        .question {
+            margin: 1.5rem 0;
+            padding: 1rem;
+            background: white;
+            border-radius: 8px;
+            border: 1px solid var(--gray-200);
+        }
+
+        .question-text { font-weight: 600; margin-bottom: 1rem; color: var(--navy); }
+
+        .answer-option {
+            margin: 0.5rem 0;
+            padding: 0.5rem;
+            cursor: pointer;
+            border-radius: 6px;
+            transition: background 0.2s;
+        }
+
+        .answer-option:hover { background: var(--gray-50); }
+
+        .answer-option.correct {
+            background: #dcfce7 !important;
+            border-left: 4px solid var(--gold);
+            padding-left: 1rem;
+        }
+
+        .answer-option.incorrect {
+            background: #fee2e2 !important;
+            border-left: 4px solid #dc2626;
+            padding-left: 1rem;
+        }
+
+        .module-completion {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem;
+            background: var(--gray-50);
+            border-top: 1px solid var(--gray-200);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        .complete-btn {
+            background: var(--gold);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        .complete-btn:hover {
+            background: var(--gold-light);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(5, 150, 105, 0.3);
+        }
+
+        .complete-btn:disabled { background: var(--gray-600); cursor: not-allowed; transform: none; }
+
+        .completed-badge {
+            background: var(--gold);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .certificate-section {
+            background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
+            color: white;
+            text-align: center;
+            padding: 3rem;
+            border-radius: 12px;
+            margin: 3rem 0;
+            display: none;
+        }
+
+        .certificate-section.visible {
+            display: block;
+            animation: slideUp 0.5s ease;
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .certificate-btn {
+            background: var(--gold);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            margin-top: 1rem;
+        }
+
+        .certificate-btn:hover {
+            background: var(--gold-light);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(5, 150, 105, 0.4);
+        }
+
+        @media (max-width: 768px) {
+            .course-container { margin: 1rem; padding: 1rem; }
+            .course-title { font-size: 2rem; }
+            .module-title { font-size: 1.1rem; }
+            .course-info { grid-template-columns: 1fr; }
+            .progress-container { padding: 1rem; }
+        }
+
+        @media print {
+            .course-header, .progress-container, .complete-btn, .certificate-section { display: none !important; }
+            .module-content { display: block !important; }
+            .module { break-inside: avoid; margin-bottom: 2rem; }
+            body { background: white; font-size: 11pt; line-height: 1.4; }
+            .course-container { box-shadow: none; margin: 0; padding: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Sticky Header -->
+    <header class="course-header">
+        <div class="course-header-container">
+            <div class="logo">
+                <img src="../images/drtroy_logo_new.jpg" alt="DrTroy CE">
+            </div>
+            <div class="course-nav">
+                <a href="../course-catalog.html">Course Catalog</a>
+                <a href="../my-account.html">My Account</a>
+                <button class="logout-btn" onclick="logout()">Logout</button>
+            </div>
+        </div>
+    </header>
+
+    <div class="course-container">
+
+        <!-- Course Title Section -->
+        <div class="course-title-section">
+            <h1 class="course-title">👴 Geriatric Care Across the Continuum</h1>
+            <p class="course-subtitle">Comprehensive Rehabilitation Approaches for the Aging Population Across All Care Settings</p>
+            <div class="course-info">
+                <div class="info-box">
+                    <strong>Duration</strong>
+                    3.0 Hours (180 minutes)
+                </div>
+                <div class="info-box">
+                    <strong>Continuing Education</strong>
+                    3.0 CCUs
+                </div>
+                <div class="info-box">
+                    <strong>Course ID</strong>
+                    GERIATRIC-001
+                </div>
+                <div class="info-box">
+                    <strong>Approval #</strong>
+                    DRTROY-GERIATRIC-001-2024
+                </div>
+            </div>
+        </div>
+
+        <!-- Progress Tracking -->
+        <div class="progress-container">
+            <div class="progress-header">
+                <div class="progress-title">Course Progress</div>
+                <div class="progress-percentage">0% Complete</div>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill"></div>
+            </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════════════════════════ -->
+        <!-- MODULE 1 -->
+        <!-- ═══════════════════════════════════════════════════════════ -->
+        <div class="module" data-module="1">
+            <div class="module-header" onclick="toggleModule(1)">
+                <div class="module-title">Module 1: Physiology of Aging — Musculoskeletal, Cardiovascular, and Neurological Changes (15 min)</div>
+            </div>
+            <div class="module-content">
+
+                <h2>1.1 Overview of Physiological Aging</h2>
+                <p>Aging is a universal, progressive process characterized by gradual structural and functional decline across all organ systems. For rehabilitation professionals, understanding the physiological underpinnings of aging is foundational to designing safe, effective, and appropriately dosed treatment programs. The changes associated with normal aging — often termed "primary aging" — occur independently of disease, though pathological processes frequently accelerate or compound them.</p>
+                <p>The rate of physiological decline varies significantly among individuals, influenced by genetics, lifestyle, cumulative disease burden, and environmental exposures. A 75-year-old recreational athlete may demonstrate physiological reserve comparable to a sedentary 50-year-old. This heterogeneity demands individualized assessment rather than age-based assumptions.</p>
+
+                <h2>1.2 Musculoskeletal Changes</h2>
+                <p>The musculoskeletal system undergoes some of the most clinically significant changes with aging. These changes directly impair mobility, functional independence, and quality of life.</p>
+
+                <h3>Skeletal Muscle</h3>
+                <p>Muscle mass peaks in the third to fourth decade and then declines at a rate of approximately 1–2% per year after age 50. This loss, termed sarcopenia when clinically significant, is driven by reduced motor unit recruitment, decreased anabolic hormone levels (testosterone, growth hormone, IGF-1), increased inflammatory cytokines, and impaired satellite cell function. Type II (fast-twitch) fibers are disproportionately lost compared to Type I fibers, resulting in reduced power output and slower force development — qualities essential for fall prevention and rapid recovery from balance perturbations.</p>
+
+                <div class="highlight-box key-point">
+                    <strong>Key Musculoskeletal Changes with Aging:</strong>
+                    <ul>
+                        <li><strong>Muscle mass:</strong> 30–50% decline between ages 30 and 80</li>
+                        <li><strong>Muscle strength:</strong> Decreases 15% per decade after age 50, accelerating to 30% per decade after age 70</li>
+                        <li><strong>Bone mineral density:</strong> Decreases 0.5–1% annually after peak; accelerates post-menopause in women</li>
+                        <li><strong>Cartilage:</strong> Decreased proteoglycan content, reduced hydration, increased stiffness and brittleness</li>
+                        <li><strong>Tendons and ligaments:</strong> Reduced collagen cross-linking strength, decreased elasticity, slower healing</li>
+                        <li><strong>Joint range of motion:</strong> Progressive loss due to capsular tightening, muscle shortening, and articular changes</li>
+                    </ul>
+                </div>
+
+                <h3>Bone and Connective Tissue</h3>
+                <p>Bone remodeling shifts toward net resorption with aging, driven by declining estrogen and testosterone, reduced physical loading, and impaired calcium absorption. Cortical bone thins while trabecular bone density decreases, increasing fracture risk — particularly at the hip, spine, and distal radius. Articular cartilage loses its shock-absorbing capacity as chondrocyte activity declines and matrix hydration diminishes, predisposing older adults to osteoarthritis.</p>
+
+                <h2>1.3 Cardiovascular Changes</h2>
+                <p>The aging cardiovascular system demonstrates reduced physiological reserve, which has important implications for exercise tolerance, rehabilitation intensity, and risk stratification.</p>
+
+                <h3>Cardiac Structure and Function</h3>
+                <p>The aging heart undergoes left ventricular hypertrophy due to increased arterial stiffness and afterload. Cardiomyocyte loss occurs through apoptosis, while remaining cells enlarge. The sinoatrial node loses pacemaker cells, contributing to decreased maximum heart rate (estimated as 220 − age). Diastolic dysfunction becomes increasingly prevalent, characterized by impaired ventricular relaxation and reduced cardiac compliance.</p>
+
+                <div class="highlight-box clinical-tip">
+                    <strong>Clinical Tip — Exercise Prescription in Older Adults:</strong>
+                    <p>Because maximum heart rate declines with age, traditional percentage-based heart rate targets (e.g., 70–85% HRmax) must be adjusted. Consider using the Karvonen formula with resting heart rate, or use rating of perceived exertion (RPE) with the Borg 6–20 scale targeting 12–14 ("somewhat hard") for moderate-intensity exercise in deconditioned older adults.</p>
+                </div>
+
+                <h3>Vascular and Pulmonary Changes</h3>
+                <p>Arterial walls stiffen due to elastin fragmentation and increased collagen cross-linking, raising systolic blood pressure and pulse pressure. Baroreceptor sensitivity declines, increasing the risk of orthostatic hypotension — a major fall risk factor. Pulmonary changes include decreased chest wall compliance, reduced respiratory muscle strength, loss of lung elasticity (increased residual volume), and a decline in diffusion capacity. Maximum oxygen uptake (VO₂ max) declines approximately 10% per decade after age 30, reducing aerobic exercise tolerance and recovery capacity.</p>
+
+                <h2>1.4 Neurological Changes</h2>
+                <p>The aging nervous system undergoes structural and functional changes that impair sensorimotor integration, balance, reaction time, and cognitive processing.</p>
+
+                <h3>Central Nervous System</h3>
+                <p>Brain volume decreases by approximately 5% per decade after age 40, with preferential loss in the prefrontal cortex, hippocampus, and cerebellum. These changes contribute to slowed processing speed, reduced working memory capacity, decreased executive function, and impaired dual-task performance. Neuroplasticity persists throughout life, however, and targeted rehabilitation can partially compensate for age-related neural decline.</p>
+
+                <h3>Peripheral Nervous System and Sensory Changes</h3>
+                <p>Peripheral nerve conduction velocity decreases with aging, slowing motor responses. Sensory deficits are particularly relevant to rehabilitation: proprioceptive acuity diminishes, visual acuity and contrast sensitivity decline, vestibular hair cell populations decrease, and cutaneous mechanoreceptor density falls. The collective effect is impaired balance and postural control, substantially elevating fall risk.</p>
+
+                <div class="highlight-box caution">
+                    <strong>Caution — Polysensory Deficits and Fall Risk:</strong>
+                    <p>Older adults often have concurrent deficits in vision, vestibular function, and proprioception. When all three systems are compromised simultaneously, balance becomes critically impaired. Always screen for sensory deficits as part of the geriatric rehabilitation evaluation and address correctable causes (cataracts, cerumen impaction, footwear) before attributing deficits solely to aging.</p>
+                </div>
+
+                <div class="knowledge-check">
+                    <h3>Knowledge Check</h3>
+                    <div class="question">
+                        <div class="question-text">Which muscle fiber type is disproportionately lost with aging, and what functional consequence does this have?</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">A) Type I fibers; resulting in reduced endurance capacity</div>
+                        <div class="answer-option" onclick="selectAnswer(this, true)">B) Type II fibers; resulting in reduced power output and slower protective responses</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">C) Type IIa fibers only; resulting in reduced aerobic efficiency</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">D) Both fiber types equally; resulting in generalized weakness</div>
+                    </div>
+                </div>
+
+                <div class="module-completion">
+                    <div>Estimated completion time: 15 minutes</div>
+                    <button class="complete-btn" onclick="completeModule(1)">Mark Complete</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════════════════════════ -->
+        <!-- MODULE 2 -->
+        <!-- ═══════════════════════════════════════════════════════════ -->
+        <div class="module" data-module="2">
+            <div class="module-header" onclick="toggleModule(2)">
+                <div class="module-title">Module 2: Comprehensive Geriatric Assessment — Tools and Frameworks (15 min)</div>
+            </div>
+            <div class="module-content">
+
+                <h2>2.1 Introduction to the Comprehensive Geriatric Assessment</h2>
+                <p>The Comprehensive Geriatric Assessment (CGA) is a multidimensional, interdisciplinary diagnostic process that evaluates an older adult's medical, psychological, functional, and social capabilities and limitations. Unlike traditional disease-focused evaluations, the CGA aims to identify modifiable risk factors, establish a baseline for functional status, guide individualized care planning, and improve outcomes through coordinated intervention.</p>
+                <p>Research consistently demonstrates that CGA-guided care reduces mortality, functional decline, nursing home placement, and hospital readmission in high-risk older adults. Rehabilitation professionals are uniquely positioned to contribute to and act upon CGA findings, particularly in the domains of functional mobility, physical performance, cognitive status, and fall risk.</p>
+
+                <h2>2.2 Core Domains of the CGA</h2>
+
+                <h3>Functional Status Assessment</h3>
+                <p>Functional assessment captures the patient's ability to perform activities necessary for daily living. The Barthel Index and the Functional Independence Measure (FIM) assess basic activities of daily living (ADLs), while the Lawton Instrumental ADL Scale addresses higher-order tasks such as medication management, financial tasks, and community mobility. The Short Physical Performance Battery (SPPB) provides an objective composite score of lower extremity function through gait speed, balance testing, and chair rise performance.</p>
+
+                <div class="highlight-box key-point">
+                    <strong>High-Yield Functional Assessment Tools:</strong>
+                    <ul>
+                        <li><strong>Barthel Index:</strong> 10-item ADL scale (0–100); score &lt;60 indicates functional dependence</li>
+                        <li><strong>FIM:</strong> 18-item scale (18–126); widely used in inpatient rehabilitation settings</li>
+                        <li><strong>Lawton IADL Scale:</strong> 8-item scale for community-level function</li>
+                        <li><strong>SPPB:</strong> Score 0–12; score ≤8 predicts adverse outcomes including disability and mortality</li>
+                        <li><strong>Timed Up and Go (TUG):</strong> &gt;12 seconds associated with fall risk; &gt;20 seconds indicates high fall risk and mobility device dependence</li>
+                        <li><strong>30-Second Chair Stand Test:</strong> Normative data by age and sex available; sensitive to change with intervention</li>
+                    </ul>
+                </div>
+
+                <h3>Cognitive Assessment</h3>
+                <p>Cognitive screening is essential in the geriatric population given the prevalence of mild cognitive impairment (MCI) and dementia and their profound impact on rehabilitation engagement, safety, and outcomes. The Mini-Mental State Examination (MMSE) and Montreal Cognitive Assessment (MoCA) are widely used. The MoCA demonstrates superior sensitivity for detecting MCI (score 18–25/30) compared to the MMSE. The Clock Drawing Test provides a quick screen for visuospatial and executive function deficits.</p>
+
+                <h3>Psychological and Social Assessment</h3>
+                <p>Depression is the most common mental health condition in older adults and is frequently underdetected in rehabilitation settings. The Geriatric Depression Scale (GDS) — available in 15-item and 30-item versions — is validated for this population and avoids somatic questions that may confound results in medically ill patients. Social assessment includes evaluation of caregiver support, living situation, financial resources, transportation, and social connectedness. Isolation and caregiver burnout profoundly affect rehabilitation adherence and outcomes.</p>
+
+                <h2>2.3 Physical Performance and Fall Risk Screening</h2>
+                <p>Physical performance measures serve dual purposes: they quantify functional capacity and stratify risk for adverse events. Gait speed, often called the "sixth vital sign" in geriatric medicine, is among the most powerful predictors of future disability, hospitalization, and mortality. A gait speed below 0.8 m/s identifies individuals at substantially elevated risk.</p>
+
+                <div class="highlight-box clinical-tip">
+                    <strong>Clinical Tip — Gait Speed as a Vital Sign:</strong>
+                    <p>Measure gait speed routinely in all geriatric patients using a standardized 4-meter or 10-meter walk test. Comfortable gait speed below 0.8 m/s warrants investigation and targeted intervention. Clinically meaningful improvement is typically 0.1 m/s or greater. Document baseline speed to track treatment response over time.</p>
+                </div>
+
+                <h2>2.4 Nutritional Assessment</h2>
+                <p>Malnutrition affects 15–30% of community-dwelling older adults and up to 60% of hospitalized elderly patients. The Mini Nutritional Assessment (MNA) is the most validated screening tool for this population. Nutritional deficits accelerate sarcopenia, impair wound healing, compromise immune function, and reduce rehabilitation participation. Clinicians should document unintentional weight loss, BMI below 22 kg/m², and reduced dietary intake as red flags requiring dietitian referral.</p>
+
+                <h2>2.5 Medication Review in the CGA</h2>
+                <p>Polypharmacy — commonly defined as five or more concurrent medications — is present in over 40% of older adults and is independently associated with falls, cognitive impairment, adverse drug events, and reduced rehabilitation participation. Screening tools such as the Beers Criteria and STOPP/START criteria identify potentially inappropriate medications in older adults. Rehabilitation clinicians should be familiar with high-risk drug classes and their functional implications (see Module 5).</p>
+
+                <div class="knowledge-check">
+                    <h3>Knowledge Check</h3>
+                    <div class="question">
+                        <div class="question-text">What gait speed threshold is commonly used to identify older adults at elevated risk for disability and adverse outcomes?</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">A) Less than 1.2 m/s</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">B) Less than 1.0 m/s</div>
+                        <div class="answer-option" onclick="selectAnswer(this, true)">C) Less than 0.8 m/s</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">D) Less than 0.5 m/s</div>
+                    </div>
+                </div>
+
+                <div class="module-completion">
+                    <div>Estimated completion time: 15 minutes</div>
+                    <button class="complete-btn" onclick="completeModule(2)">Mark Complete</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════════════════════════ -->
+        <!-- MODULE 3 -->
+        <!-- ═══════════════════════════════════════════════════════════ -->
+        <div class="module" data-module="3">
+            <div class="module-header" onclick="toggleModule(3)">
+                <div class="module-title">Module 3: Sarcopenia — Assessment, Prevention, and Treatment (15 min)</div>
+            </div>
+            <div class="module-content">
+
+                <h2>3.1 Defining Sarcopenia</h2>
+                <p>Sarcopenia is a progressive, generalized skeletal muscle disorder characterized by accelerated loss of muscle mass, strength, and physical performance. Recognized as a distinct clinical condition (ICD-10-CM M62.84), sarcopenia affects an estimated 10–16% of community-dwelling older adults and up to 50% of hospitalized elderly patients. The 2019 European Working Group on Sarcopenia in Older People (EWGSOP2) consensus definition requires confirmation of low muscle strength as the primary parameter, with low muscle quantity or quality used for diagnosis confirmation, and poor physical performance indicating severity.</p>
+                <p>The distinction between primary sarcopenia (age-related) and secondary sarcopenia (driven by disease, inactivity, or malnutrition) is clinically important. Secondary sarcopenia is often more rapidly progressive and more amenable to targeted intervention when the underlying cause is addressed.</p>
+
+                <h2>3.2 Pathophysiology of Sarcopenia</h2>
+                <p>The etiology of sarcopenia is multifactorial, involving complex interactions among hormonal, inflammatory, nutritional, and neural factors. Key pathophysiological mechanisms include:</p>
+                <ul>
+                    <li><strong>Motor unit remodeling:</strong> Loss of spinal motor neurons leads to denervation of muscle fibers; surviving motor units compensate by reinnervating orphaned fibers, but this remodeling is incomplete with aging</li>
+                    <li><strong>Anabolic resistance:</strong> Blunted muscle protein synthesis response to dietary protein and insulin, requiring higher protein doses to achieve equivalent anabolic stimulus</li>
+                    <li><strong>Chronic low-grade inflammation:</strong> Elevated IL-6, TNF-α, and C-reactive protein promote muscle protein catabolism via ubiquitin-proteasome pathway activation</li>
+                    <li><strong>Mitochondrial dysfunction:</strong> Reduced mitochondrial biogenesis and increased oxidative stress impair energy supply to muscle</li>
+                    <li><strong>Satellite cell dysfunction:</strong> Reduced regenerative capacity of muscle stem cells limits adaptation to training stimuli</li>
+                </ul>
+
+                <div class="highlight-box key-point">
+                    <strong>EWGSOP2 Sarcopenia Diagnostic Criteria:</strong>
+                    <ul>
+                        <li><strong>Low grip strength:</strong> &lt;27 kg men, &lt;16 kg women (Jamar dynamometer)</li>
+                        <li><strong>Low appendicular skeletal muscle mass index (ASMI):</strong> &lt;7.0 kg/m² men, &lt;5.5 kg/m² women (DXA or BIA)</li>
+                        <li><strong>Low gait speed:</strong> ≤0.8 m/s (4-meter walk test)</li>
+                        <li><strong>Low SPPB score:</strong> ≤8 points</li>
+                        <li><strong>Low TUG:</strong> ≥20 seconds</li>
+                    </ul>
+                </div>
+
+                <h2>3.3 Assessment Tools for Sarcopenia</h2>
+
+                <h3>Screening</h3>
+                <p>The SARC-F questionnaire is a validated five-item self-report screening tool that assesses strength (difficulty lifting 10 lbs), assistance walking, rising from a chair, climbing stairs, and falls. A score of ≥4 out of 10 indicates probable sarcopenia requiring further evaluation. The SARC-CalF adds calf circumference measurement (&lt;31 cm is a positive screen) to improve sensitivity.</p>
+
+                <h3>Physical Performance Measures</h3>
+                <p>Handgrip strength testing with a calibrated dynamometer is the most practical and reliable measure of global muscle strength. The 30-second Chair Stand Test and 5-Times Sit-to-Stand Test quantify lower extremity function. Gait speed assessment provides a practical measure of physical performance and global health status. The SPPB combines balance, gait speed, and chair stand performance into a composite score.</p>
+
+                <h3>Body Composition Assessment</h3>
+                <p>Dual-energy X-ray absorptiometry (DXA) remains the reference standard for measuring appendicular skeletal muscle mass. Bioelectrical impedance analysis (BIA) offers a practical alternative in clinical settings. CT scan analysis of L3 cross-sectional area is used in research and oncology settings as a highly accurate body composition marker.</p>
+
+                <h2>3.4 Prevention and Treatment</h2>
+
+                <h3>Resistance Exercise</h3>
+                <p>Progressive resistance training (PRT) is the most evidence-supported intervention for sarcopenia. Effective programs involve multi-joint exercises targeting major muscle groups, performed at moderate-to-high intensities (60–80% of 1-repetition maximum), 2–3 times per week. Even frail older adults demonstrate meaningful strength and functional gains with supervised PRT. Power training — emphasizing rapid contraction velocity — may be particularly valuable given preferential Type II fiber loss.</p>
+
+                <div class="highlight-box clinical-tip">
+                    <strong>Clinical Tip — Protein Timing for Sarcopenia Management:</strong>
+                    <p>Coordinate resistance exercise with adequate protein intake to maximize muscle protein synthesis. Current recommendations support 1.2–1.6 g protein/kg body weight/day for older adults with sarcopenia, distributed across three to four meals of 25–40 g each. Post-exercise protein consumption within 30–60 minutes optimizes the anabolic window. Leucine-rich protein sources (whey, eggs, lean meat) are preferable due to superior anabolic signaling.</p>
+                </div>
+
+                <h3>Multimodal Intervention</h3>
+                <p>Combining resistance training with aerobic exercise and nutritional supplementation produces superior outcomes compared to any single intervention. Protein supplementation, particularly whey protein, provides a practical means of increasing protein intake in older adults with reduced appetite. Vitamin D supplementation (800–2000 IU/day) is recommended when deficiency is present, as it supports muscle function through genomic and non-genomic pathways. Physical therapy programs should integrate functional task training — transitional movements, gait training, stair climbing — alongside structured strengthening.</p>
+
+                <div class="knowledge-check">
+                    <h3>Knowledge Check</h3>
+                    <div class="question">
+                        <div class="question-text">According to EWGSOP2 criteria, which parameter is considered the PRIMARY indicator for sarcopenia identification?</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">A) Low muscle mass measured by DXA</div>
+                        <div class="answer-option" onclick="selectAnswer(this, true)">B) Low muscle strength (handgrip or chair stand)</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">C) Low gait speed below 0.8 m/s</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">D) SARC-F score ≥4</div>
+                    </div>
+                </div>
+
+                <div class="module-completion">
+                    <div>Estimated completion time: 15 minutes</div>
+                    <button class="complete-btn" onclick="completeModule(3)">Mark Complete</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════════════════════════ -->
+        <!-- MODULE 4 -->
+        <!-- ═══════════════════════════════════════════════════════════ -->
+        <div class="module" data-module="4">
+            <div class="module-header" onclick="toggleModule(4)">
+                <div class="module-title">Module 4: Osteoporosis and Fragility Fractures — Management and Rehabilitation (15 min)</div>
+            </div>
+            <div class="module-content">
+
+                <h2>4.1 Epidemiology and Pathophysiology of Osteoporosis</h2>
+                <p>Osteoporosis is a systemic skeletal disease characterized by reduced bone mineral density (BMD) and microarchitectural deterioration of bone tissue, leading to increased bone fragility and fracture susceptibility. Approximately 10 million Americans have osteoporosis and an additional 44 million have low bone mass (osteopenia). One in two women and one in four men over age 50 will experience an osteoporosis-related fracture in their lifetime.</p>
+                <p>Peak bone mass is achieved in the third decade, with maintenance dependent on the equilibrium between osteoblast-mediated formation and osteoclast-mediated resorption. With aging — and particularly with estrogen deficiency following menopause — the balance shifts toward net resorption. Secondary causes include glucocorticoid use, malabsorption, hypogonadism, hyperparathyroidism, and prolonged immobility.</p>
+
+                <div class="highlight-box key-point">
+                    <strong>WHO Bone Mineral Density Classification (T-score):</strong>
+                    <ul>
+                        <li><strong>Normal:</strong> T-score ≥ −1.0</li>
+                        <li><strong>Osteopenia (low bone mass):</strong> T-score between −1.0 and −2.5</li>
+                        <li><strong>Osteoporosis:</strong> T-score ≤ −2.5</li>
+                        <li><strong>Severe osteoporosis:</strong> T-score ≤ −2.5 plus one or more fragility fractures</li>
+                    </ul>
+                </div>
+
+                <h2>4.2 Fragility Fractures: Common Sites and Clinical Implications</h2>
+
+                <h3>Hip Fractures</h3>
+                <p>Hip fractures are the most devastating consequence of osteoporosis, associated with 20–30% one-year mortality, significant long-term functional loss, and nursing home placement in 25–50% of survivors. The majority occur in the femoral neck (intracapsular) or intertrochanteric region (extracapsular). Surgical fixation or arthroplasty is typically performed within 24–48 hours of admission. Rehabilitation should begin within 24 hours post-operatively, with progressive weight-bearing as tolerated in most fixation types.</p>
+
+                <h3>Vertebral Fractures</h3>
+                <p>Vertebral compression fractures (VCFs) represent the most common fragility fracture, affecting an estimated 25% of postmenopausal women over age 50. Two-thirds of VCFs are clinically silent, discovered incidentally on imaging. Symptomatic VCFs cause acute back pain, progressive kyphosis, loss of height, and restrictive lung disease due to thoracic cage compromise. Rehabilitation addresses pain management, postural retraining, and prevention of secondary fractures. Vertebroplasty and kyphoplasty may be considered for persistent pain refractory to conservative treatment.</p>
+
+                <h3>Distal Radius and Wrist Fractures</h3>
+                <p>Colles fractures of the distal radius are often the sentinel fragility fracture, occurring in women in their 50s and 60s during a fall on an outstretched hand. They represent an important opportunity to identify and treat underlying osteoporosis before hip fracture occurs. Post-immobilization rehabilitation focuses on wrist and forearm mobility, grip strength restoration, and upper extremity functional reintegration.</p>
+
+                <h2>4.3 Pharmacological Management</h2>
+                <p>Bisphosphonates (alendronate, risedronate, zoledronic acid) are first-line pharmacological treatment, reducing vertebral fracture risk by 40–70% and hip fracture risk by 30–50%. Denosumab, a RANK ligand inhibitor, is effective for patients unable to tolerate bisphosphonates. Anabolic agents — teriparatide and abaloparatide (PTH analogs) and romosozumab (sclerostin inhibitor) — are reserved for high-risk patients and stimulate new bone formation. Rehabilitation professionals should be aware of medication side effects, including osteonecrosis of the jaw with bisphosphonates and atypical femur fractures with prolonged use.</p>
+
+                <div class="highlight-box caution">
+                    <strong>Caution — Atypical Femur Fractures and Bisphosphonate Use:</strong>
+                    <p>Patients on long-term bisphosphonate therapy (more than 5 years) may present with prodromal thigh or groin pain preceding an atypical femur fracture. These fractures occur with minimal trauma, often during routine activities. Report unexplained thigh pain in this population to the referring physician immediately. Atypical femur fractures require surgical fixation and modification of pharmacological therapy.</p>
+                </div>
+
+                <h2>4.4 Rehabilitation Principles for Fragility Fractures</h2>
+                <p>Rehabilitation following fragility fracture must balance early mobilization to prevent deconditioning against fracture healing requirements and surgical precautions. Weight-bearing status, fixation stability, and pain tolerance guide the progression of mobility training.</p>
+
+                <div class="highlight-box clinical-tip">
+                    <strong>Evidence-Based Exercise for Osteoporosis:</strong>
+                    <ul>
+                        <li><strong>Weight-bearing aerobic exercise:</strong> Walking, dancing, stair climbing — stimulates bone through impact loading</li>
+                        <li><strong>Progressive resistance training:</strong> Directly stimulates osteoblast activity via mechanical loading; targets hip and spine primarily</li>
+                        <li><strong>Balance and agility training:</strong> Reduces fall risk, thereby reducing fracture incidence</li>
+                        <li><strong>Postural retraining:</strong> Thoracic extension exercises counteract kyphotic posture; avoid excessive spinal flexion loading in vertebral fracture patients</li>
+                        <li><strong>Avoid:</strong> High-impact activities, loaded spinal flexion, twisting maneuvers in acute fracture phase</li>
+                    </ul>
+                </div>
+
+                <div class="knowledge-check">
+                    <h3>Knowledge Check</h3>
+                    <div class="question">
+                        <div class="question-text">Which type of exercise is CONTRAINDICATED in a patient with acute osteoporotic vertebral compression fractures?</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">A) Thoracic extension exercises in neutral spine</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">B) Progressive resistance training with proper spinal alignment</div>
+                        <div class="answer-option" onclick="selectAnswer(this, true)">C) Loaded spinal flexion exercises such as sit-ups and toe-touches</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">D) Gentle walking on level surfaces</div>
+                    </div>
+                </div>
+
+                <div class="module-completion">
+                    <div>Estimated completion time: 15 minutes</div>
+                    <button class="complete-btn" onclick="completeModule(4)">Mark Complete</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════════════════════════ -->
+        <!-- MODULE 5 -->
+        <!-- ═══════════════════════════════════════════════════════════ -->
+        <div class="module" data-module="5">
+            <div class="module-header" onclick="toggleModule(5)">
+                <div class="module-title">Module 5: Polypharmacy and Medication Effects on Rehabilitation (15 min)</div>
+            </div>
+            <div class="module-content">
+
+                <h2>5.1 The Polypharmacy Problem in Older Adults</h2>
+                <p>Polypharmacy — defined as the concurrent use of five or more medications — is extraordinarily prevalent in the geriatric population. Approximately 40% of community-dwelling adults aged 65 and older take five or more medications daily, and among hospitalized older adults, this proportion exceeds 70%. The prevalence has doubled in the past two decades, driven by the increasing burden of chronic disease, guideline-based prescribing for multiple conditions, and the accumulation of prescriptions from multiple specialists who may have incomplete knowledge of one another's prescribing.</p>
+                <p>Polypharmacy creates a cascade of adverse consequences directly relevant to rehabilitation: increased fall risk, cognitive impairment, orthostatic hypotension, deconditioning, reduced motivation, altered pain perception, and impaired cardiovascular response to exercise. Rehabilitation professionals are often the first clinicians to observe medication-related functional decline, placing them in a critical position within the care team.</p>
+
+                <h2>5.2 High-Risk Drug Categories in Geriatric Rehabilitation</h2>
+
+                <h3>Sedative-Hypnotics and Benzodiazepines</h3>
+                <p>Benzodiazepines and non-benzodiazepine "Z-drugs" (zolpidem, zaleplon, eszopiclone) are among the highest-risk medications for older adults. They cause sedation, impaired balance, slowed reaction time, anterograde amnesia, and — paradoxically — can cause agitation and delirium in older adults. The Beers Criteria strongly recommends against their use in adults over 65. Chronic use is common despite these risks, and abrupt discontinuation risks rebound insomnia and withdrawal. When encountered in the rehabilitation setting, inform the care team and document functional observations.</p>
+
+                <div class="highlight-box caution">
+                    <strong>Caution — High-Risk Medications (Beers Criteria Highlights):</strong>
+                    <ul>
+                        <li><strong>Benzodiazepines:</strong> All types increase fall/fracture risk 2–3 fold in older adults</li>
+                        <li><strong>First-generation antihistamines</strong> (diphenhydramine/Benadryl): Strongly anticholinergic — sedation, confusion, urinary retention</li>
+                        <li><strong>Tricyclic antidepressants:</strong> Orthostatic hypotension, anticholinergic burden, cardiac arrhythmia</li>
+                        <li><strong>Muscle relaxants</strong> (cyclobenzaprine, methocarbamol): CNS depression, anticholinergic effects</li>
+                        <li><strong>First-generation antipsychotics:</strong> Extrapyramidal effects, sedation, increased fall risk</li>
+                        <li><strong>Opioids:</strong> Sedation, constipation, dizziness, delirium risk</li>
+                        <li><strong>Sulfonylureas</strong> (glipizide, glyburide): Prolonged hypoglycemia risk, impairs exercise tolerance</li>
+                    </ul>
+                </div>
+
+                <h3>Antihypertensives and Cardiovascular Medications</h3>
+                <p>Beta-blockers blunt the heart rate response to exercise, preventing the use of heart rate as a reliable exercise intensity marker and reducing exercise capacity. ACE inhibitors and angiotensin receptor blockers (ARBs) may cause hypotension, particularly postural, especially in volume-depleted patients. Diuretics increase fall risk through volume depletion and electrolyte imbalances (hypokalemia causes muscle weakness and cramping). Alpha-blockers such as tamsulosin cause significant orthostatic hypotension, especially in the morning.</p>
+
+                <h3>Psychotropic Medications</h3>
+                <p>Antidepressants, including SSRIs and SNRIs, can cause orthostatic hypotension, dizziness, hyponatremia (SIADH), and — particularly at initiation or dose change — falls. Second-generation antipsychotics prescribed for dementia-related behavioral symptoms carry black-box warnings for increased mortality in elderly patients and contribute to sedation and extrapyramidal symptoms that impair rehabilitation participation.</p>
+
+                <h2>5.3 Anticholinergic Burden</h2>
+                <p>Many commonly prescribed and over-the-counter medications possess anticholinergic properties that, when accumulated, produce clinically significant cognitive and functional impairment. The Anticholinergic Cognitive Burden (ACB) scale assigns scores to hundreds of medications; a cumulative ACB score of 3 or higher is associated with a significantly increased risk of delirium, dementia, falls, and hospitalizations. Bladder antimuscarinics, antihistamines, tricyclics, and many antipsychotics are frequent contributors.</p>
+
+                <div class="highlight-box clinical-tip">
+                    <strong>Clinical Tip — Medication Monitoring in Rehabilitation:</strong>
+                    <p>At every evaluation, review the patient's complete medication list and document timing of doses relative to therapy sessions. Schedule high-intensity sessions when medication effects are optimal (e.g., after dopaminergic medications peak in Parkinson's disease; avoid sessions immediately after sedative doses). Report unexplained fatigue, dizziness, orthostatic hypotension (&gt;20 mmHg systolic drop on standing), or confusion to the prescribing team with functional observations documented.</p>
+                </div>
+
+                <h2>5.4 Exercise-Drug Interactions</h2>
+                <p>Exercise itself alters drug pharmacokinetics. Physical activity increases hepatic blood flow, muscle blood flow, and GI motility, which can affect drug absorption, distribution, and metabolism. Critically, exercise reduces blood glucose, creating hypoglycemia risk in diabetic patients on insulin or sulfonylureas. Dehydration during exercise alters lithium and digoxin clearance. NSAIDs taken around exercise sessions impair renal blood flow and, with dehydration, can precipitate acute kidney injury. Warfarin/vitamin K anticoagulation may be destabilized by sudden changes in physical activity level affecting vitamin K-dependent clotting factors.</p>
+
+                <div class="knowledge-check">
+                    <h3>Knowledge Check</h3>
+                    <div class="question">
+                        <div class="question-text">A 78-year-old patient on metoprolol (a beta-blocker) is being treated in outpatient PT. Which heart rate-based finding should you expect during exercise, and what adjustment should you make?</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">A) Elevated resting heart rate; use lower target ranges</div>
+                        <div class="answer-option" onclick="selectAnswer(this, true)">B) Blunted heart rate rise with exercise; use RPE scale instead of heart rate targets</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">C) Irregular heart rate; avoid all aerobic exercise</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">D) No significant effect on heart rate with beta-blockers at standard doses</div>
+                    </div>
+                </div>
+
+                <div class="module-completion">
+                    <div>Estimated completion time: 15 minutes</div>
+                    <button class="complete-btn" onclick="completeModule(5)">Mark Complete</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════════════════════════ -->
+        <!-- MODULE 6 -->
+        <!-- ═══════════════════════════════════════════════════════════ -->
+        <div class="module" data-module="6">
+            <div class="module-header" onclick="toggleModule(6)">
+                <div class="module-title">Module 6: Cognitive Impairment, Dementia, and Rehabilitation Considerations (15 min)</div>
+            </div>
+            <div class="module-content">
+
+                <h2>6.1 Spectrum of Cognitive Decline</h2>
+                <p>Cognitive impairment in older adults exists along a spectrum from normal age-related cognitive changes to mild cognitive impairment (MCI) to dementia. Normal aging involves modest slowing of processing speed and episodic memory retrieval without functional impairment. MCI represents a transitional state in which cognitive deficits exceed age-expected norms but do not interfere significantly with daily function. Dementia, by contrast, is characterized by progressive cognitive decline severe enough to impair daily activities and represents a significant public health challenge, affecting an estimated 6.7 million Americans age 65 and older — a number projected to nearly triple by 2060.</p>
+
+                <h2>6.2 Types of Dementia and Their Rehabilitation Implications</h2>
+
+                <h3>Alzheimer's Disease</h3>
+                <p>Alzheimer's disease (AD) accounts for 60–80% of dementia cases. It is characterized by progressive amyloid plaque accumulation, neurofibrillary tau tangles, and neuronal loss predominantly in the hippocampus and association cortices. Early AD impairs episodic memory, attention, and complex planning. As disease progresses, language, praxis, visuospatial skills, and eventually basic ADLs are compromised. Procedural memory (motor learning) is preserved until late stages, making repetitive task-specific training a viable rehabilitation strategy even in moderate dementia.</p>
+
+                <h3>Vascular Dementia</h3>
+                <p>Vascular dementia results from cerebrovascular disease — lacunar infarcts, white matter hyperintensities, or strategic infarcts. The clinical course is often stepwise rather than gradual. Rehabilitation potential may be higher than in AD because vascular pathology may be modifiable through cardiovascular risk factor management. Cognitive deficits tend to be more prominent in executive function and processing speed than in memory, affecting task initiation and planning rather than procedural learning.</p>
+
+                <h3>Lewy Body and Frontotemporal Dementias</h3>
+                <p>Dementia with Lewy bodies (DLB) features fluctuating cognition, visual hallucinations, REM sleep behavior disorder, and parkinsonism. The extreme sensitivity to antipsychotic medications in DLB patients — potentially fatal — is a critical safety consideration for rehabilitation teams. Frontotemporal dementia (FTD) affects behavior, personality, and language in patients often younger than typical Alzheimer's patients (onset 45–65 years), posing unique challenges for rehabilitation engagement and goal-setting.</p>
+
+                <div class="highlight-box caution">
+                    <strong>Caution — Antipsychotics in Dementia with Lewy Bodies:</strong>
+                    <p>Patients with Lewy body dementia can have severe, life-threatening reactions to antipsychotic medications, including rigidity, acute confusion, autonomic instability, and neuroleptic malignant syndrome. If behavioral symptoms arise during rehabilitation, do NOT suggest antipsychotic medication — instead, document behavioral observations and communicate with the medical team, noting that DLB has been identified or is suspected.</p>
+                </div>
+
+                <h2>6.3 Adapting Rehabilitation for Cognitive Impairment</h2>
+
+                <h3>Communication Strategies</h3>
+                <p>Effective communication with cognitively impaired patients requires deliberate modification of standard clinical interaction. Use simple, direct language with short sentences and one instruction at a time. Allow extra processing time after questions or instructions. Maintain eye contact and use a calm, reassuring tone. Avoid arguing with delusional or confused patients — redirect rather than correct. Use visual demonstrations alongside verbal instructions to leverage preserved visuospatial learning pathways.</p>
+
+                <div class="highlight-box clinical-tip">
+                    <strong>Clinical Tip — Motor Learning in Dementia:</strong>
+                    <p>Capitalize on preserved implicit and procedural memory in mild-to-moderate Alzheimer's disease. Errorless learning — structuring practice to minimize errors and maximize correct repetitions — produces better motor skill retention than traditional trial-and-error approaches. Consistent environmental cues, familiar music as a movement motivator, and repetitive task-specific practice leverage procedural memory pathways that remain relatively intact until late disease stages.</p>
+                </div>
+
+                <h3>Behavioral and Psychological Symptoms of Dementia</h3>
+                <p>Behavioral and psychological symptoms of dementia (BPSD) — including agitation, aggression, wandering, sundowning, and apathy — directly impede rehabilitation participation. Non-pharmacological approaches are the first-line standard of care. These include scheduled activity programming, environmental modification (reducing noise and clutter), music therapy, validation therapy, and consistent caregiver approaches. Physical activity itself is among the most evidence-supported interventions for reducing BPSD severity and improving sleep quality in dementia.</p>
+
+                <h3>Safety Considerations</h3>
+                <p>Cognitive impairment dramatically elevates fall risk and affects the patient's capacity to follow safety precautions. Clinicians must assess weight-bearing precaution adherence capacity before discharging patients from supervised therapy. Cueing strategies, visual reminder systems, bed alarms, and caregiver education become essential safety tools. Capacity for informed consent requires individualized assessment — many patients with mild-to-moderate cognitive impairment retain decision-making capacity for specific clinical decisions.</p>
+
+                <h2>6.4 Caregiver Considerations</h2>
+                <p>Family caregivers of patients with dementia experience high rates of burnout, depression, and physical health decline. Rehabilitation programs must include caregiver education in transfer techniques, fall prevention, behavioral management strategies, and available community resources. The caregiver's physical and psychological capacity directly impacts the patient's rehabilitation outcomes and ability to remain in the community.</p>
+
+                <div class="knowledge-check">
+                    <h3>Knowledge Check</h3>
+                    <div class="question">
+                        <div class="question-text">Which memory system is typically PRESERVED in mild-to-moderate Alzheimer's disease, making it a key target for rehabilitation interventions?</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">A) Episodic memory for recent events</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">B) Working memory for complex task planning</div>
+                        <div class="answer-option" onclick="selectAnswer(this, true)">C) Procedural memory for motor skills and habitual tasks</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">D) Prospective memory for future intentions</div>
+                    </div>
+                </div>
+
+                <div class="module-completion">
+                    <div>Estimated completion time: 15 minutes</div>
+                    <button class="complete-btn" onclick="completeModule(6)">Mark Complete</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════════════════════════ -->
+        <!-- MODULE 7 -->
+        <!-- ═══════════════════════════════════════════════════════════ -->
+        <div class="module" data-module="7">
+            <div class="module-header" onclick="toggleModule(7)">
+                <div class="module-title">Module 7: Rehabilitation in the Skilled Nursing Facility (SNF) Setting (15 min)</div>
+            </div>
+            <div class="module-content">
+
+                <h2>7.1 The SNF Landscape and Regulatory Framework</h2>
+                <p>Skilled nursing facilities provide post-acute care for older adults who require daily skilled nursing or rehabilitation services but do not require the intensity of an acute hospital. Following the Patient-Driven Payment Model (PDPM) implementation in October 2019, Medicare payment shifted from a volume-based (RUG-IV) system to one that reflects individual patient characteristics, clinical complexity, and functional status. This regulatory change fundamentally altered how rehabilitation is delivered in SNFs, moving away from minute-driven care toward a clinical complexity–based model.</p>
+                <p>Under PDPM, physical therapy, occupational therapy, and speech-language pathology are each reimbursed through separate case-mix groups derived from admission functional scores, primary diagnoses, cognitive status, and comorbidities. Clinicians must understand that high-quality, efficient care that achieves functional goals — not volume of minutes — drives both clinical outcomes and facility reimbursement.</p>
+
+                <h2>7.2 Admission Assessment and Goal Setting</h2>
+                <p>The SNF rehabilitation assessment must occur within 24 hours of admission and be comprehensive enough to establish realistic discharge goals and a targeted treatment plan. The interdisciplinary team — including nursing, therapy, dietary, social work, and the attending physician — collaborates on the care plan, with the resident and family actively participating in goal-setting.</p>
+
+                <div class="highlight-box key-point">
+                    <strong>Key Components of SNF Rehabilitation Assessment:</strong>
+                    <ul>
+                        <li><strong>Functional mobility:</strong> Bed mobility, transfers, ambulation distance and assist level, stair negotiation</li>
+                        <li><strong>ADL performance:</strong> Dressing, bathing, toileting, grooming — quantified by GG functional items (MDS 3.0)</li>
+                        <li><strong>Cognition:</strong> BIMS (Brief Interview for Mental Status) — cognitive support needs affecting rehabilitation approach</li>
+                        <li><strong>Pain assessment:</strong> PHQ-9 mood screening; pain numeric rating scale; impact on participation</li>
+                        <li><strong>Skin integrity:</strong> Braden Scale; healing wounds affecting mobility and positioning</li>
+                        <li><strong>Prior level of function (PLOF):</strong> Essential for establishing realistic discharge expectations</li>
+                        <li><strong>Discharge planning:</strong> Home vs. SNF-to-SNF vs. assisted living; caregiver availability and training needs</li>
+                    </ul>
+                </div>
+
+                <h2>7.3 MDS 3.0 and Section GG Documentation</h2>
+                <p>The Minimum Data Set (MDS) 3.0 is the standardized assessment tool completed at mandated intervals for all Medicare/Medicaid SNF residents. Section GG — Functional Abilities and Goals — captures admission and discharge functional performance for 16 ADL and mobility items on a 1–6 scale, with 6 indicating independence. Section GG data drives quality reporting (SNF QRP), value-based purchasing (SNF VBP), and functional outcomes reporting. Rehabilitation therapists must ensure GG scores reflect observed performance, not capacity, and must be completed with standardized coding definitions.</p>
+
+                <h3>Quality Measures and Value-Based Purchasing</h3>
+                <p>CMS publicly reports multiple SNF quality measures on Nursing Home Compare, including fall rates, hospitalizations, antipsychotic medication use, and — increasingly — functional improvement outcomes. The SNF VBP program withholds 2% of Medicare payments and redistributes them based on performance on the 30-day hospital readmission measure. Rehabilitation teams play a direct role in reducing readmissions through early identification of clinical decline, comprehensive discharge planning, and family education.</p>
+
+                <h2>7.4 Group and Concurrent Therapy in SNFs</h2>
+                <p>PDPM allows up to 25% of each therapy discipline's minutes to be delivered in group (four patients) or concurrent (two patients) format without a payment reduction. When used purposefully, group therapy offers valuable social engagement, peer motivation, and functional task practice in simulated real-world contexts. Group balance and fall prevention classes, walking programs, and ADL skills groups are examples of clinically meaningful group formats. Concurrent therapy allows simultaneous treatment of two patients receiving different interventions with one therapist.</p>
+
+                <div class="highlight-box clinical-tip">
+                    <strong>Clinical Tip — Restorative Nursing Programs in SNF:</strong>
+                    <p>In the SNF setting, restorative nursing programs (RNPs) maintained by nursing assistants under therapy supervision can bridge the gap between skilled therapy episodes and sustain functional gains long-term. Effective RNPs include range of motion maintenance, ambulation with cueing, ADL practice, and splint wear schedules. Document your restorative program handoff thoroughly — including specific exercises, frequency, goals, and measurable outcomes to monitor — to ensure continuity and compliance.</p>
+                </div>
+
+                <h2>7.5 Discharge Planning and Care Transitions</h2>
+                <p>Successful discharge planning begins at admission. Factors predicting home discharge include prior living situation, prior functional independence, caregiver availability, fall risk, cognitive status, and home accessibility. Home modification assessment — conducted by OT — should occur early in the stay. Transition to home health or outpatient therapy should be planned with documented functional goals and clinical rationale. Communication to the receiving provider regarding surgical precautions, therapy goals, medication changes, and scheduled follow-up is essential for continuity and readmission prevention.</p>
+
+                <div class="knowledge-check">
+                    <h3>Knowledge Check</h3>
+                    <div class="question">
+                        <div class="question-text">Under the PDPM payment model in SNFs, what primarily drives Medicare reimbursement for rehabilitation services?</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">A) Total therapy minutes provided per day</div>
+                        <div class="answer-option" onclick="selectAnswer(this, true)">B) Patient clinical complexity, primary diagnosis, functional status, and cognitive status</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">C) The number of therapy disciplines involved in care</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">D) The number of concurrent and group therapy minutes provided</div>
+                    </div>
+                </div>
+
+                <div class="module-completion">
+                    <div>Estimated completion time: 15 minutes</div>
+                    <button class="complete-btn" onclick="completeModule(7)">Mark Complete</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════════════════════════ -->
+        <!-- MODULE 8 -->
+        <!-- ═══════════════════════════════════════════════════════════ -->
+        <div class="module" data-module="8">
+            <div class="module-header" onclick="toggleModule(8)">
+                <div class="module-title">Module 8: Home Health Rehabilitation — Assessment and Safety Considerations (15 min)</div>
+            </div>
+            <div class="module-content">
+
+                <h2>8.1 The Home Health Environment: Unique Context and Opportunities</h2>
+                <p>Home health rehabilitation places the clinician in the patient's actual living environment — the most ecologically valid setting for functional assessment and intervention. This setting reveals real-world hazards, actual functional performance (not just capacity), caregiver dynamics, and social context that are invisible in institutional settings. Nearly 3.5 million Medicare beneficiaries receive home health services annually, with rehabilitation services representing a significant component of the care provided.</p>
+                <p>Medicare Part A home health coverage requires that the patient be homebound — defined as leaving the home requiring a considerable and taxing effort, the assistance of another person, or the use of mobility aids — and that a physician certify a plan of care. Coverage is episode-based (60-day periods), with no copayment for qualifying patients. Physical therapy, occupational therapy, speech therapy, nursing, medical social work, and home health aide services may be covered.</p>
+
+                <h2>8.2 Home Safety Assessment</h2>
+                <p>The home safety evaluation is a cornerstone of the home health visit and should be conducted systematically on initial evaluation. The clinician examines the home environment through the lens of fall risk, accessibility, and functional task safety, generating a prioritized list of modifications and adaptive equipment recommendations.</p>
+
+                <div class="highlight-box key-point">
+                    <strong>Systematic Home Safety Assessment Checklist:</strong>
+                    <ul>
+                        <li><strong>Entryways:</strong> Steps without railings, uneven threshold, poor lighting, lack of grab bar at door</li>
+                        <li><strong>Bathroom:</strong> Tub/shower without grab bars, slippery floor surfaces, toilet height, ability to transfer independently</li>
+                        <li><strong>Bedroom:</strong> Bed height appropriateness, path to bathroom at night, lighting access</li>
+                        <li><strong>Kitchen:</strong> Frequently used items within safe reach, standing tolerance at counters, stove safety</li>
+                        <li><strong>Living areas:</strong> Throw rugs, electrical cords, furniture arrangement, pet obstacles</li>
+                        <li><strong>Flooring transitions:</strong> Carpet-to-hard floor changes, thresholds, stairs</li>
+                        <li><strong>Lighting:</strong> Adequate illumination in all areas, nightlights in hallways and bathrooms</li>
+                        <li><strong>Medication storage:</strong> Accessibility, organization, ease of opening child-resistant caps</li>
+                    </ul>
+                </div>
+
+                <h3>Adaptive Equipment Recommendations</h3>
+                <p>Evidence-based home modification for fall prevention produces a 19–26% reduction in fall rates in high-risk older adults. Key recommendations include grab bars installed at the toilet (bilateral, 42-inch length, 33–36 inches from floor) and in the shower/tub, non-slip bath mats, raised toilet seats for patients post-hip surgery or with lower extremity weakness, handheld showerheads, and bed rails or bed rails for mobility. Ramp installation to replace front step(s) may be critical for wheelchair or walker users.</p>
+
+                <h2>8.3 Functional Assessment in the Home</h2>
+                <p>Clinical assessment tools must be adapted to the home environment. The TUG test can be performed in any open space. The Five-Times Sit-to-Stand test using the patient's own chair provides functionally relevant data. Stair assessment using the actual home stairs — not a standardized step — reveals true safety and assistive device needs. Kitchen and laundry task performance reveals IADL capacity. Medication management assessment identifies whether the patient can safely self-administer medications independently.</p>
+
+                <div class="highlight-box clinical-tip">
+                    <strong>Clinical Tip — Observing Actual Performance vs. Reporting:</strong>
+                    <p>Home health patients frequently perform differently in their home environment than they report. Ask the patient to demonstrate — rather than describe — how they get out of bed, use the bathroom, and prepare a simple meal. Actual observation reveals compensatory strategies, hazardous behaviors, and environmental barriers that patient-reported history consistently underestimates. Document what you observed, not what the patient said they typically do.</p>
+                </div>
+
+                <h2>8.4 Telehealth in Home Health</h2>
+                <p>The COVID-19 pandemic accelerated adoption of telehealth supplementary visits in home health rehabilitation. While Medicare does not cover telehealth as a home health visit, agencies may offer it as an additional service. Telehealth allows for visual inspection of home exercise program performance, caregiver instruction, fall risk coaching, and monitoring of clinical status between in-person visits. Video visits are most effective for exercise review, education, and monitoring in cognitively intact patients with reliable technology access.</p>
+
+                <h2>8.5 Care Coordination and Communication</h2>
+                <p>The home health team operates with less real-time coordination than institutional settings, making communication protocols critical. Secure messaging and shared electronic care plans facilitate information exchange between PT, OT, nursing, and the physician. Verbal orders, change-of-condition reporting, and medication reconciliation require clear communication channels. When fall-related injury, sudden functional decline, or new medical symptoms are observed, the home health nurse and referring physician must be notified promptly — documented in the medical record with time and clinical rationale.</p>
+
+                <div class="knowledge-check">
+                    <h3>Knowledge Check</h3>
+                    <div class="question">
+                        <div class="question-text">Which home modification has the strongest evidence for fall rate reduction in high-risk older adults?</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">A) Installing motion-activated lighting throughout the home</div>
+                        <div class="answer-option" onclick="selectAnswer(this, true)">B) Bathroom grab bar installation and removal of throw rugs combined with exercise</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">C) Purchasing a medical alert device</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">D) Relocating the bedroom to the ground floor</div>
+                    </div>
+                </div>
+
+                <div class="module-completion">
+                    <div>Estimated completion time: 15 minutes</div>
+                    <button class="complete-btn" onclick="completeModule(8)">Mark Complete</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════════════════════════ -->
+        <!-- MODULE 9 -->
+        <!-- ═══════════════════════════════════════════════════════════ -->
+        <div class="module" data-module="9">
+            <div class="module-header" onclick="toggleModule(9)">
+                <div class="module-title">Module 9: Outpatient Geriatric Rehabilitation — Functional Goals and Outcomes (15 min)</div>
+            </div>
+            <div class="module-content">
+
+                <h2>9.1 Outpatient Rehabilitation for Older Adults</h2>
+                <p>Outpatient rehabilitation is frequently the final post-acute setting in the continuum of care following hospitalization, SNF, or home health discharge — and often the first point of contact for older adults with musculoskeletal complaints, balance dysfunction, or functional decline who remain community-dwelling. The outpatient setting affords access to specialized equipment, a controlled treatment environment, and the ability to implement progressive exercise programs with regular monitoring over extended episode lengths.</p>
+                <p>The geriatric outpatient population is diverse — including post-surgical patients (joint replacement, fracture fixation, spine surgery), those with neurological diagnoses (stroke, Parkinson's disease, vestibular disorders), and those seeking to address age-related functional decline such as gait impairment, deconditioning, or fall history. Each group requires targeted assessment and goal-setting frameworks.</p>
+
+                <h2>9.2 Establishing Meaningful Functional Goals</h2>
+                <p>Goal-setting in geriatric outpatient rehabilitation must be simultaneously patient-centered, evidence-based, and functionally grounded. The International Classification of Functioning, Disability and Health (ICF) model — encompassing body structure/function, activity, and participation — provides a framework for identifying goals that matter to the patient rather than goals that reflect only impairment-level constructs.</p>
+
+                <div class="highlight-box key-point">
+                    <strong>ICF-Based Goal-Setting Framework for Geriatric Patients:</strong>
+                    <ul>
+                        <li><strong>Body structure/function goals:</strong> Improve quadriceps strength to 4+/5; improve standing balance on foam to 30 seconds</li>
+                        <li><strong>Activity goals:</strong> Ambulate 500 feet independently with rolling walker; ascend/descend 12 stairs with single rail</li>
+                        <li><strong>Participation goals:</strong> Return to weekly shopping independently; attend church services without assistance; resume golf three days per week</li>
+                        <li><strong>Patient priorities:</strong> Always ask "What do you want to be able to do that you can't do now?" — patient priorities frequently differ from clinician assumptions</li>
+                    </ul>
+                </div>
+
+                <h3>Minimal Clinically Important Differences (MCID)</h3>
+                <p>Rehabilitation documentation requires evidence-based justification that goals and progress represent clinically meaningful change rather than statistical noise. Key MCIDs for geriatric outpatient rehabilitation include: gait speed 0.10 m/s, TUG 1.4–3.5 seconds (population-dependent), Berg Balance Scale 3–7 points (acute setting) or 4–5 points (chronic), WOMAC total score 8–10 points for knee osteoarthritis, Oswestry Disability Index 10 points for low back pain. Documenting outcomes against published MCIDs strengthens medical necessity justification and demonstrates meaningful progress.</p>
+
+                <h2>9.3 Common Conditions and Evidence-Based Interventions</h2>
+
+                <h3>Knee Osteoarthritis</h3>
+                <p>Knee OA is the most prevalent musculoskeletal condition in older adults, affecting over 14 million Americans. Evidence-based interventions include progressive quadriceps strengthening, aerobic conditioning, neuromuscular re-education, manual therapy (tibiofemoral joint mobilization, patellar mobilization), and therapeutic exercise with aquatic therapy offering a low-impact alternative. Patient education regarding activity modification, weight management, and self-efficacy is integral to long-term outcomes. Land-based exercise produces effect sizes comparable to pharmacological treatment for pain and function.</p>
+
+                <h3>Parkinson's Disease</h3>
+                <p>Physical therapy for Parkinson's disease is most effective when timed with optimal dopaminergic medication effect (ON period). Evidence-based programs include LSVT BIG (amplitude-focused movement training), treadmill training with external cuing, dual-task training for gait automaticity, and balance-specific programs such as Tai Chi and sensory integration training. Referral to an APTA Parkinson's APTAPTA Academy Certified Clinician is recommended when available.</p>
+
+                <div class="highlight-box clinical-tip">
+                    <strong>Clinical Tip — Scheduling Therapy Around Medication Timing in Parkinson's:</strong>
+                    <p>Coordinate rehabilitation sessions to occur 45–60 minutes after the patient's morning dopaminergic medication dose. This coincides with peak plasma levels and optimal motor performance. Avoid scheduling during OFF periods when rigidity, bradykinesia, and freezing of gait are most pronounced. If the patient arrives in an OFF state, consider light stretching and education while waiting for medication effect, or reschedule the high-intensity portion of the session.</p>
+                </div>
+
+                <h2>9.4 Outcome Measurement in Geriatric Outpatient PT</h2>
+                <p>Systematic use of validated outcome measures is essential for demonstrating clinical efficacy, meeting payer requirements, and benchmarking against quality standards. The following measures are recommended for routine use in geriatric outpatient rehabilitation based on psychometric properties and clinical utility:</p>
+                <ul>
+                    <li><strong>Global function:</strong> PROMIS Physical Function, Patient Specific Functional Scale</li>
+                    <li><strong>Mobility:</strong> 10-Meter Walk Test, 6-Minute Walk Test, TUG, SPPB</li>
+                    <li><strong>Balance:</strong> Berg Balance Scale, Mini-BESTest, Activities-Specific Balance Confidence (ABC) Scale</li>
+                    <li><strong>Lower extremity:</strong> KOOS (knee), HOOS (hip), LEFS (lower extremity functional scale)</li>
+                    <li><strong>Spine:</strong> Oswestry Disability Index (low back), Neck Disability Index</li>
+                    <li><strong>Quality of life:</strong> SF-12, EQ-5D</li>
+                </ul>
+
+                <div class="knowledge-check">
+                    <h3>Knowledge Check</h3>
+                    <div class="question">
+                        <div class="question-text">When setting outpatient rehabilitation goals for a geriatric patient, which level of the ICF model is MOST likely to represent what patients consider meaningful improvement?</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">A) Body structure and function (impairment) level</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">B) Activity limitation level</div>
+                        <div class="answer-option" onclick="selectAnswer(this, true)">C) Participation restriction level (roles, community, life priorities)</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">D) Pathology and diagnosis level</div>
+                    </div>
+                </div>
+
+                <div class="module-completion">
+                    <div>Estimated completion time: 15 minutes</div>
+                    <button class="complete-btn" onclick="completeModule(9)">Mark Complete</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════════════════════════ -->
+        <!-- MODULE 10 -->
+        <!-- ═══════════════════════════════════════════════════════════ -->
+        <div class="module" data-module="10">
+            <div class="module-header" onclick="toggleModule(10)">
+                <div class="module-title">Module 10: Fall Prevention — Multifactorial Risk Assessment and Intervention (15 min)</div>
+            </div>
+            <div class="module-content">
+
+                <h2>10.1 Epidemiology and Impact of Falls</h2>
+                <p>Falls are the leading cause of injury death and injury-related emergency department visits in adults over age 65. Approximately one in three community-dwelling older adults falls each year, and among those who fall, half will fall again within the same year. The consequences of falls extend beyond acute injury: fear of falling, activity restriction, loss of functional independence, social isolation, and depression are well-documented sequelae that perpetuate a cycle of physical deconditioning and increasing fall risk. Direct medical costs of fall injuries exceeded $50 billion annually in the United States even before the most recent inflation-adjusted figures.</p>
+
+                <div class="highlight-box key-point">
+                    <strong>Fall Statistics in Older Adults:</strong>
+                    <ul>
+                        <li>One in three community-dwelling adults over 65 falls annually; rises to 1 in 2 in those over 80</li>
+                        <li>Fall-related injuries account for 800,000+ hospitalizations per year</li>
+                        <li>Hip fractures from falls carry 20–30% one-year mortality</li>
+                        <li>50% of older adults hospitalized for fall-related injury do not return home</li>
+                        <li>Fear of falling is present in 40–70% of older adults after a fall, even without injury</li>
+                        <li>Falls-related deaths tripled between 2000 and 2020</li>
+                    </ul>
+                </div>
+
+                <h2>10.2 Multifactorial Risk Factor Assessment</h2>
+                <p>Falls are rarely caused by a single factor. The multifactorial nature of fall risk requires a systematic, comprehensive approach to risk identification. The AGS/BGS clinical practice guideline recommends that all older adults seen in clinical settings be asked annually about falls and balance problems, with a multifactorial evaluation initiated when falls are reported, a fall-related injury has occurred, or a positive balance screening is identified.</p>
+
+                <h3>Intrinsic Risk Factors</h3>
+                <ul>
+                    <li><strong>Gait and balance disorders:</strong> Abnormal gait pattern, reduced gait speed, impaired tandem stance, positive Romberg</li>
+                    <li><strong>Lower extremity weakness:</strong> Hip abductor, quadriceps, and ankle plantar flexor weakness are most predictive</li>
+                    <li><strong>Sensory impairments:</strong> Visual acuity loss, contrast sensitivity reduction, vestibular hypofunction, peripheral neuropathy</li>
+                    <li><strong>Orthostatic hypotension:</strong> SBP drop ≥20 mmHg or DBP drop ≥10 mmHg within 3 minutes of standing</li>
+                    <li><strong>Cognitive impairment:</strong> Impaired dual-task performance, executive dysfunction, reduced attention</li>
+                    <li><strong>Fear of falling:</strong> Falls Efficacy Scale-International (FES-I); activity curtailment perpetuates deconditioning</li>
+                    <li><strong>Medications:</strong> Four or more medications, sedatives, psychotropics, antihypertensives (see Module 5)</li>
+                    <li><strong>Prior fall history:</strong> Single strongest predictor of future falls</li>
+                </ul>
+
+                <h3>Extrinsic Risk Factors</h3>
+                <p>Environmental hazards account for approximately 50% of fall-related causes. Common hazards include poor lighting, loose rugs, slippery surfaces, inadequate footwear (worn-out soles, loose fitting shoes, socks without non-slip backing), clutter, low furniture, and lack of grab bars. Seasonal factors including ice, wet leaves, and nighttime shadows outdoors significantly increase fall risk in community-dwelling adults who venture outside the home.</p>
+
+                <h2>10.3 Evidence-Based Fall Prevention Interventions</h2>
+
+                <h3>Exercise-Based Interventions</h3>
+                <p>Exercise is the single most evidence-supported intervention for fall prevention, reducing falls by 21–39% in high-risk populations when properly designed. The most effective programs incorporate balance training as a primary component, with adequate challenge to the balance system (reduced base of support, perturbation training, dual-task, moving surfaces). The Otago Exercise Programme, LSVT BIG, and Tai Chi are among the most extensively studied and validated programs.</p>
+
+                <div class="highlight-box clinical-tip">
+                    <strong>Clinical Tip — Exercise Dosing for Fall Prevention:</strong>
+                    <p>Effective fall prevention exercise must challenge balance sufficiently to drive neuromuscular adaptation. Exercises that can be performed without difficulty provide insufficient stimulus. Use the "just challenging enough" principle — the patient should be able to complete exercises with concentration and effort but without loss of control. Progress through tandem stance, single-leg stance, perturbation training, dual-task standing, and community mobility tasks as balance improves. Minimum effective dose: 50+ hours of exercise over the program duration.</p>
+                </div>
+
+                <h3>Multifactorial Interventions</h3>
+                <p>The greatest fall rate reductions (21–24%) are achieved through individualized multifactorial programs that address all identified risk factors, not just exercise. This includes: medication review and modification in collaboration with the prescriber, vision correction referral, orthostatic hypotension management (compression stockings, medication review, hydration), footwear assessment and modification, home hazard modification, and management of underlying conditions contributing to fall risk (cardiovascular instability, neuropathy, cataracts).</p>
+
+                <h3>Fear of Falling</h3>
+                <p>Fear of falling must be directly assessed and addressed — it is not a benign consequence to accept. Validated tools include the Falls Efficacy Scale-International (FES-I) and the Activities-Specific Balance Confidence (ABC) Scale. Cognitive-behavioral techniques combined with graded exposure to feared activities and progressive balance training effectively reduce fear of falling and associated activity restriction. Goal attainment scaling helps patients identify and prioritize specific activities they wish to resume.</p>
+
+                <div class="knowledge-check">
+                    <h3>Knowledge Check</h3>
+                    <div class="question">
+                        <div class="question-text">What is the most powerful single predictor of future falls in an older adult?</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">A) Low grip strength below 20 kg</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">B) Taking more than four medications daily</div>
+                        <div class="answer-option" onclick="selectAnswer(this, true)">C) History of a previous fall</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">D) Gait speed below 0.8 m/s</div>
+                    </div>
+                </div>
+
+                <div class="module-completion">
+                    <div>Estimated completion time: 15 minutes</div>
+                    <button class="complete-btn" onclick="completeModule(10)">Mark Complete</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════════════════════════ -->
+        <!-- MODULE 11 -->
+        <!-- ═══════════════════════════════════════════════════════════ -->
+        <div class="module" data-module="11">
+            <div class="module-header" onclick="toggleModule(11)">
+                <div class="module-title">Module 11: Pain Management in the Older Adult — Pharmacological and Non-Pharmacological Approaches (15 min)</div>
+            </div>
+            <div class="module-content">
+
+                <h2>11.1 Prevalence and Complexity of Pain in Older Adults</h2>
+                <p>Chronic pain is among the most prevalent and challenging conditions in geriatric care, affecting an estimated 50–80% of community-dwelling older adults and up to 80–85% of nursing home residents. Despite its prevalence, pain in older adults is systematically underassessed and undertreated, driven by patient under-reporting (believing pain is "normal" with aging), clinician focus on acute conditions, assessment challenges in cognitively impaired patients, and legitimate concerns about pharmacological treatment risks.</p>
+                <p>The consequences of undertreated pain extend far beyond discomfort: impaired sleep, depression, anxiety, reduced physical activity, functional decline, social withdrawal, and polypharmacy cascade driven by escalating analgesic prescriptions. Pain is both a cause and consequence of many geriatric conditions and requires a biopsychosocial approach that addresses physical, psychological, and social dimensions simultaneously.</p>
+
+                <h2>11.2 Pain Assessment in Older Adults</h2>
+
+                <h3>Standardized Pain Assessment Tools</h3>
+                <p>The Numeric Rating Scale (NRS, 0–10) is appropriate for cognitively intact older adults. For those with mild-to-moderate cognitive impairment, the Wong-Baker FACES Pain Rating Scale or the Verbal Descriptor Scale (none/mild/moderate/severe/very severe) may be more reliable. For patients with severe cognitive impairment who cannot self-report, behavioral pain scales such as the Pain Assessment in Advanced Dementia (PAINAD) scale assess five behavioral indicators: breathing, vocalization, facial expression, body language, and consolability.</p>
+
+                <div class="highlight-box key-point">
+                    <strong>PAINAD Scale Indicators (0–10 Total Score):</strong>
+                    <ul>
+                        <li><strong>Breathing:</strong> Normal (0) → Occasional labored breathing (1) → Noisy, labored breathing (2)</li>
+                        <li><strong>Vocalization:</strong> None (0) → Occasional moan/groan (1) → Crying out/loud moaning (2)</li>
+                        <li><strong>Facial expression:</strong> Smiling/neutral (0) → Sad/frightened (1) → Grimacing (2)</li>
+                        <li><strong>Body language:</strong> Relaxed (0) → Tense/distressed (1) → Rigid/pulling away (2)</li>
+                        <li><strong>Consolability:</strong> No need to console (0) → Distracted by voice/touch (1) → Unable to console (2)</li>
+                    </ul>
+                </div>
+
+                <h3>Pain Location, Quality, and Functional Impact</h3>
+                <p>A thorough pain assessment documents location, radiation pattern, quality (nociceptive: aching/throbbing vs. neuropathic: burning/shooting/electric), intensity at rest and with activity, temporal pattern (constant vs. intermittent), aggravating and relieving factors, and — critically — the functional impact on sleep, mobility, ADLs, mood, and social participation. This functional impact assessment links pain treatment directly to rehabilitation goals and justifies ongoing skilled care.</p>
+
+                <h2>11.3 Pharmacological Pain Management</h2>
+
+                <h3>Acetaminophen</h3>
+                <p>Acetaminophen remains the first-line analgesic for mild-to-moderate musculoskeletal pain in older adults, recommended by the AGS as the preferred initial analgesic. Scheduled dosing at 325–500 mg every 6 hours (maximum 2 g/day in healthy older adults; 1.5 g/day in those with hepatic impairment or heavy alcohol use) is more effective than as-needed dosing for chronic pain. Clinicians should audit concurrent acetaminophen sources (combination OTC cold/flu medications) to avoid inadvertent overdose.</p>
+
+                <h3>NSAIDs</h3>
+                <p>NSAIDs are effective analgesics but carry significant risk in older adults: GI hemorrhage, renal impairment, cardiovascular events, and fluid retention. The AGS Beers Criteria recommends avoiding chronic oral NSAID use in adults over 75 without concurrent GI protection. Topical NSAIDs (diclofenac gel, ketoprofen patch) provide local analgesia with substantially lower systemic exposure and are preferred for localized musculoskeletal pain.</p>
+
+                <h3>Opioids</h3>
+                <p>Opioids remain appropriate for severe pain unresponsive to non-opioid therapies but require careful risk-benefit assessment in older adults. Age-related pharmacokinetic changes (reduced hepatic metabolism, decreased renal clearance, decreased plasma protein binding, increased sensitivity to CNS depressant effects) necessitate starting at 25–50% of standard adult doses and titrating slowly ("start low, go slow"). Constipation is nearly universal and requires prophylactic bowel regimen. Monitor for sedation, cognitive changes, and fall risk at every contact.</p>
+
+                <div class="highlight-box caution">
+                    <strong>Caution — Opioid Risks in Older Adults:</strong>
+                    <p>Opioid-related falls in older adults are documented at 2–3 times the baseline rate. Initiation of opioids should be accompanied by fall risk reassessment, consideration of ambulatory aid or fall prevention program, constipation prophylaxis (senna + docusate), and caregiver education regarding sedation monitoring. In patients on three or more CNS-active medications (opioid + benzodiazepine + muscle relaxant), the risk of serious adverse events is substantially elevated and warrants urgent clinical team communication.</p>
+                </div>
+
+                <h2>11.4 Non-Pharmacological Pain Interventions</h2>
+                <p>Non-pharmacological interventions are cornerstones of geriatric pain management and should be initiated alongside or before pharmacological therapy. Rehabilitation professionals are uniquely qualified to deliver and oversee these approaches:</p>
+
+                <h3>Exercise and Physical Therapy</h3>
+                <p>Therapeutic exercise produces clinically meaningful pain reduction for osteoarthritis, chronic low back pain, fibromyalgia, and other chronic pain conditions through multiple mechanisms: strengthening muscles that reduce joint load, improving neuromuscular control, releasing endogenous opioids and serotonin, reducing central sensitization, and improving sleep quality. Exercise prescription must be appropriately dosed — starting below the pain provocation threshold and progressing gradually to avoid flare-up and treatment avoidance.</p>
+
+                <h3>Manual Therapy, Thermal Agents, and TENS</h3>
+                <p>Joint mobilization and manipulation provide short-term pain reduction for spinal and peripheral joint conditions. Thermotherapy (superficial heat: hot packs, paraffin) reduces muscle spasm, increases tissue extensibility, and reduces pain through counter-irritation and gate control mechanisms. TENS (transcutaneous electrical nerve stimulation) is safe, non-invasive, and provides meaningful short-term pain relief through segmental inhibition and endogenous opiate release — particularly effective for neuropathic pain and post-surgical pain.</p>
+
+                <h3>Cognitive-Behavioral and Mind-Body Approaches</h3>
+                <p>Pain catastrophizing — exaggerated negative appraisal of pain — is a strong predictor of pain-related disability and can be assessed with the Pain Catastrophizing Scale. CBT-based pain programs reduce catastrophizing, improve self-efficacy, and produce long-term functional improvements. Mindfulness-based stress reduction (MBSR), relaxation training, and biofeedback are evidence-supported adjuncts. These approaches require patient engagement and are most effective when integrated into the overall rehabilitation program rather than offered as standalone treatments.</p>
+
+                <div class="knowledge-check">
+                    <h3>Knowledge Check</h3>
+                    <div class="question">
+                        <div class="question-text">Which analgesic is recommended as the first-line pharmacological agent for mild-to-moderate chronic musculoskeletal pain in older adults by the American Geriatrics Society?</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">A) Ibuprofen (NSAID) 400 mg three times daily</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">B) Low-dose oxycodone 5 mg as needed</div>
+                        <div class="answer-option" onclick="selectAnswer(this, true)">C) Scheduled acetaminophen 325–500 mg every 6 hours</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">D) Cyclobenzaprine 5 mg at bedtime</div>
+                    </div>
+                </div>
+
+                <div class="module-completion">
+                    <div>Estimated completion time: 15 minutes</div>
+                    <button class="complete-btn" onclick="completeModule(11)">Mark Complete</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════════════════════════ -->
+        <!-- MODULE 12 -->
+        <!-- ═══════════════════════════════════════════════════════════ -->
+        <div class="module" data-module="12">
+            <div class="module-header" onclick="toggleModule(12)">
+                <div class="module-title">Module 12: Palliative Care, End-of-Life Considerations, and Quality of Life in Geriatric Rehabilitation (15 min)</div>
+            </div>
+            <div class="module-content">
+
+                <h2>12.1 Reframing Rehabilitation at the End of Life</h2>
+                <p>The intersection of rehabilitation and palliative care represents one of the most nuanced and clinically significant domains in geriatric practice. A persistent misconception holds that rehabilitation and palliative care are mutually exclusive — that one is concerned with recovery and the other with accepting decline. In reality, rehabilitation professionals play a vital and expanding role across the entire palliative care continuum, from early disease management through active dying, contributing to comfort, dignity, independence, and quality of life at every stage.</p>
+                <p>The World Health Organization defines palliative care as an approach that "improves the quality of life of patients and families facing life-threatening illness through the prevention and relief of suffering by means of early identification and impeccable assessment and treatment of pain and other problems, physical, psychosocial, and spiritual." This definition is entirely compatible with — and requires — the expertise of physical and occupational therapists, speech therapists, and other rehabilitation professionals.</p>
+
+                <h2>12.2 Palliative Rehabilitation Across the Care Continuum</h2>
+
+                <h3>Restorative vs. Palliative Rehabilitation Goals</h3>
+                <p>Rehabilitation goals evolve as illness progresses. Restorative rehabilitation aims to maximize functional recovery toward a prior or improved level. Maintenance rehabilitation aims to preserve current functional level and prevent decline. Supportive rehabilitation reduces care burden and maximizes comfort. Palliative rehabilitation addresses symptom management, adaptive strategies for functional decline, caregiver training, and quality of life optimization. All four approaches may be appropriate at different times in the same patient's trajectory, and the skilled clinician reassesses goals regularly in dialogue with the patient, family, and interdisciplinary team.</p>
+
+                <div class="highlight-box key-point">
+                    <strong>Levels of Rehabilitation Goal Orientation:</strong>
+                    <ul>
+                        <li><strong>Restorative:</strong> Return to prior level of function; acute post-surgical, post-stroke, post-fracture phases</li>
+                        <li><strong>Maintenance:</strong> Preserve current function; early-to-middle stage progressive disease</li>
+                        <li><strong>Supportive:</strong> Maximize comfort, reduce caregiver burden; advancing disease with functional decline</li>
+                        <li><strong>Palliative:</strong> Optimize dignity, comfort, and meaningful activities; end-stage disease, hospice</li>
+                    </ul>
+                </div>
+
+                <h3>Rehabilitation in the Hospice Setting</h3>
+                <p>Hospice services, covered under the Medicare Hospice Benefit when life expectancy is six months or less, include physical and occupational therapy as authorized services focused on patient and caregiver education, symptom management, and comfort. Therapy in hospice is not aimed at functional restoration but at maximizing quality of life, maintaining meaningful engagement, facilitating safe care transitions within the home, and reducing caregiver physical and emotional burden. Goals might include: maintaining the ability to transfer to the bedside commode independently, preserving hand function for a musician, or enabling a patient to participate in a family meal.</p>
+
+                <h2>12.3 Advance Care Planning and the Rehabilitation Team's Role</h2>
+                <p>Advance care planning (ACP) involves the ongoing process through which individuals, families, and clinicians clarify values, discuss prognosis, and document care preferences for current and future healthcare decisions. This includes advance directives (living will, healthcare proxy/durable power of attorney for healthcare), POLST (Physician Orders for Life-Sustaining Treatment) or MOLST forms, and goals-of-care conversations about resuscitation, hospitalization, and artificial nutrition.</p>
+
+                <div class="highlight-box clinical-tip">
+                    <strong>Clinical Tip — Introducing Goals-of-Care Conversations:</strong>
+                    <p>Rehabilitation clinicians spend more direct time with patients than most medical providers and are uniquely positioned to recognize when functional goals may be shifting. When a patient expresses wishes such as "I just want to be comfortable" or "I don't want to end up in a nursing home," document this and communicate it to the attending physician and interdisciplinary team. You are not responsible for conducting full ACP conversations, but you can normalize them by saying, "Many of my patients your age find it helpful to have a conversation with their doctor about what's most important to them for the future. Have you had that conversation?"</p>
+                </div>
+
+                <h2>12.4 Symptom Management: The Rehabilitation Contribution</h2>
+
+                <h3>Dyspnea and Activity Tolerance</h3>
+                <p>Dyspnea at rest or with minimal exertion profoundly limits function and quality of life in advanced cardiopulmonary disease, cancer, and end-stage organ failure. Rehabilitation strategies include energy conservation and activity pacing, positioning techniques to optimize ventilation (high Fowler's, forward lean), pursed lip breathing, respiratory muscle training when appropriate, and graded activity exposure with appropriate rest-to-work ratios. Reducing the metabolic cost of daily activities through adaptive techniques directly reduces the symptom burden of dyspnea.</p>
+
+                <h3>Fatigue Management</h3>
+                <p>Cancer-related fatigue and fatigue in other progressive conditions is often the most distressing symptom reported by patients and is frequently mismanaged through either complete rest (which worsens deconditioning) or inappropriate high-intensity exercise. Pacing strategies — balancing activity and rest across the day, prioritizing valued activities, and recognizing early fatigue signals — are central rehabilitation contributions. Low-to-moderate intensity aerobic exercise has the strongest evidence base for reducing cancer-related fatigue and is recommended by NCCN guidelines.</p>
+
+                <h2>12.5 Quality of Life and Dignity-Centered Care</h2>
+                <p>Quality of life encompasses physical, psychological, social, and spiritual well-being. In geriatric rehabilitation at the end of life, quality of life is the primary outcome — not function per se. A patient who cannot walk but can participate meaningfully in family life, engage in cherished activities, and maintain dignity in personal care has achieved a profound rehabilitation success. Clinicians must regularly ask: "What matters most to this patient?" and orient all interventions around that answer.</p>
+
+                <div class="highlight-box clinical-tip">
+                    <strong>Clinical Tip — The "What Matters Most" Framework:</strong>
+                    <p>Use the following four questions (adapted from the 4Ms of Age-Friendly Health Systems) to frame geriatric rehabilitation goals at all stages: (1) What matters most to this patient? (2) What medications are affecting function and well-being? (3) What cognitive and psychological status issues affect care? (4) What mobility capabilities and limitations define current function? Anchoring every care decision in "what matters most" ensures that rehabilitation remains truly patient-centered, especially when curative options are exhausted.</p>
+                </div>
+
+                <h3>Grief, Loss, and Clinician Well-Being</h3>
+                <p>Working with patients at the end of life evokes grief in rehabilitation clinicians — grief for the loss of function, the loss of the patient as a relationship, and the confrontation with mortality that this work inevitably brings. Recognizing and processing these responses is a professional responsibility, not a weakness. Peer support, clinical supervision, debriefing after patient deaths, and institutional support for compassion fatigue are essential components of sustainable geriatric and palliative rehabilitation practice.</p>
+
+                <div class="knowledge-check">
+                    <h3>Knowledge Check</h3>
+                    <div class="question">
+                        <div class="question-text">A patient with end-stage heart failure is on hospice and receiving home physical therapy. Which of the following is the MOST appropriate rehabilitation goal?</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">A) Restore ambulatory capacity to 1,000 feet with a standard walker</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">B) Improve 6-Minute Walk Test performance to age-matched normative values</div>
+                        <div class="answer-option" onclick="selectAnswer(this, true)">C) Maintain safe independent transfer to bedside commode and energy conservation for valued daily activities</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">D) Advance to independent community ambulation without assistive device</div>
+                    </div>
+                </div>
+
+                <div class="module-completion">
+                    <div>Estimated completion time: 15 minutes</div>
+                    <button class="complete-btn" onclick="completeModule(12)">Mark Complete</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════════════════════════ -->
+        <!-- CERTIFICATE SECTION -->
+        <!-- ═══════════════════════════════════════════════════════════ -->
+        <div class="certificate-section" id="certificateSection">
+            <h2>👴 Congratulations!</h2>
+            <p>You have successfully completed <strong>Geriatric Care Across the Continuum</strong>.</p>
+            <p>You have earned <strong>3.0 Continuing Education Units (CCUs)</strong></p>
+            <p>Course ID: GERIATRIC-001 &nbsp;|&nbsp; Approval #: DRTROY-GERIATRIC-001-2024</p>
+            <button class="certificate-btn" onclick="generateCertificate()">Download Certificate</button>
+        </div>
+
+    </div><!-- end .course-container -->
+
+    <script>
+        // Course state
+        let courseState = {
+            modulesCompleted: [],
+            totalModules: 12,
+            startTime: new Date(),
+            completionTime: null
+        };
+
+        // Load saved progress from localStorage
+        function loadProgress() {
+            const saved = localStorage.getItem('geriatricCareProgress');
+            if (saved) {
+                courseState = JSON.parse(saved);
+                courseState.modulesCompleted.forEach(function(moduleNum) {
+                    const header = document.querySelector('[data-module="' + moduleNum + '"] .module-header');
+                    if (header) header.classList.add('completed');
+                    const completion = document.querySelector('[data-module="' + moduleNum + '"] .module-completion');
+                    if (completion) {
+                        completion.innerHTML = '<div>Module completed ✓</div><div class="completed-badge">Completed</div>';
+                    }
+                });
+                updateProgress();
+                if (courseState.modulesCompleted.length === courseState.totalModules) {
+                    document.getElementById('certificateSection').classList.add('visible');
+                }
+            }
+        }
+
+        // Save progress to localStorage
+        function saveProgress() {
+            localStorage.setItem('geriatricCareProgress', JSON.stringify(courseState));
+        }
+
+        // Toggle module open/close
+        function toggleModule(moduleNum) {
+            const module = document.querySelector('[data-module="' + moduleNum + '"]');
+            const content = module.querySelector('.module-content');
+            const isActive = content.classList.contains('active');
+
+            // Close all modules
+            document.querySelectorAll('.module-content').forEach(function(c) {
+                c.classList.remove('active');
+            });
+
+            // Toggle current
+            if (!isActive) {
+                content.classList.add('active');
+                content.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }
+
+        // Complete a module
+        function completeModule(moduleNum) {
+            if (!courseState.modulesCompleted.includes(moduleNum)) {
+                courseState.modulesCompleted.push(moduleNum);
+
+                const header = document.querySelector('[data-module="' + moduleNum + '"] .module-header');
+                if (header) header.classList.add('completed');
+
+                const completion = document.querySelector('[data-module="' + moduleNum + '"] .module-completion');
+                if (completion) {
+                    completion.innerHTML = '<div>Module completed ✓</div><div class="completed-badge">Completed</div>';
+                }
+
+                updateProgress();
+                saveProgress();
+
+                if (courseState.modulesCompleted.length === courseState.totalModules) {
+                    courseState.completionTime = new Date();
+                    saveProgress();
+                    const cert = document.getElementById('certificateSection');
+                    cert.classList.add('visible');
+                    cert.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            }
+        }
+
+        // Update progress bar and percentage display
+        function updateProgress() {
+            const pct = Math.round((courseState.modulesCompleted.length / courseState.totalModules) * 100);
+            document.querySelector('.progress-fill').style.width = pct + '%';
+            document.querySelector('.progress-percentage').textContent = pct + '% Complete';
+        }
+
+        // Handle knowledge check answers
+        function selectAnswer(element, isCorrect) {
+            const question = element.parentElement;
+            // Clear previous selections
+            question.querySelectorAll('.answer-option').forEach(function(opt) {
+                opt.classList.remove('correct', 'incorrect');
+            });
+
+            element.classList.add(isCorrect ? 'correct' : 'incorrect');
+
+            setTimeout(function() {
+                if (isCorrect) {
+                    if (!element.innerHTML.includes('✓')) {
+                        element.innerHTML += ' ✓ Correct!';
+                    }
+                } else {
+                    if (!element.innerHTML.includes('✗')) {
+                        element.innerHTML += ' ✗ Incorrect';
+                    }
+                    // Highlight the correct answer
+                    question.querySelectorAll('.answer-option').forEach(function(opt) {
+                        if (opt.getAttribute('onclick') && opt.getAttribute('onclick').includes('true')) {
+                            opt.classList.add('correct');
+                            if (!opt.innerHTML.includes('✓')) {
+                                opt.innerHTML += ' ✓ Correct Answer';
+                            }
+                        }
+                    });
+                }
+            }, 400);
+        }
+
+        // Generate and print certificate
+        function generateCertificate() {
+            const completionDate = new Date().toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+
+            const certHTML = `<!DOCTYPE html>
+<html>
+<head>
+    <title>Certificate - Geriatric Care Across the Continuum</title>
+    <style>
+        body { font-family: 'Georgia', serif; text-align: center; padding: 50px; background: #f8f9fa; }
+        .certificate { background: white; padding: 60px; border: 10px solid #1a365d; max-width: 800px; margin: 0 auto; }
+        .header { color: #1a365d; font-size: 36px; margin-bottom: 20px; font-weight: bold; }
+        .title { font-size: 22px; color: #059669; margin: 30px 0; font-weight: bold; }
+        .subtitle { font-size: 14px; color: #4a5568; font-style: italic; margin-bottom: 20px; }
+        .recipient-label { font-size: 16px; color: #4a5568; margin-top: 30px; }
+        .recipient { font-size: 28px; color: #1a365d; margin: 10px 0 20px 0; border-bottom: 2px solid #1a365d; padding-bottom: 10px; display: inline-block; min-width: 300px; }
+        .content { font-size: 16px; line-height: 1.8; margin: 20px 0; }
+        .credits { font-size: 20px; color: #059669; font-weight: bold; margin: 20px 0; }
+        .signature-row { margin-top: 60px; display: flex; justify-content: space-around; }
+        .sig-block { text-align: center; }
+        .sig-line { border-top: 2px solid #333; width: 220px; padding-top: 8px; font-size: 14px; color: #333; }
+        .meta { color: #666; margin-top: 30px; font-size: 13px; line-height: 1.6; }
+        .seal { font-size: 60px; margin: 20px 0; }
+    </style>
+</head>
+<body>
+    <div class="certificate">
+        <div class="seal">🏆</div>
+        <div class="header">CERTIFICATE OF COMPLETION</div>
+        <div class="title">Geriatric Care Across the Continuum</div>
+        <div class="subtitle">Comprehensive Rehabilitation Approaches for the Aging Population Across All Care Settings</div>
+        <div class="recipient-label">This certifies that</div>
+        <div class="content">
+            <div class="recipient">[Participant Name]</div>
+        </div>
+        <div class="content">
+            has successfully completed all 12 modules of the continuing education course<br>
+            <strong>Geriatric Care Across the Continuum</strong>
+        </div>
+        <div class="credits">3.0 Continuing Education Units (CCUs)</div>
+        <div class="signature-row">
+            <div class="sig-block">
+                <div class="sig-line">Dr. Troy Hounshell, PT, ScD<br>Course Director</div>
+            </div>
+            <div class="sig-block">
+                <div class="sig-line">DrTroy Continuing Education<br>Approved Provider</div>
+            </div>
+        </div>
+        <div class="meta">
+            Completed: ${completionDate}<br>
+            Course ID: GERIATRIC-001 &nbsp;|&nbsp; Approval #: DRTROY-GERIATRIC-001-2024<br>
+            12 Modules × 15 Minutes | 180 Minutes Total
+        </div>
+    </div>
+</body>
+</html>`;
+
+            const win = window.open('', '_blank');
+            win.document.write(certHTML);
+            win.document.close();
+            win.print();
+        }
+
+        // Logout — clear progress and redirect
+        function logout() {
+            localStorage.removeItem('geriatricCareProgress');
+            window.location.href = '../index.html';
+        }
+
+        // Init on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            loadProgress();
+        });
+
+        // Auto-save every 30 seconds
+        setInterval(saveProgress, 30000);
+    </script>
+</body>
+</html>

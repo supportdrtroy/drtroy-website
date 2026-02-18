@@ -1,0 +1,1633 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Professional Documentation and Communication | DrTroy CE</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --navy: #1a365d;
+      --navy-light: #2c5282;
+      --gold: #059669;
+      --gold-light: #10b981;
+      --bg: #f7f9fc;
+      --card: #ffffff;
+      --text: #1a202c;
+      --text-muted: #4a5568;
+      --border: #e2e8f0;
+      --shadow: 0 2px 12px rgba(26,54,93,0.08);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: Georgia, 'Times New Roman', Times, serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.75;
+      font-size: 16px;
+    }
+
+    /* ===== HEADER ===== */
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--navy);
+      box-shadow: 0 2px 16px rgba(0,0,0,0.18);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 32px;
+      gap: 16px;
+    }
+
+    .site-header img {
+      height: 52px;
+      object-fit: contain;
+    }
+
+    .header-nav {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .header-nav a {
+      color: rgba(255,255,255,0.82);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      transition: color .2s;
+    }
+
+    .header-nav a:hover { color: var(--gold-light); }
+
+    .btn-logout {
+      background: transparent;
+      border: 1px solid rgba(255,255,255,0.35);
+      color: rgba(255,255,255,0.82);
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      font-weight: 500;
+      padding: 6px 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background .2s, color .2s;
+    }
+
+    .btn-logout:hover { background: rgba(255,255,255,0.12); color: #fff; }
+
+    /* ===== HERO ===== */
+    .course-hero {
+      background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
+      color: #fff;
+      padding: 52px 32px 44px;
+      text-align: center;
+    }
+
+    .course-hero .emoji { font-size: 52px; margin-bottom: 12px; display: block; }
+    .course-hero h1 { font-family: Georgia, serif; font-size: clamp(1.5rem, 3vw, 2.2rem); font-weight: 700; margin-bottom: 10px; }
+    .course-hero .subtitle { font-family: 'Inter', sans-serif; font-size: 15px; color: rgba(255,255,255,0.78); max-width: 680px; margin: 0 auto 20px; }
+
+    .course-meta {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-top: 18px;
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+    }
+
+    .meta-badge {
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.22);
+      border-radius: 20px;
+      padding: 5px 16px;
+      color: #fff;
+    }
+
+    /* ===== PROGRESS ===== */
+    .progress-wrapper {
+      background: var(--card);
+      border-bottom: 1px solid var(--border);
+      padding: 18px 32px;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .progress-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--navy);
+    }
+
+    .progress-bar {
+      height: 10px;
+      background: #e2e8f0;
+      border-radius: 99px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--gold), var(--gold-light));
+      border-radius: 99px;
+      width: 0%;
+      transition: width 0.5s ease;
+    }
+
+    /* ===== MAIN LAYOUT ===== */
+    .course-container {
+      max-width: 900px;
+      margin: 36px auto 80px;
+      padding: 0 20px;
+    }
+
+    /* ===== MODULE BLOCKS ===== */
+    .module {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      margin-bottom: 16px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      transition: box-shadow .2s;
+    }
+
+    .module:hover { box-shadow: 0 4px 20px rgba(26,54,93,0.13); }
+
+    .module.completed .module-header { background: linear-gradient(90deg, #f0fdf4, #dcfce7); border-left: 5px solid var(--gold); }
+    .module.completed .module-title::before { content: '✅ '; }
+
+    .module-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 24px;
+      cursor: pointer;
+      user-select: none;
+      border-left: 5px solid transparent;
+      transition: background .2s;
+    }
+
+    .module-header:hover { background: #f8fafc; }
+
+    .module-title {
+      font-family: 'Inter', sans-serif;
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--navy);
+    }
+
+    .module-toggle {
+      font-size: 20px;
+      color: var(--navy-light);
+      transition: transform .25s;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .module.open .module-toggle { transform: rotate(180deg); }
+
+    .module-content {
+      display: none;
+      padding: 28px 32px 24px;
+      border-top: 1px solid var(--border);
+    }
+
+    .module.open .module-content { display: block; }
+
+    /* ===== CONTENT TYPOGRAPHY ===== */
+    .module-content h2 {
+      font-family: Georgia, serif;
+      font-size: 1.35rem;
+      color: var(--navy);
+      margin: 0 0 14px;
+    }
+
+    .module-content h3 {
+      font-family: Georgia, serif;
+      font-size: 1.1rem;
+      color: var(--navy-light);
+      margin: 24px 0 10px;
+    }
+
+    .module-content p { margin-bottom: 14px; color: #2d3748; }
+
+    .module-content ul, .module-content ol {
+      padding-left: 22px;
+      margin-bottom: 14px;
+    }
+
+    .module-content li { margin-bottom: 6px; color: #2d3748; }
+
+    /* ===== HIGHLIGHT BOXES ===== */
+    .highlight-box {
+      border-radius: 10px;
+      padding: 16px 20px;
+      margin: 20px 0;
+      font-size: 15px;
+      border-left: 4px solid;
+    }
+
+    .highlight-box strong {
+      display: block;
+      margin-bottom: 6px;
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+    }
+
+    .clinical-tip {
+      background: #f0fdf4;
+      border-color: var(--gold);
+      color: #14532d;
+    }
+
+    .clinical-tip strong { color: var(--gold); }
+
+    .key-point {
+      background: #fffbeb;
+      border-color: #f59e0b;
+      color: #78350f;
+    }
+
+    .key-point strong { color: #d97706; }
+
+    .caution {
+      background: #fef2f2;
+      border-color: #ef4444;
+      color: #7f1d1d;
+    }
+
+    .caution strong { color: #dc2626; }
+
+    /* ===== KNOWLEDGE CHECK ===== */
+    .knowledge-check {
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 22px 24px;
+      margin: 26px 0 20px;
+    }
+
+    .knowledge-check h4 {
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .07em;
+      color: var(--navy);
+      margin-bottom: 10px;
+    }
+
+    .question-text {
+      font-family: Georgia, serif;
+      font-size: 15px;
+      color: #1a202c;
+      margin-bottom: 14px;
+      font-weight: bold;
+    }
+
+    .answer-options { display: flex; flex-direction: column; gap: 8px; }
+
+    .answer-option {
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      background: #fff;
+      border: 1px solid #cbd5e0;
+      border-radius: 8px;
+      padding: 10px 16px;
+      cursor: pointer;
+      text-align: left;
+      transition: background .15s, border-color .15s;
+      color: var(--text);
+    }
+
+    .answer-option:hover { background: #edf2f7; border-color: var(--navy-light); }
+    .answer-option.correct { background: #f0fdf4; border-color: var(--gold); color: #14532d; font-weight: 600; }
+    .answer-option.incorrect { background: #fef2f2; border-color: #ef4444; color: #7f1d1d; }
+
+    /* ===== COMPLETION ===== */
+    .module-completion {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 28px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border);
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    .complete-btn {
+      background: var(--gold);
+      color: #fff;
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      border: none;
+      border-radius: 8px;
+      padding: 10px 26px;
+      cursor: pointer;
+      transition: background .2s, transform .1s;
+    }
+
+    .complete-btn:hover { background: #047857; transform: translateY(-1px); }
+    .complete-btn:active { transform: translateY(0); }
+    .complete-btn:disabled { background: #9ca3af; cursor: default; transform: none; }
+
+    /* ===== CERTIFICATE ===== */
+    #certificateSection {
+      display: none;
+      background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
+      border-radius: 16px;
+      padding: 48px 40px;
+      text-align: center;
+      color: #fff;
+      margin-top: 32px;
+      box-shadow: 0 8px 32px rgba(26,54,93,0.22);
+    }
+
+    #certificateSection h2 { font-size: 2rem; margin-bottom: 12px; }
+    #certificateSection p { color: rgba(255,255,255,0.82); margin-bottom: 8px; font-family: 'Inter', sans-serif; }
+    #certificateSection .cert-ccu { font-size: 2.5rem; font-weight: 700; color: var(--gold-light); margin: 16px 0; display: block; font-family: 'Inter', sans-serif; }
+
+    .cert-btn {
+      background: var(--gold);
+      color: #fff;
+      font-family: 'Inter', sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+      border: none;
+      border-radius: 10px;
+      padding: 14px 36px;
+      cursor: pointer;
+      margin-top: 20px;
+      transition: background .2s;
+    }
+
+    .cert-btn:hover { background: #047857; }
+
+    /* ===== FOOTER ===== */
+    .site-footer {
+      background: var(--navy);
+      color: rgba(255,255,255,0.55);
+      text-align: center;
+      padding: 22px 20px;
+      font-family: 'Inter', sans-serif;
+      font-size: 12px;
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 640px) {
+      .site-header { padding: 10px 16px; }
+      .course-hero { padding: 36px 16px 30px; }
+      .progress-wrapper { padding: 14px 16px; }
+      .module-content { padding: 20px 16px; }
+      .module-header { padding: 14px 16px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ===== STICKY HEADER ===== -->
+<header class="site-header">
+  <a href="../course-catalog.html">
+    <img src="../images/drtroy_logo_new.jpg" alt="DrTroy CE Logo" />
+  </a>
+  <nav class="header-nav">
+    <a href="../course-catalog.html">Course Catalog</a>
+    <a href="../my-account.html">My Account</a>
+    <button class="btn-logout" onclick="logout()">Log Out</button>
+  </nav>
+</header>
+
+<!-- ===== HERO ===== -->
+<section class="course-hero">
+  <span class="emoji">📋</span>
+  <h1>Professional Documentation and Communication</h1>
+  <p class="subtitle">Clinical Documentation Standards, Effective Communication, and Compliance in Physical and Occupational Therapy</p>
+  <div class="course-meta">
+    <span class="meta-badge">Course ID: DOCUMENTATION-001</span>
+    <span class="meta-badge">Approval: DRTROY-DOC-001-2024</span>
+    <span class="meta-badge">3.0 CCUs</span>
+    <span class="meta-badge">12 Modules × 15 min</span>
+  </div>
+</section>
+
+<!-- ===== PROGRESS BAR ===== -->
+<div class="progress-wrapper">
+  <div class="progress-header">
+    <span>Course Progress</span>
+    <span id="progressLabel">0 / 12 modules complete</span>
+  </div>
+  <div class="progress-bar">
+    <div class="progress-fill" id="progressFill"></div>
+  </div>
+</div>
+
+<!-- ===== COURSE CONTENT ===== -->
+<main class="course-container">
+
+  <!-- ============================================================
+       MODULE 1: Principles of Clinical Documentation
+  ============================================================ -->
+  <div class="module" data-module="1">
+    <div class="module-header" onclick="toggleModule(1)">
+      <div class="module-title">Module 1: Principles of Clinical Documentation: Legal, Ethical, and Professional Standards (15 min)</div>
+      <div class="module-toggle">▾</div>
+    </div>
+    <div class="module-content">
+      <h2>Principles of Clinical Documentation: Legal, Ethical, and Professional Standards</h2>
+      <p>Clinical documentation is the cornerstone of safe, effective, and accountable patient care. In the professions of physical therapy, occupational therapy, and speech-language pathology, documentation serves as far more than a record of what occurred during a visit — it is a legal document, a communication tool, a billing instrument, and a reflection of the clinician's professional reasoning. Understanding the foundational principles that govern documentation is essential for every clinician at every level of experience.</p>
+
+      <h3>Why Documentation Matters</h3>
+      <p>Documentation creates a permanent record that chronicles the patient's clinical journey from evaluation through discharge. It communicates the clinician's findings and reasoning to other members of the healthcare team, enabling coordinated and continuous care. In legal proceedings, the medical record is often the primary — and sometimes only — evidence of what care was provided, when, by whom, and why. A common maxim in healthcare law captures this reality: <em>"If it wasn't documented, it didn't happen."</em> This principle holds true whether examining a malpractice case, a Medicare audit, or a state licensing board complaint.</p>
+
+      <div class="highlight-box key-point">
+        <strong>Key Point</strong>
+        Documentation is simultaneously a clinical, legal, billing, and communication document. Every entry must be accurate, timely, and complete.
+      </div>
+
+      <h3>Legal Standards for Documentation</h3>
+      <p>Clinicians are bound by federal and state statutes, payer requirements, and facility policies when completing documentation. At the federal level, Medicare and Medicaid establish detailed coverage requirements that must be reflected in the medical record to support reimbursement. State practice acts define who may document, how corrections must be made, and how records must be retained. Common legal standards include:</p>
+      <ul>
+        <li>Documentation must be completed in a timely manner — typically within 24 hours of the visit or procedure.</li>
+        <li>Entries must identify the author by name, credentials, date, and time of entry.</li>
+        <li>Corrections must be made by drawing a single line through the incorrect entry, adding a note, and signing — never by erasing or using correction fluid.</li>
+        <li>Records must be retained for a minimum number of years as dictated by state law and payer contracts (commonly 7–10 years for adults; longer for minors).</li>
+        <li>Only authorized personnel may access, complete, or amend a patient record.</li>
+      </ul>
+
+      <h3>Ethical Obligations in Documentation</h3>
+      <p>Beyond legal requirements, clinicians carry significant ethical responsibilities in documentation. The APTA, AOTA, and ASHA codes of ethics all emphasize the values of honesty, integrity, and respect for patient dignity. Ethical documentation requires that clinicians document only what actually occurred, avoid embellishment or falsification, protect patient privacy, and ensure that documentation accurately reflects the skill and complexity of the care provided. Upcoding (billing for a higher level of service than was provided) or fabricating documentation to support billing constitutes healthcare fraud and can result in criminal prosecution, exclusion from federal programs, and loss of licensure.</p>
+
+      <div class="highlight-box caution">
+        <strong>Caution</strong>
+        Falsifying clinical records — including copying and pasting previous notes without updating them — constitutes fraud. Each entry must accurately reflect the unique care provided that day.
+      </div>
+
+      <h3>Professional Standards and Best Practices</h3>
+      <p>Professional standards for documentation go beyond the minimum legal threshold. Best practices include writing in clear, objective language; avoiding vague or subjective terms without supporting evidence; using standardized outcome measures with documented scores; and ensuring the reader — whether a physician, insurer, or colleague — can follow the clinical reasoning from evaluation through discharge. Documentation should tell a compelling clinical story: the patient's baseline function, the impairments identified, the interventions applied, the patient's response, and the progress toward functional goals. Every note should answer the question: <em>Why was skilled care necessary today?</em></p>
+
+      <div class="highlight-box clinical-tip">
+        <strong>Clinical Tip</strong>
+        Ask yourself after every note: "Does this documentation justify skilled care? Could an auditor reading only this note understand why I was the appropriate level of provider today?" If not, revise before signing.
+      </div>
+
+      <h3>Documentation as a Reflection of Professional Identity</h3>
+      <p>Documentation is ultimately a reflection of who you are as a clinician. Thorough, accurate, and thoughtful records demonstrate clinical expertise, protect patients, support your team, and safeguard your practice. Clinicians who take documentation seriously demonstrate professionalism and build the trust of their patients, colleagues, and payers. As documentation requirements evolve — particularly with the shift toward value-based care and electronic health records — the foundational principles of accuracy, timeliness, completeness, and integrity remain constant.</p>
+
+      <div class="knowledge-check">
+        <h4>Knowledge Check</h4>
+        <div class="question-text">According to professional and legal standards, what is the correct method for correcting an error in a paper-based medical record?</div>
+        <div class="answer-options">
+          <button class="answer-option" onclick="selectAnswer(this, false)">Use correction fluid to cover the error and write the correct information above it.</button>
+          <button class="answer-option" onclick="selectAnswer(this, true)">Draw a single line through the error, note the correction, date it, and sign the entry.</button>
+          <button class="answer-option" onclick="selectAnswer(this, false)">Erase the incorrect entry and rewrite the correct information in its place.</button>
+          <button class="answer-option" onclick="selectAnswer(this, false)">Destroy the original document and rewrite the entire note from memory.</button>
+        </div>
+      </div>
+
+      <div class="module-completion">
+        <div>Estimated completion time: 15 minutes</div>
+        <button class="complete-btn" onclick="completeModule(1)">Mark Complete</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       MODULE 2: Medicare Documentation Requirements
+  ============================================================ -->
+  <div class="module" data-module="2">
+    <div class="module-header" onclick="toggleModule(2)">
+      <div class="module-title">Module 2: Medicare Documentation Requirements for PT/OT/SLP Services (15 min)</div>
+      <div class="module-toggle">▾</div>
+    </div>
+    <div class="module-content">
+      <h2>Medicare Documentation Requirements for PT/OT/SLP Services</h2>
+      <p>Medicare is the single largest payer for physical therapy, occupational therapy, and speech-language pathology services in the United States, and its documentation requirements are among the most detailed and strictly enforced. Whether a clinician practices in outpatient, inpatient, skilled nursing, or home health settings, understanding Medicare's expectations for clinical records is essential to avoid claim denials, audits, and recoupment demands.</p>
+
+      <h3>The Medicare Benefit Policy Manual</h3>
+      <p>The primary reference for Medicare therapy coverage is the Medicare Benefit Policy Manual (MBPM), Chapter 15. This document defines the conditions under which therapy services are covered, what must be documented to support coverage, and how services must be coded and billed. Clinicians should be familiar with the relevant sections of the MBPM for their practice setting, as coverage criteria differ between Part A (inpatient, SNF, home health) and Part B (outpatient) services.</p>
+
+      <h3>Core Medicare Documentation Requirements</h3>
+      <p>Under Medicare Part B for outpatient therapy services, the medical record must contain specific elements to support coverage and payment. These include:</p>
+      <ul>
+        <li><strong>Plan of Care (POC):</strong> Must be established at the start of care by the treating therapist, certified by the referring physician or allowed practitioner, and updated as needed. The POC must include the diagnosis, long-term functional goals, type and duration of therapy, and anticipated frequency of treatment.</li>
+        <li><strong>Initial Evaluation:</strong> Documents the patient's prior level of function, current functional limitations, objective findings, impairments, standardized test scores, and a skilled clinical judgment about the appropriateness of therapy.</li>
+        <li><strong>Treatment Notes (Daily Notes):</strong> Must document the date of service, total timed minutes for each timed procedure, total treatment time, the patient's response to treatment, and the therapist's or assistant's signature with credentials.</li>
+        <li><strong>Progress Reports:</strong> Required at least every 10 treatment days or once per 30 calendar days (whichever is less). Must include updated objective measures, comparison to baseline, and documentation of continued medical necessity.</li>
+        <li><strong>Discharge Summary:</strong> Documents final functional status, comparison to goals, reason for discharge, and home program or follow-up recommendations.</li>
+      </ul>
+
+      <div class="highlight-box key-point">
+        <strong>Key Point</strong>
+        Progress reports are required at a minimum every 10 treatment days or 30 calendar days. Missing this requirement is one of the most common reasons for Medicare claim denials on audit.
+      </div>
+
+      <h3>Skilled Care Requirement</h3>
+      <p>Medicare only covers therapy services that require the skills of a licensed therapist. The service must be of a complexity and nature that it cannot safely and effectively be performed by a non-skilled person. Importantly, Medicare coverage is not based solely on whether the patient is improving — services may be covered when they are necessary to maintain a patient's condition or to prevent or slow further deterioration, as long as the care requires the skill of a therapist. This principle was reinforced by the Jimmo v. Sebelius settlement in 2013.</p>
+
+      <div class="highlight-box clinical-tip">
+        <strong>Clinical Tip</strong>
+        Document specifically WHY skilled care is required for each session. State what clinical judgment, skilled assessment, or complex intervention was performed that a non-skilled person could not safely replicate.
+      </div>
+
+      <h3>Therapy Cap and KX Modifier</h3>
+      <p>While the Bipartisan Budget Act of 2018 eliminated the hard therapy cap under Medicare Part B, a financial threshold (the KX modifier threshold) remains in place. Once a beneficiary's therapy expenditures exceed a specified annual threshold, the clinician must append the KX modifier to all subsequent claims attesting that the services are medically necessary and meet applicable requirements. Failure to use the KX modifier when required will result in claim denial. Documentation supporting medical necessity must be in the record for all KX-modified claims.</p>
+
+      <div class="highlight-box caution">
+        <strong>Caution</strong>
+        The KX modifier is not a license to provide unlimited therapy. Documentation supporting continued medical necessity must be in the record and must demonstrate that skilled care is still required.
+      </div>
+
+      <h3>Supervision Requirements</h3>
+      <p>Medicare's supervision requirements for physical therapist assistants and occupational therapy assistants vary by setting. In outpatient settings, PTAs and COTAs must work under the general supervision of their supervising therapist. In SNF settings, more direct supervision is required. Documentation must clearly identify the treating clinician in every note, and co-signatures must reflect actual oversight, not rubber-stamping. When a PTA or COTA provides treatment, this must be noted in the record, as a mandatory 15% payment differential applies to Part B claims for services provided by PTAs and COTAs beginning in 2022.</p>
+
+      <div class="knowledge-check">
+        <h4>Knowledge Check</h4>
+        <div class="question-text">Under Medicare Part B, how frequently are progress reports required at a minimum?</div>
+        <div class="answer-options">
+          <button class="answer-option" onclick="selectAnswer(this, false)">Every 5 treatment days or once per 60 calendar days.</button>
+          <button class="answer-option" onclick="selectAnswer(this, false)">Once per month, regardless of visit frequency.</button>
+          <button class="answer-option" onclick="selectAnswer(this, true)">Every 10 treatment days or once per 30 calendar days, whichever is less.</button>
+          <button class="answer-option" onclick="selectAnswer(this, false)">Only at the time of initial evaluation and discharge.</button>
+        </div>
+      </div>
+
+      <div class="module-completion">
+        <div>Estimated completion time: 15 minutes</div>
+        <button class="complete-btn" onclick="completeModule(2)">Mark Complete</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       MODULE 3: Initial Evaluation Documentation
+  ============================================================ -->
+  <div class="module" data-module="3">
+    <div class="module-header" onclick="toggleModule(3)">
+      <div class="module-title">Module 3: Initial Evaluation Documentation: Elements, Functional Outcomes, and Coding (15 min)</div>
+      <div class="module-toggle">▾</div>
+    </div>
+    <div class="module-content">
+      <h2>Initial Evaluation Documentation: Elements, Functional Outcomes, and Coding</h2>
+      <p>The initial evaluation is the most critical document in the patient's therapy episode of care. It establishes the clinical baseline, justifies the need for skilled intervention, sets the trajectory for goal-setting, and determines the appropriate complexity level for evaluation CPT coding. A well-written initial evaluation tells a complete clinical story and creates the evidentiary foundation that will support every subsequent note in the record.</p>
+
+      <h3>Essential Elements of the Initial Evaluation</h3>
+      <p>A comprehensive initial evaluation must address all of the following domains:</p>
+      <ul>
+        <li><strong>Patient Demographics and Referral Information:</strong> Name, date of birth, date of onset, referring provider, diagnosis (ICD-10), and insurance information.</li>
+        <li><strong>Chief Complaint and History of Present Illness:</strong> Patient's description of symptoms, mechanism of injury, onset and duration, prior treatment, and relevant medical and social history.</li>
+        <li><strong>Prior Level of Function (PLOF):</strong> A precise description of the patient's functional abilities before the current illness or injury. PLOF is critical for establishing the goal of returning the patient to their baseline.</li>
+        <li><strong>Systems Review and Screening:</strong> Brief assessment of the cardiovascular/pulmonary, neuromuscular, musculoskeletal, integumentary, and cognitive/communication systems to rule out red flags and establish comorbid factors.</li>
+        <li><strong>Objective Tests and Measures:</strong> Range of motion, strength, sensation, balance, gait analysis, standardized outcome measures (e.g., BERG Balance Scale, DASH questionnaire, BBS, FIM), and functional assessments.</li>
+        <li><strong>Clinical Impression and Assessment:</strong> The therapist's skilled clinical judgment synthesizing the data collected and explaining why therapy is indicated.</li>
+        <li><strong>Problem List:</strong> A clear enumeration of the impairments, activity limitations, and participation restrictions identified during the evaluation.</li>
+        <li><strong>Functional Goals:</strong> Short-term and long-term goals expressed in functional, measurable, time-bound language.</li>
+        <li><strong>Plan of Care:</strong> Recommended frequency and duration, types of interventions, home program, and anticipated discharge plan.</li>
+      </ul>
+
+      <div class="highlight-box key-point">
+        <strong>Key Point</strong>
+        Prior Level of Function (PLOF) is arguably the most important element of the evaluation. Without a documented PLOF, auditors cannot determine whether the patient's functional deficits represent a change from baseline — which is required to establish medical necessity.
+      </div>
+
+      <h3>Writing Functional Goals</h3>
+      <p>Goals must be written in measurable, functional terms that reflect real-world activities meaningful to the patient. Avoid vague goals such as "improve strength" or "decrease pain." Instead, write: "Patient will ambulate 500 feet on level surfaces with a single-point cane with supervision to allow return to independent community mobility within 6 weeks." Effective goals use the SMART framework: Specific, Measurable, Achievable, Relevant, and Time-bound. Goals should also be written from the patient's perspective — what will the patient be able to do? — rather than focusing solely on impairment-level changes.</p>
+
+      <h3>Evaluation CPT Coding and Complexity Levels</h3>
+      <p>Physical therapy evaluation codes (97161, 97162, 97163) and occupational therapy evaluation codes (97165, 97166, 97167) are tiered by complexity. The appropriate code is determined by the number and complexity of problems addressed, the extent of clinical decision-making required, and the extent of the patient's history and physical examination. Key distinctions include:</p>
+      <ul>
+        <li><strong>Low complexity (97161/97165):</strong> 1–2 personal factors or comorbidities, established presentation, minimal clinical decision-making required.</li>
+        <li><strong>Moderate complexity (97162/97166):</strong> 3 or more personal factors or comorbidities, somewhat complex clinical presentation, moderate decision-making.</li>
+        <li><strong>High complexity (97163/97167):</strong> 4 or more personal factors or comorbidities, highly complex presentation, extensive clinical decision-making, requires therapist's independent judgment.</li>
+      </ul>
+
+      <div class="highlight-box clinical-tip">
+        <strong>Clinical Tip</strong>
+        The complexity code selected must be supported by documentation. Auditors will look for evidence of the comorbidities addressed, the scope of the history gathered, and the clinical reasoning documented before accepting a high-complexity evaluation claim.
+      </div>
+
+      <h3>Re-Evaluation Documentation</h3>
+      <p>Re-evaluations (CPT 97164/97168) are warranted when there is a significant change in the patient's condition, when progress is not occurring as expected, or when a new clinical problem emerges. They require the same thorough assessment approach as the initial evaluation, with particular emphasis on documenting the change that triggered the re-evaluation and updating the plan of care accordingly.</p>
+
+      <div class="knowledge-check">
+        <h4>Knowledge Check</h4>
+        <div class="question-text">Which CPT code is appropriate for a physical therapy evaluation involving a patient with 4 or more personal factors/comorbidities and a highly complex clinical presentation requiring extensive clinical decision-making?</div>
+        <div class="answer-options">
+          <button class="answer-option" onclick="selectAnswer(this, false)">97161 — Low Complexity Evaluation</button>
+          <button class="answer-option" onclick="selectAnswer(this, false)">97162 — Moderate Complexity Evaluation</button>
+          <button class="answer-option" onclick="selectAnswer(this, true)">97163 — High Complexity Evaluation</button>
+          <button class="answer-option" onclick="selectAnswer(this, false)">97164 — Re-Evaluation</button>
+        </div>
+      </div>
+
+      <div class="module-completion">
+        <div>Estimated completion time: 15 minutes</div>
+        <button class="complete-btn" onclick="completeModule(3)">Mark Complete</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       MODULE 4: Daily Notes, Progress Notes, and Re-Evaluation
+  ============================================================ -->
+  <div class="module" data-module="4">
+    <div class="module-header" onclick="toggleModule(4)">
+      <div class="module-title">Module 4: Daily Notes, Progress Notes, and Re-evaluation Documentation (15 min)</div>
+      <div class="module-toggle">▾</div>
+    </div>
+    <div class="module-content">
+      <h2>Daily Notes, Progress Notes, and Re-evaluation Documentation</h2>
+      <p>After the initial evaluation establishes the clinical baseline, the ongoing record of the therapy episode is built through daily treatment notes, periodic progress reports, and re-evaluation documentation when indicated. Each of these document types serves a distinct purpose and carries specific requirements that clinicians must understand to ensure compliance and effective communication.</p>
+
+      <h3>Daily Treatment Notes: The Foundation of the Record</h3>
+      <p>Daily treatment notes (also called visit notes or encounter notes) document what occurred during each therapy session. These notes must be completed for every patient encounter, regardless of whether a progress note is due. Under Medicare and most payer guidelines, the daily note must contain:</p>
+      <ul>
+        <li>Date of service</li>
+        <li>The name and credentials of the treating clinician (and supervising therapist if applicable)</li>
+        <li>Total number of timed minutes for each timed therapeutic procedure</li>
+        <li>Total treatment time for the encounter</li>
+        <li>Assessment of the patient's response to treatment</li>
+        <li>Any modifications to the plan of care</li>
+        <li>Clinician signature with credentials and date</li>
+      </ul>
+
+      <div class="highlight-box key-point">
+        <strong>Key Point</strong>
+        Medicare requires that daily notes include both total timed minutes for each timed procedure AND total treatment time. Omitting either of these elements is a top reason for claim denial on audit.
+      </div>
+
+      <h3>The Importance of Documenting Skilled Care Daily</h3>
+      <p>Each daily note must demonstrate that the care provided required the skill of a licensed therapist. Simply listing exercises completed (e.g., "therapeutic exercise × 15 min") without context is insufficient. The note should describe the clinical judgment applied, any adjustments made to the patient's program based on their response, functional improvements or setbacks observed, and any patient or caregiver education provided. For example: "Patient demonstrated decreased ability to maintain proper lordotic curve during bridging exercise; program modified with addition of lumbar stabilization cueing and hip extension strengthening. Patient tolerated modifications well and verbalized understanding of technique." This level of detail demonstrates skilled oversight and clinical decision-making.</p>
+
+      <h3>Progress Notes: Demonstrating Continued Medical Necessity</h3>
+      <p>Progress notes are formal reports that summarize the patient's progress toward goals over a defined period. Under Medicare, progress notes are required at least every 10 treatment days or 30 calendar days, whichever is less. The progress note must include:</p>
+      <ul>
+        <li>The period covered by the progress note</li>
+        <li>Objective measures of current functional status with comparison to baseline (initial evaluation findings)</li>
+        <li>Assessment of progress toward each established goal, with updated goal status (met, in progress, revised, or discontinued)</li>
+        <li>Plan for the next period — continued, modified, or discharge planned</li>
+        <li>Continued justification for skilled care</li>
+      </ul>
+
+      <div class="highlight-box clinical-tip">
+        <strong>Clinical Tip</strong>
+        Use objective measurement tools consistently throughout the episode of care so progress can be quantified. Documenting "improved strength" means little without pre- and post-measurements (e.g., "shoulder abduction MMT improved from 3+/5 to 4+/5 since evaluation").
+      </div>
+
+      <h3>SOAP Note Format</h3>
+      <p>The SOAP format remains a widely used framework for both daily and progress notes. Each section serves a specific function:</p>
+      <ul>
+        <li><strong>Subjective:</strong> Patient-reported symptoms, pain levels, functional changes, and response to the home program.</li>
+        <li><strong>Objective:</strong> Measurable findings — ROM, strength, balance scores, timed tests, vital signs, and documented exercise parameters.</li>
+        <li><strong>Assessment:</strong> Clinical interpretation of the data, including progress toward goals and justification for continued skilled intervention.</li>
+        <li><strong>Plan:</strong> What will be done at the next session, any referrals or communications, and timeline to anticipated discharge.</li>
+      </ul>
+
+      <h3>Re-Evaluation Documentation</h3>
+      <p>A re-evaluation (CPT 97164 for PT, 97168 for OT) is indicated when there is a significant change in the patient's clinical status, when the patient is not progressing as expected, or when additional problems are identified that require a new clinical assessment. The re-evaluation must include a comprehensive reassessment of all relevant domains, an updated problem list, and revised goals and plan of care. The documentation must clearly justify why the re-evaluation was clinically necessary, distinguishing it from a routine progress note.</p>
+
+      <div class="highlight-box caution">
+        <strong>Caution</strong>
+        A re-evaluation code (97164/97168) should NOT be billed simply because a progress note is due. A re-evaluation requires a clinically significant change in condition that necessitates a comprehensive reassessment. Overuse of re-evaluation codes is a known audit target.
+      </div>
+
+      <div class="knowledge-check">
+        <h4>Knowledge Check</h4>
+        <div class="question-text">A therapist's daily note states: "Therapeutic exercise performed for 15 minutes. Patient tolerated well." Is this documentation sufficient under Medicare standards?</div>
+        <div class="answer-options">
+          <button class="answer-option" onclick="selectAnswer(this, false)">Yes, as long as the total timed minutes are documented, Medicare requirements are met.</button>
+          <button class="answer-option" onclick="selectAnswer(this, true)">No, the note lacks documentation of skilled care, clinical reasoning, patient response, and total treatment time.</button>
+          <button class="answer-option" onclick="selectAnswer(this, false)">Yes, brief notes are acceptable as long as the claim is submitted with the correct CPT codes.</button>
+          <button class="answer-option" onclick="selectAnswer(this, false)">No, but only because total treatment time is missing — no other changes are needed.</button>
+        </div>
+      </div>
+
+      <div class="module-completion">
+        <div>Estimated completion time: 15 minutes</div>
+        <button class="complete-btn" onclick="completeModule(4)">Mark Complete</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       MODULE 5: Discharge Summaries
+  ============================================================ -->
+  <div class="module" data-module="5">
+    <div class="module-header" onclick="toggleModule(5)">
+      <div class="module-title">Module 5: Discharge Summaries: Components, Functional Outcomes, and Continuity of Care (15 min)</div>
+      <div class="module-toggle">▾</div>
+    </div>
+    <div class="module-content">
+      <h2>Discharge Summaries: Components, Functional Outcomes, and Continuity of Care</h2>
+      <p>The discharge summary marks the formal conclusion of a therapy episode of care and is one of the most important documents in the patient record. A well-crafted discharge summary serves multiple critical functions: it communicates final functional status to referring providers and other members of the healthcare team, documents the patient's achievement of (or progress toward) goals, justifies the decision to discharge, and establishes a clear plan for ongoing care or self-management. The discharge note is often the document that an insurer will most closely scrutinize when evaluating whether the episode of care as a whole was appropriate and effective.</p>
+
+      <h3>Reasons for Discharge</h3>
+      <p>Discharge from a therapy episode occurs for a variety of reasons, and the discharge summary must clearly identify and document the specific reason. Common reasons for discharge include:</p>
+      <ul>
+        <li>Goals met — the patient has achieved all established functional goals.</li>
+        <li>Plateau — the patient has reached maximum therapeutic benefit and further skilled intervention is not expected to produce additional functional gains.</li>
+        <li>Patient self-discharged — the patient chose to discontinue therapy against the clinician's recommendation (document thoroughly, including any attempts at patient education).</li>
+        <li>Transition of care — the patient is being transferred to another level of care (e.g., hospital to SNF, home health to outpatient).</li>
+        <li>Non-compliance — the patient failed to attend scheduled appointments or follow the home program (document specific instances).</li>
+        <li>Medical complications or change in status — therapy was discontinued due to a new medical issue or hospitalization.</li>
+      </ul>
+
+      <div class="highlight-box key-point">
+        <strong>Key Point</strong>
+        When discharging a patient who has not fully met their goals (e.g., due to plateau or patient self-discharge), document the reason thoroughly and ensure that the final functional status is clearly recorded.
+      </div>
+
+      <h3>Components of a Complete Discharge Summary</h3>
+      <p>A comprehensive discharge summary should include the following elements:</p>
+      <ul>
+        <li><strong>Dates of service:</strong> First and last date of treatment, total number of visits.</li>
+        <li><strong>Initial and final functional status:</strong> A direct comparison of the patient's functional abilities at evaluation versus at discharge, using the same standardized measures where possible.</li>
+        <li><strong>Goal outcomes:</strong> Status of each established short- and long-term goal (met, partially met, not met — with explanation).</li>
+        <li><strong>Summary of interventions:</strong> Overview of the types of interventions provided throughout the episode of care.</li>
+        <li><strong>Patient and caregiver education:</strong> What was taught, the patient's comprehension level, and their ability to perform the home program.</li>
+        <li><strong>Home exercise program:</strong> Description of the program provided at discharge, including frequency and any equipment or modifications required.</li>
+        <li><strong>Recommendations and referrals:</strong> Any recommendations for follow-up care, specialist referral, or community resources.</li>
+        <li><strong>Reason for discharge</strong> and clinician signature with credentials and date.</li>
+      </ul>
+
+      <h3>Documenting Functional Outcomes at Discharge</h3>
+      <p>Functional outcomes documentation is increasingly important in a value-based care environment. Payers, including Medicare, are moving toward outcome-linked payment models that require clinicians to demonstrate measurable improvements in patient function. Standardized outcome measures — such as the Functional Independence Measure (FIM), the Patient-Specific Functional Scale (PSFS), the Lower Extremity Functional Scale (LEFS), the DASH questionnaire, or the 6-Minute Walk Test — provide objective evidence of functional change that is defensible in audits and meaningful to referring providers.</p>
+
+      <div class="highlight-box clinical-tip">
+        <strong>Clinical Tip</strong>
+        Administer the same standardized outcome measures at discharge that were used at the initial evaluation. This creates a clean, quantifiable comparison that demonstrates the value of the therapy episode and supports the efficacy of your interventions.
+      </div>
+
+      <h3>Continuity of Care Communications</h3>
+      <p>In addition to the formal discharge summary in the medical record, therapists should consider sending discharge communications to the referring physician and any other relevant members of the care team. These communications should be timely — ideally within 5 business days of discharge — and should summarize the final functional status, goal outcomes, home program, and any recommendations for follow-up. Continuity of care communications strengthen the therapeutic relationship with referring providers, support coordinated patient care, and reflect positively on the professionalism of the therapy practice. In some settings, these communications are required by accreditation standards or payer contracts.</p>
+
+      <div class="highlight-box caution">
+        <strong>Caution</strong>
+        Failing to document patient self-discharge or non-compliance thoroughly can create significant liability. If a patient self-discharges against medical advice, document multiple attempts to counsel the patient, the information provided, and the patient's stated reasons for refusing continued care.
+      </div>
+
+      <div class="knowledge-check">
+        <h4>Knowledge Check</h4>
+        <div class="question-text">Which of the following is the MOST important element to include in a discharge summary for a patient who did not fully achieve their therapy goals?</div>
+        <div class="answer-options">
+          <button class="answer-option" onclick="selectAnswer(this, false)">A list of all exercises performed during the episode of care.</button>
+          <button class="answer-option" onclick="selectAnswer(this, false)">The patient's insurance information and billing codes for the final visit.</button>
+          <button class="answer-option" onclick="selectAnswer(this, true)">The specific reason goals were not met, the patient's final functional status compared to baseline, and recommendations for continued or follow-up care.</button>
+          <button class="answer-option" onclick="selectAnswer(this, false)">A statement that the patient was satisfied with their care and had no complaints.</button>
+        </div>
+      </div>
+
+      <div class="module-completion">
+        <div>Estimated completion time: 15 minutes</div>
+        <button class="complete-btn" onclick="completeModule(5)">Mark Complete</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       MODULE 6: Functional Limitation Reporting and G-Codes
+  ============================================================ -->
+  <div class="module" data-module="6">
+    <div class="module-header" onclick="toggleModule(6)">
+      <div class="module-title">Module 6: Functional Limitation Reporting and G-Codes (15 min)</div>
+      <div class="module-toggle">▾</div>
+    </div>
+    <div class="module-content">
+      <h2>Functional Limitation Reporting and G-Codes</h2>
+      <p>Functional Limitation Reporting (FLR) was a Medicare requirement for outpatient therapy services that was introduced on January 1, 2013, and continued through December 31, 2018. While this specific program has ended, the G-codes and severity modifiers that were used for FLR remain relevant for understanding Medicare's approach to functional outcomes measurement and continue to appear in documentation literature, audits of historical claims, and some payer-specific requirements. Clinicians must understand both the historical context and the current landscape of functional reporting requirements.</p>
+
+      <h3>Background and Purpose of Functional Limitation Reporting</h3>
+      <p>FLR was designed by CMS to collect standardized data about the functional limitations of therapy patients for outcomes research and future payment policy development. It required outpatient therapists to report the patient's primary functional limitation using a specific set of G-codes, along with severity modifiers indicating the degree of limitation, at the initial evaluation, at progress report intervals, and at discharge. This data was intended to build a national database of therapy outcomes that would eventually inform value-based payment decisions.</p>
+
+      <h3>G-Code Categories for Therapy Services</h3>
+      <p>G-codes are HCPCS Level II codes specific to therapy services. Under FLR, the relevant G-code categories included:</p>
+      <ul>
+        <li><strong>Mobility (G8978–G8980):</strong> Current/projected/discharge status for functional mobility limitations.</li>
+        <li><strong>Changing and Maintaining Body Position (G8981–G8983):</strong> Limitations in tasks such as sit-to-stand or maintaining postures.</li>
+        <li><strong>Carrying, Moving, and Handling Objects (G8984–G8986):</strong> Upper extremity functional limitations.</li>
+        <li><strong>Self-Care (G8987–G8989):</strong> ADL limitations such as dressing, bathing, and feeding.</li>
+        <li><strong>Other PT/OT Primary (G8990–G8992):</strong> A catch-all category for limitations not covered by the above.</li>
+        <li><strong>Communication (G8996–G8998):</strong> SLP-specific communication limitations.</li>
+        <li><strong>Swallowing (G9186–G9188):</strong> Dysphagia and swallowing limitations for SLP.</li>
+      </ul>
+
+      <div class="highlight-box key-point">
+        <strong>Key Point</strong>
+        Although the formal FLR program ended December 31, 2018, understanding G-codes and severity modifiers is still important for auditing historical records (claims from 2013–2018) and for understanding functional outcomes frameworks that continue to inform current CMS policy.
+      </div>
+
+      <h3>Severity Modifiers</h3>
+      <p>Each G-code claim line required a corresponding severity modifier that indicated the patient's current level of functional limitation in the identified area. The severity modifiers ranged from CH (0% impaired) to CN (100% impaired), with intermediate levels at CH (0%), CI (1–19%), CJ (20–39%), CK (40–59%), CL (60–79%), CM (80–99%), and CN (100% impaired). The appropriate modifier was determined by clinician assessment using a standardized method, often the AM-PAC or another validated tool. The same modifier system applied to current, projected goal, and discharge status reports.</p>
+
+      <h3>Current Functional Outcome Reporting Requirements</h3>
+      <p>Following the end of the FLR program, CMS transitioned to the PT/OT Quality Payment Program and eventually the Merit-Based Incentive Payment System (MIPS) framework for eligible clinicians. Under current requirements, eligible clinicians may be required to report Quality measures through MIPS, which includes functional outcome measures for therapy. Clinicians should verify current MIPS participation requirements annually, as thresholds and measures are updated each performance year. The use of standardized, validated outcome tools — regardless of specific program requirements — remains a best practice for demonstrating the value of therapy services.</p>
+
+      <div class="highlight-box clinical-tip">
+        <strong>Clinical Tip</strong>
+        Even in the absence of a mandatory functional reporting program, regularly using and documenting standardized outcome measures (PSFS, LEFS, DASH, BBS, etc.) at evaluation, at progress report intervals, and at discharge strengthens your documentation, supports medical necessity, and prepares your practice for any future outcome-based payment requirements.
+      </div>
+
+      <h3>Transition to Quality Measures and Value-Based Care</h3>
+      <p>The evolution from FLR G-codes to quality measures under MIPS reflects CMS's broader shift toward value-based care. For therapy providers, this means documentation must increasingly demonstrate not just that services were provided, but that those services resulted in meaningful, measurable improvements in patient function. Practices that have built strong habits around functional outcomes documentation — using validated tools, tracking outcomes over time, and communicating results — will be well-positioned as this shift accelerates in the coming years.</p>
+
+      <div class="knowledge-check">
+        <h4>Knowledge Check</h4>
+        <div class="question-text">The Medicare Functional Limitation Reporting (FLR) program required outpatient therapists to report patient functional limitations using G-codes and severity modifiers. When did this mandatory reporting program end?</div>
+        <div class="answer-options">
+          <button class="answer-option" onclick="selectAnswer(this, false)">December 31, 2020</button>
+          <button class="answer-option" onclick="selectAnswer(this, false)">January 1, 2016</button>
+          <button class="answer-option" onclick="selectAnswer(this, true)">December 31, 2018</button>
+          <button class="answer-option" onclick="selectAnswer(this, false)">December 31, 2022</button>
+        </div>
+      </div>
+
+      <div class="module-completion">
+        <div>Estimated completion time: 15 minutes</div>
+        <button class="complete-btn" onclick="completeModule(6)">Mark Complete</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       MODULE 7: ICD-10 Coding
+  ============================================================ -->
+  <div class="module" data-module="7">
+    <div class="module-header" onclick="toggleModule(7)">
+      <div class="module-title">Module 7: ICD-10 Coding for Therapy Diagnoses: Principles and Common Codes (15 min)</div>
+      <div class="module-toggle">▾</div>
+    </div>
+    <div class="module-content">
+      <h2>ICD-10 Coding for Therapy Diagnoses: Principles and Common Codes</h2>
+      <p>The International Classification of Diseases, Tenth Revision, Clinical Modification (ICD-10-CM) is the standard coding system used in the United States to report diagnoses and conditions on health care claims. Physical therapists, occupational therapists, and speech-language pathologists use ICD-10-CM codes to identify the patient's diagnosis, and proper ICD-10 coding is essential for claim payment, medical necessity determination, and accurate healthcare data reporting. While therapists do not establish medical diagnoses in the same way physicians do, they are responsible for selecting the ICD-10 codes that most accurately describe the conditions they are evaluating and treating.</p>
+
+      <h3>Structure of ICD-10-CM Codes</h3>
+      <p>ICD-10-CM codes consist of 3 to 7 alphanumeric characters. The first character is always a letter. The second and third characters are numbers. Characters 4 through 7 provide greater specificity. The general structure is: Category (3 characters) → Etiology, Anatomic Site, Severity (up to 4 additional characters). For example, M54.5 is "Low back pain," while M54.51 is "Vertebrogenic low back pain" and M54.59 is "Other low back pain." Using the most specific code available is required under ICD-10-CM conventions and is important for clinical accuracy and payer acceptance.</p>
+
+      <div class="highlight-box key-point">
+        <strong>Key Point</strong>
+        Always code to the highest level of specificity available. Using an unspecified code (e.g., M79.9 — Soft tissue disorder, unspecified) when a more specific code exists may result in claim denial or reduced payment, and reflects poorly on clinical documentation quality.
+      </div>
+
+      <h3>Commonly Used ICD-10 Codes in Therapy</h3>
+      <p>The following are among the most frequently used ICD-10 codes in physical and occupational therapy practice:</p>
+      <ul>
+        <li><strong>M54.5x — Low back pain</strong> (note: M54.50, M54.51, M54.59 for greater specificity)</li>
+        <li><strong>M25.51x — Pain in shoulder</strong> (e.g., M25.511 right shoulder, M25.512 left shoulder)</li>
+        <li><strong>G35 — Multiple sclerosis</strong></li>
+        <li><strong>I69.391 — Dysphagia following cerebral infarction</strong></li>
+        <li><strong>I63.9 — Cerebral infarction, unspecified (stroke)</strong></li>
+        <li><strong>S72.001A — Fracture of femoral head, right, initial encounter</strong></li>
+        <li><strong>M17.11 — Primary osteoarthritis, right knee</strong></li>
+        <li><strong>M75.1 — Rotator cuff syndrome</strong></li>
+        <li><strong>G20 — Parkinson's disease</strong></li>
+        <li><strong>R26.0 — Ataxic gait</strong></li>
+        <li><strong>M62.81 — Muscle weakness, generalized</strong></li>
+        <li><strong>Z96.641 — Presence of right artificial hip joint</strong></li>
+      </ul>
+
+      <h3>7th Character Extensionsfor Musculoskeletal Conditions</h3>
+      <p>Many musculoskeletal and injury-related ICD-10-CM codes require a 7th character extension to indicate the episode of care. The most common extensions for fractures and injuries are:</p>
+      <ul>
+        <li><strong>A</strong> — Initial encounter: Active treatment (not necessarily the first visit)</li>
+        <li><strong>D</strong> — Subsequent encounter: Healing phase, routine care</li>
+        <li><strong>S</strong> — Sequela: Complication or condition arising from a prior injury</li>
+      </ul>
+      <p>It is important to note that "initial encounter" (A) does not mean the patient's first physical therapy visit — it refers to the period during which the patient is receiving active treatment. Therapy provided while a fracture is still healing would typically be coded with the "A" extension. Once healing is complete and the patient is in the recovery phase, "D" would be appropriate.</p>
+
+      <div class="highlight-box clinical-tip">
+        <strong>Clinical Tip</strong>
+        When coding post-surgical patients (e.g., status post total knee replacement, status post rotator cuff repair), use the appropriate postoperative aftercare Z-code (e.g., Z47.1 — Aftercare following joint replacement surgery) as the primary code, with the underlying condition as a secondary code, unless the documentation reflects active treatment of an ongoing pathology.
+      </div>
+
+      <h3>Laterality and Specificity Requirements</h3>
+      <p>ICD-10-CM requires documentation of laterality (right, left, bilateral) for most extremity and joint conditions. A code like M25.5 (Pain in joint) must be refined to specify which joint and which side. Therapists must ensure their documentation clearly supports the specific code selected — if the code includes "right knee," the evaluation and daily notes must consistently reference the right knee as the site of dysfunction. Inconsistency between the diagnosis code and the clinical documentation is a red flag in audits and can trigger denials or recoupment.</p>
+
+      <div class="knowledge-check">
+        <h4>Knowledge Check</h4>
+        <div class="question-text">A patient is receiving PT six weeks after a distal radius fracture that is currently in the healing phase. What 7th character extension should be used with the fracture code?</div>
+        <div class="answer-options">
+          <button class="answer-option" onclick="selectAnswer(this, false)">A — Initial encounter</button>
+          <button class="answer-option" onclick="selectAnswer(this, true)">D — Subsequent encounter (healing phase)</button>
+          <button class="answer-option" onclick="selectAnswer(this, false)">S — Sequela</button>
+          <button class="answer-option" onclick="selectAnswer(this, false)">No 7th character is required for upper extremity fractures.</button>
+        </div>
+      </div>
+
+      <div class="module-completion">
+        <div>Estimated completion time: 15 minutes</div>
+        <button class="complete-btn" onclick="completeModule(7)">Mark Complete</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       MODULE 8: CPT Coding
+  ============================================================ -->
+  <div class="module" data-module="8">
+    <div class="module-header" onclick="toggleModule(8)">
+      <div class="module-title">Module 8: CPT Coding for Therapy Procedures: Timed vs. Service Codes (15 min)</div>
+      <div class="module-toggle">▾</div>
+    </div>
+    <div class="module-content">
+      <h2>CPT Coding for Therapy Procedures: Timed vs. Service Codes</h2>
+      <p>Current Procedural Terminology (CPT) codes are used to report the specific therapeutic procedures provided during a patient encounter. Accurate CPT coding ensures that claims accurately reflect the care provided, supports appropriate payment, and reduces audit risk. For physical and occupational therapists, CPT coding involves understanding the distinction between timed codes and service-based codes, applying the 8-minute rule, and correctly documenting time to support each billed unit.</p>
+
+      <h3>Timed Codes vs. Service-Based (Untimed) Codes</h3>
+      <p>The most fundamental distinction in therapy CPT coding is between timed codes and service-based (untimed) codes:</p>
+      <ul>
+        <li><strong>Timed codes</strong> are billed in 15-minute units based on the time the clinician spent providing the specific intervention. Examples include therapeutic exercise (97110), neuromuscular re-education (97112), therapeutic activities (97530), manual therapy (97140), gait training (97116), and self-care management training (97535).</li>
+        <li><strong>Service-based (untimed) codes</strong> are billed once per date of service regardless of the time spent. Examples include physical performance tests (97750), electrical stimulation unattended (97014), hot or cold packs (97010), and traction unattended (97012).</li>
+      </ul>
+
+      <div class="highlight-box key-point">
+        <strong>Key Point</strong>
+        Timed codes must be supported by documented time. Every minute of timed therapy must be accounted for in the documentation. Billing timed units without corresponding documentation of time is a top audit finding.
+      </div>
+
+      <h3>The 8-Minute Rule</h3>
+      <p>The 8-minute rule (CMS policy) governs how timed units are counted when multiple timed procedures are provided during a single encounter. The general rules are:</p>
+      <ul>
+        <li>A minimum of 8 minutes of a single timed procedure must be provided to bill 1 unit of that code.</li>
+        <li>Each additional 15-minute block allows one additional unit to be billed (8–22 min = 1 unit; 23–37 min = 2 units; 38–52 min = 3 units; 53–67 min = 4 units).</li>
+        <li>When multiple timed procedures are provided in a session, total timed minutes are used to determine total billable units using the 8-minute rule, and units are allocated to the procedures that received the most time.</li>
+      </ul>
+      <p>For example: If a patient receives 20 minutes of therapeutic exercise, 15 minutes of manual therapy, and 10 minutes of neuromuscular re-education, total timed minutes = 45. Using the 8-minute rule, 3 units can be billed. Units are allocated: 2 units to therapeutic exercise (most time), 1 unit to manual therapy.</p>
+
+      <div class="highlight-box clinical-tip">
+        <strong>Clinical Tip</strong>
+        Always document the specific minutes spent on each timed procedure and total timed treatment time in the daily note. Payers will calculate billable units from your documented time — if the math doesn't support the number of units billed, the claim will be denied or recouped.
+      </div>
+
+      <h3>Common PT/OT CPT Codes</h3>
+      <p>Frequently used timed therapy CPT codes include:</p>
+      <ul>
+        <li><strong>97110</strong> — Therapeutic exercise (active/active-assisted/resistive exercise for strength, endurance, ROM, or flexibility)</li>
+        <li><strong>97112</strong> — Neuromuscular reeducation (balance, coordination, kinesthetic sense)</li>
+        <li><strong>97116</strong> — Gait training</li>
+        <li><strong>97130</strong> — Therapeutic exercise (aquatic)</li>
+        <li><strong>97140</strong> — Manual therapy (joint mobilization, soft tissue mobilization, ASTYM, etc.)</li>
+        <li><strong>97150</strong> — Therapeutic procedure, group (2+ patients)</li>
+        <li><strong>97530</strong> — Therapeutic activities (functional task practice)</li>
+        <li><strong>97535</strong> — Self-care/home management training</li>
+        <li><strong>97750</strong> — Physical performance test/measurement (untimed)</li>
+        <li><strong>97760</strong> — Orthotic(s) management and training (upper or lower extremity)</li>
+      </ul>
+
+      <h3>Documentation Requirements for Timed Codes</h3>
+      <p>To support timed code billing, the documentation must include: the specific intervention performed, the total number of minutes spent on that intervention, the muscle groups or body regions treated (where applicable), the resistance, sets, reps, or other parameters, and the patient's response. Vague documentation such as "therapeutic exercise × 45 minutes" without specifics about what exercises were performed, at what parameters, and how the patient responded will not withstand audit scrutiny.</p>
+
+      <div class="highlight-box caution">
+        <strong>Caution</strong>
+        "Time inflation" — documenting or billing more time than was actually spent — is a form of fraud. Be precise about documented times and ensure that the total treatment time documented does not exceed the time the patient was actually seen.
+      </div>
+
+      <div class="knowledge-check">
+        <h4>Knowledge Check</h4>
+        <div class="question-text">A therapist spends 25 minutes on therapeutic exercise, 14 minutes on manual therapy, and applies hot packs for 10 minutes. Using the 8-minute rule, how many total timed units can be billed?</div>
+        <div class="answer-options">
+          <button class="answer-option" onclick="selectAnswer(this, false)">4 units (including hot packs as a timed procedure)</button>
+          <button class="answer-option" onclick="selectAnswer(this, true)">2 units — 39 total timed minutes (25+14) = 2 timed units; hot packs are an untimed service code billed once</button>
+          <button class="answer-option" onclick="selectAnswer(this, false)">3 units — each procedure is counted separately regardless of time</button>
+          <button class="answer-option" onclick="selectAnswer(this, false)">1 unit — only the procedure with the most time can be billed</button>
+        </div>
+      </div>
+
+      <div class="module-completion">
+        <div>Estimated completion time: 15 minutes</div>
+        <button class="complete-btn" onclick="completeModule(8)">Mark Complete</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       MODULE 9: Medical Necessity
+  ============================================================ -->
+  <div class="module" data-module="9">
+    <div class="module-header" onclick="toggleModule(9)">
+      <div class="module-title">Module 9: Medical Necessity: Documentation That Supports Coverage and Avoids Denials (15 min)</div>
+      <div class="module-toggle">▾</div>
+    </div>
+    <div class="module-content">
+      <h2>Medical Necessity: Documentation That Supports Coverage and Avoids Denials</h2>
+      <p>Medical necessity is the foundation upon which all payer coverage decisions rest. A service is considered medically necessary when it is required for the diagnosis or treatment of a medical condition, meets accepted standards of care, is not primarily for the convenience of the patient or provider, and is not more costly than equally effective alternatives. For therapy providers, demonstrating medical necessity through documentation is not merely a billing formality — it is the clinical and ethical justification for the care provided. Failure to clearly document medical necessity is the single most common reason therapy claims are denied on audit.</p>
+
+      <h3>What Is Medical Necessity?</h3>
+      <p>Under Medicare, medical necessity for therapy services means that the services must:</p>
+      <ul>
+        <li>Require the skills of a qualified therapist (PT, OT, or SLP) due to the complexity or nature of the condition.</li>
+        <li>Be reasonable and necessary for the treatment of the patient's illness or injury.</li>
+        <li>Be consistent with the nature and severity of the illness or injury.</li>
+        <li>Be consistent with accepted professional standards of practice.</li>
+        <li>Be expected to significantly improve the patient's functional status, or be necessary to maintain function or prevent or slow deterioration (per Jimmo v. Sebelius).</li>
+      </ul>
+
+      <div class="highlight-box key-point">
+        <strong>Key Point</strong>
+        Following the <em>Jimmo v. Sebelius</em> settlement (2013), Medicare explicitly confirmed that coverage does not require the expectation of improvement. Documentation supporting maintenance therapy or prevention of decline is sufficient, as long as skilled care is required to safely deliver the service.
+      </div>
+
+      <h3>Documenting Skilled Care</h3>
+      <p>The most critical element of medical necessity documentation is clearly articulating why the service required the skill of a licensed therapist. This includes documenting:</p>
+      <ul>
+        <li>The complexity of the patient's condition and how it informed clinical decision-making.</li>
+        <li>Any safety concerns that require skilled monitoring (e.g., fall risk, cardiac precautions, cognitive impairment).</li>
+        <li>The specific skilled interventions provided (e.g., joint mobilization, therapeutic exercise with precise parameters, complex patient and caregiver education).</li>
+        <li>The patient's response to treatment and the clinician's assessment of that response.</li>
+        <li>How the treatment plan was adjusted based on the patient's response.</li>
+      </ul>
+
+      <h3>Common Reasons for Medical Necessity Denials</h3>
+      <p>Understanding why claims are denied is the first step to preventing future denials. Common medical necessity denial reasons include:</p>
+      <ul>
+        <li>Notes that appear "cookie-cutter" or templated without individualization to the patient's current status.</li>
+        <li>Documentation that does not reflect progress or justify continued care.</li>
+        <li>Goals that are already met but therapy continues without updated or new goals.</li>
+        <li>Documentation that primarily describes maintenance activities that could be performed by a non-skilled caregiver.</li>
+        <li>Lack of objective measures to demonstrate functional deficits or improvements.</li>
+        <li>Missing progress reports (required every 10 treatment days or 30 calendar days under Medicare).</li>
+        <li>Diagnosis that does not support the billed service (e.g., billing for gait training with an upper extremity-only diagnosis).</li>
+      </ul>
+
+      <div class="highlight-box caution">
+        <strong>Caution</strong>
+        "Copy-forward" or "clone" documentation — copying a previous note and making minor changes — creates significant audit risk. If every daily note looks nearly identical, auditors will question whether the documentation reflects actual individualized care or was fabricated for billing.
+      </div>
+
+      <h3>Building a Medical Necessity Narrative</h3>
+      <p>The most effective documentation tells a compelling clinical story. Every note — from evaluation to discharge — should contribute to a coherent narrative of medical necessity. The evaluation establishes the baseline and identifies why skilled therapy is needed. Daily notes track the patient's progress, document the clinical judgment applied each session, and demonstrate that the care is evolving in response to the patient's condition. Progress notes provide periodic summaries of functional progress and reinforce the continued need for skilled care. The discharge summary closes the loop with a final accounting of outcomes and any continuing care recommendations.</p>
+
+      <div class="highlight-box clinical-tip">
+        <strong>Clinical Tip</strong>
+        After completing each daily note, ask: "If an auditor read only this note — with no access to any other document in the record — would they be able to understand why a licensed therapist was required to provide this care today?" If the answer is no, the note needs revision.
+      </div>
+
+      <div class="knowledge-check">
+        <h4>Knowledge Check</h4>
+        <div class="question-text">A patient with Parkinson's disease has reached a functional plateau and is no longer expected to improve further. Under the <em>Jimmo v. Sebelius</em> settlement, is continued therapy covered under Medicare?</div>
+        <div class="answer-options">
+          <button class="answer-option" onclick="selectAnswer(this, false)">No, Medicare coverage requires the expectation of functional improvement.</button>
+          <button class="answer-option" onclick="selectAnswer(this, true)">Yes, if the therapy requires the skill of a therapist to safely maintain function or prevent/slow decline.</button>
+          <button class="answer-option" onclick="selectAnswer(this, false)">Yes, but only if the patient is also enrolled in a Medicare Advantage plan.</button>
+          <button class="answer-option" onclick="selectAnswer(this, false)">No, maintenance therapy is never covered under Medicare regardless of complexity.</button>
+        </div>
+      </div>
+
+      <div class="module-completion">
+        <div>Estimated completion time: 15 minutes</div>
+        <button class="complete-btn" onclick="completeModule(9)">Mark Complete</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       MODULE 10: HIPAA Compliance
+  ============================================================ -->
+  <div class="module" data-module="10">
+    <div class="module-header" onclick="toggleModule(10)">
+      <div class="module-title">Module 10: HIPAA Compliance in Clinical Documentation and Communication (15 min)</div>
+      <div class="module-toggle">▾</div>
+    </div>
+    <div class="module-content">
+      <h2>HIPAA Compliance in Clinical Documentation and Communication</h2>
+      <p>The Health Insurance Portability and Accountability Act of 1996 (HIPAA) established the federal standard for protecting sensitive patient health information. Every therapist who creates, accesses, transmits, or stores patient health information is bound by HIPAA — not just the compliance officers and administrators at their facility. Understanding HIPAA's requirements as they apply to clinical documentation, electronic communication, and day-to-day practice is essential to protecting patients, avoiding enforcement actions, and maintaining professional integrity.</p>
+
+      <h3>HIPAA's Key Rules</h3>
+      <p>HIPAA consists of several key regulatory rules that directly affect clinical practice:</p>
+      <ul>
+        <li><strong>Privacy Rule:</strong> Establishes national standards for protecting individually identifiable health information (called Protected Health Information, or PHI). Governs when and how PHI may be used and disclosed, and gives patients rights over their health records.</li>
+        <li><strong>Security Rule:</strong> Sets standards for protecting electronic PHI (ePHI) through administrative, physical, and technical safeguards. Applies to all ePHI created, received, maintained, or transmitted by a covered entity.</li>
+        <li><strong>Breach Notification Rule:</strong> Requires covered entities to notify affected individuals, HHS, and (when a breach affects 500+ individuals in a state) the media when unsecured PHI is breached.</li>
+        <li><strong>Enforcement Rule:</strong> Establishes the civil and criminal penalties for HIPAA violations. Penalties range from $100 to $50,000 per violation, with annual caps and potential criminal charges for willful violations.</li>
+      </ul>
+
+      <div class="highlight-box key-point">
+        <strong>Key Point</strong>
+        PHI includes any information that can be used to identify a patient and relates to their health condition, healthcare provision, or payment. This includes names, addresses, dates (other than year), phone numbers, email addresses, Social Security numbers, medical record numbers, and clinical notes.
+      </div>
+
+      <h3>HIPAA in Clinical Documentation</h3>
+      <p>The Privacy Rule's minimum necessary standard requires that clinicians access and use only the minimum amount of PHI necessary to accomplish the intended purpose. In the context of documentation:</p>
+      <ul>
+        <li>Do not document more identifying information than is necessary for clinical purposes.</li>
+        <li>Restrict access to patient records to those with a legitimate need-to-know.</li>
+        <li>Ensure documentation systems (paper and electronic) are secured and access-controlled.</li>
+        <li>Do not discuss patient information in public areas where it may be overheard.</li>
+        <li>Fax transmissions of PHI must include a HIPAA-compliant cover sheet and verification of the recipient fax number.</li>
+      </ul>
+
+      <h3>HIPAA and Electronic Communication</h3>
+      <p>Electronic communication — including email, text messaging, and telehealth platforms — creates significant HIPAA risks if not properly managed. Key requirements include:</p>
+      <ul>
+        <li>Email containing PHI must be encrypted or the patient must be informed of the risk and provide written authorization for unencrypted communication.</li>
+        <li>Text messaging of PHI (including to other providers) requires a secure, HIPAA-compliant messaging platform — standard SMS does not meet this standard.</li>
+        <li>Telehealth platforms must have a Business Associate Agreement (BAA) with the covered entity and must provide appropriate ePHI security.</li>
+        <li>Social media: NEVER post patient photos, case descriptions, or any identifying information on social media — even without the patient's name, details can constitute a breach if the patient is identifiable.</li>
+      </ul>
+
+      <div class="highlight-box caution">
+        <strong>Caution</strong>
+        Texting a patient's name, diagnosis, or appointment time through a standard SMS app — even to another treating clinician — is a potential HIPAA violation. Use only HIPAA-compliant communication platforms for all PHI transmission.
+      </div>
+
+      <h3>Patient Rights Under HIPAA</h3>
+      <p>HIPAA grants patients specific rights regarding their health information, including:</p>
+      <ul>
+        <li>The right to access and receive a copy of their medical records.</li>
+        <li>The right to request corrections to inaccurate or incomplete records.</li>
+        <li>The right to receive a Notice of Privacy Practices at their first visit.</li>
+        <li>The right to restrict certain disclosures of their PHI.</li>
+        <li>The right to receive an accounting of disclosures made without authorization.</li>
+      </ul>
+      <p>Clinicians must be familiar with their facility's process for responding to patient record requests and must never deny a patient access to their own records without legal justification.</p>
+
+      <div class="highlight-box clinical-tip">
+        <strong>Clinical Tip</strong>
+        If a patient asks to see or receive a copy of their medical records, do not direct them elsewhere or delay the process without reason. HIPAA requires that covered entities respond to patient access requests within 30 days (with one 30-day extension if notified).
+      </div>
+
+      <div class="knowledge-check">
+        <h4>Knowledge Check</h4>
+        <div class="question-text">A therapist needs to send a colleague a quick update about a mutual patient's progress after an evaluation. They use a standard SMS text message with the patient's full name and diagnosis. This is:</div>
+        <div class="answer-options">
+          <button class="answer-option" onclick="selectAnswer(this, false)">Acceptable, as long as both clinicians are treating the same patient.</button>
+          <button class="answer-option" onclick="selectAnswer(this, false)">Acceptable if the message is deleted immediately after reading.</button>
+          <button class="answer-option" onclick="selectAnswer(this, true)">A potential HIPAA violation — standard SMS is not encrypted and does not meet ePHI security requirements.</button>
+          <button class="answer-option" onclick="selectAnswer(this, false)">Acceptable as a verbal communication equivalent under the treatment exception.</button>
+        </div>
+      </div>
+
+      <div class="module-completion">
+        <div>Estimated completion time: 15 minutes</div>
+        <button class="complete-btn" onclick="completeModule(10)">Mark Complete</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       MODULE 11: EHR Best Practices
+  ============================================================ -->
+  <div class="module" data-module="11">
+    <div class="module-header" onclick="toggleModule(11)">
+      <div class="module-title">Module 11: Electronic Health Records (EHR) Best Practices and Documentation Efficiency (15 min)</div>
+      <div class="module-toggle">▾</div>
+    </div>
+    <div class="module-content">
+      <h2>Electronic Health Records (EHR) Best Practices and Documentation Efficiency</h2>
+      <p>The widespread adoption of Electronic Health Records (EHRs) has transformed how clinical documentation is created, stored, accessed, and shared. While EHRs offer significant advantages — including legibility, accessibility, clinical decision support, and integration with billing systems — they also introduce unique documentation risks, including the potential for cloned notes, template-driven errors, and data entry mistakes that can compromise clinical accuracy and create compliance exposure. Effective use of EHRs requires clinicians to understand both the capabilities and the limitations of these systems, and to maintain the same standards of accuracy and specificity that govern paper documentation.</p>
+
+      <h3>Benefits of Electronic Documentation</h3>
+      <p>Well-implemented EHR systems provide meaningful benefits for therapy documentation:</p>
+      <ul>
+        <li>Legibility is no longer an issue — all text is typed and searchable.</li>
+        <li>Real-time access to the patient record across the care team improves communication and coordination.</li>
+        <li>Automated reminders for due progress notes, plan of care certifications, and authorization renewals reduce administrative oversights.</li>
+        <li>Integration with billing systems speeds the claims submission process and reduces coding errors.</li>
+        <li>Outcome measurement tools embedded in many EHRs allow for consistent tracking and automated comparison of functional scores over time.</li>
+        <li>Secure messaging within EHR systems allows HIPAA-compliant communication among care team members.</li>
+      </ul>
+
+      <div class="highlight-box key-point">
+        <strong>Key Point</strong>
+        The EHR is a tool — not a replacement for clinical judgment. The quality of the documentation that goes into the EHR is entirely determined by the clinician. Templates and auto-populated fields do not ensure accuracy, specificity, or compliance.
+      </div>
+
+      <h3>The Cloned Note Problem</h3>
+      <p>One of the most serious compliance risks in EHR documentation is the "cloned note" — a note that is created by copying forward a previous note and making minimal changes. Cloned notes are problematic because they may not accurately reflect the care provided on the date of service, they suggest that every session was identical (which is clinically implausible), and they are a known red flag for fraud auditors. OIG and MACs (Medicare Administrative Contractors) specifically look for note cloning as an indicator of fraudulent or improper billing.</p>
+      <p>To avoid cloned note issues:</p>
+      <ul>
+        <li>Update all data fields — especially objective measurements, timed procedure minutes, patient response, and assessment — for every visit.</li>
+        <li>Do not use auto-populate or copy-forward functions without thoroughly reviewing and personalizing the content.</li>
+        <li>Ensure that the clinical picture described in each note reflects that specific date of service, not a generic template.</li>
+        <li>If your EHR system generates audit reports flagging similar notes, review these regularly and address any patterns of template-driven documentation.</li>
+      </ul>
+
+      <div class="highlight-box caution">
+        <strong>Caution</strong>
+        Cloned documentation is a primary trigger for Medicare audits and has resulted in significant recoupment demands against therapy providers. Even if the care was actually provided, documentation that looks identical across multiple visits suggests that it was not accurately recorded.
+      </div>
+
+      <h3>Documentation Efficiency Without Sacrificing Quality</h3>
+      <p>The tension between documentation quality and efficiency is a real challenge for busy therapy practices. Strategies for improving efficiency while maintaining quality include:</p>
+      <ul>
+        <li><strong>Smart templates:</strong> Use structured templates that prompt for required elements (timed minutes, patient response, assessment, plan) without auto-populating clinical details.</li>
+        <li><strong>Outcome measure integration:</strong> Use EHR tools that allow direct entry and automatic comparison of standardized outcome scores.</li>
+        <li><strong>Point-of-care documentation:</strong> Document during or immediately after the visit to capture accurate details while they are fresh.</li>
+        <li><strong>Voice dictation:</strong> Many EHR systems support voice-to-text functionality that can significantly reduce typing time while maintaining note individualization.</li>
+        <li><strong>Pre-built exercise libraries:</strong> Use EHR exercise prescription tools to quickly document home exercise programs with sets, reps, and images.</li>
+      </ul>
+
+      <h3>EHR Security and Access Controls</h3>
+      <p>The Security Rule requires that access to ePHI be controlled, logged, and audited. Practical security requirements for EHR users include:</p>
+      <ul>
+        <li>Never share login credentials with colleagues — each user must have an individual account.</li>
+        <li>Log out of the EHR when stepping away from a workstation.</li>
+        <li>Do not access patient records for patients you are not actively treating.</li>
+        <li>Report any suspected unauthorized access, data breach, or security incident to your compliance officer immediately.</li>
+        <li>Be aware that your EHR access is logged — every record you view, every change you make, and every time you log in is tracked and auditable.</li>
+      </ul>
+
+      <div class="highlight-box clinical-tip">
+        <strong>Clinical Tip</strong>
+        Treat every EHR access as if it is being monitored — because it is. Your organization's EHR audit logs can be subpoenaed in legal proceedings, reviewed by compliance officers, and accessed by payers during audits. Every entry, edit, and access is permanently tracked.
+      </div>
+
+      <div class="knowledge-check">
+        <h4>Knowledge Check</h4>
+        <div class="question-text">A therapist uses the "copy forward" function in their EHR to create each daily note, making only minor edits to the patient's pain level. What is the PRIMARY compliance risk of this practice?</div>
+        <div class="answer-options">
+          <button class="answer-option" onclick="selectAnswer(this, false)">The notes may not be properly signed with the therapist's credentials.</button>
+          <button class="answer-option" onclick="selectAnswer(this, true)">The resulting "cloned notes" may not accurately reflect the care provided and are a recognized indicator of documentation fraud under Medicare audit standards.</button>
+          <button class="answer-option" onclick="selectAnswer(this, false)">The copy function may create duplicate claims that result in overpayment.</button>
+          <button class="answer-option" onclick="selectAnswer(this, false)">The patient's insurance information may not be updated from visit to visit.</button>
+        </div>
+      </div>
+
+      <div class="module-completion">
+        <div>Estimated completion time: 15 minutes</div>
+        <button class="complete-btn" onclick="completeModule(11)">Mark Complete</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       MODULE 12: Audits, Appeals, and Legal Reviews
+  ============================================================ -->
+  <div class="module" data-module="12">
+    <div class="module-header" onclick="toggleModule(12)">
+      <div class="module-title">Module 12: Audits, Appeals, and Protecting Your Documentation in Legal and Compliance Reviews (15 min)</div>
+      <div class="module-toggle">▾</div>
+    </div>
+    <div class="module-content">
+      <h2>Audits, Appeals, and Protecting Your Documentation in Legal and Compliance Reviews</h2>
+      <p>Every therapy provider — regardless of practice setting, size, or specialty — is subject to audits, appeals processes, and potential legal reviews. Understanding how audits work, what auditors look for, and how to effectively respond to adverse decisions is a critical professional competency. Equally important is building documentation practices today that will withstand scrutiny tomorrow. Proactive compliance is far less costly — financially, professionally, and emotionally — than reactive defense against an audit finding.</p>
+
+      <h3>Types of Medicare Audits</h3>
+      <p>Therapy providers may be subject to several types of Medicare audits, each with distinct purposes and processes:</p>
+      <ul>
+        <li><strong>Comprehensive Error Rate Testing (CERT):</strong> A random sample audit conducted by CMS contractors to measure the national improper payment rate. CERT auditors request medical records to verify that claims were coded and documented appropriately.</li>
+        <li><strong>Recovery Audit Contractors (RAC):</strong> Contractors paid on contingency to identify Medicare overpayments. RACs target high-volume claim areas with known documentation vulnerabilities, including therapy services.</li>
+        <li><strong>Medicare Administrative Contractor (MAC) Reviews:</strong> Pre- and post-payment reviews conducted by your local MAC. These may include Targeted Probe and Educate (TPE) audits, which focus on providers with high error rates and include education and re-auditing.</li>
+        <li><strong>Zone Program Integrity Contractors (ZPIC) / Unified Program Integrity Contractors (UPIC):</strong> Fraud investigation units that investigate suspected fraud, waste, and abuse. ZPIC/UPIC audits are far more serious and may involve law enforcement referrals.</li>
+        <li><strong>Office of Inspector General (OIG):</strong> The OIG conducts national compliance work plans and audits of specific billing practices, including therapy in SNF and home health settings.</li>
+      </ul>
+
+      <div class="highlight-box caution">
+        <strong>Caution</strong>
+        If you receive a demand letter from a ZPIC or UPIC (rather than a MAC), treat it as a serious legal matter. Engage a healthcare attorney immediately and do not respond without legal counsel.
+      </div>
+
+      <h3>What Auditors Look For</h3>
+      <p>Auditors reviewing therapy documentation specifically look for the following common deficiencies:</p>
+      <ul>
+        <li>Missing or incomplete plan of care certification by the referring physician.</li>
+        <li>Missing progress notes at required intervals.</li>
+        <li>Daily notes that lack timed minutes, total treatment time, or documentation of skilled care.</li>
+        <li>Goals that have been met but therapy continues without updated goals or justification.</li>
+        <li>Cloned or templated notes that do not reflect individualized care.</li>
+        <li>ICD-10 codes that do not match the documented clinical findings.</li>
+        <li>Timed units billed that are not supported by the documented time.</li>
+        <li>KX modifier used without supporting documentation of continued medical necessity.</li>
+        <li>PTA/COTA services not identified with appropriate modifier (CQ/CO for Part B claims).</li>
+      </ul>
+
+      <h3>Responding to Audit Requests</h3>
+      <p>When you receive an audit request, respond promptly and completely. Key steps include:</p>
+      <ul>
+        <li>Read the request carefully and note the response deadline — most payers require a response within 45 days, and missing the deadline will result in automatic denial.</li>
+        <li>Gather all documentation requested — the complete medical record for the dates of service in question, including the evaluation, all daily notes, progress notes, plan of care, and any correspondence with the referring provider.</li>
+        <li>Review the documentation before submitting — identify any deficiencies and, if permitted, add legitimate late entries or amendments (properly identified as such) to address missing information.</li>
+        <li>Submit a complete, organized record with a cover letter that identifies the provider, the patient, the dates of service, and the claim numbers at issue.</li>
+        <li>Keep a copy of everything submitted.</li>
+      </ul>
+
+      <div class="highlight-box key-point">
+        <strong>Key Point</strong>
+        Never alter, destroy, or backdate records in response to an audit. Doing so transforms a potential billing error into criminal obstruction of justice or fraud — which carries severe consequences including exclusion from Medicare/Medicaid and possible criminal prosecution.
+      </div>
+
+      <h3>The Appeals Process</h3>
+      <p>When a claim is denied, providers have the right to appeal through a multi-level process. For Medicare Part B claims, the appeal levels are:</p>
+      <ul>
+        <li><strong>Level 1 — Redetermination:</strong> Request to the MAC within 120 days of the initial denial. The MAC reviews the documentation and may reverse the denial.</li>
+        <li><strong>Level 2 — Reconsideration:</strong> Request to a Qualified Independent Contractor (QIC) within 180 days of the redetermination decision.</li>
+        <li><strong>Level 3 — Administrative Law Judge (ALJ) Hearing:</strong> Request within 60 days of the QIC decision. Requires a minimum amount in controversy ($180+ in 2024). An ALJ hearing allows presentation of new evidence and testimony.</li>
+        <li><strong>Level 4 — Medicare Appeals Council:</strong> Review by the Medicare Appeals Council (MAC) within 60 days of the ALJ decision.</li>
+        <li><strong>Level 5 — Federal District Court:</strong> Judicial review available if the amount in controversy meets the threshold ($1,870+ in 2024).</li>
+      </ul>
+
+      <div class="highlight-box clinical-tip">
+        <strong>Clinical Tip</strong>
+        The ALJ level (Level 3) historically has the highest overturn rate for therapy denials. If your initial appeals at the MAC and QIC levels are unsuccessful, do not abandon the process — strong documentation of skilled care has a good track record at the ALJ level.
+      </div>
+
+      <h3>Protecting Documentation in Legal Reviews</h3>
+      <p>If you are notified that your documentation may be subject to legal review — including a malpractice claim, a state licensing board investigation, or a criminal fraud inquiry — your obligations shift significantly. You must preserve all relevant records in their original state (a legal "litigation hold"), refrain from destroying or modifying any documentation, and consult legal counsel immediately. Your best protection in any legal proceeding is documentation that accurately, completely, and clearly reflects the care you provided — built note by note, visit by visit, according to the standards taught throughout this course.</p>
+
+      <div class="knowledge-check">
+        <h4>Knowledge Check</h4>
+        <div class="question-text">A therapist discovers that several notes contain missing information after receiving a Medicare audit request. What is the appropriate course of action?</div>
+        <div class="answer-options">
+          <button class="answer-option" onclick="selectAnswer(this, false)">Rewrite the original notes to add the missing information before submitting them to the auditor.</button>
+          <button class="answer-option" onclick="selectAnswer(this, false)">Destroy the deficient notes and submit a letter explaining that the records were lost.</button>
+          <button class="answer-option" onclick="selectAnswer(this, true)">If permitted by policy and time has not expired, add a properly identified late entry or addendum; submit the records transparently; consult compliance counsel if significant deficiencies exist.</button>
+          <button class="answer-option" onclick="selectAnswer(this, false)">Ignore the audit request and allow the claim to be automatically denied.</button>
+        </div>
+      </div>
+
+      <div class="module-completion">
+        <div>Estimated completion time: 15 minutes</div>
+        <button class="complete-btn" onclick="completeModule(12)">Mark Complete</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== CERTIFICATE SECTION ===== -->
+  <div id="certificateSection">
+    <div style="font-size:48px; margin-bottom:16px;">🎓</div>
+    <h2>Course Complete!</h2>
+    <p>You have successfully completed all 12 modules of</p>
+    <p style="font-weight:700; font-size:1.1rem; color:#fff; margin-top:4px;">Professional Documentation and Communication</p>
+    <span class="cert-ccu">3.0 CCUs Earned</span>
+    <p style="font-size:13px; opacity:.75;">Course ID: DOCUMENTATION-001 | Approval: DRTROY-DOC-001-2024</p>
+    <p id="certNameLine" style="margin-top:12px; font-size:15px;"></p>
+    <button class="cert-btn" onclick="generateCertificate()">Download Certificate</button>
+  </div>
+
+</main>
+
+<!-- ===== FOOTER ===== -->
+<footer class="site-footer">
+  <p>© 2024 DrTroy CE — Professional Continuing Education for Therapy Providers</p>
+  <p style="margin-top:4px;">Course ID: DOCUMENTATION-001 | Approval: DRTROY-DOC-001-2024 | 3.0 CCUs</p>
+</footer>
+
+<!-- ===== JAVASCRIPT ===== -->
+<script>
+  const STORAGE_KEY = 'documentationProgress';
+  const TOTAL_MODULES = 12;
+
+  // ── State ──────────────────────────────────────────────────────
+  let completedModules = new Set();
+  let userName = '';
+
+  // ── Load / Save ────────────────────────────────────────────────
+  function loadProgress() {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (raw) {
+        const data = JSON.parse(raw);
+        if (data.completed && Array.isArray(data.completed)) {
+          completedModules = new Set(data.completed);
+        }
+        if (data.userName) {
+          userName = data.userName;
+        }
+      }
+    } catch (e) {
+      console.warn('Could not load progress:', e);
+    }
+    applyCompletedState();
+    updateProgress();
+  }
+
+  function saveProgress() {
+    try {
+      const data = {
+        completed: Array.from(completedModules),
+        userName: userName,
+        lastUpdated: new Date().toISOString()
+      };
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+    } catch (e) {
+      console.warn('Could not save progress:', e);
+    }
+  }
+
+  function applyCompletedState() {
+    completedModules.forEach(function(n) {
+      const el = document.querySelector('[data-module="' + n + '"]');
+      if (el) {
+        el.classList.add('completed');
+        const btn = el.querySelector('.complete-btn');
+        if (btn) {
+          btn.textContent = '✓ Completed';
+          btn.disabled = true;
+        }
+      }
+    });
+  }
+
+  // ── Toggle Module Open/Close ────────────────────────────────────
+  function toggleModule(n) {
+    const el = document.querySelector('[data-module="' + n + '"]');
+    if (!el) return;
+
+    const isOpen = el.classList.contains('open');
+
+    // Close all open modules
+    document.querySelectorAll('.module.open').forEach(function(m) {
+      m.classList.remove('open');
+    });
+
+    // If it wasn't open before, open it
+    if (!isOpen) {
+      el.classList.add('open');
+      // Smooth scroll into view
+      setTimeout(function() {
+        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 50);
+    }
+  }
+
+  // ── Mark Module Complete ────────────────────────────────────────
+  function completeModule(n) {
+    if (completedModules.has(n)) return;
+
+    completedModules.add(n);
+
+    const el = document.querySelector('[data-module="' + n + '"]');
+    if (el) {
+      el.classList.add('completed');
+      const btn = el.querySelector('.complete-btn');
+      if (btn) {
+        btn.textContent = '✓ Completed';
+        btn.disabled = true;
+      }
+    }
+
+    saveProgress();
+    updateProgress();
+
+    // Auto-open next module if available
+    if (n < TOTAL_MODULES) {
+      setTimeout(function() {
+        toggleModule(n + 1);
+      }, 400);
+    }
+
+    // Check if all done
+    if (completedModules.size === TOTAL_MODULES) {
+      setTimeout(function() {
+        showCertificate();
+      }, 600);
+    }
+  }
+
+  // ── Update Progress Bar ─────────────────────────────────────────
+  function updateProgress() {
+    const count = completedModules.size;
+    const pct = Math.round((count / TOTAL_MODULES) * 100);
+
+    const fill = document.getElementById('progressFill');
+    const label = document.getElementById('progressLabel');
+
+    if (fill) fill.style.width = pct + '%';
+    if (label) label.textContent = count + ' / ' + TOTAL_MODULES + ' modules complete';
+  }
+
+  // ── Answer Selection ────────────────────────────────────────────
+  function selectAnswer(btn, isCorrect) {
+    const container = btn.closest('.answer-options');
+    if (!container) return;
+
+    // Prevent re-answering
+    if (container.dataset.answered) return;
+    container.dataset.answered = 'true';
+
+    // Disable all options
+    container.querySelectorAll('.answer-option').forEach(function(b) {
+      b.disabled = true;
+      b.style.cursor = 'default';
+    });
+
+    if (isCorrect) {
+      btn.classList.add('correct');
+      btn.textContent = '✓ ' + btn.textContent + ' — Correct!';
+    } else {
+      btn.classList.add('incorrect');
+      btn.textContent = '✗ ' + btn.textContent;
+      // Highlight the correct answer
+      container.querySelectorAll('.answer-option').forEach(function(b) {
+        if (b.getAttribute('onclick') && b.getAttribute('onclick').includes('true')) {
+          b.classList.add('correct');
+          b.textContent = '✓ ' + b.textContent + ' — Correct Answer';
+        }
+      });
+    }
+  }
+
+  // ── Certificate ─────────────────────────────────────────────────
+  function showCertificate() {
+    const cert = document.getElementById('certificateSection');
+    if (!cert) return;
+
+    // Ask for name if not already stored
+    if (!userName) {
+      const name = prompt('Congratulations! You have completed the course.\n\nPlease enter your full name for your certificate:');
+      if (name && name.trim()) {
+        userName = name.trim();
+        saveProgress();
+      }
+    }
+
+    const nameLine = document.getElementById('certNameLine');
+    if (nameLine && userName) {
+      nameLine.textContent = 'Awarded to: ' + userName;
+    }
+
+    cert.style.display = 'block';
+    setTimeout(function() {
+      cert.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }, 200);
+  }
+
+  function generateCertificate() {
+    if (!userName) {
+      const name = prompt('Please enter your full name for the certificate:');
+      if (name && name.trim()) {
+        userName = name.trim();
+        saveProgress();
+      }
+    }
+
+    const today = new Date();
+    const dateStr = today.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+
+    const certHTML = '<!DOCTYPE html><html><head><title>CE Certificate</title>'
+      + '<style>body{font-family:Georgia,serif;max-width:760px;margin:60px auto;padding:40px;border:8px double #1a365d;text-align:center;}'
+      + 'h1{color:#1a365d;font-size:2rem;margin-bottom:8px;}'
+      + '.name{font-size:2.2rem;color:#059669;border-bottom:2px solid #059669;display:inline-block;padding-bottom:4px;margin:20px 0;}'
+      + '.ccu{font-size:1.5rem;font-weight:bold;color:#1a365d;}'
+      + '.meta{font-size:13px;color:#666;margin-top:28px;}'
+      + '</style></head><body>'
+      + '<p style="font-size:13px;color:#888;letter-spacing:.1em;text-transform:uppercase;margin-bottom:20px;">DrTroy CE — Certificate of Completion</p>'
+      + '<h1>Professional Documentation<br>and Communication</h1>'
+      + '<p style="font-size:15px;color:#444;max-width:560px;margin:0 auto 24px;">Clinical Documentation Standards, Effective Communication, and Compliance in Physical and Occupational Therapy</p>'
+      + '<p style="font-size:15px;">This certifies that</p>'
+      + '<div class="name">' + userName + '</div>'
+      + '<p style="font-size:15px;">has successfully completed all 12 modules and earned</p>'
+      + '<div class="ccu">3.0 Continuing Competency Units (CCUs)</div>'
+      + '<div class="meta">'
+      + '<p>Course ID: DOCUMENTATION-001 | Approval: DRTROY-DOC-001-2024</p>'
+      + '<p>Date of Completion: ' + dateStr + '</p>'
+      + '<p style="margin-top:16px;">DrTroy CE | drtroy.com</p>'
+      + '</div></body></html>';
+
+    const blob = new Blob([certHTML], { type: 'text/html' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'DrTroyCE_Documentation_Certificate_' + userName.replace(/\s+/g, '_') + '.html';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  }
+
+  // ── Logout ───────────────────────────────────────────────────────
+  function logout() {
+    if (confirm('Are you sure you want to log out? Your progress has been saved.')) {
+      window.location.href = '../my-account.html';
+    }
+  }
+
+  // ── Init ─────────────────────────────────────────────────────────
+  document.addEventListener('DOMContentLoaded', function() {
+    loadProgress();
+
+    // Open first incomplete module by default
+    let opened = false;
+    for (let i = 1; i <= TOTAL_MODULES; i++) {
+      if (!completedModules.has(i)) {
+        toggleModule(i);
+        opened = true;
+        break;
+      }
+    }
+
+    // If all complete, show certificate
+    if (completedModules.size === TOTAL_MODULES) {
+      showCertificate();
+    }
+  });
+</script>
+
+</body>
+</html>

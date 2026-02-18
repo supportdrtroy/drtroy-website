@@ -1,0 +1,907 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Balance, Gait, and Vestibular Management - DrTroy CE</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        @page { size: letter; margin: 0.75in; @bottom-center { content: counter(page); font-size: 10pt; color: #666; } }
+        * { box-sizing: border-box; }
+        :root {
+            --navy: #1a365d; --navy-light: #2c5282;
+            --gold: #059669; --gold-light: #10b981;
+            --gray-50: #f7fafc; --gray-100: #edf2f7;
+            --gray-200: #e5e7eb; --gray-600: #4a5568;
+            --gray-800: #2d3748; --gray-900: #111827;
+        }
+        body { font-family: 'Georgia','Times New Roman',serif; font-size:16px; line-height:1.7; color:#333; margin:0; padding:0; background:#f5f5f5; }
+        .course-header { background:#ffffff; box-shadow:0 2px 10px rgba(0,0,0,0.05); position:sticky; top:0; z-index:1000; border-bottom:3px solid var(--gold); }
+        .course-header-container { max-width:1200px; margin:0 auto; padding:1rem 2rem; display:flex; justify-content:space-between; align-items:center; }
+        .logo img { height:60px; width:auto; max-width:300px; }
+        .course-nav { display:flex; align-items:center; gap:1.5rem; }
+        .course-nav a { color:var(--gray-600); text-decoration:none; font-weight:500; font-size:14px; transition:color 0.2s; font-family:'Inter',-apple-system,sans-serif; }
+        .course-nav a:hover { color:var(--navy); }
+        .logout-btn { background:var(--gold); color:white; border:none; padding:0.5rem 1rem; border-radius:6px; font-weight:600; font-size:14px; cursor:pointer; transition:all 0.3s ease; font-family:'Inter',-apple-system,sans-serif; }
+        .logout-btn:hover { background:var(--gold-light); transform:translateY(-2px); }
+        .course-container { max-width:1200px; margin:2rem auto; padding:2rem; background:white; box-shadow:0 10px 30px rgba(0,0,0,0.1); border-radius:10px; margin-bottom:2rem; }
+        .course-title-section { text-align:center; border-bottom:2px solid var(--gray-200); padding-bottom:2rem; margin-bottom:3rem; }
+        .course-title { font-size:2.5rem; font-weight:700; color:var(--navy); margin:0; font-family:'Inter',-apple-system,sans-serif; }
+        .course-subtitle { font-size:1.1rem; color:var(--gray-600); margin:1rem 0; font-style:italic; }
+        .course-info { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:1rem; margin:2rem 0; font-family:'Inter',-apple-system,sans-serif; }
+        .info-box { background:var(--gray-50); padding:1rem; border-radius:8px; text-align:center; border-left:4px solid var(--gold); }
+        .info-box strong { color:var(--navy); display:block; margin-bottom:0.5rem; }
+        .progress-container { background:var(--gray-50); padding:1.5rem; border-radius:10px; margin-bottom:2rem; border:2px solid var(--gold-light); }
+        .progress-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem; font-family:'Inter',-apple-system,sans-serif; }
+        .progress-title { font-size:1.2rem; font-weight:600; color:var(--navy); }
+        .progress-percentage { font-size:1rem; color:var(--gold); font-weight:600; }
+        .progress-bar { width:100%; height:12px; background:white; border-radius:6px; overflow:hidden; box-shadow:inset 0 2px 4px rgba(0,0,0,0.1); }
+        .progress-fill { height:100%; background:linear-gradient(90deg,var(--gold) 0%,var(--gold-light) 100%); width:0%; transition:width 0.3s ease; }
+        .module { margin-bottom:3rem; border:1px solid var(--gray-200); border-radius:12px; overflow:hidden; background:white; box-shadow:0 4px 15px rgba(0,0,0,0.05); transition:all 0.3s ease; }
+        .module:hover { box-shadow:0 6px 25px rgba(0,0,0,0.1); }
+        .module-header { background:linear-gradient(135deg,var(--navy) 0%,var(--navy-light) 100%); color:white; padding:1.5rem; cursor:pointer; transition:all 0.3s ease; position:relative; overflow:hidden; }
+        .module-header::before { content:''; position:absolute; top:0; left:-100%; width:100%; height:100%; background:linear-gradient(90deg,transparent,rgba(255,255,255,0.1),transparent); transition:left 0.6s ease; }
+        .module-header:hover::before { left:100%; }
+        .module-header.completed { background:linear-gradient(135deg,var(--gold) 0%,var(--gold-light) 100%); }
+        .module-title { font-size:1.3rem; font-weight:600; margin:0; font-family:'Inter',-apple-system,sans-serif; }
+        .module-header.completed .module-title::after { content:' ✓'; font-size:1.2rem; margin-left:0.5rem; }
+        .module-content { padding:2rem; display:none; background:white; }
+        .module-content.active { display:block; animation:fadeIn 0.3s ease; }
+        @keyframes fadeIn { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:translateY(0)} }
+        .module-content h2 { color:var(--navy); font-size:1.4rem; margin:2rem 0 1rem 0; font-weight:600; border-bottom:2px solid var(--gold); padding-bottom:0.5rem; font-family:'Inter',-apple-system,sans-serif; }
+        .module-content h3 { color:var(--navy-light); font-size:1.2rem; margin:1.5rem 0 0.75rem 0; font-weight:600; }
+        .module-content p { margin-bottom:1rem; text-align:justify; }
+        .module-content ul, .module-content ol { margin:1rem 0; padding-left:2rem; }
+        .module-content li { margin-bottom:0.5rem; }
+        .highlight-box { background:linear-gradient(135deg,#f0f9ff 0%,#e0f2fe 100%); border-left:5px solid var(--gold); padding:1.5rem; margin:1.5rem 0; border-radius:0 8px 8px 0; box-shadow:0 2px 10px rgba(0,0,0,0.05); }
+        .highlight-box.clinical-tip { background:linear-gradient(135deg,#f0fdf4 0%,#dcfce7 100%); border-left-color:var(--gold); }
+        .highlight-box.key-point { background:linear-gradient(135deg,#fef7cd 0%,#fef3c7 100%); border-left-color:#d97706; }
+        .highlight-box.caution { background:linear-gradient(135deg,#fef2f2 0%,#fee2e2 100%); border-left-color:#dc2626; }
+        .knowledge-check { background:linear-gradient(135deg,var(--gray-50) 0%,white 100%); border:2px solid var(--gold); border-radius:12px; padding:2rem; margin:2rem 0; box-shadow:0 4px 15px rgba(0,0,0,0.05); }
+        .knowledge-check h3 { color:var(--navy); margin-top:0; font-family:'Inter',-apple-system,sans-serif; }
+        .question { margin:1.5rem 0; padding:1rem; background:white; border-radius:8px; border:1px solid var(--gray-200); }
+        .question-text { font-weight:600; margin-bottom:1rem; color:var(--navy); }
+        .answer-option { margin:0.5rem 0; padding:0.5rem; cursor:pointer; border-radius:6px; transition:background 0.2s; }
+        .answer-option:hover { background:var(--gray-50); }
+        .answer-option.correct { background:#dcfce7!important; border-left:4px solid var(--gold); padding-left:1rem; }
+        .answer-option.incorrect { background:#fee2e2!important; border-left:4px solid #dc2626; padding-left:1rem; }
+        .module-completion { display:flex; justify-content:space-between; align-items:center; padding:1.5rem; background:var(--gray-50); border-top:1px solid var(--gray-200); font-family:'Inter',-apple-system,sans-serif; }
+        .complete-btn { background:var(--gold); color:white; border:none; padding:0.75rem 1.5rem; border-radius:8px; font-weight:600; cursor:pointer; transition:all 0.3s ease; font-family:'Inter',-apple-system,sans-serif; }
+        .complete-btn:hover { background:var(--gold-light); transform:translateY(-2px); box-shadow:0 4px 12px rgba(5,150,105,0.3); }
+        .complete-btn:disabled { background:var(--gray-600); cursor:not-allowed; transform:none; }
+        .completed-badge { background:var(--gold); color:white; padding:0.5rem 1rem; border-radius:20px; font-size:0.9rem; font-weight:600; }
+        .certificate-section { background:linear-gradient(135deg,var(--navy) 0%,var(--navy-light) 100%); color:white; text-align:center; padding:3rem; border-radius:12px; margin:3rem 0; display:none; }
+        .certificate-section.visible { display:block; animation:slideUp 0.5s ease; }
+        @keyframes slideUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+        .certificate-btn { background:var(--gold); color:white; border:none; padding:1rem 2rem; border-radius:8px; font-size:1.1rem; font-weight:600; cursor:pointer; transition:all 0.3s ease; font-family:'Inter',-apple-system,sans-serif; margin-top:1rem; }
+        .certificate-btn:hover { background:var(--gold-light); transform:translateY(-2px); box-shadow:0 6px 20px rgba(5,150,105,0.4); }
+        @media(max-width:768px) { .course-container{margin:1rem;padding:1rem} .course-title{font-size:2rem} .module-title{font-size:1.1rem} .course-info{grid-template-columns:1fr} }
+        @media print { .course-header,.progress-container,.complete-btn,.certificate-section{display:none!important} .module-content{display:block!important} .module{break-inside:avoid;margin-bottom:2rem} body{background:white;font-size:11pt;line-height:1.4} .course-container{box-shadow:none;margin:0;padding:0} }
+    </style>
+</head>
+<body>
+    <header class="course-header">
+        <div class="course-header-container">
+            <div class="logo"><img src="../images/drtroy_logo_new.jpg" alt="DrTroy CE"></div>
+            <div class="course-nav">
+                <a href="../course-catalog.html">Course Catalog</a>
+                <a href="../my-account.html">My Account</a>
+                <button class="logout-btn" onclick="logout()">Logout</button>
+            </div>
+        </div>
+    </header>
+
+    <div class="course-container">
+        <div class="course-title-section">
+            <h1 class="course-title">🧘 Balance, Gait, and Vestibular Management</h1>
+            <p class="course-subtitle">Evidence-Based Assessment and Treatment of Balance and Vestibular Disorders in Rehabilitation</p>
+            <div class="course-info">
+                <div class="info-box"><strong>Duration</strong>3.0 Hours (180 minutes)</div>
+                <div class="info-box"><strong>Continuing Education</strong>3.0 CCUs</div>
+                <div class="info-box"><strong>Course ID</strong>BALANCE-001</div>
+                <div class="info-box"><strong>Approval #</strong>DRTROY-BALANCE-001-2024</div>
+            </div>
+        </div>
+
+        <div class="progress-container">
+            <div class="progress-header">
+                <div class="progress-title">Course Progress</div>
+                <div class="progress-percentage">0% Complete</div>
+            </div>
+            <div class="progress-bar"><div class="progress-fill"></div></div>
+        </div>
+
+        <!-- MODULE 1 -->
+        <div class="module" data-module="1">
+            <div class="module-header" onclick="toggleModule(1)">
+                <div class="module-title">Module 1: Anatomy and Physiology of the Vestibular System (15 min)</div>
+            </div>
+            <div class="module-content">
+                <h2>Overview of Vestibular Anatomy</h2>
+                <p>The vestibular system is a sophisticated sensory apparatus housed within the inner ear responsible for detecting head motion, gravitational forces, and spatial orientation. A thorough understanding of its anatomy is foundational to accurate clinical assessment and effective treatment of vestibular disorders. The vestibular apparatus is located within the membranous labyrinth of the inner ear, situated inside the bony labyrinth of the petrous portion of the temporal bone.</p>
+
+                <h3>The Peripheral Vestibular Apparatus</h3>
+                <p>The peripheral vestibular system consists of five sensory organs: three semicircular canals (anterior, posterior, and horizontal) and two otolith organs (the utricle and saccule). Each of these structures contains specialized mechanoreceptor hair cells whose deflection generates neural signals transmitted to the central nervous system via the vestibular branch of the vestibulocochlear nerve (cranial nerve VIII).</p>
+                <p>The three semicircular canals are oriented in roughly orthogonal planes, allowing them to detect angular acceleration in any direction of head rotation. Each canal contains endolymph fluid and is capped by the ampulla, which houses the crista ampullaris — a ridge of sensory hair cells embedded in a gelatinous mass called the cupula. When the head rotates, inertia causes relative movement of endolymph, deflecting the cupula and bending the kinocilia of the hair cells. This bending either depolarizes or hyperpolarizes the hair cells, modulating the resting discharge rate of the vestibular nerve afferents.</p>
+
+                <h3>Otolith Organs: Utricle and Saccule</h3>
+                <p>Unlike the semicircular canals, the otolith organs detect linear acceleration and static head tilt relative to gravity. The utricle lies in a roughly horizontal plane and senses lateral and fore-aft acceleration, while the saccule is oriented vertically and detects vertical linear acceleration (e.g., the sensation of an elevator moving). Both organs contain a macula — a flat patch of sensory hair cells covered by an otolithic membrane embedded with calcium carbonate crystals called otoconia (or otoliths). The mass of the otoconia causes displacement of the otolithic membrane during linear acceleration or gravity, bending the stereocilia of the underlying hair cells.</p>
+
+                <div class="highlight-box key-point">
+                    <strong>Key Point — Otoconia and BPPV:</strong> Dislodged otoconia from the utricular macula that migrate into one of the semicircular canals are the underlying cause of benign paroxysmal positional vertigo (BPPV), the most common vestibular disorder treated in clinical practice.
+                </div>
+
+                <h3>Central Vestibular Pathways</h3>
+                <p>Vestibular afferents project centrally to the four vestibular nuclei in the brainstem (superior, inferior, medial, and lateral nuclei of Deiters). From there, ascending projections travel via the medial longitudinal fasciculus (MLF) to the ocular motor nuclei, enabling the vestibulo-ocular reflex (VOR) — the mechanism by which the eyes counter-rotate to stabilize the visual field during head movement. The vestibulospinal tract descends to spinal motor neurons, producing the corrective postural responses that prevent falls. Projections also reach the cerebellum (particularly the vestibulocerebellum, or flocculonodular lobe), which is critical for adaptive motor learning and VOR gain adjustment.</p>
+
+                <h3>The Vestibulo-Ocular Reflex (VOR)</h3>
+                <p>The VOR is a three-neuron arc that generates compensatory eye movements to stabilize the visual field during rapid head movements. The VOR has a gain of approximately 1.0 in healthy individuals, meaning eye velocity equals and opposes head velocity. VOR gain can be reduced (hypofunction) or increased (hyperfunction) with peripheral or central lesions. The VOR operates at latencies of 7–15 milliseconds, far faster than voluntary gaze stabilization strategies, making it uniquely important for dynamic visual acuity during locomotion.</p>
+
+                <div class="highlight-box clinical-tip">
+                    <strong>Clinical Tip:</strong> The Head Impulse Test (HIT) is a bedside clinical test that directly assesses VOR integrity. A corrective saccade following a rapid, small-amplitude head impulse indicates reduced VOR gain on that side — a hallmark of unilateral peripheral vestibular hypofunction.
+                </div>
+
+                <div class="knowledge-check">
+                    <h3>📝 Knowledge Check — Module 1</h3>
+                    <div class="question">
+                        <div class="question-text">Which structure in the semicircular canal contains the sensory hair cells responsible for detecting angular acceleration?</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">A) Macula</div>
+                        <div class="answer-option" onclick="selectAnswer(this, true)">B) Crista ampullaris</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">C) Otolithic membrane</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">D) Saccule</div>
+                    </div>
+                    <div class="question">
+                        <div class="question-text">The vestibulo-ocular reflex (VOR) functions primarily to:</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">A) Detect linear acceleration during walking</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">B) Coordinate postural muscle activation during standing</div>
+                        <div class="answer-option" onclick="selectAnswer(this, true)">C) Stabilize the visual field during rapid head movements</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">D) Transmit otolith signals to the cerebellum</div>
+                    </div>
+                </div>
+
+                <div class="module-completion">
+                    <div>Estimated completion time: 15 minutes</div>
+                    <button class="complete-btn" onclick="completeModule(1)">Mark Complete</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- MODULE 2 -->
+        <div class="module" data-module="2">
+            <div class="module-header" onclick="toggleModule(2)">
+                <div class="module-title">Module 2: Balance System Integration: Visual, Vestibular, Somatosensory (15 min)</div>
+            </div>
+            <div class="module-content">
+                <h2>The Tripartite Balance System</h2>
+                <p>Human postural control is a complex, multisensory process that relies on the integration of three primary sensory modalities: the visual system, the vestibular system, and the somatosensory system. Each contributes unique information about the body's position and motion in space, and the central nervous system must continuously weigh, combine, and when necessary, suppress or substitute these inputs to maintain upright stance and purposeful movement. Dysfunction in any one system — or in the central integration mechanisms — can produce significant balance impairment.</p>
+
+                <h3>Visual Contributions to Balance</h3>
+                <p>The visual system provides information about head position relative to the environment, the orientation of vertical and horizontal surfaces, and the movement of objects in the visual field. Visual inputs are processed by the retina, transmitted via cranial nerve II to the visual cortex, and also projected to the superior colliculi and pretectal areas for gaze stabilization. In low-frequency, slow perturbations, vision is the dominant sensory input for balance. However, visual input has a latency of approximately 200 milliseconds for corrective postural responses — significantly slower than vestibular or somatosensory inputs.</p>
+                <p>Older adults and individuals with peripheral neuropathy often rely disproportionately on visual feedback, making them particularly vulnerable to balance impairment in visually complex or low-light environments. Conditions such as cataracts, macular degeneration, and reduced contrast sensitivity contribute independently to fall risk.</p>
+
+                <h3>Somatosensory Contributions to Balance</h3>
+                <p>The somatosensory system — including proprioception, light touch, and pressure receptors — provides information about body position relative to the support surface. Mechanoreceptors in the joint capsules, muscles (particularly muscle spindles), and plantar surface skin are critical contributors. Under normal conditions on a firm, flat surface, somatosensory input is the dominant source of postural orientation information, contributing approximately 70% of balance control. This is why conditions affecting peripheral sensation — diabetic peripheral neuropathy, Charcot-Marie-Tooth disease, or chemotherapy-induced peripheral neuropathy — profoundly impair balance even when vestibular and visual systems are intact.</p>
+
+                <div class="highlight-box key-point">
+                    <strong>Key Point — Sensory Weighting:</strong> The CNS dynamically reweights sensory inputs based on their reliability. On a moving or compliant surface (foam), somatosensory input becomes unreliable and the CNS upweights vestibular and visual inputs. When vision is distorted or absent, vestibular input becomes critical. This "sensory reweighting" is the theoretical basis for structured balance rehabilitation.
+                </div>
+
+                <h3>The Sensory Organization Test (SOT) Framework</h3>
+                <p>The Sensory Organization Test, originally developed by Nashner and colleagues, systematically isolates and challenges each sensory modality. Six conditions are tested: normal surface/eyes open, normal surface/eyes closed, normal surface/sway-referenced vision, sway-referenced surface/eyes open, sway-referenced surface/eyes closed, and sway-referenced surface/sway-referenced vision. Condition 5 (eyes closed, sway-referenced surface) isolates vestibular function — patients with vestibular hypofunction show dramatic falls in scores under this condition. This framework is directly applicable to clinical testing with the mCTSIB and foam pad balance testing.</p>
+
+                <h3>Central Integration and the Cerebellum</h3>
+                <p>The cerebellum — particularly the vestibulocerebellum (flocculonodular lobe) and spinocerebellum (vermis and intermediate zones) — plays a central role in comparing predicted and actual sensory feedback, adapting motor commands, and maintaining internal models of body dynamics. Cerebellar lesions produce characteristic balance and gait findings including wide-based gait, truncal ataxia, dysmetria, and failure to benefit from balance training. The basal ganglia contribute to automated balance reactions and postural set, explaining the frequent fall risk in Parkinson disease where basal ganglia circuits are disrupted.</p>
+
+                <h3>Clinical Implications of Sensory Integration</h3>
+                <p>Understanding sensory integration guides both assessment and treatment. A patient who performs well with eyes open but poorly with eyes closed on a firm surface likely has inadequate use of somatosensory or vestibular inputs. A patient who performs well on a firm surface but fails on foam suggests somatosensory dependency. Targeted training should challenge the deficient sensory channel while providing appropriate safety support, progressing systematically from dual-input to single-input to conflicting-input conditions.</p>
+
+                <div class="highlight-box clinical-tip">
+                    <strong>Clinical Tip:</strong> When assessing a patient's balance, observe where they look. Patients with vestibular hypofunction often fixate on stationary objects and show marked deterioration with horizontal gaze — they are using visual fixation to suppress vestibular symptoms. This visual dependency can be quantified and targeted in treatment.
+                </div>
+
+                <div class="knowledge-check">
+                    <h3>📝 Knowledge Check — Module 2</h3>
+                    <div class="question">
+                        <div class="question-text">Under normal conditions on a firm, flat surface, which sensory system contributes most to postural orientation?</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">A) Vestibular system</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">B) Visual system</div>
+                        <div class="answer-option" onclick="selectAnswer(this, true)">C) Somatosensory system</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">D) Cerebellar integration</div>
+                    </div>
+                </div>
+
+                <div class="module-completion">
+                    <div>Estimated completion time: 15 minutes</div>
+                    <button class="complete-btn" onclick="completeModule(2)">Mark Complete</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- MODULE 3 -->
+        <div class="module" data-module="3">
+            <div class="module-header" onclick="toggleModule(3)">
+                <div class="module-title">Module 3: Standardized Balance Assessment Tools (Berg, BESS, mCTSIB, FGA, Mini-BESTest) (15 min)</div>
+            </div>
+            <div class="module-content">
+                <h2>Importance of Standardized Balance Assessment</h2>
+                <p>Standardized balance assessment tools are essential for establishing baseline functional status, detecting balance deficits not apparent during informal observation, monitoring treatment progress, and communicating outcomes across care settings. No single tool captures all dimensions of balance — clinicians should select measures based on the patient population, clinical question, and the specific balance domains being evaluated (static, dynamic, anticipatory, reactive, sensory integration, gait stability).</p>
+
+                <h3>Berg Balance Scale (BBS)</h3>
+                <p>The Berg Balance Scale is a 14-item, performance-based measure assessing static and dynamic balance through tasks of increasing difficulty: sitting unsupported, standing unsupported, sitting to standing, transfers, standing with eyes closed, feet together, reach forward, floor retrieval, turning to look behind, 360-degree turns, stepping up/down, tandem stance, and single-leg stance. Each item is scored 0–4 for a maximum of 56 points. A score of 45 or below is associated with increased fall risk. Scores below 36 indicate near-100% fall risk. The BBS demonstrates excellent inter-rater reliability (ICC 0.97–0.99) and is widely used across neurological and orthopedic populations.</p>
+                <p>Minimal detectable change (MDC) for the BBS is approximately 4–7 points in older adults and 5–7 points in stroke survivors. This threshold is important for determining whether observed changes represent true clinical improvement versus measurement error.</p>
+
+                <h3>Balance Error Scoring System (BESS)</h3>
+                <p>The BESS is a quick, portable, and inexpensive tool frequently used in sports medicine and concussion management, though applicable to broader populations. It assesses postural stability across six conditions — double-leg stance, single-leg stance, and tandem stance each performed on a firm surface and on foam. Errors include stepping, stumbling, lifting hands from hips, opening eyes, lifting forefoot or heel, and abducting the hip beyond 30 degrees. Scores reflect the total number of errors across conditions (maximum 60). The BESS is sensitive to acute concussion within 72 hours of injury and has been used to track post-concussion recovery.</p>
+
+                <h3>Modified Clinical Test of Sensory Interaction on Balance (mCTSIB)</h3>
+                <p>The mCTSIB operationalizes the SOT framework using clinically feasible tools. Four conditions are tested: firm surface/eyes open, firm surface/eyes closed, foam surface/eyes open, and foam surface/eyes closed. Each condition is held for 30 seconds. The mCTSIB effectively isolates sensory channel contributions and identifies sensory-specific deficits. Patients who fail only on foam with eyes closed (Condition 4) demonstrate vestibular dependency, as this condition removes both somatosensory and visual inputs, leaving only vestibular information available.</p>
+
+                <div class="highlight-box key-point">
+                    <strong>Key Point — mCTSIB Scoring:</strong> A patient who stands well on conditions 1–3 but fails condition 4 (foam, eyes closed) has a pattern consistent with vestibular hypofunction. This profile should trigger vestibular-specific assessment and rehabilitation planning.
+                </div>
+
+                <h3>Functional Gait Assessment (FGA)</h3>
+                <p>The FGA is a 10-item measure that assesses gait and balance during walking tasks, including gait on level surfaces, changes in gait speed, gait with horizontal and vertical head turns, gait over obstacles, narrow base of support walking, ambulating with eyes closed, pivot turns, walking backwards, and stair climbing. Each item is scored 0–3 for a maximum of 30 points. Scores below 22/30 are associated with fall risk in community-dwelling older adults. The FGA is considered an improvement over the Dynamic Gait Index (DGI) due to ceiling effects in higher-functioning patients and includes more challenging tasks relevant to real-world ambulation demands.</p>
+
+                <h3>Mini-BESTest (Balance Evaluation Systems Test)</h3>
+                <p>The Mini-BESTest is a 14-item measure derived from the full BESTest that evaluates four systems: anticipatory postural control, reactive postural control, sensory orientation, and dynamic gait. It captures a broader conceptual range of balance than the Berg and is particularly sensitive in detecting specific subsystem deficits in Parkinson disease, stroke, and vestibular disorders. Total score is 28 points; scores below 19–20 predict fall risk. The Mini-BESTest is increasingly preferred in research and specialized clinical settings for its theoretical framework and responsiveness.</p>
+
+                <div class="highlight-box clinical-tip">
+                    <strong>Clinical Tip:</strong> Use the Mini-BESTest when you want to identify which subsystem is primarily impaired (anticipatory, reactive, sensory, or gait). Use the BBS when tracking progress in lower-functioning patients. Use the FGA when screening for fall risk in community-ambulators. Combining two measures provides complementary information and avoids ceiling or floor effects.
+                </div>
+
+                <div class="knowledge-check">
+                    <h3>📝 Knowledge Check — Module 3</h3>
+                    <div class="question">
+                        <div class="question-text">On the Berg Balance Scale, a score of 36 or below is associated with:</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">A) Minimal fall risk with community ambulation</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">B) Adequate balance for supervised home exercise</div>
+                        <div class="answer-option" onclick="selectAnswer(this, true)">C) Near 100% fall risk</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">D) Readiness for discharge to home without support</div>
+                    </div>
+                    <div class="question">
+                        <div class="question-text">Which condition of the mCTSIB is most sensitive to vestibular hypofunction?</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">A) Firm surface, eyes open</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">B) Firm surface, eyes closed</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">C) Foam surface, eyes open</div>
+                        <div class="answer-option" onclick="selectAnswer(this, true)">D) Foam surface, eyes closed</div>
+                    </div>
+                </div>
+
+                <div class="module-completion">
+                    <div>Estimated completion time: 15 minutes</div>
+                    <button class="complete-btn" onclick="completeModule(3)">Mark Complete</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- MODULE 4 -->
+        <div class="module" data-module="4">
+            <div class="module-header" onclick="toggleModule(4)">
+                <div class="module-title">Module 4: Gait Analysis: Normal vs. Pathological Gait Patterns (15 min)</div>
+            </div>
+            <div class="module-content">
+                <h2>Foundations of Normal Gait</h2>
+                <p>Normal human gait is a highly coordinated cyclic movement pattern optimized for energy efficiency and dynamic stability. A thorough understanding of the normal gait cycle and its biomechanical requirements enables the clinician to identify deviations, hypothesize their causes, and design targeted interventions. The gait cycle is defined as the interval from initial contact of one foot to the next initial contact of the same foot, encompassing a stance phase (approximately 60% of the cycle) and a swing phase (approximately 40% of the cycle).</p>
+
+                <h3>Phases of the Gait Cycle</h3>
+                <p>The stance phase is subdivided into initial contact, loading response, midstance, terminal stance, and pre-swing. The swing phase includes initial swing, midswing, and terminal swing. Each phase has specific biomechanical demands. During loading response, the hip extensors and knee extensors undergo eccentric contraction to absorb ground reaction forces. During midstance, the ankle plantarflexors act as a rigid lever to facilitate forward propulsion in terminal stance. During swing, adequate hip flexion and ankle dorsiflexion are required to clear the foot above the ground.</p>
+                <p>Normal gait parameters in adults include a cadence of 100–120 steps per minute, a comfortable walking speed of 1.2–1.4 m/s, and a step length of approximately 65–75 cm. Deviations from these normative values may indicate pathology but must be interpreted in the context of age, body habitus, and musculoskeletal status.</p>
+
+                <h3>Antalgic Gait</h3>
+                <p>Antalgic gait is characterized by shortened stance time on the painful limb, producing asymmetric step lengths. The patient minimizes time on the painful side to reduce loading. Common causes include hip, knee, and ankle osteoarthritis, plantar fasciitis, and acute lower extremity injuries. Clinically, the Trendelenburg test differentiates hip abductor weakness (Trendelenburg sign positive) from simple antalgic gait.</p>
+
+                <h3>Trendelenburg Gait</h3>
+                <p>Trendelenburg gait results from weakness of the hip abductors (primarily gluteus medius) on the stance limb. The pelvis drops toward the contralateral side during single-leg stance. A compensatory trunk lean toward the weak stance limb (compensated Trendelenburg) may be observed as the patient uses their center of mass to reduce the hip abductor demand. This pattern is common post-hip replacement, in cerebral palsy, and in L5 radiculopathy (superior gluteal nerve).</p>
+
+                <h3>Circumduction and Hemiparetic Gait</h3>
+                <p>Circumduction describes the arc-like lateral swing of the lower extremity during swing phase, typically seen when knee flexion and ankle dorsiflexion are inadequate to achieve foot clearance. This pattern is characteristic of upper motor neuron lesions producing spasticity, such as stroke or traumatic brain injury. Hemiparetic gait encompasses a broader cluster of deviations including shortened stance time, reduced hip flexion, knee hyperextension during stance (genu recurvatum), equinovarus foot posture, and upper extremity flexion synergy patterns.</p>
+
+                <div class="highlight-box key-point">
+                    <strong>Key Point — Foot Clearance:</strong> Inadequate foot clearance during swing — whether from ankle dorsiflexion weakness (foot drop), inadequate hip flexion, or knee flexion limitation — is a leading cause of trip-related falls. Always observe foot clearance during gait analysis.
+                </div>
+
+                <h3>Parkinsonian Gait</h3>
+                <p>Parkinson disease produces a characteristic hypokinetic gait pattern including reduced step length, shuffling steps (reduced foot clearance), stooped posture, reduced arm swing (often asymmetric), freezing of gait (FOG), and festination (involuntary acceleration of stepping rate with progressive shortening of steps). Postural instability in Parkinson disease is largely due to loss of anticipatory postural adjustments (APAs) mediated by the basal ganglia. Retropulsion — a series of backward steps in response to a posterior perturbation — is a hallmark of advanced disease.</p>
+
+                <h3>Ataxic Gait</h3>
+                <p>Cerebellar ataxia produces a wide-based, irregular gait with irregular cadence, variable step lengths, and lateral weaving. Patients may have difficulty maintaining a straight line during tandem gait. Sensory ataxia (from dorsal column or peripheral nerve dysfunction) produces a high-stepping gait that worsens dramatically with eye closure (positive Romberg) and demonstrates slapping foot contact due to impaired proprioceptive feedback about foot position.</p>
+
+                <div class="highlight-box clinical-tip">
+                    <strong>Clinical Tip:</strong> When performing gait analysis, observe the patient from multiple planes (anterior, posterior, and lateral) and note foot contact pattern, trunk and pelvic motion, arm swing, cadence, and speed. Video analysis — even using a smartphone — can capture subtle deviations missed during real-time observation.
+                </div>
+
+                <div class="knowledge-check">
+                    <h3>📝 Knowledge Check — Module 4</h3>
+                    <div class="question">
+                        <div class="question-text">A patient demonstrates lateral trunk lean toward the right stance limb during single-leg stance phase. This most likely indicates:</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">A) Right hip flexor weakness</div>
+                        <div class="answer-option" onclick="selectAnswer(this, true)">B) Right hip abductor weakness (compensated Trendelenburg)</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">C) Left hip abductor weakness</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">D) Right ankle plantarflexor weakness</div>
+                    </div>
+                </div>
+
+                <div class="module-completion">
+                    <div>Estimated completion time: 15 minutes</div>
+                    <button class="complete-btn" onclick="completeModule(4)">Mark Complete</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- MODULE 5 -->
+        <div class="module" data-module="5">
+            <div class="module-header" onclick="toggleModule(5)">
+                <div class="module-title">Module 5: Gait Assessment Tools (TUG, 10MWT, DGI, FAC, FGA) (15 min)</div>
+            </div>
+            <div class="module-content">
+                <h2>Standardized Gait Measurement in Clinical Practice</h2>
+                <p>Objective, standardized gait assessment tools allow clinicians to quantify mobility, detect change over time, communicate outcomes clearly across disciplines, and make evidence-based predictions about fall risk, community ambulation potential, and discharge readiness. Selecting the appropriate tool requires understanding its psychometric properties, population-specific normative data, and what dimension of gait it captures — speed, functional ambulation, dynamic balance during gait, or community-level mobility.</p>
+
+                <h3>Timed Up and Go (TUG)</h3>
+                <p>The TUG is the most widely used clinical mobility test globally. The patient rises from a standard chair with armrests, walks 3 meters, turns around, walks back, and sits down. The time in seconds is recorded. The TUG is sensitive to fall risk, mobility limitation, and treatment change. Normative values for community-dwelling older adults approximate 10–12 seconds; scores above 13.5 seconds predict fall risk. In Parkinson disease, a dual-task TUG (performed while counting backward or carrying a cup of water) dramatically reveals attentional demands of gait and is predictive of freezing episodes.</p>
+                <p>The TUG demonstrates excellent test-retest reliability (ICC 0.93–0.99) and moderate to good sensitivity and specificity for fall prediction depending on population and cutoff score. It requires minimal equipment and can be performed in any clinical setting.</p>
+
+                <h3>10-Meter Walk Test (10MWT)</h3>
+                <p>The 10MWT measures gait speed over a 10-meter course, typically collecting data over the middle 6 meters to eliminate acceleration and deceleration effects. Both comfortable and fast walking speeds are collected. Comfortable gait speed is a powerful predictor of health outcomes in older adults — sometimes called the "sixth vital sign." A comfortable gait speed of 0.8 m/s is considered a community ambulation threshold; below 0.6 m/s indicates limited household ambulation. The minimal clinically important difference (MCID) for stroke survivors is approximately 0.16 m/s. The 10MWT is frequently used as an outcome measure in neurological rehabilitation research.</p>
+
+                <div class="highlight-box key-point">
+                    <strong>Key Point — Gait Speed Categories:</strong>
+                    <ul>
+                        <li>&lt;0.4 m/s: Limited household ambulator</li>
+                        <li>0.4–0.8 m/s: Household ambulator</li>
+                        <li>0.8–1.0 m/s: Limited community ambulator</li>
+                        <li>&gt;1.0 m/s: Community ambulator</li>
+                        <li>&gt;1.2 m/s: Age-appropriate for most older adults</li>
+                    </ul>
+                </div>
+
+                <h3>Dynamic Gait Index (DGI)</h3>
+                <p>The DGI assesses gait under eight conditions: level walking, gait speed changes, horizontal and vertical head turns, gait over/around obstacles, pivot turns, and stair climbing. Each item is scored 0–3 for a maximum of 24 points. Scores at or below 19/24 predict fall risk in older adults. The DGI has good psychometric properties but demonstrates significant ceiling effects in higher-functioning populations, which led to development of the FGA. Despite this limitation, the DGI remains widely used and has established normative values across many diagnostic groups.</p>
+
+                <h3>Functional Ambulation Category (FAC)</h3>
+                <p>The FAC is a six-level ordinal scale that classifies functional ambulation status based on the degree of physical assistance required. The levels range from 0 (non-functional ambulation — patient cannot walk even with assistance) to 5 (independent community ambulation on all surfaces including stairs, ramps, and uneven terrain). The FAC is used primarily to classify ambulation status in acute neurological rehabilitation settings and to track broad recovery across hospitalization. It does not capture fine-grained quality of gait but provides a useful communication tool for interdisciplinary teams.</p>
+
+                <h3>Functional Gait Assessment (FGA)</h3>
+                <p>The FGA was developed as an improvement upon the DGI to address ceiling effects and better capture balance demands during ambulation. Ten items include level walking, changes in speed, horizontal and vertical head turns, ambulating over obstacles, narrow base of support gait, walking with eyes closed, backward walking, pivot turns, and stair climbing. Each item is scored 0–3 for a maximum of 30 points. A score below 22 predicts fall risk in community-dwelling older adults. The FGA shows good to excellent reliability (ICC 0.84–0.93) and high concurrent validity with the DGI and BBS.</p>
+
+                <div class="highlight-box clinical-tip">
+                    <strong>Clinical Tip:</strong> When selecting a gait tool for vestibular patients, the FGA is particularly valuable because tasks involving head turns (horizontal and vertical) directly challenge vestibular-mediated gaze stability and postural control during ambulation — the precise deficits these patients experience in daily life.
+                </div>
+
+                <div class="highlight-box caution">
+                    <strong>Caution — Safety During Testing:</strong> Always perform gait assessments in a safe environment with a guard present, particularly for the FGA's eyes-closed walking and backward walking tasks. Ensure the environment is clear of obstacles and that the clinician is positioned to guard the patient without influencing gait pattern.
+                </div>
+
+                <div class="knowledge-check">
+                    <h3>📝 Knowledge Check — Module 5</h3>
+                    <div class="question">
+                        <div class="question-text">A comfortable gait speed of 0.65 m/s in a patient post-stroke most accurately classifies them as:</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">A) Community ambulator</div>
+                        <div class="answer-option" onclick="selectAnswer(this, true)">B) Household ambulator</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">C) Limited household ambulator</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">D) Non-functional ambulator</div>
+                    </div>
+                </div>
+
+                <div class="module-completion">
+                    <div>Estimated completion time: 15 minutes</div>
+                    <button class="complete-btn" onclick="completeModule(5)">Mark Complete</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- MODULE 6 -->
+        <div class="module" data-module="6">
+            <div class="module-header" onclick="toggleModule(6)">
+                <div class="module-title">Module 6: Benign Paroxysmal Positional Vertigo (BPPV): Diagnosis and Repositioning Maneuvers (15 min)</div>
+            </div>
+            <div class="module-content">
+                <h2>Understanding BPPV</h2>
+                <p>Benign paroxysmal positional vertigo (BPPV) is the most common vestibular disorder, accounting for approximately 17–42% of patients seen in vestibular rehabilitation clinics, with a lifetime prevalence of approximately 2.4%. BPPV is caused by displacement of otoconia — calcium carbonate crystals normally embedded in the utricular macula — into one or more of the semicircular canals. When the head moves into certain positions, these free-floating or cupula-adherent particles create aberrant fluid motion (canalolithiasis) or abnormal cupular deflection (cupulolithiasis), generating vertigo and nystagmus out of proportion to actual head movement.</p>
+
+                <h3>Clinical Presentation</h3>
+                <p>Patients with BPPV typically report brief (seconds to 2 minutes) episodes of intense vertigo precipitated by specific head positions — most commonly rolling over in bed, looking up or down, rising from supine, or bending forward. The vertigo is associated with nausea and may produce frank vomiting. Balance impairment and a sensation of "rocking" or "floating" may persist between acute episodes. Importantly, BPPV is not associated with hearing loss, tinnitus, or neurological signs — the presence of these features should prompt investigation for other causes.</p>
+
+                <h3>Dix-Hallpike Test: Posterior Canal BPPV</h3>
+                <p>The Dix-Hallpike is the gold-standard diagnostic test for posterior (and anterior) canal BPPV, the most common variant. With the patient seated on the treatment table, the head is rotated 45 degrees toward the test ear, then the patient is rapidly brought to the supine position with the head extended approximately 20–30 degrees below the table edge. A positive test produces geotropic (toward the ground), torsional, upbeat nystagmus with a latency of 1–5 seconds and duration of less than 60 seconds that fatigues with repeated testing. The vertigo and nystagmus beat toward the affected (down) ear in posterior canal BPPV.</p>
+
+                <div class="highlight-box key-point">
+                    <strong>Key Point — Nystagmus Interpretation:</strong> In posterior canal BPPV, the nystagmus is torsional-upbeat (the top pole of the eye beats toward the affected/down ear). If nystagmus is purely vertical, purely horizontal, or non-fatigable, central pathology must be ruled out before proceeding with repositioning maneuvers.
+                </div>
+
+                <h3>Epley Maneuver: Treatment of Posterior Canal BPPV</h3>
+                <p>The Epley canalith repositioning maneuver (CRM) is a sequence of four head positions designed to move displaced otoconia from the affected posterior semicircular canal back into the utricle. Starting from the positive Dix-Hallpike position (affected ear down), the clinician rotates the head 90 degrees toward the unaffected ear, then the patient rolls onto the unaffected side with the head facing downward (45 degrees), then sits up with the head slightly flexed. Each position is held for 30 seconds or until nystagmus subsides. Single-session success rates approach 80–90%, with repeated sessions achieving 95%+ clearance. The Epley maneuver is supported by strong Level I evidence from multiple randomized controlled trials.</p>
+
+                <h3>Horizontal Canal BPPV and the Supine Roll Test</h3>
+                <p>Horizontal canal BPPV accounts for approximately 10–15% of BPPV cases. Diagnosis uses the Supine Roll Test (also called the Log Roll Test): the patient lies supine, and the head is rapidly rotated 90 degrees to each side. A positive test produces horizontal, geotropic nystagmus (beating toward the ground, excitatory in canalolithiasis) or ageotropic nystagmus (beating away from the ground, in cupulolithiasis). The side with the stronger or longer nystagmus identifies the affected ear in the geotropic variant. Treatment involves the Barbecue Roll (Lempert) maneuver — a series of 90-degree rotations toward the unaffected ear — or the Gufoni maneuver for the cupulolithiasis variant.</p>
+
+                <div class="highlight-box caution">
+                    <strong>Caution — Pre-Maneuver Screening:</strong> Before performing repositioning maneuvers, screen for cervical spine contraindications (severe stenosis, instability, recent fusion, atlantoaxial instability), vertebrobasilar insufficiency, severe osteoporosis, and cardiac conditions that may be aggravated by rapid position changes. Modify positioning as needed for patients with restricted cervical ROM.
+                </div>
+
+                <div class="highlight-box clinical-tip">
+                    <strong>Clinical Tip:</strong> Instruct patients to perform post-Epley maneuver restrictions conservatively — sleeping semi-reclined for one night and avoiding the provocative position for 48 hours. However, evidence does not support prolonged activity restriction, and patients should resume normal activities quickly to avoid deconditioning.
+                </div>
+
+                <div class="knowledge-check">
+                    <h3>📝 Knowledge Check — Module 6</h3>
+                    <div class="question">
+                        <div class="question-text">During a positive Dix-Hallpike test for right posterior canal BPPV, the expected nystagmus pattern is:</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">A) Horizontal, ageotropic, non-fatigable</div>
+                        <div class="answer-option" onclick="selectAnswer(this, true)">B) Torsional-upbeat, geotropic, fatigable with latency of 1–5 seconds</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">C) Purely downbeat, immediate onset, non-fatigable</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">D) Horizontal, geotropic, duration greater than 3 minutes</div>
+                    </div>
+                </div>
+
+                <div class="module-completion">
+                    <div>Estimated completion time: 15 minutes</div>
+                    <button class="complete-btn" onclick="completeModule(6)">Mark Complete</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- MODULE 7 -->
+        <div class="module" data-module="7">
+            <div class="module-header" onclick="toggleModule(7)">
+                <div class="module-title">Module 7: Central vs. Peripheral Vestibular Disorders (15 min)</div>
+            </div>
+            <div class="module-content">
+                <h2>Differentiating Central from Peripheral Vestibular Pathology</h2>
+                <p>The clinical distinction between central and peripheral vestibular disorders is one of the most critical diagnostic challenges in vestibular rehabilitation. Missing central pathology — such as cerebellar stroke or posterior fossa tumor — by misclassifying it as a benign peripheral disorder can have catastrophic consequences. Conversely, over-referral for neuroimaging creates significant healthcare cost. A systematic clinical approach using bedside tests achieves diagnostic accuracy superior to MRI in the acute setting for certain presentations.</p>
+
+                <h3>Peripheral Vestibular Disorders</h3>
+                <p>Peripheral vestibular disorders originate in the labyrinth or vestibular nerve (cranial nerve VIII) proximal to the brainstem. Common peripheral disorders include BPPV, vestibular neuritis (labyrinthitis), Ménière's disease, perilymphatic fistula, superior canal dehiscence syndrome (SCDS), and acoustic neuroma (vestibular schwannoma). Peripheral lesions typically produce intense, rotational vertigo that is suppressed by visual fixation, associated with unidirectional nystagmus that beats away from the affected ear, normal neurological examination (no limb ataxia, dysarthria, diplopia, dysphagia), and normal HINTS examination findings consistent with peripheral origin.</p>
+
+                <h3>Vestibular Neuritis</h3>
+                <p>Vestibular neuritis is the second most common vestibular disorder after BPPV, presenting as an acute, sustained episode of severe rotational vertigo lasting days without hearing loss (distinguishing it from labyrinthitis, where hearing is affected). The cause is presumed viral (herpes simplex virus reactivation) or post-viral inflammatory demyelination of the superior vestibular nerve. The Head Impulse Test is markedly positive toward the affected side, nystagmus is unidirectional toward the healthy ear, and the patient demonstrates a positive head impulse corrective saccade. Vestibular rehabilitation accelerates recovery compared to spontaneous recovery alone and should begin within days of acute symptom resolution.</p>
+
+                <div class="highlight-box key-point">
+                    <strong>Key Point — HINTS Examination:</strong> The HINTS exam (Head Impulse, Nystagmus pattern, Test of Skew) is a structured bedside battery with sensitivity exceeding diffusion-weighted MRI in the first 48 hours for differentiating central from peripheral acute vestibular syndrome. A "safe" HINTS (positive HI + unidirectional nystagmus + no skew deviation) indicates peripheral origin. A "dangerous" HINTS (negative HI + direction-changing/multidirectional nystagmus + skew deviation) indicates central pathology requiring immediate neuroimaging.
+                </div>
+
+                <h3>Ménière's Disease</h3>
+                <p>Ménière's disease is a chronic condition of endolymphatic hydrops producing a classic triad of episodic vertigo (lasting 20 minutes to 12 hours), fluctuating low-frequency sensorineural hearing loss, and aural fullness with tinnitus. Episodes are unpredictable and can be severely disabling. Management includes dietary sodium restriction (less than 2,000 mg/day), diuretics, vestibular suppressants for acute episodes, and vestibular rehabilitation between episodes. In refractory cases, intratympanic gentamicin injection (chemical labyrinthectomy) or surgical interventions may be considered.</p>
+
+                <h3>Central Vestibular Disorders</h3>
+                <p>Central vestibular disorders arise from lesions in the brainstem, cerebellum, or central vestibular pathways. They include cerebellar stroke or hemorrhage, multiple sclerosis plaques affecting the MLF or vestibular nuclei, vestibular migraine, brainstem tumors, and Wernicke encephalopathy. Red flags suggesting central pathology include: sudden severe headache (thunderclap), new neurological deficits (diplopia, dysphagia, dysarthria, limb ataxia, facial numbness), downbeat or pure vertical nystagmus, direction-changing gaze-evoked nystagmus, abnormal smooth pursuit or saccades, negative head impulse test with acute vertigo, and inability to walk.</p>
+
+                <h3>Vestibular Migraine</h3>
+                <p>Vestibular migraine is now recognized as the most common cause of recurrent spontaneous vertigo in adults. Episodes last minutes to hours and are associated with migraine headache, photophobia, phonophobia, or visual aura in at least 50% of episodes. Vestibular migraine does not require headache during the vestibular episode — the migraine history and headache-feature association establish the diagnosis. Between attacks, patients may have normal vestibular testing, making diagnosis primarily clinical. Treatment includes migraine prophylaxis (propranolol, topiramate, amitriptyline), trigger avoidance, and vestibular rehabilitation.</p>
+
+                <div class="highlight-box caution">
+                    <strong>Caution — The Acute Vestibular Syndrome:</strong> Patients presenting with acute, continuous vertigo lasting more than 24 hours, inability to walk, new neurological symptoms, or vascular risk factors should be urgently referred for neuroimaging and neurological evaluation regardless of the nystagmus pattern. Do not perform repositioning maneuvers in the acute setting without ruling out central pathology first.
+                </div>
+
+                <div class="knowledge-check">
+                    <h3>📝 Knowledge Check — Module 7</h3>
+                    <div class="question">
+                        <div class="question-text">Which finding on the HINTS examination is most suggestive of central (dangerous) pathology?</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">A) Positive head impulse test with corrective saccade toward the affected side</div>
+                        <div class="answer-option" onclick="selectAnswer(this, true)">B) Normal (negative) head impulse test in the setting of acute sustained vertigo</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">C) Unidirectional horizontal nystagmus beating toward the healthy ear</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">D) Nausea and vomiting with position-provoked vertigo</div>
+                    </div>
+                </div>
+
+                <div class="module-completion">
+                    <div>Estimated completion time: 15 minutes</div>
+                    <button class="complete-btn" onclick="completeModule(7)">Mark Complete</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- MODULE 8 -->
+        <div class="module" data-module="8">
+            <div class="module-header" onclick="toggleModule(8)">
+                <div class="module-title">Module 8: Vestibular Rehabilitation: Habituation, Adaptation, Substitution Exercises (15 min)</div>
+            </div>
+            <div class="module-content">
+                <h2>Principles of Vestibular Rehabilitation Therapy</h2>
+                <p>Vestibular rehabilitation therapy (VRT) is an evidence-based, exercise-based intervention designed to promote central nervous system compensation for peripheral or central vestibular lesions, reduce vestibular symptoms, improve gaze stability, and restore functional balance and mobility. VRT is grounded in neuroplasticity and the CNS's capacity to adapt through mechanisms of habituation, adaptation, and sensory substitution. A systematic, individualized program addresses the patient's specific vestibular deficits, functional limitations, and activity restrictions.</p>
+
+                <h3>Habituation Exercises</h3>
+                <p>Habituation is the reduction of symptoms through repeated exposure to motion stimuli that provoke mild to moderate (but not severe) vertigo. The goal is to desensitize the vestibular system to provocative movements so that symptom intensity progressively diminishes. Habituation is appropriate for patients with motion sensitivity secondary to peripheral vestibular hypofunction, vestibular migraine, or persistent postural-perceptual dizziness (PPPD).</p>
+                <p>Habituation exercises include: Brandt-Daroff exercises (repeated side-lying to sitting movements), repetitive head movements in horizontal and vertical planes, position change sequences from sitting to supine, and exposure to optokinetic visual stimuli. The Dizziness Symptom Protocol rates symptom provocation on a 0–10 scale before and after each movement; exercises should provoke mild symptoms (2–3/10) to drive habituation without causing excessive distress. Exercises are performed 2–3 times daily, and symptom tolerance typically improves over 4–12 weeks.</p>
+
+                <div class="highlight-box key-point">
+                    <strong>Key Point — Habituation Dosing:</strong> The provocation stimulus must be sufficient to elicit symptoms to drive habituation — sub-threshold stimuli are ineffective. However, exercises that provoke severe symptoms (7–10/10) may cause patients to avoid further exercise and paradoxically increase avoidance behavior. Titrate exercise intensity to produce 2–5/10 symptom provocation.
+                </div>
+
+                <h3>Adaptation Exercises (Gaze Stabilization)</h3>
+                <p>VOR adaptation exercises exploit the cerebellum's ability to modify VOR gain and reduce retinal slip during head movements. These exercises are the cornerstone of VRT for patients with peripheral vestibular hypofunction (e.g., post-vestibular neuritis, post-acoustic neuroma resection, bilateral vestibular hypofunction).</p>
+                <p><strong>VOR × 1 exercise:</strong> The patient fixes gaze on a stationary target and moves the head horizontally (or vertically) while keeping the target in focus. Duration: 1–2 minutes, 3–5 times daily. The key is maintaining target clarity during head movement — blur signals retinal slip and drives cerebellar adaptation.</p>
+                <p><strong>VOR × 2 exercise:</strong> The target moves in the opposite direction of head movement (or the patient holds a target card and moves both the head and the card in opposite directions simultaneously). This creates a greater retinal slip signal and drives more aggressive VOR adaptation. VOR × 2 is more challenging and appropriate for patients who have plateaued with VOR × 1.</p>
+                <p><strong>Imaginary targets:</strong> The patient fixates on an imagined target in a visually distracting environment (e.g., grocery store simulation), which trains the VOR in more ecologically valid contexts.</p>
+
+                <h3>Substitution Exercises</h3>
+                <p>When vestibular function cannot be restored (as in complete unilateral or bilateral vestibular hypofunction), substitution strategies help the patient use alternative sensory systems — vision, somatosensory input, and smooth pursuit — to partially replace the lost vestibular function. Smooth pursuit substitution involves training the patient to use slow compensatory eye movements instead of the VOR during relatively slow head movements. Cervico-ocular reflex (COR) training uses neck proprioceptors to generate compensatory eye movements. These substitutions are less effective than a functioning VOR but can meaningfully improve functional outcomes in patients with irreversible vestibular loss.</p>
+
+                <div class="highlight-box clinical-tip">
+                    <strong>Clinical Tip:</strong> Monitor Dynamic Visual Acuity (DVA) as an outcome measure for gaze stabilization exercise progression. DVA is tested by comparing visual acuity with the head stationary versus oscillating at approximately 2 Hz. An improvement of one line on a visual acuity chart during head movement indicates meaningful VOR adaptation and confirms exercise effectiveness.
+                </div>
+
+                <div class="highlight-box caution">
+                    <strong>Caution — Active Suppression:</strong> Discourage patients from using sunglasses indoors, avoiding visually stimulating environments, or relying excessively on walking aids to reduce symptom provocation. These avoidance behaviors impede habituation and adaptation, and reinforce the disability cycle associated with chronic dizziness disorders.
+                </div>
+
+                <div class="knowledge-check">
+                    <h3>📝 Knowledge Check — Module 8</h3>
+                    <div class="question">
+                        <div class="question-text">VOR × 1 gaze stabilization exercises are designed to drive which mechanism of vestibular recovery?</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">A) Habituation to positional vertigo</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">B) Smooth pursuit substitution for the vestibulo-ocular reflex</div>
+                        <div class="answer-option" onclick="selectAnswer(this, true)">C) Cerebellar-mediated adaptation of VOR gain</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">D) Somatosensory reweighting during dynamic balance tasks</div>
+                    </div>
+                </div>
+
+                <div class="module-completion">
+                    <div>Estimated completion time: 15 minutes</div>
+                    <button class="complete-btn" onclick="completeModule(8)">Mark Complete</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- MODULE 9 -->
+        <div class="module" data-module="9">
+            <div class="module-header" onclick="toggleModule(9)">
+                <div class="module-title">Module 9: Balance Training Interventions: Evidence-Based Progressions (15 min)</div>
+            </div>
+            <div class="module-content">
+                <h2>Principles of Balance Training Progression</h2>
+                <p>Effective balance training requires systematic progression of exercise difficulty along multiple dimensions: base of support, center of mass position, sensory conditions, external perturbations, and dual-task demands. A one-dimensional progression (e.g., only narrowing base of support) is insufficient to address the multifactorial nature of clinical balance deficits. The clinician should continuously modify the challenge to maintain an appropriate training stimulus — exercises that are too easy produce no adaptive response; those that are too difficult produce fear, avoidance, and injury risk.</p>
+
+                <h3>Static Balance Progressions</h3>
+                <p>Static balance training progresses along the following hierarchy, with safety guards provided as needed:</p>
+                <ul>
+                    <li><strong>Double-leg stance, eyes open, firm surface</strong> — most stable condition, appropriate for very low-functioning patients</li>
+                    <li><strong>Double-leg stance, eyes closed, firm surface</strong> — removes visual input, increases vestibular and somatosensory demand</li>
+                    <li><strong>Double-leg stance on foam, eyes open</strong> — disrupts somatosensory input, upweights vestibular contribution</li>
+                    <li><strong>Double-leg stance on foam, eyes closed</strong> — eliminates somatosensory and visual input; requires intact vestibular function</li>
+                    <li><strong>Semitandem stance → tandem stance → single-leg stance</strong> — narrow base progressions on firm and compliant surfaces</li>
+                    <li><strong>Perturbation training</strong> — manual perturbations, unexpected platform movements, nudge testing</li>
+                </ul>
+
+                <h3>Dynamic Balance and Task-Specific Training</h3>
+                <p>Dynamic balance exercises train the postural control system under conditions of voluntary movement, which more closely simulates the demands of daily activity. Key dynamic balance training exercises include:</p>
+                <ul>
+                    <li><strong>Weight shifting exercises:</strong> Deliberate anterior-posterior and mediolateral weight shifts, with or without visual biofeedback</li>
+                    <li><strong>Stepping exercises:</strong> Lateral, forward, backward, and diagonal steps with variable speed and cadence</li>
+                    <li><strong>Reaching tasks:</strong> Reaching to targets beyond arm's length in multiple directions, standing or seated</li>
+                    <li><strong>Limits of stability training:</strong> Moving the center of mass to the boundaries of the base of support without stepping (functional reach activities)</li>
+                    <li><strong>Reactive stepping:</strong> Unexpected perturbations requiring protective stepping responses; highly effective for fall prevention</li>
+                </ul>
+
+                <div class="highlight-box key-point">
+                    <strong>Key Point — Reactive Balance Training:</strong> Reactive stepping and perturbation-based training have the strongest evidence base for fall prevention, demonstrating up to 50% reduction in fall incidence in high-risk older adults. This type of training specifically targets the protective stepping and grabbing reactions that prevent injury during trips and slips.
+                </div>
+
+                <h3>Sensory Manipulation During Balance Training</h3>
+                <p>Sensory manipulation exercises systematically challenge specific sensory channels by altering surface compliance (foam, BOSU, balance board), visual availability (eyes open/closed, lenses, virtual reality environments), or by introducing conflicting sensory cues (optokinetic stimulation). This approach operationalizes the sensory reweighting model and ensures that all three sensory channels (visual, vestibular, somatosensory) are trained, not just the patient's preferred or dominant channel.</p>
+
+                <h3>Dual-Task Balance Training</h3>
+                <p>Many falls occur during divided-attention tasks — walking while talking, carrying objects, or navigating unexpected hazards. Dual-task training pairs balance tasks with cognitive tasks (serial subtraction, verbal fluency, reaction time tasks) or motor tasks (carrying a tray, bouncing a ball). Dual-task training is particularly important in older adults, where the attentional cost of postural control is elevated, and in Parkinson disease, where basal ganglia-mediated automaticity of gait is disrupted. Research demonstrates that dual-task training produces greater improvements in dual-task gait performance than single-task training alone.</p>
+
+                <h3>Tai Chi and Group Exercise Programs</h3>
+                <p>Tai Chi is the most extensively studied exercise program for fall prevention, with meta-analyses demonstrating approximately 20–30% reduction in fall rate in community-dwelling older adults. The Otago Exercise Program — a home-based strengthening and balance program — demonstrated a 35% reduction in falls in a landmark RCT and has been widely disseminated. Group exercise programs (Matter of Balance, EnhanceFitness) provide social reinforcement alongside balance training and can be cost-effective in community settings.</p>
+
+                <div class="highlight-box clinical-tip">
+                    <strong>Clinical Tip:</strong> Always include at least one reactive balance task in each treatment session for high-fall-risk patients. Simple perturbation tasks such as pushing the patient unexpectedly while standing, catching a ball thrown off-center, or using a perturbation treadmill can be implemented without expensive equipment and have a high clinical impact.
+                </div>
+
+                <div class="knowledge-check">
+                    <h3>📝 Knowledge Check — Module 9</h3>
+                    <div class="question">
+                        <div class="question-text">Which type of balance training intervention has the strongest evidence for reducing fall incidence in community-dwelling older adults?</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">A) Static single-leg stance training on foam</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">B) Optokinetic visual stimulation exercises</div>
+                        <div class="answer-option" onclick="selectAnswer(this, true)">C) Perturbation-based reactive balance training</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">D) Seated weight-shifting exercises with biofeedback</div>
+                    </div>
+                </div>
+
+                <div class="module-completion">
+                    <div>Estimated completion time: 15 minutes</div>
+                    <button class="complete-btn" onclick="completeModule(9)">Mark Complete</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- MODULE 10 -->
+        <div class="module" data-module="10">
+            <div class="module-header" onclick="toggleModule(10)">
+                <div class="module-title">Module 10: Fall Risk Assessment and Prevention Strategies (15 min)</div>
+            </div>
+            <div class="module-content">
+                <h2>Epidemiology of Falls and Their Consequences</h2>
+                <p>Falls are the leading cause of both fatal and nonfatal injuries among adults 65 years and older in the United States. Approximately one-third of community-dwelling older adults fall at least once per year, rising to 50% in adults over 80. Falls account for over 800,000 hospitalizations annually in the U.S., with hip fractures representing the most devastating consequence — associated with 20–30% one-year mortality and significant permanent functional decline. The direct medical costs of fall injuries exceed $50 billion annually. Prevention of falls is thus a major public health priority and a central goal of physical therapy practice.</p>
+
+                <h3>Risk Factor Identification</h3>
+                <p>Comprehensive fall risk assessment must address both intrinsic and extrinsic risk factors. Intrinsic risk factors include:</p>
+                <ul>
+                    <li>Previous fall history (strongest single predictor of future falls)</li>
+                    <li>Muscle weakness, particularly hip abductors and ankle plantarflexors</li>
+                    <li>Gait speed below 1.0 m/s or TUG above 13.5 seconds</li>
+                    <li>Balance impairment (BBS ≤45, FGA ≤22)</li>
+                    <li>Visual impairment, particularly reduced contrast sensitivity and visual acuity below 20/40</li>
+                    <li>Peripheral neuropathy and reduced plantar sensation</li>
+                    <li>Vestibular hypofunction or chronic dizziness</li>
+                    <li>Polypharmacy (4+ medications) and specific drug classes: benzodiazepines, anticholinergics, opioids, alpha-blockers, antihypertensives</li>
+                    <li>Orthostatic hypotension (drop of ≥20 mmHg systolic or ≥10 mmHg diastolic within 3 minutes of standing)</li>
+                    <li>Cognitive impairment, depression, and fear of falling</li>
+                    <li>Urinary incontinence and nocturia</li>
+                    <li>Foot disorders (hallux valgus, neuropathic pain, inappropriate footwear)</li>
+                </ul>
+
+                <div class="highlight-box key-point">
+                    <strong>Key Point — Fall History as Predictor:</strong> A history of one fall in the past year doubles the risk of a future fall. A history of two or more falls identifies high-risk individuals who should receive comprehensive multifactorial fall risk assessment and targeted intervention. Always ask about fall history at every encounter.
+                </div>
+
+                <h3>Standardized Fall Risk Screening Tools</h3>
+                <p>Validated fall risk screening tools include the Fall Risk Assessment Tool (FRAT), the STEADI (Stopping Elderly Accidents, Deaths, and Injuries) algorithm developed by the CDC, and the Johns Hopkins Fall Risk Assessment Tool (JHFRAT) for inpatient settings. The STEADI algorithm includes three validated screening questions, the TUG, the 4-Stage Balance Test (side-by-side, semi-tandem, tandem, and single-leg stance), and the 30-Second Chair Stand Test. Patients who screen positive undergo comprehensive clinical assessment.</p>
+
+                <h3>Environmental Modification</h3>
+                <p>Home hazard assessment and modification reduce fall rates by 19–21% in high-risk older adults when performed by an occupational therapist. Key environmental modifications include removing loose rugs and clutter, improving lighting (particularly on stairways and in bathrooms), installing grab bars in bathrooms (near toilet and in shower/tub), securing handrails on both sides of stairs, adding non-slip mats in bathing areas, and ensuring telephone and lighting access from the bed. Non-slip footwear with adequate ankle support replaces backless slippers or socks, which significantly increase fall risk.</p>
+
+                <h3>Medication Review</h3>
+                <p>Medication review and deprescribing is a critical component of multifactorial fall prevention. Benzodiazepines increase fall risk by 44–57%. First-generation antipsychotics, opioids, and tricyclic antidepressants also significantly increase fall risk. Gradual withdrawal of benzodiazepines in high-risk fallers has been shown to reduce fall rates by 66% in one landmark study. Clinicians should communicate fall risk concerns to the prescribing physician and advocate for medication review as part of the fall prevention plan.</p>
+
+                <h3>Multifactorial Fall Prevention Programs</h3>
+                <p>Single-component interventions (exercise alone, medication review alone, or environmental modification alone) are less effective than multifactorial programs that simultaneously address multiple risk factors. The Cochrane review of fall prevention in older adults confirms that multifactorial programs reduce fall rate by approximately 24% in community-dwelling older adults. Exercise is the most consistently effective single component, particularly programs combining balance and strength training with adequate dose (≥3 hours/week of progressive exercise).</p>
+
+                <div class="highlight-box clinical-tip">
+                    <strong>Clinical Tip:</strong> Always screen for fear of falling using the Falls Efficacy Scale-International (FES-I) or Activities-Specific Balance Confidence (ABC) scale. Fear of falling is an independent predictor of fall risk, activity restriction, and reduced quality of life. Patients with high fear of falling may benefit from cognitive-behavioral approaches alongside balance training to address the psychological component of fall risk.
+                </div>
+
+                <div class="knowledge-check">
+                    <h3>📝 Knowledge Check — Module 10</h3>
+                    <div class="question">
+                        <div class="question-text">Which of the following is the single strongest predictor of future fall risk in older adults?</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">A) TUG score greater than 13.5 seconds</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">B) Berg Balance Scale score below 45</div>
+                        <div class="answer-option" onclick="selectAnswer(this, true)">C) History of one or more falls in the past year</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">D) Gait speed below 1.0 m/s</div>
+                    </div>
+                </div>
+
+                <div class="module-completion">
+                    <div>Estimated completion time: 15 minutes</div>
+                    <button class="complete-btn" onclick="completeModule(10)">Mark Complete</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- MODULE 11 -->
+        <div class="module" data-module="11">
+            <div class="module-header" onclick="toggleModule(11)">
+                <div class="module-title">Module 11: Special Populations: Geriatric Balance, Post-Concussion, Bilateral Vestibulopathy (15 min)</div>
+            </div>
+            <div class="module-content">
+                <h2>Balance and Vestibular Disorders in Special Populations</h2>
+                <p>Clinical management of balance and vestibular disorders must be adapted to the specific physiological, psychological, and social characteristics of each patient population. Three populations present particularly unique clinical challenges: older adults with age-related balance decline (presbystasis/presbyvestibulia), individuals with post-concussion syndrome affecting balance and vestibular function, and patients with bilateral vestibular hypofunction (BVH). Each requires population-specific assessment strategies, treatment modifications, and outcome expectations.</p>
+
+                <h3>Geriatric Balance: Age-Related Changes</h3>
+                <p>Normal aging produces progressive changes in all three balance subsystems. Vestibular: Hair cell density in the cristae and maculae declines by 20–40% by age 70, VOR gain decreases, and otolith sensitivity diminishes. Visual: Reduced contrast sensitivity, impaired dark adaptation, reduced depth perception, and increased susceptibility to visual motion. Somatosensory: Reduced plantar cutaneous sensitivity, impaired joint proprioception, slowed nerve conduction velocity, and loss of large myelinated sensory fibers. These concurrent declines produce "presbystasis" — age-related postural instability that increases fall risk even in the absence of discrete pathology.</p>
+                <p>In addition, muscle power (force × velocity) declines faster than strength alone with aging, which is particularly relevant for reactive balance tasks requiring rapid force generation. Ankle plantarflexor power is particularly impaired and is closely correlated with gait speed and balance performance in older adults. Resistance training targeting lower extremity power (high-velocity exercises) is therefore an important adjunct to balance training in the geriatric population.</p>
+
+                <div class="highlight-box key-point">
+                    <strong>Key Point — Polypharmacy in Older Adults:</strong> Older adults presenting with new or worsening dizziness and balance problems should always have their medication list reviewed as part of the initial assessment. Many cases of "dizziness" in older adults are pharmacological in origin and are reversible with appropriate medication adjustment — always communicate with the prescribing team.
+                </div>
+
+                <h3>Post-Concussion Balance and Vestibular Dysfunction</h3>
+                <p>Concussion (mild traumatic brain injury) frequently disrupts both vestibular and oculomotor function, producing a spectrum of symptoms including dizziness, imbalance, visual motion sensitivity, and headache. Approximately 30–50% of concussed individuals demonstrate vestibular impairments on objective testing, including abnormal VOR gain, impaired smooth pursuit, saccadic dysfunction, and elevated DVA scores. The King-Devick test, the BESS, and oculomotor assessments (smooth pursuit, saccades, vergence, and convergence near point) are used alongside symptom scales (PCSS — Post-Concussion Symptom Scale) to profile the postconcussion phenotype.</p>
+                <p>Post-concussion vestibular rehabilitation differs from standard VRT in several ways. Exercise intensity must be titrated below symptom exacerbation threshold (Leddy aerobic threshold model), and treatment addresses multiple concurrent deficits: cervicogenic dizziness from associated cervical injury, BPPV (common after head trauma), oculomotor dysfunction, and cognitive fatigue. The Concussion Recognition and Assessment Tool (CRAT) framework includes sport-specific return-to-sport and return-to-learn protocols that must be coordinated with the patient's school or employer. Most athletes with concussion recover within 7–14 days; those with persistent symptoms beyond one month require interdisciplinary management.</p>
+
+                <h3>Bilateral Vestibular Hypofunction (BVH)</h3>
+                <p>Bilateral vestibular hypofunction is a severe and often underdiagnosed condition in which both labyrinths are damaged, producing profoundly impaired VOR function, oscillopsia (blurring of vision with head movement), imbalance on uneven surfaces and in the dark, and a characteristic waddling or cautious gait. Common causes include aminoglycoside ototoxicity (gentamicin, tobramycin), bilateral Ménière's disease, autoimmune inner ear disease, superior semicircular canal dehiscence, and idiopathic causes.</p>
+                <p>Diagnosis is confirmed by rotary chair testing (reduced or absent gain bilaterally), video head impulse testing (vHIT) showing bilateral corrective saccades, and absent caloric responses bilaterally. The Vestibular Activities and Participation measure (VAP) and the Dizziness Handicap Inventory (DHI) quantify functional impact. VRT for BVH focuses almost exclusively on gaze stabilization adaptation, sensory substitution, and balance training rather than habituation, since there is no functioning vestibular end-organ to habituate. Prognosis for full VOR recovery is poor; goals focus on maximizing quality of life through functional compensation strategies.</p>
+
+                <div class="highlight-box clinical-tip">
+                    <strong>Clinical Tip:</strong> Patients with BVH are dependent on lighting — they may be essentially unable to ambulate safely in the dark without an assistive device. Counsel patients about home lighting strategies, nightlights in hallways and bathrooms, and the use of a cane in challenging environments. This simple intervention can prevent nighttime falls and dramatically improve safety.
+                </div>
+
+                <div class="highlight-box caution">
+                    <strong>Caution — Aminoglycoside Monitoring:</strong> If treating a patient who has recently received IV aminoglycoside antibiotics (often in the ICU for serious infection), screen for vestibular toxicity even if the patient does not report dizziness — BVH from aminoglycosides is often initially subtle and manifests primarily as oscillopsia and imbalance rather than vertigo. Early detection enables timely rehabilitation intervention and patient education.
+                </div>
+
+                <div class="knowledge-check">
+                    <h3>📝 Knowledge Check — Module 11</h3>
+                    <div class="question">
+                        <div class="question-text">A patient with bilateral vestibular hypofunction reports significant imbalance when walking in the dark and oscillopsia with head movement. The MOST appropriate primary VRT focus for this patient is:</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">A) Habituation exercises targeting motion-provoked dizziness</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">B) Epley maneuver to clear otoconia from both canals</div>
+                        <div class="answer-option" onclick="selectAnswer(this, true)">C) Gaze stabilization adaptation and sensory substitution balance training</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">D) Optokinetic habituation in a visually enriched environment</div>
+                    </div>
+                </div>
+
+                <div class="module-completion">
+                    <div>Estimated completion time: 15 minutes</div>
+                    <button class="complete-btn" onclick="completeModule(11)">Mark Complete</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- MODULE 12 -->
+        <div class="module" data-module="12">
+            <div class="module-header" onclick="toggleModule(12)">
+                <div class="module-title">Module 12: Outcomes Measurement and Discharge Planning for Balance Disorders (15 min)</div>
+            </div>
+            <div class="module-content">
+                <h2>Selecting and Interpreting Outcomes Measures</h2>
+                <p>Outcomes measurement is integral to evidence-based practice, clinical quality improvement, reimbursement documentation, and patient communication. For balance and vestibular disorders, outcomes span multiple domains: symptom burden (dizziness, vertigo intensity), functional performance (gait speed, balance test scores), activity limitation (community ambulation, fall rate), and quality of life (participation restriction, fear of falling). A comprehensive outcomes framework captures all relevant domains and enables meaningful interpretation of clinical change.</p>
+
+                <h3>Patient-Reported Outcome Measures (PROMs)</h3>
+                <p>Patient-reported outcomes capture the patient's subjective experience of symptoms and their functional impact — information that performance tests cannot provide. Key PROMs in vestibular and balance rehabilitation include:</p>
+                <ul>
+                    <li><strong>Dizziness Handicap Inventory (DHI):</strong> 25-item questionnaire assessing physical, emotional, and functional impact of dizziness. Total score 0–100; scores above 30 indicate moderate handicap. MDC is approximately 18 points. Validated for vestibular neuritis, BPPV (post-treatment follow-up), Ménière's disease, and bilateral vestibular hypofunction.</li>
+                    <li><strong>Activities-Specific Balance Confidence Scale (ABC):</strong> 16-item scale rating confidence performing activities without losing balance or being unsteady, scored 0–100%. Scores below 67% indicate community mobility concerns; scores below 50% indicate significant fear of falling. Highly responsive to balance rehabilitation interventions.</li>
+                    <li><strong>Vestibular Activities and Participation (VAP):</strong> 34-item ICF-based tool assessing vestibular symptom impact on activities and participation across multiple life domains. Particularly useful for capturing real-world functional gains in vestibular rehabilitation.</li>
+                    <li><strong>Falls Efficacy Scale-International (FES-I):</strong> 16-item scale measuring concern about falling during activities. Scores 16–64; scores above 23 predict fall risk. Available in multiple languages; widely used in geriatric populations.</li>
+                    <li><strong>Visual Vertigo Analogue Scale (VVAS):</strong> Assesses visual motion sensitivity — the degree to which visually complex environments (grocery stores, busy traffic, scrolling screens) provoke dizziness. Useful for monitoring vestibular migraine and PPPD.</li>
+                </ul>
+
+                <h3>Interpreting Minimal Detectable Change and MCID</h3>
+                <p>Two key statistical concepts guide clinical interpretation of outcomes data. The Minimal Detectable Change (MDC) is the smallest change that exceeds measurement error (based on test reliability); changes smaller than the MDC may reflect random variation rather than true change. The Minimal Clinically Important Difference (MCID) is the smallest change that is meaningful to the patient. For the DHI, MDC = 18 points and MCID = 11 points. For the BBS, MDC = 4–7 points. For gait speed (10MWT), MCID = 0.05–0.10 m/s for within-population comparisons and 0.10–0.16 m/s for clinically meaningful functional change.</p>
+
+                <div class="highlight-box key-point">
+                    <strong>Key Point — Documenting Meaningful Change:</strong> When documenting outcomes for payers and quality reporting, use MDC and MCID values to justify continuation or discharge. A patient who has improved 20 points on the DHI has exceeded both MDC and MCID — this is objective evidence of a meaningful treatment response that supports reimbursement and documents clinical value.
+                </div>
+
+                <h3>Discharge Criteria for Balance and Vestibular Rehabilitation</h3>
+                <p>Discharge from vestibular and balance rehabilitation should be based on documented attainment of established functional goals, plateauing of progress despite optimized treatment, and the patient's ability to self-manage their condition independently. Specific criteria by condition include:</p>
+                <ul>
+                    <li><strong>BPPV:</strong> Negative Dix-Hallpike and/or Roll test, resolution of vertigo episodes, patient education on self-repositioning and recurrence management</li>
+                    <li><strong>Vestibular neuritis/unilateral hypofunction:</strong> DHI score in mild range (&lt;30), FGA ≥22/30, DVA within 1–2 lines of stationary acuity, patient performing independent home exercise program</li>
+                    <li><strong>Bilateral vestibular hypofunction:</strong> Maximal functional compensation achieved, independent with home program, environmental modifications in place, patient/caregiver educated on long-term management</li>
+                    <li><strong>Fall risk:</strong> BBS ≥45, TUG ≤13.5 seconds, fall rate reduced, home hazard assessment completed, community falls prevention program referral made</li>
+                </ul>
+
+                <h3>Home Exercise Program Design and Adherence</h3>
+                <p>A well-designed home exercise program (HEP) is critical for maintaining gains after discharge and for continuing the neuroplastic adaptation process. Vestibular adaptation exercises must be performed consistently — the cerebellum requires repeated practice to consolidate VOR adaptation. Key principles for HEP design in balance and vestibular rehabilitation include: limit to 3–5 exercises per session to avoid overwhelm, provide written and visual instructions (illustrated handouts or video links), specify frequency (2–3 times daily), duration (1–2 minutes each exercise), and intensity parameters (symptom target), and build in a mechanism for progression (e.g., increase head speed, decrease base of support). Adherence is enhanced when patients understand the rationale for each exercise and when early positive symptom changes reinforce continued participation.</p>
+
+                <h3>Interdisciplinary Collaboration and Referral Pathways</h3>
+                <p>Optimal management of complex balance and vestibular disorders often requires an interdisciplinary team. The physical therapist communicates with: the otolaryngologist (ENT) for Ménière's management, surgical candidacy (gentamicin injection, labyrinthectomy), audiological monitoring, and SCDS workup; the neurologist for central vestibular pathology, vestibular migraine prophylaxis, and Parkinson management; the ophthalmologist for visual contributions to balance dysfunction; the geriatrician or primary care physician for medication review, orthostatic hypotension management, and osteoporosis treatment; and the occupational therapist for ADL adaptation and home modification. Clear documentation of referral needs and follow-up plans ensures continuity of care and optimizes patient outcomes.</p>
+
+                <div class="highlight-box clinical-tip">
+                    <strong>Clinical Tip:</strong> At discharge, provide each patient with a written summary of their baseline and discharge outcome scores, the exercises they should continue, red-flag symptoms warranting reassessment (recurrence of acute vertigo, new neurological symptoms, new fall, sudden hearing loss), and contact information for re-referral. Empowering patients with this information promotes self-efficacy and enables timely re-engagement with care if symptoms recur.
+                </div>
+
+                <div class="highlight-box caution">
+                    <strong>Caution — Premature Discharge:</strong> Balance rehabilitation benefits are lost rapidly without maintenance exercise. Avoid discharging patients to no activity. Always transition to a community maintenance exercise program (fitness center balance classes, Tai Chi, Silver Sneakers) or a clearly defined independent home program with scheduled reassessment at 3–6 months to monitor for regression.
+                </div>
+
+                <div class="knowledge-check">
+                    <h3>📝 Knowledge Check — Module 12</h3>
+                    <div class="question">
+                        <div class="question-text">A patient with vestibular neuritis improves their DHI score from 58 to 32 following 8 weeks of vestibular rehabilitation. How should this change be interpreted?</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">A) The change of 26 points is within measurement error and does not represent true clinical change</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">B) The change is statistically significant but not clinically meaningful</div>
+                        <div class="answer-option" onclick="selectAnswer(this, true)">C) The change exceeds both MDC (18 pts) and MCID (11 pts), indicating a meaningful and real treatment response</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">D) The final score of 32 indicates no remaining dizziness handicap and patient is fully recovered</div>
+                    </div>
+                    <div class="question">
+                        <div class="question-text">Which of the following best represents appropriate discharge criteria for a patient treated for BPPV?</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">A) Patient reports subjective improvement in dizziness symptoms only</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">B) Patient has completed 6 Epley maneuvers regardless of test findings</div>
+                        <div class="answer-option" onclick="selectAnswer(this, true)">C) Negative Dix-Hallpike test, resolution of vertigo episodes, and patient education on recurrence management</div>
+                        <div class="answer-option" onclick="selectAnswer(this, false)">D) DHI score reduced by at least 5 points from baseline</div>
+                    </div>
+                </div>
+
+                <div class="module-completion">
+                    <div>Estimated completion time: 15 minutes</div>
+                    <button class="complete-btn" onclick="completeModule(12)">Mark Complete</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="certificate-section" id="certificateSection">
+            <h2>🧘 Congratulations!</h2>
+            <p>You have successfully completed the <strong>Balance, Gait, and Vestibular Management</strong> course.</p>
+            <p>You have earned <strong>3.0 Continuing Education Units</strong></p>
+            <button class="certificate-btn" onclick="generateCertificate()">Download Certificate</button>
+        </div>
+    </div>
+
+    <script>
+        let courseState = {
+            modulesCompleted: [],
+            totalModules: 12,
+            startTime: new Date(),
+            completionTime: null
+        };
+
+        function loadProgress() {
+            const saved = localStorage.getItem('balanceGaitProgress');
+            if (saved) {
+                courseState = JSON.parse(saved);
+                courseState.modulesCompleted.forEach(moduleNum => {
+                    const moduleHeader = document.querySelector(`[data-module="${moduleNum}"] .module-header`);
+                    if (moduleHeader) moduleHeader.classList.add('completed');
+                });
+                updateProgress();
+                if (courseState.modulesCompleted.length === courseState.totalModules) {
+                    document.getElementById('certificateSection').classList.add('visible');
+                }
+            }
+        }
+
+        function saveProgress() {
+            localStorage.setItem('balanceGaitProgress', JSON.stringify(courseState));
+        }
+
+        function toggleModule(moduleNum) {
+            const module = document.querySelector(`[data-module="${moduleNum}"]`);
+            const content = module.querySelector('.module-content');
+            const isActive = content.classList.contains('active');
+            document.querySelectorAll('.module-content').forEach(c => c.classList.remove('active'));
+            if (!isActive) content.classList.add('active');
+        }
+
+        function completeModule(moduleNum) {
+            if (!courseState.modulesCompleted.includes(moduleNum)) {
+                courseState.modulesCompleted.push(moduleNum);
+                const moduleHeader = document.querySelector(`[data-module="${moduleNum}"] .module-header`);
+                moduleHeader.classList.add('completed');
+                const completion = document.querySelector(`[data-module="${moduleNum}"] .module-completion`);
+                completion.innerHTML = '<div>Module completed ✓</div><div class="completed-badge">Completed</div>';
+                updateProgress();
+                saveProgress();
+                if (courseState.modulesCompleted.length === courseState.totalModules) {
+                    courseState.completionTime = new Date();
+                    document.getElementById('certificateSection').classList.add('visible');
+                    saveProgress();
+                }
+            }
+        }
+
+        function updateProgress() {
+            const percentage = Math.round((courseState.modulesCompleted.length / courseState.totalModules) * 100);
+            document.querySelector('.progress-fill').style.width = percentage + '%';
+            document.querySelector('.progress-percentage').textContent = percentage + '% Complete';
+        }
+
+        function selectAnswer(element, isCorrect) {
+            const question = element.parentElement;
+            question.querySelectorAll('.answer-option').forEach(opt => opt.classList.remove('correct', 'incorrect'));
+            element.classList.add(isCorrect ? 'correct' : 'incorrect');
+            setTimeout(() => {
+                if (isCorrect) {
+                    element.innerHTML += ' ✓ Correct!';
+                } else {
+                    element.innerHTML += ' ✗ Incorrect';
+                    question.querySelectorAll('.answer-option').forEach(opt => {
+                        if (opt.onclick && opt.onclick.toString().includes('true')) {
+                            opt.classList.add('correct');
+                            opt.innerHTML += ' ✓ Correct Answer';
+                        }
+                    });
+                }
+            }, 500);
+        }
+
+        function generateCertificate() {
+            const completionDate = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+            const w = window.open('', '_blank');
+            w.document.write(`<!DOCTYPE html><html><head><title>Certificate - Balance, Gait, and Vestibular Management</title><style>body{font-family:'Georgia',serif;text-align:center;padding:50px;background:#f8f9fa}.certificate{background:white;padding:60px;border:10px solid #1a365d;max-width:800px;margin:0 auto}.header{color:#1a365d;font-size:36px;margin-bottom:20px}.title{font-size:24px;color:#059669;margin:30px 0}.recipient{font-size:28px;color:#333;margin:20px 0;border-bottom:2px solid #1a365d;padding-bottom:10px}.content{font-size:18px;line-height:1.6;margin:30px 0}.signature{margin-top:60px;display:flex;justify-content:space-around}.sig-line{border-top:2px solid #333;width:200px;padding-top:10px}.date{color:#666;margin-top:20px}</style></head><body><div class="certificate"><div class="header">CERTIFICATE OF COMPLETION</div><div class="title">🧘 Balance, Gait, and Vestibular Management</div><div class="content">This certifies that<br><div class="recipient">[Participant Name]</div>has successfully completed the continuing education course<br><strong>Balance, Gait, and Vestibular Management</strong><br>consisting of 3.0 contact hours of instruction</div><div class="signature"><div class="sig-line">Dr. Troy Hounshell, PT, ScD<br>Course Director</div><div class="sig-line">DrTroy Continuing Education<br>Approved Provider</div></div><div class="date">Completed: ${completionDate}<br>Course ID: BALANCE-001<br>Approval #: DRTROY-BALANCE-001-2024</div></div></body></html>`);
+            w.document.close();
+            w.print();
+        }
+
+        function logout() {
+            localStorage.clear();
+            window.location.href = '../index.html';
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            loadProgress();
+        });
+
+        setInterval(saveProgress, 30000);
+    </script>
+</body>
+</html>
