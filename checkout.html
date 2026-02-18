@@ -614,21 +614,15 @@
                         <h2 class="section-title">Payment Information</h2>
                         
                         <div class="security-badge">
-                            🔒 Your payment information is secure and encrypted
+                            🔒 You'll be redirected to Stripe's secure checkout to enter your card details
                         </div>
-                        
-                        <div class="form-group">
-                            <label for="card-element" class="form-label">Credit Card *</label>
-                            <div id="card-element">
-                                <!-- Stripe Elements will create form elements here -->
-                            </div>
-                            <div id="card-errors" role="alert"></div>
-                        </div>
+
+                        <div id="card-errors" role="alert" style="color:#dc2626;margin-top:8px;font-size:14px;"></div>
                     </div>
 
                     <!-- Submit Button -->
                     <button type="submit" class="btn btn-primary btn-block" id="submit-button">
-                        Complete Purchase
+                        Proceed to Secure Checkout →
                     </button>
                 </form>
             </div>
@@ -667,35 +661,8 @@
     <script src="js/cart.js"></script>
     
     <script>
-        // Initialize Stripe
-        const stripe = Stripe('pk_test_TYooMQauvdEDq54NiTphI7jx'); // Replace with your publishable key
-        const elements = stripe.elements();
-
-        // Create card element
-        const cardElement = elements.create('card', {
-            style: {
-                base: {
-                    fontSize: '16px',
-                    color: '#262626',
-                    fontFamily: 'Source Sans Pro, -apple-system, BlinkMacSystemFont, sans-serif',
-                    '::placeholder': {
-                        color: '#a3a3a3',
-                    },
-                },
-            },
-        });
-
-        cardElement.mount('#card-element');
-
-        // Handle real-time validation errors from the card Element
-        cardElement.on('change', ({error}) => {
-            const displayError = document.getElementById('card-errors');
-            if (error) {
-                displayError.textContent = error.message;
-            } else {
-                displayError.textContent = '';
-            }
-        });
+        // Stripe publishable key (used for display only — actual charge handled server-side)
+        const STRIPE_PK = 'pk_test_51T1zgAKLZXkCUHuwSwjI2bAMbvmNrie5zHiQvZKbRGH3GwyA82sURjzMgiywmnbewkTZdMJPCVwHsShU4tAbWoR100UxNDCmQK';
 
         // Populate checkout page
         function populateCheckout() {
@@ -780,7 +747,7 @@
                 alert(`Please fill in all required fields: ${missingFields.join(', ')}`);
                 submitButton.disabled = false;
                 submitButton.classList.remove('loading');
-                submitButton.innerHTML = 'Complete Purchase';
+                submitButton.innerHTML = 'Proceed to Secure Checkout →';
                 return;
             }
 
@@ -788,45 +755,19 @@
             const cartData = window.drtroyCart.getCheckoutData();
 
             try {
-                // ── Simulate payment processing (replace with real Stripe in production) ──
-                // NOTE: In production, create a PaymentIntent server-side via Netlify Function
-                // and confirm here with stripe.confirmCardPayment(clientSecret, {payment_method:{card:cardElement}})
-                await new Promise(resolve => setTimeout(resolve, 2000));
+                // ── Step 1: Create or get Supabase account ────────────────────────────────
+                let userId = null;
+                let userEmail = customerData.email;
 
-                const orderId   = 'ORDER-' + Date.now();
-                const paymentId = 'pay_simulated_' + Date.now();
-
-                // ── Build purchase record ─────────────────────────────────────────────────
-                const purchaseData = {
-                    orderId,
-                    customer: customerData,
-                    items:    cartData.items,
-                    totals: {
-                        subtotal: cartData.subtotal,
-                        discount: cartData.discount,
-                        total:    cartData.total
-                    },
-                    purchaseDate:  new Date().toISOString(),
-                    paymentMethod: 'card'
-                };
-
-                localStorage.setItem('lastPurchase', JSON.stringify(purchaseData));
-
-                // ── Supabase enrollment creation ──────────────────────────────────────────
                 if (window.DrTroySupabase) {
-                    let userId = null;
-
-                    // Check if user is already logged in
                     const session = await window.DrTroySupabase.getSession();
                     if (session && session.user) {
                         userId = session.user.id;
                     } else {
-                        // User not logged in — sign them up with the checkout email
-                        // Use a random password they can reset later
+                        // New user — sign them up so we have a user_id for the enrollment
                         const tempPassword = Math.random().toString(36).slice(-10) + 'Aa1!';
                         const { data: signUpData, error: signUpErr } = await window.DrTroySupabase.signUp(
-                            customerData.email,
-                            tempPassword,
+                            customerData.email, tempPassword,
                             {
                                 first_name:     customerData.firstName,
                                 last_name:      customerData.lastName,
@@ -835,72 +776,72 @@
                                 state:          customerData.licenseState
                             }
                         );
-
-                        if (signUpErr) {
-                            // If email already exists, just note it — enrollment still proceeds
-                            console.warn('Supabase signup note:', signUpErr.message);
-                        } else if (signUpData?.user) {
+                        if (signUpData?.user) {
                             userId = signUpData.user.id;
+                            localStorage.setItem('pendingAccountSetup', JSON.stringify({
+                                email: customerData.email,
+                                message: 'Check your email to confirm your account and set your password.'
+                            }));
+                        } else if (signUpErr) {
+                            console.warn('Signup note:', signUpErr.message);
                         }
-
-                        // Store temporary credentials hint in localStorage for account setup
-                        localStorage.setItem('pendingAccountSetup', JSON.stringify({
-                            email: customerData.email,
-                            message: 'Please check your email to confirm your account and set your password.'
-                        }));
-                    }
-
-                    // If we have a userId, create all enrollment records
-                    if (userId) {
-                        // Collect all course IDs from the cart
-                        const courseIdsToEnroll = [];
-                        let packageId = null;
-
-                        for (const item of cartData.items) {
-                            if (item.type === 'package' && item.courseIds) {
-                                packageId = item.id || null;
-                                item.courseIds.forEach(id => courseIdsToEnroll.push(id));
-                            } else if (item.supabaseCourseId) {
-                                courseIdsToEnroll.push(item.supabaseCourseId);
-                            } else if (item.courseId) {
-                                courseIdsToEnroll.push(item.courseId);
-                            }
-                        }
-
-                        if (courseIdsToEnroll.length > 0) {
-                            const result = await window.DrTroySupabase.processSuccessfulPurchase({
-                                userId,
-                                courseIds: courseIdsToEnroll,
-                                packageId,
-                                paymentId,
-                                amountPaidCents: Math.round(cartData.total * 100)
-                            });
-
-                            if (result.errors.length > 0) {
-                                console.warn('Some enrollment errors:', result.errors);
-                            } else {
-                                console.log('✅ Supabase enrollments created:', result.enrollments.length);
-                            }
-                        }
-
-                        // Store userId in localStorage so success page can fetch Supabase data
-                        localStorage.setItem('lastPurchaseUserId', userId);
                     }
                 }
 
-                // Clear cart and redirect
+                // ── Step 2: Determine what's in the cart ──────────────────────────────────
+                // Pick the first item — most purchases are a single package or course
+                const firstItem = cartData.items[0];
+                if (!firstItem) throw new Error('Cart is empty');
+
+                const itemId       = firstItem.id || firstItem.courseId || firstItem.supabaseCourseId;
+                const itemType     = firstItem.type || 'course'; // 'package' or 'course'
+                const discountCode = cartData.discountCode || '';
+
+                // Save cart state so success page can reference it
+                localStorage.setItem('lastPurchase', JSON.stringify({
+                    customer: customerData,
+                    items: cartData.items,
+                    totals: { subtotal: cartData.subtotal, discount: cartData.discount, total: cartData.total },
+                    purchaseDate: new Date().toISOString()
+                }));
+                if (userId) localStorage.setItem('lastPurchaseUserId', userId);
+
+                // ── Step 3: Create Stripe Checkout session via Netlify function ────────────
+                submitButton.innerHTML = 'Redirecting to Stripe...';
+
+                const checkoutRes = await fetch('/.netlify/functions/create-checkout', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        itemId,
+                        itemType,
+                        userId:      userId || 'guest_' + Date.now(),
+                        userEmail,
+                        discountCode,
+                        successUrl: window.location.origin + '/success.html?session_id={CHECKOUT_SESSION_ID}',
+                        cancelUrl:  window.location.origin + '/checkout.html'
+                    })
+                });
+
+                const checkoutData = await checkoutRes.json();
+
+                if (checkoutData.error) {
+                    throw new Error(checkoutData.error);
+                }
+
+                // ── Step 4: Redirect to Stripe hosted checkout ────────────────────────────
                 window.drtroyCart.clear();
-                window.location.href = 'success.html';
+                window.location.href = checkoutData.url;
 
             } catch (error) {
                 console.error('Checkout error:', error);
 
                 const displayError = document.getElementById('card-errors');
-                displayError.textContent = 'Payment failed. Please try again.';
+                displayError.textContent = error.message || 'Something went wrong. Please try again.';
 
                 submitButton.disabled = false;
                 submitButton.classList.remove('loading');
-                submitButton.innerHTML = 'Complete Purchase';
+                submitButton.innerHTML = 'Proceed to Secure Checkout →';
             }
         });
 
