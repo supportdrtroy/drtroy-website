@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terms of Service | DrTroy Continuing Education</title>
+    <meta name="description" content="Terms of Service for DrTroy Continuing Education platform.">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Source+Sans+Pro:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --navy:          #1a365d;
+            --navy-mid:      #2c5282;
+            --emerald:       #059669;
+            --emerald-light: #10b981;
+            --neutral-50:    #fafafa;
+            --neutral-100:   #f5f5f5;
+            --neutral-200:   #e5e5e5;
+            --neutral-400:   #a3a3a3;
+            --neutral-600:   #525252;
+            --neutral-700:   #404040;
+            --neutral-800:   #262626;
+            --neutral-900:   #171717;
+            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / .1), 0 2px 4px -2px rgb(0 0 0 / .1);
+            --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / .1), 0 8px 10px -6px rgb(0 0 0 / .1);
+        }
+
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Source Sans Pro', -apple-system, sans-serif;
+            font-weight: 400;
+            line-height: 1.7;
+            color: var(--neutral-800);
+            background: #fff;
+        }
+
+        /* Header */
+        .header {
+            background: rgba(255,255,255,.97);
+            border-bottom: 1px solid var(--neutral-200);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .header-inner {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 1.25rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo img { height: 64px; width: auto; }
+        .nav-links { display: flex; align-items: center; gap: 2rem; }
+        .nav-links a { color: var(--neutral-600); text-decoration: none; font-weight: 500; font-size: .95rem; transition: color .2s; }
+        .nav-links a:hover { color: var(--navy); }
+        .nav-btn { background: var(--navy); color: white !important; padding: .5rem 1.25rem; border-radius: 6px; font-weight: 600; font-size: .9rem; }
+
+        .hamburger { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; padding: .25rem; }
+        .hamburger span { display: block; width: 24px; height: 2px; background: var(--navy); border-radius: 2px; transition: all .3s; }
+
+        @media (max-width: 768px) {
+            .hamburger { display: flex; }
+            .nav-links { display: none; position: absolute; top: 100%; left: 0; right: 0; background: white; flex-direction: column; padding: 1rem 2rem; box-shadow: 0 4px 20px rgba(0,0,0,.1); z-index: 100; border-top: 1px solid #e5e7eb; }
+            .nav-links.active { display: flex; }
+            .nav-links a { padding: .75rem 0; border-bottom: 1px solid #f3f4f6; }
+            .header-inner { position: relative; }
+        }
+
+        /* Hero */
+        .page-hero {
+            background: linear-gradient(135deg, var(--navy) 0%, var(--navy-mid) 100%);
+            color: white;
+            padding: 4rem 2rem 3rem;
+            text-align: center;
+        }
+        .page-hero h1 {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 600;
+            margin-bottom: .75rem;
+        }
+        .page-hero p {
+            color: rgba(255,255,255,.75);
+            font-size: 1rem;
+        }
+
+        /* Content */
+        .content {
+            max-width: 860px;
+            margin: 4rem auto;
+            padding: 0 2rem 4rem;
+        }
+
+        .toc {
+            background: var(--neutral-50);
+            border: 1px solid var(--neutral-200);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 3rem;
+        }
+        .toc h2 {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--navy);
+            margin-bottom: 1rem;
+        }
+        .toc ol {
+            padding-left: 1.25rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: .4rem .5rem;
+        }
+        .toc li a {
+            color: var(--emerald);
+            text-decoration: none;
+            font-size: .95rem;
+            font-weight: 500;
+        }
+        .toc li a:hover { text-decoration: underline; }
+        @media (max-width: 600px) { .toc ol { grid-template-columns: 1fr; } }
+
+        .section {
+            margin-bottom: 3rem;
+            scroll-margin-top: 80px;
+        }
+        .section h2 {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--navy);
+            margin-bottom: 1rem;
+            padding-bottom: .75rem;
+            border-bottom: 2px solid var(--neutral-200);
+        }
+        .section h2 span {
+            font-size: .9rem;
+            font-weight: 400;
+            color: var(--neutral-400);
+            font-family: 'Source Sans Pro', sans-serif;
+            margin-left: .5rem;
+        }
+        .section p {
+            color: var(--neutral-700);
+            margin-bottom: 1rem;
+            font-size: 1rem;
+        }
+        .section ul, .section ol {
+            margin: .75rem 0 1rem 1.5rem;
+            color: var(--neutral-700);
+        }
+        .section li {
+            margin-bottom: .5rem;
+            font-size: 1rem;
+        }
+
+        .highlight-box {
+            background: #fff8e1;
+            border-left: 4px solid #f59e0b;
+            border-radius: 0 12px 12px 0;
+            padding: 1.25rem 1.5rem;
+            margin: 1.5rem 0;
+        }
+        .highlight-box p { margin: 0; color: var(--neutral-800); font-weight: 500; }
+
+        .important-box {
+            background: #fef2f2;
+            border: 1px solid #fca5a5;
+            border-left: 4px solid #dc2626;
+            border-radius: 0 12px 12px 0;
+            padding: 1.25rem 1.5rem;
+            margin: 1.5rem 0;
+        }
+        .important-box p { margin: 0; color: #991b1b; font-weight: 500; }
+
+        .contact-card {
+            background: var(--neutral-50);
+            border: 1px solid var(--neutral-200);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-top: 2rem;
+            text-align: center;
+        }
+        .contact-card h3 {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: 1.2rem;
+            color: var(--navy);
+            margin-bottom: .75rem;
+        }
+        .contact-card a { color: var(--emerald); font-weight: 600; text-decoration: none; }
+        .contact-card a:hover { text-decoration: underline; }
+
+        /* Footer */
+        .footer { background: var(--neutral-900); color: var(--neutral-400); padding: 2.5rem 2rem; text-align: center; }
+        .footer-links { display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap; margin-bottom: 1rem; }
+        .footer-links a { color: var(--neutral-400); text-decoration: none; font-size: .9rem; transition: color .2s; }
+        .footer-links a:hover { color: var(--emerald-light); }
+        .footer-copy { font-size: .85rem; }
+    </style>
+</head>
+<body>
+
+    <header class="header">
+        <div class="header-inner">
+            <div class="logo">
+                <a href="home-preview.html">
+                    <img src="courses/images/drtroy_logo_new.jpg" alt="DrTroy Continuing Education">
+                </a>
+            </div>
+            <button class="hamburger" aria-label="Open menu">
+                <span></span><span></span><span></span>
+            </button>
+            <nav class="nav-links">
+                <a href="home-preview.html">Home</a>
+                <a href="course-catalog.html">Courses</a>
+                <a href="about.html">About</a>
+                <a href="my-account.html" class="nav-btn">Log In</a>
+            </nav>
+        </div>
+    </header>
+
+    <div class="page-hero">
+        <h1>Terms of Service</h1>
+        <p>Last updated: February 2026 &nbsp;·&nbsp; DrTroy Continuing Education</p>
+    </div>
+
+    <div class="content">
+
+        <p style="color: var(--neutral-600); margin-bottom: 2.5rem; font-size: 1rem; line-height: 1.7;">Please read these Terms of Service carefully before purchasing or accessing any course on the DrTroy Continuing Education platform. By creating an account, making a purchase, or accessing any course content, you agree to be bound by these terms.</p>
+
+        <!-- Table of Contents -->
+        <div class="toc">
+            <h2>Contents</h2>
+            <ol>
+                <li><a href="#acceptance">Acceptance of Terms</a></li>
+                <li><a href="#eligibility">Eligibility</a></li>
+                <li><a href="#purchases">Purchases & Payment</a></li>
+                <li><a href="#refunds">Refund Policy</a></li>
+                <li><a href="#access">Course Access</a></li>
+                <li><a href="#certificates">CE Certificates</a></li>
+                <li><a href="#copyright">Copyright & Prohibited Use</a></li>
+                <li><a href="#accounts">Account Responsibility</a></li>
+                <li><a href="#disclaimer">Disclaimers</a></li>
+                <li><a href="#termination">Termination</a></li>
+                <li><a href="#governing">Governing Law</a></li>
+                <li><a href="#contact">Contact Us</a></li>
+            </ol>
+        </div>
+
+        <!-- 1 -->
+        <div class="section" id="acceptance">
+            <h2>1. Acceptance of Terms</h2>
+            <p>These Terms of Service ("Terms") constitute a legally binding agreement between you ("User," "you," or "your") and DrTroy Continuing Education ("DrTroy CE," "we," "us," or "our"), operated by Texas Therapy Pros.</p>
+            <p>By accessing or using the DrTroy CE platform at drtroy.com, creating an account, or completing a purchase, you acknowledge that you have read, understood, and agree to be bound by these Terms. If you do not agree, do not access or use the platform.</p>
+        </div>
+
+        <!-- 2 -->
+        <div class="section" id="eligibility">
+            <h2>2. Eligibility</h2>
+            <p>DrTroy CE courses are intended for licensed or supervised healthcare professionals, including Physical Therapists (PT), Physical Therapist Assistants (PTA), Occupational Therapists (OT), and Certified Occupational Therapy Assistants (COTA).</p>
+            <p>By purchasing a course, you represent and warrant that:</p>
+            <ul>
+                <li>You are at least 18 years of age</li>
+                <li>You hold or are actively pursuing a valid license or certification in the relevant discipline</li>
+                <li>All information provided during registration is accurate and truthful</li>
+                <li>You are purchasing for personal professional development and not on behalf of another individual</li>
+            </ul>
+        </div>
+
+        <!-- 3 -->
+        <div class="section" id="purchases">
+            <h2>3. Purchases & Payment</h2>
+            <p>All purchases are processed securely through our payment provider. Prices are listed in U.S. dollars and are subject to change without notice. Your purchase price is confirmed at the time of checkout.</p>
+            <p>By completing a purchase, you authorize DrTroy CE to charge the payment method provided for the full purchase amount. You agree that all billing information you provide is accurate and that you are authorized to use the payment method presented.</p>
+            <p>New member discounts and promotional pricing are applied at checkout where eligible and are subject to availability.</p>
+        </div>
+
+        <!-- 4 -->
+        <div class="section" id="refunds">
+            <h2>4. Refund Policy</h2>
+            <div class="important-box">
+                <p>⚠️ All course and package purchases are final and non-refundable once course content has been accessed.</p>
+            </div>
+            <p>Because DrTroy CE delivers digital continuing education content that is immediately accessible upon purchase, refunds are generally not available. Specifically:</p>
+            <ul>
+                <li><strong>Individual courses:</strong> Non-refundable once the course has been opened or any content viewed</li>
+                <li><strong>Package purchases:</strong> Non-refundable once any course within the package has been accessed</li>
+                <li><strong>Pre-access cancellation:</strong> If you contact us within 24 hours of purchase and have not yet accessed any course content, we will consider refund requests on a case-by-case basis</li>
+            </ul>
+            <p>To request a pre-access cancellation, contact us at <a href="mailto:info@drtroy.com" style="color: var(--emerald);">info@drtroy.com</a> within 24 hours of purchase.</p>
+        </div>
+
+        <!-- 5 -->
+        <div class="section" id="access">
+            <h2>5. Course Access</h2>
+            <p>Upon purchase, you are granted a limited, non-exclusive, non-transferable license to access and complete the purchased course(s) for your own personal professional development.</p>
+            <ul>
+                <li>Course access is available for a minimum of 12 months from the date of purchase unless otherwise noted</li>
+                <li>You may complete courses at your own pace within the access period</li>
+                <li>Access is granted to the individual account holder only and may not be shared, transferred, or sold</li>
+                <li>DrTroy CE reserves the right to update, modify, or retire course content at any time</li>
+            </ul>
+            <div class="highlight-box">
+                <p>💡 Course enrollment is tied to your individual account. Sharing login credentials violates these Terms and may result in immediate account termination without refund.</p>
+            </div>
+        </div>
+
+        <!-- 6 -->
+        <div class="section" id="certificates">
+            <h2>6. CE Certificates</h2>
+            <p>Upon successful completion of a course — including all required content, assessments, and any competency checks — a certificate of completion will be issued to the enrolled account holder.</p>
+            <ul>
+                <li>Certificates are issued solely to the individual who completed the coursework under their registered account</li>
+                <li>Certificates may not be shared with, transferred to, or claimed by any other individual</li>
+                <li>You agree not to misrepresent course completion or submit a certificate earned by another person to any licensing board or employer</li>
+                <li>DrTroy CE reserves the right to revoke certificates obtained through fraudulent means</li>
+            </ul>
+            <p><strong>Licensing Board Acceptance:</strong> DrTroy CE provides professional development content. Until official accreditation by a relevant state board or professional association is confirmed, we make no guarantee that any specific licensing board will accept our certificates for renewal credit. It is your responsibility to verify acceptance with your applicable board prior to purchase.</p>
+        </div>
+
+        <!-- 7 -->
+        <div class="section" id="copyright">
+            <h2>7. Copyright & Prohibited Use</h2>
+            <p>All course content on the DrTroy CE platform — including but not limited to text, video, audio, assessments, handouts, graphics, and clinical materials — is the intellectual property of DrTroy CE and its contributing authors. All rights reserved.</p>
+            <p>You agree that you will NOT:</p>
+            <ul>
+                <li>Copy, reproduce, distribute, or republish any course content in any form</li>
+                <li>Share course materials, videos, or documents with individuals who have not purchased access</li>
+                <li>Use course content to develop competing educational products or courses</li>
+                <li>Present DrTroy CE course content as your own original work (plagiarism)</li>
+                <li>Record, screenshot, or capture course content for redistribution</li>
+                <li>Circumvent any access controls or security measures on the platform</li>
+            </ul>
+            <div class="important-box">
+                <p>⚠️ Plagiarism or unauthorized reproduction of course materials may constitute copyright infringement and/or a violation of professional ethics standards subject to disciplinary action by your licensing board.</p>
+            </div>
+            <p>Violations of this section will result in immediate account termination, certificate revocation, and may result in legal action.</p>
+        </div>
+
+        <!-- 8 -->
+        <div class="section" id="accounts">
+            <h2>8. Account Responsibility</h2>
+            <p>You are responsible for maintaining the confidentiality of your account credentials and for all activity that occurs under your account. You agree to:</p>
+            <ul>
+                <li>Create only one account per individual</li>
+                <li>Provide accurate and current registration information</li>
+                <li>Notify us immediately at <a href="mailto:info@drtroy.com" style="color: var(--emerald);">info@drtroy.com</a> if you suspect unauthorized access to your account</li>
+                <li>Not allow any other person to use your account credentials</li>
+            </ul>
+            <p>DrTroy CE is not liable for any loss or damage arising from your failure to maintain account security.</p>
+        </div>
+
+        <!-- 9 -->
+        <div class="section" id="disclaimer">
+            <h2>9. Disclaimers & Limitation of Liability</h2>
+            <p>DrTroy CE courses are provided for professional development and educational purposes only. Course content does not constitute clinical advice, medical guidance, or a standard of care recommendation for any specific patient or situation.</p>
+            <p>DrTroy CE is not responsible for:</p>
+            <ul>
+                <li>How course content is applied in clinical practice</li>
+                <li>Patient outcomes arising from the application of information presented in any course</li>
+                <li>Decisions made by any licensing board regarding CE credit acceptance</li>
+                <li>Technical interruptions, platform downtime, or data loss beyond our reasonable control</li>
+            </ul>
+            <p>To the fullest extent permitted by applicable law, DrTroy CE's total liability to you for any claim arising out of or relating to these Terms or your use of the platform shall not exceed the amount you paid for the course or package giving rise to the claim.</p>
+        </div>
+
+        <!-- 10 -->
+        <div class="section" id="termination">
+            <h2>10. Termination</h2>
+            <p>DrTroy CE reserves the right to suspend or permanently terminate your account and access to all courses, without prior notice or refund, if you:</p>
+            <ul>
+                <li>Violate any provision of these Terms</li>
+                <li>Share account credentials with unauthorized users</li>
+                <li>Engage in copyright infringement or plagiarism of course content</li>
+                <li>Submit falsified completion records or certificates to any board or employer</li>
+                <li>Engage in fraudulent, abusive, or disruptive behavior on the platform</li>
+            </ul>
+            <p>Termination does not entitle you to a refund of any amounts previously paid.</p>
+        </div>
+
+        <!-- 11 -->
+        <div class="section" id="governing">
+            <h2>11. Governing Law & Disputes</h2>
+            <p>These Terms shall be governed by and construed in accordance with the laws of the State of Texas, without regard to its conflict of law provisions.</p>
+            <p>Any dispute arising out of or relating to these Terms or your use of the DrTroy CE platform shall be resolved through good-faith negotiation. If a resolution cannot be reached, disputes shall be submitted to binding arbitration in Lubbock, Texas, in accordance with the rules of the American Arbitration Association.</p>
+            <p>You waive any right to participate in a class action lawsuit or class-wide arbitration against DrTroy CE.</p>
+        </div>
+
+        <!-- 12 -->
+        <div class="section" id="contact">
+            <h2>12. Contact Us</h2>
+            <p>If you have questions about these Terms of Service, please contact us:</p>
+            <div class="contact-card">
+                <h3>DrTroy Continuing Education</h3>
+                <p style="margin-bottom: .5rem;">Texas Therapy Pros</p>
+                <p style="margin-bottom: .5rem;">Lubbock, Texas</p>
+                <p><a href="mailto:info@drtroy.com">info@drtroy.com</a></p>
+            </div>
+            <p style="margin-top: 2rem; color: var(--neutral-400); font-size: .9rem;">DrTroy CE reserves the right to update these Terms at any time. Material changes will be communicated via email or a notice on the platform. Continued use of the platform after changes constitutes acceptance of the updated Terms.</p>
+        </div>
+
+    </div>
+
+    <footer class="footer">
+        <div style="max-width: 1280px; margin: 0 auto;">
+            <div class="footer-links">
+                <a href="home-preview.html">Home</a>
+                <a href="course-catalog.html">Courses</a>
+                <a href="about.html">About</a>
+                <a href="terms.html">Terms of Service</a>
+                <a href="my-account.html">Log In</a>
+            </div>
+            <p class="footer-copy">&copy; 2026 DrTroy Continuing Education. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        (function() {
+            const btn = document.querySelector('.hamburger');
+            const nav = document.querySelector('.nav-links');
+            if (btn && nav) {
+                btn.addEventListener('click', () => nav.classList.toggle('active'));
+                nav.querySelectorAll('a').forEach(a => {
+                    a.addEventListener('click', () => nav.classList.remove('active'));
+                });
+                window.addEventListener('scroll', () => nav.classList.remove('active'), {passive: true});
+                document.addEventListener('click', (e) => {
+                    if (!nav.contains(e.target) && !btn.contains(e.target)) nav.classList.remove('active');
+                });
+            }
+        })();
+    </script>
+
+</body>
+</html>

@@ -675,6 +675,16 @@
                         <div id="card-errors" role="alert" style="color:#dc2626;margin-top:8px;font-size:14px;"></div>
                     </div>
 
+                    <!-- Terms Agreement -->
+                    <div style="margin-bottom: 1.5rem; padding: 1.25rem; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px;">
+                        <label style="display: flex; align-items: flex-start; gap: .875rem; cursor: pointer;">
+                            <input type="checkbox" id="terms-checkbox" required style="margin-top: .25rem; width: 18px; height: 18px; accent-color: #059669; flex-shrink: 0; cursor: pointer;">
+                            <span style="font-size: .95rem; color: #404040; line-height: 1.6;">
+                                I have read and agree to the <a href="terms.html" target="_blank" style="color: #059669; font-weight: 600; text-decoration: none; border-bottom: 1px solid #059669;">Terms of Service</a>. I understand that all course purchases are <strong>non-refundable</strong> once course content has been accessed, and that I may not share, reproduce, or plagiarize any course materials.
+                            </span>
+                        </label>
+                    </div>
+
                     <!-- Submit Button -->
                     <button type="submit" class="btn btn-primary btn-block" id="submit-button">
                         Proceed to Secure Checkout →
@@ -837,6 +847,20 @@
         const form = document.getElementById('checkout-form');
         form.addEventListener('submit', async (event) => {
             event.preventDefault();
+
+            // Enforce Terms agreement
+            const termsCheckbox = document.getElementById('terms-checkbox');
+            if (!termsCheckbox || !termsCheckbox.checked) {
+                termsCheckbox.focus();
+                termsCheckbox.closest('div').style.border = '2px solid #dc2626';
+                termsCheckbox.closest('div').style.background = '#fef2f2';
+                const msg = document.createElement('p');
+                msg.id = 'terms-error';
+                msg.style.cssText = 'color:#dc2626;font-size:.88rem;margin-top:.75rem;font-weight:600;';
+                msg.textContent = 'Please read and agree to the Terms of Service before proceeding.';
+                if (!document.getElementById('terms-error')) termsCheckbox.closest('div').appendChild(msg);
+                return;
+            }
 
             const submitButton = document.getElementById('submit-button');
             submitButton.disabled = true;
