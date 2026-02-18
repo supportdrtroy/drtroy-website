@@ -1735,7 +1735,16 @@
                     <div id="marketing" class="sub-content">
                         <div class="info-box">
                             <strong>Marketing Codes:</strong> Flexible discount codes for promotions, campaigns, and customer acquisition.<br>
-                            <small>Examples: SPRING25 (25% off), SAVE20 ($20 off), FREEPT (100% free for PTs)</small>
+                            <small>Examples: SPRING25 (25% off), SAVE20 ($20 off), LAUNCH10 ($10 off for new customers, 30 days)</small>
+                        </div>
+
+                        <!-- Quick Preset: Founding Member Offer -->
+                        <div style="background:linear-gradient(135deg,#f0fdf4,#dcfce7);border:2px solid #86efac;border-radius:12px;padding:1.25rem 1.5rem;margin-bottom:1.5rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;">
+                            <div>
+                                <p style="font-weight:700;color:#166534;margin:0 0 .25rem;font-size:.95rem;">🎯 Founding Member Offer</p>
+                                <p style="color:#166534;font-size:.85rem;margin:0;">$10 off for new customers — starts today, expires in 30 days. One click setup.</p>
+                            </div>
+                            <button onclick="createFoundingMemberOffer()" style="padding:.6rem 1.25rem;background:#059669;color:#fff;border:none;border-radius:8px;font-weight:700;font-size:.875rem;cursor:pointer;white-space:nowrap;">⚡ Create Now</button>
                         </div>
 
                         <form id="marketingForm">
@@ -1772,9 +1781,22 @@
                                     <label class="form-label">Max Uses (if limited)</label>
                                     <input type="number" id="marketingMaxUses" class="form-input" placeholder="100" min="1">
                                 </div>
+                            </div>
+
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label class="form-label">Start Date (Optional)</label>
+                                    <input type="date" id="marketingStartDate" class="form-input">
+                                </div>
                                 <div class="form-group">
                                     <label class="form-label">Expiry Date (Optional)</label>
                                     <input type="date" id="marketingExpiry" class="form-input">
+                                </div>
+                                <div class="form-group" style="display:flex;align-items:flex-end;padding-bottom:.25rem;">
+                                    <label style="display:flex;align-items:center;gap:.6rem;cursor:pointer;font-weight:600;color:#374151;font-size:.9rem;">
+                                        <input type="checkbox" id="marketingNewOnly" style="width:18px;height:18px;accent-color:#059669;cursor:pointer;">
+                                        New customers only
+                                    </label>
                                 </div>
                             </div>
 
@@ -1802,11 +1824,12 @@
                                 <thead>
                                     <tr>
                                         <th>Code</th>
-                                        <th>Type</th>
+                                        <th>Campaign</th>
                                         <th>Discount</th>
                                         <th>Usage</th>
+                                        <th>Active Window</th>
+                                        <th>New Only</th>
                                         <th>Status</th>
-                                        <th>Created</th>
                                         <th>Actions</th>
                                     </tr>
                                 </thead>
@@ -2917,50 +2940,112 @@
             this.reset();
         });
 
-        document.getElementById('marketingForm').addEventListener('submit', function(e) {
+        document.getElementById('marketingForm').addEventListener('submit', async function(e) {
             e.preventDefault();
-            
-            const codeName = document.getElementById('marketingCodeName').value.toUpperCase();
+
+            const codeName     = document.getElementById('marketingCodeName').value.toUpperCase();
             const discountType = document.getElementById('marketingDiscountType').value;
-            const discountValue = document.getElementById('marketingDiscountValue').value;
-            const usageLimit = document.getElementById('marketingUsageLimit').value;
-            const maxUses = document.getElementById('marketingMaxUses').value;
-            const expiry = document.getElementById('marketingExpiry').value;
-            const campaign = document.getElementById('marketingCampaign').value;
-            
+            const discountValue= document.getElementById('marketingDiscountValue').value;
+            const usageLimit   = document.getElementById('marketingUsageLimit').value;
+            const maxUses      = document.getElementById('marketingMaxUses').value;
+            const startDate    = document.getElementById('marketingStartDate').value;
+            const expiry       = document.getElementById('marketingExpiry').value;
+            const campaign     = document.getElementById('marketingCampaign').value;
+            const newOnly      = document.getElementById('marketingNewOnly').checked;
+
             if (!codeName || !discountType || (discountType !== 'free' && !discountValue)) {
                 showMessage('marketingError', 'Please fill in all required fields.');
                 return;
             }
-            
-            // Check for duplicate codes
+
             if (marketingCodes.find(c => c.code === codeName) || employeeCodes.find(c => c.code === codeName)) {
                 showMessage('marketingError', 'Code name already exists. Please choose a different name.');
                 return;
             }
-            
-            const marketingCode = {
-                code: codeName,
-                discountType: discountType,
-                discountValue: discountType === 'free' ? 100 : parseInt(discountValue),
-                usageLimit: usageLimit,
-                maxUses: usageLimit === 'limited' ? parseInt(maxUses) : null,
-                currentUses: 0,
-                campaign: campaign || 'General Campaign',
-                expires: expiry || null,
-                status: 'active',
-                created: new Date().toISOString()
+
+            const discVal = discountType === 'free' ? 100 : parseInt(discountValue);
+            const record  = {
+                code:               codeName,
+                description:        campaign || 'Marketing promotion',
+                campaign_name:      campaign || null,
+                discount_type:      discountType,
+                discount_value:     discVal,
+                applies_to:         'all',
+                max_uses:           usageLimit === 'limited' ? parseInt(maxUses) : (usageLimit === 'single' ? 1 : null),
+                current_uses:       0,
+                is_active:          true,
+                starts_at:          startDate ? new Date(startDate).toISOString() : null,
+                expires_at:         expiry    ? new Date(expiry + 'T23:59:59').toISOString() : null,
+                new_customers_only: newOnly
             };
-            
-            marketingCodes.push(marketingCode);
+
+            // Save to Supabase
+            const res = await fetch(SUPABASE_URL + '/rest/v1/discount_codes', {
+                method:  'POST',
+                headers: {
+                    'apikey':        SUPABASE_ANON_KEY,
+                    'Authorization': 'Bearer ' + SUPABASE_ANON_KEY,
+                    'Content-Type':  'application/json',
+                    'Prefer':        'return=minimal'
+                },
+                body: JSON.stringify(record)
+            });
+
+            if (!res.ok) {
+                showMessage('marketingError', 'Error saving code. Please try again.');
+                return;
+            }
+
+            // Also update local state for display
+            marketingCodes.push({ ...record, discountType, discountValue: discVal, campaign, expires: expiry || null, status: 'active', created: new Date().toISOString() });
             saveData();
             updateStats();
             updateCodesTable();
-            
-            showMessage('marketingSuccess', `🚀 Marketing code "${codeName}" created successfully!`);
-            
+
+            showMessage('marketingSuccess', `🚀 Code "${codeName}" created!${newOnly ? ' (new customers only)' : ''}${expiry ? ' Expires ' + expiry + '.' : ''}`);
             this.reset();
         });
+
+        async function createFoundingMemberOffer() {
+            const start   = new Date();
+            const end     = new Date(start);
+            end.setDate(end.getDate() + 30);
+            const fmt = d => d.toISOString().slice(0, 10);
+
+            const record = {
+                code:               'FOUNDING10',
+                description:        'Founding Member Offer — $10 off for new customers',
+                campaign_name:      'Founding Member — 30 Day Launch Offer',
+                discount_type:      'fixed',
+                discount_value:     10,
+                applies_to:         'all',
+                max_uses:           null,
+                current_uses:       0,
+                is_active:          true,
+                starts_at:          start.toISOString(),
+                expires_at:         new Date(fmt(end) + 'T23:59:59').toISOString(),
+                new_customers_only: true
+            };
+
+            const res = await fetch(SUPABASE_URL + '/rest/v1/discount_codes', {
+                method:  'POST',
+                headers: {
+                    'apikey':        SUPABASE_ANON_KEY,
+                    'Authorization': 'Bearer ' + SUPABASE_ANON_KEY,
+                    'Content-Type':  'application/json',
+                    'Prefer':        'return=minimal'
+                },
+                body: JSON.stringify(record)
+            });
+
+            if (res.ok || res.status === 201) {
+                marketingCodes.push({ code: 'FOUNDING10', discountType: 'fixed', discountValue: 10, campaign: record.campaign_name, expires: fmt(end), status: 'active', created: start.toISOString(), newOnly: true });
+                saveData(); updateStats(); updateCodesTable();
+                showMessage('marketingSuccess', '🎉 Founding Member offer created! Code: FOUNDING10 — valid for 30 days, new customers only.');
+            } else {
+                showMessage('marketingError', 'Error creating offer. Code FOUNDING10 may already exist.');
+            }
+        }
 
 
         // Utility functions
