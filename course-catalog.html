@@ -422,6 +422,12 @@
             justify-content: space-between;
             align-items: flex-start;
             margin-bottom: 1.5rem;
+            gap: 1rem;
+        }
+
+        .course-header > div {
+            flex: 1;
+            min-width: 0;
         }
 
         .course-title {
@@ -440,6 +446,8 @@
             font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 0.5px;
+            flex-shrink: 0;
+            white-space: nowrap;
         }
 
         .status-available {
