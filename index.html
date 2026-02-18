@@ -365,7 +365,8 @@
                     <input
                         type="text"
                         id="wl-name"
-                        placeholder="First name (optional)"
+                        placeholder="First name *"
+                        required
                         style="padding: 1rem 1.25rem; border: 2px solid rgba(255,255,255,.3); border-radius: 12px; background: rgba(255,255,255,.12); color: white; font-size: 1rem; font-family: inherit; outline: none; transition: border .2s;"
                         onfocus="this.style.borderColor='rgba(255,255,255,.7)'" onblur="this.style.borderColor='rgba(255,255,255,.3)'"
                     >
@@ -427,7 +428,7 @@
             const name   = document.getElementById('wl-name').value.trim();
             const disc   = document.getElementById('wl-discipline').value;
 
-            if (!email) return;
+            if (!email || !name) return;
 
             btn.disabled   = true;
             btn.textContent = 'Signing you up…';
