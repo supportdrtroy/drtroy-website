@@ -2184,69 +2184,47 @@
     </div>
 
     <script>
-        // ─── ADMIN AUTH (Supabase + legacy session) ──────────────────────────────
+        // ─── ADMIN AUTH (Supabase) ────────────────────────────────────────────────
         let _adminUser   = null;
         let _adminAuthed = false;
 
-        async function checkAuthentication() {
-            // ── Try Supabase session ──────────────────────────────────────────
-            if (window.DrTroySupabase) {
-                const session = await window.DrTroySupabase.getSession();
-                if (session && session.user) {
-                    const adminFlag = await window.DrTroySupabase.isAdmin(session.user.id);
-                    if (adminFlag) {
-                        _adminUser   = session.user;
-                        _adminAuthed = true;
-                        console.log('✅ Supabase admin session confirmed:', session.user.email);
-                        return true;
-                    }
-                    // Logged in but not admin
-                    alert('Access denied — your account does not have admin privileges.');
-                    await window.DrTroySupabase.signOut();
-                    window.location.href = 'secure-admin-access-2026.html';
-                    return false;
-                }
-            }
-
-            // ── Fallback: legacy localStorage session ─────────────────────────
-            const adminSession = localStorage.getItem('drtroyAdminSession');
-            if (!adminSession) {
-                console.log('🚨 No admin session found, redirecting to login...');
-                window.location.href = 'secure-admin-access-2026.html';
-                return false;
-            }
-
-            try {
-                const session   = JSON.parse(adminSession);
-                const now       = new Date().getTime();
-                const expiresAt = new Date(session.expires).getTime();
-
-                if (now >= expiresAt) {
-                    console.log('🕒 Admin session expired');
-                    localStorage.removeItem('drtroyAdminSession');
-                    window.location.href = 'secure-admin-access-2026.html';
-                    return false;
-                }
-
-                _adminAuthed = true;
-                console.log('✅ Legacy admin session valid');
-                return true;
-
-            } catch (error) {
-                localStorage.removeItem('drtroyAdminSession');
-                window.location.href = 'secure-admin-access-2026.html';
-                return false;
-            }
+        // HTML escape utility — prevents XSS when rendering user-supplied data
+        function esc(str) {
+            if (str == null) return '';
+            return String(str)
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#x27;');
         }
 
-        // Logout — Supabase + legacy clear
+        async function checkAuthentication() {
+            if (!window.DrTroySupabase) {
+                window.location.replace('secure-admin-access-2026.html');
+                return false;
+            }
+            const session = await window.DrTroySupabase.getSession();
+            if (session && session.user) {
+                const adminFlag = await window.DrTroySupabase.isAdmin(session.user.id);
+                if (adminFlag) {
+                    _adminUser   = session.user;
+                    _adminAuthed = true;
+                    return true;
+                }
+                // Authenticated but not an admin
+                alert('Access denied — your account does not have admin privileges.');
+                await window.DrTroySupabase.signOut();
+            }
+            window.location.replace('secure-admin-access-2026.html');
+            return false;
+        }
+
+        // Logout
         async function logout() {
             if (confirm('Are you sure you want to logout?')) {
                 if (window.DrTroySupabase) await window.DrTroySupabase.signOut();
-                localStorage.removeItem('drtroyAdminSession');
-                localStorage.removeItem('currentAdminTab');
-                console.log('👋 Admin logged out');
-                window.location.href = 'secure-admin-access-2026.html';
+                window.location.replace('secure-admin-access-2026.html');
             }
         }
 
@@ -2264,7 +2242,6 @@
             const authed = await checkAuthentication();
             if (!authed) return;
 
-            console.log('🚀 Initializing DrTroy Admin Dashboard...');
             updateLastUpdate();
             loadStoredData();
             createSampleData();
@@ -2277,7 +2254,6 @@
             await loadUsers();
             await loadSupabaseRevenue();
 
-            console.log('✅ Admin dashboard ready');
         }
 
         // Update last update timestamp and session info
@@ -2324,7 +2300,6 @@
                     }
                 }
             } catch (error) {
-                console.warn('Error updating session info:', error);
             }
         }
 
@@ -2341,7 +2316,6 @@
                     updateSessionInfo();
                 }
             } catch (error) {
-                console.error('Error extending session:', error);
                 alert('❌ Failed to extend session. Please refresh the page.');
             }
         }
@@ -2945,7 +2919,6 @@
                 if (revenueEl) revenueEl.textContent  = '$' + revenue.toLocaleString('en-US', {minimumFractionDigits:2, maximumFractionDigits:2});
                 if (complEl)   complEl.textContent    = completions.length;
 
-                console.log('✅ Admin dashboard updated from Supabase');
             } catch (err) {
                 console.warn('Dashboard Supabase load error:', err.message);
             }
@@ -2970,7 +2943,6 @@
 
             const { data: users, error } = await window.DrTroySupabase.getAllUsers();
             if (error || !users) {
-                console.warn('Could not load users:', error?.message);
                 if (tbody) tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:#dc2626;padding:2rem;">Failed to load users. Check console for details.</td></tr>';
                 return;
             }
@@ -2991,26 +2963,25 @@
 
             tbody.innerHTML = '';
             users.forEach(u => {
-                const name = [u.first_name, u.last_name].filter(Boolean).join(' ') || '(no name)';
+                const name = esc([u.first_name, u.last_name].filter(Boolean).join(' ') || '(no name)');
                 const roleBadge = u.is_admin
                     ? '<span class="badge-admin">Admin</span>'
                     : '<span class="badge-user">User</span>';
                 const suspBadge = u.is_suspended
                     ? ' <span class="badge-suspended">Suspended</span>'
                     : '';
-                const safeEmail = (u.email || '').replace(/'/g, "\\'");
                 const tr = document.createElement('tr');
                 tr.innerHTML = `
                     <td>${name}</td>
-                    <td style="font-size:0.9rem;">${u.email || '—'}</td>
-                    <td>${u.profession || '—'}</td>
-                    <td>${u.license_number || '—'}</td>
-                    <td>${u.state || '—'}</td>
+                    <td style="font-size:0.9rem;">${esc(u.email) || '—'}</td>
+                    <td>${esc(u.profession) || '—'}</td>
+                    <td>${esc(u.license_number) || '—'}</td>
+                    <td>${esc(u.state) || '—'}</td>
                     <td>${roleBadge}${suspBadge}</td>
                     <td style="white-space:nowrap;">
-                        <button class="btn-small" onclick="viewUser('${safeEmail}')">👁️ View</button>
+                        <button class="btn-small" onclick="viewUser(${JSON.stringify(u.email)})">👁️ View</button>
                         <button class="btn-small ${u.is_admin ? 'warning' : ''}"
-                            onclick="quickToggleAdmin('${u.id}', ${!!u.is_admin})"
+                            onclick="quickToggleAdmin('${esc(u.id)}', ${!!u.is_admin})"
                             style="margin-left:4px;">
                             ${u.is_admin ? '🛡️ Remove Admin' : 'Make Admin'}
                         </button>
@@ -3190,18 +3161,19 @@
                 return;
             }
             container.innerHTML = enrollments.map(e => {
-                const title    = e.courses?.title || 'Unknown Course';
-                const hours    = e.courses?.ceu_hours || 0;
+                const title    = esc(e.courses?.title || 'Unknown Course');
+                const hours    = esc(String(e.courses?.ceu_hours || 0));
                 const date     = e.enrolled_at ? new Date(e.enrolled_at).toLocaleDateString() : '—';
                 const paid     = parseFloat(e.amount_paid || 0).toFixed(2);
-                const method   = e.payment_method === 'admin_grant' ? 'Admin Grant' : ('$' + paid);
+                const method   = e.payment_method === 'admin_grant' ? 'Admin Grant' : ('$' + esc(paid));
+                const safeId   = esc(e.id);
                 return `
                     <div class="enrollment-row">
                         <div>
                             <strong>${title}</strong>
                             <div style="font-size:0.82rem;color:#6b7280;">${hours} CEU hrs &bull; ${date} &bull; ${method}</div>
                         </div>
-                        <button class="btn-small danger" onclick="removeEnrollment('${e.id}')">Remove</button>
+                        <button class="btn-small danger" onclick="removeEnrollment('${safeId}')">Remove</button>
                     </div>`;
             }).join('');
         }
@@ -3459,7 +3431,6 @@
 
         // Email System Functions
         function loadEmailData() {
-            console.log('Loading email system data...');
         }
 
         function exportEmailData() {

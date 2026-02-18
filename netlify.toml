@@ -12,6 +12,9 @@
     X-XSS-Protection = "1; mode=block"
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"
+    Strict-Transport-Security = "max-age=31536000; includeSubDomains"
+    Permissions-Policy = "camera=(), microphone=(), geolocation=(), payment=(self)"
+    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://unpkg.com https://js.stripe.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.jsdelivr.net; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://*.supabase.co https://api.stripe.com; frame-src https://js.stripe.com; object-src 'none'; base-uri 'self';"
 
 [[headers]]
   for = "*.css"
@@ -39,6 +42,11 @@
   status = 301
 
 [[redirects]]
+  from = "/secure-admin.html"
+  to = "/secure-admin-access-2026.html"
+  status = 301
+
+[[redirects]]
   from = "/account"
   to = "/my-account.html"
   status = 301
@@ -47,3 +55,29 @@
   from = "/courses"
   to = "/course-catalog.html"
   status = 301
+
+# Block backup and internal test files
+[[redirects]]
+  from = "/courses-backup.html"
+  to = "/course-catalog.html"
+  status = 302
+
+[[redirects]]
+  from = "/courses-standardized.html"
+  to = "/course-catalog.html"
+  status = 302
+
+[[redirects]]
+  from = "/course-template.html"
+  to = "/course-catalog.html"
+  status = 302
+
+[[redirects]]
+  from = "/pelvis-demo.html"
+  to = "/course-catalog.html"
+  status = 302
+
+[[redirects]]
+  from = "/logo-comparison.html"
+  to = "/"
+  status = 302
