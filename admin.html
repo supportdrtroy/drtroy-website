@@ -1065,6 +1065,9 @@
             <button class="main-tab" onclick="switchMainTab('credits')">
                 💳 Credits
             </button>
+            <button class="main-tab" onclick="switchMainTab('waitlist'); loadWaitlist();">
+                📋 Waitlist
+            </button>
         </div>
 
         <!-- Dashboard Tab -->
@@ -2100,6 +2103,49 @@
             </div>
         </div>
 
+        <!-- Waitlist Tab -->
+        <div id="waitlist" class="tab-content">
+            <div class="card">
+                <div class="card-header" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;">
+                    <div>
+                        <h2 class="card-title">📋 Waitlist Signups</h2>
+                        <p style="color:#64748b;margin-top:.5rem;font-size:.95rem;">Everyone who signed up to be notified at launch.</p>
+                    </div>
+                    <div style="display:flex;gap:.75rem;align-items:center;">
+                        <span id="waitlist-count" style="background:#e0f2fe;color:#0369a1;font-size:.85rem;font-weight:600;padding:.35rem .9rem;border-radius:20px;">Loading...</span>
+                        <button onclick="exportWaitlistCSV()" style="padding:.5rem 1.1rem;background:#059669;color:#fff;border:none;border-radius:8px;font-size:.875rem;font-weight:600;cursor:pointer;">⬇ Export CSV</button>
+                        <button onclick="loadWaitlist()" style="padding:.5rem 1.1rem;background:#1a365d;color:#fff;border:none;border-radius:8px;font-size:.875rem;font-weight:600;cursor:pointer;">↻ Refresh</button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <!-- Search -->
+                    <div style="margin-bottom:1.25rem;">
+                        <input type="text" id="waitlist-search" placeholder="Search by name or email…" oninput="filterWaitlist()"
+                            style="width:100%;padding:.75rem 1rem;border:2px solid #e2e8f0;border-radius:10px;font-size:.9rem;font-family:inherit;outline:none;box-sizing:border-box;"
+                            onfocus="this.style.borderColor='#059669'" onblur="this.style.borderColor='#e2e8f0'">
+                    </div>
+                    <!-- Table -->
+                    <div style="overflow-x:auto;">
+                        <table class="table" id="waitlist-table">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Discipline</th>
+                                    <th>Signed Up</th>
+                                    <th>Source</th>
+                                </tr>
+                            </thead>
+                            <tbody id="waitlist-tbody">
+                                <tr><td colspan="6" style="text-align:center;color:#94a3b8;padding:2rem;">Loading waitlist…</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
 
     <!-- ═══════════════════════════════════════════════════════════
@@ -2267,6 +2313,7 @@
                 .replace(/"/g, '&quot;')
                 .replace(/'/g, '&#x27;');
         }
+        const escapeHtml = esc;
 
         async function checkAuthentication() {
             if (!window.DrTroySupabase) {
@@ -2624,6 +2671,81 @@
             document.getElementById('loadTime').textContent = (1.1 + Math.random() * 0.3).toFixed(1) + 's';
             document.getElementById('dbHealth').textContent = 'A+';
             document.getElementById('activeSessions').textContent = Math.floor(Math.random() * 8) + 3;
+        }
+
+        // ── Waitlist ──────────────────────────────────────────────
+        let waitlistData = [];
+
+        async function loadWaitlist() {
+            const tbody = document.getElementById('waitlist-tbody');
+            tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:#94a3b8;padding:2rem;">Loading…</td></tr>';
+            try {
+                const res = await fetch(SUPABASE_URL + '/rest/v1/waitlist?order=signed_up_at.desc&limit=500', {
+                    headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': 'Bearer ' + SUPABASE_ANON_KEY }
+                });
+                waitlistData = await res.json();
+                if (!Array.isArray(waitlistData)) waitlistData = [];
+                document.getElementById('waitlist-count').textContent = waitlistData.length + ' signups';
+                renderWaitlist(waitlistData);
+            } catch(e) {
+                tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:#ef4444;padding:2rem;">Error loading waitlist.</td></tr>';
+            }
+        }
+
+        function renderWaitlist(data) {
+            const tbody = document.getElementById('waitlist-tbody');
+            if (!data.length) {
+                tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:#94a3b8;padding:2rem;">No signups yet.</td></tr>';
+                return;
+            }
+            tbody.innerHTML = data.map((r, i) => {
+                const firstName = r.first_name || '';
+                const lastName  = r.last_name  || '';
+                const fullName  = [firstName, lastName].filter(Boolean).join(' ') || '—';
+                const disc      = r.discipline  || '—';
+                const src       = r.source      || '—';
+                const date      = r.signed_up_at
+                    ? new Date(r.signed_up_at).toLocaleDateString('en-US', { month:'short', day:'numeric', year:'numeric' })
+                    : '—';
+                return `<tr>
+                    <td style="color:#94a3b8;font-size:.85rem;">${i + 1}</td>
+                    <td style="font-weight:600;color:#1e293b;">${escapeHtml(fullName)}</td>
+                    <td style="color:#374151;">${escapeHtml(r.email || '')}</td>
+                    <td><span style="background:#e0f2fe;color:#0369a1;padding:.2rem .65rem;border-radius:12px;font-size:.8rem;font-weight:600;">${escapeHtml(disc)}</span></td>
+                    <td style="color:#64748b;font-size:.875rem;">${date}</td>
+                    <td style="color:#94a3b8;font-size:.8rem;">${escapeHtml(src)}</td>
+                </tr>`;
+            }).join('');
+        }
+
+        function filterWaitlist() {
+            const q = document.getElementById('waitlist-search').value.toLowerCase();
+            if (!q) { renderWaitlist(waitlistData); return; }
+            const filtered = waitlistData.filter(r =>
+                (r.email      || '').toLowerCase().includes(q) ||
+                (r.first_name || '').toLowerCase().includes(q) ||
+                (r.last_name  || '').toLowerCase().includes(q)
+            );
+            renderWaitlist(filtered);
+        }
+
+        function exportWaitlistCSV() {
+            if (!waitlistData.length) return;
+            const header = ['#','First Name','Last Name','Email','Discipline','Signed Up','Source'];
+            const rows = waitlistData.map((r, i) => [
+                i + 1,
+                r.first_name  || '',
+                r.last_name   || '',
+                r.email       || '',
+                r.discipline  || '',
+                r.signed_up_at ? new Date(r.signed_up_at).toLocaleDateString() : '',
+                r.source      || ''
+            ]);
+            const csv = [header, ...rows].map(r => r.map(v => `"${String(v).replace(/"/g,'""')}"`).join(',')).join('\n');
+            const a = document.createElement('a');
+            a.href = 'data:text/csv;charset=utf-8,' + encodeURIComponent(csv);
+            a.download = 'drtroy-waitlist-' + new Date().toISOString().slice(0,10) + '.csv';
+            a.click();
         }
 
         // Tab switching functions

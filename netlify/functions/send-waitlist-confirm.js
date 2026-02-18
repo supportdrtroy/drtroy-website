@@ -17,10 +17,11 @@ exports.handler = async (event) => {
         return { statusCode: 400, body: 'Invalid JSON' };
     }
 
-    const { email, firstName, discipline } = body;
+    const { email, firstName, lastName, discipline } = body;
     if (!email) return { statusCode: 400, body: 'Missing email' };
 
     const name     = (firstName || '').trim() || 'there';
+    const fullName = [firstName, lastName].filter(Boolean).map(s => s.trim()).join(' ') || 'there';
     const discLine = discipline && discipline !== 'prefer_not'
         ? `<p style="color:#4b5563;font-size:15px;line-height:1.7;margin:0 0 20px;">We've noted that you work in <strong>${discipline}</strong> — we'll make sure to highlight relevant courses for your license when we launch.</p>`
         : '';
@@ -101,7 +102,7 @@ exports.handler = async (event) => {
             html: `
                 <div style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;max-width:480px;margin:0 auto;padding:32px 24px;background:#f8fafc;border-radius:12px;">
                     <h2 style="color:#1a365d;margin:0 0 16px;">New Waitlist Signup</h2>
-                    <p style="color:#374151;font-size:15px;margin:0 0 8px;"><strong>Name:</strong> ${name}</p>
+                    <p style="color:#374151;font-size:15px;margin:0 0 8px;"><strong>Name:</strong> ${fullName}</p>
                     <p style="color:#374151;font-size:15px;margin:0 0 8px;"><strong>Email:</strong> ${email}</p>
                     <p style="color:#374151;font-size:15px;margin:0 0 24px;"><strong>Discipline:</strong> ${disciplineLabel}</p>
                     <p style="color:#6b7280;font-size:13px;margin:0;">DrTroy Continuing Education — drtroy.com</p>
