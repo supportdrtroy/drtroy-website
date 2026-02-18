@@ -24,5 +24,8 @@
   "devDependencies": {
     "html-minifier-terser": "^7.2.0",
     "terser": "^5.46.0"
+  },
+  "dependencies": {
+    "nodemailer": "^8.0.1"
   }
 }
