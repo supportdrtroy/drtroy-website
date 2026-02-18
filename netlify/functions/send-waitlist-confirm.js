@@ -1,9 +1,8 @@
 /**
  * DrTroy CE Platform — Netlify Function: send-waitlist-confirm
  * POST /.netlify/functions/send-waitlist-confirm
- * Sends a branded confirmation email when someone joins the waitlist.
+ * Sends a branded confirmation email via Resend when someone joins the waitlist.
  */
-const nodemailer = require('nodemailer');
 
 exports.handler = async (event) => {
     if (event.httpMethod !== 'POST') {
@@ -71,27 +70,35 @@ exports.handler = async (event) => {
 </body>
 </html>`;
 
+    const RESEND_API_KEY = process.env.RESEND_API_KEY;
+    if (!RESEND_API_KEY) {
+        console.error('RESEND_API_KEY not set');
+        return { statusCode: 500, body: JSON.stringify({ error: 'Email service not configured' }) };
+    }
+
     try {
-        const transporter = nodemailer.createTransport({
-            host:   process.env.SMTP_HOST || 'p3plzcpnl507574.prod.phx3.secureserver.net',
-            port:   parseInt(process.env.SMTP_PORT || '465'),
-            secure: true,
-            auth: {
-                user: process.env.SMTP_USER || 'no-reply@drtroy.com',
-                pass: process.env.SMTP_PASS
+        const res = await fetch('https://api.resend.com/emails', {
+            method:  'POST',
+            headers: {
+                'Authorization': `Bearer ${RESEND_API_KEY}`,
+                'Content-Type':  'application/json'
             },
-            tls: { rejectUnauthorized: false }
+            body: JSON.stringify({
+                from:    'DrTroy Continuing Education <no-reply@send.drtroy.com>',
+                to:      [email],
+                subject: `You're on the list, ${name}! 🎉 DrTroy CE is coming`,
+                html
+            })
         });
 
-        const info = await transporter.sendMail({
-            from:    '"DrTroy Continuing Education" <no-reply@drtroy.com>',
-            to:      email,
-            subject: `You're on the list, ${name}! 🎉 DrTroy CE is coming`,
-            html
-        });
+        const data = await res.json();
+        if (!res.ok) {
+            console.error('Resend error:', data);
+            return { statusCode: 500, body: JSON.stringify({ error: data.message || 'Send failed' }) };
+        }
 
-        console.log('SMTP response:', info.response, 'messageId:', info.messageId, 'accepted:', info.accepted);
-        return { statusCode: 200, body: JSON.stringify({ sent: true, messageId: info.messageId, response: info.response, accepted: info.accepted }) };
+        console.log('Email sent via Resend, id:', data.id);
+        return { statusCode: 200, body: JSON.stringify({ sent: true, id: data.id }) };
     } catch (err) {
         console.error('send-waitlist-confirm error:', err.message);
         return { statusCode: 500, body: JSON.stringify({ error: err.message }) };
