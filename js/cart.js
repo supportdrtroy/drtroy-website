@@ -214,6 +214,8 @@ class ShoppingCart {
             discount: totals.discount,
             total: totals.total,
             hasNewAccountDiscount: totals.hasNewAccountDiscount,
+            // Pass the actual discount code so Stripe applies it server-side
+            discountCode: totals.hasNewAccountDiscount ? 'NEWCUSTOMER10' : '',
             itemCount: this.getItemCount()
         };
     }
