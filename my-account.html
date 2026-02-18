@@ -1422,7 +1422,10 @@
                 licenseExpiration: legacyData.licenseExpiration || '',
                 licenseRenewalReminders: legacyData.licenseRenewalReminders !== false,
                 notifications: legacyData.notifications || {},
-                privacy:       legacyData.privacy       || {},
+                privacy: {
+                    marketingConsent: profile?.marketing_consent ?? legacyData.privacy?.marketingConsent ?? false,
+                    dataAnalytics:    legacyData.privacy?.dataAnalytics ?? true
+                },
                 ethicsCCUs:    legacyData.ethicsCCUs    || { jurisprudenceCompleted: false, humanTrafficingCompleted: false, totalEthicsCCUs: 0 },
                 externalCCUs:  legacyData.externalCCUs  || [],
                 courseProgress: legacyData.courseProgress || {},
@@ -2594,17 +2597,24 @@
         }
 
         // Save privacy settings
-        function savePrivacySettings() {
+        async function savePrivacySettings() {
             if (!currentAccount) return;
-            
-            currentAccount.privacy = {
-                dataAnalytics: document.getElementById('dataAnalytics').checked,
-                marketingConsent: document.getElementById('marketingConsent').checked
-            };
-            
+
+            const marketingConsent = document.getElementById('marketingConsent').checked;
+            const dataAnalytics    = document.getElementById('dataAnalytics').checked;
+
+            currentAccount.privacy = { dataAnalytics, marketingConsent };
             currentAccount.updatedAt = new Date().toISOString();
             localStorage.setItem('drtroyAccount', JSON.stringify(currentAccount));
-            
+
+            // Sync marketing consent to Supabase profile
+            try {
+                if (window.DrTroySupabase && currentAccount.id) {
+                    const sb = window.DrTroySupabase.getClient ? window.DrTroySupabase.getClient() : null;
+                    if (sb) await sb.from('profiles').update({ marketing_consent: marketingConsent }).eq('id', currentAccount.id);
+                }
+            } catch(e) { /* non-blocking */ }
+
             showAlert('Privacy settings saved!', 'success');
         }
 
