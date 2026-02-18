@@ -355,18 +355,119 @@
             </div>
         </div>
 
-        <!-- Call to Action -->
+        <!-- Call to Action / Waitlist -->
         <div class="cta-section">
-            <h2 class="cta-title">Check Back Soon</h2>
-            <p class="cta-description">Our professional continuing education platform is launching soon. We're putting the finishing touches on courses designed by practicing clinicians who understand your daily challenges.</p>
-            
-            <!-- Buttons removed -->
+            <h2 class="cta-title">Be First to Know When We Launch</h2>
+            <p class="cta-description">Drop your email below and we'll notify you the moment DrTroy CE goes live — including any exclusive early access pricing.</p>
+
+            <div id="signup-form-wrap" style="max-width: 520px; margin: 2.5rem auto 0;">
+                <form id="waitlist-form" style="display: flex; flex-direction: column; gap: 1rem;">
+                    <input
+                        type="text"
+                        id="wl-name"
+                        placeholder="First name (optional)"
+                        style="padding: 1rem 1.25rem; border: 2px solid rgba(255,255,255,.3); border-radius: 12px; background: rgba(255,255,255,.12); color: white; font-size: 1rem; font-family: inherit; outline: none; transition: border .2s;"
+                        onfocus="this.style.borderColor='rgba(255,255,255,.7)'" onblur="this.style.borderColor='rgba(255,255,255,.3)'"
+                    >
+                    <input
+                        type="email"
+                        id="wl-email"
+                        placeholder="Your email address *"
+                        required
+                        style="padding: 1rem 1.25rem; border: 2px solid rgba(255,255,255,.3); border-radius: 12px; background: rgba(255,255,255,.12); color: white; font-size: 1rem; font-family: inherit; outline: none; transition: border .2s;"
+                        onfocus="this.style.borderColor='rgba(255,255,255,.7)'" onblur="this.style.borderColor='rgba(255,255,255,.3)'"
+                    >
+                    <select
+                        id="wl-discipline"
+                        style="padding: 1rem 1.25rem; border: 2px solid rgba(255,255,255,.3); border-radius: 12px; background: rgba(255,255,255,.12); color: white; font-size: 1rem; font-family: inherit; outline: none; transition: border .2s; cursor: pointer;"
+                        onfocus="this.style.borderColor='rgba(255,255,255,.7)'" onblur="this.style.borderColor='rgba(255,255,255,.3)'"
+                    >
+                        <option value="" style="color:#262626;">My discipline (optional)</option>
+                        <option value="PT" style="color:#262626;">Physical Therapist (PT)</option>
+                        <option value="PTA" style="color:#262626;">Physical Therapist Assistant (PTA)</option>
+                        <option value="OT" style="color:#262626;">Occupational Therapist (OT)</option>
+                        <option value="COTA" style="color:#262626;">Certified OT Assistant (COTA)</option>
+                    </select>
+                    <button
+                        type="submit"
+                        id="wl-submit"
+                        style="padding: 1.1rem 2rem; background: white; color: #1a365d; border: none; border-radius: 12px; font-size: 1.05rem; font-weight: 700; cursor: pointer; font-family: inherit; transition: all .25s; box-shadow: 0 4px 14px rgba(0,0,0,.2);"
+                        onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 8px 24px rgba(0,0,0,.25)'"
+                        onmouseout="this.style.transform='none';this.style.boxShadow='0 4px 14px rgba(0,0,0,.2)'"
+                    >
+                        Notify Me When You Launch →
+                    </button>
+                    <p id="wl-error" style="display:none; color:#fca5a5; font-size:.9rem; text-align:center; margin:0;"></p>
+                </form>
+
+                <div id="signup-success" style="display:none; text-align:center; padding: 2rem; background: rgba(255,255,255,.15); border-radius: 16px; border: 2px solid rgba(255,255,255,.3);">
+                    <div style="font-size: 3rem; margin-bottom: 1rem;">🎉</div>
+                    <h3 style="font-family: 'Playfair Display', Georgia, serif; font-size: 1.5rem; color: white; margin-bottom: .75rem;">You're on the list!</h3>
+                    <p style="color: rgba(255,255,255,.85); line-height: 1.6;">We'll send you a personal notification the moment DrTroy CE goes live. Keep an eye on your inbox.</p>
+                </div>
+            </div>
+
+            <p style="margin-top: 1.5rem; font-size: .85rem; color: rgba(255,255,255,.5);">No spam, ever. Unsubscribe at any time.</p>
         </div>
 
         <!-- Footer -->
         <div class="footer">
-            <p>&copy; 2024 DrTroy Continuing Education. Professional development coming soon.</p>
+            <p>&copy; 2026 DrTroy Continuing Education. Professional development coming soon.</p>
         </div>
+
+    <script>
+        const SUPA_URL  = 'https://pnqoxulxdmlmbywcpbyx.supabase.co';
+        const SUPA_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBucW94dWx4ZG1sbWJ5d2NwYnl4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzEzNjU3NTIsImV4cCI6MjA4Njk0MTc1Mn0.YEPrwIvINX_Q1AsbxyU0T5m5oxpV9M756yiSCzy6LTc';
+
+        document.getElementById('waitlist-form').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const btn    = document.getElementById('wl-submit');
+            const errEl  = document.getElementById('wl-error');
+            const email  = document.getElementById('wl-email').value.trim();
+            const name   = document.getElementById('wl-name').value.trim();
+            const disc   = document.getElementById('wl-discipline').value;
+
+            if (!email) return;
+
+            btn.disabled   = true;
+            btn.textContent = 'Signing you up…';
+            errEl.style.display = 'none';
+
+            try {
+                const res = await fetch(SUPA_URL + '/rest/v1/waitlist', {
+                    method:  'POST',
+                    headers: {
+                        'Content-Type':  'application/json',
+                        'apikey':        SUPA_ANON,
+                        'Authorization': 'Bearer ' + SUPA_ANON,
+                        'Prefer':        'return=minimal'
+                    },
+                    body: JSON.stringify({
+                        email:      email,
+                        first_name: name  || null,
+                        discipline: disc  || null,
+                        source:     'coming-soon'
+                    })
+                });
+
+                if (res.ok || res.status === 201) {
+                    document.getElementById('waitlist-form').style.display  = 'none';
+                    document.getElementById('signup-success').style.display = 'block';
+                } else if (res.status === 409) {
+                    // Duplicate email — still show success, no need to say "already signed up"
+                    document.getElementById('waitlist-form').style.display  = 'none';
+                    document.getElementById('signup-success').style.display = 'block';
+                } else {
+                    throw new Error('Server error');
+                }
+            } catch(err) {
+                btn.disabled    = false;
+                btn.textContent = 'Notify Me When You Launch →';
+                errEl.textContent   = 'Something went wrong. Please try again.';
+                errEl.style.display = 'block';
+            }
+        });
+    </script>
     </div>
 </body>
 </html>
