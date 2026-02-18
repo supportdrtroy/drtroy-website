@@ -1,8 +1,12 @@
 /**
  * DrTroy CE Platform — Netlify Function: send-referral
  * POST /.netlify/functions/send-referral
- * Sends a branded colleague invitation email with referral link.
+ * Sends a branded colleague invitation email via GoDaddy SMTP (nodemailer).
+ * NOTE: Temporary — will switch to Resend once domain verified.
  */
+
+const nodemailer = require('nodemailer');
+
 exports.handler = async (event) => {
     if (event.httpMethod !== 'POST') {
         return { statusCode: 405, body: 'Method not allowed' };
@@ -71,35 +75,26 @@ exports.handler = async (event) => {
 </body>
 </html>`;
 
-    const RESEND_API_KEY = process.env.RESEND_API_KEY;
-    if (!RESEND_API_KEY) {
-        console.error('RESEND_API_KEY not set');
-        return { statusCode: 500, body: JSON.stringify({ error: 'Email service not configured' }) };
-    }
+    const transporter = nodemailer.createTransport({
+        host: 'p3plzcpnl507574.prod.phx3.secureserver.net',
+        port: 465,
+        secure: true,
+        auth: {
+            user: 'no-reply@drtroy.com',
+            pass: 'DrTroy2026!Mail#Send'
+        }
+    });
 
     try {
-        const res = await fetch('https://api.resend.com/emails', {
-            method:  'POST',
-            headers: {
-                'Authorization': `Bearer ${RESEND_API_KEY}`,
-                'Content-Type':  'application/json'
-            },
-            body: JSON.stringify({
-                from:    'DrTroy Continuing Education <no-reply@send.drtroy.com>',
-                to:      [to],
-                subject: `${senderDisplay} invited you to DrTroy CE — $10 off your first package`,
-                html
-            })
+        await transporter.sendMail({
+            from:    '"DrTroy Continuing Education" <no-reply@drtroy.com>',
+            to,
+            subject: `${senderDisplay} invited you to DrTroy CE — $10 off your first package`,
+            html
         });
 
-        const data = await res.json();
-        if (!res.ok) {
-            console.error('Resend error:', data);
-            return { statusCode: 500, body: JSON.stringify({ error: data.message || 'Send failed' }) };
-        }
-
-        console.log('Referral email sent via Resend, id:', data.id);
-        return { statusCode: 200, body: JSON.stringify({ sent: true, id: data.id }) };
+        console.log('Referral email sent to:', to);
+        return { statusCode: 200, body: JSON.stringify({ sent: true }) };
     } catch (err) {
         console.error('send-referral error:', err.message);
         return { statusCode: 500, body: JSON.stringify({ error: err.message }) };
