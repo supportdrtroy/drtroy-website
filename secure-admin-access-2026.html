@@ -35,8 +35,7 @@
             --gray-600:#6b7280;
             --gray-900:#111827;
             --danger:  #dc2626;
-            --shadow:  0 4px 24px rgba(0,0,0,0.12);
-            --shadow-lg:0 20px 60px rgba(0,0,0,0.25);
+            --shadow-lg: 0 20px 60px rgba(0,0,0,0.25);
         }
 
         body {
@@ -70,20 +69,18 @@
             background: linear-gradient(90deg, var(--emerald), var(--gold));
         }
 
+        /* ─── Panels (login / forgot / reset) ─── */
+        .panel { display: none; }
+        .panel.active { display: block; }
+
         /* ─── Header ─── */
         .card-header {
             text-align: center;
             margin-bottom: 2rem;
         }
 
-        .logo-wrap {
-            margin-bottom: 1.25rem;
-        }
-
-        .logo-wrap img {
-            height: 56px;
-            object-fit: contain;
-        }
+        .logo-wrap { margin-bottom: 1.25rem; }
+        .logo-wrap img { height: 56px; object-fit: contain; }
 
         .card-header h1 {
             font-family: 'Playfair Display', Georgia, serif;
@@ -94,15 +91,10 @@
             letter-spacing: -0.01em;
         }
 
-        .card-header p {
-            font-size: 0.9rem;
-            color: var(--gray-600);
-        }
+        .card-header p { font-size: 0.9rem; color: var(--gray-600); }
 
-        /* ─── Form ─── */
-        .form-group {
-            margin-bottom: 1.25rem;
-        }
+        /* ─── Form elements ─── */
+        .form-group { margin-bottom: 1.25rem; }
 
         label {
             display: block;
@@ -113,9 +105,7 @@
             letter-spacing: 0.01em;
         }
 
-        .input-wrap {
-            position: relative;
-        }
+        .input-wrap { position: relative; }
 
         .input-icon {
             position: absolute;
@@ -148,13 +138,17 @@
             box-shadow: 0 0 0 3px rgba(26,54,93,0.1);
         }
 
-        input:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
+        input:disabled { opacity: 0.6; cursor: not-allowed; }
+
+        /* password strength hint */
+        .hint {
+            font-size: 0.78rem;
+            color: var(--gray-600);
+            margin-top: 0.35rem;
         }
 
-        /* ─── Button ─── */
-        .btn-login {
+        /* ─── Primary button ─── */
+        .btn-primary {
             width: 100%;
             background: var(--navy);
             color: #fff;
@@ -174,17 +168,15 @@
             letter-spacing: 0.01em;
         }
 
-        .btn-login:hover:not(:disabled) {
+        .btn-primary:hover:not(:disabled) {
             background: var(--navy-dk);
             transform: translateY(-1px);
             box-shadow: 0 6px 20px rgba(26,54,93,0.3);
         }
 
-        .btn-login:active:not(:disabled) {
-            transform: translateY(0);
-        }
+        .btn-primary:active:not(:disabled) { transform: translateY(0); }
 
-        .btn-login:disabled {
+        .btn-primary:disabled {
             opacity: 0.65;
             cursor: not-allowed;
             transform: none;
@@ -204,7 +196,28 @@
         .loading .btn-label { display: none; }
         @keyframes spin { to { transform: rotate(360deg); } }
 
-        /* ─── Messages ─── */
+        /* ─── Text link ─── */
+        .text-link {
+            background: none;
+            border: none;
+            color: var(--navy);
+            font-size: 0.875rem;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: underline;
+            text-underline-offset: 2px;
+            padding: 0;
+            font-family: inherit;
+            transition: color 0.15s;
+        }
+        .text-link:hover { color: var(--emerald); }
+
+        .link-row {
+            text-align: center;
+            margin-top: 1rem;
+        }
+
+        /* ─── Alerts ─── */
         .alert {
             padding: 0.75rem 1rem;
             border-radius: 7px;
@@ -213,15 +226,33 @@
             display: none;
             line-height: 1.45;
         }
-        .alert-error {
-            background: #fef2f2;
-            border: 1px solid #fca5a5;
-            color: #991b1b;
+        .alert-error   { background:#fef2f2; border:1px solid #fca5a5; color:#991b1b; }
+        .alert-success { background:#ecfdf5; border:1px solid #6ee7b7; color:#065f46; }
+
+        /* ─── Info box (for reset-sent state) ─── */
+        .info-box {
+            background: #eff6ff;
+            border: 1px solid #bfdbfe;
+            color: #1e40af;
+            border-radius: 8px;
+            padding: 1rem 1.25rem;
+            font-size: 0.9rem;
+            line-height: 1.55;
+            text-align: center;
         }
-        .alert-success {
-            background: #ecfdf5;
-            border: 1px solid #6ee7b7;
-            color: #065f46;
+
+        .info-box .big-icon {
+            font-size: 2.5rem;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .info-box strong { display: block; margin-bottom: 0.25rem; font-size: 1rem; }
+
+        /* ─── Back link ─── */
+        .back-row {
+            text-align: center;
+            margin-top: 1.25rem;
         }
 
         /* ─── Security strip ─── */
@@ -242,11 +273,7 @@
             color: var(--gray-600);
         }
 
-        .sec-check {
-            color: var(--emerald);
-            font-size: 0.85rem;
-            flex-shrink: 0;
-        }
+        .sec-check { color: var(--emerald); font-size: 0.85rem; flex-shrink: 0; }
 
         /* ─── Footer ─── */
         .page-footer {
@@ -256,71 +283,62 @@
             color: rgba(255,255,255,0.55);
         }
 
-        .page-footer a {
-            color: rgba(255,255,255,0.7);
-            text-decoration: none;
-        }
-
+        .page-footer a { color: rgba(255,255,255,0.7); text-decoration: none; }
         .page-footer a:hover { color: #fff; }
 
         /* ─── Mobile ─── */
         @media (max-width: 480px) {
             body { padding: 1rem; }
-
-            .card {
-                padding: 2rem 1.5rem;
-                border-radius: 12px;
-            }
-
+            .card { padding: 2rem 1.5rem; border-radius: 12px; }
             .card-header h1 { font-size: 1.4rem; }
-
-            .security-strip {
-                grid-template-columns: 1fr;
-            }
+            .security-strip { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
 
-    <div class="card">
+<div class="card">
 
-        <div class="card-header">
-            <div class="logo-wrap">
-                <img src="courses/images/drtroy_logo_new.jpg" alt="DrTroy Continuing Education" onerror="this.style.display='none'">
-            </div>
-            <h1>Admin Portal</h1>
-            <p>Sign in to the DrTroy.com admin dashboard</p>
+    <div class="card-header">
+        <div class="logo-wrap">
+            <img src="courses/images/drtroy_logo_new.jpg" alt="DrTroy" onerror="this.style.display='none'">
         </div>
+        <h1 id="cardTitle">Admin Portal</h1>
+        <p  id="cardSubtitle">Sign in to the DrTroy.com admin dashboard</p>
+    </div>
 
-        <div id="alertError"   class="alert alert-error"></div>
-        <div id="alertSuccess" class="alert alert-success"></div>
+    <!-- ── PANEL 1: Login ── -->
+    <div id="panelLogin" class="panel active">
+        <div id="loginAlert"   class="alert alert-error"></div>
 
         <form id="loginForm" novalidate>
             <div class="form-group">
-                <label for="email">Email Address</label>
+                <label for="loginEmail">Email Address</label>
                 <div class="input-wrap">
                     <span class="input-icon">✉️</span>
-                    <input type="email" id="email" name="email"
-                           placeholder="your@email.com"
+                    <input type="email" id="loginEmail" placeholder="your@email.com"
                            autocomplete="email" required>
                 </div>
             </div>
 
             <div class="form-group">
-                <label for="password">Password</label>
+                <label for="loginPassword">Password</label>
                 <div class="input-wrap">
                     <span class="input-icon">🔒</span>
-                    <input type="password" id="password" name="password"
-                           placeholder="Enter your password"
+                    <input type="password" id="loginPassword" placeholder="Enter your password"
                            autocomplete="current-password" required>
                 </div>
             </div>
 
-            <button type="submit" class="btn-login" id="loginBtn">
+            <button type="submit" class="btn-primary" id="loginBtn">
                 <div class="spinner"></div>
                 <span class="btn-label">Sign In to Admin</span>
             </button>
         </form>
+
+        <div class="link-row">
+            <button class="text-link" onclick="showPanel('forgot')">Forgot password?</button>
+        </div>
 
         <div class="security-strip">
             <div class="sec-item"><span class="sec-check">✓</span> Supabase Auth</div>
@@ -328,112 +346,267 @@
             <div class="sec-item"><span class="sec-check">✓</span> HTTPS encrypted</div>
             <div class="sec-item"><span class="sec-check">✓</span> Session protected</div>
         </div>
-
     </div>
 
-    <div class="page-footer">
-        <p>&copy; 2026 DrTroy.com &nbsp;·&nbsp; <a href="index.html">Return to website</a></p>
+    <!-- ── PANEL 2: Forgot Password ── -->
+    <div id="panelForgot" class="panel">
+        <div id="forgotAlert" class="alert alert-error"></div>
+
+        <!-- default: email entry -->
+        <div id="forgotEntry">
+            <form id="forgotForm" novalidate>
+                <div class="form-group">
+                    <label for="forgotEmail">Email Address</label>
+                    <div class="input-wrap">
+                        <span class="input-icon">✉️</span>
+                        <input type="email" id="forgotEmail" placeholder="troy@drtroy.com"
+                               autocomplete="email" required>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-primary" id="forgotBtn">
+                    <div class="spinner"></div>
+                    <span class="btn-label">Send Reset Link</span>
+                </button>
+            </form>
+        </div>
+
+        <!-- sent confirmation -->
+        <div id="forgotSent" style="display:none;">
+            <div class="info-box">
+                <span class="big-icon">📬</span>
+                <strong>Check your inbox</strong>
+                A password reset link has been sent to <span id="sentEmail" style="font-weight:600;"></span>. Click the link in that email to set a new password.
+            </div>
+        </div>
+
+        <div class="back-row">
+            <button class="text-link" onclick="showPanel('login')">← Back to sign in</button>
+        </div>
     </div>
 
-    <script>
-        const SUPABASE_URL      = 'https://pnqoxulxdmlmbywcpbyx.supabase.co';
-        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBucW94dWx4ZG1sbWJ5d2NwYnl4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzEzNjU3NTIsImV4cCI6MjA4Njk0MTc1Mn0.YEPrwIvINX_Q1AsbxyU0T5m5oxpV9M756yiSCzy6LTc';
+    <!-- ── PANEL 3: Set New Password (recovery redirect) ── -->
+    <div id="panelReset" class="panel">
+        <div id="resetAlert" class="alert alert-error"></div>
+        <div id="resetSuccess" class="alert alert-success"></div>
 
-        const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
-            auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: false }
-        });
+        <form id="resetForm" novalidate>
+            <div class="form-group">
+                <label for="newPassword">New Password</label>
+                <div class="input-wrap">
+                    <span class="input-icon">🔒</span>
+                    <input type="password" id="newPassword" placeholder="At least 8 characters"
+                           autocomplete="new-password" required minlength="8">
+                </div>
+            </div>
 
-        // ─── helpers ─────────────────────────────────────────────────────────
-        function showError(msg) {
-            const el = document.getElementById('alertError');
-            el.textContent = msg;
-            el.style.display = 'block';
-            document.getElementById('alertSuccess').style.display = 'none';
+            <div class="form-group">
+                <label for="confirmPassword">Confirm Password</label>
+                <div class="input-wrap">
+                    <span class="input-icon">🔒</span>
+                    <input type="password" id="confirmPassword" placeholder="Re-enter new password"
+                           autocomplete="new-password" required>
+                </div>
+                <p class="hint">Must be at least 8 characters.</p>
+            </div>
+
+            <button type="submit" class="btn-primary" id="resetBtn">
+                <div class="spinner"></div>
+                <span class="btn-label">Set New Password</span>
+            </button>
+        </form>
+    </div>
+
+</div><!-- /card -->
+
+<div class="page-footer">
+    <p>&copy; 2026 DrTroy.com &nbsp;·&nbsp; <a href="index.html">Return to website</a></p>
+</div>
+
+<script>
+    const SUPABASE_URL      = 'https://pnqoxulxdmlmbywcpbyx.supabase.co';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBucW94dWx4ZG1sbWJ5d2NwYnl4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzEzNjU3NTIsImV4cCI6MjA4Njk0MTc1Mn0.YEPrwIvINX_Q1AsbxyU0T5m5oxpV9M756yiSCzy6LTc';
+
+    const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
+        auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: true }
+    });
+
+    // ─── Panel switcher ──────────────────────────────────────────────────────
+    const PANEL_CONFIG = {
+        login:  { title: 'Admin Portal',          subtitle: 'Sign in to the DrTroy.com admin dashboard' },
+        forgot: { title: 'Reset Password',         subtitle: 'Enter your email to receive a reset link'  },
+        reset:  { title: 'Set New Password',       subtitle: 'Choose a new password for your account'    },
+    };
+
+    function showPanel(name) {
+        document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+        document.getElementById('panel' + name.charAt(0).toUpperCase() + name.slice(1)).classList.add('active');
+        const cfg = PANEL_CONFIG[name];
+        document.getElementById('cardTitle').textContent    = cfg.title;
+        document.getElementById('cardSubtitle').textContent = cfg.subtitle;
+        // focus first input in panel
+        const first = document.querySelector('#panel' + name.charAt(0).toUpperCase() + name.slice(1) + ' input');
+        if (first) setTimeout(() => first.focus(), 50);
+    }
+
+    // ─── Alert helpers ───────────────────────────────────────────────────────
+    function showAlert(id, msg, type = 'error') {
+        const el = document.getElementById(id);
+        el.textContent  = msg;
+        el.className    = 'alert alert-' + type;
+        el.style.display = 'block';
+    }
+    function hideAlert(id) { document.getElementById(id).style.display = 'none'; }
+
+    // ─── Button loading state ────────────────────────────────────────────────
+    function setLoading(btnId, on, ...inputIds) {
+        const btn = document.getElementById(btnId);
+        btn.disabled = on;
+        btn.classList.toggle('loading', on);
+        inputIds.forEach(id => { const el = document.getElementById(id); if (el) el.disabled = on; });
+    }
+
+    // ─── Auto-redirect if already admin ─────────────────────────────────────
+    async function checkExisting() {
+        const { data: { session } } = await sb.auth.getSession();
+        if (!session) return;
+        const { data: profile } = await sb.from('profiles')
+            .select('is_admin')
+            .eq('id', session.user.id)
+            .single();
+        if (profile?.is_admin) window.location.replace('admin.html');
+    }
+
+    // ─── Listen for PASSWORD_RECOVERY event ─────────────────────────────────
+    sb.auth.onAuthStateChange((event) => {
+        if (event === 'PASSWORD_RECOVERY') {
+            showPanel('reset');
+        }
+    });
+
+    // ─── FORM 1: Login ───────────────────────────────────────────────────────
+    document.getElementById('loginForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        hideAlert('loginAlert');
+
+        const email    = document.getElementById('loginEmail').value.trim();
+        const password = document.getElementById('loginPassword').value;
+
+        if (!email || !password) {
+            showAlert('loginAlert', 'Please enter your email and password.');
+            return;
         }
 
-        function showSuccess(msg) {
-            const el = document.getElementById('alertSuccess');
-            el.textContent = msg;
-            el.style.display = 'block';
-            document.getElementById('alertError').style.display = 'none';
-        }
+        setLoading('loginBtn', true, 'loginEmail', 'loginPassword');
 
-        function setLoading(on) {
-            const btn = document.getElementById('loginBtn');
-            btn.disabled = on;
-            btn.classList.toggle('loading', on);
-            document.getElementById('email').disabled    = on;
-            document.getElementById('password').disabled = on;
-        }
-
-        // ─── redirect if already authed + admin ──────────────────────────────
-        async function checkExisting() {
-            const { data: { session } } = await sb.auth.getSession();
-            if (!session) return;
-            const { data: profile } = await sb.from('profiles')
-                .select('is_admin')
-                .eq('id', session.user.id)
-                .single();
-            if (profile?.is_admin) {
-                window.location.replace('admin.html');
-            }
-        }
-
-        // ─── form submit ──────────────────────────────────────────────────────
-        document.getElementById('loginForm').addEventListener('submit', async (e) => {
-            e.preventDefault();
-
-            const email    = document.getElementById('email').value.trim();
-            const password = document.getElementById('password').value;
-
-            if (!email || !password) {
-                showError('Please enter your email and password.');
+        try {
+            const { data, error } = await sb.auth.signInWithPassword({ email, password });
+            if (error) {
+                showAlert('loginAlert', 'Incorrect email or password. Please try again.');
+                document.getElementById('loginPassword').value = '';
+                document.getElementById('loginPassword').focus();
+                setLoading('loginBtn', false, 'loginEmail', 'loginPassword');
                 return;
             }
 
-            setLoading(true);
+            const { data: profile } = await sb.from('profiles')
+                .select('is_admin, first_name')
+                .eq('id', data.user.id)
+                .single();
 
-            try {
-                // 1. Sign in
-                const { data, error: signInErr } = await sb.auth.signInWithPassword({ email, password });
-                if (signInErr) {
-                    showError('Incorrect email or password. Please try again.');
-                    setLoading(false);
-                    document.getElementById('password').value = '';
-                    document.getElementById('password').focus();
-                    return;
-                }
-
-                // 2. Verify admin flag
-                const { data: profile, error: profileErr } = await sb.from('profiles')
-                    .select('is_admin, first_name')
-                    .eq('id', data.user.id)
-                    .single();
-
-                if (profileErr || !profile?.is_admin) {
-                    await sb.auth.signOut();
-                    showError('Your account does not have admin access.');
-                    setLoading(false);
-                    return;
-                }
-
-                // 3. Success — redirect
-                const name = profile.first_name ? ` ${profile.first_name}` : '';
-                showSuccess(`Welcome back${name}! Redirecting to dashboard…`);
-                setTimeout(() => window.location.replace('admin.html'), 1200);
-
-            } catch (err) {
-                console.error('Login error:', err);
-                showError('Something went wrong. Please try again.');
-                setLoading(false);
+            if (!profile?.is_admin) {
+                await sb.auth.signOut();
+                showAlert('loginAlert', 'Your account does not have admin access.');
+                setLoading('loginBtn', false, 'loginEmail', 'loginPassword');
+                return;
             }
-        });
 
-        // ─── init ─────────────────────────────────────────────────────────────
-        document.addEventListener('DOMContentLoaded', () => {
-            checkExisting();
-            document.getElementById('email').focus();
-        });
-    </script>
+            const name = profile.first_name ? ` ${profile.first_name}` : '';
+            showAlert('loginAlert', `Welcome back${name}! Redirecting…`, 'success');
+            document.getElementById('loginAlert').className = 'alert alert-success';
+            setTimeout(() => window.location.replace('admin.html'), 1200);
+
+        } catch (err) {
+            console.error(err);
+            showAlert('loginAlert', 'Something went wrong. Please try again.');
+            setLoading('loginBtn', false, 'loginEmail', 'loginPassword');
+        }
+    });
+
+    // ─── FORM 2: Forgot Password ─────────────────────────────────────────────
+    document.getElementById('forgotForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        hideAlert('forgotAlert');
+
+        const email = document.getElementById('forgotEmail').value.trim();
+        if (!email) {
+            showAlert('forgotAlert', 'Please enter your email address.');
+            return;
+        }
+
+        setLoading('forgotBtn', true, 'forgotEmail');
+
+        const redirectTo = window.location.origin + window.location.pathname;
+        const { error } = await sb.auth.resetPasswordForEmail(email, { redirectTo });
+
+        setLoading('forgotBtn', false, 'forgotEmail');
+
+        if (error) {
+            showAlert('forgotAlert', 'Could not send reset email. Please try again.');
+            return;
+        }
+
+        // Show sent confirmation
+        document.getElementById('sentEmail').textContent = email;
+        document.getElementById('forgotEntry').style.display = 'none';
+        document.getElementById('forgotSent').style.display  = 'block';
+    });
+
+    // ─── FORM 3: Set New Password ────────────────────────────────────────────
+    document.getElementById('resetForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        hideAlert('resetAlert');
+        document.getElementById('resetSuccess').style.display = 'none';
+
+        const newPw  = document.getElementById('newPassword').value;
+        const confPw = document.getElementById('confirmPassword').value;
+
+        if (newPw.length < 8) {
+            showAlert('resetAlert', 'Password must be at least 8 characters.');
+            return;
+        }
+        if (newPw !== confPw) {
+            showAlert('resetAlert', 'Passwords do not match. Please try again.');
+            return;
+        }
+
+        setLoading('resetBtn', true, 'newPassword', 'confirmPassword');
+
+        const { error } = await sb.auth.updateUser({ password: newPw });
+
+        setLoading('resetBtn', false, 'newPassword', 'confirmPassword');
+
+        if (error) {
+            showAlert('resetAlert', 'Could not update password. Your reset link may have expired — request a new one.');
+            return;
+        }
+
+        // Success — clear fields and redirect to login
+        document.getElementById('newPassword').value    = '';
+        document.getElementById('confirmPassword').value = '';
+        document.getElementById('resetSuccess').textContent  = '✅ Password updated! Redirecting to sign in…';
+        document.getElementById('resetSuccess').style.display = 'block';
+        setTimeout(() => {
+            sb.auth.signOut();
+            showPanel('login');
+        }, 2000);
+    });
+
+    // ─── Init ────────────────────────────────────────────────────────────────
+    document.addEventListener('DOMContentLoaded', () => {
+        checkExisting();
+        document.getElementById('loginEmail').focus();
+    });
+</script>
 </body>
 </html>
