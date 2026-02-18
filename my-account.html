@@ -825,6 +825,7 @@
                         <li><a href="#" onclick="showSection('password')" class="nav-link">🔐 Password</a></li>
                         <li><a href="#" onclick="showSection('ccu')" class="nav-link">🎓 CCU Dashboard</a></li>
                         <li><a href="#" onclick="showSection('courses')" class="nav-link">📚 My Courses</a></li>
+                        <li><a href="#" onclick="showSection('credits')" class="nav-link">💳 Credits & Referrals</a></li>
                         <li><a href="#" onclick="showSection('superuser')" class="nav-link" id="superuser-nav" style="display: none;">⚡ Super User</a></li>
                         <li><a href="#" onclick="showSection('notifications')" class="nav-link">🔔 Notifications</a></li>
                         <li><a href="#" onclick="showSection('security')" class="nav-link">🛡️ Security</a></li>
@@ -1105,6 +1106,59 @@
                     </div>
 
                     <!-- Super User Section -->
+                    <!-- Credits & Referrals Section -->
+                    <div id="credits" class="content-section">
+                        <h2>💳 Credits & Referrals</h2>
+
+                        <!-- Balance Card -->
+                        <div style="background:linear-gradient(135deg,#1a365d,#2c5282);border-radius:16px;padding:2rem;color:white;margin-bottom:2rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;">
+                            <div>
+                                <div style="font-size:.85rem;font-weight:600;text-transform:uppercase;letter-spacing:.08em;opacity:.75;margin-bottom:.5rem;">Available Credit Balance</div>
+                                <div style="font-size:3rem;font-weight:700;font-family:'Playfair Display',Georgia,serif;" id="myCreditsBalance">$0.00</div>
+                                <div style="font-size:.9rem;opacity:.8;margin-top:.5rem;">Applied automatically at checkout</div>
+                            </div>
+                            <div style="text-align:center;">
+                                <div style="font-size:2rem;margin-bottom:.25rem;">🎁</div>
+                                <div style="font-size:.85rem;opacity:.75;">Earn $10 per referral</div>
+                            </div>
+                        </div>
+
+                        <!-- Referral Link -->
+                        <div style="background:#f0fdf4;border:2px solid #bbf7d0;border-radius:16px;padding:2rem;margin-bottom:2rem;">
+                            <h3 style="font-size:1.1rem;font-weight:700;color:#1a365d;margin-bottom:.5rem;">👥 Your Referral Link</h3>
+                            <p style="color:#374151;font-size:.95rem;margin-bottom:1.25rem;line-height:1.6;">Share this link with colleagues. When they make their first purchase, you both earn a <strong>$10 credit</strong>.</p>
+                            <div style="display:flex;gap:.75rem;align-items:center;flex-wrap:wrap;">
+                                <input type="text" id="myReferralLink" readonly
+                                    style="flex:1;min-width:200px;padding:.875rem 1rem;border:2px solid #d1fae5;border-radius:10px;background:white;font-size:.9rem;color:#1a365d;font-family:inherit;">
+                                <button onclick="copyReferralLink()" id="copyRefBtn"
+                                    style="padding:.875rem 1.5rem;background:#059669;color:white;border:none;border-radius:10px;font-weight:700;cursor:pointer;font-size:.95rem;white-space:nowrap;">
+                                    Copy Link
+                                </button>
+                            </div>
+                            <div id="copyRefConfirm" style="display:none;color:#059669;font-weight:600;font-size:.9rem;margin-top:.75rem;">✓ Copied to clipboard!</div>
+                            <div style="margin-top:1.25rem;display:flex;gap:2rem;flex-wrap:wrap;">
+                                <div style="text-align:center;">
+                                    <div style="font-size:1.75rem;font-weight:700;color:#059669;" id="totalReferrals">0</div>
+                                    <div style="font-size:.8rem;color:#64748b;font-weight:600;">Total Referrals</div>
+                                </div>
+                                <div style="text-align:center;">
+                                    <div style="font-size:1.75rem;font-weight:700;color:#059669;" id="totalReferralEarned">$0</div>
+                                    <div style="font-size:.8rem;color:#64748b;font-weight:600;">Total Earned</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Transaction History -->
+                        <div style="background:white;border:1px solid #e2e8f0;border-radius:16px;overflow:hidden;">
+                            <div style="padding:1.25rem 1.5rem;border-bottom:1px solid #e2e8f0;background:#f8fafc;">
+                                <h3 style="font-size:1rem;font-weight:700;color:#1e293b;margin:0;">Credit History</h3>
+                            </div>
+                            <div id="myTransactionList">
+                                <p style="color:#94a3b8;text-align:center;padding:2rem;font-size:.95rem;">Loading…</p>
+                            </div>
+                        </div>
+                    </div>
+
                     <div id="superuser" class="content-section">
                         <h2>⚡ Super User Controls</h2>
                         <p>Advanced administrative controls for platform management.</p>
@@ -2498,6 +2552,9 @@
             
             // Add active class to clicked nav link
             event.target.classList.add('active');
+
+            // Load section-specific data
+            if (sectionId === 'credits') loadCreditsSection();
         }
 
         // Save personal information — localStorage + Supabase sync
@@ -3257,6 +3314,62 @@
                 }, 5000);
             }
         }
+
+        // ── CREDITS & REFERRALS ───────────────────────────────────────────
+        async function loadCreditsSection() {
+            if (!currentAccount?.id) return;
+            const sb = window.DrTroySupabase?.getClient ? window.DrTroySupabase.getClient() : null;
+            if (!sb) return;
+
+            // Load balance
+            const { data: credits } = await sb.from('account_credits').select('balance_cents').eq('user_id', currentAccount.id).single();
+            const bal = credits ? (credits.balance_cents / 100).toFixed(2) : '0.00';
+            document.getElementById('myCreditsBalance').textContent = '$' + bal;
+
+            // Load or create referral code
+            const { data: refData } = await sb.rpc('get_or_create_referral_code', { p_user_id: currentAccount.id });
+            if (refData) {
+                const link = window.location.origin + '/course-catalog.html?ref=' + refData;
+                document.getElementById('myReferralLink').value = link;
+
+                const { data: refRow } = await sb.from('referral_codes').select('total_referrals, total_earned_cents').eq('user_id', currentAccount.id).single();
+                if (refRow) {
+                    document.getElementById('totalReferrals').textContent = refRow.total_referrals || 0;
+                    document.getElementById('totalReferralEarned').textContent = '$' + ((refRow.total_earned_cents || 0) / 100).toFixed(0);
+                }
+            }
+
+            // Load transaction history
+            const { data: txns } = await sb.from('credit_transactions').select('*').eq('user_id', currentAccount.id).order('created_at', { ascending: false }).limit(20);
+            const listEl = document.getElementById('myTransactionList');
+            const typeLabels = { admin_grant: '🎁 Credit Added', referral_earned: '👥 Referral Bonus', purchase_applied: '🛒 Used at Checkout', adjustment: '⚙️ Adjustment' };
+            if (!txns || txns.length === 0) {
+                listEl.innerHTML = '<p style="color:#94a3b8;text-align:center;padding:2rem;font-size:.95rem;">No credit activity yet. Share your referral link to earn your first $10!</p>';
+            } else {
+                listEl.innerHTML = txns.map(t => `
+                    <div style="display:flex;justify-content:space-between;align-items:center;padding:.875rem 1.25rem;border-bottom:1px solid #f1f5f9;font-size:.9rem;">
+                        <div>
+                            <div style="font-weight:600;color:#1e293b;">${typeLabels[t.type] || t.type}</div>
+                            <div style="color:#64748b;font-size:.85rem;">${t.description ? t.description + ' · ' : ''}${new Date(t.created_at).toLocaleDateString()}</div>
+                        </div>
+                        <div style="text-align:right;">
+                            <div style="font-weight:700;color:${t.amount_cents > 0 ? '#059669' : '#dc2626'};">${t.amount_cents > 0 ? '+' : ''}$${Math.abs(t.amount_cents / 100).toFixed(2)}</div>
+                            <div style="color:#94a3b8;font-size:.8rem;">Bal: $${(t.balance_after_cents / 100).toFixed(2)}</div>
+                        </div>
+                    </div>`).join('');
+            }
+        }
+
+        function copyReferralLink() {
+            const input = document.getElementById('myReferralLink');
+            input.select();
+            navigator.clipboard.writeText(input.value).then(() => {
+                const confirm = document.getElementById('copyRefConfirm');
+                confirm.style.display = 'block';
+                setTimeout(() => confirm.style.display = 'none', 3000);
+            });
+        }
+
     </script>
 
     <script>
