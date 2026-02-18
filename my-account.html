@@ -1097,14 +1097,12 @@
                                 </button>
                             </div>
 
-                            <!-- Course Access Override -->
+                            <!-- Course Access Override — dynamically populated -->
                             <div style="background: var(--gray-50); border: 1px solid var(--gray-200); border-radius: 6px; padding: 1rem; margin-bottom: 1.5rem;">
-                                <h4 style="margin-bottom: 0.5rem;">🔓 Direct Course Access</h4>
-                                <p style="font-size: 0.9rem; color: var(--gray-600); margin-bottom: 1rem;">Access any course directly, bypassing normal enrollment restrictions:</p>
-                                <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
-                                    <a href="courses/pt-msk-001-progressive.html" class="btn btn-success" style="font-size: 0.9rem;">MSK Course (Progressive)</a>
-                                    <a href="courses/pt-msk-001.html" class="btn btn-success" style="font-size: 0.9rem;">MSK Course (Original)</a>
-                                    <button onclick="setAdminMode()" class="btn btn-primary" style="font-size: 0.9rem;">🛡️ Enable Admin Mode</button>
+                                <h4 style="margin-bottom: 0.5rem;">🔓 All Courses</h4>
+                                <p style="font-size: 0.9rem; color: var(--gray-600); margin-bottom: 1rem;">All courses in the platform catalog:</p>
+                                <div id="superuser-course-list" style="display: flex; flex-direction: column; gap: 0.5rem;">
+                                    <p style="color: var(--gray-500); font-size: 0.9rem;">Loading courses…</p>
                                 </div>
                             </div>
                         </div>
@@ -1415,6 +1413,7 @@
 
             // Final section restore — corrects nav highlight and any timer-triggered resets
             restoreActiveSection();
+            renderSuperuserCourseList();
             window._accountInitialized = true;
         }
 
@@ -1497,9 +1496,48 @@
                 // Render courses directly into the DOM
                 renderSupabaseCourses(enrollments);
 
+                // Populate the super user course catalog list
+                renderSuperuserCourseList();
+
             } catch(err) {
                 console.error('loadSupabaseEnrollments error:', err);
             }
+        }
+
+        // Render full course catalog into the Super User section
+        function renderSuperuserCourseList() {
+            const container = document.getElementById('superuser-course-list');
+            if (!container) return;
+
+            const allIds = Object.keys(COURSE_DATABASE);
+            if (allIds.length === 0) {
+                container.innerHTML = '<p style="color:var(--gray-500);font-size:0.9rem;">No courses found.</p>';
+                return;
+            }
+
+            const enrolled = new Set(currentAccount?.enrolledCourses || []);
+            let html = '';
+            allIds.forEach(id => {
+                const c = COURSE_DATABASE[id];
+                if (!c) return;
+                const isEnrolled = enrolled.has(id);
+                const badge = isEnrolled
+                    ? '<span style="color:#16a34a;font-weight:600;font-size:0.8rem;">✓ Enrolled</span>'
+                    : '<span style="color:#9ca3af;font-size:0.8rem;">Not enrolled</span>';
+                const profs = Array.isArray(c.professions) ? c.professions.join(', ') : (c.professions || '');
+                html += `
+                    <div style="display:flex;align-items:center;justify-content:space-between;padding:0.6rem 0.75rem;background:white;border-radius:6px;border:1px solid var(--gray-200);">
+                        <div>
+                            <strong style="font-size:0.9rem;">${c.title}</strong>
+                            <span style="margin-left:0.5rem;color:var(--gray-500);font-size:0.8rem;">${c.credits} CCU${c.credits !== 1 ? 's' : ''} ${profs ? '· ' + profs : ''}</span>
+                        </div>
+                        <div style="display:flex;align-items:center;gap:0.75rem;">
+                            ${badge}
+                            <code style="font-size:0.75rem;color:var(--gray-500);">${id}</code>
+                        </div>
+                    </div>`;
+            });
+            container.innerHTML = html;
         }
 
         // Directly render Supabase enrollment cards into coursesList
