@@ -1219,7 +1219,22 @@
                 if (!window.DrTroySupabase) return;
                 const sb = window.DrTroySupabase.getClient ? window.DrTroySupabase.getClient() : null;
                 if (!sb) return;
-                sb.auth.getSession().then(({ data: { session } }) => {
+                                // Wait for DrTroySupabase to be available
+                if (!window.DrTroySupabase) {
+                    setTimeout(() => {
+                        (async () => { 
+                            const session = await window.DrTroySupabase?.getSession(); 
+                            if (session) {
+                                updateAuthUI(true, session.user);
+                            } else {
+                                updateAuthUI(false);
+                            }
+                        })();
+                    }, 100);
+                    return;
+                }
+                
+                (async () => { const session = await window.DrTroySupabase?.getSession(); if (session) {
                     if (session && session.user) {
                         link.textContent = 'My Account';
                         link.href = 'my-account.html';
