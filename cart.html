@@ -872,29 +872,75 @@
                 const result = window.drtroyCart.removeItem(itemId, type);
                 console.log('✅ Cart UI: removeItem result:', result);
                 
-                if (result.success) {
+                // Check if removal was successful
+                if (result && result.success === true) {
                     console.log('✅ Item successfully removed from cart');
                     
-                    // Update cart icon
-                    if (window.updateCartIcon) {
-                        window.updateCartIcon();
+                    // Update cart icon (with error handling)
+                    try {
+                        if (window.updateCartIcon && typeof window.updateCartIcon === 'function') {
+                            window.updateCartIcon();
+                        }
+                    } catch (iconError) {
+                        console.warn('⚠️ Cart icon update failed:', iconError);
+                        // Don't block removal success for icon update failures
                     }
                     
-                    // Repopulate the cart display
-                    populateCart();
-                    console.log('✅ Cart UI: populateCart completed');
+                    // Repopulate the cart display (with error handling)
+                    try {
+                        populateCart();
+                        console.log('✅ Cart UI: populateCart completed');
+                    } catch (populateError) {
+                        console.warn('⚠️ Cart repopulation failed:', populateError);
+                        // Don't block removal success for display update failures
+                    }
                     
                     // Show success feedback
                     showRemoveNotification('Item removed from cart');
                     
-                } else {
+                } else if (result && result.success === false) {
                     console.error('❌ Item removal failed:', result.reason);
                     showRemoveNotification(result.reason || 'Failed to remove item', true);
+                } else {
+                    // Unexpected result format
+                    console.warn('⚠️ Unexpected removal result:', result);
+                    // Since Troy reports item is actually removed, assume success
+                    showRemoveNotification('Item removed from cart');
+                    try {
+                        if (window.updateCartIcon) window.updateCartIcon();
+                        populateCart();
+                    } catch (e) {
+                        console.warn('⚠️ Post-removal UI update failed:', e);
+                    }
                 }
                 
             } catch (error) {
                 console.error('❌ Cart UI: Error during removal:', error);
-                showRemoveNotification('Error removing item: ' + error.message, true);
+                
+                // Check if the error is just a UI issue but removal actually worked
+                setTimeout(() => {
+                    try {
+                        const currentItems = window.drtroyCart.getItems();
+                        const stillExists = currentItems.find(item => 
+                            item.type === type && 
+                            (type === 'course' ? item.courseId === itemId : item.packageCode === itemId)
+                        );
+                        
+                        if (!stillExists) {
+                            // Item was removed despite the error, show success
+                            console.log('🔄 Item was actually removed despite error, showing success');
+                            showRemoveNotification('Item removed from cart');
+                            if (window.updateCartIcon) window.updateCartIcon();
+                            populateCart();
+                        } else {
+                            // Item still there, actual failure
+                            showRemoveNotification('Error removing item: ' + error.message, true);
+                        }
+                    } catch (checkError) {
+                        // Final fallback
+                        showRemoveNotification('Error removing item: ' + error.message, true);
+                    }
+                }, 100);
             }
         }
 
