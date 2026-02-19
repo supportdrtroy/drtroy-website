@@ -466,19 +466,6 @@
         inputIds.forEach(id => { const el = document.getElementById(id); if (el) el.disabled = on; });
     }
 
-    // ─── Auto-redirect if already admin ─────────────────────────────────────
-    async function checkExisting() {
-        // If this is a password recovery flow, never redirect — let the reset panel handle it
-        if (window.location.hash.includes('type=recovery')) return;
-        const { data: { session } } = await sb.auth.getSession();
-        if (!session) return;
-        const { data: profile } = await sb.from('profiles')
-            .select('is_admin')
-            .eq('id', session.user.id)
-            .single();
-        if (profile?.is_admin) window.location.replace('admin.html');
-    }
-
     // ─── Listen for PASSWORD_RECOVERY event ─────────────────────────────────
     sb.auth.onAuthStateChange((event) => {
         if (event === 'PASSWORD_RECOVERY') {
@@ -608,7 +595,6 @@
 
     // ─── Init ────────────────────────────────────────────────────────────────
     document.addEventListener('DOMContentLoaded', () => {
-        checkExisting();
         document.getElementById('loginEmail').focus();
     });
 </script>
