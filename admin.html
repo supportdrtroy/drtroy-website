@@ -3226,7 +3226,7 @@
                     <td>${esc(u.state) || '—'}</td>
                     <td>${roleBadge}${suspBadge}</td>
                     <td style="white-space:nowrap;">
-                        <button class="btn-small" onclick="viewUser(${JSON.stringify(u.email)})">👁️ View</button>
+                        <button class="btn-small" onclick="viewUser('${esc(u.id)}')">👁️ View</button>
                         <button class="btn-small ${u.is_admin ? 'warning' : ''}"
                             onclick="quickToggleAdmin('${esc(u.id)}', ${!!u.is_admin})"
                             style="margin-left:4px;">
@@ -3351,20 +3351,21 @@
 
         // ─── VIEW USER DETAIL MODAL ────────────────────────────────────────────────
 
-        async function viewUser(email) {
-            const user = _allUsers.find(u => u.email === email);
-            if (!user) {
-                const { data, error } = await window.DrTroySupabase.adminGetUserByEmail(email);
-                if (error || !data) {
-                    showAdminToast('User not found: ' + email, 'error');
+        async function viewUser(userId) {
+            try {
+                const user = _allUsers.find(u => u.id === userId);
+                if (!user) {
+                    showAdminToast('User not found.', 'error');
                     return;
                 }
-                _currentViewedUser = data;
-            } else {
                 _currentViewedUser = user;
+                await populateUserDetailModal(_currentViewedUser);
+                const modal = document.getElementById('userDetailModal');
+                if (!modal) { showAdminToast('Modal element missing — contact support.', 'error'); return; }
+                modal.classList.add('active');
+            } catch(err) {
+                showAdminToast('Could not open user: ' + err.message, 'error');
             }
-            await populateUserDetailModal(_currentViewedUser);
-            document.getElementById('userDetailModal').classList.add('active');
         }
 
         function closeUserDetailModal() {
