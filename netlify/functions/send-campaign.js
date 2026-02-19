@@ -7,8 +7,9 @@
 const https = require('https');
 
 const SUPABASE_HOST = 'pnqoxulxdmlmbywcpbyx.supabase.co';
-const SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBucW94dWx4ZG1sbWJ5d2NwYnl4Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3MTM2NTc1MiwiZXhwIjoyMDg2OTQxNzUyfQ.P3qGeWVSvEbp3hjBXcJHfbHKxlhNUbQdn5IIi3WEjkE';
-const RESEND_API_KEY = process.env.RESEND_API_KEY || 're_Z8BZLjWw_F7a29VSYgY8eJdhTXaCsn657';
+const SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
+const RESEND_API_KEY = process.env.RESEND_API_KEY;
+if (!SERVICE_ROLE_KEY || !RESEND_API_KEY) { console.error('[send-campaign] Missing required env vars'); }
 const FROM_EMAIL = '"DrTroy Continuing Education" <no-reply@drtroy.com>';
 
 const ALLOWED_ORIGINS = ['https://drtroy.com', 'https://www.drtroy.com'];

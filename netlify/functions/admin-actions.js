@@ -293,6 +293,20 @@ exports.handler = async (event) => {
     };
   }
 
+  // ── Audit logging helper ─────────────────────────────────────
+  async function logAdminAction(actionType, targetUserId, details) {
+    try {
+      await sbRest('POST', '/rest/v1/admin_log', {
+        admin_user_id: adminCheck.userId,
+        action_type: actionType,
+        target_user_id: targetUserId || null,
+        details: details || {},
+        ip_address: event.headers['x-forwarded-for'] || event.headers['client-ip'] || 'unknown',
+        created_at: new Date().toISOString(),
+      });
+    } catch (e) { console.warn('[admin-actions] Audit log failed:', e.message); }
+  }
+
   // ── Route to action ─────────────────────────────────────────
   try {
     let result;
@@ -310,6 +324,9 @@ exports.handler = async (event) => {
           body: JSON.stringify({ error: `Unknown action: ${action}` }),
         };
     }
+
+    // Audit log the action
+    await logAdminAction(action, payload.userId || payload.enrollmentId || null, payload);
 
     return {
       statusCode: 200,

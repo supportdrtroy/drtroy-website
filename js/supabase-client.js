@@ -252,28 +252,21 @@ async function issueCertificate(certData) {
 /* ─── DISCOUNT CODE HELPERS ─────────────────────────────────────────────────── */
 
 async function validateDiscountCode(code, profession) {
-    const sb = getSupabaseClient();
-    if (!sb) return { data: null, error: { message: 'Database unavailable' } };
-
-    const { data, error } = await sb.from('discount_codes')
-        .select('*')
-        .eq('code', code.toUpperCase())
-        .eq('is_active', true)
-        .maybeSingle();
-
-    if (error || !data) return { data: null, error: error || { message: 'Invalid discount code' } };
-
-    // Check usage limits
-    if (data.max_uses && data.current_uses >= data.max_uses) {
-        return { data: null, error: { message: 'This code has reached its usage limit' } };
+    // SECURITY: Validate via server-side function (no direct DB access to discount_codes)
+    try {
+        const resp = await fetch('/.netlify/functions/validate-discount', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ code })
+        });
+        const result = await resp.json();
+        if (!result || !result.valid) {
+            return { data: null, error: { message: 'Invalid discount code' } };
+        }
+        return { data: result, error: null };
+    } catch (err) {
+        return { data: null, error: { message: 'Could not validate code. Please try again.' } };
     }
-
-    // Check profession applicability
-    if (data.applies_to && data.applies_to !== 'all' && data.applies_to !== profession) {
-        return { data: null, error: { message: 'This code does not apply to your profession' } };
-    }
-
-    return { data, error: null };
 }
 
 /* ─── ADMIN HELPERS ─────────────────────────────────────────────────────────── */
@@ -673,4 +666,55 @@ window.DrTroySupabase.getClient = getSupabaseClient;
 // Convenience alias
 window.SB = window.DrTroySupabase;
 
-console.log('✅ DrTroy Supabase client loaded');
+/* ─── PASSWORD VALIDATION ───────────────────────────────────────────────────── */
+
+/**
+ * Validate password meets security requirements:
+ * - At least 8 characters
+ * - At least one uppercase letter
+ * - At least one lowercase letter
+ * - At least one number
+ * - At least one special character
+ */
+function validatePassword(password) {
+    const errors = [];
+    if (!password || password.length < 8) errors.push('Password must be at least 8 characters');
+    if (!/[A-Z]/.test(password)) errors.push('Password must contain at least one uppercase letter');
+    if (!/[a-z]/.test(password)) errors.push('Password must contain at least one lowercase letter');
+    if (!/[0-9]/.test(password)) errors.push('Password must contain at least one number');
+    if (!/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(password)) errors.push('Password must contain at least one special character');
+    return { valid: errors.length === 0, errors };
+}
+
+window.DrTroySupabase.validatePassword = validatePassword;
+
+/* ─── SESSION IDLE TIMEOUT ──────────────────────────────────────────────────── */
+
+(function initSessionTimeout() {
+    const IDLE_TIMEOUT_MS = 30 * 60 * 1000; // 30 minutes
+    let idleTimer = null;
+
+    function resetIdleTimer() {
+        if (idleTimer) clearTimeout(idleTimer);
+        idleTimer = setTimeout(async () => {
+            const sb = getSupabaseClient();
+            if (!sb) return;
+            const { data: { session } } = await sb.auth.getSession();
+            if (session) {
+                await sb.auth.signOut();
+                alert('Your session has expired due to inactivity. Please log in again.');
+                window.location.href = '/my-account.html';
+            }
+        }, IDLE_TIMEOUT_MS);
+    }
+
+    // Track user activity
+    ['mousemove', 'keydown', 'scroll', 'click', 'touchstart'].forEach(evt => {
+        document.addEventListener(evt, resetIdleTimer, { passive: true });
+    });
+
+    // Start timer
+    resetIdleTimer();
+})();
+
+console.log('✅ DrTroy Supabase client loaded (security-hardened)');

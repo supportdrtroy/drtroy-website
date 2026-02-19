@@ -7,7 +7,8 @@
 const https = require('https');
 
 const SUPABASE_HOST = 'pnqoxulxdmlmbywcpbyx.supabase.co';
-const SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBucW94dWx4ZG1sbWJ5d2NwYnl4Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3MTM2NTc1MiwiZXhwIjoyMDg2OTQxNzUyfQ.P3qGeWVSvEbp3hjBXcJHfbHKxlhNUbQdn5IIi3WEjkE';
+const SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
+if (!SERVICE_ROLE_KEY) { console.error('[update-progress] Missing SUPABASE_SERVICE_ROLE_KEY'); }
 
 const ALLOWED_ORIGINS = ['https://drtroy.com', 'https://www.drtroy.com'];
 
@@ -76,11 +77,13 @@ exports.handler = async (event) => {
   let body;
   try { body = JSON.parse(event.body || '{}'); } catch { return { statusCode: 400, headers: cors, body: JSON.stringify({ error: 'Invalid JSON' }) }; }
 
-  const { courseId, progressPercent, modulesCompleted, timeSpentSeconds, status } = body;
+  const { courseId, progressPercent, modulesCompleted, timeSpentSeconds } = body;
   if (!courseId) return { statusCode: 400, headers: cors, body: JSON.stringify({ error: 'courseId required' }) };
 
+  // SECURITY: Cap progress at 95% from client-side. Only complete-course function can set 100%/completed.
+  const cappedProgress = Math.min(95, Math.max(0, progressPercent || 0));
   const now = new Date().toISOString();
-  const newStatus = status || (progressPercent >= 100 ? 'completed' : progressPercent > 0 ? 'in_progress' : 'not_started');
+  const newStatus = cappedProgress > 0 ? 'in_progress' : 'not_started';
 
   // Find enrollment
   const enrollRes = await sbRest('GET', `/rest/v1/enrollments?user_id=eq.${userId}&course_id=eq.${encodeURIComponent(courseId)}&limit=1`);
@@ -98,7 +101,7 @@ exports.handler = async (event) => {
     course_id: courseId,
     enrollment_id: enrollment.id,
     status: newStatus,
-    progress_percent: Math.min(100, Math.max(0, progressPercent || 0)),
+    progress_percent: cappedProgress,
     modules_completed: modulesCompleted || null,
     time_spent_seconds: timeSpentSeconds || 0,
     updated_at: now,
@@ -107,9 +110,7 @@ exports.handler = async (event) => {
   if (Array.isArray(existingRes.body) && existingRes.body.length > 0) {
     // Update
     const id = existingRes.body[0].id;
-    if (newStatus === 'completed' && !existingRes.body[0].completed_at) {
-      progressData.completed_at = now;
-    }
+    // completed_at only set by complete-course function
     if (!existingRes.body[0].started_at) {
       progressData.started_at = now;
     }
@@ -118,7 +119,7 @@ exports.handler = async (event) => {
   } else {
     // Insert
     progressData.started_at = now;
-    if (newStatus === 'completed') progressData.completed_at = now;
+    // completed_at only set by complete-course function
     const ins = await sbRest('POST', '/rest/v1/course_progress', progressData);
     progressRecord = Array.isArray(ins.body) ? ins.body[0] : ins.body;
   }

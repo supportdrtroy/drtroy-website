@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verify Certificate — DrTroy Continuing Education</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f1f5f9; color: #1e293b; min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 2rem; }
+        .container { max-width: 560px; width: 100%; }
+        .logo { text-align: center; margin-bottom: 2rem; }
+        .logo img { height: 56px; }
+        .logo p { color: #64748b; font-size: 13px; text-transform: uppercase; letter-spacing: .05em; margin-top: 8px; }
+        .card { background: #fff; border-radius: 16px; padding: 2.5rem; box-shadow: 0 4px 24px rgba(0,0,0,.08); }
+        h1 { font-size: 1.5rem; color: #1a365d; margin-bottom: 1rem; text-align: center; }
+        .search-form { display: flex; gap: 0.5rem; margin-bottom: 1.5rem; }
+        .search-form input { flex: 1; padding: 12px 16px; border: 2px solid #e2e8f0; border-radius: 10px; font-size: 1rem; outline: none; transition: border-color .2s; }
+        .search-form input:focus { border-color: #1a365d; }
+        .search-form button { padding: 12px 24px; background: #1a365d; color: #fff; border: none; border-radius: 10px; font-weight: 700; cursor: pointer; font-size: 1rem; }
+        .search-form button:hover { background: #2c5282; }
+        .result { display: none; }
+        .result.show { display: block; }
+        .valid { background: #f0fdf4; border: 2px solid #86efac; border-radius: 12px; padding: 1.5rem; text-align: center; }
+        .valid .check { font-size: 3rem; margin-bottom: 0.5rem; }
+        .valid h2 { color: #166534; font-size: 1.25rem; margin-bottom: 1rem; }
+        .valid .detail { margin: 0.5rem 0; color: #374151; font-size: 0.95rem; }
+        .valid .detail strong { color: #1a365d; }
+        .invalid { background: #fef2f2; border: 2px solid #fca5a5; border-radius: 12px; padding: 1.5rem; text-align: center; }
+        .invalid .x { font-size: 3rem; margin-bottom: 0.5rem; }
+        .invalid h2 { color: #991b1b; font-size: 1.25rem; }
+        .loading { text-align: center; color: #64748b; padding: 1rem; }
+        .footer { text-align: center; margin-top: 2rem; color: #94a3b8; font-size: 0.8rem; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">
+            <img src="/courses/images/drtroy_logo_new.jpg" alt="DrTroy CE">
+            <p>Certificate Verification Portal</p>
+        </div>
+        <div class="card">
+            <h1>🔍 Verify a Certificate</h1>
+            <p style="text-align:center;color:#64748b;margin-bottom:1.5rem;">Enter the certificate number to verify its authenticity.</p>
+            <div class="search-form">
+                <input type="text" id="certInput" placeholder="e.g. DRTROY-2026-12345678" autocomplete="off">
+                <button onclick="verifyCert()">Verify</button>
+            </div>
+            <div id="loading" class="loading" style="display:none;">Verifying...</div>
+            <div id="validResult" class="result valid">
+                <div class="check">✅</div>
+                <h2>Certificate Verified</h2>
+                <p class="detail"><strong>Certificate:</strong> <span id="rCertNum"></span></p>
+                <p class="detail"><strong>Recipient:</strong> <span id="rName"></span></p>
+                <p class="detail"><strong>Course:</strong> <span id="rCourse"></span></p>
+                <p class="detail"><strong>CEU Hours:</strong> <span id="rCeu"></span></p>
+                <p class="detail"><strong>Issued:</strong> <span id="rDate"></span></p>
+            </div>
+            <div id="invalidResult" class="result invalid">
+                <div class="x">❌</div>
+                <h2 id="invalidMsg">Certificate Not Found</h2>
+            </div>
+        </div>
+        <div class="footer">&copy; 2026 DrTroy Continuing Education &middot; Lubbock, Texas</div>
+    </div>
+    <script>
+        // Auto-fill from URL param
+        const params = new URLSearchParams(window.location.search);
+        if (params.get('number')) {
+            document.getElementById('certInput').value = params.get('number');
+            verifyCert();
+        }
+
+        async function verifyCert() {
+            const input = document.getElementById('certInput').value.trim();
+            if (!input) return;
+            
+            document.getElementById('loading').style.display = 'block';
+            document.getElementById('validResult').classList.remove('show');
+            document.getElementById('invalidResult').classList.remove('show');
+
+            try {
+                const res = await fetch(`/.netlify/functions/verify-certificate?number=${encodeURIComponent(input)}`);
+                const data = await res.json();
+                document.getElementById('loading').style.display = 'none';
+
+                if (data.valid) {
+                    document.getElementById('rCertNum').textContent = data.certificateNumber;
+                    document.getElementById('rName').textContent = data.recipientName;
+                    document.getElementById('rCourse').textContent = data.courseTitle;
+                    document.getElementById('rCeu').textContent = data.ceuHours;
+                    document.getElementById('rDate').textContent = new Date(data.issuedAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+                    document.getElementById('validResult').classList.add('show');
+                } else {
+                    document.getElementById('invalidMsg').textContent = data.message || 'Certificate not found';
+                    document.getElementById('invalidResult').classList.add('show');
+                }
+            } catch (e) {
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('invalidMsg').textContent = 'Verification service unavailable. Please try again.';
+                document.getElementById('invalidResult').classList.add('show');
+            }
+        }
+
+        document.getElementById('certInput').addEventListener('keypress', (e) => { if (e.key === 'Enter') verifyCert(); });
+    </script>
+</body>
+</html>

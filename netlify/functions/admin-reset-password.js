@@ -6,7 +6,8 @@
 const https = require('https');
 
 const SUPABASE_HOST = 'pnqoxulxdmlmbywcpbyx.supabase.co';
-const SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBucW94dWx4ZG1sbWJ5d2NwYnl4Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3MTM2NTc1MiwiZXhwIjoyMDg2OTQxNzUyfQ.P3qGeWVSvEbp3hjBXcJHfbHKxlhNUbQdn5IIi3WEjkE';
+const SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
+if (!SERVICE_ROLE_KEY) { console.error('[admin-reset-password] Missing SUPABASE_SERVICE_ROLE_KEY'); }
 
 const ALLOWED_ORIGINS = ['https://drtroy.com', 'https://www.drtroy.com'];
 

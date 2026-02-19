@@ -6,6 +6,18 @@
 [functions]
   node_bundler = "esbuild"
 
+[[edge_functions]]
+  path = "/.netlify/functions/create-checkout"
+  function = "rate-limit"
+
+[[edge_functions]]
+  path = "/.netlify/functions/send-referral"
+  function = "rate-limit"
+
+[[edge_functions]]
+  path = "/.netlify/functions/send-waitlist-confirm"
+  function = "rate-limit"
+
 [[headers]]
   for = "/*"
   [headers.values]
@@ -36,6 +48,21 @@
   for = "*.jpg"
   [headers.values]
     Cache-Control = "public, max-age=31536000"
+
+[[redirects]]
+  from = "/verify"
+  to = "/verify.html"
+  status = 200
+
+[[redirects]]
+  from = "/verify/:certId"
+  to = "/verify.html?number=:certId"
+  status = 200
+
+[[redirects]]
+  from = "/privacy"
+  to = "/privacy.html"
+  status = 200
 
 [[redirects]]
   from = "/admin"
