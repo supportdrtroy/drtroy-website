@@ -714,6 +714,39 @@
     
     <script>
         // Populate cart items
+        
+        // Backup removal function with detailed debugging
+        window.debugRemoveFromCart = function(button) {
+            console.log('🔧 DEBUG: Button clicked:', button);
+            console.log('🔧 DEBUG: Button onclick:', button.getAttribute('onclick'));
+            
+            // Get cart contents
+            const items = window.drtroyCart ? window.drtroyCart.getItems() : [];
+            console.log('🔧 DEBUG: Current cart items:', items);
+            
+            // Try to extract parameters from the button
+            const onclickAttr = button.getAttribute('onclick');
+            if (onclickAttr) {
+                console.log('🔧 DEBUG: Parsing onclick:', onclickAttr);
+                
+                // Extract the parameters
+                const match = onclickAttr.match(/removeFromCartUI\('([^']*)',\s*'([^']*)'\)/);
+                if (match) {
+                    const [, itemId, type] = match;
+                    console.log('🔧 DEBUG: Extracted params:', { itemId, type });
+                    
+                    // Try the removal
+                    removeFromCartUI(itemId, type);
+                } else {
+                    console.error('🔧 DEBUG: Could not parse onclick attribute');
+                    showRemoveNotification('Could not parse removal parameters', true);
+                }
+            } else {
+                console.error('🔧 DEBUG: No onclick attribute found');
+                showRemoveNotification('No removal parameters found', true);
+            }
+        };
+
         function populateCart() {
             const cartData = window.drtroyCart.getCheckoutData();
             const container = document.getElementById('cart-items-container');
@@ -759,7 +792,10 @@
                         <div class="item-actions">
                             <div class="item-price">$${(item.price * (item.quantity || 1)).toFixed(2)}</div>
                             ${quantityControls}
-                            <button class="remove-btn" onclick="removeFromCartUI('${item.type === 'course' ? item.courseId : item.packageCode}', '${item.type}')">
+                            <button class="remove-btn" 
+                                       data-item-id="${item.type === 'course' ? item.courseId : item.packageCode}"
+                                       data-item-type="${item.type}"
+                                       onclick="removeFromCartUI(this.dataset.itemId, this.dataset.itemType)">
                                 Remove
                             </button>
                         </div>
@@ -804,6 +840,13 @@
                 return;
             }
 
+            // Check if removeItem function exists
+            if (typeof window.drtroyCart.removeItem !== 'function') {
+                console.error('❌ Cart UI: removeItem function not found');
+                showRemoveNotification('Cart removal function not available', true);
+                return;
+            }
+
             // Get initial cart state
             const itemsBefore = window.drtroyCart.getItems();
             const countBefore = itemsBefore.length;
@@ -817,6 +860,7 @@
             
             if (!itemToRemove) {
                 console.warn('⚠️ Cart UI: Item not found in cart:', { itemId, type });
+                console.log('📋 Available items:', itemsBefore.map(i => ({type: i.type, id: i.type === 'course' ? i.courseId : i.packageCode})));
                 showRemoveNotification('Item not found in cart', true);
                 return;
             }

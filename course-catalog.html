@@ -1020,12 +1020,7 @@
             try {
                 const result = window.addCourseToCart(courseId);
                 console.log('✅ Add to cart result:', result);
-                
-                if (result) {
-                    showAddNotification(`Course added to cart!`);
-                } else {
-                    showAddNotification('Error adding course to cart', true);
-                }
+                // Note: cart.js already shows notification, no need to duplicate
             } catch (error) {
                 console.error('❌ Error adding course:', error);
                 showAddNotification('Error adding course to cart', true);
@@ -1038,12 +1033,7 @@
             try {
                 const result = window.addPackageToCart(packageCode);
                 console.log('✅ Add package result:', result);
-                
-                if (result) {
-                    showAddNotification(`Package added to cart!`);
-                } else {
-                    showAddNotification('Error adding package to cart', true);
-                }
+                // Note: cart.js already shows notification, no need to duplicate
             } catch (error) {
                 console.error('❌ Error adding package:', error);
                 showAddNotification('Error adding package to cart', true);
