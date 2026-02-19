@@ -69,9 +69,9 @@ exports.handler = async (event) => {
             <p style="color:#4b5563;font-size:16px;line-height:1.7;margin:0 0 20px;">Your colleague thought you'd benefit from <strong>DrTroy Continuing Education</strong> — a platform built by practicing clinicians, for practicing clinicians. All the CCUs you need for your Texas license renewal, in one place, at a fair price.</p>
             <table width="100%" cellpadding="0" cellspacing="0" style="background:linear-gradient(135deg,#f0fdf4,#dcfce7);border:2px solid #86efac;border-radius:12px;margin:24px 0;">
               <tr><td style="padding:24px;text-align:center;">
-                <p style="font-size:13px;font-weight:700;color:#166534;text-transform:uppercase;letter-spacing:.08em;margin:0 0 8px;">Exclusive Offer for You</p>
-                <p style="font-size:32px;font-weight:800;color:#059669;margin:0 0 8px;line-height:1;">$10 Off</p>
-                <p style="font-size:14px;color:#166534;margin:0;">your first CE package when you sign up using this link</p>
+                <p style="font-size:13px;font-weight:700;color:#166534;text-transform:uppercase;letter-spacing:.08em;margin:0 0 8px;">Recommended by a Colleague</p>
+                <p style="font-size:22px;font-weight:800;color:#1a365d;margin:0 0 8px;line-height:1.2;">DrTroy Continuing Education</p>
+                <p style="font-size:14px;color:#166534;margin:0;">Online CCU packages for Texas PTs, PTAs, OTs &amp; COTAs</p>
               </td></tr>
             </table>
             <p style="color:#4b5563;font-size:15px;line-height:1.7;margin:0 0 16px;">DrTroy CE offers discipline-specific CCU packages for <strong>PTs, PTAs, OTs, and COTAs</strong> — covering your required contact hours with content that actually applies to daily clinical practice.</p>
@@ -83,7 +83,7 @@ exports.handler = async (event) => {
             </ul>
             <table width="100%" cellpadding="0" cellspacing="0">
               <tr><td align="center" style="padding:8px 0 28px;">
-                <a href="${refLink}" style="display:inline-block;background:linear-gradient(135deg,#059669,#10b981);color:#fff;font-size:16px;font-weight:700;text-decoration:none;padding:16px 40px;border-radius:10px;letter-spacing:.02em;">Claim My $10 Discount →</a>
+                <a href="${refLink}" style="display:inline-block;background:linear-gradient(135deg,#059669,#10b981);color:#fff;font-size:16px;font-weight:700;text-decoration:none;padding:16px 40px;border-radius:10px;letter-spacing:.02em;">Explore DrTroy CE →</a>
               </td></tr>
             </table>
             <p style="color:#9ca3af;font-size:13px;line-height:1.6;margin:0;text-align:center;">Or copy this link: <a href="${refLink}" style="color:#059669;word-break:break-all;">${refLink}</a></p>
@@ -105,7 +105,7 @@ exports.handler = async (event) => {
         const result = await resendPost(apiKey, {
             from:    'DrTroy Continuing Education <no-reply@drtroy.com>',
             to:      [to],
-            subject: `${senderDisplay} invited you to DrTroy CE — $10 off your first package`,
+            subject: `${senderDisplay} thinks you'll love DrTroy CE`,
             html
         });
 
