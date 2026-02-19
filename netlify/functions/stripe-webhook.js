@@ -98,6 +98,58 @@ async function createEnrollment(enrollment, supabaseUrl, serviceRoleKey) {
   return supabaseRequest('POST', '/rest/v1/enrollments', enrollment, supabaseUrl, serviceRoleKey);
 }
 
+async function createAuthorSalesRecords(courseId, enrollmentId, saleAmountCents, supabaseUrl, serviceRoleKey) {
+  try {
+    // Get course authors and their revenue shares
+    const authorsRes = await supabaseRequest(
+      'GET',
+      `/rest/v1/course_authors?course_id=eq.${encodeURIComponent(courseId)}&select=*,authors(*)`,
+      null, supabaseUrl, serviceRoleKey
+    );
+
+    if (authorsRes.status !== 200 || !authorsRes.data || authorsRes.data.length === 0) {
+      console.log(`[stripe-webhook] No authors found for course ${courseId} - skipping author sales tracking`);
+      return;
+    }
+
+    const saleAmount = saleAmountCents / 100; // Convert cents to dollars
+    const authorSalesRecords = [];
+
+    // Create a sales record for each author
+    for (const courseAuthor of authorsRes.data) {
+      const authorEarning = saleAmount * (courseAuthor.revenue_share / 100);
+      
+      authorSalesRecords.push({
+        author_id: courseAuthor.author_id,
+        course_id: courseId,
+        enrollment_id: enrollmentId,
+        sale_amount: saleAmount,
+        author_earning: authorEarning,
+        revenue_share_percent: courseAuthor.revenue_share,
+        payment_status: 'pending'
+      });
+    }
+
+    // Insert all author sales records
+    const salesResult = await supabaseRequest(
+      'POST', 
+      '/rest/v1/author_sales',
+      authorSalesRecords,
+      supabaseUrl, 
+      serviceRoleKey
+    );
+
+    if (salesResult.status >= 400) {
+      console.error(`[stripe-webhook] Failed to create author sales records for course ${courseId}:`, salesResult.data);
+    } else {
+      console.log(`[stripe-webhook] ✅ Created ${authorSalesRecords.length} author sales records for course ${courseId}`);
+    }
+
+  } catch (error) {
+    console.error(`[stripe-webhook] Error creating author sales records for course ${courseId}:`, error.message);
+  }
+}
+
 async function createProgressRow(progress, supabaseUrl, serviceRoleKey) {
   return supabaseRequest('POST', '/rest/v1/course_progress', progress, supabaseUrl, serviceRoleKey);
 }
@@ -331,6 +383,9 @@ exports.handler = async (event) => {
             status:           'not_started',
             progress_percent: 0,
           }, SUPABASE_URL, SERVICE_ROLE);
+
+          // Create author sales tracking records
+          await createAuthorSalesRecords(courseId, enrollId, amountPaid, SUPABASE_URL, SERVICE_ROLE);
         }
 
         // Get course details for email
