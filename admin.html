@@ -2116,6 +2116,35 @@
             if (session && session.user) {
                 const adminFlag = await window.DrTroySupabase.isAdmin(session.user.id);
                 if (adminFlag) {
+                    // ─── MFA Enforcement for Admins ───────────────────────
+                    try {
+                        const sbClient = window.DrTroySupabase.getClient ? window.DrTroySupabase.getClient() : null;
+                        if (sbClient) {
+                            const { data: aal } = await sbClient.auth.mfa.getAuthenticatorAssuranceLevel();
+                            const { data: factors } = await sbClient.auth.mfa.listFactors();
+                            const totpFactors = (factors?.totp || []).filter(f => f.status === 'verified');
+
+                            // If admin has MFA enrolled but hasn't verified this session
+                            if (totpFactors.length > 0 && aal?.currentLevel !== 'aal2') {
+                                // Recovery bypass check
+                                if (sessionStorage.getItem('mfa_recovery_bypass') !== 'true') {
+                                    window.location.replace('secure-admin-access-2026.html');
+                                    return false;
+                                }
+                            }
+
+                            // If admin has NO MFA enrolled, force setup
+                            if (totpFactors.length === 0) {
+                                window.location.replace('secure-admin-access-2026.html');
+                                return false;
+                            }
+                        }
+                    } catch (mfaErr) {
+                        console.warn('MFA check error:', mfaErr);
+                        // Don't block access on MFA check errors — graceful degradation
+                    }
+                    // ─── End MFA Enforcement ──────────────────────────────
+
                     _adminUser   = session.user;
                     _adminAuthed = true;
                     return true;

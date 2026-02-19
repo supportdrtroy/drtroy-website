@@ -50,6 +50,10 @@
   path = "/.netlify/functions/verify-certificate"
   function = "rate-limit"
 
+[[edge_functions]]
+  path = "/.netlify/functions/contact-form"
+  function = "rate-limit"
+
 [[headers]]
   for = "/*"
   [headers.values]
@@ -59,7 +63,7 @@
     Referrer-Policy = "strict-origin-when-cross-origin"
     Strict-Transport-Security = "max-age=31536000; includeSubDomains"
     Permissions-Policy = "camera=(), microphone=(), geolocation=(), payment=(self)"
-    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://unpkg.com https://js.stripe.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.jsdelivr.net; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://*.supabase.co https://api.stripe.com; frame-src https://js.stripe.com; object-src 'none'; base-uri 'self';"
+    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://unpkg.com https://js.stripe.com https://www.google.com https://www.gstatic.com https://www.recaptcha.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.jsdelivr.net; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://*.supabase.co https://api.stripe.com https://www.google.com; frame-src https://js.stripe.com https://www.google.com https://www.recaptcha.net; object-src 'none'; base-uri 'self';"
 
 # Admin pages — extra security headers
 [[headers]]

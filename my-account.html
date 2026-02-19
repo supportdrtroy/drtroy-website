@@ -67,22 +67,17 @@
         }
 
         nav {
-            margin-top: 1rem;
             display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
             align-items: center;
-            gap: 0.5rem;
+            gap: 2.5rem;
         }
 
         nav a {
             color: var(--gray-600);
             text-decoration: none;
-            padding: 0.5rem 1rem;
             font-weight: 500;
-            transition: color 0.2s;
-            white-space: nowrap;
-            font-size: 0.9rem;
+            font-size: 0.95rem;
+            transition: color 0.25s;
         }
 
         nav a:hover {
@@ -635,32 +630,9 @@
             }
             
             .logo img {
-            mix-blend-mode: multiply;
-                height: 120px;
+                mix-blend-mode: multiply;
+                height: 60px;
                 max-width: 100%;
-            }
-            
-            nav {
-                margin-top: 1rem;
-                display: grid;
-                grid-template-columns: repeat(2, 1fr);
-                gap: 0.5rem;
-                width: 100%;
-                max-width: 400px;
-            }
-            
-            nav a {
-                font-size: 0.8rem;
-                padding: 0.4rem 0.6rem;
-                text-align: center;
-                border-radius: 4px;
-                background: var(--gray-100);
-                border: 1px solid var(--gray-200);
-            }
-            
-            .login-link {
-                font-size: 0.8rem !important;
-                padding: 0.4rem 0.6rem !important;
             }
 
             .account-layout {
@@ -730,9 +702,9 @@
             display: block;
             width: 24px;
             height: 2px;
-            background: #1e3a8a;
+            background: var(--navy);
             border-radius: 2px;
-            transition: all 0.3s ease;
+            transition: all 0.3s;
         }
         @media (max-width: 768px) {
             .hamburger { display: flex; }
@@ -773,7 +745,7 @@
     <header class="header">
         <div class="header-container">
             <div class="logo">
-                <a href="index.html">
+                <a href="home-preview.html">
                     <img src="courses/images/drtroy_logo_new.jpg" alt="DrTroy Continuing Education">
                 </a>
             </div>
@@ -781,13 +753,12 @@
                 <span></span><span></span><span></span>
             </button>
             <nav class="nav-links">
-                <a href="index.html">Home</a>
-                <a href="index.html#packages">Packages</a>
+                <a href="home-preview.html">Home</a>
+                <a href="home-preview.html#packages">Packages</a>
                 <a href="courses.html">Course Catalog</a>
-                <a href="index.html#about">About</a>
-                <a href="index.html#contact">Contact</a>
-                <a href="my-account.html" class="login-link" id="accountLink">My Account</a>
-                <a href="#" onclick="logout(); return false;" class="login-link">🚪 Logout</a>
+                <a href="home-preview.html#about">About</a>
+                <a href="home-preview.html#contact">Contact</a>
+                <a href="my-account.html" class="login-link" id="accountLink">Log In</a>
             </nav>
         </div>
     </header>
@@ -1560,6 +1531,7 @@
             restoreActiveSection();
             renderSuperuserCourseList();
             window._accountInitialized = true;
+            updateNavigation();
         }
 
         // Load enrollments from Supabase via direct REST (no CDN dependency)
@@ -1752,6 +1724,24 @@
             }
         }
 
+        // Update navigation based on authentication state
+        function updateNavigation() {
+            const accountLink = document.getElementById('accountLink');
+            if (!accountLink) return;
+
+            const isAuthenticated = currentAccount || currentSupabaseUser;
+            
+            if (isAuthenticated) {
+                accountLink.textContent = '🚪 Logout';
+                accountLink.onclick = function() { logout(); return false; };
+                accountLink.href = '#';
+            } else {
+                accountLink.textContent = 'Log In';
+                accountLink.onclick = null;
+                accountLink.href = 'my-account.html';
+            }
+        }
+
         // Logout — Supabase + legacy clear
         async function logout() {
             if (window.DrTroySupabase) {
@@ -1761,7 +1751,7 @@
             localStorage.removeItem('userSession');
             localStorage.removeItem('troyadmin');
             localStorage.removeItem('currentAccountSection');
-            window.location.href = 'index.html';
+            window.location.href = 'home-preview.html';
         }
 
         // Restore the previously active section after page load
@@ -1826,6 +1816,7 @@
         function showLoginRequired() {
             document.getElementById('loginRequired').style.display = 'block';
             document.getElementById('accountContent').style.display = 'none';
+            updateNavigation();
             
             // Don't auto-redirect - let user see debug info
             // setTimeout(() => {
@@ -2477,7 +2468,7 @@
                     <div style="text-align: center; color: var(--gray-600); padding: 3rem;">
                         <h3>No Courses Yet</h3>
                         <p>You haven't enrolled in any courses yet.</p>
-                        <a href="index.html#packages" class="btn btn-primary" style="margin-top: 1rem;">📚 Browse Packages</a>
+                        <a href="home-preview.html#packages" class="btn btn-primary" style="margin-top: 1rem;">📚 Browse Packages</a>
                     </div>
                 `;
                 return;
@@ -2802,7 +2793,7 @@
                         localStorage.removeItem('customerDiscipline');
                         
                         alert('✅ Account deleted successfully. You will be redirected to the homepage.');
-                        window.location.href = 'index.html';
+                        window.location.href = 'home-preview.html';
                     } else {
                         alert('Account deletion cancelled - confirmation text did not match.');
                     }
@@ -3313,7 +3304,7 @@
             showAlert('🗑️ All data deleted. Redirecting to homepage...', 'danger');
             
             setTimeout(() => {
-                window.location.href = 'index.html';
+                window.location.href = 'home-preview.html';
             }, 3000);
         }
 
@@ -3615,9 +3606,9 @@
         // Mobile hamburger menu
         (function() {
             const btn = document.querySelector('.hamburger');
-            const nav = document.querySelector('.nav-links, nav');
+            const nav = document.querySelector('.nav-links');
             if (btn && nav) {
-                btn.addEventListener('click', () => { nav.classList.toggle('active'); });
+                btn.addEventListener('click', () => nav.classList.toggle('active'));
                 nav.querySelectorAll('a').forEach(a => {
                     a.addEventListener('click', () => nav.classList.remove('active'));
                 });
