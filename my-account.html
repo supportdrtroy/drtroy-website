@@ -898,6 +898,7 @@
                         <li><a href="#" onclick="showSection('courses')" class="nav-link">📚 My Courses</a></li>
                         <li><a href="#" onclick="showSection('credits')" class="nav-link">💳 Credits & Referrals</a></li>
                         <li><a href="#" onclick="showSection('superuser')" class="nav-link" id="superuser-nav" style="display: none;">⚡ Super User</a></li>
+                        <li><a href="author-dashboard.html" class="nav-link" id="author-portal-nav" style="display: none;">✍️ Author Portal</a></li>
                         <li><a href="#" onclick="showSection('notifications')" class="nav-link">🔔 Notifications</a></li>
                         <li><a href="#" onclick="showSection('security')" class="nav-link">🛡️ Security</a></li>
                         <li><a href="#" onclick="showSection('privacy')" class="nav-link">🔒 Privacy</a></li>
@@ -1356,6 +1357,7 @@
                                 <button onclick="showAuthorSection('course-assignments')" class="btn btn-secondary" id="btn-course-assignments">📚 Course Assignments</button>
                                 <button onclick="showAuthorSection('sales-reports')" class="btn btn-secondary" id="btn-sales-reports">📊 Sales Reports</button>
                                 <button onclick="showAuthorSection('payments')" class="btn btn-secondary" id="btn-payments">💰 Payments</button>
+                                <button onclick="showAuthorSection('designate-users')" class="btn btn-secondary" id="btn-designate-users">👤 Designate Users</button>
                             </div>
 
                             <!-- Authors List -->
@@ -1481,6 +1483,53 @@
                                 </div>
                                 <div id="payments-content">
                                     <p style="color: #6b7280; text-align: center; padding: 2rem;">Click "View Pending Payments" to see authors awaiting payment</p>
+                                </div>
+                            </div>
+
+                            <!-- Designate Users as Authors -->
+                            <div id="designate-users" class="author-section" style="display: none;">
+                                <h4>Designate Users as Authors</h4>
+                                <p style="color: #6b7280; margin-bottom: 1.5rem;">Connect existing user accounts to author records to give them access to the Author Portal.</p>
+                                
+                                <!-- User Search -->
+                                <div style="margin-bottom: 2rem;">
+                                    <div style="display: flex; gap: 1rem; align-items: end; margin-bottom: 1rem;">
+                                        <div style="flex: 1;">
+                                            <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">User Email</label>
+                                            <input type="email" id="user-email-search" placeholder="Enter user's email address" 
+                                                style="width: 100%; padding: 0.5rem; border: 2px solid #e2e8f0; border-radius: 6px;">
+                                        </div>
+                                        <button onclick="searchUser()" class="btn btn-secondary">🔍 Search User</button>
+                                    </div>
+                                    <div id="user-search-results" style="display: none; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; padding: 1rem;"></div>
+                                </div>
+
+                                <!-- Author Assignment -->
+                                <div id="author-assignment-section" style="display: none;">
+                                    <h5 style="color: var(--navy); margin-bottom: 1rem;">Assign Author Role</h5>
+                                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
+                                        <div>
+                                            <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Select Author</label>
+                                            <select id="assign-author-select" style="width: 100%; padding: 0.5rem; border: 2px solid #e2e8f0; border-radius: 6px;">
+                                                <option value="">Choose existing author...</option>
+                                            </select>
+                                        </div>
+                                        <div style="display: flex; align-items: end;">
+                                            <button onclick="assignUserToAuthor()" class="btn btn-primary" style="width: 100%;">✅ Designate as Author</button>
+                                        </div>
+                                    </div>
+                                    <div id="assignment-feedback" style="display: none; padding: 1rem; border-radius: 6px; margin-bottom: 1rem;"></div>
+                                </div>
+
+                                <!-- Current Designations -->
+                                <div>
+                                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                                        <h5>Current Author Designations</h5>
+                                        <button onclick="loadUserAuthorDesignations()" class="btn btn-secondary">🔄 Refresh</button>
+                                    </div>
+                                    <div id="user-author-designations" style="background: white; border: 1px solid #e2e8f0; border-radius: 6px; overflow: hidden;">
+                                        <p style="color: #6b7280; text-align: center; padding: 2rem;">Click "Refresh" to load current designations</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -1688,6 +1737,9 @@
 
             // Load real enrollments from Supabase
             await loadSupabaseEnrollments(user.id);
+
+            // Check if user is an author and show author portal link
+            await checkAuthorAccess(user.email);
 
             // Apply saved section BEFORE showing content — eliminates the overview flash
             const _savedSection = localStorage.getItem('currentAccountSection');
@@ -3551,6 +3603,8 @@
                 loadAuthors();
             } else if (sectionId === 'course-assignments') {
                 loadCourseAssignments();
+            } else if (sectionId === 'designate-users') {
+                loadUserAuthorDesignations();
             }
         }
 
@@ -4292,6 +4346,310 @@
             feedback.style.cssText = 'display:block;background:#f0fdf4;border:1px solid #bbf7d0;color:#166534;font-size:.9rem;padding:.75rem 1rem;border-radius:8px;';
             feedback.textContent   = '✓ Invitation sent to ' + email + '!';
             document.getElementById('inviteEmail').value = '';
+        }
+
+        // ── AUTHOR ACCESS MANAGEMENT ──────────────────────────────────────────
+        async function checkAuthorAccess(userEmail) {
+            try {
+                const supabase = window.DrTroySupabase?.getClient ? window.DrTroySupabase.getClient() : null;
+                if (!supabase || !userEmail) return;
+
+                // Check if current user is an author
+                const { data: authors, error } = await supabase
+                    .from('authors')
+                    .select('id, first_name, last_name, status')
+                    .eq('email', userEmail)
+                    .eq('status', 'active');
+                
+                if (error) {
+                    console.error('Error checking author access:', error);
+                    return;
+                }
+                
+                // Show author portal link if user is an active author
+                const authorPortalNav = document.getElementById('author-portal-nav');
+                if (authors && authors.length > 0 && authorPortalNav) {
+                    authorPortalNav.style.display = 'block';
+                    console.log('✅ Author portal access enabled for:', userEmail);
+                } else {
+                    authorPortalNav.style.display = 'none';
+                }
+                
+            } catch (error) {
+                console.error('Error in checkAuthorAccess:', error);
+            }
+        }
+
+        // Search for user by email
+        async function searchUser() {
+            const email = document.getElementById('user-email-search').value.trim();
+            const resultsDiv = document.getElementById('user-search-results');
+            const assignmentSection = document.getElementById('author-assignment-section');
+            
+            if (!email) {
+                showAlert('Please enter a user email address', 'error');
+                return;
+            }
+            
+            try {
+                const supabase = window.DrTroySupabase?.getClient ? window.DrTroySupabase.getClient() : null;
+                if (!supabase) throw new Error('Database connection unavailable');
+                
+                // Search for user profile
+                const { data: profiles, error } = await supabase
+                    .from('profiles')
+                    .select('id, email, first_name, last_name, profession')
+                    .eq('email', email);
+                
+                if (error) throw error;
+                
+                resultsDiv.style.display = 'block';
+                
+                if (!profiles || profiles.length === 0) {
+                    resultsDiv.innerHTML = `
+                        <div style="color: #dc2626;">
+                            <strong>❌ User Not Found</strong><br>
+                            No user account found with email: ${email}
+                        </div>
+                    `;
+                    assignmentSection.style.display = 'none';
+                    return;
+                }
+                
+                const user = profiles[0];
+                
+                // Check if user is already an author
+                const { data: existingAuthor, error: authorError } = await supabase
+                    .from('authors')
+                    .select('id, first_name, last_name, status')
+                    .eq('email', email);
+                
+                if (authorError) throw authorError;
+                
+                const isAlreadyAuthor = existingAuthor && existingAuthor.length > 0;
+                
+                resultsDiv.innerHTML = `
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <strong>✅ User Found:</strong> ${user.first_name} ${user.last_name} (${user.email})<br>
+                            <small style="color: #6b7280;">Profession: ${user.profession || 'Not specified'}</small>
+                        </div>
+                        <div style="text-align: right;">
+                            ${isAlreadyAuthor ? 
+                                `<span style="color: #059669; font-weight: bold;">✅ Already Author</span>` :
+                                `<span style="color: #6b7280;">Not yet an author</span>`
+                            }
+                        </div>
+                    </div>
+                `;
+                
+                // Show assignment section if user is not already an author
+                if (!isAlreadyAuthor) {
+                    assignmentSection.style.display = 'block';
+                    await loadAvailableAuthors();
+                    // Store user data for assignment
+                    window._currentSearchedUser = user;
+                } else {
+                    assignmentSection.style.display = 'none';
+                }
+                
+            } catch (error) {
+                console.error('Error searching user:', error);
+                resultsDiv.style.display = 'block';
+                resultsDiv.innerHTML = `
+                    <div style="color: #dc2626;">
+                        <strong>❌ Search Error</strong><br>
+                        ${error.message}
+                    </div>
+                `;
+                assignmentSection.style.display = 'none';
+            }
+        }
+        
+        // Load available authors for assignment
+        async function loadAvailableAuthors() {
+            try {
+                const supabase = window.DrTroySupabase?.getClient ? window.DrTroySupabase.getClient() : null;
+                if (!supabase) return;
+                
+                const { data: authors, error } = await supabase
+                    .from('authors')
+                    .select('id, first_name, last_name, email, status')
+                    .eq('status', 'active')
+                    .order('first_name');
+                
+                if (error) throw error;
+                
+                const select = document.getElementById('assign-author-select');
+                select.innerHTML = '<option value="">Choose existing author...</option>';
+                
+                if (authors && authors.length > 0) {
+                    authors.forEach(author => {
+                        select.innerHTML += `<option value="${author.id}">${author.first_name} ${author.last_name} (${author.email})</option>`;
+                    });
+                }
+                
+            } catch (error) {
+                console.error('Error loading authors:', error);
+            }
+        }
+        
+        // Assign user to existing author record
+        async function assignUserToAuthor() {
+            const authorId = document.getElementById('assign-author-select').value;
+            const feedbackDiv = document.getElementById('assignment-feedback');
+            
+            if (!authorId) {
+                showAlert('Please select an author to assign the user to', 'error');
+                return;
+            }
+            
+            if (!window._currentSearchedUser) {
+                showAlert('No user selected. Please search for a user first.', 'error');
+                return;
+            }
+            
+            try {
+                const supabase = window.DrTroySupabase?.getClient ? window.DrTroySupabase.getClient() : null;
+                if (!supabase) throw new Error('Database connection unavailable');
+                
+                // Update the author record with the user's email (this connects them)
+                const { data, error } = await supabase
+                    .from('authors')
+                    .update({ 
+                        email: window._currentSearchedUser.email,
+                        user_id: window._currentSearchedUser.id 
+                    })
+                    .eq('id', authorId)
+                    .select('first_name, last_name');
+                
+                if (error) throw error;
+                
+                feedbackDiv.style.display = 'block';
+                feedbackDiv.className = 'alert-success';
+                feedbackDiv.style.background = '#f0fdf4';
+                feedbackDiv.style.border = '1px solid #bbf7d0';
+                feedbackDiv.style.color = '#166534';
+                
+                const authorName = data[0] ? `${data[0].first_name} ${data[0].last_name}` : 'the author';
+                feedbackDiv.innerHTML = `
+                    <strong>✅ Successfully Designated</strong><br>
+                    User ${window._currentSearchedUser.first_name} ${window._currentSearchedUser.last_name} (${window._currentSearchedUser.email}) 
+                    can now access the Author Portal as ${authorName}.
+                `;
+                
+                // Clear search
+                document.getElementById('user-email-search').value = '';
+                document.getElementById('user-search-results').style.display = 'none';
+                document.getElementById('author-assignment-section').style.display = 'none';
+                window._currentSearchedUser = null;
+                
+                // Refresh designations
+                setTimeout(() => loadUserAuthorDesignations(), 1000);
+                
+            } catch (error) {
+                console.error('Error assigning user to author:', error);
+                feedbackDiv.style.display = 'block';
+                feedbackDiv.className = 'alert-error';
+                feedbackDiv.style.background = '#fef2f2';
+                feedbackDiv.style.border = '1px solid #fca5a5';
+                feedbackDiv.style.color = '#dc2626';
+                feedbackDiv.innerHTML = `<strong>❌ Assignment Error</strong><br>${error.message}`;
+            }
+        }
+        
+        // Load current user-author designations
+        async function loadUserAuthorDesignations() {
+            try {
+                const supabase = window.DrTroySupabase?.getClient ? window.DrTroySupabase.getClient() : null;
+                if (!supabase) return;
+                
+                // Get authors who have user emails assigned (indicating designation)
+                const { data: designations, error } = await supabase
+                    .from('authors')
+                    .select('id, first_name, last_name, email, status, user_id')
+                    .not('email', 'is', null)
+                    .order('first_name');
+                
+                if (error) throw error;
+                
+                const container = document.getElementById('user-author-designations');
+                
+                if (!designations || designations.length === 0) {
+                    container.innerHTML = '<p style="color: #6b7280; text-align: center; padding: 2rem;">No user-author designations yet</p>';
+                    return;
+                }
+                
+                let html = `
+                    <div style="display: grid; grid-template-columns: 2fr 2fr 1fr 1fr; gap: 1rem; padding: 0.75rem; background: #f8fafc; border-bottom: 1px solid #e2e8f0; font-weight: 600;">
+                        <div>Author Name</div>
+                        <div>User Email</div>
+                        <div>Status</div>
+                        <div>Actions</div>
+                    </div>
+                `;
+                
+                designations.forEach(designation => {
+                    html += `
+                        <div style="display: grid; grid-template-columns: 2fr 2fr 1fr 1fr; gap: 1rem; padding: 0.75rem; border-bottom: 1px solid #f1f5f9; align-items: center;">
+                            <div><strong>${designation.first_name} ${designation.last_name}</strong></div>
+                            <div style="color: #6b7280;">${designation.email}</div>
+                            <div>
+                                <span style="padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.8rem; 
+                                    background: ${designation.status === 'active' ? '#dcfce7' : '#fee2e2'}; 
+                                    color: ${designation.status === 'active' ? '#166534' : '#991b1b'};">
+                                    ${designation.status}
+                                </span>
+                            </div>
+                            <div>
+                                <button onclick="removeUserAuthorDesignation('${designation.id}')" 
+                                    class="btn btn-secondary" style="font-size: 0.8rem; padding: 0.25rem 0.5rem;">
+                                    Remove
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                });
+                
+                container.innerHTML = html;
+                
+            } catch (error) {
+                console.error('Error loading user author designations:', error);
+                const container = document.getElementById('user-author-designations');
+                container.innerHTML = '<p style="color: #dc2626; text-align: center; padding: 2rem;">Error loading designations</p>';
+            }
+        }
+        
+        // Remove user-author designation
+        async function removeUserAuthorDesignation(authorId) {
+            if (!confirm('Are you sure you want to remove this user-author designation? The user will lose access to the Author Portal.')) {
+                return;
+            }
+            
+            try {
+                const supabase = window.DrTroySupabase?.getClient ? window.DrTroySupabase.getClient() : null;
+                if (!supabase) throw new Error('Database connection unavailable');
+                
+                // Remove the email and user_id from the author record (breaks the connection)
+                const { error } = await supabase
+                    .from('authors')
+                    .update({ 
+                        email: null,
+                        user_id: null 
+                    })
+                    .eq('id', authorId);
+                
+                if (error) throw error;
+                
+                showAlert('✅ User-author designation removed successfully', 'success');
+                
+                // Refresh the list
+                await loadUserAuthorDesignations();
+                
+            } catch (error) {
+                console.error('Error removing user-author designation:', error);
+                showAlert('Error removing designation: ' + error.message, 'error');
+            }
         }
 
         function copyReferralLink() {
