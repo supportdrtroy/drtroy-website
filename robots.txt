@@ -1,0 +1,89 @@
+# DrTroy.com — Robots Exclusion Protocol
+# Protect administrative, pricing, and business-sensitive areas
+
+User-agent: *
+# Allow public pages
+Allow: /index.html
+Allow: /about.html
+Allow: /privacy.html
+Allow: /terms.html
+Allow: /verify.html
+Allow: /success.html
+
+# Block admin and sensitive areas
+Disallow: /admin.html
+Disallow: /admin
+Disallow: /secure-admin-access-2026.html
+Disallow: /secure-admin.html
+Disallow: /system-settings.html
+Disallow: /clear-account.html
+
+# Block course content details and pricing
+Disallow: /course-catalog.html
+Disallow: /courses/
+Disallow: /course-template.html
+Disallow: /courses-backup.html
+Disallow: /courses-standardized.html
+Disallow: /pelvis-demo.html
+
+# Block checkout and account areas
+Disallow: /checkout.html
+Disallow: /cart.html
+Disallow: /my-account.html
+
+# Block internal files
+Disallow: /js/
+Disallow: /docs/
+Disallow: /templates/
+Disallow: /certificates/
+Disallow: /assets/
+Disallow: /*.md$
+Disallow: /*.sql$
+Disallow: /*.pdf$
+Disallow: /supabase-config.js
+Disallow: /database-setup.sql
+
+# Block development/test files
+Disallow: /logo-comparison.html
+Disallow: /home-preview.html
+Disallow: /download-tpta-submission.html
+
+# Block Netlify functions
+Disallow: /.netlify/
+
+# Crawl delay for well-behaved bots
+Crawl-delay: 10
+
+# Specific aggressive crawlers
+User-agent: GPTBot
+Disallow: /
+
+User-agent: CCBot
+Disallow: /
+
+User-agent: ChatGPT-User
+Disallow: /
+
+User-agent: anthropic-ai
+Disallow: /
+
+User-agent: Google-Extended
+Disallow: /
+
+User-agent: Bytespider
+Disallow: /
+
+User-agent: SemrushBot
+Disallow: /
+
+User-agent: AhrefsBot
+Disallow: /
+
+User-agent: MJ12bot
+Disallow: /
+
+User-agent: DotBot
+Disallow: /
+
+User-agent: PetalBot
+Disallow: /
