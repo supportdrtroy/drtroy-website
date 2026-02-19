@@ -758,6 +758,89 @@
             border-radius: 8px;
         }
 
+        .learning-objectives {
+            background: linear-gradient(135deg, #059669 0%, #10b981 100%);
+            color: white;
+            padding: 20px;
+            margin: 25px 0;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(5, 150, 105, 0.2);
+        }
+
+        .learning-objectives h3 {
+            color: white;
+            margin-top: 0;
+            margin-bottom: 12px;
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .learning-objectives p {
+            color: #e6fffa;
+            margin-bottom: 12px;
+            font-weight: 500;
+        }
+
+        .learning-objectives ul {
+            color: white;
+            padding-left: 20px;
+        }
+
+        .learning-objectives li {
+            margin-bottom: 8px;
+            line-height: 1.6;
+        }
+
+        .disclosure-section {
+            background: #ffffff;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            margin: 30px 0;
+            overflow: hidden;
+        }
+
+        .disclosure-section h3 {
+            background: linear-gradient(135deg, #4a5568 0%, #2d3748 100%);
+            color: white;
+            margin: 0;
+            padding: 16px 24px;
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .disclosure-content {
+            padding: 24px;
+        }
+
+        .disclosure-item {
+            margin-bottom: 20px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .disclosure-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+        }
+
+        .disclosure-item h4 {
+            color: #1a365d;
+            margin: 0 0 8px 0;
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .disclosure-item p {
+            color: #4a5568;
+            font-size: 14px;
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        .disclosure-item strong {
+            color: #059669;
+        }
+
         .divider {
             text-align: center;
             font-size: 24px;
@@ -836,6 +919,33 @@
             </div>
         </div>
 
+        <!-- Conflict of Interest Disclosure -->
+        <div class="disclosure-section">
+            <h3>📋 Professional Disclosures & Course Information</h3>
+            
+            <div class="disclosure-content">
+                <div class="disclosure-item">
+                    <h4>Conflict of Interest Disclosure</h4>
+                    <p>Dr. Troy Hounshell, PT, ScD, course author, has no financial relationships with commercial interests related to the content of this continuing education activity. This course was developed independently without commercial support or bias.</p>
+                </div>
+                
+                <div class="disclosure-item">
+                    <h4>Author Qualifications</h4>
+                    <p><strong>Troy Hounshell, PT, ScD</strong> is a licensed Physical Therapist in Texas with over 25 years of clinical experience across inpatient, outpatient, skilled nursing, and home health settings. He holds a Doctor of Science in Physical Therapy from Texas Tech University Health Sciences Center and has extensive experience in patient education and health promotion across diverse healthcare environments.</p>
+                </div>
+                
+                <div class="disclosure-item">
+                    <h4>Learning Assessment</h4>
+                    <p>This course includes interactive knowledge checks after each module and a comprehensive final examination. A passing score of 70% on the final exam is required for course completion and certificate issuance.</p>
+                </div>
+                
+                <div class="disclosure-item">
+                    <h4>CE Credit Information</h4>
+                    <p>This course awards <strong>2.0 continuing education units (CEUs)</strong> upon successful completion. Course content is current as of February 2026 and incorporates the latest evidence-based practices in patient education and health promotion.</p>
+                </div>
+            </div>
+        </div>
+
         <div class="module-container" id="module-1">
             <div class="module-header" onclick="toggleModule(1)">
                 <div class="module-title">Module 1: Foundations of Patient Education Theory (15 min)</div>
@@ -845,6 +955,17 @@
                 </div>
             </div>
             <div class="module-content" id="content-1">
+
+                <div class="learning-objectives">
+                    <h3>🎯 Learning Objectives - Module 1</h3>
+                    <p>Upon completion of this module, participants will be able to:</p>
+                    <ul>
+                        <li>Apply Knowles' andragogy principles to design effective patient education interventions</li>
+                        <li>Differentiate between pedagogy and andragogy in healthcare education contexts</li>
+                        <li>Implement adult learning strategies that enhance patient engagement and retention</li>
+                        <li>Assess readiness to learn and adapt educational approaches accordingly</li>
+                    </ul>
+                </div>
 
                 <h2>1.1 Adult Learning Principles in Healthcare</h2>
                 <p>Effective patient education requires understanding how adults learn. Malcolm Knowles' andragogy principles provide the foundation for designing education that engages and empowers healthcare consumers.</p>
@@ -950,6 +1071,17 @@
                 </div>
             </div>
             <div class="module-content" id="content-2">
+
+                <div class="learning-objectives">
+                    <h3>🎯 Learning Objectives - Module 2</h3>
+                    <p>Upon completion of this module, participants will be able to:</p>
+                    <ul>
+                        <li>Define health literacy and identify its impact on patient outcomes and healthcare costs</li>
+                        <li>Assess patient health literacy using validated screening tools and techniques</li>
+                        <li>Recognize the universal precautions approach to health literacy in clinical practice</li>
+                        <li>Implement strategies to reduce literacy barriers in patient education materials and interactions</li>
+                    </ul>
+                </div>
 
                 <h2>2.1 Health Literacy: Scope and Impact</h2>
                 <p>Health literacy is the capacity to obtain, process, and understand basic health information needed to make appropriate health decisions. Nearly 9 out of 10 adults have difficulty using health information, and low health literacy costs the US healthcare system an estimated $106-238 billion annually.</p>
@@ -1719,7 +1851,11 @@
                                 <div><div style="border-top: 1px solid #333; margin-top: 20px; padding-top: 5px;">Troy Hounshell, PT, ScD<br>Course Director</div></div>
                                 <div><div style="border-top: 1px solid #333; margin-top: 20px; padding-top: 5px;">Date of Completion<br><span id="completion-date">[Date]</span></div></div>
                             </div>
-                            <div style="margin-top: 30px; font-size: 12px; color: #666;">DrTroy.com Continuing Education | Lubbock, Texas<br>This certificate verifies completion of continuing education requirements</div>
+                            <div style="margin-top: 30px; font-size: 12px; color: #666;">
+                                DrTroy.com Continuing Education | Lubbock, Texas<br>
+                                This certificate verifies completion of continuing education requirements<br>
+                                <strong style="color: #1a365d;">Certificate Number: <span id="certificate-number">[Certificate Number]</span></strong>
+                            </div>
                         </div>
                     </div>
                     <div style="margin-top: 30px;">
@@ -1958,7 +2094,24 @@
             let name = localStorage.getItem('userName') || 'Course Participant';
             if (name === 'Course Participant') { name = prompt('Enter your name for the certificate:') || 'Course Participant'; localStorage.setItem('userName', name); }
             document.getElementById('participant-name').textContent = name;
+            
+            // Generate unique certificate number
+            const certificateNumber = generateCertificateNumber();
+            document.getElementById('certificate-number').textContent = certificateNumber;
+            
             setTimeout(() => document.getElementById('certificate-section').scrollIntoView({ behavior: 'smooth' }), 1000);
+        }
+
+        function generateCertificateNumber() {
+            // Generate unique certificate number: DT-EDUCAT-YYYY-XXXXX
+            const year = new Date().getFullYear();
+            const randomNum = Math.floor(Math.random() * 90000) + 10000; // 5-digit random number
+            const certificateNumber = `DT-EDUCAT-${year}-${randomNum}`;
+            
+            // Store the certificate number for this completion
+            localStorage.setItem('certificateNumber_education', certificateNumber);
+            
+            return certificateNumber;
         }
 
         function printCertificate() {

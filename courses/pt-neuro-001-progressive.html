@@ -758,6 +758,256 @@
             border-radius: 8px;
         }
 
+        .learning-objectives {
+            background: linear-gradient(135deg, #059669 0%, #10b981 100%);
+            color: white;
+            padding: 20px;
+            margin: 25px 0;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(5, 150, 105, 0.2);
+        }
+
+        .learning-objectives h3 {
+            color: white;
+            margin-top: 0;
+            margin-bottom: 12px;
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .learning-objectives p {
+            color: #e6fffa;
+            margin-bottom: 12px;
+            font-weight: 500;
+        }
+
+        .learning-objectives ul {
+            color: white;
+            padding-left: 20px;
+        }
+
+        .learning-objectives li {
+            margin-bottom: 8px;
+            line-height: 1.6;
+        }
+
+        .case-study {
+            background: #ffffff;
+            margin: 40px 0;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+            overflow: hidden;
+            border: 2px solid #1a365d;
+        }
+
+        .case-study h2 {
+            background: linear-gradient(135deg, #1a365d 0%, #2c5282 100%);
+            color: white;
+            margin: 0;
+            padding: 20px 30px;
+            font-size: 22px;
+            font-weight: 600;
+        }
+
+        .case-header {
+            background: #f8fafc;
+            padding: 20px 30px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .case-header h3 {
+            color: #1a365d;
+            margin: 0 0 12px 0;
+            font-size: 18px;
+        }
+
+        .case-header p {
+            margin: 6px 0;
+            font-weight: 500;
+        }
+
+        .case-section {
+            padding: 20px 30px;
+        }
+
+        .case-section h4 {
+            color: #1a365d;
+            margin: 0 0 16px 0;
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .case-data {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin: 20px 0;
+        }
+
+        .assessment-column strong {
+            color: #059669;
+            display: block;
+            margin: 16px 0 8px 0;
+            font-size: 15px;
+        }
+
+        .assessment-column:first-child strong:first-child {
+            margin-top: 0;
+        }
+
+        .assessment-column ul {
+            margin: 0 0 12px 0;
+            padding-left: 20px;
+        }
+
+        .assessment-column li {
+            margin-bottom: 4px;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .case-analysis, .case-interventions, .case-outcomes, .case-discussion {
+            padding: 20px 30px;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        .reasoning-point {
+            margin-bottom: 20px;
+        }
+
+        .reasoning-point strong {
+            color: #059669;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .reasoning-point p {
+            font-size: 15px;
+            line-height: 1.6;
+            color: #4a5568;
+        }
+
+        .intervention-phase {
+            margin-bottom: 24px;
+        }
+
+        .intervention-phase h5 {
+            color: #1a365d;
+            margin: 0 0 12px 0;
+            font-size: 15px;
+            font-weight: 600;
+        }
+
+        .intervention-phase ul {
+            margin: 0;
+            padding-left: 20px;
+        }
+
+        .intervention-phase li {
+            margin-bottom: 8px;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .outcome-data {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        .outcome-column strong {
+            color: #059669;
+            display: block;
+            margin: 0 0 8px 0;
+            font-size: 15px;
+        }
+
+        .outcome-column ul {
+            margin: 0 0 16px 0;
+            padding-left: 20px;
+        }
+
+        .outcome-column li {
+            margin-bottom: 4px;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .case-discussion ol {
+            padding-left: 20px;
+        }
+
+        .case-discussion li {
+            margin-bottom: 12px;
+            font-size: 15px;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 768px) {
+            .case-data, .outcome-data {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .case-study {
+                margin: 20px 0;
+            }
+            
+            .case-header, .case-section, .case-analysis, .case-interventions, .case-outcomes, .case-discussion {
+                padding: 16px 20px;
+            }
+        }
+
+        .disclosure-section {
+            background: #ffffff;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            margin: 30px 0;
+            overflow: hidden;
+        }
+
+        .disclosure-section h3 {
+            background: linear-gradient(135deg, #4a5568 0%, #2d3748 100%);
+            color: white;
+            margin: 0;
+            padding: 16px 24px;
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .disclosure-content {
+            padding: 24px;
+        }
+
+        .disclosure-item {
+            margin-bottom: 20px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .disclosure-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+        }
+
+        .disclosure-item h4 {
+            color: #1a365d;
+            margin: 0 0 8px 0;
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .disclosure-item p {
+            color: #4a5568;
+            font-size: 14px;
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        .disclosure-item strong {
+            color: #059669;
+        }
+
         .divider {
             text-align: center;
             font-size: 24px;
@@ -845,6 +1095,33 @@
             </div>
         </div>
 
+        <!-- Conflict of Interest Disclosure -->
+        <div class="disclosure-section">
+            <h3>📋 Professional Disclosures & Course Information</h3>
+            
+            <div class="disclosure-content">
+                <div class="disclosure-item">
+                    <h4>Conflict of Interest Disclosure</h4>
+                    <p>Dr. Troy Hounshell, PT, ScD, course author, has no financial relationships with commercial interests related to the content of this continuing education activity. This course was developed independently without commercial support or bias.</p>
+                </div>
+                
+                <div class="disclosure-item">
+                    <h4>Author Qualifications</h4>
+                    <p><strong>Troy Hounshell, PT, ScD</strong> is a licensed Physical Therapist in Texas with over 25 years of clinical experience in neurological rehabilitation across inpatient, outpatient, skilled nursing, and home health settings. He holds a Doctor of Science in Physical Therapy from Texas Tech University Health Sciences Center and currently serves as CEO of Texas Therapy Pros, a multi-location therapy practice.</p>
+                </div>
+                
+                <div class="disclosure-item">
+                    <h4>Learning Assessment</h4>
+                    <p>This course includes interactive knowledge checks after each module and a comprehensive final examination. A passing score of 70% on the final exam is required for course completion and certificate issuance.</p>
+                </div>
+                
+                <div class="disclosure-item">
+                    <h4>CE Credit Information</h4>
+                    <p>This course awards <strong>3.0 continuing education units (CEUs)</strong> upon successful completion. Course content is current as of February 2026 and incorporates the latest evidence-based practices in neurological rehabilitation.</p>
+                </div>
+            </div>
+        </div>
+
         <!-- Module 1 -->
         <div class="module-container" id="module-1">
             <div class="module-header" onclick="toggleModule(1)">
@@ -855,6 +1132,17 @@
                 </div>
             </div>
             <div class="module-content" id="content-1">
+
+                <div class="learning-objectives">
+                    <h3>🎯 Learning Objectives - Module 1</h3>
+                    <p>Upon completion of this module, participants will be able to:</p>
+                    <ul>
+                        <li>Identify and systematically assess all seven components of a comprehensive neurological examination</li>
+                        <li>Differentiate between upper motor neuron and lower motor neuron lesion signs and symptoms</li>
+                        <li>Apply appropriate assessment techniques for mental status, cranial nerves, motor, sensory, reflex, cerebellar, and gait evaluation</li>
+                        <li>Recognize pathological reflexes and their clinical significance in neurological diagnosis</li>
+                    </ul>
+                </div>
 
                 <h2>1.1 The Neurological Examination Framework</h2>
                 <p>A comprehensive neurological assessment requires systematic evaluation of mental status, cranial nerves, motor function, sensory systems, reflexes, coordination, and gait. The framework ensures no critical findings are missed and provides a baseline for tracking recovery.</p>
@@ -964,6 +1252,17 @@
                 </div>
             </div>
             <div class="module-content" id="content-2">
+
+                <div class="learning-objectives">
+                    <h3>🎯 Learning Objectives - Module 2</h3>
+                    <p>Upon completion of this module, participants will be able to:</p>
+                    <ul>
+                        <li>Classify stroke subtypes and identify their respective pathophysiology and risk factors</li>
+                        <li>Correlate vascular territories (MCA, ACA, PCA) with expected clinical presentation patterns</li>
+                        <li>Apply the Brunnstrom stages of stroke recovery to assess motor function and plan interventions</li>
+                        <li>Demonstrate understanding of neuroplasticity principles in stroke recovery and rehabilitation</li>
+                    </ul>
+                </div>
 
                 <h2>2.1 Stroke Classification and Pathophysiology</h2>
                 <p>Stroke is the leading cause of long-term disability in adults. Understanding stroke subtypes and vascular territories is essential for predicting deficits and planning rehabilitation.</p>
@@ -1078,6 +1377,17 @@
             </div>
             <div class="module-content" id="content-3">
 
+                <div class="learning-objectives">
+                    <h3>🎯 Learning Objectives - Module 3</h3>
+                    <p>Upon completion of this module, participants will be able to:</p>
+                    <ul>
+                        <li>Implement evidence-based upper extremity interventions including CIMT, robot-assisted therapy, and mental practice</li>
+                        <li>Apply appropriate inclusion criteria for Constraint-Induced Movement Therapy protocols</li>
+                        <li>Demonstrate understanding of neuroplasticity principles underlying upper extremity recovery</li>
+                        <li>Design task-specific training programs for functional upper extremity recovery post-stroke</li>
+                    </ul>
+                </div>
+
                 <h2>3.1 Upper Extremity Rehabilitation Post-Stroke</h2>
                 <p>Upper extremity recovery after stroke is often more limited than lower extremity recovery. Only 12-34% of stroke survivors achieve full arm function recovery, making targeted interventions critical.</p>
 
@@ -1166,6 +1476,135 @@
             </div>
         </div>
 
+        <!-- Clinical Case Study 1 -->
+        <div class="case-study">
+            <h2>📋 Clinical Case Study 1: Acute Stroke Recovery</h2>
+            
+            <div class="case-header">
+                <h3>Patient Presentation</h3>
+                <p><strong>Margaret S., 67-year-old retired teacher</strong></p>
+                <p><strong>Diagnosis:</strong> Left middle cerebral artery (MCA) stroke, 5 days post-onset</p>
+                <p><strong>Medical History:</strong> Hypertension, type 2 diabetes, atrial fibrillation (non-compliant with anticoagulation)</p>
+            </div>
+
+            <div class="case-section">
+                <h4>Initial Assessment Findings:</h4>
+                <div class="case-data">
+                    <div class="assessment-column">
+                        <strong>Mental Status:</strong>
+                        <ul>
+                            <li>Alert and oriented x3</li>
+                            <li>Mild expressive aphasia</li>
+                            <li>Follows 2-step commands consistently</li>
+                            <li>NIH Stroke Scale: 8/42</li>
+                        </ul>
+                        
+                        <strong>Motor Function:</strong>
+                        <ul>
+                            <li>Right hemiparesis</li>
+                            <li>UE: Shoulder 2/5, elbow 2/5, wrist 1/5, hand 0/5</li>
+                            <li>LE: Hip 3/5, knee 3/5, ankle 2/5</li>
+                            <li>Modified Ashworth Scale: UE 1+, LE 1</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="assessment-column">
+                        <strong>Functional Status:</strong>
+                        <ul>
+                            <li>FIM Motor: 38/91 (requires moderate assist)</li>
+                            <li>Transfers: Moderate assist with sliding board</li>
+                            <li>Bed mobility: Minimal assist, uses bed rail</li>
+                            <li>Balance: Unsupported sitting &lt;30 seconds</li>
+                        </ul>
+                        
+                        <strong>Sensation & Perception:</strong>
+                        <ul>
+                            <li>Diminished light touch right arm/hand</li>
+                            <li>Intact proprioception LE</li>
+                            <li>No visual field deficits</li>
+                            <li>Mild right-sided neglect</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="case-analysis">
+                <h4>Clinical Reasoning & Analysis:</h4>
+                
+                <div class="reasoning-point">
+                    <strong>1. Stroke Classification & Prognosis:</strong>
+                    <p>Left MCA territory stroke with classic presentation: right hemiparesis greater in UE than LE, expressive aphasia, and mild neglect. Cardioembolic mechanism (atrial fibrillation) suggests complete vessel occlusion rather than watershed infarct, supporting potential for good recovery if reperfusion occurred.</p>
+                </div>
+                
+                <div class="reasoning-point">
+                    <strong>2. Brunnstrom Stage Assessment:</strong>
+                    <p>UE presents at Brunnstrom Stage 2 (emerging spasticity, minimal voluntary movement). LE shows Stage 3 characteristics (voluntary movement within synergy patterns). This suggests faster LE recovery potential, typical in MCA strokes.</p>
+                </div>
+                
+                <div class="reasoning-point">
+                    <strong>3. Rehabilitation Priorities:</strong>
+                    <p>Focus on trunk control and sitting balance as foundation. Early weight-bearing activities for LE strengthening. UE interventions should emphasize scapular stability and proximal control before addressing distal function.</p>
+                </div>
+            </div>
+
+            <div class="case-interventions">
+                <h4>Evidence-Based Intervention Plan:</h4>
+                
+                <div class="intervention-phase">
+                    <h5>Phase 1: Acute (Days 5-14)</h5>
+                    <ul>
+                        <li><strong>Mobility:</strong> Progressive sitting balance, bed mobility training, early supported standing</li>
+                        <li><strong>UE:</strong> Passive ROM, scapular mobilization, weight-bearing activities on stable surface</li>
+                        <li><strong>LE:</strong> Progressive weight-bearing, pre-gait activities, ankle pumps for DVT prevention</li>
+                        <li><strong>Functional:</strong> Feeding with adaptive equipment, grooming with setup</li>
+                    </ul>
+                </div>
+                
+                <div class="intervention-phase">
+                    <h5>Phase 2: Subacute (Weeks 2-12)</h5>
+                    <ul>
+                        <li><strong>Gait Training:</strong> Body weight-supported treadmill training starting 30% BWS</li>
+                        <li><strong>UE Recovery:</strong> Task-specific reaching, bilateral activities, mirror therapy</li>
+                        <li><strong>Balance:</strong> Sitting balance progression, standing balance with support</li>
+                        <li><strong>ADL Focus:</strong> Dressing techniques, bathroom transfers, kitchen mobility</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="case-outcomes">
+                <h4>6-Week Outcomes:</h4>
+                <div class="outcome-data">
+                    <div class="outcome-column">
+                        <strong>Motor Recovery:</strong>
+                        <ul>
+                            <li>UE: Brunnstrom Stage 4 (movement outside synergy patterns emerging)</li>
+                            <li>LE: Brunnstrom Stage 5 (independent joint movements)</li>
+                            <li>Walks 150 feet with quad cane and AFO</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="outcome-column">
+                        <strong>Functional Independence:</strong>
+                        <ul>
+                            <li>FIM Motor: 72/91 (modified independence most tasks)</li>
+                            <li>Transfers: Independent with equipment</li>
+                            <li>ADLs: Independent dressing, minimal assist bathing</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="case-discussion">
+                <h4>Clinical Discussion Points:</h4>
+                <ol>
+                    <li><strong>Recovery Pattern:</strong> Why did LE recovery exceed UE recovery? Discuss corticospinal tract organization and alternative motor pathways.</li>
+                    <li><strong>Intervention Timing:</strong> How did early mobilization within 24-48 hours contribute to outcomes?</li>
+                    <li><strong>Prognostic Factors:</strong> Which initial assessment findings best predicted functional recovery?</li>
+                    <li><strong>Discharge Planning:</strong> What community resources and equipment will Margaret need for safe home discharge?</li>
+                </ol>
+            </div>
+        </div>
+
         <!-- Module 4 -->
         <div class="module-container" id="module-4">
             <div class="module-header locked" onclick="toggleModule(4)">
@@ -1215,16 +1654,20 @@
                 <p>Current evidence supports graduated return-to-activity protocols rather than complete cognitive and physical rest beyond the initial 24-48 hours.</p>
 
                 <div class="highlight-box">
-                    <strong>Graduated Return-to-Activity Protocol (Berlin Consensus 2016):</strong>
+                    <strong>Graduated Return-to-Activity Protocol (Amsterdam Consensus 2023):</strong>
                     <ul>
-                        <li><strong>Stage 1:</strong> Symptom-limited activity — daily activities that do not provoke symptoms</li>
-                        <li><strong>Stage 2:</strong> Light aerobic exercise — walking, swimming, cycling &lt;70% max HR</li>
-                        <li><strong>Stage 3:</strong> Sport-specific exercise — running drills, no head-impact activities</li>
-                        <li><strong>Stage 4:</strong> Non-contact training drills — progressive resistance training, complex drills</li>
-                        <li><strong>Stage 5:</strong> Full-contact practice — after medical clearance</li>
-                        <li><strong>Stage 6:</strong> Return to sport/activity</li>
+                        <li><strong>Stage 1:</strong> Initial rest and symptom monitoring — 24-48 hours of cognitive and physical rest</li>
+                        <li><strong>Stage 2:</strong> Symptom-limited activity — gradual return to daily activities that do not exacerbate symptoms</li>
+                        <li><strong>Stage 3:</strong> Light aerobic exercise — walking, swimming, stationary cycling at &lt;70% max HR</li>
+                        <li><strong>Stage 4:</strong> Sport-specific exercise — running drills, passing, skating drills (no contact/head-impact)</li>
+                        <li><strong>Stage 5:</strong> Non-contact training drills — more complex training, may initiate progressive resistance</li>
+                        <li><strong>Stage 6:</strong> Full-contact practice — after medical clearance and normal neuropsychological testing</li>
+                        <li><strong>Stage 7:</strong> Return to sport/competitive activity — unrestricted participation</li>
                     </ul>
                     <p><em>Minimum 24 hours at each stage before progressing. Return to previous stage if symptoms recur.</em></p>
+                    <div style="margin-top: 12px; padding: 12px; background: #e6fffa; border-left: 4px solid #059669; font-size: 14px;">
+                        <strong>Amsterdam 2023 Updates:</strong> Extended protocol from 6 to 7 stages, emphasized initial rest period, incorporated neuropsychological testing requirements, and refined return-to-contact criteria.
+                    </div>
                 </div>
 
                 <div class="caution-box">
@@ -2224,7 +2667,8 @@
                             
                             <div style="margin-top: 30px; font-size: 12px; color: #666;">
                                 DrTroy.com Continuing Education | Lubbock, Texas<br>
-                                This certificate verifies completion of continuing education requirements
+                                This certificate verifies completion of continuing education requirements<br>
+                                <strong style="color: #1a365d;">Certificate Number: <span id="certificate-number">[Certificate Number]</span></strong>
                             </div>
                         </div>
                     </div>
@@ -2661,9 +3105,25 @@
             }
             document.getElementById('participant-name').textContent = userName;
             
+            // Generate unique certificate number
+            const certificateNumber = generateCertificateNumber();
+            document.getElementById('certificate-number').textContent = certificateNumber;
+            
             setTimeout(() => {
                 document.getElementById('certificate-section').scrollIntoView({ behavior: 'smooth' });
             }, 1000);
+        }
+
+        function generateCertificateNumber() {
+            // Generate unique certificate number: DT-NEURO-YYYY-XXXXX
+            const year = new Date().getFullYear();
+            const randomNum = Math.floor(Math.random() * 90000) + 10000; // 5-digit random number
+            const certificateNumber = `DT-NEURO-${year}-${randomNum}`;
+            
+            // Store the certificate number for this completion
+            localStorage.setItem('certificateNumber_neuro', certificateNumber);
+            
+            return certificateNumber;
         }
 
         function printCertificate() {
