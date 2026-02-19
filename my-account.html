@@ -758,8 +758,7 @@
                 <a href="courses.html">Course Catalog</a>
                 <a href="index.html#about">About</a>
                 <a href="index.html#contact">Contact</a>
-                <a href="my-account.html" class="login-link" id="accountLink">My Account</a>
-                <a href="#" onclick="logout(); return false;" class="login-link">🚪 Logout</a>
+                <a href="my-account.html" class="login-link" id="accountLink">Log In</a>
             </nav>
         </div>
     </header>
@@ -1532,6 +1531,7 @@
             restoreActiveSection();
             renderSuperuserCourseList();
             window._accountInitialized = true;
+            updateNavigation();
         }
 
         // Load enrollments from Supabase via direct REST (no CDN dependency)
@@ -1724,6 +1724,24 @@
             }
         }
 
+        // Update navigation based on authentication state
+        function updateNavigation() {
+            const accountLink = document.getElementById('accountLink');
+            if (!accountLink) return;
+
+            const isAuthenticated = currentAccount || currentSupabaseUser;
+            
+            if (isAuthenticated) {
+                accountLink.textContent = '🚪 Logout';
+                accountLink.onclick = function() { logout(); return false; };
+                accountLink.href = '#';
+            } else {
+                accountLink.textContent = 'Log In';
+                accountLink.onclick = null;
+                accountLink.href = 'my-account.html';
+            }
+        }
+
         // Logout — Supabase + legacy clear
         async function logout() {
             if (window.DrTroySupabase) {
@@ -1798,6 +1816,7 @@
         function showLoginRequired() {
             document.getElementById('loginRequired').style.display = 'block';
             document.getElementById('accountContent').style.display = 'none';
+            updateNavigation();
             
             // Don't auto-redirect - let user see debug info
             // setTimeout(() => {
