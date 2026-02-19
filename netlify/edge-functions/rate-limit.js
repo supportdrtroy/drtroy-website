@@ -15,6 +15,10 @@ const RATE_LIMITS = {
   '/.netlify/functions/send-campaign': { window: 3600, max: 5 },       // campaigns: 5/hour
   '/.netlify/functions/admin-reset-password': { window: 300, max: 10 }, // pwd resets: 10/5min
   '/.netlify/functions/issue-certificate': { window: 60, max: 20 },    // certs: 20/min
+  '/.netlify/functions/complete-course': { window: 3600, max: 5 },     // course completion: 5/hour
+  '/.netlify/functions/update-progress': { window: 3600, max: 100 },   // progress updates: 100/hour
+  '/.netlify/functions/validate-discount': { window: 300, max: 10 },   // discount validation: 10/5min
+  '/.netlify/functions/verify-certificate': { window: 60, max: 20 },   // cert verification: 20/min
 };
 
 // In-memory rate limit store (per edge node)
@@ -48,7 +52,7 @@ export default async (request, context) => {
   const ip = request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || 
              request.headers.get('x-real-ip') || 'unknown';
 
-  if (request.method === 'POST' && isRateLimited(ip, url.pathname)) {
+  if (isRateLimited(ip, url.pathname)) {
     return new Response(JSON.stringify({ error: 'Too many requests. Please try again later.' }), {
       status: 429,
       headers: {
@@ -70,5 +74,9 @@ export const config = {
     "/.netlify/functions/send-campaign",
     "/.netlify/functions/admin-reset-password",
     "/.netlify/functions/issue-certificate",
+    "/.netlify/functions/complete-course",
+    "/.netlify/functions/update-progress",
+    "/.netlify/functions/validate-discount",
+    "/.netlify/functions/verify-certificate",
   ],
 };

@@ -17,7 +17,7 @@ function getCorsHeaders(event) {
   const allowed = ALLOWED_ORIGINS.includes(origin) ? origin : ALLOWED_ORIGINS[0];
   return {
     'Access-Control-Allow-Origin': allowed,
-    'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+    'Access-Control-Allow-Headers': 'Content-Type, Authorization, X-Requested-With',
     'Access-Control-Allow-Methods': 'POST, OPTIONS',
     'Content-Type': 'application/json',
     'Vary': 'Origin',
@@ -69,6 +69,12 @@ exports.handler = async (event) => {
   if (event.httpMethod === 'OPTIONS') return { statusCode: 200, headers: cors, body: '' };
   if (event.httpMethod !== 'POST') return { statusCode: 405, headers: cors, body: JSON.stringify({ error: 'Method not allowed' }) };
 
+  // CSRF protection: require custom header
+  const xRequested = event.headers['x-requested-with'] || '';
+  if (xRequested !== 'XMLHttpRequest' && xRequested !== 'fetch') {
+    return { statusCode: 403, headers: cors, body: JSON.stringify({ error: 'Invalid request' }) };
+  }
+
   // Auth
   const authHeader = event.headers.authorization || event.headers.Authorization || '';
   const userId = await verifyUser(authHeader);
@@ -84,6 +90,12 @@ exports.handler = async (event) => {
   const cappedProgress = Math.min(95, Math.max(0, progressPercent || 0));
   const now = new Date().toISOString();
   const newStatus = cappedProgress > 0 ? 'in_progress' : 'not_started';
+
+  // SECURITY: Validate time_spent_seconds is reasonable (max 24 hours per update)
+  const safeTimeSpent = Math.min(Math.max(0, timeSpentSeconds || 0), 86400);
+
+  // SECURITY: Prevent progress from going backwards (anti-manipulation)
+  // Progress can only increase unless reset by admin
 
   // Find enrollment
   const enrollRes = await sbRest('GET', `/rest/v1/enrollments?user_id=eq.${userId}&course_id=eq.${encodeURIComponent(courseId)}&limit=1`);
@@ -103,15 +115,27 @@ exports.handler = async (event) => {
     status: newStatus,
     progress_percent: cappedProgress,
     modules_completed: modulesCompleted || null,
-    time_spent_seconds: timeSpentSeconds || 0,
+    time_spent_seconds: safeTimeSpent,
     updated_at: now,
   };
 
   if (Array.isArray(existingRes.body) && existingRes.body.length > 0) {
     // Update
     const id = existingRes.body[0].id;
+    const existing = existingRes.body[0];
+
+    // SECURITY: Don't allow progress to go backwards
+    if (cappedProgress < (existing.progress_percent || 0) && existing.status !== 'not_started') {
+      progressData.progress_percent = existing.progress_percent;
+    }
+
+    // SECURITY: Time spent can only increase
+    if (safeTimeSpent < (existing.time_spent_seconds || 0)) {
+      progressData.time_spent_seconds = existing.time_spent_seconds;
+    }
+
     // completed_at only set by complete-course function
-    if (!existingRes.body[0].started_at) {
+    if (!existing.started_at) {
       progressData.started_at = now;
     }
     const upd = await sbRest('PATCH', `/rest/v1/course_progress?id=eq.${id}`, progressData);

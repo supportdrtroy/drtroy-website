@@ -5,6 +5,14 @@
  * and shared learning objectives.
  */
 
+/** Escape HTML to prevent XSS */
+function escapeHtml(str) {
+    if (typeof str !== 'string') return '';
+    const div = document.createElement('div');
+    div.textContent = str;
+    return div.innerHTML;
+}
+
 class AdaptiveCourseManager {
     constructor() {
         this.currentProfession = null;

@@ -198,12 +198,120 @@ exports.handler = async (event) => {
     sessionParams['metadata[item_id]'] = allItemIds[0];
     sessionParams['metadata[item_type]'] = allItemTypes[0];
 
-    // Free items: skip Stripe
+    // Free items: create enrollments server-side directly (don't rely on client)
     if (totalFinalPrice === 0) {
+      // Resolve all course IDs (expand packages)
+      let allCourseIds = [];
+      for (let i = 0; i < items.length; i++) {
+        const { itemId, itemType = 'course' } = items[i];
+        if (itemType === 'package') {
+          try {
+            const pkg = await supabaseGet(
+              `/rest/v1/packages?id=eq.${encodeURIComponent(itemId)}&select=id,course_ids`,
+              SUPABASE_URL, SERVICE_ROLE
+            );
+            if (pkg.course_ids && Array.isArray(pkg.course_ids)) {
+              allCourseIds.push(...pkg.course_ids);
+            }
+          } catch { /* skip if package not found */ }
+        } else {
+          allCourseIds.push(itemId);
+        }
+      }
+      allCourseIds = [...new Set(allCourseIds)];
+
+      // Create enrollment for each course
+      const now = new Date().toISOString();
+      for (const cId of allCourseIds) {
+        const enrollBody = JSON.stringify({
+          user_id: userId,
+          course_id: cId,
+          stripe_payment_intent_id: `free_${discountCode || 'promo'}_${Date.now()}`,
+          amount_paid_cents: 0,
+          is_active: true,
+          purchased_at: now,
+        });
+        const enrollUrl = new URL(`${SUPABASE_URL}/rest/v1/enrollments`);
+        try {
+          await new Promise((resolve, reject) => {
+            const opts = {
+              hostname: enrollUrl.hostname,
+              path: enrollUrl.pathname,
+              method: 'POST',
+              headers: {
+                apikey: SERVICE_ROLE,
+                Authorization: `Bearer ${SERVICE_ROLE}`,
+                'Content-Type': 'application/json',
+                Prefer: 'return=representation',
+                'Content-Length': Buffer.byteLength(enrollBody),
+              },
+            };
+            const req = https.request(opts, (res) => {
+              let data = '';
+              res.on('data', (c) => (data += c));
+              res.on('end', () => resolve({ status: res.statusCode, data }));
+            });
+            req.on('error', reject);
+            req.write(enrollBody);
+            req.end();
+          });
+        } catch { /* best effort - may already be enrolled */ }
+
+        // Create progress row
+        const progressBody = JSON.stringify({
+          user_id: userId,
+          course_id: cId,
+          module_id: '0',
+          status: 'not_started',
+          progress_percent: 0,
+        });
+        try {
+          await new Promise((resolve, reject) => {
+            const opts = {
+              hostname: enrollUrl.hostname,
+              path: new URL(`${SUPABASE_URL}/rest/v1/course_progress`).pathname,
+              method: 'POST',
+              headers: {
+                apikey: SERVICE_ROLE,
+                Authorization: `Bearer ${SERVICE_ROLE}`,
+                'Content-Type': 'application/json',
+                Prefer: 'return=representation',
+                'Content-Length': Buffer.byteLength(progressBody),
+              },
+            };
+            const req = https.request(opts, (res) => {
+              let data = '';
+              res.on('data', (c) => (data += c));
+              res.on('end', () => resolve({ status: res.statusCode, data }));
+            });
+            req.on('error', reject);
+            req.write(progressBody);
+            req.end();
+          });
+        } catch { /* best effort */ }
+      }
+
+      // Increment discount usage
+      if (discountCode) {
+        try {
+          const rpcBody = JSON.stringify({ code_input: discountCode });
+          const rpcUrl = new URL(`${SUPABASE_URL}/rest/v1/rpc/increment_discount_usage`);
+          await new Promise((resolve) => {
+            const req = https.request({
+              hostname: rpcUrl.hostname, path: rpcUrl.pathname, method: 'POST',
+              headers: { apikey: SERVICE_ROLE, Authorization: `Bearer ${SERVICE_ROLE}`, 'Content-Type': 'application/json', 'Content-Length': Buffer.byteLength(rpcBody) },
+            }, (res) => { let d = ''; res.on('data', c => d += c); res.on('end', () => resolve()); });
+            req.on('error', () => resolve());
+            req.write(rpcBody);
+            req.end();
+          });
+        } catch { /* best effort */ }
+      }
+
       return {
         statusCode: 200,
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ free: true, message: 'Items are free with discount.' }),
+        body: JSON.stringify({ free: true, enrolled: true, message: 'Free enrollment created successfully.' }),
       };
     }
 

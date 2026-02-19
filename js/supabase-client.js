@@ -59,13 +59,44 @@ async function signUp(email, password, metadata = {}) {
 async function signIn(email, password) {
     const sb = getSupabaseClient();
     if (!sb) return { data: null, error: { message: 'Database unavailable' } };
-    return await sb.auth.signInWithPassword({ email, password });
+    const result = await sb.auth.signInWithPassword({ email, password });
+    if (result.data?.session) resetSessionTimeout();
+    return result;
 }
 
 async function signOut() {
     const sb = getSupabaseClient();
     if (!sb) return;
+    clearSessionTimeout();
     await sb.auth.signOut();
+}
+
+/* ─── SESSION TIMEOUT (2 hours inactivity) ──────────────────────────────── */
+const SESSION_TIMEOUT_MS = 2 * 60 * 60 * 1000; // 2 hours
+let _sessionTimer = null;
+
+function resetSessionTimeout() {
+    if (_sessionTimer) clearTimeout(_sessionTimer);
+    _sessionTimer = setTimeout(async () => {
+        console.log('[session] Auto-logout due to inactivity');
+        await signOut();
+        if (typeof window !== 'undefined') {
+            window.location.href = '/my-account.html?expired=1';
+        }
+    }, SESSION_TIMEOUT_MS);
+}
+
+function clearSessionTimeout() {
+    if (_sessionTimer) { clearTimeout(_sessionTimer); _sessionTimer = null; }
+}
+
+// Start monitoring on load
+if (typeof window !== 'undefined') {
+    ['click', 'keydown', 'scroll', 'mousemove'].forEach(evt => {
+        document.addEventListener(evt, () => {
+            if (_sessionTimer) resetSessionTimeout();
+        }, { passive: true });
+    });
 }
 
 async function getUser() {

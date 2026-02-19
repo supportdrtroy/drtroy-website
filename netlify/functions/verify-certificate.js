@@ -1,12 +1,26 @@
 /**
  * DrTroy CE Platform — Netlify Function: verify-certificate
- * GET /.netlify/functions/verify-certificate?number=DRTROY-2026-12345678
+ * GET /.netlify/functions/verify-certificate?number=DRTROY-2026-A3F8B2C1E9D4
  * Public certificate verification endpoint.
+ * SECURITY: Restricted CORS, rate limited, returns initials only for privacy.
  */
 const https = require('https');
 
 const SUPABASE_HOST = 'pnqoxulxdmlmbywcpbyx.supabase.co';
 const SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
+const ALLOWED_ORIGINS = ['https://drtroy.com', 'https://www.drtroy.com'];
+
+function getCorsHeaders(event) {
+  const origin = (event.headers && (event.headers.origin || event.headers.Origin)) || '';
+  const allowed = ALLOWED_ORIGINS.includes(origin) ? origin : ALLOWED_ORIGINS[0];
+  return {
+    'Access-Control-Allow-Origin': allowed,
+    'Access-Control-Allow-Headers': 'Content-Type',
+    'Access-Control-Allow-Methods': 'GET, OPTIONS',
+    'Content-Type': 'application/json',
+    'Vary': 'Origin',
+  };
+}
 
 function httpReq(options, body) {
   return new Promise((resolve, reject) => {
@@ -21,17 +35,27 @@ function httpReq(options, body) {
   });
 }
 
+/** Convert full name to privacy-safe initials: "John Doe" → "John D." */
+function toInitials(firstName, lastName) {
+  const first = firstName || '';
+  const lastInitial = lastName ? `${lastName.charAt(0)}.` : '';
+  return [first, lastInitial].filter(Boolean).join(' ') || 'N/A';
+}
+
 exports.handler = async (event) => {
-  const headers = {
-    'Access-Control-Allow-Origin': '*',
-    'Content-Type': 'application/json',
-  };
+  const headers = getCorsHeaders(event);
+  if (event.httpMethod === 'OPTIONS') return { statusCode: 200, headers, body: '' };
 
   const certNumber = event.queryStringParameters?.number;
   if (!certNumber) return { statusCode: 400, headers, body: JSON.stringify({ error: 'Certificate number required' }) };
   if (!SERVICE_ROLE_KEY) return { statusCode: 500, headers, body: JSON.stringify({ error: 'Server config error' }) };
 
-  // Look up certificate with course and user info
+  // Validate certificate number format to prevent injection
+  if (!/^DRTROY-\d{4}-[A-Z0-9]{8,16}$/i.test(certNumber) && !/^DRTROY-\d{4}-\d{8}$/i.test(certNumber)) {
+    return { statusCode: 400, headers, body: JSON.stringify({ error: 'Invalid certificate number format' }) };
+  }
+
+  // Look up certificate
   const path = `/rest/v1/certificates?certificate_number=eq.${encodeURIComponent(certNumber)}&select=certificate_number,issued_at,revoked_at,course_id,user_id`;
   const certRes = await httpReq({
     hostname: SUPABASE_HOST, path, method: 'GET',
@@ -55,7 +79,7 @@ exports.handler = async (event) => {
     headers: { apikey: SERVICE_ROLE_KEY, Authorization: `Bearer ${SERVICE_ROLE_KEY}`, 'Content-Type': 'application/json' },
   }, null);
 
-  // Get user name (first/last only)
+  // Get user name (return initials only for privacy)
   const profileRes = await httpReq({
     hostname: SUPABASE_HOST,
     path: `/rest/v1/profiles?id=eq.${encodeURIComponent(cert.user_id)}&select=first_name,last_name`,
@@ -73,7 +97,7 @@ exports.handler = async (event) => {
       valid: true,
       certificateNumber: cert.certificate_number,
       issuedAt: cert.issued_at,
-      recipientName: [profile.first_name, profile.last_name].filter(Boolean).join(' ') || 'N/A',
+      recipientName: toInitials(profile.first_name, profile.last_name),
       courseTitle: course.title || 'N/A',
       ceuHours: course.ceu_hours || 'N/A',
     }),

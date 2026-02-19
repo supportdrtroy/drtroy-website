@@ -95,7 +95,8 @@
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${jwt}`
+          'Authorization': `Bearer ${jwt}`,
+          'X-Requested-With': 'fetch'
         },
         body: JSON.stringify(syncData)
       });

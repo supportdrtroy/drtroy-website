@@ -34,6 +34,22 @@
   path = "/.netlify/functions/issue-certificate"
   function = "rate-limit"
 
+[[edge_functions]]
+  path = "/.netlify/functions/complete-course"
+  function = "rate-limit"
+
+[[edge_functions]]
+  path = "/.netlify/functions/update-progress"
+  function = "rate-limit"
+
+[[edge_functions]]
+  path = "/.netlify/functions/validate-discount"
+  function = "rate-limit"
+
+[[edge_functions]]
+  path = "/.netlify/functions/verify-certificate"
+  function = "rate-limit"
+
 [[headers]]
   for = "/*"
   [headers.values]

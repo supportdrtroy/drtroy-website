@@ -4,6 +4,7 @@
  * Issues or re-issues a certificate and optionally emails it via Resend.
  */
 const https = require('https');
+const crypto = require('crypto');
 
 const SUPABASE_HOST = 'pnqoxulxdmlmbywcpbyx.supabase.co';
 const SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
@@ -92,7 +93,7 @@ exports.handler = async (event) => {
   const { userId, courseId, userEmail, userName, courseTitle, ceuHours, completionId, reissue } = body;
   if (!userId || !courseId) return { statusCode: 400, headers: getCorsHeaders(event), body: JSON.stringify({ error: 'userId and courseId are required' }) };
 
-  const certNumber = `DRTROY-${new Date().getFullYear()}-${String(Date.now()).slice(-8)}`;
+  const certNumber = `DRTROY-${new Date().getFullYear()}-${crypto.randomBytes(6).toString('hex').toUpperCase()}`;
   const now = new Date().toISOString();
 
   let certRecord;

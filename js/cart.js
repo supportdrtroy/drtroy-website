@@ -1,6 +1,13 @@
 // DrTroy CE Shopping Cart System
 // Handles both individual courses and bundle packages
 
+/** Escape HTML to prevent XSS */
+function escapeHtml(str) {
+    const div = document.createElement('div');
+    div.textContent = str;
+    return div.innerHTML;
+}
+
 class ShoppingCart {
     constructor() {
         this.items = this.loadCart();
@@ -476,7 +483,7 @@ window.showCartNotification = function(message) {
             font-weight: 500;
             max-width: 300px;
         ">
-            ${message}
+            ${escapeHtml(message)}
             <div style="margin-top: 0.5rem;">
                 <a href="cart.html" style="color: white; text-decoration: underline; font-size: 0.9rem;">View Cart</a>
             </div>
