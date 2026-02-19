@@ -745,7 +745,7 @@
     <header class="header">
         <div class="header-container">
             <div class="logo">
-                <a href="index.html">
+                <a href="home-preview.html">
                     <img src="courses/images/drtroy_logo_new.jpg" alt="DrTroy Continuing Education">
                 </a>
             </div>
@@ -753,11 +753,11 @@
                 <span></span><span></span><span></span>
             </button>
             <nav class="nav-links">
-                <a href="index.html">Home</a>
-                <a href="index.html#packages">Packages</a>
+                <a href="home-preview.html">Home</a>
+                <a href="home-preview.html#packages">Packages</a>
                 <a href="courses.html">Course Catalog</a>
-                <a href="index.html#about">About</a>
-                <a href="index.html#contact">Contact</a>
+                <a href="home-preview.html#about">About</a>
+                <a href="home-preview.html#contact">Contact</a>
                 <a href="my-account.html" class="login-link" id="accountLink">Log In</a>
             </nav>
         </div>
@@ -1751,7 +1751,7 @@
             localStorage.removeItem('userSession');
             localStorage.removeItem('troyadmin');
             localStorage.removeItem('currentAccountSection');
-            window.location.href = 'index.html';
+            window.location.href = 'home-preview.html';
         }
 
         // Restore the previously active section after page load
@@ -2468,7 +2468,7 @@
                     <div style="text-align: center; color: var(--gray-600); padding: 3rem;">
                         <h3>No Courses Yet</h3>
                         <p>You haven't enrolled in any courses yet.</p>
-                        <a href="index.html#packages" class="btn btn-primary" style="margin-top: 1rem;">📚 Browse Packages</a>
+                        <a href="home-preview.html#packages" class="btn btn-primary" style="margin-top: 1rem;">📚 Browse Packages</a>
                     </div>
                 `;
                 return;
@@ -2793,7 +2793,7 @@
                         localStorage.removeItem('customerDiscipline');
                         
                         alert('✅ Account deleted successfully. You will be redirected to the homepage.');
-                        window.location.href = 'index.html';
+                        window.location.href = 'home-preview.html';
                     } else {
                         alert('Account deletion cancelled - confirmation text did not match.');
                     }
@@ -3304,7 +3304,7 @@
             showAlert('🗑️ All data deleted. Redirecting to homepage...', 'danger');
             
             setTimeout(() => {
-                window.location.href = 'index.html';
+                window.location.href = 'home-preview.html';
             }, 3000);
         }
 
