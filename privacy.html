@@ -4,100 +4,404 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Privacy Policy — DrTroy Continuing Education</title>
+    <meta name="description" content="Privacy Policy for DrTroy Continuing Education. Learn how we collect, use, and protect your personal information.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Source+Sans+Pro:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f8fafc; color: #1e293b; line-height: 1.7; }
-        .header { background: #1a365d; color: #fff; padding: 2rem; text-align: center; }
-        .header h1 { font-size: 2rem; }
-        .header p { opacity: .75; margin-top: .5rem; }
-        .content { max-width: 800px; margin: 2rem auto; padding: 0 1.5rem 4rem; }
-        h2 { color: #1a365d; margin: 2rem 0 1rem; font-size: 1.25rem; border-bottom: 2px solid #e2e8f0; padding-bottom: .5rem; }
-        p, li { margin-bottom: 0.75rem; color: #374151; }
-        ul { padding-left: 1.5rem; }
-        .updated { color: #64748b; font-style: italic; margin-bottom: 2rem; }
-        a { color: #2b6cb0; }
-        .footer { text-align: center; color: #94a3b8; font-size: 0.8rem; padding: 2rem; border-top: 1px solid #e2e8f0; margin-top: 3rem; }
+        :root {
+            --navy: #1a365d; --navy-mid: #2c5282; --emerald: #059669; --emerald-light: #10b981;
+            --neutral-50: #fafafa; --neutral-100: #f5f5f5; --neutral-200: #e5e5e5;
+            --neutral-400: #a3a3a3; --neutral-600: #525252; --neutral-700: #404040;
+            --neutral-800: #262626; --neutral-900: #171717;
+        }
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Source Sans Pro', -apple-system, sans-serif; font-weight: 400; line-height: 1.7; color: var(--neutral-800); background: #fff; }
+        .header { background: rgba(255,255,255,.97); border-bottom: 1px solid var(--neutral-200); position: sticky; top: 0; z-index: 100; }
+        .header-inner { max-width: 1280px; margin: 0 auto; padding: 1.25rem 2rem; display: flex; justify-content: space-between; align-items: center; }
+        .logo img { height: 64px; width: auto; }
+        .nav-links { display: flex; align-items: center; gap: 2rem; }
+        .nav-links a { color: var(--neutral-600); text-decoration: none; font-weight: 500; font-size: .95rem; transition: color .2s; }
+        .nav-links a:hover { color: var(--navy); }
+        .nav-btn { background: var(--navy); color: white !important; padding: .5rem 1.25rem; border-radius: 6px; font-weight: 600; font-size: .9rem; }
+        .hamburger { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; padding: .25rem; }
+        .hamburger span { display: block; width: 24px; height: 2px; background: var(--navy); border-radius: 2px; transition: all .3s; }
+        @media (max-width: 768px) {
+            .hamburger { display: flex; }
+            .nav-links { display: none; position: absolute; top: 100%; left: 0; right: 0; background: white; flex-direction: column; padding: 1rem 2rem; box-shadow: 0 4px 20px rgba(0,0,0,.1); z-index: 100; border-top: 1px solid #e5e7eb; }
+            .nav-links.active { display: flex; }
+            .nav-links a { padding: .75rem 0; border-bottom: 1px solid #f3f4f6; }
+            .header-inner { position: relative; }
+        }
+        .page-hero { background: linear-gradient(135deg, var(--navy) 0%, var(--navy-mid) 100%); color: white; padding: 4rem 2rem 3rem; text-align: center; }
+        .page-hero h1 { font-family: 'Playfair Display', Georgia, serif; font-size: clamp(2rem, 4vw, 3rem); font-weight: 600; margin-bottom: .75rem; }
+        .page-hero p { color: rgba(255,255,255,.75); font-size: 1rem; }
+        .content { max-width: 860px; margin: 4rem auto; padding: 0 2rem 4rem; }
+        .toc { background: var(--neutral-50); border: 1px solid var(--neutral-200); border-radius: 16px; padding: 2rem; margin-bottom: 3rem; }
+        .toc h2 { font-family: 'Playfair Display', Georgia, serif; font-size: 1.1rem; font-weight: 600; color: var(--navy); margin-bottom: 1rem; }
+        .toc ol { padding-left: 1.25rem; display: grid; grid-template-columns: 1fr 1fr; gap: .4rem .5rem; }
+        .toc li a { color: var(--emerald); text-decoration: none; font-size: .95rem; font-weight: 500; }
+        .toc li a:hover { text-decoration: underline; }
+        @media (max-width: 600px) { .toc ol { grid-template-columns: 1fr; } }
+        .section { margin-bottom: 3rem; scroll-margin-top: 80px; }
+        .section h2 { font-family: 'Playfair Display', Georgia, serif; font-size: 1.5rem; font-weight: 600; color: var(--navy); margin-bottom: 1rem; padding-bottom: .75rem; border-bottom: 2px solid var(--neutral-200); }
+        .section p { color: var(--neutral-700); margin-bottom: 1rem; font-size: 1rem; }
+        .section ul, .section ol { margin: .75rem 0 1rem 1.5rem; color: var(--neutral-700); }
+        .section li { margin-bottom: .5rem; font-size: 1rem; }
+        .highlight-box { background: #fff8e1; border-left: 4px solid #f59e0b; border-radius: 0 12px 12px 0; padding: 1.25rem 1.5rem; margin: 1.5rem 0; }
+        .highlight-box p { margin: 0; color: var(--neutral-800); font-weight: 500; }
+        .important-box { background: #fef2f2; border: 1px solid #fca5a5; border-left: 4px solid #dc2626; border-radius: 0 12px 12px 0; padding: 1.25rem 1.5rem; margin: 1.5rem 0; }
+        .important-box p { margin: 0; color: #991b1b; font-weight: 500; }
+        .info-box { background: #eff6ff; border-left: 4px solid #3b82f6; border-radius: 0 12px 12px 0; padding: 1.25rem 1.5rem; margin: 1.5rem 0; }
+        .info-box p { margin: 0; color: #1e40af; font-weight: 500; }
+        .contact-card { background: var(--neutral-50); border: 1px solid var(--neutral-200); border-radius: 16px; padding: 2rem; margin-top: 2rem; text-align: center; }
+        .contact-card h3 { font-family: 'Playfair Display', Georgia, serif; font-size: 1.2rem; color: var(--navy); margin-bottom: .75rem; }
+        .contact-card a { color: var(--emerald); font-weight: 600; text-decoration: none; }
+        .contact-card a:hover { text-decoration: underline; }
+        table { width: 100%; border-collapse: collapse; margin: 1rem 0; }
+        th, td { text-align: left; padding: .75rem 1rem; border: 1px solid var(--neutral-200); font-size: .95rem; }
+        th { background: var(--neutral-50); font-weight: 600; color: var(--navy); }
+        .footer { background: var(--neutral-900); color: var(--neutral-400); padding: 2.5rem 2rem; text-align: center; }
+        .footer-links { display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap; margin-bottom: 1rem; }
+        .footer-links a { color: var(--neutral-400); text-decoration: none; font-size: .9rem; transition: color .2s; }
+        .footer-links a:hover { color: var(--emerald-light); }
+        .footer-copy { font-size: .85rem; }
     </style>
 </head>
 <body>
-    <div class="header">
+
+    <header class="header">
+        <div class="header-inner">
+            <div class="logo">
+                <a href="index.html"><img src="courses/images/drtroy_logo_new.jpg" alt="DrTroy Continuing Education"></a>
+            </div>
+            <button class="hamburger" aria-label="Open menu"><span></span><span></span><span></span></button>
+            <nav class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="course-catalog.html">Courses</a>
+                <a href="about.html">About</a>
+                <a href="my-account.html" class="nav-btn">Log In</a>
+            </nav>
+        </div>
+    </header>
+
+    <div class="page-hero">
         <h1>Privacy Policy</h1>
-        <p>DrTroy Continuing Education</p>
+        <p>Last updated: February 18, 2026 &nbsp;·&nbsp; DrTroy Continuing Education</p>
     </div>
+
     <div class="content">
-        <p class="updated">Last Updated: February 18, 2026</p>
 
-        <p>DrTroy Continuing Education ("we," "our," or "us") is committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our continuing education platform at drtroy.com.</p>
+        <p style="color: var(--neutral-600); margin-bottom: 2.5rem;">DrTroy Continuing Education ("we," "our," or "us") is committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our continuing education platform at drtroy.com. This policy applies to all users regardless of location, including residents of California, the European Economic Area, and all U.S. states.</p>
 
-        <h2>1. Information We Collect</h2>
-        <p><strong>Account Information:</strong> When you create an account, we collect your name, email address, profession, license number, license state, and phone number.</p>
-        <p><strong>Course Data:</strong> We collect information about your course enrollments, progress, quiz scores, completion dates, and certificates earned.</p>
-        <p><strong>Payment Information:</strong> Payment processing is handled by Stripe. We do not store credit card numbers. We retain transaction records including amount paid and payment identifiers.</p>
-        <p><strong>Usage Data:</strong> We collect information about how you interact with our platform, including pages visited, time spent on courses, and browser information.</p>
+        <div class="toc">
+            <h2>Contents</h2>
+            <ol>
+                <li><a href="#info-collect">Information We Collect</a></li>
+                <li><a href="#how-use">How We Use Your Information</a></li>
+                <li><a href="#legal-basis">Legal Basis for Processing</a></li>
+                <li><a href="#sharing">Data Sharing & Third Parties</a></li>
+                <li><a href="#retention">Data Retention</a></li>
+                <li><a href="#security">Data Security</a></li>
+                <li><a href="#your-rights">Your Privacy Rights</a></li>
+                <li><a href="#ccpa">California Privacy Rights (CCPA/CPRA)</a></li>
+                <li><a href="#gdpr">European Privacy Rights (GDPR)</a></li>
+                <li><a href="#hipaa">Healthcare Information (HIPAA)</a></li>
+                <li><a href="#cookies">Cookies & Tracking</a></li>
+                <li><a href="#children">Children's Privacy</a></li>
+                <li><a href="#international">International Data Transfers</a></li>
+                <li><a href="#changes">Changes to This Policy</a></li>
+                <li><a href="#contact">Contact Us</a></li>
+            </ol>
+        </div>
 
-        <h2>2. How We Use Your Information</h2>
-        <ul>
-            <li>To provide and maintain our continuing education services</li>
-            <li>To process course enrollments and payments</li>
-            <li>To issue certificates of completion</li>
-            <li>To verify certificates for employers and licensing boards</li>
-            <li>To communicate with you about your courses, account, and platform updates</li>
-            <li>To comply with continuing education reporting requirements</li>
-            <li>To prevent fraud and ensure platform security</li>
-        </ul>
+        <!-- 1 -->
+        <div class="section" id="info-collect">
+            <h2>1. Information We Collect</h2>
+            <p><strong>Account Information:</strong> When you create an account, we collect your name, email address, profession, license number, license state, and phone number.</p>
+            <p><strong>Course Data:</strong> We collect information about your course enrollments, progress, quiz scores, completion dates, and certificates earned.</p>
+            <p><strong>Payment Information:</strong> Payment processing is handled by Stripe, Inc. We do not store credit card numbers on our servers. We retain transaction records including amount paid, date, and payment identifiers.</p>
+            <p><strong>Usage Data:</strong> We automatically collect information about how you interact with our platform, including pages visited, time spent on courses, browser type, device type, IP address, and referring URLs.</p>
+            <p><strong>Communication Data:</strong> If you contact us via email, we retain the content of your communications and our responses.</p>
 
-        <h2>3. Professional License Information</h2>
-        <p>We collect license numbers and state information to facilitate continuing education credit reporting. This information is stored securely and is only shared with licensing boards when required for CEU verification or as directed by you.</p>
+            <table>
+                <thead>
+                    <tr><th>Data Category</th><th>Examples</th><th>Purpose</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>Identity</td><td>Name, email, profession</td><td>Account management</td></tr>
+                    <tr><td>Professional</td><td>License number, state, discipline</td><td>CE credit reporting</td></tr>
+                    <tr><td>Financial</td><td>Transaction ID, amount, date</td><td>Purchase records</td></tr>
+                    <tr><td>Educational</td><td>Enrollments, scores, completions</td><td>Course delivery, certificates</td></tr>
+                    <tr><td>Technical</td><td>IP address, browser, device</td><td>Security, analytics</td></tr>
+                </tbody>
+            </table>
+        </div>
 
-        <h2>4. Data Sharing</h2>
-        <p>We do not sell your personal information. We may share your data with:</p>
-        <ul>
-            <li><strong>Payment Processors:</strong> Stripe processes payments on our behalf</li>
-            <li><strong>Email Services:</strong> We use Resend to send transactional emails</li>
-            <li><strong>Licensing Boards:</strong> Certificate verification data may be shared with licensing authorities as required</li>
-            <li><strong>Legal Requirements:</strong> When required by law or to protect our rights</li>
-        </ul>
+        <!-- 2 -->
+        <div class="section" id="how-use">
+            <h2>2. How We Use Your Information</h2>
+            <ul>
+                <li>To provide and maintain our continuing education platform and services</li>
+                <li>To process course enrollments, track progress, and deliver content</li>
+                <li>To process payments and maintain transaction records</li>
+                <li>To issue certificates of completion with verifiable credentials</li>
+                <li>To verify certificates for employers, licensing boards, and auditors</li>
+                <li>To communicate with you about your courses, account, and platform updates</li>
+                <li>To comply with continuing education record-keeping and reporting requirements</li>
+                <li>To prevent fraud, unauthorized access, and ensure platform security</li>
+                <li>To improve our platform, courses, and user experience</li>
+                <li>To respond to your inquiries and provide customer support</li>
+            </ul>
+        </div>
 
-        <h2>5. Data Security</h2>
-        <p>We implement industry-standard security measures including:</p>
-        <ul>
-            <li>Encryption of data in transit (TLS/SSL)</li>
-            <li>Row-level security on all database tables</li>
-            <li>Server-side authentication and authorization</li>
-            <li>Rate limiting on sensitive endpoints</li>
-            <li>Regular security audits</li>
-        </ul>
+        <!-- 3 -->
+        <div class="section" id="legal-basis">
+            <h2>3. Legal Basis for Processing</h2>
+            <p>We process your personal information based on the following legal grounds:</p>
+            <ul>
+                <li><strong>Contract Performance:</strong> Processing necessary to deliver the courses and services you purchased</li>
+                <li><strong>Legitimate Interest:</strong> Platform security, fraud prevention, and service improvement</li>
+                <li><strong>Legal Obligation:</strong> Compliance with CE record-keeping requirements and tax regulations</li>
+                <li><strong>Consent:</strong> Marketing communications (you may withdraw consent at any time)</li>
+            </ul>
+        </div>
 
-        <h2>6. Data Retention</h2>
-        <p>We retain your account and course completion data for a minimum of 7 years to comply with continuing education record-keeping requirements. Certificate records are retained indefinitely for verification purposes.</p>
+        <!-- 4 -->
+        <div class="section" id="sharing">
+            <h2>4. Data Sharing & Third Parties</h2>
+            <div class="important-box">
+                <p>⚠️ We do not sell, rent, or trade your personal information to third parties for marketing purposes.</p>
+            </div>
+            <p>We share your data only with the following service providers, solely for the purposes described:</p>
+            <table>
+                <thead>
+                    <tr><th>Provider</th><th>Purpose</th><th>Data Shared</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>Stripe, Inc.</td><td>Payment processing</td><td>Payment details, email, transaction data</td></tr>
+                    <tr><td>Supabase (AWS)</td><td>Database hosting & authentication</td><td>Account data, course progress, certificates</td></tr>
+                    <tr><td>Resend (Amazon SES)</td><td>Transactional email delivery</td><td>Email address, name</td></tr>
+                    <tr><td>Netlify</td><td>Website hosting & delivery</td><td>Usage logs, IP addresses</td></tr>
+                </tbody>
+            </table>
+            <p>We may also disclose your information when required by law, court order, or governmental regulation, or to protect our rights or the safety of our users.</p>
+            <p><strong>Licensing Boards:</strong> Certificate verification data may be shared with professional licensing authorities when required for CEU verification, audit, or as directed by you.</p>
+        </div>
 
-        <h2>7. Your Rights</h2>
-        <p>You have the right to:</p>
-        <ul>
-            <li><strong>Access:</strong> Request a copy of your personal data</li>
-            <li><strong>Correction:</strong> Update inaccurate information via your account dashboard</li>
-            <li><strong>Deletion:</strong> Request deletion of your account (subject to record-keeping requirements)</li>
-            <li><strong>Export:</strong> Request an export of your data in a portable format</li>
-            <li><strong>Opt-out:</strong> Unsubscribe from marketing communications</li>
-        </ul>
-        <p>To exercise these rights, contact us at <a href="mailto:support@drtroy.com">support@drtroy.com</a>.</p>
+        <!-- 5 -->
+        <div class="section" id="retention">
+            <h2>5. Data Retention</h2>
+            <p>We retain your data for the following periods:</p>
+            <table>
+                <thead>
+                    <tr><th>Data Type</th><th>Retention Period</th><th>Reason</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>Account information</td><td>Duration of account + 3 years</td><td>Service delivery, support</td></tr>
+                    <tr><td>Course completion records</td><td>Minimum 7 years</td><td>CE record-keeping requirements</td></tr>
+                    <tr><td>Certificates</td><td>Indefinite</td><td>Verification by employers/boards</td></tr>
+                    <tr><td>Payment records</td><td>7 years</td><td>Tax and financial regulations</td></tr>
+                    <tr><td>Usage/analytics data</td><td>24 months</td><td>Platform improvement</td></tr>
+                    <tr><td>Support communications</td><td>3 years</td><td>Service quality, disputes</td></tr>
+                </tbody>
+            </table>
+            <p>After the retention period expires, data is securely deleted or anonymized. You may request earlier deletion subject to our legal obligations (see Section 7).</p>
+        </div>
 
-        <h2>8. Cookies and Tracking</h2>
-        <p>We use essential cookies for authentication and session management. We do not use third-party advertising trackers.</p>
+        <!-- 6 -->
+        <div class="section" id="security">
+            <h2>6. Data Security</h2>
+            <p>We implement industry-standard security measures to protect your information:</p>
+            <ul>
+                <li>All data transmitted via TLS/SSL encryption (HTTPS everywhere)</li>
+                <li>Row-level security (RLS) on all database tables ensuring users access only their own data</li>
+                <li>Server-side authentication and authorization on all API endpoints</li>
+                <li>Rate limiting on sensitive endpoints to prevent abuse</li>
+                <li>Security headers (HSTS, CSP, X-Frame-Options, X-Content-Type-Options) on all pages</li>
+                <li>Regular security audits and vulnerability assessments</li>
+                <li>Multi-factor authentication on administrative accounts</li>
+                <li>Payment data handled exclusively by PCI DSS-compliant Stripe</li>
+            </ul>
+            <div class="highlight-box">
+                <p>💡 No method of electronic transmission or storage is 100% secure. While we strive to protect your data, we cannot guarantee absolute security. If you become aware of a security breach, please contact us immediately.</p>
+            </div>
+        </div>
 
-        <h2>9. Children's Privacy</h2>
-        <p>Our platform is designed for licensed healthcare professionals. We do not knowingly collect information from individuals under 18 years of age.</p>
+        <!-- 7 -->
+        <div class="section" id="your-rights">
+            <h2>7. Your Privacy Rights</h2>
+            <p>Regardless of your location, you have the following rights regarding your personal information:</p>
+            <ul>
+                <li><strong>Access:</strong> Request a copy of the personal data we hold about you</li>
+                <li><strong>Correction:</strong> Update or correct inaccurate information via your account dashboard or by contacting us</li>
+                <li><strong>Deletion:</strong> Request deletion of your account and personal data (subject to legal retention requirements for CE records)</li>
+                <li><strong>Data Portability:</strong> Request an export of your data in a machine-readable format</li>
+                <li><strong>Opt-Out:</strong> Unsubscribe from marketing communications at any time</li>
+                <li><strong>Restriction:</strong> Request that we limit how we use your data</li>
+                <li><strong>Objection:</strong> Object to processing based on legitimate interests</li>
+            </ul>
+            <p>To exercise any of these rights, contact us at <a href="mailto:support@drtroy.com" style="color: var(--emerald);">support@drtroy.com</a>. We will respond within 30 days (or within the timeframe required by applicable law).</p>
+            <div class="info-box">
+                <p>ℹ️ Note: Due to professional licensing requirements, we may be unable to delete course completion records and certificates within the mandatory retention period (minimum 7 years). We will inform you of any such limitations when you submit a request.</p>
+            </div>
+        </div>
 
-        <h2>10. Changes to This Policy</h2>
-        <p>We may update this Privacy Policy periodically. We will notify registered users of material changes via email.</p>
+        <!-- 8 -->
+        <div class="section" id="ccpa">
+            <h2>8. California Privacy Rights (CCPA/CPRA)</h2>
+            <p>If you are a California resident, the California Consumer Privacy Act (CCPA) and California Privacy Rights Act (CPRA) provide you with additional rights:</p>
+            <ul>
+                <li><strong>Right to Know:</strong> You may request that we disclose the categories and specific pieces of personal information we have collected about you, the sources of that information, the business purposes for collection, and the categories of third parties with whom we share it.</li>
+                <li><strong>Right to Delete:</strong> You may request deletion of your personal information, subject to certain legal exceptions (including CE record retention requirements).</li>
+                <li><strong>Right to Correct:</strong> You may request that we correct inaccurate personal information.</li>
+                <li><strong>Right to Opt-Out of Sale/Sharing:</strong> We do not sell or share your personal information for cross-context behavioral advertising. No opt-out is necessary.</li>
+                <li><strong>Right to Non-Discrimination:</strong> We will not discriminate against you for exercising your privacy rights.</li>
+                <li><strong>Right to Limit Use of Sensitive Personal Information:</strong> We only use sensitive personal information (such as license numbers) for the purposes described in this policy.</li>
+            </ul>
+            <p><strong>How to Submit a Request:</strong> Email <a href="mailto:support@drtroy.com" style="color: var(--emerald);">support@drtroy.com</a> with the subject line "California Privacy Request." We will verify your identity before processing your request. We will respond within 45 days.</p>
+            <p><strong>Authorized Agents:</strong> You may designate an authorized agent to make requests on your behalf. We may require verification of the agent's authority.</p>
+            <p><strong>Financial Incentives:</strong> We do not offer financial incentives related to the collection, sale, or deletion of personal information.</p>
+            <p><strong>Metrics:</strong> In the preceding 12 months, we have not sold any personal information. We do not use personal information for automated decision-making or profiling.</p>
+        </div>
 
-        <h2>11. Contact Us</h2>
-        <p>For privacy-related inquiries:<br>
-        <strong>Email:</strong> <a href="mailto:support@drtroy.com">support@drtroy.com</a><br>
-        <strong>DrTroy Continuing Education</strong><br>
-        Lubbock, Texas</p>
+        <!-- 9 -->
+        <div class="section" id="gdpr">
+            <h2>9. European Privacy Rights (GDPR)</h2>
+            <p>If you are located in the European Economic Area (EEA), United Kingdom, or Switzerland, the General Data Protection Regulation (GDPR) provides you with additional rights:</p>
+            <ul>
+                <li><strong>Right of Access (Art. 15):</strong> Obtain confirmation of whether we process your data and receive a copy</li>
+                <li><strong>Right to Rectification (Art. 16):</strong> Have inaccurate data corrected</li>
+                <li><strong>Right to Erasure (Art. 17):</strong> Request deletion ("right to be forgotten"), subject to legal retention obligations</li>
+                <li><strong>Right to Restriction (Art. 18):</strong> Restrict processing in certain circumstances</li>
+                <li><strong>Right to Data Portability (Art. 20):</strong> Receive your data in a structured, machine-readable format</li>
+                <li><strong>Right to Object (Art. 21):</strong> Object to processing based on legitimate interests, including direct marketing</li>
+                <li><strong>Right to Withdraw Consent (Art. 7):</strong> Withdraw consent at any time without affecting prior processing</li>
+            </ul>
+            <p><strong>Data Controller:</strong> DrTroy Continuing Education, Lubbock, Texas, USA. Contact: <a href="mailto:support@drtroy.com" style="color: var(--emerald);">support@drtroy.com</a></p>
+            <p><strong>International Transfers:</strong> Your data is stored and processed in the United States. By using our platform, you consent to the transfer of your data to the U.S. We implement appropriate safeguards including encryption and access controls.</p>
+            <p><strong>Supervisory Authority:</strong> You have the right to lodge a complaint with your local data protection authority if you believe your rights have been violated.</p>
+            <p><strong>Response Time:</strong> We will respond to GDPR requests within 30 days. If we need additional time (up to 60 additional days), we will notify you.</p>
+        </div>
 
-        <div class="footer">&copy; 2026 DrTroy Continuing Education. All rights reserved.</div>
+        <!-- 10 -->
+        <div class="section" id="hipaa">
+            <h2>10. Healthcare Information (HIPAA Notice)</h2>
+            <div class="info-box">
+                <p>ℹ️ DrTroy Continuing Education is a continuing education provider, not a healthcare provider, health plan, or healthcare clearinghouse as defined under HIPAA.</p>
+            </div>
+            <p>While we are not a HIPAA-covered entity, we recognize that our users are healthcare professionals and we take the following measures to protect your information:</p>
+            <ul>
+                <li>We do not collect, store, or process Protected Health Information (PHI) of your patients</li>
+                <li>Our courses may reference de-identified clinical scenarios for educational purposes only</li>
+                <li>Professional license information is treated as sensitive data with restricted access controls</li>
+                <li>We employ security measures consistent with healthcare industry best practices</li>
+                <li>Course content should never be used as a substitute for clinical judgment or patient-specific medical advice</li>
+            </ul>
+            <p>If you inadvertently submit patient health information through our platform (e.g., in a support email), please notify us immediately and we will securely delete it.</p>
+        </div>
+
+        <!-- 11 -->
+        <div class="section" id="cookies">
+            <h2>11. Cookies & Tracking Technologies</h2>
+            <p>We use cookies and similar technologies to operate our platform. Here is what we use:</p>
+            <table>
+                <thead>
+                    <tr><th>Cookie Type</th><th>Purpose</th><th>Duration</th><th>Required?</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>Authentication</td><td>Keep you logged in, session management</td><td>Session / 30 days</td><td>Essential</td></tr>
+                    <tr><td>Security</td><td>CSRF protection, rate limiting</td><td>Session</td><td>Essential</td></tr>
+                    <tr><td>Preferences</td><td>Remember your settings (e.g., theme)</td><td>1 year</td><td>Functional</td></tr>
+                    <tr><td>Course Progress</td><td>Track your position in course modules</td><td>Session</td><td>Essential</td></tr>
+                </tbody>
+            </table>
+            <p><strong>What We Do NOT Use:</strong></p>
+            <ul>
+                <li>No third-party advertising cookies or trackers</li>
+                <li>No social media tracking pixels</li>
+                <li>No cross-site behavioral advertising</li>
+                <li>No Google Analytics or similar third-party analytics platforms</li>
+            </ul>
+            <p><strong>Managing Cookies:</strong> You can control cookies through your browser settings. Disabling essential cookies may prevent you from accessing course content or maintaining your login session. Most browsers allow you to:</p>
+            <ul>
+                <li>View what cookies are set</li>
+                <li>Delete all or specific cookies</li>
+                <li>Block third-party cookies</li>
+                <li>Block all cookies (may impact functionality)</li>
+            </ul>
+            <p><strong>Do Not Track:</strong> We honor Do Not Track (DNT) signals. When we detect a DNT signal, we do not track your browsing activity across other websites.</p>
+        </div>
+
+        <!-- 12 -->
+        <div class="section" id="children">
+            <h2>12. Children's Privacy</h2>
+            <p>Our platform is designed exclusively for licensed and supervised healthcare professionals. We do not knowingly collect personal information from individuals under 18 years of age. If we learn that we have inadvertently collected data from a minor, we will promptly delete it. If you believe a minor has provided us with personal information, please contact us at <a href="mailto:support@drtroy.com" style="color: var(--emerald);">support@drtroy.com</a>.</p>
+        </div>
+
+        <!-- 13 -->
+        <div class="section" id="international">
+            <h2>13. International Data Transfers</h2>
+            <p>Our platform is operated from the United States. If you access our platform from outside the U.S., your information will be transferred to and processed in the United States, where data protection laws may differ from those in your jurisdiction.</p>
+            <p>We implement appropriate technical and organizational safeguards for international transfers, including:</p>
+            <ul>
+                <li>Encryption of data in transit and at rest</li>
+                <li>Access controls limiting data access to authorized personnel</li>
+                <li>Contractual obligations with service providers requiring adequate data protection</li>
+            </ul>
+        </div>
+
+        <!-- 14 -->
+        <div class="section" id="changes">
+            <h2>14. Changes to This Policy</h2>
+            <p>We may update this Privacy Policy periodically to reflect changes in our practices, legal requirements, or platform features. When we make material changes, we will:</p>
+            <ul>
+                <li>Update the "Last updated" date at the top of this page</li>
+                <li>Notify registered users via email for material changes</li>
+                <li>Post a notice on our platform for at least 30 days</li>
+            </ul>
+            <p>Your continued use of the platform after changes take effect constitutes acceptance of the updated policy.</p>
+        </div>
+
+        <!-- 15 -->
+        <div class="section" id="contact">
+            <h2>15. Contact Us</h2>
+            <p>If you have questions, concerns, or requests regarding this Privacy Policy or our data practices, please contact us:</p>
+            <div class="contact-card">
+                <h3>DrTroy Continuing Education</h3>
+                <p style="margin-bottom: .5rem;">Lubbock, Texas, USA</p>
+                <p><a href="mailto:support@drtroy.com">support@drtroy.com</a></p>
+                <p style="margin-top: 1rem; font-size: .9rem; color: var(--neutral-600);">For privacy-specific inquiries, please include "Privacy Request" in your email subject line.<br>We aim to respond to all inquiries within 5 business days.</p>
+            </div>
+        </div>
+
     </div>
+
+    <footer class="footer">
+        <div style="max-width: 1280px; margin: 0 auto;">
+            <div class="footer-links">
+                <a href="index.html">Home</a>
+                <a href="course-catalog.html">Courses</a>
+                <a href="about.html">About</a>
+                <a href="terms.html">Terms of Service</a>
+                <a href="privacy.html">Privacy Policy</a>
+                <a href="my-account.html">Log In</a>
+            </div>
+            <p class="footer-copy">&copy; 2026 DrTroy Continuing Education. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        (function() {
+            const btn = document.querySelector('.hamburger');
+            const nav = document.querySelector('.nav-links');
+            if (btn && nav) {
+                btn.addEventListener('click', () => nav.classList.toggle('active'));
+                nav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => nav.classList.remove('active')));
+                window.addEventListener('scroll', () => nav.classList.remove('active'), {passive: true});
+                document.addEventListener('click', (e) => { if (!nav.contains(e.target) && !btn.contains(e.target)) nav.classList.remove('active'); });
+            }
+        })();
+    </script>
+
 </body>
 </html>

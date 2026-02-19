@@ -270,3 +270,108 @@
   to = "/course-catalog.html"
   status = 301
   force = true
+
+# Block exposed internal/sample HTML files
+[[redirects]]
+  from = "/Certificate_Sample_DrTroy.html"
+  to = "/"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/Course_Evaluation_Sample.html"
+  to = "/"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/TPTA_CCU_Submission_Package.html"
+  to = "/"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/home-preview.html"
+  to = "/"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/index-coming-soon-backup.html"
+  to = "/"
+  status = 404
+  force = true
+
+# Block exposed course development files
+[[redirects]]
+  from = "/courses/modules_content.txt"
+  to = "/"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/courses/module1_script.txt"
+  to = "/"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/courses/msk_quiz_questions.json"
+  to = "/"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/courses/clinical_decision_trees.md"
+  to = "/"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/courses/image_list.md"
+  to = "/"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/courses/create_title.sh"
+  to = "/"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/courses/*.txt"
+  to = "/"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/courses/*.json"
+  to = "/"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/courses/*.sh"
+  to = "/"
+  status = 404
+  force = true
+
+# Block package files
+[[redirects]]
+  from = "/package.json"
+  to = "/"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/package-lock.json"
+  to = "/"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/build.js"
+  to = "/"
+  status = 404
+  force = true
