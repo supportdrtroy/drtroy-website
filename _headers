@@ -1,0 +1,50 @@
+# DrTroy.com Security Headers (Netlify)
+
+/*
+  X-Frame-Options: DENY
+  X-Content-Type-Options: nosniff
+  X-XSS-Protection: 1; mode=block
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: geolocation=(), microphone=(), camera=()
+  Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
+
+# Admin pages - extra security
+/admin.html
+  X-Frame-Options: DENY
+  Cache-Control: no-cache, no-store, must-revalidate
+  Pragma: no-cache
+  Expires: 0
+
+/secure-admin-access-2026.html
+  X-Frame-Options: DENY
+  Cache-Control: no-cache, no-store, must-revalidate
+  Pragma: no-cache
+  Expires: 0
+
+# API endpoints - CORS protection
+/api/*
+  Access-Control-Allow-Origin: https://drtroy.com
+  Access-Control-Allow-Methods: GET, POST, OPTIONS
+  Access-Control-Allow-Headers: Content-Type, Authorization
+
+# Static assets - cache but secure
+/js/*
+  Cache-Control: public, max-age=31536000
+  X-Content-Type-Options: nosniff
+
+/css/*
+  Cache-Control: public, max-age=31536000
+  X-Content-Type-Options: nosniff
+
+# Sensitive files - block access
+/database-setup.sql
+  X-Robots-Tag: noindex, nofollow, noarchive, nosnippet
+  Cache-Control: no-cache, no-store, must-revalidate
+
+/*.md
+  X-Robots-Tag: noindex, nofollow, noarchive, nosnippet
+
+# Course content - require authentication
+/courses/*
+  X-Frame-Options: SAMEORIGIN
+  Cache-Control: private, no-cache

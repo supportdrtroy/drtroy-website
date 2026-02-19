@@ -12,7 +12,7 @@ Allow: /success.html
 
 # Block admin and sensitive areas
 Disallow: /admin.html
-Disallow: /admin
+Disallow: /admin/
 Disallow: /secure-admin-access-2026.html
 Disallow: /secure-admin.html
 Disallow: /system-settings.html
@@ -42,6 +42,7 @@ Disallow: /*.sql$
 Disallow: /*.pdf$
 Disallow: /supabase-config.js
 Disallow: /database-setup.sql
+Disallow: /analytics-implementation.md
 
 # Block development/test files
 Disallow: /logo-comparison.html
@@ -54,7 +55,7 @@ Disallow: /.netlify/
 # Crawl delay for well-behaved bots
 Crawl-delay: 10
 
-# Specific aggressive crawlers
+# Block AI training crawlers
 User-agent: GPTBot
 Disallow: /
 
@@ -73,6 +74,7 @@ Disallow: /
 User-agent: Bytespider
 Disallow: /
 
+# Block SEO/competitive intelligence crawlers
 User-agent: SemrushBot
 Disallow: /
 
@@ -85,5 +87,10 @@ Disallow: /
 User-agent: DotBot
 Disallow: /
 
+User-agent: BLEXBot
+Disallow: /
+
 User-agent: PetalBot
 Disallow: /
+
+Sitemap: https://drtroy.com/sitemap.xml

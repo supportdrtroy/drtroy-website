@@ -1,0 +1,35 @@
+# DrTroy.com Security Redirects (Netlify)
+
+# Block access to sensitive files
+/database-setup.sql  /404.html  404
+/database-architecture.md  /404.html  404
+/analytics-implementation.md  /404.html  404
+/*.sql  /404.html  404
+/*.md  /404.html  404
+/.env  /404.html  404
+/.htaccess  /404.html  404
+/config/*  /404.html  404
+/backup/*  /404.html  404
+
+# Redirect common attack patterns
+/wp-admin/*  /  301
+/wp-login.php  /  301
+/phpmyadmin/*  /  301
+/admin/login  /secure-admin-access-2026.html  301
+/administrator/*  /secure-admin-access-2026.html  301
+
+# Force HTTPS (additional layer)
+http://drtroy.com/*  https://drtroy.com/:splat  301!
+http://www.drtroy.com/*  https://drtroy.com/:splat  301!
+
+# Hide version control
+/.git/*  /404.html  404
+/.gitignore  /404.html  404
+
+# Block direct access to admin without proper authentication
+/admin.html  /secure-admin-access-2026.html  302  Conditions=Cookie:!supabase-auth-token
+
+# Main platform redirects
+/platform  /home-preview.html  301
+/courses  /course-catalog.html  301
+/pricing  /home-preview.html#packages  301
