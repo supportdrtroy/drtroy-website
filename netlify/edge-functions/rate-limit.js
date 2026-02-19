@@ -11,6 +11,10 @@ const RATE_LIMITS = {
   '/.netlify/functions/create-checkout': { window: 60, max: 10 },
   '/.netlify/functions/send-referral': { window: 300, max: 5 },
   '/.netlify/functions/send-waitlist-confirm': { window: 300, max: 5 },
+  '/.netlify/functions/admin-actions': { window: 60, max: 30 },        // admin ops: 30/min
+  '/.netlify/functions/send-campaign': { window: 3600, max: 5 },       // campaigns: 5/hour
+  '/.netlify/functions/admin-reset-password': { window: 300, max: 10 }, // pwd resets: 10/5min
+  '/.netlify/functions/issue-certificate': { window: 60, max: 20 },    // certs: 20/min
 };
 
 // In-memory rate limit store (per edge node)
@@ -62,5 +66,9 @@ export const config = {
     "/.netlify/functions/create-checkout",
     "/.netlify/functions/send-referral", 
     "/.netlify/functions/send-waitlist-confirm",
+    "/.netlify/functions/admin-actions",
+    "/.netlify/functions/send-campaign",
+    "/.netlify/functions/admin-reset-password",
+    "/.netlify/functions/issue-certificate",
   ],
 };

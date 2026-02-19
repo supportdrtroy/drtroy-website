@@ -119,10 +119,37 @@ exports.handler = async (event) => {
     return { statusCode: 400, headers: getCorsHeaders(event), body: JSON.stringify({ error: 'subject and htmlBody are required' }) };
   }
 
+  // Validate subject length
+  if (subject.length > 200) {
+    return { statusCode: 400, headers: getCorsHeaders(event), body: JSON.stringify({ error: 'Subject line too long (max 200 characters)' }) };
+  }
+
+  // Validate body length
+  if (htmlBody.length > 100000) {
+    return { statusCode: 400, headers: getCorsHeaders(event), body: JSON.stringify({ error: 'Email body too large (max 100KB)' }) };
+  }
+
   const recipients = await getRecipients(filters);
   if (!recipients.length) {
     return { statusCode: 200, headers: getCorsHeaders(event), body: JSON.stringify({ success: true, sent: 0, message: 'No matching recipients' }) };
   }
+
+  // Safety limit: max 500 emails per campaign send
+  const MAX_RECIPIENTS = 500;
+  if (recipients.length > MAX_RECIPIENTS) {
+    return { statusCode: 400, headers: getCorsHeaders(event), body: JSON.stringify({ error: `Too many recipients (${recipients.length}). Maximum is ${MAX_RECIPIENTS} per campaign. Use filters to narrow your audience.` }) };
+  }
+
+  // Log campaign send
+  try {
+    await sbRest('POST', '/rest/v1/admin_log', {
+      admin_user_id: admin.userId,
+      action_type: 'send_campaign',
+      details: { subject, recipientCount: recipients.length, filters },
+      ip_address: event.headers['x-forwarded-for'] || event.headers['client-ip'] || 'unknown',
+      created_at: new Date().toISOString(),
+    });
+  } catch (e) { /* non-critical */ }
 
   let sent = 0, failed = 0;
   // Send in batches (Resend allows batch, but we'll send individually for reliability)

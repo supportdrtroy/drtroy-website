@@ -89,6 +89,25 @@ exports.handler = async (event) => {
   }, recoverBody);
 
   if (res.status < 300) {
+    // Audit log password reset
+    try {
+      const token = authHeader.replace('Bearer ', '');
+      const adminUserRes = await httpRequest({
+        hostname: SUPABASE_HOST, path: '/auth/v1/user', method: 'GET',
+        headers: { apikey: SERVICE_ROLE_KEY, Authorization: `Bearer ${token}` }
+      }, null);
+      const logBody = JSON.stringify({
+        admin_user_id: adminUserRes.body?.id || null,
+        action_type: 'admin_reset_password',
+        details: { target_email: email },
+        ip_address: event.headers['x-forwarded-for'] || event.headers['client-ip'] || 'unknown',
+        created_at: new Date().toISOString(),
+      });
+      await httpRequest({
+        hostname: SUPABASE_HOST, path: '/rest/v1/admin_log', method: 'POST',
+        headers: { apikey: SERVICE_ROLE_KEY, Authorization: `Bearer ${SERVICE_ROLE_KEY}`, 'Content-Type': 'application/json', Prefer: 'return=representation', 'Content-Length': Buffer.byteLength(logBody) }
+      }, logBody);
+    } catch (e) { /* non-critical */ }
     return { statusCode: 200, headers: getCorsHeaders(event), body: JSON.stringify({ success: true }) };
   } else {
     return { statusCode: res.status, headers: getCorsHeaders(event), body: JSON.stringify({ error: res.body?.msg || res.body?.message || 'Failed to send reset email' }) };

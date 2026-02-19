@@ -18,6 +18,22 @@
   path = "/.netlify/functions/send-waitlist-confirm"
   function = "rate-limit"
 
+[[edge_functions]]
+  path = "/.netlify/functions/admin-actions"
+  function = "rate-limit"
+
+[[edge_functions]]
+  path = "/.netlify/functions/send-campaign"
+  function = "rate-limit"
+
+[[edge_functions]]
+  path = "/.netlify/functions/admin-reset-password"
+  function = "rate-limit"
+
+[[edge_functions]]
+  path = "/.netlify/functions/issue-certificate"
+  function = "rate-limit"
+
 [[headers]]
   for = "/*"
   [headers.values]

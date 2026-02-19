@@ -2145,6 +2145,26 @@
 
         }
 
+        // ── Admin-specific idle timeout (15 minutes) ──────────────────
+        (function initAdminIdleTimeout() {
+            const ADMIN_IDLE_MS = 15 * 60 * 1000;
+            let adminIdleTimer = null;
+            function resetAdminIdle() {
+                if (adminIdleTimer) clearTimeout(adminIdleTimer);
+                adminIdleTimer = setTimeout(async () => {
+                    if (window.DrTroySupabase) {
+                        await window.DrTroySupabase.signOut();
+                        alert('Admin session expired due to inactivity (15 min). Please log in again.');
+                        window.location.replace('secure-admin-access-2026.html');
+                    }
+                }, ADMIN_IDLE_MS);
+            }
+            ['mousemove','keydown','scroll','click','touchstart'].forEach(e =>
+                document.addEventListener(e, resetAdminIdle, { passive: true })
+            );
+            resetAdminIdle();
+        })();
+
         // Update last update timestamp and session info
         function updateLastUpdate() {
             const now = new Date();

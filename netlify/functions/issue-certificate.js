@@ -75,6 +75,17 @@ exports.handler = async (event) => {
   const admin = await verifyAdmin(authHeader);
   if (!admin.valid) return { statusCode: 403, headers: getCorsHeaders(event), body: JSON.stringify({ error: 'Unauthorized' }) };
 
+  // Extract admin userId for audit logging
+  const adminToken = authHeader.replace('Bearer ', '');
+  let adminUserId = null;
+  try {
+    const adminUserRes = await httpRequest({
+      hostname: SUPABASE_HOST, path: '/auth/v1/user', method: 'GET',
+      headers: { apikey: SERVICE_ROLE_KEY, Authorization: `Bearer ${adminToken}` }
+    }, null);
+    adminUserId = adminUserRes.body?.id;
+  } catch (e) { /* non-critical */ }
+
   let body;
   try { body = JSON.parse(event.body || '{}'); } catch { return { statusCode: 400, headers: getCorsHeaders(event), body: JSON.stringify({ error: 'Invalid JSON' }) }; }
 
@@ -144,6 +155,18 @@ exports.handler = async (event) => {
       }
     } catch { /* email failed but cert still issued */ }
   }
+
+  // Audit log certificate issuance
+  try {
+    await sbRest('POST', '/rest/v1/admin_log', {
+      admin_user_id: adminUserId,
+      action_type: reissue ? 'reissue_certificate' : 'issue_certificate',
+      target_user_id: userId,
+      details: { courseId, certNumber, emailSent, completionId: completionId || null },
+      ip_address: event.headers['x-forwarded-for'] || event.headers['client-ip'] || 'unknown',
+      created_at: new Date().toISOString(),
+    });
+  } catch (e) { /* non-critical */ }
 
   return {
     statusCode: 200,
