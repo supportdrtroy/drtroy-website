@@ -3232,9 +3232,32 @@
                             style="margin-left:4px;">
                             ${u.is_admin ? '🛡️ Remove Admin' : 'Make Admin'}
                         </button>
+                        ${!u.is_admin ? `<button class="btn-small danger"
+                            onclick="deleteAdminUser('${esc(u.id)}', '${esc([u.first_name, u.last_name].filter(Boolean).join(' ') || u.email)}')"
+                            style="margin-left:4px;">🗑️ Delete</button>` : ''}
                     </td>`;
                 tbody.appendChild(tr);
             });
+        }
+
+        async function deleteAdminUser(userId, name) {
+            if (!confirm(`Delete user "${name}"?\n\nThis permanently removes their account, enrollments, and all data. This cannot be undone.`)) return;
+            try {
+                const sb = window.DrTroySupabase ? window.DrTroySupabase.getClient() : null;
+                if (!sb) { showAdminToast('Session error', 'error'); return; }
+                const session = (await sb.auth.getSession()).data.session;
+                const res = await fetch('/.netlify/functions/admin-actions', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${session.access_token}` },
+                    body: JSON.stringify({ action: 'delete_user', payload: { userId } })
+                });
+                const data = await res.json();
+                if (!res.ok) throw new Error(data.error || 'Delete failed');
+                showAdminToast(`User "${name}" deleted successfully.`, 'success');
+                await loadUsers();
+            } catch (err) {
+                showAdminToast('Delete failed: ' + err.message, 'error');
+            }
         }
 
         function filterUsers() {
