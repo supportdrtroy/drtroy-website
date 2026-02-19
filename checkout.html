@@ -594,7 +594,7 @@
     <header class="header">
         <div class="header-container">
             <div class="logo">
-                <a href="home-preview.html">
+                <a href="index.html">
                     <img src="courses/images/drtroy_logo_new.jpg" alt="DrTroy Continuing Education">
                 </a>
             </div>
@@ -602,7 +602,7 @@
                 <span></span><span></span><span></span>
             </button>
             <nav class="nav-links">
-                <a href="home-preview.html">Home</a>
+                <a href="index.html">Home</a>
                 <a href="course-catalog.html">Courses</a>
                 <a href="cart.html">Cart</a>
                 <a href="my-account.html" id="navAccountLink" class="nav-login-link">Log In</a>
@@ -959,15 +959,10 @@
                     }
                 }
 
-                // ── Step 2: Determine what's in the cart ──────────────────────────────────
-                const firstItem = cartData.items[0];
-                if (!firstItem) throw new Error('Cart is empty');
-
-                const itemType = firstItem.type || 'course';
+                // ── Step 2: Build items array from cart ──────────────────────────────────
+                if (!cartData.items || cartData.items.length === 0) throw new Error('Cart is empty');
 
                 // Map cart IDs → Supabase IDs
-                // Packages: 'PT' → 'pt-package', 'PTA' → 'pta-package', etc.
-                // Courses:  'PT-MSK-001' → 'pt-msk-001' (lowercase)
                 const PACKAGE_ID_MAP = {
                     'PT':   'pt-package',
                     'PTA':  'pta-package',
@@ -975,16 +970,19 @@
                     'COTA': 'cota-package'
                 };
 
-                let itemId;
-                if (itemType === 'package') {
-                    const rawCode = firstItem.packageCode || firstItem.code || firstItem.id;
-                    itemId = PACKAGE_ID_MAP[rawCode] || (rawCode ? rawCode.toLowerCase() + '-package' : null);
-                } else {
-                    const rawId = firstItem.supabaseCourseId || firstItem.courseId || firstItem.id;
-                    itemId = rawId ? rawId.toLowerCase() : null;
-                }
-
-                if (!itemId) throw new Error('Could not identify item. Please clear your cart and try again.');
+                const checkoutItems = cartData.items.map(cartItem => {
+                    const itemType = cartItem.type || 'course';
+                    let itemId;
+                    if (itemType === 'package') {
+                        const rawCode = cartItem.packageCode || cartItem.code || cartItem.id;
+                        itemId = PACKAGE_ID_MAP[rawCode] || (rawCode ? rawCode.toLowerCase() + '-package' : null);
+                    } else {
+                        const rawId = cartItem.supabaseCourseId || cartItem.courseId || cartItem.id;
+                        itemId = rawId ? rawId.toLowerCase() : null;
+                    }
+                    if (!itemId) throw new Error('Could not identify item. Please clear your cart and try again.');
+                    return { itemId, itemType };
+                });
 
                 const discountCode = appliedDiscount.code || '';
 
@@ -1004,8 +1002,7 @@
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
-                        itemId,
-                        itemType,
+                        items: checkoutItems,
                         userId:      userId || 'guest_' + Date.now(),
                         userEmail,
                         discountCode,
@@ -1070,7 +1067,7 @@
                         document.getElementById('email').value      = session.user.email  || '';
                         document.getElementById('profession').value = profile.profession  || '';
                         document.getElementById('licenseNumber').value = profile.license_number || '';
-                        document.getElementById('licenseState').value  = profile.state        || '';
+                        document.getElementById('licenseState').value  = profile.license_state || '';
                         console.log('✅ Form pre-filled from Supabase profile');
                     }
                 }

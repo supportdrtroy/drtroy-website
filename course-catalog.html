@@ -8,7 +8,7 @@
     <!-- Security Headers -->
     <meta http-equiv="Content-Security-Policy" content="
         default-src 'self';
-        script-src 'self' 'unsafe-inline';
+        script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net;
         style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
         font-src 'self' https://fonts.gstatic.com;
         img-src 'self' data: https:;
@@ -673,6 +673,9 @@
     <meta name="twitter:title" content="Course Catalog — DrTroy CE">
     <meta name="twitter:description" content="Browse DrTroy CE course packages for PT, PTA, OT, and COTA. Complete your required Texas CCUs online at your own pace.">
     <meta name="twitter:image" content="https://drtroy.com/courses/images/og-preview.jpg">
+    <!-- Supabase JS v2 CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+    <script src="js/supabase-client.js"></script>
 </head>
 
 <body>
@@ -680,7 +683,7 @@
     <header class="header">
         <div class="header-container">
             <div class="logo">
-                <a href="home-preview.html">
+                <a href="index.html">
                     <img src="courses/images/drtroy_logo_new.jpg" alt="DrTroy Continuing Education">
                 </a>
             </div>
@@ -688,10 +691,10 @@
                 <span></span><span></span><span></span>
             </button>
             <nav class="nav-links">
-                <a href="home-preview.html">Home</a>
+                <a href="index.html">Home</a>
                 <a href="course-catalog.html">Courses</a>
-                <a href="home-preview.html#about">About</a>
-                <a href="home-preview.html#contact">Contact</a>
+                <a href="index.html#about">About</a>
+                <a href="index.html#contact">Contact</a>
                 <a href="cart.html" class="cart-icon" id="cart-icon">
                     🛒 Cart
                     <span class="cart-count" id="cart-count">0</span>
@@ -754,7 +757,7 @@
         // Course Data - Enhanced for new design
         const COURSE_CATALOG = {
             // PT-Specific Courses
-            'PT-MSK-001': {
+            'pt-msk-001': {
                 title: 'PT Musculoskeletal Evaluation and Diagnosis',
                 credits: 3,
                 description: 'Comprehensive MSK evaluation and treatment approaches across all body regions',
@@ -764,19 +767,19 @@
                 category: 'pt-specific',
                 url: 'courses/pt-msk-001.html'
             },
-            'JOINT-001': {
+            'core-joint-001': {
                 title: 'Considerations in Lower Extremity Joint Replacements',
                 credits: 3,
                 description: 'Comprehensive management of hip, knee, and ankle arthroplasty from pre-op to long-term care',
                 status: 'available',
                 courseNumber: 'DRTROY-JOINT-001-2024',
-                individualPrice: 34,
+                individualPrice: 29,
                 category: 'pt-specific',
                 url: 'courses/joint-replacement-001-progressive.html'
             },
             
             // OT-Specific Courses
-            'OT-ADL-001': {
+            'ot-adl-001': {
                 title: 'OT Evaluation and Assessment of ADLs',
                 credits: 3,
                 description: 'Comprehensive ADL assessment and intervention strategies for occupational therapists',
@@ -788,7 +791,7 @@
             },
             
             // Core Courses
-            'MOBILITY-001': {
+            'core-mobility-001': {
                 title: 'Comprehensive Mobility and Fall Prevention',
                 credits: 3,
                 description: 'Evidence-based mobility assessment and fall prevention strategies across healthcare settings',
@@ -798,7 +801,7 @@
                 category: 'core',
                 url: 'courses/mobility-fall-001-progressive.html'
             },
-            'BALANCE-001': {
+            'core-balance-001': {
                 title: 'Balance, Gait, and Vestibular Management',
                 credits: 3,
                 description: 'Assessment and treatment of balance and vestibular disorders in rehabilitation',
@@ -808,7 +811,7 @@
                 category: 'core',
                 url: 'courses/balance-gait-001-progressive.html'
             },
-            'EXERCISE-001': {
+            'core-postsurg-001': {
                 title: 'Post-Surgical and Therapeutic Exercise',
                 credits: 3,
                 description: 'Post-operative rehabilitation and evidence-based exercise prescription',
@@ -818,7 +821,7 @@
                 category: 'core',
                 url: 'courses/post-surgical-001-progressive.html'
             },
-            'GERIATRIC-001': {
+            'core-geriatric-001': {
                 title: 'Geriatric Care Across the Continuum',
                 credits: 3,
                 description: 'Comprehensive geriatric rehabilitation approaches for all care settings',
@@ -828,7 +831,7 @@
                 category: 'core',
                 url: 'courses/geriatric-care-001-progressive.html'
             },
-            'DOCUMENTATION-001': {
+            'core-doc-001': {
                 title: 'Professional Documentation and Communication',
                 credits: 3,
                 description: 'Clinical documentation standards and professional communication skills',
@@ -838,7 +841,7 @@
                 category: 'core',
                 url: 'courses/documentation-001-progressive.html'
             },
-            'MODALITIES-001': {
+            'core-agents-001': {
                 title: 'Physical Agents, Modalities, and Wound Care',
                 credits: 3,
                 description: 'Therapeutic modalities and comprehensive wound care management',
@@ -848,7 +851,7 @@
                 category: 'core',
                 url: 'courses/physical-agents-001-progressive.html'
             },
-            'NEURO-001': {
+            'core-neuro-001': {
                 title: 'Neurological Rehabilitation',
                 credits: 3,
                 description: 'Comprehensive neurological rehabilitation covering stroke, TBI, SCI, Parkinson\'s, MS, and emerging technologies',
@@ -858,7 +861,7 @@
                 category: 'core',
                 url: 'courses/pt-neuro-001-progressive.html'
             },
-            'INFECTION-001': {
+            'core-infection-001': {
                 title: 'Infection Control and Patient Safety',
                 credits: 3,
                 description: 'Infection prevention protocols and patient safety in healthcare settings',
@@ -868,7 +871,7 @@
                 category: 'core',
                 url: 'courses/infection-control-001-progressive.html'
             },
-            'EDUCATION-001': {
+            'core-education-001': {
                 title: 'Patient Education and Health Promotion',
                 credits: 2,
                 description: 'Evidence-based strategies for effective patient education and health behavior change',
@@ -878,9 +881,9 @@
                 category: 'core',
                 url: 'courses/patient-education-001-progressive.html'
             },
-            'HEALTHTECH-001': {
+            'core-tech-001': {
                 title: 'Healthcare Technology and Electronic Records',
-                credits: 1.5,
+                credits: 1,
                 description: 'Comprehensive technology skills including EHR systems, HIPAA compliance, clinical documentation, interoperability, and emerging healthcare technologies',
                 status: 'available',
                 courseNumber: 'DRTROY-HEALTHTECH-001-2024',
@@ -900,7 +903,7 @@
                 originalPrice: 149,
                 finalPrice: 139,
                 savings: 10,
-                courses: ['PT-MSK-001', 'JOINT-001', 'MOBILITY-001', 'NEURO-001', 'EDUCATION-001', 'HEALTHTECH-001', 'BALANCE-001', 'EXERCISE-001', 'GERIATRIC-001'],
+                courses: ['pt-msk-001', 'core-joint-001', 'core-mobility-001', 'core-neuro-001', 'core-education-001', 'core-tech-001', 'core-balance-001', 'core-postsurg-001', 'core-geriatric-001'],
                 featured: true
             },
             'OT': {
@@ -911,7 +914,7 @@
                 originalPrice: 129,
                 finalPrice: 119,
                 savings: 10,
-                courses: ['OT-ADL-001', 'MOBILITY-001', 'NEURO-001', 'EDUCATION-001', 'HEALTHTECH-001', 'GERIATRIC-001', 'INFECTION-001'],
+                courses: ['ot-adl-001', 'core-mobility-001', 'core-neuro-001', 'core-education-001', 'core-tech-001', 'core-geriatric-001', 'core-infection-001'],
                 featured: true
             },
             'PTA': {
@@ -922,7 +925,7 @@
                 originalPrice: 119,
                 finalPrice: 109,
                 savings: 10,
-                courses: ['MOBILITY-001', 'NEURO-001', 'EDUCATION-001', 'HEALTHTECH-001', 'GERIATRIC-001'],
+                courses: ['core-mobility-001', 'core-neuro-001', 'core-education-001', 'core-tech-001', 'core-geriatric-001'],
                 featured: true
             },
             'COTA': {
@@ -933,7 +936,7 @@
                 originalPrice: 109,
                 finalPrice: 99,
                 savings: 10,
-                courses: ['MOBILITY-001', 'NEURO-001', 'EDUCATION-001', 'HEALTHTECH-001', 'GERIATRIC-001'],
+                courses: ['core-mobility-001', 'core-neuro-001', 'core-education-001', 'core-tech-001', 'core-geriatric-001'],
                 featured: true
             }
         };

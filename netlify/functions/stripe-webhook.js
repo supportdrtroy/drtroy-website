@@ -3,17 +3,11 @@
  * POST /.netlify/functions/stripe-webhook
  *
  * Handles Stripe webhook events.
- * checkout.session.completed → creates enrollment(s) in Supabase.
- *
- * Stripe Dashboard webhook config:
- *   URL: https://drtroy.com/.netlify/functions/stripe-webhook
- *   Events: checkout.session.completed
+ * checkout.session.completed → creates enrollment(s) in Supabase + sends confirmation email.
  *
  * Env vars required:
- *   STRIPE_SECRET_KEY
- *   STRIPE_WEBHOOK_SECRET   (whsec_... from Stripe webhook settings)
- *   SUPABASE_URL
- *   SUPABASE_SERVICE_ROLE_KEY
+ *   STRIPE_SECRET_KEY, STRIPE_WEBHOOK_SECRET, SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY
+ *   RESEND_API_KEY (for confirmation emails)
  */
 
 const https  = require('https');
@@ -88,6 +82,18 @@ async function getPackageCourseIds(packageId, supabaseUrl, serviceRoleKey) {
   return [];
 }
 
+async function getCourseTitle(courseId, supabaseUrl, serviceRoleKey) {
+  const res = await supabaseRequest(
+    'GET',
+    `/rest/v1/courses?id=eq.${encodeURIComponent(courseId)}&select=id,title,ceu_hours`,
+    null, supabaseUrl, serviceRoleKey
+  );
+  if (res.status === 200 && res.data && res.data[0]) {
+    return res.data[0];
+  }
+  return { id: courseId, title: courseId, ceu_hours: '?' };
+}
+
 async function createEnrollment(enrollment, supabaseUrl, serviceRoleKey) {
   return supabaseRequest('POST', '/rest/v1/enrollments', enrollment, supabaseUrl, serviceRoleKey);
 }
@@ -98,10 +104,101 @@ async function createProgressRow(progress, supabaseUrl, serviceRoleKey) {
 
 async function incrementDiscountUsage(code, supabaseUrl, serviceRoleKey) {
   if (!code) return;
-  // Use RPC if available; otherwise silently skip
   try {
     await supabaseRequest('POST', '/rest/v1/rpc/increment_discount_usage', { code_input: code }, supabaseUrl, serviceRoleKey);
   } catch { /* best effort */ }
+}
+
+// ─── Email helper (Resend API) ────────────────────────────────
+
+function sendConfirmationEmail(toEmail, courseDetails, amountPaid) {
+  const RESEND_API_KEY = process.env.RESEND_API_KEY;
+  if (!RESEND_API_KEY) {
+    console.warn('[stripe-webhook] RESEND_API_KEY not set — skipping confirmation email');
+    return Promise.resolve();
+  }
+
+  const courseListHtml = courseDetails.map(c =>
+    `<li><strong>${c.title}</strong> — ${c.ceu_hours} CEU Hours</li>`
+  ).join('\n');
+
+  const totalCeus = courseDetails.reduce((sum, c) => sum + parseFloat(c.ceu_hours || 0), 0);
+  const amountFormatted = (amountPaid / 100).toFixed(2);
+
+  const html = `
+    <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 600px; margin: 0 auto;">
+      <div style="background: #1a365d; color: white; padding: 24px; text-align: center; border-radius: 8px 8px 0 0;">
+        <h1 style="margin: 0; font-size: 24px;">🎓 Purchase Confirmed!</h1>
+        <p style="margin: 8px 0 0; opacity: 0.9;">DrTroy Continuing Education</p>
+      </div>
+      <div style="padding: 24px; background: #f7fafc; border: 1px solid #e2e8f0;">
+        <p>Thank you for your purchase! Your courses are ready to access right now.</p>
+        
+        <h3 style="color: #1a365d;">Your Courses:</h3>
+        <ul style="line-height: 1.8;">${courseListHtml}</ul>
+        
+        <div style="background: white; border: 1px solid #e2e8f0; border-radius: 8px; padding: 16px; margin: 16px 0;">
+          <p style="margin: 0;"><strong>Total Paid:</strong> $${amountFormatted}</p>
+          <p style="margin: 4px 0 0;"><strong>Total CEU Hours:</strong> ${totalCeus}</p>
+        </div>
+
+        <h3 style="color: #1a365d;">How to Access Your Courses:</h3>
+        <ol style="line-height: 1.8;">
+          <li>Go to <a href="https://drtroy.com/my-account.html" style="color: #2b6cb0;">drtroy.com/my-account.html</a></li>
+          <li>Log in with the email you used to purchase</li>
+          <li>Click on any course to begin learning</li>
+          <li>Complete all modules and pass the final exam to earn your certificate</li>
+        </ol>
+
+        <div style="text-align: center; margin: 24px 0;">
+          <a href="https://drtroy.com/my-account.html" style="display: inline-block; background: #2b6cb0; color: white; padding: 12px 32px; border-radius: 6px; text-decoration: none; font-weight: bold;">Start Learning Now →</a>
+        </div>
+
+        <p style="color: #718096; font-size: 14px;">Questions? Reply to this email or contact us at support@drtroy.com</p>
+      </div>
+      <div style="text-align: center; padding: 16px; color: #a0aec0; font-size: 12px;">
+        © ${new Date().getFullYear()} DrTroy Continuing Education · drtroy.com
+      </div>
+    </div>
+  `;
+
+  const emailBody = JSON.stringify({
+    from: 'DrTroy Continuing Education <no-reply@drtroy.com>',
+    to: [toEmail],
+    subject: `Your ${courseDetails.length === 1 ? 'Course is' : courseDetails.length + ' Courses are'} Ready! — DrTroy CE`,
+    html,
+  });
+
+  return new Promise((resolve) => {
+    const options = {
+      hostname: 'api.resend.com',
+      path: '/emails',
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${RESEND_API_KEY}`,
+        'Content-Type': 'application/json',
+        'Content-Length': Buffer.byteLength(emailBody),
+      },
+    };
+    const req = https.request(options, (res) => {
+      let data = '';
+      res.on('data', (chunk) => (data += chunk));
+      res.on('end', () => {
+        if (res.statusCode >= 200 && res.statusCode < 300) {
+          console.log('[stripe-webhook] ✅ Confirmation email sent to', toEmail);
+        } else {
+          console.error('[stripe-webhook] Email send failed:', res.statusCode, data);
+        }
+        resolve();
+      });
+    });
+    req.on('error', (err) => {
+      console.error('[stripe-webhook] Email error:', err.message);
+      resolve(); // Don't fail the webhook over email
+    });
+    req.write(emailBody);
+    req.end();
+  });
 }
 
 // ─── handler ─────────────────────────────────────────────────
@@ -123,7 +220,6 @@ exports.handler = async (event) => {
   const signature = event.headers['stripe-signature'];
   if (!signature) return { statusCode: 400, body: 'Missing stripe-signature header' };
 
-  // Netlify may base64-encode the body — decode it so Stripe signature check works
   const payload = event.isBase64Encoded
     ? Buffer.from(event.body, 'base64').toString('utf8')
     : event.body;
@@ -142,40 +238,67 @@ exports.handler = async (event) => {
   if (stripeEvent.type === 'checkout.session.completed') {
     const session      = stripeEvent.data.object;
     const meta         = session.metadata || {};
-    const itemId       = meta.item_id   || meta.course_id;  // support legacy field
-    const itemType     = meta.item_type || 'course';
     const userId       = meta.user_id;
     const discountCode = meta.discount_code || null;
     const paymentIntent = session.payment_intent;
     const amountPaid   = session.amount_total;
+    const customerEmail = session.customer_email || session.customer_details?.email;
 
-    if (!itemId || !userId || userId.startsWith('guest_')) {
+    // Support multi-item (item_ids comma-separated) and legacy single-item (item_id)
+    let itemIds = [];
+    let itemTypes = [];
+    if (meta.item_ids) {
+      itemIds = meta.item_ids.split(',').filter(Boolean);
+      itemTypes = (meta.item_types || '').split(',').filter(Boolean);
+    } else {
+      const singleId = meta.item_id || meta.course_id;
+      if (singleId) {
+        itemIds = [singleId];
+        itemTypes = [meta.item_type || 'course'];
+      }
+    }
+
+    if (itemIds.length === 0 || !userId || userId.startsWith('guest_')) {
       console.warn('[stripe-webhook] Missing/guest metadata — no enrollment created:', meta);
       return { statusCode: 200, body: 'No enrollment (guest or missing metadata)' };
     }
 
-    console.log(`[stripe-webhook] Processing: user=${userId} item=${itemId} type=${itemType} paid=${amountPaid}`);
+    console.log(`[stripe-webhook] Processing: user=${userId} items=${itemIds.join(',')} paid=${amountPaid}`);
 
     try {
-      // Resolve course IDs to enroll
-      let courseIds = [];
-      let packageId = null;
+      // Resolve all course IDs to enroll
+      let allCourseIds = [];
 
-      if (itemType === 'package') {
-        packageId = itemId;
-        courseIds = await getPackageCourseIds(itemId, SUPABASE_URL, SERVICE_ROLE);
-        if (courseIds.length === 0) {
-          console.error('[stripe-webhook] Package has no courses:', itemId);
-          return { statusCode: 200, body: 'Package has no courses — logged' };
+      for (let i = 0; i < itemIds.length; i++) {
+        const itemId = itemIds[i];
+        const itemType = itemTypes[i] || 'course';
+
+        if (itemType === 'package') {
+          const pkgCourses = await getPackageCourseIds(itemId, SUPABASE_URL, SERVICE_ROLE);
+          if (pkgCourses.length === 0) {
+            console.error('[stripe-webhook] Package has no courses:', itemId);
+          } else {
+            console.log(`[stripe-webhook] Package ${itemId} → ${pkgCourses.length} courses`);
+            allCourseIds.push(...pkgCourses);
+          }
+        } else {
+          allCourseIds.push(itemId);
         }
-        console.log(`[stripe-webhook] Package ${itemId} → ${courseIds.length} courses`);
-      } else {
-        courseIds = [itemId];
+      }
+
+      // Deduplicate
+      allCourseIds = [...new Set(allCourseIds)];
+
+      if (allCourseIds.length === 0) {
+        console.error('[stripe-webhook] No courses to enroll');
+        return { statusCode: 200, body: 'No courses resolved — logged' };
       }
 
       // Create enrollment + progress row for each course
       const errors = [];
-      for (const courseId of courseIds) {
+      const enrolledCourseDetails = [];
+
+      for (const courseId of allCourseIds) {
         const enrollResult = await createEnrollment({
           user_id:                  userId,
           course_id:                courseId,
@@ -188,6 +311,9 @@ exports.handler = async (event) => {
         if (enrollResult.status >= 400) {
           if (enrollResult.status === 409 || enrollResult.data?.code === '23505') {
             console.log(`[stripe-webhook] Already enrolled: user=${userId} course=${courseId}`);
+            // Still include in email
+            const courseInfo = await getCourseTitle(courseId, SUPABASE_URL, SERVICE_ROLE);
+            enrolledCourseDetails.push(courseInfo);
             continue;
           }
           errors.push(`Enroll ${courseId}: ${enrollResult.status} ${JSON.stringify(enrollResult.data)}`);
@@ -201,11 +327,15 @@ exports.handler = async (event) => {
             user_id:          userId,
             course_id:        courseId,
             enrollment_id:    enrollId,
-            module_id:        0,
+            module_id:        '0',
             status:           'not_started',
             progress_percent: 0,
           }, SUPABASE_URL, SERVICE_ROLE);
         }
+
+        // Get course details for email
+        const courseInfo = await getCourseTitle(courseId, SUPABASE_URL, SERVICE_ROLE);
+        enrolledCourseDetails.push(courseInfo);
       }
 
       if (errors.length > 0) {
@@ -218,8 +348,13 @@ exports.handler = async (event) => {
         await incrementDiscountUsage(discountCode, SUPABASE_URL, SERVICE_ROLE);
       }
 
-      console.log(`[stripe-webhook] ✅ Enrolled user=${userId} in ${courseIds.length} course(s)`);
-      return { statusCode: 200, body: JSON.stringify({ received: true, enrolled: courseIds.length }) };
+      // Send confirmation email (best effort — don't fail webhook)
+      if (customerEmail && enrolledCourseDetails.length > 0) {
+        await sendConfirmationEmail(customerEmail, enrolledCourseDetails, amountPaid || 0);
+      }
+
+      console.log(`[stripe-webhook] ✅ Enrolled user=${userId} in ${allCourseIds.length} course(s)`);
+      return { statusCode: 200, body: JSON.stringify({ received: true, enrolled: allCourseIds.length }) };
 
     } catch (err) {
       console.error('[stripe-webhook] Error:', err.message);

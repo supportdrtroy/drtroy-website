@@ -2,15 +2,13 @@
  * DrTroy CE Platform — Netlify Function: create-checkout
  * POST /.netlify/functions/create-checkout
  *
- * Creates a Stripe Checkout Session for a course OR package purchase.
+ * Creates a Stripe Checkout Session for one or more courses/packages.
  *
- * Request body:
+ * Request body (multi-item):
+ *   { items: [{ itemId, itemType }], userId, userEmail, discountCode?, successUrl, cancelUrl }
+ *
+ * Legacy single-item body (still supported):
  *   { itemId, itemType, userId, userEmail, discountCode?, successUrl, cancelUrl }
- *   itemType: 'course' | 'package'
- *
- * Response:
- *   { url } — Stripe hosted checkout URL
- *   { error } — on failure
  */
 
 const https = require('https');
@@ -124,67 +122,88 @@ exports.handler = async (event) => {
   try { body = JSON.parse(event.body || '{}'); }
   catch { return { statusCode: 400, body: JSON.stringify({ error: 'Invalid request body' }) }; }
 
-  const { itemId, itemType = 'course', userId, userEmail, discountCode, successUrl, cancelUrl } = body;
+  const { userId, userEmail, discountCode, successUrl, cancelUrl } = body;
 
-  // Support legacy courseId field
-  const resolvedItemId = itemId || body.courseId;
+  // Support both multi-item { items: [...] } and legacy single-item { itemId, itemType }
+  let items = body.items;
+  if (!items || !Array.isArray(items) || items.length === 0) {
+    const resolvedItemId = body.itemId || body.courseId;
+    if (resolvedItemId) {
+      items = [{ itemId: resolvedItemId, itemType: body.itemType || 'course' }];
+    }
+  }
 
-  if (!resolvedItemId || !userId || !userEmail) {
-    return { statusCode: 400, body: JSON.stringify({ error: 'Missing required fields: itemId, userId, userEmail' }) };
+  if (!items || items.length === 0 || !userId || !userEmail) {
+    return { statusCode: 400, body: JSON.stringify({ error: 'Missing required fields: items, userId, userEmail' }) };
   }
 
   try {
-    // 1. Look up item (course or package)
-    let item, itemLabel, ceuInfo;
-
-    if (itemType === 'package') {
-      item = await supabaseGet(
-        `/rest/v1/packages?id=eq.${encodeURIComponent(resolvedItemId)}&select=id,title,price_cents,total_ceu_hours`,
-        SUPABASE_URL, SERVICE_ROLE
-      );
-      ceuInfo = `${item.total_ceu_hours} CEU Hours`;
-      itemLabel = item.title;
-    } else {
-      item = await supabaseGet(
-        `/rest/v1/courses?id=eq.${encodeURIComponent(resolvedItemId)}&select=id,title,price_cents,ceu_hours`,
-        SUPABASE_URL, SERVICE_ROLE
-      );
-      ceuInfo = `${item.ceu_hours} CEU Hours`;
-      itemLabel = item.title;
-    }
-
-    // 2. Apply discount if provided
-    let finalPrice = item.price_cents;
+    // Validate discount if provided
     let discountRow = null;
     if (discountCode && discountCode.trim()) {
       discountRow = await validateDiscount(discountCode, SUPABASE_URL, SERVICE_ROLE);
-      if (discountRow) finalPrice = applyDiscount(finalPrice, discountRow);
     }
 
-    // 3. Build Stripe Checkout session
+    // Look up each item and build Stripe line items
     const sessionParams = {
       'payment_method_types[]': 'card',
-      'line_items[0][price_data][currency]': 'usd',
-      'line_items[0][price_data][product_data][name]': itemLabel,
-      'line_items[0][price_data][product_data][description]': `${ceuInfo} | DrTroy.com CE Platform`,
-      'line_items[0][price_data][unit_amount]': String(finalPrice),
-      'line_items[0][quantity]': '1',
       mode: 'payment',
       customer_email: userEmail,
-      'metadata[item_id]':      resolvedItemId,
-      'metadata[item_type]':    itemType,
       'metadata[user_id]':      userId,
       'metadata[discount_code]': discountCode || '',
       success_url: successUrl,
       cancel_url:  cancelUrl,
     };
 
+    const allItemIds = [];
+    const allItemTypes = [];
+    let totalFinalPrice = 0;
+
+    for (let i = 0; i < items.length; i++) {
+      const { itemId, itemType = 'course' } = items[i];
+      let item, ceuInfo;
+
+      if (itemType === 'package') {
+        item = await supabaseGet(
+          `/rest/v1/packages?id=eq.${encodeURIComponent(itemId)}&select=id,title,price_cents,total_ceu_hours`,
+          SUPABASE_URL, SERVICE_ROLE
+        );
+        ceuInfo = `${item.total_ceu_hours} CEU Hours`;
+      } else {
+        item = await supabaseGet(
+          `/rest/v1/courses?id=eq.${encodeURIComponent(itemId)}&select=id,title,price_cents,ceu_hours`,
+          SUPABASE_URL, SERVICE_ROLE
+        );
+        ceuInfo = `${item.ceu_hours} CEU Hours`;
+      }
+
+      let finalPrice = item.price_cents;
+      if (discountRow) finalPrice = applyDiscount(finalPrice, discountRow);
+      totalFinalPrice += finalPrice;
+
+      sessionParams[`line_items[${i}][price_data][currency]`] = 'usd';
+      sessionParams[`line_items[${i}][price_data][product_data][name]`] = item.title;
+      sessionParams[`line_items[${i}][price_data][product_data][description]`] = `${ceuInfo} | DrTroy.com CE Platform`;
+      sessionParams[`line_items[${i}][price_data][unit_amount]`] = String(finalPrice);
+      sessionParams[`line_items[${i}][quantity]`] = '1';
+
+      allItemIds.push(itemId);
+      allItemTypes.push(itemType);
+    }
+
+    // Store all item IDs in metadata (Stripe metadata values max 500 chars)
+    sessionParams['metadata[item_ids]'] = allItemIds.join(',');
+    sessionParams['metadata[item_types]'] = allItemTypes.join(',');
+    // Keep legacy single-item fields for backward compat
+    sessionParams['metadata[item_id]'] = allItemIds[0];
+    sessionParams['metadata[item_type]'] = allItemTypes[0];
+
     // Free items: skip Stripe
-    if (finalPrice === 0) {
+    if (totalFinalPrice === 0) {
       return {
         statusCode: 200,
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ free: true, message: 'Item is free with discount.' }),
+        body: JSON.stringify({ free: true, message: 'Items are free with discount.' }),
       };
     }
 

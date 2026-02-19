@@ -222,8 +222,9 @@ class ShoppingCart {
 }
 
 // Course and Package Data (will be overridden by page-specific data if available)
+// Course IDs match Supabase database IDs exactly
 window.COURSE_CATALOG = window.COURSE_CATALOG || {
-    'PT-MSK-001': {
+    'pt-msk-001': {
         title: 'PT Musculoskeletal Evaluation and Diagnosis',
         credits: 3,
         price: 34,
@@ -231,23 +232,23 @@ window.COURSE_CATALOG = window.COURSE_CATALOG || {
         category: 'pt-specific',
         status: 'available'
     },
-    'JOINT-001': {
+    'core-joint-001': {
         title: 'Considerations in Lower Extremity Joint Replacements',
         credits: 3,
-        price: 34,
+        price: 29,
         courseNumber: 'DRTROY-JOINT-001-2024',
         category: 'pt-specific',
         status: 'available'
     },
-    'OT-ADL-001': {
+    'ot-adl-001': {
         title: 'OT Evaluation and Assessment of ADLs',
         credits: 3,
         price: 34,
         courseNumber: 'DRTROY-OT-ADL-001-2024',
         category: 'ot-specific',
-        status: 'coming-soon'
+        status: 'available'
     },
-    'MOBILITY-001': {
+    'core-mobility-001': {
         title: 'Comprehensive Mobility and Fall Prevention',
         credits: 3,
         price: 29,
@@ -255,47 +256,47 @@ window.COURSE_CATALOG = window.COURSE_CATALOG || {
         category: 'core',
         status: 'available'
     },
-    'BALANCE-001': {
+    'core-balance-001': {
         title: 'Balance, Gait, and Vestibular Management',
         credits: 3,
         price: 29,
         courseNumber: 'DRTROY-BALANCE-001-2024',
         category: 'core',
-        status: 'coming-soon'
+        status: 'available'
     },
-    'EXERCISE-001': {
+    'core-postsurg-001': {
         title: 'Post-Surgical and Therapeutic Exercise',
         credits: 3,
         price: 29,
         courseNumber: 'DRTROY-EXERCISE-001-2024',
         category: 'core',
-        status: 'coming-soon'
+        status: 'available'
     },
-    'GERIATRIC-001': {
+    'core-geriatric-001': {
         title: 'Geriatric Care Across the Continuum',
         credits: 3,
         price: 29,
         courseNumber: 'DRTROY-GERIATRIC-001-2024',
         category: 'core',
-        status: 'coming-soon'
+        status: 'available'
     },
-    'DOCUMENTATION-001': {
+    'core-doc-001': {
         title: 'Professional Documentation and Communication',
         credits: 3,
         price: 29,
         courseNumber: 'DRTROY-DOC-001-2024',
         category: 'core',
-        status: 'coming-soon'
+        status: 'available'
     },
-    'MODALITIES-001': {
+    'core-agents-001': {
         title: 'Physical Agents, Modalities, and Wound Care',
         credits: 3,
         price: 29,
         courseNumber: 'DRTROY-MODALITIES-001-2024',
         category: 'core',
-        status: 'coming-soon'
+        status: 'available'
     },
-    'NEURO-001': {
+    'core-neuro-001': {
         title: 'Neurological Rehabilitation',
         credits: 3,
         price: 29,
@@ -303,15 +304,15 @@ window.COURSE_CATALOG = window.COURSE_CATALOG || {
         category: 'core',
         status: 'available'
     },
-    'INFECTION-001': {
+    'core-infection-001': {
         title: 'Infection Control and Patient Safety',
         credits: 3,
         price: 29,
         courseNumber: 'DRTROY-INFECTION-001-2024',
         category: 'core',
-        status: 'coming-soon'
+        status: 'available'
     },
-    'EDUCATION-001': {
+    'core-education-001': {
         title: 'Patient Education and Health Promotion',
         credits: 2,
         price: 22,
@@ -319,9 +320,9 @@ window.COURSE_CATALOG = window.COURSE_CATALOG || {
         category: 'core',
         status: 'available'
     },
-    'HEALTHTECH-001': {
+    'core-tech-001': {
         title: 'Healthcare Technology and Electronic Records',
-        credits: 1.5,
+        credits: 1,
         price: 14,
         courseNumber: 'DRTROY-HEALTHTECH-001-2024',
         category: 'core',
@@ -336,9 +337,9 @@ window.PACKAGE_CATALOG = window.PACKAGE_CATALOG || {
         credits: 27,
         description: 'Complete CE package designed for Physical Therapists. Includes core courses plus PT-specific specialties.',
         originalPrice: 149,
-        finalPrice: 139, // With $10 new member discount
+        finalPrice: 139,
         savings: 10,
-        courses: ['PT-MSK-001', 'JOINT-001', 'MOBILITY-001', 'NEURO-001', 'EDUCATION-001', 'HEALTHTECH-001', 'BALANCE-001', 'EXERCISE-001', 'GERIATRIC-001'],
+        courses: ['pt-msk-001', 'core-joint-001', 'core-mobility-001', 'core-neuro-001', 'core-education-001', 'core-tech-001', 'core-balance-001', 'core-postsurg-001', 'core-geriatric-001'],
         featured: true
     },
     'PTA': {
@@ -347,9 +348,9 @@ window.PACKAGE_CATALOG = window.PACKAGE_CATALOG || {
         credits: 17,
         description: 'Tailored CE package for Physical Therapist Assistants covering essential topics.',
         originalPrice: 119,
-        finalPrice: 109, // With $10 new member discount
+        finalPrice: 109,
         savings: 10,
-        courses: ['MOBILITY-001', 'NEURO-001', 'EDUCATION-001', 'HEALTHTECH-001', 'GERIATRIC-001'],
+        courses: ['core-mobility-001', 'core-neuro-001', 'core-education-001', 'core-tech-001', 'core-geriatric-001'],
         featured: true
     },
     'OT': {
@@ -358,9 +359,9 @@ window.PACKAGE_CATALOG = window.PACKAGE_CATALOG || {
         credits: 23,
         description: 'Complete CE package designed for Occupational Therapists with OT-specific content.',
         originalPrice: 129,
-        finalPrice: 119, // With $10 new member discount
+        finalPrice: 119,
         savings: 10,
-        courses: ['OT-ADL-001', 'MOBILITY-001', 'NEURO-001', 'EDUCATION-001', 'HEALTHTECH-001', 'GERIATRIC-001', 'INFECTION-001'],
+        courses: ['ot-adl-001', 'core-mobility-001', 'core-neuro-001', 'core-education-001', 'core-tech-001', 'core-geriatric-001', 'core-infection-001'],
         featured: true
     },
     'COTA': {
@@ -369,9 +370,9 @@ window.PACKAGE_CATALOG = window.PACKAGE_CATALOG || {
         credits: 23,
         description: 'Tailored CE package for Certified Occupational Therapy Assistants.',
         originalPrice: 109,
-        finalPrice: 99, // With $10 new member discount
+        finalPrice: 99,
         savings: 10,
-        courses: ['MOBILITY-001', 'NEURO-001', 'EDUCATION-001', 'HEALTHTECH-001', 'GERIATRIC-001'],
+        courses: ['core-mobility-001', 'core-neuro-001', 'core-education-001', 'core-tech-001', 'core-geriatric-001'],
         featured: true
     }
 };

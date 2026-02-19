@@ -1590,7 +1590,8 @@
       + '<p>Course ID: DOCUMENTATION-001 | Course ID: DRTROY-DOC-001-2024</p>'
       + '<p>Date of Completion: ' + dateStr + '</p>'
       + '<p style="margin-top:16px;">DrTroy CE | drtroy.com</p>'
-      + '</div></body></html>';
+      + '</div><script src="../js/course-sync.js"></script>
+</body></html>';
 
     const blob = new Blob([certHTML], { type: 'text/html' });
     const url = URL.createObjectURL(blob);
@@ -1631,5 +1632,6 @@
   });
 </script>
 
+<script src="../js/course-sync.js"></script>
 </body>
 </html>

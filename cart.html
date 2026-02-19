@@ -8,7 +8,7 @@
     <!-- Security Headers -->
     <meta http-equiv="Content-Security-Policy" content="
         default-src 'self';
-        script-src 'self' 'unsafe-inline';
+        script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net;
         style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
         font-src 'self' https://fonts.gstatic.com;
         img-src 'self' data: https:;
@@ -622,6 +622,9 @@
         }
         .nav-login-link:hover { background: #1e40af; }
     </style>
+    <!-- Supabase JS v2 CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+    <script src="js/supabase-client.js"></script>
 </head>
 
 <body>
@@ -629,7 +632,7 @@
     <header class="header">
         <div class="header-container">
             <div class="logo">
-                <a href="home-preview.html">
+                <a href="index.html">
                     <img src="courses/images/drtroy_logo_new.jpg" alt="DrTroy Continuing Education">
                 </a>
             </div>
@@ -637,10 +640,10 @@
                 <span></span><span></span><span></span>
             </button>
             <nav class="nav-links">
-                <a href="home-preview.html">Home</a>
+                <a href="index.html">Home</a>
                 <a href="course-catalog.html">Courses</a>
-                <a href="home-preview.html#about">About</a>
-                <a href="home-preview.html#contact">Contact</a>
+                <a href="index.html#about">About</a>
+                <a href="index.html#contact">Contact</a>
                 <div class="cart-icon" id="cart-icon">
                     🛒 Cart
                     <span class="cart-count" id="cart-count">0</span>

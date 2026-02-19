@@ -773,7 +773,7 @@
     <header class="header">
         <div class="header-container">
             <div class="logo">
-                <a href="home-preview.html">
+                <a href="index.html">
                     <img src="courses/images/drtroy_logo_new.jpg" alt="DrTroy Continuing Education">
                 </a>
             </div>
@@ -781,7 +781,7 @@
                 <span></span><span></span><span></span>
             </button>
             <nav class="nav-links">
-                <a href="home-preview.html">Home</a>
+                <a href="index.html">Home</a>
                 <a href="index.html#packages">Packages</a>
                 <a href="courses.html">Course Catalog</a>
                 <a href="index.html#about">About</a>
@@ -1491,36 +1491,7 @@
                 console.log('ℹ️ No Supabase session found, checking localStorage...');
             }
 
-            // ── Fallback: legacy localStorage session ─────────────────────────
-            const accountData = localStorage.getItem('drtroyAccount');
-            const sessionData  = localStorage.getItem('userSession');
-
-            if (accountData && sessionData) {
-                try {
-                    currentAccount = JSON.parse(accountData);
-                    const session   = JSON.parse(sessionData);
-                    const isTroy    = currentAccount.email === 'troy@drtroy.com';
-                    const isValid   = session.expires > Date.now();
-
-                    if (isValid || isTroy) {
-                        console.log('✅ Legacy session valid for', currentAccount.email);
-                        const _ls = localStorage.getItem('currentAccountSection');
-                        if (_ls && document.getElementById(_ls)) {
-                            document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
-                            document.getElementById(_ls).classList.add('active');
-                        }
-                        showAccountContent();
-                        loadAccountData();
-                        restoreActiveSection();
-                        restoreCachedRenewal();
-                        return;
-                    }
-                } catch (e) {
-                    console.error('Legacy session parse error:', e);
-                }
-            }
-
-            // No valid session
+            // No valid Supabase session — legacy localStorage login removed for security
             showLoginRequired();
         }
 
@@ -1545,7 +1516,7 @@
                 lastName:  profile?.last_name  || legacyData.lastName  || '',
                 discipline: profile?.profession || legacyData.discipline || 'PT',
                 licenseNumber: profile?.license_number || legacyData.licenseNumber || '',
-                licenseState:  profile?.state          || legacyData.licenseState  || '',
+                licenseState:  profile?.license_state   || legacyData.licenseState  || '',
                 phone:    legacyData.phone    || '',
                 address:  legacyData.address  || '',
                 city:     legacyData.city     || '',
@@ -1620,7 +1591,7 @@
 
             try {
                 // Fetch enrollments + course data via REST
-                const select = encodeURIComponent('*,courses(id,title,description,ceu_hours,professions)');
+                const select = encodeURIComponent('*,courses(id,title,description,ceu_hours,professions),course_progress(id,status,progress_percent,modules_completed,completed_at,updated_at)');
                 const res = await fetch(
                     `${SUPA_URL}/rest/v1/enrollments?user_id=eq.${userId}&select=${select}&order=purchased_at.desc`,
                     { headers: { apikey: ANON_KEY, Authorization: `Bearer ${userJwt}` } }
@@ -1639,7 +1610,7 @@
                             description: e.courses.description || '',
                             status: 'available',
                             professions: e.courses.professions || [],
-                            url: `courses/${e.course_id}.html`
+                            url: COURSE_CONTENT_URLS[e.course_id] || `courses/${e.course_id}-progressive.html`
                         };
                     }
                 });
@@ -1660,7 +1631,7 @@
                                     description: c.description || '',
                                     status: 'available',
                                     professions: c.professions || [],
-                                    url: `courses/${c.id}.html`
+                                    url: COURSE_CONTENT_URLS[c.id] || `courses/${c.id}-progressive.html`
                                 };
                             }
                         });
@@ -2096,8 +2067,8 @@
             if (!currentAccount.enrolledCourses) {
                 currentAccount.enrolledCourses = [];
             }
-            if (!currentAccount.enrolledCourses.includes('PT-MSK-001')) {
-                currentAccount.enrolledCourses.push('PT-MSK-001');
+            if (!currentAccount.enrolledCourses.includes('pt-msk-001')) {
+                currentAccount.enrolledCourses.push('pt-msk-001');
             }
             
             // Super users get access to ALL courses
@@ -2113,8 +2084,8 @@
             if (!currentAccount.courseProgress) {
                 currentAccount.courseProgress = {};
             }
-            if (!currentAccount.courseProgress['PT-MSK-001']) {
-                currentAccount.courseProgress['PT-MSK-001'] = {
+            if (!currentAccount.courseProgress['pt-msk-001']) {
+                currentAccount.courseProgress['pt-msk-001'] = {
                     enrolledAt: new Date().toISOString(),
                     startedAt: null,
                     completed: false,
@@ -2198,7 +2169,7 @@
         // Course Information Database (Enhanced with individual pricing & course numbers)
         const COURSE_DATABASE = {
             // PT-Specific Course (Available Now)
-            'PT-MSK-001': {
+            'pt-msk-001': {
                 title: 'Comprehensive Musculoskeletal Evaluation',
                 credits: 3,
                 description: 'Evidence-based special tests and clinical reasoning for systematic MSK evaluation',
@@ -2214,7 +2185,7 @@
                 instructor: 'Troy Hounshell, PT, ScD'
             },
             // OT-Specific Course (Coming Soon)
-            'OT-ADL-001': {
+            'ot-adl-001': {
                 title: 'OT Evaluation and Assessment of ADLs',
                 credits: 3,
                 description: 'Comprehensive ADL assessment and intervention strategies',
@@ -2225,17 +2196,17 @@
                 provider: 'DrTroy Continuing Education'
             },
             // Core Courses (Coming This Week)
-            'MOBILITY-001': {
+            'core-mobility-001': {
                 title: 'Comprehensive Mobility and Fall Prevention',
                 credits: 3,
                 description: 'Evidence-based mobility assessment and fall prevention strategies',
-                url: '#',
-                status: 'coming-soon',
+                url: 'courses/mobility-fall-001-progressive.html',
+                status: 'available',
                 courseNumber: 'DRTROY-MOBILITY-001-2024',
                 individualPrice: 27.99,
                 provider: 'DrTroy Continuing Education'
             },
-            'BALANCE-001': {
+            'core-balance-001': {
                 title: 'Balance, Gait, and Vestibular Management',
                 credits: 3,
                 description: 'Assessment and treatment of balance and vestibular disorders',
@@ -2245,7 +2216,7 @@
                 individualPrice: 27.99,
                 provider: 'DrTroy Continuing Education'
             },
-            'EXERCISE-001': {
+            'core-postsurg-001': {
                 title: 'Post-Surgical and Therapeutic Exercise',
                 credits: 3,
                 description: 'Post-operative rehabilitation and exercise prescription',
@@ -2255,7 +2226,7 @@
                 individualPrice: 27.99,
                 provider: 'DrTroy Continuing Education'
             },
-            'GERIATRIC-001': {
+            'core-geriatric-001': {
                 title: 'Geriatric Care Across the Continuum',
                 credits: 3,
                 description: 'Comprehensive geriatric rehabilitation approaches',
@@ -2265,7 +2236,7 @@
                 individualPrice: 27.99,
                 provider: 'DrTroy Continuing Education'
             },
-            'DOCUMENTATION-001': {
+            'core-doc-001': {
                 title: 'Professional Documentation and Communication',
                 credits: 3,
                 description: 'Clinical documentation and professional communication skills',
@@ -2275,7 +2246,7 @@
                 individualPrice: 27.99,
                 provider: 'DrTroy Continuing Education'
             },
-            'MODALITIES-001': {
+            'core-agents-001': {
                 title: 'Physical Agents, Modalities, and Wound Care',
                 credits: 3,
                 description: 'Therapeutic modalities and wound care management',
@@ -2285,17 +2256,17 @@
                 individualPrice: 27.99,
                 provider: 'DrTroy Continuing Education'
             },
-            'NEURO-001': {
+            'core-neuro-001': {
                 title: 'Neurological Rehabilitation',
                 credits: 3,
                 description: 'Evidence-based neurological rehabilitation techniques',
-                url: '#',
-                status: 'coming-soon',
+                url: 'courses/pt-neuro-001-progressive.html',
+                status: 'available',
                 courseNumber: 'DRTROY-NEURO-001-2024',
                 individualPrice: 27.99,
                 provider: 'DrTroy Continuing Education'
             },
-            'INFECTION-001': {
+            'core-infection-001': {
                 title: 'Infection Control and Patient Safety',
                 credits: 3,
                 description: 'Infection prevention and patient safety protocols',
@@ -2305,14 +2276,34 @@
                 individualPrice: 27.99,
                 provider: 'DrTroy Continuing Education'
             },
-            'EDUCATION-001': {
+            'core-education-001': {
                 title: 'Patient Education and Health Promotion',
                 credits: 2,
                 description: 'Patient education strategies and health promotion',
-                url: '#',
-                status: 'coming-soon',
+                url: 'courses/patient-education-001-progressive.html',
+                status: 'available',
                 courseNumber: 'DRTROY-EDUCATION-001-2024',
-                individualPrice: 18.99, // Updated pricing
+                individualPrice: 18.99,
+                provider: 'DrTroy Continuing Education'
+            },
+            'core-tech-001': {
+                title: 'Healthcare Technology and Electronic Records',
+                credits: 2,
+                description: 'Healthcare technology integration and electronic health records management',
+                url: 'courses/healthcare-technology-001-progressive.html',
+                status: 'available',
+                courseNumber: 'DRTROY-TECH-001-2024',
+                individualPrice: 18.99,
+                provider: 'DrTroy Continuing Education'
+            },
+            'core-joint-001': {
+                title: 'Considerations in Lower Extremity Joint Replacements',
+                credits: 3,
+                description: 'Evidence-based rehabilitation for lower extremity joint replacements',
+                url: 'courses/joint-replacement-001-progressive.html',
+                status: 'available',
+                courseNumber: 'DRTROY-JOINT-001-2024',
+                individualPrice: 27.99,
                 provider: 'DrTroy Continuing Education'
             }
         };
@@ -2323,6 +2314,23 @@
             newAccountDiscount: 0, // No discount on individual courses (bundles only get $10 discount)
             bulkDiscountThreshold: 3, // Buy 3+ individual courses for discount
             bulkDiscountPercent: 15 // 15% off when buying 3+ individual courses
+        };
+
+        // Course content URL mapping (fallback for Supabase-only enrollments)
+        const COURSE_CONTENT_URLS = {
+            'pt-msk-001': 'courses/pt-msk-001-progressive.html',
+            'core-mobility-001': 'courses/mobility-fall-001-progressive.html',
+            'core-balance-001': 'courses/balance-gait-001-progressive.html',
+            'core-postsurg-001': 'courses/post-surgical-001-progressive.html',
+            'core-geriatric-001': 'courses/geriatric-care-001-progressive.html',
+            'core-doc-001': 'courses/documentation-001-progressive.html',
+            'core-agents-001': 'courses/physical-agents-001-progressive.html',
+            'core-neuro-001': 'courses/pt-neuro-001-progressive.html',
+            'core-infection-001': 'courses/infection-control-001-progressive.html',
+            'core-education-001': 'courses/patient-education-001-progressive.html',
+            'core-tech-001': 'courses/healthcare-technology-001-progressive.html',
+            'ot-adl-001': 'courses/ot-adl-001-progressive.html',
+            'core-joint-001': 'courses/joint-replacement-001-progressive.html'
         };
 
         // Update CCU dashboard and course display
@@ -2442,7 +2450,10 @@
                     let statusBadge = isCompleted ? '<span class="status-badge completed">✓ Completed</span>'
                                     : inProgress  ? '<span class="status-badge in-progress">In Progress</span>'
                                     : '<span class="status-badge available">Available</span>';
-                    let actionBtn = `<a href="courses/pt-msk-001-progressive.html" class="btn btn-primary">Start Course</a>`;
+                    // Resolve course URL from COURSE_DATABASE or build from course_id
+                    const courseUrl = COURSE_DATABASE[enrollment.course_id]?.url || COURSE_CONTENT_URLS[enrollment.course_id] || `courses/${enrollment.course_id}-progressive.html`;
+                    let actionLabel = inProgress ? 'Continue' : 'Start Course';
+                    let actionBtn = `<a href="${courseUrl}" class="btn btn-primary">${actionLabel}</a>`;
                     if (isCompleted) actionBtn = `<button class="btn btn-secondary" onclick="viewCertificate('${enrollment.course_id}')">View Certificate</button>`;
                     supabaseCards.push(`
                         <div class="course-card">
@@ -3350,8 +3361,25 @@
 
         // Load Supabase certificates into the CCU course history section
         async function loadSupabaseCertificates() {
-            if (!window.DrTroySupabase || !currentSupabaseUser) return;
-            const { data: certs } = await window.DrTroySupabase.getCertificates(currentSupabaseUser.id);
+            if (!currentSupabaseUser) return;
+            let certs = null;
+            // Try SDK first
+            if (window.DrTroySupabase?.getCertificates) {
+                const result = await window.DrTroySupabase.getCertificates(currentSupabaseUser.id);
+                certs = result?.data;
+            }
+            // Fallback to direct REST
+            if (!certs) {
+                try {
+                    const SUPA_URL = 'https://pnqoxulxdmlmbywcpbyx.supabase.co';
+                    const ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBucW94dWx4ZG1sbWJ5d2NwYnl4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzEzNjU3NTIsImV4cCI6MjA4Njk0MTc1Mn0.YEPrwIvINX_Q1AsbxyU0T5m5oxpV9M756yiSCzy6LTc';
+                    const select = encodeURIComponent('*,courses(title,ceu_hours)');
+                    const res = await fetch(`${SUPA_URL}/rest/v1/certificates?user_id=eq.${currentSupabaseUser.id}&select=${select}&order=issued_at.desc`, {
+                        headers: { apikey: ANON_KEY, Authorization: `Bearer ${ANON_KEY}` }
+                    });
+                    if (res.ok) certs = await res.json();
+                } catch(e) { console.warn('Certificate fetch fallback failed:', e); }
+            }
             if (!certs || certs.length === 0) return;
 
             const historyDiv = document.getElementById('courseHistory');
