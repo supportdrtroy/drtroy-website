@@ -754,14 +754,24 @@
             const emptyCart = document.getElementById('empty-cart');
             
             if (cartData.items.length === 0) {
+                // Clear any existing cart items
+                container.innerHTML = '';
+                
+                // Show empty cart message and hide summary
                 emptyCart.style.display = 'block';
                 summary.style.display = 'none';
+                
+                // Make sure the empty cart element is in the container
+                if (!container.contains(emptyCart)) {
+                    container.appendChild(emptyCart);
+                }
                 return;
             }
 
             emptyCart.style.display = 'none';
             summary.style.display = 'block';
             
+            // Clear the container and build fresh content
             let itemsHtml = '';
             
             cartData.items.forEach(item => {
@@ -803,7 +813,17 @@
                 `;
             });
             
-            container.innerHTML = itemsHtml;
+            // Clear container and add fresh items (preserving empty cart element structure)
+            const itemElements = container.querySelectorAll(':not(#empty-cart)');
+            itemElements.forEach(el => el.remove());
+            
+            if (itemsHtml) {
+                const tempDiv = document.createElement('div');
+                tempDiv.innerHTML = itemsHtml;
+                while (tempDiv.firstChild) {
+                    container.appendChild(tempDiv.firstChild);
+                }
+            }
             
             // Update summary
             document.getElementById('subtotal').textContent = `$${cartData.subtotal.toFixed(2)}`;
