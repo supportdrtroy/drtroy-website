@@ -2885,6 +2885,21 @@
             }, 5000);
         }
 
+        function editCode(code) {
+            // Find code in marketing codes
+            const codeData = marketingCodes.find(c => c.code === code);
+            if (!codeData) {
+                alert('Code not found: ' + code);
+                return;
+            }
+            const newDiscount = prompt('Edit discount value for "' + code + '":', codeData.discountValue);
+            if (newDiscount !== null && newDiscount !== '') {
+                codeData.discountValue = parseFloat(newDiscount) || codeData.discountValue;
+                updateCodesTable();
+                alert('Code "' + code + '" updated successfully.');
+            }
+        }
+
         function viewCodeDetails(code, type) {
             const codeData = type === 'employee' ? 
                 employeeCodes.find(c => c.code === code) : 
