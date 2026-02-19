@@ -2079,14 +2079,42 @@
     </div>
 
     <script>
-        // ─── IMMEDIATE SECURITY CHECK ────────────────────────────────────────────
-        // Block access immediately if no authentication present
-        (function() {
-            const hasValidSession = sessionStorage.getItem('supabase.auth.token') || 
-                                   localStorage.getItem('supabase.auth.token');
-            if (!hasValidSession && !window.location.href.includes('secure-admin-access-2026.html')) {
+        // ─── ENHANCED SECURITY CHECK ────────────────────────────────────────────
+        // More comprehensive authentication verification
+        (async function() {
+            try {
+                // Check if Supabase is available
+                if (!window.DrTroySupabase) {
+                    console.warn('Supabase not available, redirecting to login');
+                    window.location.replace('secure-admin-access-2026.html');
+                    return;
+                }
+
+                // Get current session
+                const session = await window.DrTroySupabase.getSession();
+                
+                if (!session || !session.user) {
+                    console.warn('No valid session found, redirecting to login');
+                    window.location.replace('secure-admin-access-2026.html');
+                    return;
+                }
+
+                // Verify admin status from database (not just localStorage)
+                const { data: profile, error } = await window.DrTroySupabase.getProfile(session.user.id);
+                
+                if (error || !profile?.is_admin) {
+                    console.warn('User is not admin, redirecting to login');
+                    await window.DrTroySupabase.signOut();
+                    window.location.replace('secure-admin-access-2026.html');
+                    return;
+                }
+
+                // If we get here, user is authenticated and authorized
+                console.log('✅ Admin authentication verified');
+                
+            } catch (error) {
+                console.error('Authentication check failed:', error);
                 window.location.replace('secure-admin-access-2026.html');
-                return;
             }
         })();
 

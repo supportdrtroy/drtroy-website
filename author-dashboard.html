@@ -15,7 +15,7 @@
       gtag('config', 'G-XXXXXXXXXX');
     </script>
     
-    <!-- Security Headers -->
+    <!-- Enhanced Security Headers -->
     <meta http-equiv="Content-Security-Policy" content="
         default-src 'self';
         script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com https://cdn.jsdelivr.net;
@@ -23,10 +23,15 @@
         font-src 'self' https://fonts.gstatic.com;
         img-src 'self' data: https:;
         connect-src 'self' https://*.supabase.co https://www.google-analytics.com https://analytics.google.com;
+        form-action 'self';
+        frame-ancestors 'none';
+        base-uri 'self';
     ">
     <meta http-equiv="X-Content-Type-Options" content="nosniff">
     <meta http-equiv="X-Frame-Options" content="DENY">
     <meta http-equiv="X-XSS-Protection" content="1; mode=block">
+    <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
+    <meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -648,40 +653,101 @@
             }
         }
 
+        // Rate limiting for login attempts
+        let loginAttempts = parseInt(localStorage.getItem('authorLoginAttempts') || '0');
+        let lastAttempt = parseInt(localStorage.getItem('authorLastAttempt') || '0');
+        const RATE_LIMIT_WINDOW = 15 * 60 * 1000; // 15 minutes
+        const MAX_ATTEMPTS = 5;
+
+        function checkRateLimit() {
+            const now = Date.now();
+            if (now - lastAttempt > RATE_LIMIT_WINDOW) {
+                // Reset counter after rate limit window
+                loginAttempts = 0;
+                localStorage.removeItem('authorLoginAttempts');
+                localStorage.removeItem('authorLastAttempt');
+            }
+            
+            if (loginAttempts >= MAX_ATTEMPTS) {
+                const remainingTime = Math.ceil((RATE_LIMIT_WINDOW - (now - lastAttempt)) / 60000);
+                throw new Error(`Too many login attempts. Please wait ${remainingTime} minutes before trying again.`);
+            }
+        }
+
+        function incrementLoginAttempts() {
+            loginAttempts++;
+            lastAttempt = Date.now();
+            localStorage.setItem('authorLoginAttempts', loginAttempts.toString());
+            localStorage.setItem('authorLastAttempt', lastAttempt.toString());
+        }
+
         // Author login form handler
         document.getElementById('author-login-form').addEventListener('submit', async (e) => {
             e.preventDefault();
             
+            try {
+                checkRateLimit();
+            } catch (error) {
+                showAlert(error.message, 'error');
+                return;
+            }
+            
             const email = document.getElementById('author-email').value;
             const password = document.getElementById('author-password').value;
             
+            if (!email || !password) {
+                showAlert('Please enter both email and password.', 'error');
+                return;
+            }
+            
             try {
-                // Simple email-based lookup for authors
-                // In production, this would use proper authentication
-                const { data: authors, error } = await supabase
+                // SECURE AUTHENTICATION: Proper Supabase auth
+                if (!window.supabase) {
+                    showAlert('Authentication system unavailable. Please try again.', 'error');
+                    return;
+                }
+
+                // Attempt Supabase authentication
+                const { data: authData, error: authError } = await supabase.auth.signInWithPassword({
+                    email: email,
+                    password: password
+                });
+
+                if (authError) {
+                    incrementLoginAttempts();
+                    const remaining = MAX_ATTEMPTS - loginAttempts;
+                    showAlert(`Invalid email or password. ${remaining} attempt(s) remaining.`, 'error');
+                    return;
+                }
+
+                // Check if user is authorized author
+                const { data: authors, error: authorError } = await supabase
                     .from('authors')
                     .select('*')
                     .eq('email', email)
                     .eq('status', 'active');
                 
-                if (error) throw error;
-                
-                if (!authors || authors.length === 0) {
-                    showAlert('Author not found or inactive. Please contact support.', 'error');
+                if (authorError || !authors || authors.length === 0) {
+                    await supabase.auth.signOut(); // Clean up session
+                    incrementLoginAttempts();
+                    const remaining = MAX_ATTEMPTS - loginAttempts;
+                    showAlert(`Author access not found. Contact support. ${remaining} attempt(s) remaining.`, 'error');
                     return;
                 }
                 
-                // For demo purposes, accept any password for authors
-                // In production, implement proper password authentication
                 currentAuthor = authors[0];
-                localStorage.setItem('currentAuthor', JSON.stringify(currentAuthor));
+                // Clear login attempts on successful authentication
+                localStorage.removeItem('authorLoginAttempts');
+                localStorage.removeItem('authorLastAttempt');
                 
                 showAlert('Login successful!', 'success');
                 setTimeout(() => showDashboard(), 1000);
                 
             } catch (error) {
                 console.error('Login error:', error);
-                showAlert('Login failed. Please try again.', 'error');
+                incrementLoginAttempts();
+                const remaining = MAX_ATTEMPTS - loginAttempts;
+                showAlert(`Login failed. Please try again. ${remaining} attempt(s) remaining.`, 'error');
             }
         });
 
@@ -875,11 +941,20 @@
             `).join('');
         }
 
-        // Sign out function
-        function signOut() {
+        // Secure sign out function
+        async function signOut() {
+            try {
+                // Sign out from Supabase
+                await supabase.auth.signOut();
+            } catch (error) {
+                console.error('Sign out error:', error);
+            }
+            
+            // Clear local state
             currentAuthor = null;
             localStorage.removeItem('currentAuthor');
             
+            // Reset UI
             document.getElementById('author-dashboard-content').style.display = 'none';
             document.getElementById('author-login-section').style.display = 'block';
             
@@ -888,17 +963,34 @@
             document.getElementById('login-alerts').innerHTML = '';
         }
 
-        // Check for existing session on page load
-        document.addEventListener('DOMContentLoaded', () => {
-            const storedAuthor = localStorage.getItem('currentAuthor');
-            if (storedAuthor) {
-                try {
-                    currentAuthor = JSON.parse(storedAuthor);
-                    showDashboard();
-                } catch (error) {
-                    console.error('Error parsing stored author:', error);
-                    localStorage.removeItem('currentAuthor');
+        // Secure session validation on page load
+        document.addEventListener('DOMContentLoaded', async () => {
+            try {
+                // Check if we have a valid Supabase session first
+                const { data: { session }, error } = await supabase.auth.getSession();
+                
+                if (session && session.user) {
+                    // Verify the user is still an active author
+                    const { data: authors, error: authorError } = await supabase
+                        .from('authors')
+                        .select('*')
+                        .eq('email', session.user.email)
+                        .eq('status', 'active');
+                    
+                    if (!authorError && authors && authors.length > 0) {
+                        currentAuthor = authors[0];
+                        showDashboard();
+                        return;
+                    }
                 }
+                
+                // No valid session or not an active author - clear any stored data
+                currentAuthor = null;
+                localStorage.removeItem('currentAuthor');
+                
+            } catch (error) {
+                console.error('Session validation error:', error);
+                localStorage.removeItem('currentAuthor');
             }
         });
     </script>
