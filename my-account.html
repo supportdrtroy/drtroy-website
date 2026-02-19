@@ -1726,16 +1726,26 @@
 
         // Update navigation based on authentication state
         function updateNavigation() {
+            console.log('🔍 NAV DEBUG - updateNavigation() called');
+            console.log('🔍 NAV DEBUG - currentAccount:', !!currentAccount);
+            console.log('🔍 NAV DEBUG - currentSupabaseUser:', !!currentSupabaseUser);
+            
             const accountLink = document.getElementById('accountLink');
-            if (!accountLink) return;
+            if (!accountLink) {
+                console.log('🔍 NAV DEBUG - accountLink element not found');
+                return;
+            }
 
             const isAuthenticated = currentAccount || currentSupabaseUser;
+            console.log('🔍 NAV DEBUG - isAuthenticated:', isAuthenticated);
             
             if (isAuthenticated) {
+                console.log('🔍 NAV DEBUG - Setting logout button');
                 accountLink.textContent = '🚪 Logout';
                 accountLink.onclick = function() { logout(); return false; };
                 accountLink.href = '#';
             } else {
+                console.log('🔍 NAV DEBUG - Setting login button');
                 accountLink.textContent = 'Log In';
                 accountLink.onclick = null;
                 accountLink.href = 'my-account.html';
@@ -1808,6 +1818,9 @@
                 console.log('🔍 DISPLAY DEBUG - Showing accountContent div');
                 contentDiv.style.display = 'block';
             }
+            
+            // Update navigation to show logout when account content is shown
+            updateNavigation();
             
             console.log('🔍 DISPLAY DEBUG - showAccountContent() complete');
         }
