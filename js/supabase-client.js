@@ -289,15 +289,15 @@ async function getAllEnrollments() {
     if (!sb) return { data: [], error: { message: 'Database unavailable' } };
     return await sb.from('enrollments')
         .select('*, profiles(first_name, last_name, email), courses(title, ceu_hours)')
-        .order('enrolled_at', { ascending: false });
+        .order('purchased_at', { ascending: false });
 }
 
 async function getRevenueSummary() {
     const sb = getSupabaseClient();
     if (!sb) return { data: [], error: { message: 'Database unavailable' } };
     return await sb.from('enrollments')
-        .select('amount_paid, enrolled_at, courses(title)')
-        .order('enrolled_at', { ascending: false });
+        .select('amount_paid_cents, purchased_at, courses(title)')
+        .order('purchased_at', { ascending: false });
 }
 
 async function getCourseCompletionStats() {
@@ -349,7 +349,7 @@ async function adminGetUserEnrollments(userId) {
     return await sb.from('enrollments')
         .select('*, courses(id, title, ceu_hours)')
         .eq('user_id', userId)
-        .order('enrolled_at', { ascending: false });
+        .order('purchased_at', { ascending: false });
 }
 
 async function adminGetAllCourses() {
@@ -423,10 +423,10 @@ async function processSuccessfulPurchase({ userId, courseIds, packageId, payment
         const { data: enrollment, error: enrollErr } = await createEnrollment({
             user_id: userId,
             course_id: courseId,
-            package_id: packageId || null,
-            payment_id: paymentId || null,
-            amount_paid: amountPaidCents ? amountPaidCents / 100 : 0,
-            enrolled_at: new Date().toISOString()
+            stripe_payment_intent_id: paymentId || null,
+            amount_paid_cents: amountPaidCents || 0,
+            purchased_at: new Date().toISOString(),
+            is_active: true
         });
 
         if (enrollErr) {

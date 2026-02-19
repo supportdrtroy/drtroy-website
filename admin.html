@@ -3434,9 +3434,12 @@
             container.innerHTML = enrollments.map(e => {
                 const title    = esc(e.courses?.title || 'Unknown Course');
                 const hours    = esc(String(e.courses?.ceu_hours || 0));
-                const date     = e.enrolled_at ? new Date(e.enrolled_at).toLocaleDateString() : '—';
-                const paid     = parseFloat(e.amount_paid || 0).toFixed(2);
-                const method   = e.payment_method === 'admin_grant' ? 'Admin Grant' : ('$' + esc(paid));
+                const date     = e.purchased_at ? new Date(e.purchased_at).toLocaleDateString() : '—';
+                const paidCents = parseInt(e.amount_paid_cents || 0, 10);
+                const paidDollars = (paidCents / 100).toFixed(2);
+                // Admin grant: no stripe payment AND $0 paid
+                const isAdminGrant = !e.stripe_payment_intent_id && paidCents === 0;
+                const method   = isAdminGrant ? 'Admin Grant' : ('$' + esc(paidDollars));
                 const safeId   = esc(e.id);
                 return `
                     <div class="enrollment-row">
