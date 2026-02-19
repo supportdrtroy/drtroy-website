@@ -1,0 +1,906 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Author Dashboard | DrTroy CE</title>
+    <meta name="description" content="Author dashboard for DrTroy Continuing Education course creators and contributors.">
+    
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-XXXXXXXXXX');
+    </script>
+    
+    <!-- Security Headers -->
+    <meta http-equiv="Content-Security-Policy" content="
+        default-src 'self';
+        script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com https://cdn.jsdelivr.net;
+        style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
+        font-src 'self' https://fonts.gstatic.com;
+        img-src 'self' data: https:;
+        connect-src 'self' https://*.supabase.co https://www.google-analytics.com https://analytics.google.com;
+    ">
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta http-equiv="X-Frame-Options" content="DENY">
+    <meta http-equiv="X-XSS-Protection" content="1; mode=block">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --navy: #1a365d;
+            --emerald: #059669;
+            --emerald-dark: #047857;
+            --emerald-light: #10b981;
+            --gray-50: #f9fafb;
+            --gray-100: #f3f4f6;
+            --gray-200: #e5e7eb;
+            --gray-300: #d1d5db;
+            --gray-600: #4b5563;
+            --gray-700: #374151;
+            --gray-800: #1f2937;
+            --gray-900: #111827;
+            --neutral-50: #fafafa;
+            --neutral-100: #f5f5f5;
+            --neutral-200: #e5e5e5;
+            --neutral-600: #525252;
+            --blue-50: #eff6ff;
+            --blue-600: #2563eb;
+            --green-50: #f0fdf4;
+            --green-600: #16a34a;
+            --yellow-50: #fefce8;
+            --yellow-600: #ca8a04;
+            --red-50: #fef2f2;
+            --red-600: #dc2626;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Source Sans Pro', sans-serif;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            min-height: 100vh;
+            line-height: 1.6;
+            color: var(--gray-800);
+        }
+
+        .header {
+            background: white;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+        }
+
+        .logo img {
+            height: 60px;
+            width: auto;
+            mix-blend-mode: multiply;
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        nav a {
+            color: var(--gray-600);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: color 0.25s;
+        }
+
+        nav a:hover {
+            color: var(--emerald);
+        }
+
+        .login-link {
+            background: var(--emerald);
+            color: white !important;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            font-weight: 600;
+        }
+
+        .login-link:hover {
+            background: var(--emerald-dark);
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 4px;
+        }
+
+        .hamburger span {
+            display: block;
+            width: 24px;
+            height: 2px;
+            background: var(--navy);
+            border-radius: 2px;
+            transition: all 0.3s;
+        }
+
+        .main-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .dashboard-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .dashboard-title {
+            font-size: 2.5rem;
+            font-weight: 600;
+            color: var(--navy);
+            margin-bottom: 0.5rem;
+        }
+
+        .dashboard-subtitle {
+            font-size: 1.1rem;
+            color: var(--gray-600);
+        }
+
+        .author-welcome {
+            background: linear-gradient(135deg, var(--emerald) 0%, var(--emerald-light) 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .author-welcome h2 {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .author-welcome p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .metric-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            border: 1px solid var(--gray-200);
+            text-align: center;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .metric-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+        }
+
+        .metric-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .metric-label {
+            font-size: 1rem;
+            color: var(--gray-600);
+            font-weight: 500;
+        }
+
+        .courses-section {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            border: 1px solid var(--gray-200);
+            margin-bottom: 2rem;
+            overflow: hidden;
+        }
+
+        .section-header {
+            background: var(--gray-50);
+            padding: 1.5rem 2rem;
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        .section-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: var(--navy);
+            margin-bottom: 0.25rem;
+        }
+
+        .section-subtitle {
+            color: var(--gray-600);
+            font-size: 0.95rem;
+        }
+
+        .section-content {
+            padding: 2rem;
+        }
+
+        .course-grid {
+            display: grid;
+            gap: 1.5rem;
+        }
+
+        .course-card {
+            border: 1px solid var(--gray-200);
+            border-radius: 8px;
+            padding: 1.5rem;
+            background: var(--gray-50);
+        }
+
+        .course-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+
+        .course-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--navy);
+            margin-bottom: 0.25rem;
+        }
+
+        .course-role {
+            font-size: 0.8rem;
+            background: var(--emerald);
+            color: white;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-weight: 500;
+        }
+
+        .course-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: var(--emerald);
+        }
+
+        .stat-label {
+            font-size: 0.85rem;
+            color: var(--gray-600);
+        }
+
+        .earnings-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        .earnings-card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            border: 1px solid var(--gray-200);
+        }
+
+        .payment-status-pending {
+            background: var(--yellow-50);
+            color: var(--yellow-600);
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            text-align: center;
+        }
+
+        .payment-status-paid {
+            background: var(--green-50);
+            color: var(--green-600);
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            text-align: center;
+        }
+
+        .login-section {
+            max-width: 400px;
+            margin: 3rem auto;
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            color: var(--navy);
+            margin-bottom: 0.5rem;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid var(--gray-200);
+            border-radius: 6px;
+            font-size: 1rem;
+            transition: border-color 0.25s;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--emerald);
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.25s;
+        }
+
+        .btn-primary {
+            background: var(--emerald);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--emerald-dark);
+        }
+
+        .btn-full {
+            width: 100%;
+            text-align: center;
+        }
+
+        .alert {
+            padding: 1rem;
+            border-radius: 6px;
+            margin-bottom: 1rem;
+        }
+
+        .alert-error {
+            background: var(--red-50);
+            color: var(--red-600);
+            border: 1px solid #fecaca;
+        }
+
+        .alert-success {
+            background: var(--green-50);
+            color: var(--green-600);
+            border: 1px solid #a7f3d0;
+        }
+
+        .alert-info {
+            background: var(--blue-50);
+            color: var(--blue-600);
+            border: 1px solid #bfdbfe;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 3rem;
+            color: var(--gray-600);
+        }
+
+        @media (max-width: 768px) {
+            .header-container {
+                padding: 1rem;
+            }
+            
+            .logo img {
+                height: 45px;
+            }
+
+            nav {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: white;
+                flex-direction: column;
+                gap: 0;
+                box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+                padding: 1rem;
+            }
+
+            .nav-links.active { display: flex; }
+            .nav-links a { padding: 0.75rem 0; border-bottom: 1px solid #f3f4f6; }
+
+            .hamburger { display: flex; }
+
+            .main-container {
+                padding: 1rem;
+            }
+
+            .dashboard-title {
+                font-size: 2rem;
+            }
+
+            .metrics-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .earnings-section {
+                grid-template-columns: 1fr;
+            }
+
+            .course-stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-container">
+            <div class="logo">
+                <a href="home-preview.html">
+                    <img src="courses/images/drtroy_logo_new.jpg" alt="DrTroy Continuing Education">
+                </a>
+            </div>
+            <nav class="nav-links">
+                <a href="home-preview.html">Home</a>
+                <a href="course-catalog.html">Courses</a>
+                <a href="home-preview.html#about">About</a>
+                <a href="home-preview.html#contact">Contact</a>
+                <a href="my-account.html" class="login-link" id="accountLink">Student Portal</a>
+            </nav>
+            <div class="hamburger" onclick="toggleMobileMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </header>
+
+    <div class="main-container">
+        <!-- Login Form (shown when not authenticated) -->
+        <div id="author-login-section" class="login-section">
+            <div class="dashboard-header">
+                <h1 class="dashboard-title">Author Dashboard</h1>
+                <p class="dashboard-subtitle">Access your course performance and earnings</p>
+            </div>
+
+            <div id="login-alerts"></div>
+
+            <form id="author-login-form">
+                <div class="form-group">
+                    <label for="author-email">Email Address</label>
+                    <input type="email" id="author-email" class="form-input" required placeholder="your@email.com">
+                </div>
+                <div class="form-group">
+                    <label for="author-password">Password</label>
+                    <input type="password" id="author-password" class="form-input" required placeholder="Enter your password">
+                </div>
+                <button type="submit" class="btn btn-primary btn-full">Sign In</button>
+            </form>
+
+            <div style="text-align: center; margin-top: 1.5rem; color: var(--gray-600); font-size: 0.9rem;">
+                <p>Need access? Contact <a href="mailto:support@drtroy.com" style="color: var(--emerald);">support@drtroy.com</a></p>
+            </div>
+        </div>
+
+        <!-- Dashboard Content (shown when authenticated) -->
+        <div id="author-dashboard-content" style="display: none;">
+            <div class="dashboard-header">
+                <h1 class="dashboard-title">Author Dashboard</h1>
+                <p class="dashboard-subtitle">Track your course performance and earnings</p>
+            </div>
+
+            <!-- Author Welcome -->
+            <div class="author-welcome">
+                <h2 id="author-name">Welcome Back!</h2>
+                <p id="author-summary">Course Author & Expert</p>
+            </div>
+
+            <!-- Key Metrics -->
+            <div class="metrics-grid" id="metrics-grid">
+                <div class="metric-card">
+                    <div class="metric-icon">📚</div>
+                    <div class="metric-value" id="total-courses">-</div>
+                    <div class="metric-label">Active Courses</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-icon">🛒</div>
+                    <div class="metric-value" id="total-sales">-</div>
+                    <div class="metric-label">Total Sales</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-icon">💰</div>
+                    <div class="metric-value" id="total-earnings">$-</div>
+                    <div class="metric-label">Total Earnings</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-icon">⏳</div>
+                    <div class="metric-value" id="pending-earnings">$-</div>
+                    <div class="metric-label">Pending Payout</div>
+                </div>
+            </div>
+
+            <!-- Courses Performance -->
+            <div class="courses-section">
+                <div class="section-header">
+                    <h2 class="section-title">Course Performance</h2>
+                    <p class="section-subtitle">Sales and earnings breakdown by course</p>
+                </div>
+                <div class="section-content">
+                    <div class="course-grid" id="courses-grid">
+                        <div class="loading">Loading course data...</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Earnings Overview -->
+            <div class="earnings-section">
+                <!-- Recent Sales -->
+                <div class="earnings-card">
+                    <div class="section-header">
+                        <h3 class="section-title">Recent Sales</h3>
+                        <p class="section-subtitle">Your latest course purchases</p>
+                    </div>
+                    <div class="section-content" id="recent-sales">
+                        <div class="loading">Loading sales data...</div>
+                    </div>
+                </div>
+
+                <!-- Payment Status -->
+                <div class="earnings-card">
+                    <div class="section-header">
+                        <h3 class="section-title">Payment Status</h3>
+                        <p class="section-subtitle">Your earnings and payouts</p>
+                    </div>
+                    <div class="section-content" id="payment-status">
+                        <div class="loading">Loading payment data...</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sign Out -->
+            <div style="text-align: center; margin-top: 3rem;">
+                <button onclick="signOut()" class="btn btn-primary">Sign Out</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Supabase Client -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <script>
+        // Initialize Supabase
+        const supabaseUrl = 'https://pnqoxulxdmlmbywcpbyx.supabase.co';
+        const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBucW94dWx4ZG1sbWJ5d2NwYnl4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzEzNjU3NTIsImV4cCI6MjA4Njk0MTc1Mn0.YEPrwIvINX_Q1AsbxyU0T5m5oxpV9M756yiSCzy6LTc';
+        const supabase = supabase.createClient(supabaseUrl, supabaseAnonKey);
+
+        let currentAuthor = null;
+
+        // Mobile menu toggle
+        function toggleMobileMenu() {
+            document.querySelector('.nav-links').classList.toggle('active');
+        }
+
+        // Show alert message
+        function showAlert(message, type = 'info') {
+            const alertsContainer = document.getElementById('login-alerts');
+            const alertDiv = document.createElement('div');
+            alertDiv.className = `alert alert-${type}`;
+            alertDiv.textContent = message;
+            
+            alertsContainer.innerHTML = '';
+            alertsContainer.appendChild(alertDiv);
+            
+            // Auto-dismiss after 5 seconds for success/info messages
+            if (type === 'success' || type === 'info') {
+                setTimeout(() => alertDiv.remove(), 5000);
+            }
+        }
+
+        // Author login form handler
+        document.getElementById('author-login-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const email = document.getElementById('author-email').value;
+            const password = document.getElementById('author-password').value;
+            
+            try {
+                // Simple email-based lookup for authors
+                // In production, this would use proper authentication
+                const { data: authors, error } = await supabase
+                    .from('authors')
+                    .select('*')
+                    .eq('email', email)
+                    .eq('status', 'active');
+                
+                if (error) throw error;
+                
+                if (!authors || authors.length === 0) {
+                    showAlert('Author not found or inactive. Please contact support.', 'error');
+                    return;
+                }
+                
+                // For demo purposes, accept any password for authors
+                // In production, implement proper password authentication
+                currentAuthor = authors[0];
+                localStorage.setItem('currentAuthor', JSON.stringify(currentAuthor));
+                
+                showAlert('Login successful!', 'success');
+                setTimeout(() => showDashboard(), 1000);
+                
+            } catch (error) {
+                console.error('Login error:', error);
+                showAlert('Login failed. Please try again.', 'error');
+            }
+        });
+
+        // Show dashboard
+        function showDashboard() {
+            document.getElementById('author-login-section').style.display = 'none';
+            document.getElementById('author-dashboard-content').style.display = 'block';
+            
+            // Load author data
+            loadAuthorDashboard();
+        }
+
+        // Load dashboard data
+        async function loadAuthorDashboard() {
+            if (!currentAuthor) return;
+            
+            // Update welcome message
+            document.getElementById('author-name').textContent = `Welcome, ${currentAuthor.first_name} ${currentAuthor.last_name}!`;
+            document.getElementById('author-summary').textContent = `${currentAuthor.credentials || 'Course Author'} • Expert Contributor`;
+            
+            try {
+                // Load author's courses and performance data
+                await Promise.all([
+                    loadAuthorCourses(),
+                    loadAuthorSalesMetrics(),
+                    loadRecentSales(),
+                    loadPaymentStatus()
+                ]);
+                
+            } catch (error) {
+                console.error('Error loading dashboard data:', error);
+                showAlert('Error loading dashboard data', 'error');
+            }
+        }
+
+        // Load author's courses
+        async function loadAuthorCourses() {
+            const { data: courses, error } = await supabase
+                .from('course_authors')
+                .select('*')
+                .eq('author_id', currentAuthor.id);
+            
+            if (error) throw error;
+            
+            // Update total courses metric
+            document.getElementById('total-courses').textContent = courses?.length || 0;
+            
+            // Load detailed course performance
+            if (courses && courses.length > 0) {
+                const courseGrid = document.getElementById('courses-grid');
+                courseGrid.innerHTML = '';
+                
+                for (const course of courses) {
+                    await loadCourseCard(course);
+                }
+            }
+        }
+
+        // Load individual course card with performance data
+        async function loadCourseCard(courseAssignment) {
+            try {
+                // Get sales data for this course by this author
+                const { data: sales, error } = await supabase
+                    .from('author_sales')
+                    .select('*')
+                    .eq('author_id', currentAuthor.id)
+                    .eq('course_id', courseAssignment.course_id);
+                
+                if (error) throw error;
+                
+                const totalSales = sales?.length || 0;
+                const totalEarnings = sales?.reduce((sum, sale) => sum + parseFloat(sale.author_earning), 0) || 0;
+                const avgRevenueShare = sales?.length > 0 ? 
+                    sales.reduce((sum, sale) => sum + parseFloat(sale.revenue_share_percent), 0) / sales.length : 
+                    courseAssignment.revenue_share;
+                
+                const courseCard = document.createElement('div');
+                courseCard.className = 'course-card';
+                courseCard.innerHTML = `
+                    <div class="course-header">
+                        <div>
+                            <div class="course-title">${courseAssignment.course_id}</div>
+                            <div style="font-size: 0.9rem; color: var(--gray-600);">Revenue Share: ${courseAssignment.revenue_share}%</div>
+                        </div>
+                        <div class="course-role">${courseAssignment.role}</div>
+                    </div>
+                    <div class="course-stats">
+                        <div class="stat-item">
+                            <div class="stat-value">${totalSales}</div>
+                            <div class="stat-label">Sales</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">$${totalEarnings.toFixed(2)}</div>
+                            <div class="stat-label">Earnings</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">${avgRevenueShare.toFixed(1)}%</div>
+                            <div class="stat-label">Avg Share</div>
+                        </div>
+                    </div>
+                `;
+                
+                document.getElementById('courses-grid').appendChild(courseCard);
+                
+            } catch (error) {
+                console.error('Error loading course card:', error);
+            }
+        }
+
+        // Load sales metrics
+        async function loadAuthorSalesMetrics() {
+            const { data: sales, error } = await supabase
+                .from('author_sales')
+                .select('*')
+                .eq('author_id', currentAuthor.id);
+            
+            if (error) throw error;
+            
+            const totalSales = sales?.length || 0;
+            const totalEarnings = sales?.reduce((sum, sale) => sum + parseFloat(sale.author_earning), 0) || 0;
+            const pendingEarnings = sales?.filter(sale => sale.payment_status === 'pending')
+                .reduce((sum, sale) => sum + parseFloat(sale.author_earning), 0) || 0;
+            
+            // Update metrics
+            document.getElementById('total-sales').textContent = totalSales;
+            document.getElementById('total-earnings').textContent = `$${totalEarnings.toFixed(2)}`;
+            document.getElementById('pending-earnings').textContent = `$${pendingEarnings.toFixed(2)}`;
+        }
+
+        // Load recent sales
+        async function loadRecentSales() {
+            const { data: sales, error } = await supabase
+                .from('author_sales')
+                .select('*')
+                .eq('author_id', currentAuthor.id)
+                .order('sale_date', { ascending: false })
+                .limit(10);
+            
+            if (error) throw error;
+            
+            const container = document.getElementById('recent-sales');
+            
+            if (!sales || sales.length === 0) {
+                container.innerHTML = '<p style="color: var(--gray-600); text-align: center; padding: 1rem;">No sales yet</p>';
+                return;
+            }
+            
+            container.innerHTML = sales.map(sale => `
+                <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.75rem 0; border-bottom: 1px solid var(--gray-200);">
+                    <div>
+                        <div style="font-weight: 600; font-size: 0.9rem;">${sale.course_id}</div>
+                        <div style="font-size: 0.8rem; color: var(--gray-600);">${new Date(sale.sale_date).toLocaleDateString()}</div>
+                    </div>
+                    <div style="text-align: right;">
+                        <div style="font-weight: 600; color: var(--emerald);">$${parseFloat(sale.author_earning).toFixed(2)}</div>
+                        <div style="font-size: 0.8rem; color: var(--gray-600);">${sale.revenue_share_percent}%</div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Load payment status
+        async function loadPaymentStatus() {
+            const { data: payments, error } = await supabase
+                .from('author_payments')
+                .select('*')
+                .eq('author_id', currentAuthor.id)
+                .order('created_at', { ascending: false });
+            
+            if (error) throw error;
+            
+            const container = document.getElementById('payment-status');
+            
+            if (!payments || payments.length === 0) {
+                container.innerHTML = '<div class="payment-status-pending">No payments yet</div>';
+                return;
+            }
+            
+            container.innerHTML = payments.map(payment => `
+                <div style="margin-bottom: 1rem; padding: 1rem; border: 1px solid var(--gray-200); border-radius: 6px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+                        <div style="font-weight: 600;">$${parseFloat(payment.total_earnings).toFixed(2)}</div>
+                        <div class="payment-status-${payment.payment_status === 'paid' ? 'paid' : 'pending'}">
+                            ${payment.payment_status === 'paid' ? 'Paid' : 'Pending'}
+                        </div>
+                    </div>
+                    <div style="font-size: 0.85rem; color: var(--gray-600);">
+                        ${payment.total_sales_count} sales • ${new Date(payment.payment_period_start).toLocaleDateString()} - ${new Date(payment.payment_period_end).toLocaleDateString()}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Sign out function
+        function signOut() {
+            currentAuthor = null;
+            localStorage.removeItem('currentAuthor');
+            
+            document.getElementById('author-dashboard-content').style.display = 'none';
+            document.getElementById('author-login-section').style.display = 'block';
+            
+            // Reset form
+            document.getElementById('author-login-form').reset();
+            document.getElementById('login-alerts').innerHTML = '';
+        }
+
+        // Check for existing session on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            const storedAuthor = localStorage.getItem('currentAuthor');
+            if (storedAuthor) {
+                try {
+                    currentAuthor = JSON.parse(storedAuthor);
+                    showDashboard();
+                } catch (error) {
+                    console.error('Error parsing stored author:', error);
+                    localStorage.removeItem('currentAuthor');
+                }
+            }
+        });
+    </script>
+</body>
+</html>
