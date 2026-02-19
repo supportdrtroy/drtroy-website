@@ -295,12 +295,6 @@
   force = true
 
 [[redirects]]
-  from = "/home-preview.html"
-  to = "/"
-  status = 404
-  force = true
-
-[[redirects]]
   from = "/index-coming-soon-backup.html"
   to = "/"
   status = 404
