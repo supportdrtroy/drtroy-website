@@ -49,7 +49,7 @@ async function signUp(email, password, metadata = {}) {
             last_name: metadata.last_name || '',
             profession: metadata.profession || '',
             license_number: metadata.license_number || '',
-            state: metadata.state || ''
+            license_state: metadata.state || ''
         }, { onConflict: 'id' });
     }
 
@@ -356,8 +356,140 @@ async function adminGetAllCourses() {
     const sb = getSupabaseClient();
     if (!sb) return { data: [], error: 'Database unavailable' };
     return await sb.from('courses')
-        .select('id, title, ceu_hours, is_active')
-        .order('title');
+        .select('*')
+        .order('sort_order', { ascending: true });
+}
+
+/* ─── COURSE MANAGEMENT (Admin CRUD) ───────────────────────────────────────── */
+
+async function adminCreateCourse(courseData) {
+    const sb = getSupabaseClient();
+    if (!sb) return { data: null, error: { message: 'Database unavailable' } };
+    return await sb.from('courses').insert(courseData).select().single();
+}
+
+async function adminUpdateCourse(courseId, updates) {
+    const sb = getSupabaseClient();
+    if (!sb) return { data: null, error: { message: 'Database unavailable' } };
+    return await sb.from('courses').update(updates).eq('id', courseId).select().single();
+}
+
+async function adminToggleCourseActive(courseId, isActive) {
+    return adminUpdateCourse(courseId, { is_active: isActive });
+}
+
+/* ─── DISCOUNT CODE MANAGEMENT (Admin) ─────────────────────────────────────── */
+
+async function adminGetDiscountCodes() {
+    const sb = getSupabaseClient();
+    if (!sb) return { data: [], error: { message: 'Database unavailable' } };
+    return await sb.from('discount_codes').select('*').order('created_at', { ascending: false });
+}
+
+async function adminCreateDiscountCode(codeData) {
+    const sb = getSupabaseClient();
+    if (!sb) return { data: null, error: { message: 'Database unavailable' } };
+    return await sb.from('discount_codes').insert(codeData).select().single();
+}
+
+async function adminUpdateDiscountCode(codeId, updates) {
+    const sb = getSupabaseClient();
+    if (!sb) return { data: null, error: { message: 'Database unavailable' } };
+    return await sb.from('discount_codes').update(updates).eq('id', codeId).select().single();
+}
+
+async function adminDeleteDiscountCode(codeId) {
+    const sb = getSupabaseClient();
+    if (!sb) return { data: null, error: { message: 'Database unavailable' } };
+    return await sb.from('discount_codes').delete().eq('id', codeId);
+}
+
+/* ─── LICENSE TRACKING (Admin) ──────────────────────────────────────────────── */
+
+async function adminGetExpiringLicenses(withinDays = 90) {
+    const sb = getSupabaseClient();
+    if (!sb) return { data: [], error: { message: 'Database unavailable' } };
+    const cutoff = new Date();
+    cutoff.setDate(cutoff.getDate() + withinDays);
+    return await sb.from('profiles')
+        .select('*')
+        .not('license_expiry_date', 'is', null)
+        .lte('license_expiry_date', cutoff.toISOString().split('T')[0])
+        .order('license_expiry_date', { ascending: true });
+}
+
+async function adminUpdateLicenseExpiry(userId, expiryDate) {
+    const sb = getSupabaseClient();
+    if (!sb) return { data: null, error: { message: 'Database unavailable' } };
+    return await sb.from('profiles').update({ license_expiry_date: expiryDate }).eq('id', userId).select().single();
+}
+
+/* ─── CERTIFICATE MANAGEMENT (Admin) ───────────────────────────────────────── */
+
+async function adminGetUserCertificates(userId) {
+    const sb = getSupabaseClient();
+    if (!sb) return { data: [], error: { message: 'Database unavailable' } };
+    return await sb.from('certificates')
+        .select('*')
+        .eq('user_id', userId)
+        .order('issued_at', { ascending: false });
+}
+
+async function adminGetUserCompletions(userId) {
+    const sb = getSupabaseClient();
+    if (!sb) return { data: [], error: { message: 'Database unavailable' } };
+    return await sb.from('completions')
+        .select('*, courses(title, ceu_hours)')
+        .eq('user_id', userId)
+        .eq('passed', true)
+        .order('completed_at', { ascending: false });
+}
+
+/* ─── CAMPAIGN / PASSWORD RESET / CERTIFICATE (via Netlify functions) ──────── */
+
+async function adminSendCampaign(subject, htmlBody, filters = {}, countOnly = false) {
+    const sb = getSupabaseClient();
+    if (!sb) return { error: 'Database unavailable' };
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) return { error: 'Not authenticated' };
+    try {
+        const resp = await fetch('/.netlify/functions/send-campaign', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + session.access_token },
+            body: JSON.stringify({ action: countOnly ? 'count' : 'send', subject, htmlBody, filters })
+        });
+        return await resp.json();
+    } catch (err) { return { error: err.message }; }
+}
+
+async function adminResetPassword(email) {
+    const sb = getSupabaseClient();
+    if (!sb) return { error: 'Database unavailable' };
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) return { error: 'Not authenticated' };
+    try {
+        const resp = await fetch('/.netlify/functions/admin-reset-password', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + session.access_token },
+            body: JSON.stringify({ email })
+        });
+        return await resp.json();
+    } catch (err) { return { error: err.message }; }
+}
+
+async function adminIssueCertificate(params) {
+    const sb = getSupabaseClient();
+    if (!sb) return { error: 'Database unavailable' };
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) return { error: 'Not authenticated' };
+    try {
+        const resp = await fetch('/.netlify/functions/issue-certificate', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + session.access_token },
+            body: JSON.stringify(params)
+        });
+        return await resp.json();
+    } catch (err) { return { error: err.message }; }
 }
 
 function adminExportUsersCSV(users) {
@@ -368,7 +500,7 @@ function adminExportUsersCSV(users) {
         u.last_name,
         u.profession,
         u.license_number,
-        u.state,
+        u.license_state,
         u.is_admin ? 'Yes' : 'No',
         u.created_at ? new Date(u.created_at).toLocaleDateString() : ''
     ]);
@@ -442,7 +574,7 @@ async function processSuccessfulPurchase({ userId, courseIds, packageId, payment
             course_id: courseId,
             enrollment_id: enrollment.id,
             status: 'not_started',
-            progress_pct: 0
+            progress_percent: 0
         });
     }
 
@@ -509,6 +641,30 @@ window.DrTroySupabase = {
     adminGetUserEnrollments,
     adminGetAllCourses,
     adminExportUsersCSV,
+
+    // Admin Course CRUD
+    adminCreateCourse,
+    adminUpdateCourse,
+    adminToggleCourseActive,
+
+    // Admin Discount Codes
+    adminGetDiscountCodes,
+    adminCreateDiscountCode,
+    adminUpdateDiscountCode,
+    adminDeleteDiscountCode,
+
+    // Admin License Tracking
+    adminGetExpiringLicenses,
+    adminUpdateLicenseExpiry,
+
+    // Admin Certificates
+    adminGetUserCertificates,
+    adminGetUserCompletions,
+
+    // Admin Campaigns / Password Reset / Certificates (Netlify)
+    adminSendCampaign,
+    adminResetPassword,
+    adminIssueCertificate,
 };
 
 // Expose raw client for advanced use

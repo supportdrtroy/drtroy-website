@@ -227,9 +227,9 @@ async function manualEnroll({ userId, courseId }) {
   const res = await sbRest('POST', '/rest/v1/enrollments', {
     user_id: userId,
     course_id: courseId,
-    amount_paid: 0,
-    payment_method: 'admin_grant',
-    enrolled_at: new Date().toISOString(),
+    amount_paid_cents: 0,
+    purchased_at: new Date().toISOString(),
+    is_active: true,
   });
 
   if (res.status >= 400) throw new Error(res.body?.message || 'Failed to enroll user');
@@ -238,6 +238,12 @@ async function manualEnroll({ userId, courseId }) {
 
 async function removeEnrollment({ enrollmentId }) {
   if (!enrollmentId) throw new Error('enrollmentId is required');
+
+  // Delete dependent course_progress rows first (FK constraint: NO ACTION)
+  await sbRest('DELETE', `/rest/v1/course_progress?enrollment_id=eq.${encodeURIComponent(enrollmentId)}`);
+  // Delete dependent completions rows (FK constraint: NO ACTION)
+  await sbRest('DELETE', `/rest/v1/completions?enrollment_id=eq.${encodeURIComponent(enrollmentId)}`);
+
   const res = await sbRest(
     'DELETE',
     `/rest/v1/enrollments?id=eq.${encodeURIComponent(enrollmentId)}`

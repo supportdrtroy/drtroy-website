@@ -11,7 +11,7 @@
         script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net;
         style-src 'self' 'unsafe-inline';
         img-src 'self' data: https:;
-        connect-src 'self' https://*.supabase.co;
+        connect-src 'self' https://*.supabase.co https://*.netlify.app;
     ">
     <meta http-equiv="X-Content-Type-Options" content="nosniff">
     <meta http-equiv="X-Frame-Options" content="DENY">
@@ -1187,102 +1187,76 @@
         <!-- Course Content Tab -->
         <div id="courses" class="tab-content">
             <div class="card">
-                <div class="card-header">
+                <div class="card-header" style="display:flex;justify-content:space-between;align-items:center;">
                     <h2 class="card-title">📚 Course Content Management</h2>
                     <div style="display: flex; gap: 1rem;">
-                        <button class="btn btn-secondary" onclick="exportCourseData()">📥 Export Data</button>
+                        <button class="btn btn-secondary" onclick="refreshCourses()">🔄 Refresh</button>
                         <button class="btn btn-primary" onclick="showAddCourseForm()">➕ Add Course</button>
                     </div>
                 </div>
                 <div class="card-body">
-                    <!-- Course Statistics -->
                     <div class="stats-grid" style="margin-bottom: 2rem;">
-                        <div class="stat-card">
-                            <div class="stat-number">12</div>
-                            <div class="stat-label">Total Courses</div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-number">8</div>
-                            <div class="stat-label">Active Courses</div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-number">89%</div>
-                            <div class="stat-label">Avg Completion Rate</div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-number">4.8</div>
-                            <div class="stat-label">Avg Rating</div>
-                        </div>
+                        <div class="stat-card"><div class="stat-number" id="courseStatTotal">—</div><div class="stat-label">Total Courses</div></div>
+                        <div class="stat-card"><div class="stat-number" id="courseStatActive">—</div><div class="stat-label">Active Courses</div></div>
+                        <div class="stat-card"><div class="stat-number" id="courseStatInactive">—</div><div class="stat-label">Inactive / Draft</div></div>
+                        <div class="stat-card"><div class="stat-number" id="courseStatCEU">—</div><div class="stat-label">Total CEU Hours</div></div>
                     </div>
-
-                    <!-- Course List -->
-                    <div class="course-grid">
-                        <div class="course-card">
-                            <div class="course-header">
-                                <h3>Fall Prevention & Mobility</h3>
-                                <div class="course-status active">Active</div>
-                            </div>
-                            <div class="course-meta">
-                                <div>CCU Value: 2 hours</div>
-                                <div>Enrollments: 45</div>
-                                <div>Completion: 92%</div>
-                            </div>
-                            <div class="course-actions">
-                                <button class="btn-small" onclick="editCourse('fall-prevention')">✏️ Edit</button>
-                                <button class="btn-small" onclick="viewStats('fall-prevention')">📊 Stats</button>
-                                <button class="btn-small" onclick="manageCourse('fall-prevention')">⚙️ Manage</button>
-                            </div>
-                        </div>
-
-                        <div class="course-card">
-                            <div class="course-header">
-                                <h3>Ethics in Healthcare</h3>
-                                <div class="course-status active">Active</div>
-                            </div>
-                            <div class="course-meta">
-                                <div>CCU Value: 2 hours</div>
-                                <div>Enrollments: 38</div>
-                                <div>Completion: 85%</div>
-                            </div>
-                            <div class="course-actions">
-                                <button class="btn-small" onclick="editCourse('ethics')">✏️ Edit</button>
-                                <button class="btn-small" onclick="viewStats('ethics')">📊 Stats</button>
-                                <button class="btn-small" onclick="manageCourse('ethics')">⚙️ Manage</button>
-                            </div>
-                        </div>
-
-                        <div class="course-card">
-                            <div class="course-header">
-                                <h3>PT Musculoskeletal Assessment</h3>
-                                <div class="course-status draft">Draft</div>
-                            </div>
-                            <div class="course-meta">
-                                <div>CCU Value: 3 hours</div>
-                                <div>Enrollments: 0</div>
-                                <div>Completion: N/A</div>
-                            </div>
-                            <div class="course-actions">
-                                <button class="btn-small" onclick="editCourse('msk-assessment')">✏️ Edit</button>
-                                <button class="btn-small" onclick="publishCourse('msk-assessment')">🚀 Publish</button>
-                                <button class="btn-small" onclick="manageCourse('msk-assessment')">⚙️ Manage</button>
-                            </div>
-                        </div>
+                    <div id="courseListContainer" class="course-grid">
+                        <p style="color:#6b7280;text-align:center;grid-column:1/-1;">Loading courses…</p>
                     </div>
+                </div>
+            </div>
 
-                    <!-- Bulk Course Operations -->
-                    <div class="card" style="margin-top: 2rem;">
-                        <div class="card-header">
-                            <h3>Bulk Operations</h3>
-                        </div>
-                        <div class="card-body">
-                            <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
-                                <button class="btn btn-secondary" onclick="updateAllCourses()">🔄 Update All Courses</button>
-                                <button class="btn btn-secondary" onclick="exportCourseContent()">📦 Export Content</button>
-                                <button class="btn btn-secondary" onclick="generateCertificates()">🏆 Generate Certificates</button>
-                                <button class="btn btn-secondary" onclick="notifyIncompleteCourses()">📧 Notify Incomplete</button>
+            <!-- Add / Edit Course Modal -->
+            <div class="modal-overlay" id="courseModal">
+                <div class="modal-box" style="max-width:600px;">
+                    <button class="modal-close" onclick="closeCourseModal()">×</button>
+                    <div class="modal-title" id="courseModalTitle">➕ Add New Course</div>
+                    <div id="courseModalError" class="error-message" style="display:none;"></div>
+                    <div id="courseModalSuccess" class="success-message" style="display:none;"></div>
+                    <form id="courseForm" onsubmit="event.preventDefault(); saveCourse();">
+                        <input type="hidden" id="cf-id">
+                        <div class="form-grid">
+                            <div class="form-group" style="grid-column:1/-1;">
+                                <label class="form-label">Course ID (slug) *</label>
+                                <input type="text" id="cf-slug" class="form-input" placeholder="fall-prevention-2026" required>
+                            </div>
+                            <div class="form-group" style="grid-column:1/-1;">
+                                <label class="form-label">Title *</label>
+                                <input type="text" id="cf-title" class="form-input" placeholder="Fall Prevention & Mobility" required>
+                            </div>
+                            <div class="form-group" style="grid-column:1/-1;">
+                                <label class="form-label">Description</label>
+                                <textarea id="cf-description" class="form-input" rows="3" placeholder="Course description..."></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">CEU Hours *</label>
+                                <input type="number" id="cf-ceu" class="form-input" step="0.5" min="0" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Price (cents) *</label>
+                                <input type="number" id="cf-price" class="form-input" min="0" placeholder="10900" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Professions</label>
+                                <input type="text" id="cf-professions" class="form-input" placeholder="PT,PTA,OT,COTA">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Sort Order</label>
+                                <input type="number" id="cf-sort" class="form-input" value="0">
                             </div>
                         </div>
-                    </div>
+                        <div class="form-group" style="display:flex;align-items:center;gap:.75rem;margin:1rem 0;">
+                            <label style="display:flex;align-items:center;gap:.5rem;font-weight:600;cursor:pointer;">
+                                <input type="checkbox" id="cf-active" checked style="width:18px;height:18px;accent-color:#059669;">
+                                Active (visible to students)
+                            </label>
+                        </div>
+                        <div style="display:flex;gap:1rem;">
+                            <button type="submit" class="btn btn-primary" id="cf-submit-btn">💾 Save Course</button>
+                            <button type="button" class="btn btn-secondary" onclick="closeCourseModal()">Cancel</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -1290,209 +1264,56 @@
         <!-- Email System Tab -->
         <div id="emails" class="tab-content">
             <div class="card">
-                <div class="card-header">
-                    <h2 class="card-title">📧 Email System Management</h2>
-                    <div style="display: flex; gap: 1rem;">
-                        <button class="btn btn-secondary" onclick="exportEmailData()">📥 Export Logs</button>
-                        <button class="btn btn-primary" onclick="showComposeEmail()">✉️ Compose Email</button>
-                    </div>
+                <div class="card-header" style="display:flex;justify-content:space-between;align-items:center;">
+                    <h2 class="card-title">📧 Email Campaigns</h2>
                 </div>
                 <div class="card-body">
-                    <!-- Email Statistics -->
-                    <div class="stats-grid" style="margin-bottom: 2rem;">
-                        <div class="stat-card">
-                            <div class="stat-number">1,247</div>
-                            <div class="stat-label">Total Sent</div>
+                    <div class="info-box">
+                        <strong>Send emails to your users</strong> via Resend. You can send to all active users or filter by profession, state, or course enrollment.
+                    </div>
+
+                    <!-- Compose Campaign -->
+                    <div class="form-group">
+                        <label class="form-label">Subject Line *</label>
+                        <input type="text" id="campaign-subject" class="form-input" placeholder="Important update from DrTroy CE">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Email Body (HTML supported) *</label>
+                        <textarea id="campaign-body" class="form-input" rows="10" placeholder="Write your email content here... HTML tags are supported."></textarea>
+                    </div>
+
+                    <h4 style="margin:1.5rem 0 1rem;color:var(--navy);">📋 Audience Filters (optional — leave blank to send to ALL active users)</h4>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label class="form-label">Filter by Profession</label>
+                            <select id="campaign-profession" class="form-select">
+                                <option value="">All Professions</option>
+                                <option value="PT">Physical Therapist (PT)</option>
+                                <option value="PTA">PT Assistant (PTA)</option>
+                                <option value="OT">Occupational Therapist (OT)</option>
+                                <option value="COTA">OT Assistant (COTA)</option>
+                            </select>
                         </div>
-                        <div class="stat-card">
-                            <div class="stat-number">95.8%</div>
-                            <div class="stat-label">Delivery Rate</div>
+                        <div class="form-group">
+                            <label class="form-label">Filter by State</label>
+                            <input type="text" id="campaign-state" class="form-input" placeholder="TX" maxlength="2" style="text-transform:uppercase;" oninput="this.value=this.value.toUpperCase()">
                         </div>
-                        <div class="stat-card">
-                            <div class="stat-number">68.4%</div>
-                            <div class="stat-label">Open Rate</div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-number">12.3%</div>
-                            <div class="stat-label">Click Rate</div>
+                        <div class="form-group">
+                            <label class="form-label">Filter by Course Enrollment</label>
+                            <select id="campaign-course" class="form-select">
+                                <option value="">All Users (no course filter)</option>
+                            </select>
                         </div>
                     </div>
 
-                    <!-- Email Campaign Management -->
-                    <div class="sub-tabs">
-                        <button class="sub-tab active" onclick="switchEmailTab('campaigns')">📢 Campaigns</button>
-                        <button class="sub-tab" onclick="switchEmailTab('renewals')">🎓 License Renewals</button>
-                        <button class="sub-tab" onclick="switchEmailTab('templates')">📝 Templates</button>
-                        <button class="sub-tab" onclick="switchEmailTab('logs')">📋 Email Logs</button>
+                    <div style="display:flex;gap:1rem;align-items:center;margin-top:1rem;flex-wrap:wrap;">
+                        <button class="btn btn-secondary" onclick="previewCampaignCount()">👁️ Preview Recipient Count</button>
+                        <span id="campaign-count" style="font-weight:600;color:var(--navy);"></span>
                     </div>
-
-                    <!-- Email Campaigns -->
-                    <div id="email-campaigns" class="sub-content active">
-                        <div class="campaign-list">
-                            <div class="campaign-item">
-                                <div class="campaign-header">
-                                    <h3>Spring 2026 Promotion</h3>
-                                    <div class="campaign-status active">Active</div>
-                                </div>
-                                <div class="campaign-meta">
-                                    <div>Recipients: 234</div>
-                                    <div>Opens: 156 (66.7%)</div>
-                                    <div>Clicks: 28 (12.0%)</div>
-                                    <div>Sent: Feb 10, 2026</div>
-                                </div>
-                                <div class="campaign-actions">
-                                    <button class="btn-small" onclick="viewCampaign('spring-2026')">📊 View Stats</button>
-                                    <button class="btn-small" onclick="duplicateCampaign('spring-2026')">📋 Duplicate</button>
-                                    <button class="btn-small" onclick="stopCampaign('spring-2026')">⏹️ Stop</button>
-                                </div>
-                            </div>
-
-                            <div class="campaign-item">
-                                <div class="campaign-header">
-                                    <h3>New Course Announcement</h3>
-                                    <div class="campaign-status draft">Draft</div>
-                                </div>
-                                <div class="campaign-meta">
-                                    <div>Recipients: 312</div>
-                                    <div>Status: Scheduled for Feb 20</div>
-                                </div>
-                                <div class="campaign-actions">
-                                    <button class="btn-small" onclick="editCampaign('new-course')">✏️ Edit</button>
-                                    <button class="btn-small" onclick="sendCampaign('new-course')">🚀 Send Now</button>
-                                    <button class="btn-small" onclick="deleteCampaign('new-course')">🗑️ Delete</button>
-                                </div>
-                            </div>
-                        </div>
+                    <div style="margin-top:1.5rem;">
+                        <button class="btn btn-primary" id="campaign-send-btn" onclick="sendCampaignEmail()">🚀 Send Campaign</button>
                     </div>
-
-                    <!-- License Renewal Emails -->
-                    <div id="email-renewals" class="sub-content">
-                        <div class="renewal-stats">
-                            <div class="stat-card">
-                                <div class="stat-number">45</div>
-                                <div class="stat-label">6-Month Reminders Sent</div>
-                            </div>
-                            <div class="stat-card">
-                                <div class="stat-number">28</div>
-                                <div class="stat-label">1-Month Reminders Sent</div>
-                            </div>
-                            <div class="stat-card">
-                                <div class="stat-number">12</div>
-                                <div class="stat-label">Final Warnings Sent</div>
-                            </div>
-                            <div class="stat-card">
-                                <div class="stat-number">89%</div>
-                                <div class="stat-label">Response Rate</div>
-                            </div>
-                        </div>
-
-                        <div class="renewal-controls">
-                            <h3>Renewal Email Controls</h3>
-                            <div style="display: flex; gap: 1rem; margin: 1rem 0;">
-                                <button class="btn btn-primary" onclick="sendRenewalReminders()">📧 Send Due Reminders</button>
-                                <button class="btn btn-secondary" onclick="previewRenewalEmail()">👁️ Preview Template</button>
-                                <button class="btn btn-secondary" onclick="testRenewalEmail()">🧪 Send Test Email</button>
-                            </div>
-                            <div class="info-box">
-                                <strong>Automated System:</strong> Renewal reminders are sent automatically at 6 months, 1 month, and 1 week before license expiration. You can also trigger manual sends here.
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Email Templates -->
-                    <div id="email-templates" class="sub-content">
-                        <div class="template-list">
-                            <div class="template-item">
-                                <h3>License Renewal - 6 Month Warning</h3>
-                                <p>Friendly reminder template for users with 6 months until renewal</p>
-                                <div class="template-actions">
-                                    <button class="btn-small" onclick="editTemplate('renewal-6mo')">✏️ Edit</button>
-                                    <button class="btn-small" onclick="previewTemplate('renewal-6mo')">👁️ Preview</button>
-                                </div>
-                            </div>
-                            <div class="template-item">
-                                <h3>License Renewal - 1 Month Warning</h3>
-                                <p>Urgent reminder template for users with 1 month until renewal</p>
-                                <div class="template-actions">
-                                    <button class="btn-small" onclick="editTemplate('renewal-1mo')">✏️ Edit</button>
-                                    <button class="btn-small" onclick="previewTemplate('renewal-1mo')">👁️ Preview</button>
-                                </div>
-                            </div>
-                            <div class="template-item">
-                                <h3>License Renewal - Final Notice</h3>
-                                <p>Final warning template for users with less than 1 week</p>
-                                <div class="template-actions">
-                                    <button class="btn-small" onclick="editTemplate('renewal-final')">✏️ Edit</button>
-                                    <button class="btn-small" onclick="previewTemplate('renewal-final')">👁️ Preview</button>
-                                </div>
-                            </div>
-                            <div class="template-item">
-                                <h3>Welcome Email</h3>
-                                <p>Welcome message for new user registrations</p>
-                                <div class="template-actions">
-                                    <button class="btn-small" onclick="editTemplate('welcome')">✏️ Edit</button>
-                                    <button class="btn-small" onclick="previewTemplate('welcome')">👁️ Preview</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Email Logs -->
-                    <div id="email-logs" class="sub-content">
-                        <div style="overflow-x: auto;">
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th>Recipient</th>
-                                        <th>Subject</th>
-                                        <th>Type</th>
-                                        <th>Status</th>
-                                        <th>Sent</th>
-                                        <th>Opened</th>
-                                        <th>Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>sarah.johnson@email.com</td>
-                                        <td>License Renewal Reminder</td>
-                                        <td>Renewal</td>
-                                        <td><span class="status-badge delivered">Delivered</span></td>
-                                        <td>Feb 15, 2:30 PM</td>
-                                        <td>Feb 15, 3:45 PM</td>
-                                        <td>
-                                            <button class="btn-small" onclick="viewEmail('email123')">👁️ View</button>
-                                            <button class="btn-small" onclick="resendEmail('email123')">🔄 Resend</button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>m.chen@email.com</td>
-                                        <td>New Course Available</td>
-                                        <td>Campaign</td>
-                                        <td><span class="status-badge opened">Opened</span></td>
-                                        <td>Feb 14, 9:00 AM</td>
-                                        <td>Feb 14, 11:20 AM</td>
-                                        <td>
-                                            <button class="btn-small" onclick="viewEmail('email124')">👁️ View</button>
-                                            <button class="btn-small" onclick="resendEmail('email124')">🔄 Resend</button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>lisa.r@email.com</td>
-                                        <td>Welcome to DrTroy.com</td>
-                                        <td>Welcome</td>
-                                        <td><span class="status-badge bounced">Bounced</span></td>
-                                        <td>Feb 13, 4:15 PM</td>
-                                        <td>-</td>
-                                        <td>
-                                            <button class="btn-small" onclick="viewEmail('email125')">👁️ View</button>
-                                            <button class="btn-small" onclick="updateEmail('email125')">✏️ Update</button>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
+                    <div id="campaign-result" style="margin-top:1rem;font-weight:600;display:none;"></div>
                 </div>
             </div>
         </div>
@@ -1500,147 +1321,47 @@
         <!-- License Tracking Tab -->
         <div id="licenses" class="tab-content">
             <div class="card">
-                <div class="card-header">
+                <div class="card-header" style="display:flex;justify-content:space-between;align-items:center;">
                     <h2 class="card-title">🎓 License Tracking & Monitoring</h2>
-                    <div style="display: flex; gap: 1rem;">
-                        <button class="btn btn-secondary" onclick="exportLicenseData()">📥 Export Report</button>
-                        <button class="btn btn-primary" onclick="sendBulkReminders()">📧 Send Reminders</button>
-                    </div>
+                    <button class="btn btn-secondary" onclick="loadLicenseData()">🔄 Refresh</button>
                 </div>
                 <div class="card-body">
-                    <!-- License Statistics -->
                     <div class="stats-grid" style="margin-bottom: 2rem;">
                         <div class="stat-card">
-                            <div class="stat-number" style="color: #dc2626;">8</div>
-                            <div class="stat-label">Expired Licenses</div>
+                            <div class="stat-number" style="color:#dc2626;" id="licExpired">—</div>
+                            <div class="stat-label">Expired</div>
                         </div>
                         <div class="stat-card">
-                            <div class="stat-number" style="color: #d69e2e;">15</div>
-                            <div class="stat-label">Expiring Soon (30 days)</div>
+                            <div class="stat-number" style="color:#d69e2e;" id="licExpiring30">—</div>
+                            <div class="stat-label">≤ 30 Days</div>
                         </div>
                         <div class="stat-card">
-                            <div class="stat-number" style="color: #059669;">234</div>
-                            <div class="stat-label">Active Licenses</div>
+                            <div class="stat-number" style="color:#2563eb;" id="licExpiring90">—</div>
+                            <div class="stat-label">≤ 90 Days</div>
                         </div>
                         <div class="stat-card">
-                            <div class="stat-number">89%</div>
-                            <div class="stat-label">Renewal Rate</div>
+                            <div class="stat-number" id="licWithDate">—</div>
+                            <div class="stat-label">Licenses Tracked</div>
                         </div>
                     </div>
-
-                    <!-- License Filter and Search -->
-                    <div style="display: grid; grid-template-columns: 1fr auto auto auto; gap: 1rem; margin-bottom: 2rem;">
-                        <input type="text" id="licenseSearch" class="form-input" placeholder="Search by name, license number, or email">
-                        <select id="stateFilter" class="form-select">
-                            <option value="all">All States</option>
-                            <option value="TX">Texas</option>
-                            <option value="CA">California</option>
-                            <option value="FL">Florida</option>
-                            <option value="NY">New York</option>
-                        </select>
-                        <select id="disciplineFilter" class="form-select">
-                            <option value="all">All Disciplines</option>
-                            <option value="PT">Physical Therapist</option>
-                            <option value="PTA">PT Assistant</option>
-                            <option value="OT">Occupational Therapist</option>
-                            <option value="COTA">OT Assistant</option>
-                        </select>
-                        <select id="urgencyFilter" class="form-select">
-                            <option value="all">All Status</option>
-                            <option value="expired">Expired</option>
-                            <option value="critical">Critical (≤30 days)</option>
-                            <option value="warning">Warning (≤90 days)</option>
-                            <option value="safe">Safe (>90 days)</option>
-                        </select>
-                    </div>
-
-                    <!-- License Tracking Table -->
                     <div style="overflow-x: auto;">
                         <table class="table">
                             <thead>
                                 <tr>
                                     <th>Name</th>
+                                    <th>Email</th>
                                     <th>License #</th>
                                     <th>State</th>
-                                    <th>Discipline</th>
+                                    <th>Profession</th>
                                     <th>Expires</th>
                                     <th>Days Left</th>
-                                    <th>CCU Progress</th>
                                     <th>Actions</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                <tr class="license-critical">
-                                    <td>Dr. Sarah Johnson</td>
-                                    <td>TX12345</td>
-                                    <td>TX</td>
-                                    <td>PT</td>
-                                    <td>March 15, 2026</td>
-                                    <td class="urgent">18 days</td>
-                                    <td>
-                                        <div class="progress-mini">
-                                            <div class="progress-bar" style="width: 85%"></div>
-                                            <span>23/27 CCUs</span>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <button class="btn-small critical" onclick="sendUrgentReminder('TX12345')">⚠️ Urgent</button>
-                                        <button class="btn-small" onclick="viewLicenseDetails('TX12345')">👁️ View</button>
-                                    </td>
-                                </tr>
-                                <tr class="license-warning">
-                                    <td>Michael Chen</td>
-                                    <td>CA67890</td>
-                                    <td>CA</td>
-                                    <td>OT</td>
-                                    <td>May 30, 2026</td>
-                                    <td class="warning">94 days</td>
-                                    <td>
-                                        <div class="progress-mini">
-                                            <div class="progress-bar" style="width: 60%"></div>
-                                            <span>14/23 CCUs</span>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <button class="btn-small warning" onclick="sendReminder('CA67890')">📧 Remind</button>
-                                        <button class="btn-small" onclick="viewLicenseDetails('CA67890')">👁️ View</button>
-                                    </td>
-                                </tr>
-                                <tr class="license-safe">
-                                    <td>Lisa Rodriguez</td>
-                                    <td>FL54321</td>
-                                    <td>FL</td>
-                                    <td>PTA</td>
-                                    <td>December 31, 2026</td>
-                                    <td class="safe">319 days</td>
-                                    <td>
-                                        <div class="progress-mini">
-                                            <div class="progress-bar" style="width: 35%"></div>
-                                            <span>6/17 CCUs</span>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <button class="btn-small" onclick="viewLicenseDetails('FL54321')">👁️ View</button>
-                                        <button class="btn-small" onclick="emailUser('lisa.r@email.com')">📧 Contact</button>
-                                    </td>
-                                </tr>
+                            <tbody id="licenseTableBody">
+                                <tr><td colspan="8" style="text-align:center;color:#6b7280;">Loading…</td></tr>
                             </tbody>
                         </table>
-                    </div>
-
-                    <!-- Bulk License Operations -->
-                    <div class="card" style="margin-top: 2rem;">
-                        <div class="card-header">
-                            <h3>Bulk License Operations</h3>
-                        </div>
-                        <div class="card-body">
-                            <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
-                                <button class="btn btn-secondary" onclick="sendCriticalReminders()">⚠️ Notify Critical (≤30 days)</button>
-                                <button class="btn btn-secondary" onclick="sendWarningReminders()">📧 Notify Warnings (≤90 days)</button>
-                                <button class="btn btn-secondary" onclick="updateCCUProgress()">🔄 Update CCU Progress</button>
-                                <button class="btn btn-secondary" onclick="generateRenewalReport()">📊 Generate Report</button>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -1681,6 +1402,7 @@
                         <button class="sub-tab" onclick="switchSubTab('marketing')">
                             📢 Marketing Codes
                         </button>
+                    </div>
 
                     <!-- Employee Code Form -->
                     <div id="employee" class="sub-content active">
@@ -2228,12 +1950,25 @@
                 <button class="btn btn-primary" onclick="saveUserProfile()">💾 Save Profile Changes</button>
             </div>
 
+            <!-- License Expiry -->
+            <div class="modal-section">
+                <h4>🎓 License Expiry</h4>
+                <div style="display:flex;gap:.75rem;align-items:flex-end;flex-wrap:wrap;">
+                    <div class="form-group" style="margin:0;">
+                        <label class="form-label" style="font-size:.85rem;">Expiry Date</label>
+                        <input type="date" id="udm-license-expiry" class="form-input" style="width:200px;">
+                    </div>
+                    <button class="btn btn-primary" onclick="saveLicenseExpiry()" style="height:fit-content;">💾 Save Expiry</button>
+                </div>
+            </div>
+
             <!-- Account Actions Section -->
             <div class="modal-section">
                 <h4>⚙️ Account Actions</h4>
                 <div style="display:flex;gap:0.75rem;flex-wrap:wrap;">
                     <button id="udm-toggle-admin-btn" class="btn btn-primary" onclick="toggleAdmin()">🛡️ Toggle Admin</button>
                     <button id="udm-suspend-btn" class="btn btn-warning" onclick="toggleSuspend()">⚠️ Suspend User</button>
+                    <button class="btn btn-secondary" onclick="sendPasswordReset()">🔑 Send Password Reset</button>
                     <button class="btn btn-danger" onclick="deleteUserAccount()">🗑️ Delete Account</button>
                 </div>
             </div>
@@ -2253,6 +1988,14 @@
                             ➕ Enroll
                         </button>
                     </div>
+                </div>
+            </div>
+
+            <!-- Certificates Section -->
+            <div class="modal-section">
+                <h4>🏆 Certificates</h4>
+                <div id="udm-certificates" style="min-height:2rem;">
+                    <p style="color:#6b7280;font-style:italic;">Loading certificates…</p>
                 </div>
             </div>
         </div>
@@ -2323,6 +2066,7 @@
 
     <script>
         // ─── ADMIN AUTH (Supabase) ────────────────────────────────────────────────
+        const SB = window.DrTroySupabase || {};
         let _adminUser   = null;
         let _adminAuthed = false;
 
@@ -2393,6 +2137,12 @@
             await loadUsers();
             await loadSupabaseRevenue();
 
+            // Load feature data
+            await refreshCourses();
+            await loadDiscountCodesFromDB();
+            await loadLicenseData();
+            await loadCampaignCourses();
+
         }
 
         // Update last update timestamp and session info
@@ -2406,7 +2156,8 @@
                 minute: '2-digit',
                 timeZoneName: 'short'
             });
-            document.getElementById('systemUpdate').textContent = now.toLocaleDateString();
+            const sysEl = document.getElementById('systemUpdate');
+            if (sysEl) sysEl.textContent = now.toLocaleDateString();
             
             // Update session info
             updateSessionInfo();
@@ -2784,7 +2535,7 @@
             } else if (tabName === 'licenses') {
                 loadLicenseData();
             } else if (tabName === 'discount-codes') {
-                updateDiscountCodeStats();
+                loadDiscountCodesFromDB();
             }
         }
 
@@ -3154,8 +2905,8 @@
                 const enrollments = enrollRes.data       || [];
                 const completions = completionsRes.data  || [];
 
-                // Total revenue
-                const revenue = enrollments.reduce((sum, e) => sum + (parseFloat(e.amount_paid) || 0), 0);
+                // Total revenue (amount_paid_cents → dollars)
+                const revenue = enrollments.reduce((sum, e) => sum + (parseInt(e.amount_paid_cents) || 0), 0) / 100;
 
                 // Update stat cards
                 const totalEl    = document.getElementById('totalUsers');
@@ -3176,7 +2927,7 @@
             if (!window.DrTroySupabase) return;
             const { data: enrollments } = await window.DrTroySupabase.getAllEnrollments();
             if (!enrollments) return;
-            const total = enrollments.reduce((sum, e) => sum + (parseFloat(e.amount_paid) || 0), 0);
+            const total = enrollments.reduce((sum, e) => sum + (parseInt(e.amount_paid_cents) || 0), 0) / 100;
             const el = document.getElementById('totalRevenue');
             if (el) el.textContent = '$' + total.toFixed(2);
         }
@@ -3223,7 +2974,7 @@
                     <td style="font-size:0.9rem;">${esc(u.email) || '—'}</td>
                     <td>${esc(u.profession) || '—'}</td>
                     <td>${esc(u.license_number) || '—'}</td>
-                    <td>${esc(u.state) || '—'}</td>
+                    <td>${esc(u.license_state) || '—'}</td>
                     <td>${roleBadge}${suspBadge}</td>
                     <td style="white-space:nowrap;">
                         <button class="btn-small" onclick="viewUser('${esc(u.id)}')">👁️ View</button>
@@ -3399,7 +3150,7 @@
             document.getElementById('udm-first-name').value  = user.first_name  || '';
             document.getElementById('udm-last-name').value   = user.last_name   || '';
             document.getElementById('udm-license').value     = user.license_number || '';
-            document.getElementById('udm-state').value       = user.state       || '';
+            document.getElementById('udm-state').value       = user.license_state || user.state || '';
             document.getElementById('udm-profession').value  = user.profession  || '';
 
             // Toggle Admin button
@@ -3417,12 +3168,18 @@
             statusEl.style.display = 'none';
             statusEl.textContent = '';
 
+            // License expiry
+            document.getElementById('udm-license-expiry').value = user.license_expiry_date || '';
+
             // Enrollments
             const { data: enrollments } = await window.DrTroySupabase.adminGetUserEnrollments(user.id);
             renderUserEnrollments(enrollments || []);
 
             // Course picker
             await buildEnrollPicker(user.id, enrollments || []);
+
+            // Certificates
+            await loadUserCertificates(user.id);
         }
 
         function renderUserEnrollments(enrollments) {
@@ -3480,7 +3237,7 @@
                 first_name:     document.getElementById('udm-first-name').value.trim(),
                 last_name:      document.getElementById('udm-last-name').value.trim(),
                 license_number: document.getElementById('udm-license').value.trim(),
-                state:          document.getElementById('udm-state').value.trim().toUpperCase(),
+                license_state:  document.getElementById('udm-state').value.trim().toUpperCase(),
                 profession:     document.getElementById('udm-profession').value,
             };
             showUDMStatus('Saving changes...', 'info');
@@ -3656,213 +3413,422 @@
             window.location.href = 'mailto:' + email;
         }
 
-        // Course Management Functions
-        function loadCourses() {
-            console.log('Loading course data...');
+        // ══════════════════════════════════════════════════════════════
+        // COURSE MANAGEMENT — Real CRUD
+        // ══════════════════════════════════════════════════════════════
+
+        let _allCourseData = [];
+
+        async function loadCourses() { await refreshCourses(); }
+
+        async function refreshCourses() {
+            const { data, error } = await SB.adminGetAllCourses();
+            if (error) { showAdminToast('Failed to load courses: ' + (error.message || error), 'error'); return; }
+            _allCourseData = data || [];
+            renderCourseList(_allCourseData);
+            // Update stats
+            document.getElementById('courseStatTotal').textContent = _allCourseData.length;
+            document.getElementById('courseStatActive').textContent = _allCourseData.filter(c => c.is_active).length;
+            document.getElementById('courseStatInactive').textContent = _allCourseData.filter(c => !c.is_active).length;
+            document.getElementById('courseStatCEU').textContent = _allCourseData.reduce((s, c) => s + parseFloat(c.ceu_hours || 0), 0);
         }
 
-        function exportCourseData() {
-            alert('📥 Course data export would be implemented here.');
+        function renderCourseList(courses) {
+            const container = document.getElementById('courseListContainer');
+            if (!courses.length) { container.innerHTML = '<p style="color:#6b7280;text-align:center;grid-column:1/-1;">No courses found.</p>'; return; }
+            container.innerHTML = courses.map(c => {
+                const price = (parseInt(c.price_cents || 0) / 100).toFixed(2);
+                const statusClass = c.is_active ? 'active' : 'draft';
+                const statusLabel = c.is_active ? 'Active' : 'Inactive';
+                return `<div class="course-card">
+                    <div class="course-header"><h3>${esc(c.title)}</h3><div class="course-status ${statusClass}">${statusLabel}</div></div>
+                    <div class="course-meta">
+                        <div>ID: ${esc(c.id)}</div>
+                        <div>CEU: ${c.ceu_hours} hrs · $${price}</div>
+                        <div>Professions: ${(c.professions || []).join(', ') || 'All'}</div>
+                    </div>
+                    <div class="course-actions">
+                        <button class="btn-small" onclick="editCourse('${esc(c.id)}')">✏️ Edit</button>
+                        <button class="btn-small ${c.is_active ? 'danger' : ''}" onclick="toggleCourseActive('${esc(c.id)}', ${!c.is_active})">${c.is_active ? '⏸️ Deactivate' : '🚀 Activate'}</button>
+                    </div>
+                </div>`;
+            }).join('');
         }
 
         function showAddCourseForm() {
-            alert('➕ Add course form would open here.');
+            document.getElementById('courseModalTitle').textContent = '➕ Add New Course';
+            document.getElementById('cf-id').value = '';
+            document.getElementById('cf-slug').value = '';
+            document.getElementById('cf-slug').disabled = false;
+            document.getElementById('cf-title').value = '';
+            document.getElementById('cf-description').value = '';
+            document.getElementById('cf-ceu').value = '';
+            document.getElementById('cf-price').value = '';
+            document.getElementById('cf-professions').value = 'PT,PTA,OT,COTA';
+            document.getElementById('cf-sort').value = '0';
+            document.getElementById('cf-active').checked = true;
+            document.getElementById('courseModalError').style.display = 'none';
+            document.getElementById('courseModalSuccess').style.display = 'none';
+            document.getElementById('courseModal').classList.add('active');
         }
 
         function editCourse(courseId) {
-            alert(`✏️ Editing course: ${courseId}`);
+            const c = _allCourseData.find(x => x.id === courseId);
+            if (!c) return;
+            document.getElementById('courseModalTitle').textContent = '✏️ Edit Course';
+            document.getElementById('cf-id').value = c.id;
+            document.getElementById('cf-slug').value = c.id;
+            document.getElementById('cf-slug').disabled = true;
+            document.getElementById('cf-title').value = c.title || '';
+            document.getElementById('cf-description').value = c.description || '';
+            document.getElementById('cf-ceu').value = c.ceu_hours || '';
+            document.getElementById('cf-price').value = c.price_cents || '';
+            document.getElementById('cf-professions').value = (c.professions || []).join(',');
+            document.getElementById('cf-sort').value = c.sort_order || 0;
+            document.getElementById('cf-active').checked = c.is_active;
+            document.getElementById('courseModalError').style.display = 'none';
+            document.getElementById('courseModalSuccess').style.display = 'none';
+            document.getElementById('courseModal').classList.add('active');
         }
 
-        function viewStats(courseId) {
-            alert(`📊 Viewing statistics for course: ${courseId}`);
-        }
+        function closeCourseModal() { document.getElementById('courseModal').classList.remove('active'); }
 
-        function manageCourse(courseId) {
-            alert(`⚙️ Managing course: ${courseId}`);
-        }
+        async function saveCourse() {
+            const existingId = document.getElementById('cf-id').value;
+            const slug = document.getElementById('cf-slug').value.trim();
+            const profStr = document.getElementById('cf-professions').value.trim();
+            const courseData = {
+                title: document.getElementById('cf-title').value.trim(),
+                description: document.getElementById('cf-description').value.trim(),
+                ceu_hours: parseFloat(document.getElementById('cf-ceu').value),
+                price_cents: parseInt(document.getElementById('cf-price').value),
+                professions: profStr ? profStr.split(',').map(s => s.trim()) : [],
+                sort_order: parseInt(document.getElementById('cf-sort').value) || 0,
+                is_active: document.getElementById('cf-active').checked,
+            };
 
-        function publishCourse(courseId) {
-            if (confirm(`Are you sure you want to publish course: ${courseId}?`)) {
-                alert(`🚀 Course ${courseId} has been published!`);
+            let result;
+            if (existingId) {
+                result = await SB.adminUpdateCourse(existingId, courseData);
+            } else {
+                courseData.id = slug;
+                result = await SB.adminCreateCourse(courseData);
+            }
+
+            if (result.error) {
+                const errEl = document.getElementById('courseModalError');
+                errEl.textContent = '❌ ' + (result.error.message || result.error);
+                errEl.style.display = 'block';
+            } else {
+                const sucEl = document.getElementById('courseModalSuccess');
+                sucEl.textContent = existingId ? '✅ Course updated!' : '✅ Course created!';
+                sucEl.style.display = 'block';
+                setTimeout(() => closeCourseModal(), 1500);
+                await refreshCourses();
             }
         }
 
-        function updateAllCourses() {
-            alert('🔄 Bulk course update would be implemented here.');
+        async function toggleCourseActive(courseId, makeActive) {
+            const verb = makeActive ? 'activate' : 'deactivate';
+            if (!confirm(`${verb.charAt(0).toUpperCase()+verb.slice(1)} this course?`)) return;
+            const { error } = await SB.adminToggleCourseActive(courseId, makeActive);
+            if (error) { showAdminToast('❌ ' + (error.message || error), 'error'); }
+            else { showAdminToast(`✅ Course ${makeActive ? 'activated' : 'deactivated'}!`, 'success'); await refreshCourses(); }
         }
 
-        function exportCourseContent() {
-            alert('📦 Course content export would be implemented here.');
-        }
+        // ══════════════════════════════════════════════════════════════
+        // EMAIL CAMPAIGNS — Real Resend integration
+        // ══════════════════════════════════════════════════════════════
 
-        function generateCertificates() {
-            alert('🏆 Certificate generation would be implemented here.');
-        }
-
-        function notifyIncompleteCourses() {
-            alert('📧 Notification system for incomplete courses would be implemented here.');
-        }
-
-        // Email System Functions
         function loadEmailData() {
+            // Ensure course dropdown is populated when switching to emails tab
+            loadCampaignCourses();
         }
 
-        function exportEmailData() {
-            alert('📥 Email data export would be implemented here.');
+        function getCampaignFilters() {
+            const filters = {};
+            const prof = document.getElementById('campaign-profession')?.value;
+            const st = document.getElementById('campaign-state')?.value?.trim();
+            const cid = document.getElementById('campaign-course')?.value;
+            if (prof) filters.profession = prof;
+            if (st) filters.state = st;
+            if (cid) filters.courseId = cid;
+            return filters;
         }
 
-        function showComposeEmail() {
-            alert('✉️ Email composer would open here.');
+        async function previewCampaignCount() {
+            const el = document.getElementById('campaign-count');
+            el.textContent = 'Counting…';
+            const result = await SB.adminSendCampaign('', '', getCampaignFilters(), true);
+            if (result.error) { el.textContent = '❌ ' + result.error; }
+            else { el.textContent = `📬 ${result.count} recipient(s) match these filters`; }
         }
 
-        function viewCampaign(campaignId) {
-            alert(`📊 Viewing campaign stats for: ${campaignId}`);
-        }
+        async function sendCampaignEmail() {
+            const subject = document.getElementById('campaign-subject').value.trim();
+            const body = document.getElementById('campaign-body').value.trim();
+            if (!subject || !body) { showAdminToast('Subject and body are required.', 'error'); return; }
+            if (!confirm('Send this campaign to all matching users?')) return;
 
-        function duplicateCampaign(campaignId) {
-            alert(`📋 Duplicating campaign: ${campaignId}`);
-        }
+            const btn = document.getElementById('campaign-send-btn');
+            btn.disabled = true; btn.textContent = '⏳ Sending…';
+            const resultEl = document.getElementById('campaign-result');
 
-        function stopCampaign(campaignId) {
-            if (confirm(`Are you sure you want to stop campaign: ${campaignId}?`)) {
-                alert(`⏹️ Campaign ${campaignId} has been stopped.`);
+            const htmlBody = body.includes('<') ? body : `<div style="font-family:sans-serif;max-width:600px;margin:0 auto;">${body.replace(/\n/g, '<br>')}</div>`;
+            const result = await SB.adminSendCampaign(subject, htmlBody, getCampaignFilters());
+
+            btn.disabled = false; btn.textContent = '🚀 Send Campaign';
+            resultEl.style.display = 'block';
+            if (result.error) {
+                resultEl.style.color = '#dc2626';
+                resultEl.textContent = '❌ ' + result.error;
+            } else {
+                resultEl.style.color = '#059669';
+                resultEl.textContent = `✅ Sent to ${result.sent} user(s)${result.failed ? `, ${result.failed} failed` : ''}`;
             }
         }
 
-        function editCampaign(campaignId) {
-            alert(`✏️ Editing campaign: ${campaignId}`);
-        }
-
-        function sendCampaign(campaignId) {
-            if (confirm(`Are you sure you want to send campaign: ${campaignId} now?`)) {
-                alert(`🚀 Campaign ${campaignId} has been sent!`);
+        async function loadCampaignCourses() {
+            const sel = document.getElementById('campaign-course');
+            if (!sel) return;
+            const { data } = await SB.adminGetAllCourses();
+            if (data) {
+                data.forEach(c => {
+                    const opt = document.createElement('option');
+                    opt.value = c.id;
+                    opt.textContent = c.title;
+                    sel.appendChild(opt);
+                });
             }
         }
 
-        function deleteCampaign(campaignId) {
-            if (confirm(`Are you sure you want to delete campaign: ${campaignId}?`)) {
-                alert(`🗑️ Campaign ${campaignId} has been deleted.`);
+        // ══════════════════════════════════════════════════════════════
+        // LICENSE TRACKING — Real data from Supabase
+        // ══════════════════════════════════════════════════════════════
+
+        async function loadLicenseData() {
+            const sb = _sbClient();
+            if (!sb) return;
+            // Get all profiles that have a license expiry set
+            const { data, error } = await sb.from('profiles')
+                .select('id, email, first_name, last_name, license_number, license_state, profession, license_expiry_date')
+                .not('license_expiry_date', 'is', null)
+                .order('license_expiry_date', { ascending: true });
+
+            if (error) { showAdminToast('Failed to load license data', 'error'); return; }
+            const users = data || [];
+            const today = new Date(); today.setHours(0,0,0,0);
+
+            let expired = 0, within30 = 0, within90 = 0;
+            users.forEach(u => {
+                const exp = new Date(u.license_expiry_date);
+                const days = Math.ceil((exp - today) / 86400000);
+                if (days < 0) expired++;
+                else if (days <= 30) within30++;
+                else if (days <= 90) within90++;
+            });
+
+            document.getElementById('licExpired').textContent = expired;
+            document.getElementById('licExpiring30').textContent = within30;
+            document.getElementById('licExpiring90').textContent = within90;
+            document.getElementById('licWithDate').textContent = users.length;
+
+            const tbody = document.getElementById('licenseTableBody');
+            if (!users.length) { tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;color:#6b7280;">No license expiry dates set yet. Set them from User Detail modals.</td></tr>'; return; }
+
+            tbody.innerHTML = users.map(u => {
+                const exp = new Date(u.license_expiry_date);
+                const days = Math.ceil((exp - today) / 86400000);
+                let urgClass = 'safe', urgLabel = days + ' days';
+                if (days < 0) { urgClass = 'urgent'; urgLabel = 'EXPIRED'; }
+                else if (days <= 30) { urgClass = 'urgent'; urgLabel = days + ' days'; }
+                else if (days <= 90) { urgClass = 'warning'; urgLabel = days + ' days'; }
+                const name = [u.first_name, u.last_name].filter(Boolean).join(' ') || '—';
+                return `<tr>
+                    <td>${esc(name)}</td>
+                    <td>${esc(u.email)}</td>
+                    <td>${esc(u.license_number || '—')}</td>
+                    <td>${esc(u.license_state || '—')}</td>
+                    <td>${esc(u.profession || '—')}</td>
+                    <td>${exp.toLocaleDateString()}</td>
+                    <td class="${urgClass}" style="font-weight:700;">${urgLabel}</td>
+                    <td><button class="btn-small" onclick="viewUser('${u.id}')">👁️ View</button></td>
+                </tr>`;
+            }).join('');
+        }
+
+        // ══════════════════════════════════════════════════════════════
+        // PASSWORD RESET — via Netlify function
+        // ══════════════════════════════════════════════════════════════
+
+        async function sendPasswordReset() {
+            if (!_currentViewedUser) return;
+            if (!confirm(`Send password reset email to ${_currentViewedUser.email}?`)) return;
+            showUDMStatus('Sending password reset…', 'info');
+            const result = await SB.adminResetPassword(_currentViewedUser.email);
+            if (result.error) { showUDMStatus('❌ ' + result.error, 'error'); }
+            else { showUDMStatus(`✅ Password reset email sent to ${_currentViewedUser.email}`, 'success'); }
+        }
+
+        // ══════════════════════════════════════════════════════════════
+        // LICENSE EXPIRY — save from user detail modal
+        // ══════════════════════════════════════════════════════════════
+
+        async function saveLicenseExpiry() {
+            if (!_currentViewedUser) return;
+            const dateVal = document.getElementById('udm-license-expiry').value;
+            if (!dateVal) { showUDMStatus('Please select a date.', 'error'); return; }
+            showUDMStatus('Saving…', 'info');
+            const { error } = await SB.adminUpdateLicenseExpiry(_currentViewedUser.id, dateVal);
+            if (error) { showUDMStatus('❌ ' + (error.message || error), 'error'); }
+            else { showUDMStatus('✅ License expiry saved!', 'success'); }
+        }
+
+        // ══════════════════════════════════════════════════════════════
+        // CERTIFICATE MANAGEMENT — in user detail modal
+        // ══════════════════════════════════════════════════════════════
+
+        async function loadUserCertificates(userId) {
+            const container = document.getElementById('udm-certificates');
+            container.innerHTML = '<p style="color:#6b7280;">Loading…</p>';
+
+            const [certRes, compRes] = await Promise.all([
+                SB.adminGetUserCertificates(userId),
+                SB.adminGetUserCompletions(userId)
+            ]);
+            const certs = certRes.data || [];
+            const completions = compRes.data || [];
+            const certCourseIds = new Set(certs.map(c => c.course_id));
+
+            let html = '';
+
+            // Existing certs
+            if (certs.length) {
+                html += '<h5 style="color:#059669;margin-bottom:.5rem;">Issued Certificates</h5>';
+                html += certs.map(c => `
+                    <div class="enrollment-row">
+                        <div>
+                            <strong>${esc(c.certificate_number)}</strong>
+                            <div style="font-size:.82rem;color:#6b7280;">${esc(c.course_id)} · Issued ${c.issued_at ? new Date(c.issued_at).toLocaleDateString() : '—'}${c.emailed_at ? ' · Emailed ✓' : ''}</div>
+                        </div>
+                        <button class="btn-small" onclick="reissueCertificate('${esc(c.user_id)}', '${esc(c.course_id)}')">🔄 Re-issue</button>
+                    </div>`).join('');
+            }
+
+            // Completions without certs
+            const uncertified = completions.filter(co => !certCourseIds.has(co.course_id));
+            if (uncertified.length) {
+                html += '<h5 style="color:#d69e2e;margin-top:1rem;margin-bottom:.5rem;">Completed — No Certificate Yet</h5>';
+                html += uncertified.map(co => `
+                    <div class="enrollment-row">
+                        <div>
+                            <strong>${esc(co.courses?.title || co.course_id)}</strong>
+                            <div style="font-size:.82rem;color:#6b7280;">Score: ${co.quiz_score || '—'} · Completed ${co.completed_at ? new Date(co.completed_at).toLocaleDateString() : '—'}</div>
+                        </div>
+                        <button class="btn-small" onclick="issueCertificateForUser('${esc(co.user_id)}', '${esc(co.course_id)}', '${esc(co.id)}')">🏆 Issue Certificate</button>
+                    </div>`).join('');
+            }
+
+            if (!html) html = '<p style="color:#6b7280;font-style:italic;">No completions or certificates.</p>';
+            container.innerHTML = html;
+        }
+
+        async function issueCertificateForUser(userId, courseId, completionId) {
+            if (!_currentViewedUser) return;
+            showUDMStatus('Issuing certificate…', 'info');
+            const course = _allCourseData.find(c => c.id === courseId);
+            const result = await SB.adminIssueCertificate({
+                userId, courseId, completionId,
+                userEmail: _currentViewedUser.email,
+                userName: [_currentViewedUser.first_name, _currentViewedUser.last_name].filter(Boolean).join(' '),
+                courseTitle: course?.title || courseId,
+                ceuHours: course?.ceu_hours || ''
+            });
+            if (result.error) { showUDMStatus('❌ ' + result.error, 'error'); }
+            else {
+                showUDMStatus(`✅ Certificate ${result.certNumber} issued!${result.emailSent ? ' Email sent.' : ''}`, 'success');
+                await loadUserCertificates(userId);
             }
         }
 
-        function sendRenewalReminders() {
-            alert('📧 Renewal reminders would be sent to eligible users.');
+        async function reissueCertificate(userId, courseId) {
+            if (!confirm('Re-issue this certificate? A new certificate number will be generated and emailed.')) return;
+            if (!_currentViewedUser) return;
+            showUDMStatus('Re-issuing certificate…', 'info');
+            const course = _allCourseData.find(c => c.id === courseId);
+            const result = await SB.adminIssueCertificate({
+                userId, courseId, reissue: true,
+                userEmail: _currentViewedUser.email,
+                userName: [_currentViewedUser.first_name, _currentViewedUser.last_name].filter(Boolean).join(' '),
+                courseTitle: course?.title || courseId,
+                ceuHours: course?.ceu_hours || ''
+            });
+            if (result.error) { showUDMStatus('❌ ' + result.error, 'error'); }
+            else {
+                showUDMStatus(`✅ Certificate re-issued: ${result.certNumber}${result.emailSent ? ' · Email sent.' : ''}`, 'success');
+                await loadUserCertificates(userId);
+            }
         }
 
-        function previewRenewalEmail() {
-            alert('👁️ Renewal email template preview would open here.');
+        // Discount Code Functions — DB-backed
+
+        let _allDiscountCodes = [];
+
+        async function loadDiscountCodesFromDB() {
+            const { data, error } = await SB.adminGetDiscountCodes();
+            if (error) { showAdminToast('Failed to load discount codes', 'error'); return; }
+            _allDiscountCodes = data || [];
+            renderDiscountCodesTable();
+            updateDiscountCodeStats();
         }
 
-        function testRenewalEmail() {
-            alert('🧪 Test renewal email would be sent to admin.');
-        }
-
-        function editTemplate(templateId) {
-            alert(`✏️ Editing email template: ${templateId}`);
-        }
-
-        function previewTemplate(templateId) {
-            alert(`👁️ Previewing template: ${templateId}`);
-        }
-
-        function viewEmail(emailId) {
-            alert(`👁️ Viewing email details: ${emailId}`);
-        }
-
-        function resendEmail(emailId) {
-            alert(`🔄 Resending email: ${emailId}`);
-        }
-
-        function updateEmail(emailId) {
-            alert(`✏️ Updating email: ${emailId}`);
-        }
-
-        // License Tracking Functions
-        function loadLicenseData() {
-            console.log('Loading license tracking data...');
-        }
-
-        function exportLicenseData() {
-            alert('📥 License data export would be implemented here.');
-        }
-
-        function sendBulkReminders() {
-            alert('📧 Bulk license reminders would be sent.');
-        }
-
-        function sendUrgentReminder(licenseId) {
-            alert(`⚠️ Urgent reminder sent for license: ${licenseId}`);
-        }
-
-        function sendReminder(licenseId) {
-            alert(`📧 Reminder sent for license: ${licenseId}`);
-        }
-
-        function viewLicenseDetails(licenseId) {
-            alert(`👁️ Viewing license details: ${licenseId}`);
-        }
-
-        function sendCriticalReminders() {
-            alert('⚠️ Critical license reminders would be sent to users with ≤30 days.');
-        }
-
-        function sendWarningReminders() {
-            alert('📧 Warning reminders would be sent to users with ≤90 days.');
-        }
-
-        function updateCCUProgress() {
-            alert('🔄 CCU progress would be updated for all users.');
-        }
-
-        function generateRenewalReport() {
-            alert('📊 Renewal report would be generated.');
-        }
-
-        // Discount Code Functions  
         function updateDiscountCodeStats() {
-            const totalEmployeeCodes = employeeCodes.length;
-            const totalMarketingCodes = marketingCodes.length;
-            const totalCodes = totalEmployeeCodes + totalMarketingCodes;
-            
-            const activeCodes = employeeCodes.filter(c => c.status === 'active').length + 
-                               marketingCodes.filter(c => c.status === 'active').length;
-            
-            const usedCodes = employeeCodes.filter(c => c.used).length + 
-                             marketingCodes.reduce((sum, c) => sum + (c.currentUses || 0), 0);
-            
-            let totalSavings = 0;
-            employeeCodes.forEach(code => {
-                if (code.used) {
-                    totalSavings += code.packagePrice;
-                }
-            });
-            marketingCodes.forEach(code => {
-                const uses = code.currentUses || 0;
-                if (code.discountType === 'percentage') {
-                    totalSavings += uses * 25;
-                } else if (code.discountType === 'fixed') {
-                    totalSavings += uses * code.discountValue;
-                }
-            });
-            
-            document.getElementById('totalCodes').textContent = totalCodes;
-            document.getElementById('activeCodes').textContent = activeCodes;
-            document.getElementById('usedCodes').textContent = usedCodes;
-            document.getElementById('totalSavings').textContent = `$${totalSavings.toLocaleString()}`;
+            const codes = _allDiscountCodes;
+            document.getElementById('totalCodes').textContent = codes.length;
+            document.getElementById('activeCodes').textContent = codes.filter(c => c.is_active).length;
+            document.getElementById('usedCodes').textContent = codes.reduce((s, c) => s + (c.current_uses || 0), 0);
+            const savings = codes.reduce((s, c) => s + (c.current_uses || 0) * (c.discount_value || 0), 0);
+            document.getElementById('totalSavings').textContent = '$' + savings.toLocaleString();
         }
 
-        function viewCode(codeId) {
-            alert(`👁️ Viewing code details: ${codeId}`);
+        function renderDiscountCodesTable() {
+            const tbody = document.getElementById('codesTableBody');
+            if (!_allDiscountCodes.length) { tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;color:#6b7280;">No discount codes yet.</td></tr>'; return; }
+            tbody.innerHTML = _allDiscountCodes.map(c => {
+                const discountLabel = c.discount_type === 'percentage' ? c.discount_value + '% Off' :
+                                      c.discount_type === 'free' ? '100% Free' : '$' + c.discount_value + ' Off';
+                const usage = (c.current_uses || 0) + '/' + (c.max_uses || '∞');
+                const statusBadge = c.is_active ? '<span class="status-badge active">Active</span>' : '<span class="status-badge inactive">Inactive</span>';
+                const window = (c.starts_at ? new Date(c.starts_at).toLocaleDateString() : '—') + ' → ' + (c.expires_at ? new Date(c.expires_at).toLocaleDateString() : '∞');
+                return `<tr>
+                    <td><strong>${esc(c.code)}</strong></td>
+                    <td>${esc(c.campaign_name || c.description || '—')}</td>
+                    <td>${discountLabel}</td>
+                    <td>${usage}</td>
+                    <td>${window}</td>
+                    <td>${c.new_customers_only ? '✓' : '—'}</td>
+                    <td>${statusBadge}</td>
+                    <td>
+                        <button class="btn-small" onclick="toggleDiscountCode('${c.id}', ${!c.is_active})">${c.is_active ? '❌ Deactivate' : '✅ Activate'}</button>
+                        <button class="btn-small danger" onclick="deleteDiscountCode('${c.id}')">🗑️</button>
+                    </td>
+                </tr>`;
+            }).join('');
         }
 
-        function editCode(codeId) {
-            alert(`✏️ Editing code: ${codeId}`);
+        async function toggleDiscountCode(codeId, makeActive) {
+            const { error } = await SB.adminUpdateDiscountCode(codeId, { is_active: makeActive });
+            if (error) { showAdminToast('❌ ' + (error.message || error), 'error'); return; }
+            showAdminToast(`✅ Code ${makeActive ? 'activated' : 'deactivated'}`, 'success');
+            await loadDiscountCodesFromDB();
         }
 
-        function deactivateCode(codeId) {
-            if (confirm(`Are you sure you want to deactivate code: ${codeId}?`)) {
-                alert(`❌ Code ${codeId} has been deactivated.`);
-            }
+        async function deleteDiscountCode(codeId) {
+            if (!confirm('Permanently delete this discount code?')) return;
+            const { error } = await SB.adminDeleteDiscountCode(codeId);
+            if (error) { showAdminToast('❌ ' + (error.message || error), 'error'); return; }
+            showAdminToast('✅ Code deleted', 'success');
+            await loadDiscountCodesFromDB();
         }
 
 
@@ -3930,25 +3896,29 @@
         // ── CREDITS ──────────────────────────────────────────────────────
         let creditTargetUserId = null;
 
+        function _sbClient() { return window.DrTroySupabase ? window.DrTroySupabase.getClient() : null; }
+
         async function lookupCreditUser() {
+            const sb = _sbClient(); if (!sb) return;
             const email = document.getElementById('creditUserEmail').value.trim();
             const resultEl = document.getElementById('creditUserResult');
             if (!email) return;
             resultEl.innerHTML = '<span style="color:#64748b;">Searching…</span>';
             creditTargetUserId = null;
             try {
-                const { data, error } = await supabase.from('profiles').select('id, first_name, last_name, email, profession').eq('email', email).single();
+                const { data, error } = await sb.from('profiles').select('id, first_name, last_name, email, profession').eq('email', email).single();
                 if (error || !data) { resultEl.innerHTML = '<span style="color:#dc2626;">User not found.</span>'; return; }
                 creditTargetUserId = data.id;
                 resultEl.innerHTML = `<span style="color:#059669;font-weight:600;">✓ Found: ${escapeHtml(data.first_name || '')} ${escapeHtml(data.last_name || '')} (${escapeHtml(data.profession || 'N/A')})</span>`;
                 // Also load their current balance
-                const { data: credits } = await supabase.from('account_credits').select('balance_cents').eq('user_id', data.id).single();
+                const { data: credits } = await sb.from('account_credits').select('balance_cents').eq('user_id', data.id).single();
                 const bal = credits ? (credits.balance_cents / 100).toFixed(2) : '0.00';
                 resultEl.innerHTML += ` — Current balance: <strong>$${bal}</strong>`;
             } catch(e) { resultEl.innerHTML = '<span style="color:#dc2626;">Error looking up user.</span>'; }
         }
 
         async function grantCredits() {
+            const sb = _sbClient(); if (!sb) return;
             const btn = document.getElementById('grantCreditsBtn');
             const feedback = document.getElementById('grantCreditsFeedback');
             const amountDollars = parseFloat(document.getElementById('creditAmount').value);
@@ -3963,8 +3933,8 @@
 
             try {
                 const amountCents = Math.round(amountDollars * 100);
-                const adminUser = supabase.auth ? (await supabase.auth.getUser()).data?.user : null;
-                const { data, error } = await supabase.rpc('grant_credits', {
+                const adminUser = sb.auth ? (await sb.auth.getUser()).data?.user : null;
+                const { data, error } = await sb.rpc('grant_credits', {
                     p_user_id:      creditTargetUserId,
                     p_amount_cents: amountCents,
                     p_type:         'admin_grant',
@@ -3985,20 +3955,21 @@
         }
 
         async function loadUserBalance() {
+            const sb = _sbClient(); if (!sb) return;
             const email = document.getElementById('balanceUserEmail').value.trim();
             if (!email) return;
             const display = document.getElementById('balanceDisplay');
             display.style.display = 'none';
             try {
-                const { data: profile } = await supabase.from('profiles').select('id, first_name, last_name, profession').eq('email', email).single();
+                const { data: profile } = await sb.from('profiles').select('id, first_name, last_name, profession').eq('email', email).single();
                 if (!profile) { alert('User not found.'); return; }
 
-                const { data: credits } = await supabase.from('account_credits').select('balance_cents').eq('user_id', profile.id).single();
+                const { data: credits } = await sb.from('account_credits').select('balance_cents').eq('user_id', profile.id).single();
                 const bal = credits ? (credits.balance_cents / 100).toFixed(2) : '0.00';
                 document.getElementById('balanceAmount').textContent = '$' + bal;
                 document.getElementById('balanceUserInfo').innerHTML = `<div style="font-weight:600;color:#1e293b;">${escapeHtml(profile.first_name||'')} ${escapeHtml(profile.last_name||'')}</div><div style="color:#64748b;font-size:.9rem;">${escapeHtml(email)} · ${escapeHtml(profile.profession||'')}</div>`;
 
-                const { data: txns } = await supabase.from('credit_transactions').select('*').eq('user_id', profile.id).order('created_at', {ascending: false}).limit(25);
+                const { data: txns } = await sb.from('credit_transactions').select('*').eq('user_id', profile.id).order('created_at', {ascending: false}).limit(25);
                 const typeLabels = { admin_grant: '🎁 Admin Grant', referral_earned: '👥 Referral', purchase_applied: '🛒 Applied to Purchase', adjustment: '⚙️ Adjustment' };
                 const list = document.getElementById('transactionList');
                 if (!txns || txns.length === 0) {
