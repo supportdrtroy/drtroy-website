@@ -1540,7 +1540,8 @@
 
   // ── Certificate ─────────────────────────────────────────────────
   function showCertificate() {
-    const cert = document.getElementById('certificateSection');
+    const cert = document.getElementById('certificateSection')
+        setStandardizedCompletion();;
     if (!cert) return;
 
     // Ask for name if not already stored
@@ -1635,6 +1636,28 @@
   });
 </script>
 
-<script src="../js/course-sync.js"></script>
+<script src="../js/course-sync.js">
+        function setStandardizedCompletion() {
+            try {
+                let accountData = localStorage.getItem('drtroyAccount');
+                if (accountData) {
+                    const account = JSON.parse(accountData);
+                    if (!account.courseProgress) account.courseProgress = {};
+                    if (!account.courseProgress['documentation-001']) account.courseProgress['documentation-001'] = {};
+                    account.courseProgress['documentation-001'].quizCompleted = true;
+                    account.courseProgress['documentation-001'].completed = true;
+                    account.courseProgress['documentation-001'].completedAt = new Date().toISOString();
+                    account.courseProgress['documentation-001'].lastAccessedAt = new Date().toISOString();
+                    localStorage.setItem('drtroyAccount', JSON.stringify(account));
+                    console.log('✅ Course completion recorded for documentation-001');
+                } else {
+                    console.log('⚠️ No account data found - completion flag not set');
+                }
+            } catch (error) {
+                console.error('Error setting completion flag:', error);
+            }
+        }
+
+    </script></script>
 </body>
 </html>

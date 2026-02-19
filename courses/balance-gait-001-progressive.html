@@ -831,6 +831,8 @@
                 updateProgress();
                 if (courseState.modulesCompleted.length === courseState.totalModules) {
                     document.getElementById('certificateSection').classList.add('visible');
+                    // Set completion flag for certificate validation
+                    setStandardizedCompletion();
                 }
             }
         }
@@ -859,6 +861,8 @@
                 if (courseState.modulesCompleted.length === courseState.totalModules) {
                     courseState.completionTime = new Date();
                     document.getElementById('certificateSection').classList.add('visible');
+                    // Set completion flag for certificate validation
+                    setStandardizedCompletion();
                     saveProgress();
                 }
             }

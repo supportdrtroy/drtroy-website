@@ -2091,6 +2091,7 @@
 
         function showCertificate(r) {
             document.getElementById('certificate-section').style.display = 'block';
+            setStandardizedCompletion();
             const d = new Date(r.completionDate).toLocaleDateString();
             document.getElementById('completion-date').textContent = d;
             document.getElementById('completion-date-display').textContent = d;
@@ -2155,6 +2156,28 @@
         function zoomImage(img) { const o = document.getElementById('imageZoomOverlay'), z = document.getElementById('zoomedImage'); z.src = img.src; o.classList.add('show'); document.body.style.overflow = 'hidden'; }
         function closeZoom() { document.getElementById('imageZoomOverlay').classList.remove('show'); document.body.style.overflow = 'auto'; }
     </script>
-<script src="../js/course-sync.js"></script>
+<script src="../js/course-sync.js">
+        function setStandardizedCompletion() {
+            try {
+                let accountData = localStorage.getItem('drtroyAccount');
+                if (accountData) {
+                    const account = JSON.parse(accountData);
+                    if (!account.courseProgress) account.courseProgress = {};
+                    if (!account.courseProgress['patient-education-001']) account.courseProgress['patient-education-001'] = {};
+                    account.courseProgress['patient-education-001'].quizCompleted = true;
+                    account.courseProgress['patient-education-001'].completed = true;
+                    account.courseProgress['patient-education-001'].completedAt = new Date().toISOString();
+                    account.courseProgress['patient-education-001'].lastAccessedAt = new Date().toISOString();
+                    localStorage.setItem('drtroyAccount', JSON.stringify(account));
+                    console.log('✅ Course completion recorded for patient-education-001');
+                } else {
+                    console.log('⚠️ No account data found - completion flag not set');
+                }
+            } catch (error) {
+                console.error('Error setting completion flag:', error);
+            }
+        }
+
+    </script></script>
 </body>
 </html>
