@@ -18,19 +18,24 @@
         element.innerHTML = clean;
     };
     
-    // Validate admin access
-    window.validateAdminAccess = async function() {
-        try {
-            const session = await window.DrTroySupabase?.getSession();
-            if (!session?.user) return false;
-            
-            const profile = await window.DrTroySupabase?.getProfile(session.user.id);
-            return profile?.is_admin === true;
-        } catch (e) {
-            console.error('Admin validation failed:', e);
-            return false;
+    // DrTroySecurity namespace
+    window.DrTroySecurity = {
+        validateAdminAccess: async function() {
+            try {
+                const session = await window.DrTroySupabase?.getSession();
+                if (!session?.user) return false;
+                
+                const { data: profile } = await window.DrTroySupabase?.getProfile(session.user.id);
+                return profile?.is_admin === true;
+            } catch (e) {
+                console.error('Admin validation failed:', e);
+                return false;
+            }
         }
     };
+    
+    // Also expose as window.validateAdminAccess for backward compatibility
+    window.validateAdminAccess = window.DrTroySecurity.validateAdminAccess;
     
     // Content Security Policy enforcement helper
     window.enforceCSP = function() {

@@ -21,6 +21,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Source+Sans+Pro:wght@300;400;500;600&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+    <script src="js/supabase-client.js"></script>
 
     <style>
         *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
@@ -632,16 +633,9 @@
 </div>
 
 <script>
-    const SUPABASE_URL      = 'https://pnqoxulxdmlmbywcpbyx.supabase.co';
-    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBucW94dWx4ZG1sbWJ5d2NwYnl4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzEzNjU3NTIsImV4cCI6MjA4Njk0MTc1Mn0.YEPrwIvINX_Q1AsbxyU0T5m5oxpV9M756yiSCzy6LTc';
-
-    let sb;
-    try {
-        sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
-            auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: true }
-        });
-    } catch(e) {
-        console.error('Supabase init failed:', e);
+    // Use the shared Supabase client from supabase-client.js
+    function getSupabaseClient() {
+        return window.DrTroySupabase?.getClient() || null;
     }
 
     // ─── Panel switcher ──────────────────────────────────────────────────────
@@ -683,8 +677,9 @@
     }
 
     // ─── Listen for PASSWORD_RECOVERY event ─────────────────────────────────
-    if (sb) {
-        sb.auth.onAuthStateChange((event) => {
+    const initClient = getSupabaseClient();
+    if (initClient) {
+        initClient.auth.onAuthStateChange((event) => {
             if (event === 'PASSWORD_RECOVERY') {
                 history.replaceState(null, '', window.location.pathname);
                 showPanel('reset');
@@ -767,6 +762,7 @@
             return;
         }
 
+        const sb = getSupabaseClient();
         if (!sb) {
             showAlert('loginAlert', 'Login service unavailable. Please refresh and try again.');
             return;
@@ -812,6 +808,12 @@
         // SECURITY: Validate admin access
         if (!(await window.DrTroySecurity?.validateAdminAccess())) {
             window.location.href = "/";
+            return;
+        }
+
+        const sb = getSupabaseClient();
+        if (!sb) {
+            showAlert('loginAlert', 'Service unavailable. Please refresh and try again.');
             return;
         }
 
@@ -872,6 +874,14 @@
         btn.disabled = true;
         btn.classList.add('loading');
 
+        const sb = getSupabaseClient();
+        if (!sb) {
+            showAlert('mfaAlert', 'Service unavailable. Please refresh and try again.');
+            btn.disabled = false;
+            btn.classList.remove('loading');
+            return;
+        }
+
         try {
             const { data, error } = await sb.auth.mfa.verify({
                 factorId: _mfaFactorId,
@@ -890,8 +900,10 @@
                 }
                 clearCodeInputs('mfaCodeInputs');
                 // Get a new challenge for retry
-                const { data: newChallenge } = await sb.auth.mfa.challenge({ factorId: _mfaFactorId });
-                if (newChallenge) _mfaChallengeId = newChallenge.id;
+                if (sb) {
+                    const { data: newChallenge } = await sb.auth.mfa.challenge({ factorId: _mfaFactorId });
+                    if (newChallenge) _mfaChallengeId = newChallenge.id;
+                }
                 btn.disabled = false;
                 btn.classList.remove('loading');
                 return;
@@ -923,6 +935,14 @@
         const btn = document.getElementById('mfaSetupVerifyBtn');
         btn.disabled = true;
         btn.classList.add('loading');
+
+        const sb = getSupabaseClient();
+        if (!sb) {
+            showAlert('mfaSetupAlert', 'Service unavailable. Please refresh and try again.');
+            btn.disabled = false;
+            btn.classList.remove('loading');
+            return;
+        }
 
         try {
             // Challenge the newly enrolled factor
@@ -991,6 +1011,12 @@
             return;
         }
 
+        const sb = getSupabaseClient();
+        if (!sb) {
+            showAlert('mfaAlert', 'Service unavailable. Please refresh and try again.');
+            return;
+        }
+
         try {
             const { data: { user } } = await sb.auth.getUser();
             if (!user) {
@@ -1047,7 +1073,8 @@
 
     // ─── Helpers ────────────────────────────────────────────────────────
     function mfaCancel() {
-        sb.auth.signOut();
+        const sb = getSupabaseClient();
+        if (sb) sb.auth.signOut();
         _mfaFactorId = null;
         _mfaChallengeId = null;
         _mfaEnrollData = null;
@@ -1075,6 +1102,9 @@
     }
 
     async function logMfaEvent(eventType) {
+        const sb = getSupabaseClient();
+        if (!sb) return;
+        
         try {
             const { data: { user } } = await sb.auth.getUser();
             if (!user) return;
@@ -1106,6 +1136,13 @@
         }
 
         setLoading('forgotBtn', true, 'forgotEmail');
+
+        const sb = getSupabaseClient();
+        if (!sb) {
+            showAlert('forgotAlert', 'Service unavailable. Please refresh and try again.');
+            setLoading('forgotBtn', false, 'forgotEmail');
+            return;
+        }
 
         const redirectTo = window.location.origin + window.location.pathname;
         const { error } = await sb.auth.resetPasswordForEmail(email, { redirectTo });
@@ -1141,6 +1178,12 @@
             return;
         }
 
+        const sb = getSupabaseClient();
+        if (!sb) {
+            showAlert('resetAlert', 'Service unavailable. Please refresh and try again.');
+            return;
+        }
+
         setLoading('resetBtn', true, 'newPassword', 'confirmPassword');
 
         const { error } = await sb.auth.updateUser({ password: newPw });
@@ -1158,7 +1201,8 @@
         document.getElementById('resetSuccess').textContent  = '✅ Password updated! Redirecting to sign in…';
         document.getElementById('resetSuccess').style.display = 'block';
         setTimeout(() => {
-            sb.auth.signOut();
+            const client = getSupabaseClient();
+            if (client) client.auth.signOut();
             showPanel('login');
         }, 2000);
     });
