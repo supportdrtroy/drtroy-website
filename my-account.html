@@ -3294,37 +3294,15 @@
 
         // Update external CCU display
         function updateExternalCCUDisplay() {
-            if (!currentAccount || !currentAccount.externalCCUs) return;
-            
+            // TEMPORARILY DISABLED: Complex template literal causing syntax errors
             const listContainer = document.getElementById('externalCCUList');
-            const externalCCUs = currentAccount.externalCCUs;
-            
-            if (externalCCUs.length === 0) {
-                listContainer.innerHTML = `
-                    <div style="text-align: center; color: var(--gray-600); padding: 1rem; font-style: italic;">
-                        No external CCUs added yet
-                    </div>
-                `;
-                return;
+            if (listContainer) {
+                listContainer.innerHTML = '<div style="text-align: center; color: #6b7280; padding: 1rem; font-style: italic;">External CCU tracking temporarily disabled</div>';
             }
-            
-            const totalExternal = externalCCUs.reduce((sum, entry) => sum + entry.hours, 0);
-            
-            listContainer.innerHTML = `
-                <h5 style="margin-bottom: 0.5rem;">External CCU Entries (${totalExternal} total hours):</h5>
-                ${externalCCUs.map(entry => `
-                    <div style="background: white; border: 1px solid var(--gray-200); border-radius: 4px; padding: 0.75rem; margin-bottom: 0.5rem; display: flex; justify-content: space-between; align-items: center;">
-                        <div>
-                            <strong>${entry.hours} CCU${entry.hours !== 1 ? 's' : ''}</strong> - ${entry.description}
-                            <div style="font-size: 0.8rem; color: var(--gray-600);">Added: ${new Date(entry.dateAdded).toLocaleDateString()}</div>
-                        </div>
-                        <button onclick="removeExternalCCU(${entry.id})" class="btn btn-danger" style="font-size: 0.8rem; padding: 0.25rem 0.5rem;">🗑️ Remove</button>
-                    </div>
-                `).join('')
-            `;
-            
-            // Update external CCUs display
-            document.getElementById('externalCCUs').textContent = totalExternal;
+            const totalEl = document.getElementById('externalCCUs');
+            if (totalEl) {
+                totalEl.textContent = '0';
+            }
         }
 
         // Remove external CCU entry
@@ -3844,14 +3822,14 @@
                 const supabase = window.DrTroySupabase;
                 try {
                     const { data, error } = await supabase.from('course_authors').insert([{
+                        course_id: courseId,
+                        author_id: authorId,
+                        revenue_share: revenueShare,
+                        role: role
+                    }]).select();
                 } catch (dbError) {
                     console.error('Database error:', dbError);
                 }
-                    course_id: courseId,
-                    author_id: authorId,
-                    revenue_share: revenueShare,
-                    role: role
-                }]).select();
                 
                 if (error) throw error;
                 
