@@ -1139,7 +1139,7 @@
                 }
             });
             
-            packageGrid.safeText(element, packagesHtml); // Changed from innerHTML for security
+            packageGrid.innerHTML = packagesHtml;
             
             // Populate courses
             const coursesGrid = document.getElementById('courses-grid');
@@ -1149,7 +1149,7 @@
                 coursesHtml += generateCourseCard(courseId, course);
             });
             
-            coursesGrid.safeText(element, coursesHtml); // Changed from innerHTML for security
+            coursesGrid.innerHTML = coursesHtml;
             
             console.log('✅ Course catalog populated');
         }
