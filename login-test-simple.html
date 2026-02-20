@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login Test</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+    <script src="js/supabase-client.js"></script>
+</head>
+<body>
+    <h2>Test Customer Login</h2>
+    <form id="testLoginForm">
+        <div>
+            <label>Email:</label>
+            <input type="email" id="testEmail" required>
+        </div>
+        <div>
+            <label>Password:</label>
+            <input type="password" id="testPassword" required>
+        </div>
+        <button type="submit">Test Login</button>
+    </form>
+    
+    <div id="testResult" style="margin-top: 1rem; padding: 1rem; border: 1px solid #ccc;"></div>
+    
+    <script>
+        document.getElementById('testLoginForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const email = document.getElementById('testEmail').value;
+            const password = document.getElementById('testPassword').value;
+            const result = document.getElementById('testResult');
+            
+            result.innerHTML = 'Testing login...';
+            
+            try {
+                if (!window.DrTroySupabase) {
+                    result.innerHTML = '<strong style="color: red;">ERROR:</strong> DrTroySupabase not available';
+                    return;
+                }
+                
+                const { data, error } = await window.DrTroySupabase.signIn(email, password);
+                
+                if (error) {
+                    result.innerHTML = `<strong style="color: red;">LOGIN ERROR:</strong> ${error.message}`;
+                } else {
+                    result.innerHTML = `<strong style="color: green;">SUCCESS:</strong> Logged in as ${data.user.email}`;
+                }
+                
+            } catch (err) {
+                result.innerHTML = `<strong style="color: red;">JAVASCRIPT ERROR:</strong> ${err.message}`;
+                console.error('Full error:', err);
+            }
+        });
+    </script>
+</body>
+</html>
