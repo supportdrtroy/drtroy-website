@@ -3320,7 +3320,7 @@
                         </div>
                         <button onclick="removeExternalCCU(${entry.id})" class="btn btn-danger" style="font-size: 0.8rem; padding: 0.25rem 0.5rem;">🗑️ Remove</button>
                     </div>
-                `)).join('')}
+                `).join('')}
             `;
             
             // Update external CCUs display
@@ -3975,7 +3975,7 @@
                             <span><strong>${name}</strong></span>
                             <span>${stats.sales} sales • $${stats.earnings.toFixed(2)}</span>
                         </div>
-                    `)).join('')}
+                    `).join('')}
                 </div>
                 
                 <h5>Individual Sales</h5>
@@ -4581,7 +4581,7 @@
                 
                 if (authors && authors.length > 0) {
                     authors.forEach(author => {
-                        select.innerHTML += escapeHtml(`<option value="${author.id}">${author.first_name} ${author.last_name} (${author.email})</option>`);
+                        select.innerHTML += `<option value="${author.id}">${author.first_name} ${author.last_name} (${author.email})</option>`;
                     });
                 }
                 
