@@ -1,3 +1,4 @@
+<!-- SECURITY: API keys should be loaded from environment variables -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -394,6 +395,7 @@
             .security-strip { grid-template-columns: 1fr; }
         }
     </style>
+    <script src="js/security.js"></script>
 </head>
 <body>
 
@@ -630,8 +632,8 @@
 </div>
 
 <script>
-    const SUPABASE_URL      = 'https://pnqoxulxdmlmbywcpbyx.supabase.co';
-    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBucW94dWx4ZG1sbWJ5d2NwYnl4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzEzNjU3NTIsImV4cCI6MjA4Njk0MTc1Mn0.YEPrwIvINX_Q1AsbxyU0T5m5oxpV9M756yiSCzy6LTc';
+    const SUPABASE_URL      = '${process.env.SUPABASE_KEY || 'YOUR_SUPABASE_KEY'}';
+    const SUPABASE_ANON_KEY = '${process.env.SUPABASE_KEY || 'YOUR_SUPABASE_KEY'}';
 
     const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
         auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: true }
@@ -816,6 +818,12 @@
 
     // ─── MFA Enrollment ─────────────────────────────────────────────────
     async function startMfaEnrollment() {
+        // SECURITY: Validate admin access
+        if (!(await window.DrTroySecurity?.validateAdminAccess())) {
+            window.location.href = "/";
+            return;
+        }
+
         try {
             const { data, error } = await sb.auth.mfa.enroll({
                 factorType: 'totp',

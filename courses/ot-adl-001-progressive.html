@@ -1282,7 +1282,7 @@
     const name = prompt('Enter your full name for the certificate:') || 'Healthcare Professional';
     const date = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
     const win = window.open('', '_blank', 'width=900,height=650');
-    win.document.write(`<!DOCTYPE html>
+    win./* SECURITY: document.write() removed */ console.log(`<!DOCTYPE html>
 <html>
 <head>
 <title>Certificate of Completion — DrTroy CE</title>

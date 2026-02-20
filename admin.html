@@ -1034,6 +1034,7 @@
             to   { opacity: 1; transform: translateX(0); }
         }
     </style>
+    <script src="js/security.js"></script>
 </head>
 <body>
     <div class="header">
@@ -2082,6 +2083,12 @@
         // ─── ENHANCED SECURITY CHECK ────────────────────────────────────────────
         // More comprehensive authentication verification
         (async function() {
+        // SECURITY: Validate admin access
+        if (!(await window.DrTroySecurity?.validateAdminAccess())) {
+            window.location.href = "/";
+            return;
+        }
+
             try {
                 // Check if Supabase is available
                 if (!window.DrTroySupabase) {
@@ -2419,7 +2426,7 @@
             // Add employee codes
             employeeCodes.forEach(code => {
                 const row = tableBody.insertRow();
-                row.innerHTML = `
+                row.innerHTML = escapeHtml(`
                     <td><strong>${code.code}</strong> <span class="code-badge employee">Employee</span></td>
                     <td>100% off ${code.packageType}</td>
                     <td>$${code.packagePrice}</td>
@@ -2428,7 +2435,7 @@
                     <td>${new Date(code.created).toLocaleDateString()}</td>
                     <td>
                         <button class="btn btn-secondary" onclick="viewCodeDetails('${code.code}', 'employee')">View</button>
-                        ${code.status === 'active' ? `<button class="btn btn-danger" onclick="deactivateCode('${code.code}', 'employee')">Deactivate</button>` : ''}
+                        ${code.status === 'active' ? `<button class="btn btn-danger" onclick="deactivateCode('${code.code}', 'employee')">Deactivate</button>`) : ''}
                     </td>
                 `;
             });
@@ -2441,7 +2448,7 @@
                 let usageDisplay = code.usageLimit === 'unlimited' ? `${code.currentUses}/∞` : 
                                  `${code.currentUses}/${code.maxUses}`;
                 
-                row.innerHTML = `
+                row.innerHTML = escapeHtml(`
                     <td><strong>${code.code}</strong> <span class="code-badge marketing">Marketing</span></td>
                     <td>${discountDisplay} off</td>
                     <td>Variable</td>
@@ -2450,7 +2457,7 @@
                     <td>${new Date(code.created).toLocaleDateString()}</td>
                     <td>
                         <button class="btn btn-secondary" onclick="viewCodeDetails('${code.code}', 'marketing')">View</button>
-                        ${code.status === 'active' ? `<button class="btn btn-danger" onclick="deactivateCode('${code.code}', 'marketing')">Deactivate</button>` : ''}
+                        ${code.status === 'active' ? `<button class="btn btn-danger" onclick="deactivateCode('${code.code}', 'marketing')">Deactivate</button>`) : ''}
                     </td>
                 `;
             });
@@ -3089,7 +3096,7 @@
                     ? ' <span class="badge-suspended">Suspended</span>'
                     : '';
                 const tr = document.createElement('tr');
-                tr.innerHTML = `
+                tr.innerHTML = escapeHtml(`
                     <td>${name}</td>
                     <td style="font-size:0.9rem;">${esc(u.email) || '—'}</td>
                     <td>${esc(u.profession) || '—'}</td>
@@ -3105,7 +3112,7 @@
                         </button>
                         ${!u.is_admin ? `<button class="btn-small danger"
                             onclick="deleteAdminUser('${esc(u.id)}', '${esc([u.first_name, u.last_name].filter(Boolean).join(' ') || u.email)}')"
-                            style="margin-left:4px;">🗑️ Delete</button>` : ''}
+                            style="margin-left:4px;">🗑️ Delete</button>`) : ''}
                     </td>`;
                 tbody.appendChild(tr);
             });
@@ -3850,7 +3857,7 @@
             }
 
             if (!html) html = '<p style="color:#6b7280;font-style:italic;">No completions or certificates.</p>';
-            container.innerHTML = html;
+            container.innerHTML = escapeHtml(html); // XSS protection applied
         }
 
         async function issueCertificateForUser(userId, courseId, completionId) {
@@ -4029,11 +4036,11 @@
                 const { data, error } = await sb.from('profiles').select('id, first_name, last_name, email, profession').eq('email', email).single();
                 if (error || !data) { resultEl.innerHTML = '<span style="color:#dc2626;">User not found.</span>'; return; }
                 creditTargetUserId = data.id;
-                resultEl.innerHTML = `<span style="color:#059669;font-weight:600;">✓ Found: ${escapeHtml(data.first_name || '')} ${escapeHtml(data.last_name || '')} (${escapeHtml(data.profession || 'N/A')})</span>`;
+                resultEl.innerHTML = escapeHtml(`<span style="color:#059669;font-weight:600;">✓ Found: ${escapeHtml(data.first_name || '')} ${escapeHtml(data.last_name || '')} (${escapeHtml(data.profession || 'N/A')})</span>`);
                 // Also load their current balance
                 const { data: credits } = await sb.from('account_credits').select('balance_cents').eq('user_id', data.id).single();
                 const bal = credits ? (credits.balance_cents / 100).toFixed(2) : '0.00';
-                resultEl.innerHTML += ` — Current balance: <strong>$${bal}</strong>`;
+                resultEl.innerHTML += escapeHtml(escapeHtml)(` — Current balance: <strong>$${bal}</strong>`);
             } catch(e) { resultEl.innerHTML = '<span style="color:#dc2626;">Error looking up user.</span>'; }
         }
 
@@ -4063,12 +4070,12 @@
                 });
                 if (error) throw error;
                 const newBal = (data.new_balance_cents / 100).toFixed(2);
-                feedback.innerHTML = `<span style="color:#059669;font-weight:600;">✓ $${amountDollars.toFixed(2)} credited. New balance: $${newBal}</span>`;
+                feedback.innerHTML = escapeHtml(`<span style="color:#059669;font-weight:600;">✓ $${amountDollars.toFixed(2)} credited. New balance: $${newBal}</span>`);
                 document.getElementById('creditAmount').value = '';
                 document.getElementById('creditDescription').value = '';
-                document.getElementById('creditUserResult').innerHTML = `<span style="color:#059669;font-weight:600;">✓ User found — New balance: <strong>$${newBal}</strong></span>`;
+                document.getElementById('creditUserResult').innerHTML = escapeHtml(`<span style="color:#059669;font-weight:600;">✓ User found — New balance: <strong>$${newBal}</strong></span>`);
             } catch(e) {
-                feedback.innerHTML = `<span style="color:#dc2626;">Error: ${e.message}</span>`;
+                feedback.innerHTML = escapeHtml(`<span style="color:#dc2626;">Error: ${e.message}</span>`);
             }
             btn.disabled = false;
             btn.textContent = 'Grant Credits →';
@@ -4087,7 +4094,7 @@
                 const { data: credits } = await sb.from('account_credits').select('balance_cents').eq('user_id', profile.id).single();
                 const bal = credits ? (credits.balance_cents / 100).toFixed(2) : '0.00';
                 document.getElementById('balanceAmount').textContent = '$' + bal;
-                document.getElementById('balanceUserInfo').innerHTML = `<div style="font-weight:600;color:#1e293b;">${escapeHtml(profile.first_name||'')} ${escapeHtml(profile.last_name||'')}</div><div style="color:#64748b;font-size:.9rem;">${escapeHtml(email)} · ${escapeHtml(profile.profession||'')}</div>`;
+                document.getElementById('balanceUserInfo').innerHTML = escapeHtml(`<div style="font-weight:600;color:#1e293b;">${escapeHtml(profile.first_name||'')} ${escapeHtml(profile.last_name||'')}</div><div style="color:#64748b;font-size:.9rem;">${escapeHtml(email)} · ${escapeHtml(profile.profession||'')}</div>`);
 
                 const { data: txns } = await sb.from('credit_transactions').select('*').eq('user_id', profile.id).order('created_at', {ascending: false}).limit(25);
                 const typeLabels = { admin_grant: '🎁 Admin Grant', referral_earned: '👥 Referral', purchase_applied: '🛒 Applied to Purchase', adjustment: '⚙️ Adjustment' };

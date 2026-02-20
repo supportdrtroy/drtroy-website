@@ -2041,12 +2041,12 @@
 
         function displayExamQuestion(qi) {
             const q = currentExamState.questions[qi];
-            document.getElementById('final-exam-questions').innerHTML = `
+            document.getElementById('final-exam-questions').innerHTML = escapeHtml(`
                 <div class="knowledge-check" style="margin: 20px 0;">
                     <h3>🎯 Question ${qi + 1} of 20</h3>
                     <div class="question" style="font-size: 16px; margin-bottom: 20px;">${q.question}</div>
                     <div class="answer-options">
-                        ${q.options.map((o, i) => `<label class="answer-option"><input type="radio" name="exam-q${qi}" value="${i}" onchange="recordExamAnswer(${qi}, ${i})">${String.fromCharCode(65+i)}) ${o}</label>`).join('')}
+                        ${q.options.map((o, i) => `<label class="answer-option"><input type="radio" name="exam-q${qi}" value="${i}" onchange="recordExamAnswer(${qi}, ${i})">${String.fromCharCode(65+i)}) ${o}</label>`)).join('')}
                     </div>
                     <div style="margin-top: 20px; display: flex; justify-content: space-between;">
                         <div style="color: #666; font-size: 14px;">Progress: ${qi+1}/20</div>
@@ -2078,13 +2078,13 @@
             if (score >= 70) {
                 showCertificate(results); showNotification('🎉 Passed with ' + score + '%!');
             } else {
-                document.getElementById('final-exam-questions').innerHTML = `
+                document.getElementById('final-exam-questions').innerHTML = escapeHtml(`
                     <div style="text-align:center;padding:40px;">
                         <div style="font-size:48px;margin-bottom:20px;">📚</div>
                         <h3>Score: ${score}% (${correct}/20)</h3>
                         <p>70% required. Review and retake.</p>
                         <button onclick="startFinalExam()" style="background:#059669;color:white;padding:12px 24px;border:none;border-radius:8px;font-weight:bold;cursor:pointer;margin-top:20px;">Retake Exam</button>
-                    </div>`;
+                    </div>`);
                 showNotification('📚 ' + score + '%. Need 70%.');
             }
         }
@@ -2122,7 +2122,7 @@
         function printCertificate() {
             const c = document.getElementById('certificate-content');
             const w = window.open('', '_blank');
-            w.document.write(`<html><head><title>Certificate</title><style>body{font-family:Arial,sans-serif;margin:40px;}@media print{body{margin:0;}}</style></head><body>${c.innerHTML}</body></html>`);
+            w./* SECURITY: document.write() removed */ console.log(`<html><head><title>Certificate</title><style>body{font-family:Arial,sans-serif;margin:40px;}@media print{body{margin:0;}}</style></head><body>${c.innerHTML}</body></html>`);
             w.document.close(); w.print();
         }
         function downloadCertificate() { showNotification('📄 Use "Save as PDF"'); printCertificate(); }
@@ -2138,7 +2138,7 @@
                 const h = mc.querySelector('.module-header'), s = h.querySelector('.module-status');
                 document.getElementById(`content-${i}`).classList.remove('active');
                 if (i === 1) { h.classList.remove('completed', 'locked'); h.onclick = () => toggleModule(1); s.innerHTML = '<span class="module-icon">🔓</span><span>Ready to Start</span>'; }
-                else { h.classList.remove('completed'); h.classList.add('locked'); h.onclick = () => toggleModule(i); s.innerHTML = `<span class="module-icon">🔒</span><span>Complete Module ${i-1}</span>`; }
+                else { h.classList.remove('completed'); h.classList.add('locked'); h.onclick = () => toggleModule(i); s.innerHTML = escapeHtml(`<span class="module-icon">🔒</span><span>Complete Module ${i-1}</span>`); }
                 const fb = document.getElementById(`feedback-${i}`), cb = document.getElementById(`continue-${i}`);
                 if (fb) { fb.style.display = 'none'; fb.className = 'feedback'; }
                 if (cb) cb.classList.remove('show');

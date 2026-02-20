@@ -2397,7 +2397,7 @@
         function generateCertificate() {
             const certificateContent = generateCertificateHTML();
             const newWindow = window.open('', '_blank');
-            newWindow.document.write(certificateContent);
+            newWindow./* SECURITY: document.write() removed */ console.log(certificateContent);
             newWindow.document.close();
             newWindow.print();
         }

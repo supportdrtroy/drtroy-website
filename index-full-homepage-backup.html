@@ -1053,7 +1053,7 @@
             
             // Update account form title to reflect selection
             const accountTitle = document.getElementById('account-title');
-            accountTitle.innerHTML = `Create Account to Get ${packageName}`;
+            accountTitle.innerHTML = escapeHtml(`Create Account to Get ${packageName}`);
             accountTitle.style.color = 'var(--accent-emerald)';
             
             // Add selection indicator to form
@@ -1093,10 +1093,10 @@
                 max-width: 350px;
                 text-align: center;
             `;
-            confirmation.innerHTML = `
+            confirmation.innerHTML = escapeHtml(`
                 <div style="margin-bottom: 0.5rem;">📦 ${packageName} Selected!</div>
                 <div style="font-size: 0.85rem; opacity: 0.9;">Create your free account below to get started</div>
-            `;
+            `);
             
             document.body.appendChild(confirmation);
             

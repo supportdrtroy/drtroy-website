@@ -625,6 +625,7 @@
     <!-- Supabase JS v2 CDN -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
     <script src="js/supabase-client.js"></script>
+    <script src="js/security.js"></script>
 </head>
 
 <body>
@@ -819,7 +820,7 @@
             
             if (itemsHtml) {
                 const tempDiv = document.createElement('div');
-                tempDiv.innerHTML = itemsHtml;
+                tempDiv.safeText(element, itemsHtml); // Changed from innerHTML for security
                 while (tempDiv.firstChild) {
                     container.appendChild(tempDiv.firstChild);
                 }

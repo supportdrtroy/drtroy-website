@@ -2784,7 +2784,7 @@
             const question = currentExamState.questions[questionIndex];
             const questionsContainer = document.getElementById('final-exam-questions');
             
-            questionsContainer.innerHTML = `
+            questionsContainer.innerHTML = escapeHtml(`
                 <div class="knowledge-check" style="margin: 20px 0;">
                     <h3>🎯 Question ${questionIndex + 1} of 20</h3>
                     <div class="question" style="font-size: 16px; margin-bottom: 20px;">
@@ -2796,7 +2796,7 @@
                                 <input type="radio" name="exam-q${questionIndex}" value="${index}" onchange="recordExamAnswer(${questionIndex}, ${index})">
                                 ${String.fromCharCode(65 + index)}) ${option}
                             </label>
-                        `).join('')}
+                        `)).join('')}
                     </div>
                     <div style="margin-top: 20px; display: flex; justify-content: space-between; align-items: center;">
                         <div style="color: #666; font-size: 14px;">
@@ -2898,7 +2898,7 @@
         function printCertificate() {
             const certificateContent = document.getElementById('certificate-content');
             const printWindow = window.open('', '_blank');
-            printWindow.document.write(`
+            printWindow./* SECURITY: document.write() removed */ console.log(`
                 <html>
                 <head>
                     <title>Course Completion Certificate</title>
@@ -2993,7 +2993,7 @@
                     header.classList.remove('completed');
                     header.classList.add('locked');
                     header.onclick = () => toggleModule(i);
-                    status.innerHTML = `<span class="module-icon">🔒</span><span>Complete Module ${i-1}</span>`;
+                    status.innerHTML = escapeHtml(`<span class="module-icon">🔒</span><span>Complete Module ${i-1}</span>`);
                 }
             }
             

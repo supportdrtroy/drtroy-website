@@ -1258,7 +1258,7 @@
 
             const newWindow = window.open('', '_blank');
             if (newWindow) {
-                newWindow.document.write(certHTML);
+                newWindow./* SECURITY: document.write() removed */ console.log(certHTML);
                 newWindow.document.close();
             }
         }

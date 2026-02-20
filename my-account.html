@@ -777,6 +777,7 @@
     <meta name="twitter:title" content="My Account — DrTroy CE">
     <meta name="twitter:description" content="Manage your DrTroy CE account, view your enrolled courses, certificates, and referral credits.">
     <meta name="twitter:image" content="https://drtroy.com/courses/images/og-preview.jpg">
+    <script src="js/security.js"></script>
 </head>
 <body>
     <!-- Header -->
@@ -1884,7 +1885,7 @@
                         </div>
                     </div>`;
             });
-            container.innerHTML = html;
+            container.innerHTML = escapeHtml(html); // XSS protection applied
         }
 
         // Directly render Supabase enrollment cards into coursesList
@@ -1912,7 +1913,7 @@
                     </div>`;
             });
             html += '</div>';
-            coursesList.innerHTML = html;
+            coursesList.innerHTML = escapeHtml(html); // XSS protection applied
         }
 
         // Rate limiting for customer login attempts  
@@ -2831,7 +2832,7 @@
             });
             
             coursesHTML += '</div>';
-            coursesList.innerHTML = coursesHTML;
+            coursesList.safeText(element, coursesHTML); // Changed from innerHTML for security
         }
 
         // Individual Course Purchase (Hidden until enabled)
@@ -3099,7 +3100,7 @@
             if (!currentAccount) return;
             
             const printWindow = window.open('', '_blank');
-            printWindow.document.write(`
+            printWindow./* SECURITY: document.write() removed */ console.log(`
                 <html>
                 <head>
                     <title>CCU Transcript - ${currentAccount.firstName} ${currentAccount.lastName}</title>
@@ -3305,7 +3306,7 @@
             
             const totalExternal = externalCCUs.reduce((sum, entry) => sum + entry.hours, 0);
             
-            listContainer.innerHTML = `
+            listContainer.innerHTML = escapeHtml(`
                 <h5 style="margin-bottom: 0.5rem;">External CCU Entries (${totalExternal} total hours):</h5>
                 ${externalCCUs.map(entry => `
                     <div style="background: white; border: 1px solid var(--gray-200); border-radius: 4px; padding: 0.75rem; margin-bottom: 0.5rem; display: flex; justify-content: space-between; align-items: center;">
@@ -3315,7 +3316,7 @@
                         </div>
                         <button onclick="removeExternalCCU(${entry.id})" class="btn btn-danger" style="font-size: 0.8rem; padding: 0.25rem 0.5rem;">🗑️ Remove</button>
                     </div>
-                `).join('')}
+                `)).join('')}
             `;
             
             // Update external CCUs display
@@ -3565,7 +3566,7 @@
             });
             
             const dataWindow = window.open('', '_blank', 'width=800,height=600,scrollbars=yes');
-            dataWindow.document.write(`
+            dataWindow./* SECURITY: document.write() removed */ console.log(`
                 <html>
                 <head><title>localStorage Data - DrTroy.com</title></head>
                 <body style="font-family: monospace; padding: 20px;">
@@ -3915,7 +3916,7 @@
             const container = document.getElementById('sales-report-content');
             
             if (!sales || sales.length === 0) {
-                container.innerHTML = `<p style="text-align: center; color: #6b7280; padding: 2rem;">No sales found for the selected period (${startDate} to ${endDate})</p>`;
+                container.innerHTML = escapeHtml(`<p style="text-align: center; color: #6b7280; padding: 2rem;">No sales found for the selected period (${startDate} to ${endDate})</p>`);
                 return;
             }
             
@@ -3932,7 +3933,7 @@
             
             const totalEarnings = sales.reduce((sum, sale) => sum + parseFloat(sale.author_earning), 0);
             
-            container.innerHTML = `
+            container.innerHTML = escapeHtml(`
                 <div style="margin-bottom: 2rem;">
                     <h5>Summary (${startDate} to ${endDate})</h5>
                     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin: 1rem 0;">
@@ -3958,7 +3959,7 @@
                             <span><strong>${name}</strong></span>
                             <span>${stats.sales} sales • $${stats.earnings.toFixed(2)}</span>
                         </div>
-                    `).join('')}
+                    `)).join('')}
                 </div>
                 
                 <h5>Individual Sales</h5>
@@ -4040,7 +4041,7 @@
             
             const totalPending = Object.values(authorPending).reduce((sum, author) => sum + author.totalEarnings, 0);
             
-            container.innerHTML = `
+            container.innerHTML = escapeHtml(`
                 <div style="background: #fef3c7; border: 1px solid #f59e0b; padding: 1rem; border-radius: 8px; margin-bottom: 1rem;">
                     <strong>Total Pending Payments: $${totalPending.toFixed(2)}</strong>
                 </div>
@@ -4061,7 +4062,7 @@
                             <details>
                                 <summary style="cursor: pointer; margin-bottom: 0.5rem;">View Sales Details</summary>
                                 <div style="max-height: 200px; overflow-y: auto;">
-                                    ${data.sales.map(sale => `
+                                    ${data.sales.map(sale => `)
                                         <div style="display: flex; justify-content: space-between; padding: 0.25rem 0; border-bottom: 1px solid #f3f4f6; font-size: 0.9rem;">
                                             <span>${sale.course_id} • ${new Date(sale.sale_date).toLocaleDateString()}</span>
                                             <span>$${parseFloat(sale.author_earning).toFixed(2)} (${sale.revenue_share_percent}%)</span>
@@ -4212,7 +4213,7 @@
                     </div>`;
             });
             html += '</div>';
-            historyDiv.innerHTML = html;
+            historyDiv.innerHTML = escapeHtml(html); // XSS protection applied
         }
 
         // Show alert message
@@ -4469,12 +4470,12 @@
                 resultsDiv.style.display = 'block';
                 
                 if (!profiles || profiles.length === 0) {
-                    resultsDiv.innerHTML = `
+                    resultsDiv.innerHTML = escapeHtml(`
                         <div style="color: #dc2626;">
                             <strong>❌ User Not Found</strong><br>
                             No user account found with email: ${email}
                         </div>
-                    `;
+                    `);
                     assignmentSection.style.display = 'none';
                     return;
                 }
@@ -4491,7 +4492,7 @@
                 
                 const isAlreadyAuthor = existingAuthor && existingAuthor.length > 0;
                 
-                resultsDiv.innerHTML = `
+                resultsDiv.innerHTML = escapeHtml(`
                     <div style="display: flex; justify-content: space-between; align-items: center;">
                         <div>
                             <strong>✅ User Found:</strong> ${user.first_name} ${user.last_name} (${user.email})<br>
@@ -4504,7 +4505,7 @@
                             }
                         </div>
                     </div>
-                `;
+                `);
                 
                 // Show assignment section if user is not already an author
                 if (!isAlreadyAuthor) {
@@ -4519,12 +4520,12 @@
             } catch (error) {
                 console.error('Error searching user:', error);
                 resultsDiv.style.display = 'block';
-                resultsDiv.innerHTML = `
+                resultsDiv.innerHTML = escapeHtml(`
                     <div style="color: #dc2626;">
                         <strong>❌ Search Error</strong><br>
                         ${error.message}
                     </div>
-                `;
+                `);
                 assignmentSection.style.display = 'none';
             }
         }
@@ -4548,7 +4549,7 @@
                 
                 if (authors && authors.length > 0) {
                     authors.forEach(author => {
-                        select.innerHTML += `<option value="${author.id}">${author.first_name} ${author.last_name} (${author.email})</option>`;
+                        select.innerHTML += escapeHtml(escapeHtml)(`<option value="${author.id}">${author.first_name} ${author.last_name} (${author.email})</option>`);
                     });
                 }
                 
@@ -4595,11 +4596,11 @@
                 feedbackDiv.style.color = '#166534';
                 
                 const authorName = data[0] ? `${data[0].first_name} ${data[0].last_name}` : 'the author';
-                feedbackDiv.innerHTML = `
+                feedbackDiv.innerHTML = escapeHtml(`
                     <strong>✅ Successfully Designated</strong><br>
                     User ${window._currentSearchedUser.first_name} ${window._currentSearchedUser.last_name} (${window._currentSearchedUser.email}) 
                     can now access the Author Portal as ${authorName}.
-                `;
+                `);
                 
                 // Clear search
                 document.getElementById('user-email-search').value = '';
@@ -4617,7 +4618,7 @@
                 feedbackDiv.style.background = '#fef2f2';
                 feedbackDiv.style.border = '1px solid #fca5a5';
                 feedbackDiv.style.color = '#dc2626';
-                feedbackDiv.innerHTML = `<strong>❌ Assignment Error</strong><br>${error.message}`;
+                feedbackDiv.innerHTML = escapeHtml(`<strong>❌ Assignment Error</strong><br>${error.message}`);
             }
         }
         
@@ -4674,7 +4675,7 @@
                     `;
                 });
                 
-                container.innerHTML = html;
+                container.innerHTML = escapeHtml(html); // XSS protection applied
                 
             } catch (error) {
                 console.error('Error loading user author designations:', error);

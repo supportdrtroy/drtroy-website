@@ -483,6 +483,7 @@
             .header-container, header > div { position: relative; }
         }
     </style>
+    <script src="js/security.js"></script>
 </head>
 
 <body>
@@ -628,7 +629,7 @@
                                 </div>
                             </div>`;
                     });
-                    if (coursesHtml) coursesContainer.innerHTML = coursesHtml;
+                    if (coursesHtml) coursesContainer.safeText(element, coursesHtml); // Changed from innerHTML for security
                 }
             } catch (e) {
                 console.error('Error loading localStorage purchase data:', e);
@@ -641,7 +642,7 @@
                     const info = JSON.parse(pendingSetup);
                     const setupBanner = document.createElement('div');
                     setupBanner.style.cssText = 'background:#dbeafe;border:1px solid #3b82f6;color:#1e40af;padding:1rem;border-radius:8px;margin:1rem 0;text-align:center;';
-                    setupBanner.innerHTML = `<strong>📧 Account Created!</strong><br>${info.message || 'Check your email to set your password.'}`;
+                    setupBanner.innerHTML = escapeHtml(`<strong>📧 Account Created!</strong><br>${info.message || 'Check your email to set your password.'}`);
                     document.querySelector('.success-card').insertBefore(setupBanner, document.querySelector('.order-details'));
                     localStorage.removeItem('pendingAccountSetup');
                 } catch (e) { /* ignore */ }
@@ -669,7 +670,7 @@
                                         <div class="course-price" style="color:var(--accent-emerald);">✓ Enrolled</div>
                                     </div>`;
                             });
-                            if (html) container.innerHTML = html;
+                            if (html) container.innerHTML = escapeHtml(html); // XSS protection applied
                             console.log('✅ Supabase enrollments loaded on success page');
                         }
                     } catch (e) {

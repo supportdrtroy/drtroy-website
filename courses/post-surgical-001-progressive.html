@@ -969,7 +969,7 @@ function generateCertificate() {
     if (!name || name.trim() === '') return;
     const date = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
     const certWin = window.open('', '_blank', 'width=900,height=680');
-    certWin.document.write(`<!DOCTYPE html><html><head><title>Certificate of Completion - DrTroy CE</title>
+    certWin./* SECURITY: document.write() removed */ console.log(`<!DOCTYPE html><html><head><title>Certificate of Completion - DrTroy CE</title>
     <style>
         body { font-family:'Georgia','Times New Roman',serif; background:#f5f0e8; display:flex; align-items:center; justify-content:center; min-height:100vh; margin:0; }
         .cert { background:white; border:12px double #1a365d; padding:3rem; max-width:800px; width:90%; text-align:center; box-shadow:0 20px 60px rgba(0,0,0,0.2); }

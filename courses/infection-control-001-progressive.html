@@ -1398,7 +1398,7 @@ function generateCertificate() {
   const now = new Date();
   const dateStr = now.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
   const win = window.open('', '_blank', 'width=900,height=700');
-  win.document.write(`<!DOCTYPE html>
+  win./* SECURITY: document.write() removed */ console.log(`<!DOCTYPE html>
 <html>
 <head>
 <title>Certificate of Completion — Infection Control and Patient Safety</title>

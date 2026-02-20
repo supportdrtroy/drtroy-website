@@ -609,7 +609,7 @@
                 `;
             });
 
-            document.getElementById('quizContainer').innerHTML = `
+            document.getElementById('quizContainer').innerHTML = escapeHtml(`
                 <div class="question">
                     <div class="question-number">Question ${index + 1}</div>
                     <div class="question-text">${question.question}</div>
@@ -617,7 +617,7 @@
                         ${optionsHTML}
                     </ul>
                 </div>
-            `;
+            `);
 
             updateProgress();
             updateNavigation();
@@ -709,11 +709,11 @@
 
             if (passed) {
                 resultMessage.className = 'result-message result-pass';
-                resultMessage.innerHTML = `
+                resultMessage.innerHTML = escapeHtml(`
                     <h3>Congratulations! You Passed!</h3>
                     <p>You answered ${correctAnswers} out of ${quizQuestions.length} questions correctly (${score}%).</p>
                     <p>You have successfully completed the knowledge check for PT Musculoskeletal Evaluation and Diagnosis.</p>
-                `;
+                `);
 
                 nextSteps.innerHTML = `
                     <a href="pt-msk-001-certificate.html?from=quiz" class="btn btn-primary" style="margin-right: 10px;">Generate Certificate</a>
@@ -721,11 +721,11 @@
                 `;
             } else {
                 resultMessage.className = 'result-message result-fail';
-                resultMessage.innerHTML = `
+                resultMessage.innerHTML = escapeHtml(`
                     <h3>Not Quite There Yet</h3>
                     <p>You answered ${correctAnswers} out of ${quizQuestions.length} questions correctly (${score}%).</p>
                     <p>You need 70% or higher to pass. Review your answers below, then try again.</p>
-                `;
+                `);
 
                 nextSteps.innerHTML = `
                     <button class="btn btn-primary" onclick="location.reload()" style="margin-right: 10px;">Retake Quiz</button>
@@ -807,7 +807,7 @@
                 `;
             });
 
-            questionReview.innerHTML = reviewHTML;
+            questionReview.innerHTML = escapeHtml(reviewHTML); // XSS protection applied
             questionReview.classList.remove('hidden');
         }
     </script>

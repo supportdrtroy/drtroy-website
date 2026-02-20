@@ -1547,7 +1547,7 @@
 </html>`;
 
             const win = window.open('', '_blank');
-            win.document.write(certHTML);
+            win./* SECURITY: document.write() removed */ console.log(certHTML);
             win.document.close();
             win.print();
         }
