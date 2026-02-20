@@ -683,13 +683,14 @@
     }
 
     // ─── Listen for PASSWORD_RECOVERY event ─────────────────────────────────
-    sb.auth.onAuthStateChange((event) => {
-        if (event === 'PASSWORD_RECOVERY') {
-            // Clear the hash so a page refresh doesn't re-trigger recovery mode
-            history.replaceState(null, '', window.location.pathname);
-            showPanel('reset');
-        }
-    });
+    if (sb) {
+        sb.auth.onAuthStateChange((event) => {
+            if (event === 'PASSWORD_RECOVERY') {
+                history.replaceState(null, '', window.location.pathname);
+                showPanel('reset');
+            }
+        });
+    }
 
     // ─── MFA state ─────────────────────────────────────────────────────────
     let _mfaFactorId = null;
