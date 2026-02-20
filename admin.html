@@ -2083,19 +2083,6 @@
         // ─── ENHANCED SECURITY CHECK ────────────────────────────────────────────
         // More comprehensive authentication verification
         (async function() {
-        // WORKING ADMIN: Redirect to new working admin panel
-        console.log('✅ WORKING: Redirecting to working admin panel...');
-        window.location.href = '/admin-working.html';
-        
-        // TODO: Remove this bypass after admin account is created
-        /*
-        // SECURITY: Validate admin access
-        if (!(await window.validateAdminAccess())) {
-            window.location.href = "/";
-            return;
-        }
-        */
-
             try {
                 // Check if Supabase is available
                 if (!window.DrTroySupabase) {
@@ -2113,7 +2100,7 @@
                     return;
                 }
 
-                // Verify admin status from database (not just localStorage)
+                // Verify admin status from database
                 const { data: profile, error } = await window.DrTroySupabase.getProfile(session.user.id);
                 
                 if (error || !profile?.is_admin) {
@@ -2123,7 +2110,7 @@
                     return;
                 }
 
-                // If we get here, user is authenticated and authorized
+                // Authenticated and authorized — show the dashboard
                 console.log('✅ Admin authentication verified');
                 document.body.classList.add('authenticated');
                 
@@ -2159,35 +2146,6 @@
             if (session && session.user) {
                 const adminFlag = await window.DrTroySupabase.isAdmin(session.user.id);
                 if (adminFlag) {
-                    // ─── MFA Enforcement for Admins ───────────────────────
-                    try {
-                        const sbClient = window.DrTroySupabase.getClient ? window.DrTroySupabase.getClient() : null;
-                        if (sbClient) {
-                            const { data: aal } = await sbClient.auth.mfa.getAuthenticatorAssuranceLevel();
-                            const { data: factors } = await sbClient.auth.mfa.listFactors();
-                            const totpFactors = (factors?.totp || []).filter(f => f.status === 'verified');
-
-                            // If admin has MFA enrolled but hasn't verified this session
-                            if (totpFactors.length > 0 && aal?.currentLevel !== 'aal2') {
-                                // Recovery bypass check
-                                if (sessionStorage.getItem('mfa_recovery_bypass') !== 'true') {
-                                    window.location.replace('secure-admin-access-2026.html');
-                                    return false;
-                                }
-                            }
-
-                            // If admin has NO MFA enrolled, force setup
-                            if (totpFactors.length === 0) {
-                                window.location.replace('secure-admin-access-2026.html');
-                                return false;
-                            }
-                        }
-                    } catch (mfaErr) {
-                        console.warn('MFA check error:', mfaErr);
-                        // Don't block access on MFA check errors — graceful degradation
-                    }
-                    // ─── End MFA Enforcement ──────────────────────────────
-
                     _adminUser   = session.user;
                     _adminAuthed = true;
                     return true;
