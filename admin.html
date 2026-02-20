@@ -2563,7 +2563,7 @@
         }
 
         // Tab switching functions
-        function switchMainTab(tabName) {
+        function switchMainTab(tabName, skipHashUpdate = false) {
             console.log(`🔄 Switching to tab: ${tabName}`);
             
             // Update tab buttons - find the correct button by onclick attribute
@@ -2588,12 +2588,22 @@
                 console.warn(`❌ Could not find content for tab: ${tabName}`);
             }
             
-            // Save current tab to localStorage AND URL hash
+            // Save current tab to localStorage
             localStorage.setItem('currentAdminTab', tabName);
-            window.location.hash = tabName;
+            
+            // Update URL hash only if not called from hash change event
+            if (!skipHashUpdate) {
+                window.location.hash = tabName;
+            }
+            
             console.log(`💾 Saved tab: ${tabName}`);
             
             // Load data when switching to specific tabs
+            loadTabData(tabName);
+        }
+        
+        // Load data for specific tabs
+        function loadTabData(tabName) {
             if (tabName === 'dashboard') {
                 updateDashboard();
             } else if (tabName === 'users') {
@@ -2606,6 +2616,8 @@
                 loadLicenseData();
             } else if (tabName === 'discount-codes') {
                 loadDiscountCodesFromDB();
+            } else if (tabName === 'waitlist') {
+                loadWaitlist();
             }
         }
 
@@ -2626,46 +2638,10 @@
                 }
             }
             
-            console.log(`🔄 Restoring tab: ${targetTab}`);
+            console.log(`🔄 Restoring tab on page load: ${targetTab}`);
             
-            // Always clear all active states first
-            document.querySelectorAll('.main-tab').forEach(tab => tab.classList.remove('active'));
-            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
-            
-            // Activate the correct tab
-            const tabButton = document.querySelector(`[onclick*="switchMainTab('${targetTab}')"]`);
-            const tabContent = document.getElementById(targetTab);
-            
-            if (tabButton && tabContent) {
-                tabButton.classList.add('active');
-                tabContent.classList.add('active');
-                
-                // Update localStorage to match
-                localStorage.setItem('currentAdminTab', targetTab);
-                
-                // Load data for the active tab
-                if (targetTab === 'dashboard') {
-                    updateDashboard();
-                } else if (targetTab === 'users') {
-                    loadUsers();
-                } else if (targetTab === 'courses') {
-                    loadCourses();
-                } else if (targetTab === 'emails') {
-                    loadEmailData();
-                } else if (targetTab === 'licenses') {
-                    loadLicenseData();
-                } else if (targetTab === 'discount-codes') {
-                    updateDiscountCodeStats();
-                }
-                
-                console.log(`✅ Restored tab: ${targetTab}`);
-            } else {
-                // Fallback: activate dashboard
-                document.querySelector(`[onclick="switchMainTab('dashboard')"]`).classList.add('active');
-                document.getElementById('dashboard').classList.add('active');
-                updateDashboard();
-                console.log('⚠️ Fallback to dashboard');
-            }
+            // Use the regular switchMainTab function with hash update
+            switchMainTab(targetTab, false);
         }
 
         function switchSubTab(tabName) {
@@ -4121,8 +4097,12 @@
 
         // Handle browser back/forward navigation
         window.addEventListener('hashchange', function() {
-            console.log('🔄 Hash changed, restoring tab');
-            restoreSavedTab();
+            const hashTab = window.location.hash.replace('#', '');
+            if (hashTab && ['dashboard', 'users', 'courses', 'emails', 'licenses', 'discount-codes', 'credits', 'waitlist'].includes(hashTab)) {
+                console.log('🔄 Hash changed to:', hashTab);
+                switchMainTab(hashTab, true); // Skip hash update to avoid loop
+                loadTabData(hashTab);
+            }
         });
 
         // Initialize when page loads
