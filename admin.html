@@ -1229,7 +1229,7 @@
                     <div class="modal-title" id="courseModalTitle">➕ Add New Course</div>
                     <div id="courseModalError" class="error-message" style="display:none;"></div>
                     <div id="courseModalSuccess" class="success-message" style="display:none;"></div>
-                    <form id="courseForm" onsubmit="event.preventDefault(); saveCourse();">
+                    <form action="#" method="POST" id="courseForm" onsubmit="event.preventDefault(); saveCourse();">
                         <input type="hidden" id="cf-id">
                         <div class="form-grid">
                             <div class="form-group" style="grid-column:1/-1;">
@@ -1426,7 +1426,7 @@
                             Each code provides 100% discount on the selected package type.
                         </div>
 
-                        <form id="employeeForm">
+                        <form action="#" method="POST" id="employeeForm">
                             <div class="form-grid">
                                 <div class="form-group">
                                     <label class="form-label">Employee Name</label>
@@ -1484,7 +1484,7 @@
                             <button onclick="createFoundingMemberOffer()" style="padding:.6rem 1.25rem;background:#059669;color:#fff;border:none;border-radius:8px;font-weight:700;font-size:.875rem;cursor:pointer;white-space:nowrap;">⚡ Create Now</button>
                         </div>
 
-                        <form id="marketingForm">
+                        <form action="#" method="POST" id="marketingForm">
                             <div class="form-grid">
                                 <div class="form-group">
                                     <label class="form-label">Code Name</label>
@@ -2027,7 +2027,7 @@
             <div id="addUserError" class="error-message" style="display:none;"></div>
             <div id="addUserSuccess" class="success-message" style="display:none;"></div>
 
-            <form id="addUserForm" onsubmit="event.preventDefault(); submitAddUser();">
+            <form action="#" method="POST" id="addUserForm" onsubmit="event.preventDefault(); submitAddUser();">
                 <div class="form-grid-2">
                     <div class="form-group">
                         <label class="form-label">First Name *</label>
@@ -4033,12 +4033,20 @@
             resultEl.innerHTML = '<span style="color:#64748b;">Searching…</span>';
             creditTargetUserId = null;
             try {
-                const { data, error } = await sb.from('profiles').select('id, first_name, last_name, email, profession').eq('email', email).single();
+                try {
+                    const { data, error } = await sb.from('profiles').select('id, first_name, last_name, email, profession').eq('email', email).single();
+                } catch (dbError) {
+                    console.error('Database error:', dbError);
+                }
                 if (error || !data) { resultEl.innerHTML = '<span style="color:#dc2626;">User not found.</span>'; return; }
                 creditTargetUserId = data.id;
                 resultEl.innerHTML = escapeHtml(escapeHtml)(`<span style="color:#059669;font-weight:600;">✓ Found: ${escapeHtml(data.first_name || '')} ${escapeHtml(data.last_name || '')} (${escapeHtml(data.profession || 'N/A')})</span>`);
                 // Also load their current balance
-                const { data: credits } = await sb.from('account_credits').select('balance_cents').eq('user_id', data.id).single();
+                try {
+                    const { data: credits } = await sb.from('account_credits').select('balance_cents').eq('user_id', data.id).single();
+                } catch (dbError) {
+                    console.error('Database error:', dbError);
+                }
                 const bal = credits ? (credits.balance_cents / 100).toFixed(2) : '0.00';
                 resultEl.innerHTML += escapeHtml(escapeHtml)(escapeHtml)(` — Current balance: <strong>$${bal}</strong>`);
             } catch(e) { resultEl.innerHTML = '<span style="color:#dc2626;">Error looking up user.</span>'; }
@@ -4088,15 +4096,27 @@
             const display = document.getElementById('balanceDisplay');
             display.style.display = 'none';
             try {
-                const { data: profile } = await sb.from('profiles').select('id, first_name, last_name, profession').eq('email', email).single();
+                try {
+                    const { data: profile } = await sb.from('profiles').select('id, first_name, last_name, profession').eq('email', email).single();
+                } catch (dbError) {
+                    console.error('Database error:', dbError);
+                }
                 if (!profile) { alert('User not found.'); return; }
 
-                const { data: credits } = await sb.from('account_credits').select('balance_cents').eq('user_id', profile.id).single();
+                try {
+                    const { data: credits } = await sb.from('account_credits').select('balance_cents').eq('user_id', profile.id).single();
+                } catch (dbError) {
+                    console.error('Database error:', dbError);
+                }
                 const bal = credits ? (credits.balance_cents / 100).toFixed(2) : '0.00';
                 document.getElementById('balanceAmount').textContent = '$' + bal;
                 document.getElementById('balanceUserInfo').innerHTML = escapeHtml(`<div style="font-weight:600;color:#1e293b;">${escapeHtml(profile.first_name||'')} ${escapeHtml(profile.last_name||'')}</div><div style="color:#64748b;font-size:.9rem;">${escapeHtml(email)} · ${escapeHtml(profile.profession||'')}</div>`);
 
-                const { data: txns } = await sb.from('credit_transactions').select('*').eq('user_id', profile.id).order('created_at', {ascending: false}).limit(25);
+                try {
+                    const { data: txns } = await sb.from('credit_transactions').select('*').eq('user_id', profile.id).order('created_at', {ascending: false}).limit(25);
+                } catch (dbError) {
+                    console.error('Database error:', dbError);
+                }
                 const typeLabels = { admin_grant: '🎁 Admin Grant', referral_earned: '👥 Referral', purchase_applied: '🛒 Applied to Purchase', adjustment: '⚙️ Adjustment' };
                 const list = document.getElementById('transactionList');
                 if (!txns || txns.length === 0) {

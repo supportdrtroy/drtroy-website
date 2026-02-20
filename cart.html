@@ -1045,6 +1045,8 @@
         
         // Initialize page
         document.addEventListener('DOMContentLoaded', function() {
+        // Load cart from localStorage
+        if (window.cart) window.cart.loadCart();
             console.log('🚀 Cart page initializing...');
             
             // Ensure cart system is ready

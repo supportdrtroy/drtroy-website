@@ -413,7 +413,7 @@
     <div id="panelLogin" class="panel active">
         <div id="loginAlert"   class="alert alert-error"></div>
 
-        <form id="loginForm" novalidate>
+        <form action="#" method="POST" id="loginForm" novalidate>
             <div class="form-group">
                 <label for="loginEmail">Email Address</label>
                 <div class="input-wrap">
@@ -456,7 +456,7 @@
 
         <!-- default: email entry -->
         <div id="forgotEntry">
-            <form id="forgotForm" novalidate>
+            <form action="#" method="POST" id="forgotForm" novalidate>
                 <div class="form-group">
                     <label for="forgotEmail">Email Address</label>
                     <div class="input-wrap">
@@ -492,7 +492,7 @@
         <div id="resetAlert" class="alert alert-error"></div>
         <div id="resetSuccess" class="alert alert-success"></div>
 
-        <form id="resetForm" novalidate>
+        <form action="#" method="POST" id="resetForm" novalidate>
             <div class="form-group">
                 <label for="newPassword">New Password</label>
                 <div class="input-wrap">
@@ -628,7 +628,7 @@
 </div><!-- /card -->
 
 <div class="page-footer">
-    <p>&copy; 2026 DrTroy.com &nbsp;·&nbsp; <a href="index.html">Return to website</a></p>
+    <p>&copy; 2026 DrTroy.com &nbsp;·&nbsp; <a href="home-preview.html">Return to website</a></p>
 </div>
 
 <script>
@@ -960,7 +960,11 @@
             // Store recovery codes (hashed) in profiles
             const { data: { user } } = await sb.auth.getUser();
             if (user) {
-                await sb.from('profiles').update({
+                try {
+                    await sb.from('profiles').update({
+                } catch (dbError) {
+                    console.error('Database error:', dbError);
+                }
                     mfa_enabled: true,
                     mfa_enabled_at: new Date().toISOString(),
                     recovery_codes: _recoveryCodes.map(c => btoa(c)) // simple encoding
@@ -1023,7 +1027,11 @@
             // Remove used code
             const updatedCodes = [...profile.recovery_codes];
             updatedCodes.splice(idx, 1);
-            await sb.from('profiles').update({ recovery_codes: updatedCodes }).eq('id', user.id);
+            try {
+                await sb.from('profiles').update({ recovery_codes: updatedCodes }).eq('id', user.id);
+            } catch (dbError) {
+                console.error('Database error:', dbError);
+            }
 
             await logMfaEvent('recovery_code_used');
 
@@ -1079,7 +1087,11 @@
         try {
             const { data: { user } } = await sb.auth.getUser();
             if (!user) return;
-            await sb.from('mfa_audit_log').insert({
+            try {
+                await sb.from('mfa_audit_log').insert({
+            } catch (dbError) {
+                console.error('Database error:', dbError);
+            }
                 user_id: user.id,
                 event_type: eventType,
                 ip_address: null, // Would need server-side for real IP
