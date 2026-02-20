@@ -10,7 +10,7 @@
     const CONFIG = {
         maxRequestsPerMinute: 10,
         blockDuration: 300000, // 5 minutes
-        sensitivePages: ['/course-catalog.html', '/courses/', '/admin.html', '/checkout.html'],
+        sensitivePages: ['/course-catalog.html', '/courses/', '/checkout.html'],
         blockedUserAgents: [
             'bot', 'crawler', 'spider', 'scraper', 'ahrefs', 'semrush', 
             'moz', 'screaming frog', 'wget', 'curl', 'python', 'scrapy'
