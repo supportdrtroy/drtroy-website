@@ -2512,7 +2512,7 @@
                 tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:#94a3b8;padding:2rem;">No signups yet.</td></tr>';
                 return;
             }
-            tbody.innerHTML = escapeHtml(data).map((r, i) => {
+            tbody.innerHTML = data.map((r, i) => {
                 const firstName = r.first_name || '';
                 const lastName  = r.last_name  || '';
                 const fullName  = [firstName, lastName].filter(Boolean).join(' ') || '—';
@@ -3272,7 +3272,7 @@
                 container.innerHTML = '<p style="color:#6b7280;font-style:italic;">No enrollments yet.</p>';
                 return;
             }
-            container.innerHTML = escapeHtml(enrollments).map(e => {
+            container.innerHTML = enrollments.map(e => {
                 const title    = esc(e.courses?.title || 'Unknown Course');
                 const hours    = esc(String(e.courses?.ceu_hours || 0));
                 const date     = e.purchased_at ? new Date(e.purchased_at).toLocaleDateString() : '—';
@@ -3520,7 +3520,7 @@
         function renderCourseList(courses) {
             const container = document.getElementById('courseListContainer');
             if (!courses.length) { container.innerHTML = '<p style="color:#6b7280;text-align:center;grid-column:1/-1;">No courses found.</p>'; return; }
-            container.innerHTML = escapeHtml(courses).map(c => {
+            container.innerHTML = courses.map(c => {
                 const price = (parseInt(c.price_cents || 0) / 100).toFixed(2);
                 const statusClass = c.is_active ? 'active' : 'draft';
                 const statusLabel = c.is_active ? 'Active' : 'Inactive';
@@ -3720,7 +3720,7 @@
             const tbody = document.getElementById('licenseTableBody');
             if (!users.length) { tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;color:#6b7280;">No license expiry dates set yet. Set them from User Detail modals.</td></tr>'; return; }
 
-            tbody.innerHTML = escapeHtml(users).map(u => {
+            tbody.innerHTML = users.map(u => {
                 const exp = new Date(u.license_expiry_date);
                 const days = Math.ceil((exp - today) / 86400000);
                 let urgClass = 'safe', urgLabel = days + ' days';
@@ -3878,7 +3878,7 @@
         function renderDiscountCodesTable() {
             const tbody = document.getElementById('codesTableBody');
             if (!_allDiscountCodes.length) { tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;color:#6b7280;">No discount codes yet.</td></tr>'; return; }
-            tbody.innerHTML = escapeHtml(_allDiscountCodes).map(c => {
+            tbody.innerHTML = _allDiscountCodes.map(c => {
                 const discountLabel = c.discount_type === 'percentage' ? c.discount_value + '% Off' :
                                       c.discount_type === 'free' ? '100% Free' : '$' + c.discount_value + ' Off';
                 const usage = (c.current_uses || 0) + '/' + (c.max_uses || '∞');
@@ -4079,7 +4079,7 @@
                 if (!txns || txns.length === 0) {
                     list.innerHTML = '<p style="color:#64748b;font-size:.9rem;text-align:center;padding:1rem;">No transactions yet.</p>';
                 } else {
-                    list.innerHTML = escapeHtml(txns).map(t => `
+                    list.innerHTML = txns.map(t => `
                         <div style="display:flex;justify-content:space-between;align-items:center;padding:.875rem 1rem;border-bottom:1px solid #f1f5f9;font-size:.9rem;">
                             <div>
                                 <div style="font-weight:600;color:#1e293b;">${typeLabels[t.type] || t.type}</div>
