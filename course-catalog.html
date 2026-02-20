@@ -1158,30 +1158,35 @@
         document.addEventListener('DOMContentLoaded', function() {
             console.log('🚀 Course catalog initializing...');
             
-            // Ensure cart system is ready
-            if (!window.drtroyCart) {
-                console.error('❌ Cart system not available');
-                return;
-            }
-            
-            console.log('✅ Cart system ready');
-            
-            // Populate the page
+            // Always populate the page first, regardless of cart system
             populatePage();
             
-            // Update cart icon
-            window.updateCartIcon();
-            
-            // Listen for cart changes
-            try {
-                window.drtroyCart.addListener(function() {
-                    console.log('🔔 Cart changed, updating icon');
-                    window.updateCartIcon();
-                });
-                console.log('✅ Cart change listener added');
-            } catch (error) {
-                console.error('❌ Error adding cart listener:', error);
-            }
+            // Then try to initialize cart system (non-blocking)
+            setTimeout(function() {
+                if (window.drtroyCart) {
+                    console.log('✅ Cart system ready');
+                    
+                    // Update cart icon
+                    if (window.updateCartIcon) {
+                        window.updateCartIcon();
+                    }
+                    
+                    // Listen for cart changes
+                    try {
+                        window.drtroyCart.addListener(function() {
+                            console.log('🔔 Cart changed, updating icon');
+                            if (window.updateCartIcon) {
+                                window.updateCartIcon();
+                            }
+                        });
+                        console.log('✅ Cart change listener added');
+                    } catch (error) {
+                        console.error('❌ Error adding cart listener:', error);
+                    }
+                } else {
+                    console.warn('⚠️ Cart system not available, continuing without cart functionality');
+                }
+            }, 100); // Small delay to let cart.js load
         });
     </script>
 
