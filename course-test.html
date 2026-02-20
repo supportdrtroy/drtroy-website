@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Course Catalog Test</title>
+</head>
+<body>
+    <h1>Course Catalog Debug Test</h1>
+    <div id="debug-info"></div>
+    <div id="packages-test"></div>
+    <div id="courses-test"></div>
+    
+    <script>
+        // Simplified course data for testing
+        const SIMPLE_COURSES = {
+            'pt-msk-001': {
+                title: 'PT Musculoskeletal Evaluation and Diagnosis',
+                credits: 3,
+                status: 'available'
+            },
+            'ot-adl-001': {
+                title: 'OT Evaluation and Assessment of ADLs', 
+                credits: 3,
+                status: 'available'
+            },
+            'core-mobility-001': {
+                title: 'Comprehensive Mobility and Fall Prevention',
+                credits: 3, 
+                status: 'available'
+            }
+        };
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            const debugDiv = document.getElementById('debug-info');
+            const coursesDiv = document.getElementById('courses-test');
+            
+            debugDiv.innerHTML = '<p>JavaScript is working!</p><p>Found ' + Object.keys(SIMPLE_COURSES).length + ' courses</p>';
+            
+            let html = '<h2>Test Courses:</h2>';
+            Object.entries(SIMPLE_COURSES).forEach(([id, course]) => {
+                html += '<div style="border:1px solid #ccc; padding:10px; margin:10px;">';
+                html += '<h3>' + course.title + '</h3>';
+                html += '<p>Credits: ' + course.credits + '</p>';
+                html += '<p>Status: ' + course.status + '</p>';
+                html += '</div>';
+            });
+            
+            coursesDiv.innerHTML = html;
+        });
+    </script>
+</body>
+</html>
