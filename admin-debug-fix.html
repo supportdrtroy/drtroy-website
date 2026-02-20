@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DrTroy Admin Debug - Fix User Management Issue</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+    <script src="js/supabase-client.js"></script>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 2rem; line-height: 1.6; }
+        .test { background: #f0f0f0; padding: 1rem; margin: 1rem 0; border-radius: 4px; }
+        .success { background: #d4edda; color: #155724; }
+        .error { background: #f8d7da; color: #721c24; }
+        .info { background: #d1ecf1; color: #0c5460; }
+        .warning { background: #fff3cd; color: #856404; }
+        button { background: #007bff; color: white; border: none; padding: 0.5rem 1rem; margin: 0.5rem; cursor: pointer; border-radius: 4px; }
+        button:hover { background: #0056b3; }
+    </style>
+</head>
+<body>
+    <h1>🔧 DrTroy Admin - User Management Debug & Fix</h1>
+    <div id="results"></div>
+    
+    <div style="margin: 2rem 0;">
+        <button onclick="runFullDiagnostic()">🔍 Run Full Diagnostic</button>
+        <button onclick="testUserLoad()">👥 Test User Loading</button>
+        <button onclick="checkAuth()">🔐 Check Authentication</button>
+        <button onclick="testDirectQuery()">📊 Test Direct Database Query</button>
+    </div>
+    
+    <script>
+        function log(message, type = 'info') {
+            const results = document.getElementById('results');
+            const div = document.createElement('div');
+            div.className = `test ${type}`;
+            div.innerHTML = message;
+            results.appendChild(div);
+            console.log(message);
+        }
+        
+        async function runFullDiagnostic() {
+            document.getElementById('results').innerHTML = '';
+            log('🔍 Starting comprehensive diagnostic...', 'info');
+            
+            // Test 1: Check if Supabase is loaded
+            if (typeof window.supabase === 'undefined') {
+                log('❌ Supabase CDN not loaded', 'error');
+                return;
+            }
+            log('✅ Supabase CDN loaded', 'success');
+            
+            // Test 2: Check if DrTroySupabase client is initialized
+            if (!window.DrTroySupabase) {
+                log('❌ DrTroySupabase client not initialized', 'error');
+                return;
+            }
+            log('✅ DrTroySupabase client initialized', 'success');
+            
+            // Test 3: Get raw Supabase client
+            const client = window.DrTroySupabase.getClient();
+            if (!client) {
+                log('❌ Could not get Supabase client instance', 'error');
+                return;
+            }
+            log('✅ Supabase client instance available', 'success');
+            
+            // Test 4: Check current session
+            try {
+                const session = await window.DrTroySupabase.getSession();
+                if (session && session.user) {
+                    log(`✅ User authenticated: ${session.user.email}`, 'success');
+                    log(`📊 User ID: ${session.user.id}`, 'info');
+                } else {
+                    log('⚠️ No authenticated session found', 'warning');
+                    log('💡 This might be why admin functions are failing', 'info');
+                }
+            } catch (error) {
+                log(`❌ Session check failed: ${error.message}`, 'error');
+            }
+            
+            // Test 5: Test getAllUsers function
+            await testUserLoad();
+            
+            // Test 6: Test direct database query
+            await testDirectQuery();
+            
+            log('🎯 Diagnostic complete!', 'success');
+        }
+        
+        async function testUserLoad() {
+            log('👥 Testing getAllUsers function...', 'info');
+            
+            try {
+                if (!window.DrTroySupabase.getAllUsers) {
+                    log('❌ getAllUsers function not found', 'error');
+                    return;
+                }
+                
+                const { data, error } = await window.DrTroySupabase.getAllUsers();
+                
+                if (error) {
+                    log(`❌ getAllUsers failed: ${error.message}`, 'error');
+                    log('🔍 This is likely the source of your "Failed to fetch" error', 'warning');
+                } else if (!data) {
+                    log('❌ getAllUsers returned no data', 'error');
+                } else {
+                    log(`✅ getAllUsers succeeded - returned ${data.length} users`, 'success');
+                    if (data.length === 0) {
+                        log('ℹ️ Database is empty (no users registered yet)', 'info');
+                    } else {
+                        log(`📊 Sample user: ${data[0].email || 'No email'}`, 'info');
+                    }
+                }
+            } catch (error) {
+                log(`❌ getAllUsers threw exception: ${error.message}`, 'error');
+                log('🔍 This is definitely the source of your "Failed to fetch" error', 'warning');
+            }
+        }
+        
+        async function checkAuth() {
+            log('🔐 Checking authentication status...', 'info');
+            
+            try {
+                const client = window.DrTroySupabase.getClient();
+                const { data: { session } } = await client.auth.getSession();
+                
+                if (session) {
+                    log(`✅ Authenticated as: ${session.user.email}`, 'success');
+                    log(`🕒 Session expires: ${new Date(session.expires_at * 1000).toLocaleString()}`, 'info');
+                    
+                    // Check if user is admin
+                    try {
+                        const { data: profile } = await client.from('profiles').select('is_admin, role').eq('id', session.user.id).single();
+                        if (profile) {
+                            log(`👤 Admin status: ${profile.is_admin ? 'YES' : 'NO'}`, profile.is_admin ? 'success' : 'warning');
+                            log(`🎭 Role: ${profile.role || 'unknown'}`, 'info');
+                        }
+                    } catch (profileError) {
+                        log(`⚠️ Could not check admin status: ${profileError.message}`, 'warning');
+                    }
+                } else {
+                    log('❌ Not authenticated - this is the problem!', 'error');
+                    log('💡 You need to log in through the secure admin access page first', 'info');
+                }
+            } catch (error) {
+                log(`❌ Auth check failed: ${error.message}`, 'error');
+            }
+        }
+        
+        async function testDirectQuery() {
+            log('📊 Testing direct database query...', 'info');
+            
+            try {
+                const client = window.DrTroySupabase.getClient();
+                const { data, error } = await client.from('profiles').select('id, email, first_name, last_name, created_at').limit(5);
+                
+                if (error) {
+                    log(`❌ Direct query failed: ${error.message}`, 'error');
+                    
+                    if (error.message.includes('permission denied') || error.message.includes('RLS')) {
+                        log('🔒 This looks like a Row Level Security (RLS) issue', 'warning');
+                        log('💡 The admin user may not have proper permissions to read the profiles table', 'info');
+                    }
+                } else {
+                    log(`✅ Direct query succeeded - ${data.length} records found`, 'success');
+                    if (data.length > 0) {
+                        log(`📄 Sample record: ${JSON.stringify(data[0], null, 2)}`, 'info');
+                    }
+                }
+            } catch (error) {
+                log(`❌ Direct query threw exception: ${error.message}`, 'error');
+            }
+        }
+        
+        // Auto-run diagnostic on page load
+        window.addEventListener('load', () => {
+            setTimeout(runFullDiagnostic, 1000);
+        });
+    </script>
+</body>
+</html>
