@@ -18,10 +18,6 @@
     <meta http-equiv="X-Frame-Options" content="DENY">
     <meta http-equiv="X-XSS-Protection" content="1; mode=block">
 
-    <!-- Security: Bot Protection & Security Monitoring -->
-    <script src="js/bot-protection.js"></script>
-    <script src="js/security-monitor.js"></script>
-    
     <!-- Supabase JS v2 CDN -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
     <!-- DrTroy Supabase client -->
@@ -50,15 +46,10 @@
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
             background: var(--gray-100);
             min-height: 100vh;
-            /* Hide all content until authentication verified */
-            opacity: 0;
-            pointer-events: none;
         }
 
         body.authenticated {
-            opacity: 1;
-            pointer-events: auto;
-            transition: opacity 0.3s ease;
+            /* authenticated class still applied but opacity already 1 */
         }
 
         .header {
