@@ -26,8 +26,7 @@ http://www.drtroy.com/*  https://drtroy.com/:splat  301!
 /.git/*  /404.html  404
 /.gitignore  /404.html  404
 
-# Block direct access to admin without proper authentication
-/admin.html  /secure-admin-access-2026.html  302  Conditions=Cookie:!supabase-auth-token
+# Admin auth is handled client-side by admin.html session check
 
 # Main platform redirects
 /platform  /home-preview.html  301

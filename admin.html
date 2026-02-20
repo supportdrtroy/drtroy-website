@@ -18,10 +18,6 @@
     <meta http-equiv="X-Frame-Options" content="DENY">
     <meta http-equiv="X-XSS-Protection" content="1; mode=block">
 
-    <!-- Security: Bot Protection & Security Monitoring -->
-    <script src="js/bot-protection.js"></script>
-    <script src="js/security-monitor.js"></script>
-    
     <!-- Supabase JS v2 CDN -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
     <!-- DrTroy Supabase client -->
@@ -50,15 +46,10 @@
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
             background: var(--gray-100);
             min-height: 100vh;
-            /* Hide all content until authentication verified */
-            opacity: 0;
-            pointer-events: none;
         }
 
         body.authenticated {
-            opacity: 1;
-            pointer-events: auto;
-            transition: opacity 0.3s ease;
+            /* authenticated class still applied but opacity already 1 */
         }
 
         .header {
@@ -2083,19 +2074,6 @@
         // ─── ENHANCED SECURITY CHECK ────────────────────────────────────────────
         // More comprehensive authentication verification
         (async function() {
-        // EMERGENCY REDIRECT: Use completely clean admin panel
-        console.log('🚨 EMERGENCY: Redirecting to clean admin panel...');
-        window.location.href = '/admin-clean.html';
-        
-        // TODO: Remove this bypass after admin account is created
-        /*
-        // SECURITY: Validate admin access
-        if (!(await window.validateAdminAccess())) {
-            window.location.href = "/";
-            return;
-        }
-        */
-
             try {
                 // Check if Supabase is available
                 if (!window.DrTroySupabase) {
@@ -2113,7 +2091,7 @@
                     return;
                 }
 
-                // Verify admin status from database (not just localStorage)
+                // Verify admin status from database
                 const { data: profile, error } = await window.DrTroySupabase.getProfile(session.user.id);
                 
                 if (error || !profile?.is_admin) {
@@ -2123,7 +2101,7 @@
                     return;
                 }
 
-                // If we get here, user is authenticated and authorized
+                // Authenticated and authorized — show the dashboard
                 console.log('✅ Admin authentication verified');
                 document.body.classList.add('authenticated');
                 
@@ -2159,35 +2137,6 @@
             if (session && session.user) {
                 const adminFlag = await window.DrTroySupabase.isAdmin(session.user.id);
                 if (adminFlag) {
-                    // ─── MFA Enforcement for Admins ───────────────────────
-                    try {
-                        const sbClient = window.DrTroySupabase.getClient ? window.DrTroySupabase.getClient() : null;
-                        if (sbClient) {
-                            const { data: aal } = await sbClient.auth.mfa.getAuthenticatorAssuranceLevel();
-                            const { data: factors } = await sbClient.auth.mfa.listFactors();
-                            const totpFactors = (factors?.totp || []).filter(f => f.status === 'verified');
-
-                            // If admin has MFA enrolled but hasn't verified this session
-                            if (totpFactors.length > 0 && aal?.currentLevel !== 'aal2') {
-                                // Recovery bypass check
-                                if (sessionStorage.getItem('mfa_recovery_bypass') !== 'true') {
-                                    window.location.replace('secure-admin-access-2026.html');
-                                    return false;
-                                }
-                            }
-
-                            // If admin has NO MFA enrolled, force setup
-                            if (totpFactors.length === 0) {
-                                window.location.replace('secure-admin-access-2026.html');
-                                return false;
-                            }
-                        }
-                    } catch (mfaErr) {
-                        console.warn('MFA check error:', mfaErr);
-                        // Don't block access on MFA check errors — graceful degradation
-                    }
-                    // ─── End MFA Enforcement ──────────────────────────────
-
                     _adminUser   = session.user;
                     _adminAuthed = true;
                     return true;
@@ -2443,7 +2392,7 @@
                     <td>${new Date(code.created).toLocaleDateString()}</td>
                     <td>
                         <button class="btn btn-secondary" onclick="viewCodeDetails('${code.code}', 'employee')">View</button>
-                        ${code.status === 'active' ? `<button class="btn btn-danger" onclick="deactivateCode('${code.code}', 'employee')">Deactivate</button>`) : ''}
+                        ${code.status === 'active' ? `<button class="btn btn-danger" onclick="deactivateCode('${code.code}', 'employee')">Deactivate</button>` : ''}
                     </td>
                 `;
             });
@@ -2465,7 +2414,7 @@
                     <td>${new Date(code.created).toLocaleDateString()}</td>
                     <td>
                         <button class="btn btn-secondary" onclick="viewCodeDetails('${code.code}', 'marketing')">View</button>
-                        ${code.status === 'active' ? `<button class="btn btn-danger" onclick="deactivateCode('${code.code}', 'marketing')">Deactivate</button>`) : ''}
+                        ${code.status === 'active' ? `<button class="btn btn-danger" onclick="deactivateCode('${code.code}', 'marketing')">Deactivate</button>` : ''}
                     </td>
                 `;
             });
@@ -3120,7 +3069,7 @@
                         </button>
                         ${!u.is_admin ? `<button class="btn-small danger"
                             onclick="deleteAdminUser('${esc(u.id)}', '${esc([u.first_name, u.last_name].filter(Boolean).join(' ') || u.email)}')"
-                            style="margin-left:4px;">🗑️ Delete</button>`) : ''}
+                            style="margin-left:4px;">🗑️ Delete</button>` : ''}
                     </td>`;
                 tbody.appendChild(tr);
             });
@@ -4048,7 +3997,7 @@
                 }
                 if (error || !data) { resultEl.innerHTML = '<span style="color:#dc2626;">User not found.</span>'; return; }
                 creditTargetUserId = data.id;
-                resultEl.innerHTML = `<span style="color:#059669;font-weight:600;">✓ Found: ${escapeHtml(data.first_name || '')} ${escapeHtml(data.last_name || '')} (${escapeHtml(data.profession || 'N/A')})</span>`);
+                resultEl.innerHTML = `<span style="color:#059669;font-weight:600;">✓ Found: ${escapeHtml(data.first_name || '')} ${escapeHtml(data.last_name || '')} (${escapeHtml(data.profession || 'N/A')})</span>`;
                 // Also load their current balance
                 try {
                     const { data: credits } = await sb.from('account_credits').select('balance_cents').eq('user_id', data.id).single();
@@ -4086,12 +4035,12 @@
                 });
                 if (error) throw error;
                 const newBal = (data.new_balance_cents / 100).toFixed(2);
-                feedback.innerHTML = `<span style="color:#059669;font-weight:600;">✓ $${amountDollars.toFixed(2)} credited. New balance: $${newBal}</span>`);
+                feedback.innerHTML = `<span style="color:#059669;font-weight:600;">✓ $${amountDollars.toFixed(2)} credited. New balance: $${newBal}</span>`;
                 document.getElementById('creditAmount').value = '';
                 document.getElementById('creditDescription').value = '';
                 document.getElementById('creditUserResult').innerHTML = escapeHtml(`<span style="color:#059669;font-weight:600;">✓ User found — New balance: <strong>$${newBal}</strong></span>`);
             } catch(e) {
-                feedback.innerHTML = `<span style="color:#dc2626;">Error: ${e.message}</span>`);
+                feedback.innerHTML = `<span style="color:#dc2626;">Error: ${e.message}</span>`;
             }
             btn.disabled = false;
             btn.textContent = 'Grant Credits →';

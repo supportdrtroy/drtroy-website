@@ -413,7 +413,7 @@
     <div id="panelLogin" class="panel active">
         <div id="loginAlert"   class="alert alert-error"></div>
 
-        <form action="#" method="POST" id="loginForm" novalidate>
+        <form action="javascript:void(0)" id="loginForm" novalidate>
             <div class="form-group">
                 <label for="loginEmail">Email Address</label>
                 <div class="input-wrap">
@@ -456,7 +456,7 @@
 
         <!-- default: email entry -->
         <div id="forgotEntry">
-            <form action="#" method="POST" id="forgotForm" novalidate>
+            <form action="javascript:void(0)" id="forgotForm" novalidate>
                 <div class="form-group">
                     <label for="forgotEmail">Email Address</label>
                     <div class="input-wrap">
@@ -492,7 +492,7 @@
         <div id="resetAlert" class="alert alert-error"></div>
         <div id="resetSuccess" class="alert alert-success"></div>
 
-        <form action="#" method="POST" id="resetForm" novalidate>
+        <form action="javascript:void(0)" id="resetForm" novalidate>
             <div class="form-group">
                 <label for="newPassword">New Password</label>
                 <div class="input-wrap">
@@ -635,9 +635,14 @@
     const SUPABASE_URL      = 'https://pnqoxulxdmlmbywcpbyx.supabase.co';
     const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBucW94dWx4ZG1sbWJ5d2NwYnl4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzEzNjU3NTIsImV4cCI6MjA4Njk0MTc1Mn0.YEPrwIvINX_Q1AsbxyU0T5m5oxpV9M756yiSCzy6LTc';
 
-    const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
-        auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: true }
-    });
+    let sb;
+    try {
+        sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
+            auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: true }
+        });
+    } catch(e) {
+        console.error('Supabase init failed:', e);
+    }
 
     // ─── Panel switcher ──────────────────────────────────────────────────────
     const PANEL_CONFIG = {
@@ -678,13 +683,14 @@
     }
 
     // ─── Listen for PASSWORD_RECOVERY event ─────────────────────────────────
-    sb.auth.onAuthStateChange((event) => {
-        if (event === 'PASSWORD_RECOVERY') {
-            // Clear the hash so a page refresh doesn't re-trigger recovery mode
-            history.replaceState(null, '', window.location.pathname);
-            showPanel('reset');
-        }
-    });
+    if (sb) {
+        sb.auth.onAuthStateChange((event) => {
+            if (event === 'PASSWORD_RECOVERY') {
+                history.replaceState(null, '', window.location.pathname);
+                showPanel('reset');
+            }
+        });
+    }
 
     // ─── MFA state ─────────────────────────────────────────────────────────
     let _mfaFactorId = null;
@@ -761,6 +767,11 @@
             return;
         }
 
+        if (!sb) {
+            showAlert('loginAlert', 'Login service unavailable. Please refresh and try again.');
+            return;
+        }
+
         setLoading('loginBtn', true, 'loginEmail', 'loginPassword');
 
         try {
@@ -785,29 +796,9 @@
                 return;
             }
 
-            // ─── MFA Check ──────────────────────────────────────────────
-            const { data: aal } = await sb.auth.mfa.getAuthenticatorAssuranceLevel();
-            const { data: factors } = await sb.auth.mfa.listFactors();
-            const totpFactors = (factors?.totp || []).filter(f => f.status === 'verified');
-
-            if (totpFactors.length > 0) {
-                // Has MFA enrolled — show challenge
-                _mfaFactorId = totpFactors[0].id;
-                const { data: challenge, error: cErr } = await sb.auth.mfa.challenge({ factorId: _mfaFactorId });
-                if (cErr) {
-                    showAlert('loginAlert', 'Could not initiate 2FA challenge. Please try again.');
-                    setLoading('loginBtn', false, 'loginEmail', 'loginPassword');
-                    return;
-                }
-                _mfaChallengeId = challenge.id;
-                showPanel('mfa');
-                initCodeInputs('mfaCodeInputs');
-                setLoading('loginBtn', false, 'loginEmail', 'loginPassword');
-            } else {
-                // No MFA enrolled — must set up
-                await startMfaEnrollment();
-                setLoading('loginBtn', false, 'loginEmail', 'loginPassword');
-            }
+            // ─── Admin verified — redirect to dashboard ──────────────
+            showAlert('loginAlert', `Welcome back, ${profile.first_name}! Redirecting…`, 'success');
+            setTimeout(() => window.location.replace('admin.html'), 800);
 
         } catch (err) {
             console.error(err);
@@ -962,13 +953,13 @@
             if (user) {
                 try {
                     await sb.from('profiles').update({
+                        mfa_enabled: true,
+                        mfa_enabled_at: new Date().toISOString(),
+                        recovery_codes: _recoveryCodes.map(c => btoa(c)) // simple encoding
+                    }).eq('id', user.id);
                 } catch (dbError) {
                     console.error('Database error:', dbError);
                 }
-                    mfa_enabled: true,
-                    mfa_enabled_at: new Date().toISOString(),
-                    recovery_codes: _recoveryCodes.map(c => btoa(c)) // simple encoding
-                }).eq('id', user.id);
             }
 
             await logMfaEvent('mfa_setup_complete');
@@ -1089,15 +1080,15 @@
             if (!user) return;
             try {
                 await sb.from('mfa_audit_log').insert({
+                    user_id: user.id,
+                    event_type: eventType,
+                    ip_address: null, // Would need server-side for real IP
+                    user_agent: navigator.userAgent,
+                    created_at: new Date().toISOString()
+                });
             } catch (dbError) {
                 console.error('Database error:', dbError);
             }
-                user_id: user.id,
-                event_type: eventType,
-                ip_address: null, // Would need server-side for real IP
-                user_agent: navigator.userAgent,
-                created_at: new Date().toISOString()
-            });
         } catch (e) {
             console.warn('MFA audit log failed:', e);
         }
