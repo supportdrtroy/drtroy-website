@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>DrTroy Login Debug Test</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+    <script src="js/supabase-client.js"></script>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 2rem; line-height: 1.6; }
+        .test { background: #f0f0f0; padding: 1rem; margin: 1rem 0; border-radius: 4px; }
+        .success { background: #d4edda; color: #155724; }
+        .error { background: #f8d7da; color: #721c24; }
+        .info { background: #d1ecf1; color: #0c5460; }
+    </style>
+</head>
+<body>
+    <h1>🔧 DrTroy Login System Debug</h1>
+    <div id="results"></div>
+    
+    <script>
+        async function runDiagnostics() {
+            const results = document.getElementById('results');
+            
+            function log(message, type = 'info') {
+                const div = document.createElement('div');
+                div.className = `test ${type}`;
+                div.innerHTML = message;
+                results.appendChild(div);
+            }
+            
+            log('🔍 Starting login system diagnostics...');
+            
+            // Test 1: Check if Supabase CDN loaded
+            if (typeof window.supabase === 'undefined') {
+                log('❌ Supabase CDN failed to load', 'error');
+                return;
+            } else {
+                log('✅ Supabase CDN loaded successfully', 'success');
+            }
+            
+            // Test 2: Check if our client is initialized
+            if (typeof window.DrTroySupabase === 'undefined') {
+                log('❌ DrTroySupabase client not initialized', 'error');
+                return;
+            } else {
+                log('✅ DrTroySupabase client initialized', 'success');
+            }
+            
+            // Test 3: Check Supabase connection
+            try {
+                const client = window.DrTroySupabase.getClient();
+                if (!client) {
+                    log('❌ Could not get Supabase client instance', 'error');
+                    return;
+                }
+                log('✅ Supabase client instance created', 'success');
+                
+                // Test connection by checking session
+                const session = await client.auth.getSession();
+                log('✅ Successfully connected to Supabase database', 'success');
+                log(`📊 Current session status: ${session.data.session ? 'Logged in' : 'Not logged in'}`);
+                
+            } catch (error) {
+                log(`❌ Supabase connection failed: ${error.message}`, 'error');
+                return;
+            }
+            
+            // Test 4: Test login functionality
+            log('🧪 Testing login functionality (this will fail with invalid credentials, which is expected)...');
+            try {
+                const result = await window.DrTroySupabase.signIn('test@example.com', 'wrongpassword');
+                if (result.error) {
+                    log(`✅ Login function working (got expected error: ${result.error.message})`, 'success');
+                } else {
+                    log('⚠️ Login succeeded with test credentials (unexpected)', 'info');
+                }
+            } catch (error) {
+                log(`❌ Login function failed: ${error.message}`, 'error');
+            }
+            
+            log('🎯 Diagnostics complete!', 'success');
+        }
+        
+        // Run diagnostics when page loads
+        window.addEventListener('load', runDiagnostics);
+    </script>
+</body>
+</html>
