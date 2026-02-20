@@ -3575,11 +3575,67 @@
                         <div>Professions: ${(c.professions || []).join(', ') || 'All'}</div>
                     </div>
                     <div class="course-actions">
+                        <button class="btn-small" onclick="viewCourseContent('${esc(c.id)}')">👁️ View Course</button>
                         <button class="btn-small" onclick="editCourse('${esc(c.id)}')">✏️ Edit</button>
                         <button class="btn-small ${c.is_active ? 'danger' : ''}" onclick="toggleCourseActive('${esc(c.id)}', ${!c.is_active})">${c.is_active ? '⏸️ Deactivate' : '🚀 Activate'}</button>
                     </div>
                 </div>`;
             }).join('');
+        }
+
+        function viewCourseContent(courseId) {
+            // Create a popup to choose which part of the course to view
+            const options = [
+                { label: '📚 Course Content (Progressive)', url: `/courses/${courseId}-progressive.html` },
+                { label: '📝 Quiz (if available)', url: `/courses/${courseId}-quiz.html` },
+                { label: '📋 Feedback Form', url: `/courses/${courseId}-feedback.html` },
+                { label: '🏆 Certificate Template', url: `/courses/${courseId}-certificate.html` }
+            ];
+            
+            let optionsHtml = options.map((opt, i) => 
+                `<button class="btn btn-secondary" onclick="openCourseUrl('${opt.url}', '${opt.label}')" style="width:100%;margin-bottom:0.5rem;text-align:left;">${opt.label}</button>`
+            ).join('');
+            
+            const content = `
+                <div style="padding:1rem;">
+                    <h3 style="margin-bottom:1rem;">📖 Review Course: ${courseId}</h3>
+                    <p style="color:#6b7280;margin-bottom:1.5rem;">Choose which part of the course to review:</p>
+                    ${optionsHtml}
+                    <button class="btn btn-primary" onclick="closeViewModal()" style="width:100%;margin-top:1rem;">Close</button>
+                </div>
+            `;
+            
+            // Create a simple modal
+            const modal = document.createElement('div');
+            modal.id = 'courseViewModal';
+            modal.style.cssText = `
+                position: fixed; top: 0; left: 0; right: 0; bottom: 0; 
+                background: rgba(0,0,0,0.5); display: flex; align-items: center; 
+                justify-content: center; z-index: 10000;
+            `;
+            modal.innerHTML = `<div style="background:white;border-radius:8px;max-width:400px;width:90%;" onclick="event.stopPropagation()">${content}</div>`;
+            modal.onclick = closeViewModal; // Close on background click
+            document.body.appendChild(modal);
+            
+            // Close on ESC key
+            const escListener = (e) => {
+                if (e.key === 'Escape') {
+                    closeViewModal();
+                    document.removeEventListener('keydown', escListener);
+                }
+            };
+            document.addEventListener('keydown', escListener);
+        }
+        
+        function openCourseUrl(url, label) {
+            window.open(url, '_blank');
+            showAdminToast(`Opening: ${label}`, 'info');
+            closeViewModal();
+        }
+        
+        function closeViewModal() {
+            const modal = document.getElementById('courseViewModal');
+            if (modal) modal.remove();
         }
 
         function showAddCourseForm() {
