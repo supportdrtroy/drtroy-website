@@ -7,7 +7,15 @@
  */
 
 const SUPABASE_URL = 'https://pnqoxulxdmlmbywcpbyx.supabase.co';
-const SUPABASE_ANON_KEY = 'process.env.SUPABASE_ANON_KEY || window.SUPABASE_ANON_KEY || 'YOUR_SUPABASE_ANON_KEY'';
+// Get key from environment variables or fallback
+const SUPABASE_ANON_KEY = (function() {
+    // Check if running in browser with environment variable
+    if (typeof window !== 'undefined' && window.SUPABASE_ANON_KEY) {
+        return window.SUPABASE_ANON_KEY;
+    }
+    // Temporary development key - replace with actual anon key
+    return 'YOUR_SUPABASE_ANON_KEY';
+})();
 
 // Initialize Supabase client (requires CDN script to be loaded first)
 let _supabase = null;
