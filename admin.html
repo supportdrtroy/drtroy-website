@@ -6,6 +6,12 @@
     <title>DrTroy.com - Admin Dashboard</title>
     <meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
     
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="shortcut icon" href="/favicon.ico">
+    
     <!-- Security Headers -->
     <meta http-equiv="Content-Security-Policy" content="
         default-src 'self';
@@ -99,6 +105,9 @@
             border-radius: 8px;
             box-shadow: 0 1px 3px rgba(0,0,0,0.1);
             margin-bottom: 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
 
         .main-tab {
@@ -2563,8 +2572,11 @@
         }
 
         // Tab switching functions
-        function switchMainTab(tabName) {
+        function switchMainTab(tabName, skipHashUpdate = false) {
             console.log(`🔄 Switching to tab: ${tabName}`);
+            
+            // Store current scroll position
+            const currentScrollY = window.scrollY;
             
             // Update tab buttons - find the correct button by onclick attribute
             document.querySelectorAll('.main-tab').forEach(tab => tab.classList.remove('active'));
@@ -2584,15 +2596,34 @@
             if (targetContent) {
                 targetContent.classList.add('active');
                 console.log(`✅ Activated content for: ${tabName}`);
+                
+                // Prevent auto-scroll after content becomes visible
+                requestAnimationFrame(() => {
+                    if (window.scrollY !== currentScrollY) {
+                        window.scrollTo(0, currentScrollY);
+                        console.log(`🔧 Restored scroll position to: ${currentScrollY}`);
+                    }
+                });
             } else {
                 console.warn(`❌ Could not find content for tab: ${tabName}`);
             }
             
             // Save current tab to localStorage
             localStorage.setItem('currentAdminTab', tabName);
+            
+            // Update URL hash only if not called from hash change event
+            if (!skipHashUpdate) {
+                window.location.hash = tabName;
+            }
+            
             console.log(`💾 Saved tab: ${tabName}`);
             
             // Load data when switching to specific tabs
+            loadTabData(tabName);
+        }
+        
+        // Load data for specific tabs
+        function loadTabData(tabName) {
             if (tabName === 'dashboard') {
                 updateDashboard();
             } else if (tabName === 'users') {
@@ -2605,48 +2636,32 @@
                 loadLicenseData();
             } else if (tabName === 'discount-codes') {
                 loadDiscountCodesFromDB();
+            } else if (tabName === 'waitlist') {
+                loadWaitlist();
             }
         }
 
         // Restore saved tab on page load
         function restoreSavedTab() {
-            const savedTab = localStorage.getItem('currentAdminTab') || 'dashboard';
+            // Check URL hash first, then localStorage, fallback to dashboard
+            let targetTab = 'dashboard';
             
-            // Always clear all active states first
-            document.querySelectorAll('.main-tab').forEach(tab => tab.classList.remove('active'));
-            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
-            
-            // Activate the correct tab
-            const tabButton = document.querySelector(`[onclick="switchMainTab('${savedTab}')"]`);
-            const tabContent = document.getElementById(savedTab);
-            
-            if (tabButton && tabContent) {
-                tabButton.classList.add('active');
-                tabContent.classList.add('active');
-                
-                // Load data for the active tab
-                if (savedTab === 'dashboard') {
-                    updateDashboard();
-                } else if (savedTab === 'users') {
-                    loadUsers();
-                } else if (savedTab === 'courses') {
-                    loadCourses();
-                } else if (savedTab === 'emails') {
-                    loadEmailData();
-                } else if (savedTab === 'licenses') {
-                    loadLicenseData();
-                } else if (savedTab === 'discount-codes') {
-                    updateDiscountCodeStats();
+            if (window.location.hash) {
+                const hashTab = window.location.hash.replace('#', '');
+                if (['dashboard', 'users', 'courses', 'emails', 'licenses', 'discount-codes', 'credits', 'waitlist'].includes(hashTab)) {
+                    targetTab = hashTab;
                 }
-                
-                console.log(`✅ Restored tab: ${savedTab}`);
             } else {
-                // Fallback: activate dashboard
-                document.querySelector(`[onclick="switchMainTab('dashboard')"]`).classList.add('active');
-                document.getElementById('dashboard').classList.add('active');
-                updateDashboard();
-                console.log('⚠️ Fallback to dashboard');
+                const savedTab = localStorage.getItem('currentAdminTab');
+                if (savedTab && ['dashboard', 'users', 'courses', 'emails', 'licenses', 'discount-codes', 'credits', 'waitlist'].includes(savedTab)) {
+                    targetTab = savedTab;
+                }
             }
+            
+            console.log(`🔄 Restoring tab on page load: ${targetTab}`);
+            
+            // Use the regular switchMainTab function with hash update
+            switchMainTab(targetTab, false);
         }
 
         function switchSubTab(tabName) {
@@ -3584,12 +3599,99 @@
         }
 
         function viewCourseContent(courseId) {
-            // Create a popup to choose which part of the course to view
+            // Debug: Show the course ID being used
+            console.log('Viewing course with ID:', courseId);
+            
+            // Map database course IDs to actual filenames
+            const courseIdMapping = {
+                // Mobility and Fall Prevention (known working)
+                'core-mobility-001': 'mobility-fall-001',
+                'mobility-fall': 'mobility-fall-001',
+                'comprehensive-mobility': 'mobility-fall-001',
+                'fall-prevention': 'mobility-fall-001',
+                
+                // Balance and Gait
+                'balance-gait': 'balance-gait-001',
+                'balance-training': 'balance-gait-001',
+                'gait-training': 'balance-gait-001',
+                'core-balance': 'balance-gait-001',
+                
+                // Documentation
+                'documentation': 'documentation-001',
+                'doc-001': 'documentation-001',
+                'clinical-documentation': 'documentation-001',
+                
+                // Geriatric Care
+                'geriatric-care': 'geriatric-care-001',
+                'geriatric': 'geriatric-care-001',
+                'elderly-care': 'geriatric-care-001',
+                'senior-care': 'geriatric-care-001',
+                
+                // Healthcare Technology
+                'healthcare-technology': 'healthcare-technology-001',
+                'health-tech': 'healthcare-technology-001',
+                'medical-technology': 'healthcare-technology-001',
+                'tech-001': 'healthcare-technology-001',
+                
+                // Infection Control
+                'infection-control': 'infection-control-001',
+                'infection-prevention': 'infection-control-001',
+                'ic-001': 'infection-control-001',
+                
+                // Joint Replacement
+                'joint-replacement': 'joint-replacement-001',
+                'joint-replace': 'joint-replacement-001',
+                'orthopedic': 'joint-replacement-001',
+                'joint-surgery': 'joint-replacement-001',
+                
+                // OT ADL
+                'ot-adl': 'ot-adl-001',
+                'occupational-therapy': 'ot-adl-001',
+                'activities-daily-living': 'ot-adl-001',
+                'adl-training': 'ot-adl-001',
+                
+                // Patient Education
+                'patient-education': 'patient-education-001',
+                'patient-ed': 'patient-education-001',
+                'education-001': 'patient-education-001',
+                
+                // Physical Agents
+                'physical-agents': 'physical-agents-001',
+                'modalities': 'physical-agents-001',
+                'therapeutic-modalities': 'physical-agents-001',
+                'agents-001': 'physical-agents-001',
+                
+                // Post-Surgical
+                'post-surgical': 'post-surgical-001',
+                'post-surgery': 'post-surgical-001',
+                'surgical-rehab': 'post-surgical-001',
+                'postop': 'post-surgical-001',
+                
+                // PT MSK (Musculoskeletal)
+                'pt-msk': 'pt-msk-001',
+                'musculoskeletal': 'pt-msk-001',
+                'msk-001': 'pt-msk-001',
+                'orthopedic-pt': 'pt-msk-001',
+                
+                // PT Neuro (Neurological)
+                'pt-neuro': 'pt-neuro-001',
+                'neurological': 'pt-neuro-001',
+                'neuro-001': 'pt-neuro-001',
+                'neurologic-pt': 'pt-neuro-001',
+                
+                // Add more mappings as needed
+            };
+            
+            // Use mapped ID if available, otherwise use original ID
+            const actualCourseId = courseIdMapping[courseId] || courseId;
+            console.log('Mapped to actual course file:', actualCourseId);
+            
+            // Create a popup to choose which part of the course to view (using admin course viewer)
             const options = [
-                { label: '📚 Course Content (Progressive)', url: `/courses/${courseId}-progressive.html` },
-                { label: '📝 Quiz (if available)', url: `/courses/${courseId}-quiz.html` },
-                { label: '📋 Feedback Form', url: `/courses/${courseId}-feedback.html` },
-                { label: '🏆 Certificate Template', url: `/courses/${courseId}-certificate.html` }
+                { label: '📚 Course Content (Progressive)', url: `/admin-course-viewer.html?course=${actualCourseId}&type=progressive` },
+                { label: '📝 Quiz (if available)', url: `/admin-course-viewer.html?course=${actualCourseId}&type=quiz` },
+                { label: '📋 Feedback Form', url: `/admin-course-viewer.html?course=${actualCourseId}&type=feedback` },
+                { label: '🏆 Certificate Template', url: `/admin-course-viewer.html?course=${actualCourseId}&type=certificate` }
             ];
             
             let optionsHtml = options.map((opt, i) => 
@@ -3599,6 +3701,13 @@
             const content = `
                 <div style="padding:1rem;">
                     <h3 style="margin-bottom:1rem;">📖 Review Course: ${courseId}</h3>
+                    <div style="background:#f0f9ff;padding:0.5rem;margin-bottom:1rem;border-radius:4px;font-size:0.9rem;">
+                        <strong>Debug Info:</strong> 
+                        ${actualCourseId !== courseId 
+                            ? `Database ID <code>${courseId}</code> mapped to file <code>${actualCourseId}</code>`
+                            : `Looking for files like <code>/courses/${courseId}-progressive.html</code>`
+                        }
+                    </div>
                     <p style="color:#6b7280;margin-bottom:1.5rem;">Choose which part of the course to review:</p>
                     ${optionsHtml}
                     <button class="btn btn-primary" onclick="closeViewModal()" style="width:100%;margin-top:1rem;">Close</button>
@@ -3627,10 +3736,22 @@
             document.addEventListener('keydown', escListener);
         }
         
-        function openCourseUrl(url, label) {
-            window.open(url, '_blank');
-            showAdminToast(`Opening: ${label}`, 'info');
-            closeViewModal();
+        async function openCourseUrl(url, label) {
+            try {
+                // Check if URL exists before opening
+                const response = await fetch(url, { method: 'HEAD' });
+                if (response.ok) {
+                    window.open(url, '_blank');
+                    showAdminToast(`Opening: ${label}`, 'info');
+                    closeViewModal();
+                } else {
+                    showAdminToast(`❌ Course not found: ${url}`, 'error');
+                    console.error('Course URL not found:', url);
+                }
+            } catch (error) {
+                showAdminToast(`❌ Error accessing course: ${label}`, 'error');
+                console.error('Error accessing course URL:', url, error);
+            }
         }
         
         function closeViewModal() {
@@ -4054,6 +4175,16 @@
                 }
             }
         }
+
+        // Handle browser back/forward navigation
+        window.addEventListener('hashchange', function() {
+            const hashTab = window.location.hash.replace('#', '');
+            if (hashTab && ['dashboard', 'users', 'courses', 'emails', 'licenses', 'discount-codes', 'credits', 'waitlist'].includes(hashTab)) {
+                console.log('🔄 Hash changed to:', hashTab);
+                switchMainTab(hashTab, true); // Skip hash update to avoid loop
+                loadTabData(hashTab);
+            }
+        });
 
         // Initialize when page loads
         document.addEventListener('DOMContentLoaded', async function() {

@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Course Viewer - DrTroy.com</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="shortcut icon" href="/favicon.ico">
+    
+    <!-- Supabase JS v2 CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+    <!-- DrTroy Supabase client -->
+    <script src="js/supabase-client.js"></script>
+
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            background: #f8f9fa;
+        }
+        .admin-header {
+            background: #1a365d;
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .course-frame {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            overflow: hidden;
+            height: 80vh;
+        }
+        .course-iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        .course-selector {
+            margin-bottom: 1rem;
+            padding: 1rem;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        .course-selector select {
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            margin-right: 1rem;
+            font-size: 1rem;
+        }
+        .course-selector button {
+            background: #059669;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+        .admin-info {
+            background: #e6fffa;
+            border: 1px solid #38b2ac;
+            padding: 1rem;
+            border-radius: 6px;
+            margin-bottom: 1rem;
+        }
+        .back-btn {
+            background: #666;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .back-btn:hover {
+            background: #555;
+        }
+        #directContent {
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+        #directContent img {
+            max-width: 100%;
+            height: auto;
+        }
+        #directContent table {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 1rem 0;
+        }
+        #directContent th, #directContent td {
+            border: 1px solid #ddd;
+            padding: 0.5rem;
+            text-align: left;
+        }
+        #directContent th {
+            background: #f8f9fa;
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-header">
+        <h1>🔧 Admin Course Viewer</h1>
+        <a href="admin.html" class="back-btn">← Back to Admin</a>
+    </div>
+
+    <div class="admin-info">
+        <strong>🛡️ Admin Mode Active:</strong> You are viewing courses with administrative privileges. Authentication checks are bypassed.
+    </div>
+
+    <div class="course-selector">
+        <label for="courseSelect"><strong>Select Course:</strong></label>
+        <select id="courseSelect">
+            <option value="">-- Choose a course --</option>
+            <option value="balance-gait-001">Balance and Gait Training</option>
+            <option value="documentation-001">Clinical Documentation</option>
+            <option value="geriatric-care-001">Geriatric Care</option>
+            <option value="healthcare-technology-001">Healthcare Technology</option>
+            <option value="infection-control-001">Infection Control</option>
+            <option value="joint-replacement-001">Joint Replacement</option>
+            <option value="mobility-fall-001">Comprehensive Mobility and Fall Prevention</option>
+            <option value="ot-adl-001">OT Activities of Daily Living</option>
+            <option value="patient-education-001">Patient Education</option>
+            <option value="physical-agents-001">Physical Agents and Modalities</option>
+            <option value="post-surgical-001">Post-Surgical Care</option>
+            <option value="pt-msk-001">PT Musculoskeletal</option>
+            <option value="pt-neuro-001">PT Neurological</option>
+        </select>
+        
+        <label for="contentType"><strong>Content Type:</strong></label>
+        <select id="contentType">
+            <option value="progressive">📚 Course Content</option>
+            <option value="quiz">📝 Quiz</option>
+            <option value="feedback">📋 Feedback Form</option>
+            <option value="certificate">🏆 Certificate</option>
+        </select>
+        
+        <button onclick="loadCourse()">Load Course</button>
+        <button onclick="openInNewTab()" id="newTabBtn" disabled>Open in New Tab</button>
+        <button onclick="loadDirectContent()" id="directBtn" disabled>🔧 Load Direct Content</button>
+    </div>
+
+    <div class="course-frame" id="courseFrame" style="display: none;">
+        <iframe id="courseIframe" class="course-iframe" src=""></iframe>
+    </div>
+
+    <div id="directContent" class="course-frame" style="display: none; height: auto; padding: 2rem; background: white;">
+        <div id="directContentInner"></div>
+    </div>
+
+    <div id="noSelection" style="text-align: center; padding: 4rem; color: #666;">
+        <h3>Select a course above to begin viewing</h3>
+        <p>This admin viewer bypasses customer authentication and allows you to preview course content directly.</p>
+    </div>
+
+    <script>
+        let currentCourseUrl = '';
+
+        function loadCourse() {
+            const courseSelect = document.getElementById('courseSelect');
+            const contentType = document.getElementById('contentType');
+            const courseFrame = document.getElementById('courseFrame');
+            const courseIframe = document.getElementById('courseIframe');
+            const noSelection = document.getElementById('noSelection');
+            const newTabBtn = document.getElementById('newTabBtn');
+            const directBtn = document.getElementById('directBtn');
+            const directContent = document.getElementById('directContent');
+            
+            const courseId = courseSelect.value;
+            const contentTypeValue = contentType.value;
+            
+            if (!courseId) {
+                alert('Please select a course');
+                return;
+            }
+            
+            // Build the course URL
+            currentCourseUrl = `/courses/${courseId}-${contentTypeValue}.html`;
+            
+            console.log('Loading course:', currentCourseUrl);
+            
+            // Show the frame and hide other views
+            courseFrame.style.display = 'block';
+            directContent.style.display = 'none';
+            noSelection.style.display = 'none';
+            newTabBtn.disabled = false;
+            directBtn.disabled = false;
+            
+            // Load the course in iframe
+            courseIframe.src = currentCourseUrl;
+            
+            // Update iframe title
+            const courseTitle = courseSelect.options[courseSelect.selectedIndex].text;
+            const contentTitle = contentType.options[contentType.selectedIndex].text;
+            courseIframe.title = `${courseTitle} - ${contentTitle}`;
+        }
+        
+        function openInNewTab() {
+            if (currentCourseUrl) {
+                window.open(currentCourseUrl, '_blank');
+            }
+        }
+
+        async function loadDirectContent() {
+            const courseSelect = document.getElementById('courseSelect');
+            const contentType = document.getElementById('contentType');
+            const directContent = document.getElementById('directContent');
+            const directContentInner = document.getElementById('directContentInner');
+            const courseFrame = document.getElementById('courseFrame');
+            const noSelection = document.getElementById('noSelection');
+            
+            const courseId = courseSelect.value;
+            const contentTypeValue = contentType.value;
+            
+            if (!courseId) {
+                alert('Please select a course');
+                return;
+            }
+            
+            // Build the course URL
+            currentCourseUrl = `/courses/${courseId}-${contentTypeValue}.html`;
+            
+            console.log('Loading direct content from:', currentCourseUrl);
+            
+            try {
+                // Fetch the course content
+                const response = await fetch(currentCourseUrl);
+                if (!response.ok) {
+                    throw new Error(`Course not found: ${response.status}`);
+                }
+                
+                const html = await response.text();
+                
+                // Parse the HTML and extract the main content
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(html, 'text/html');
+                
+                // Remove navigation and authentication elements
+                const elementsToRemove = doc.querySelectorAll('header, .course-nav, .logout-btn, script[src*="supabase"]');
+                elementsToRemove.forEach(el => el.remove());
+                
+                // Get the main content
+                const contentWrapper = doc.querySelector('.content-wrapper') || doc.body;
+                
+                // Show direct content and hide other views
+                directContent.style.display = 'block';
+                courseFrame.style.display = 'none';
+                noSelection.style.display = 'none';
+                
+                // Insert the content
+                directContentInner.innerHTML = `
+                    <div style="background: #e6fffa; padding: 1rem; border-radius: 6px; margin-bottom: 2rem;">
+                        <strong>🔧 Direct Content Mode:</strong> Navigation and authentication removed for admin preview
+                    </div>
+                    ${contentWrapper.innerHTML}
+                `;
+                
+                // Re-enable any inline scripts that are safe
+                const scripts = directContentInner.querySelectorAll('script');
+                scripts.forEach(script => {
+                    if (!script.src && !script.innerHTML.includes('location.href') && !script.innerHTML.includes('logout')) {
+                        const newScript = document.createElement('script');
+                        newScript.innerHTML = script.innerHTML;
+                        script.parentNode.replaceChild(newScript, script);
+                    } else {
+                        script.remove();
+                    }
+                });
+                
+                document.getElementById('directBtn').disabled = false;
+                
+            } catch (error) {
+                console.error('Failed to load course content:', error);
+                alert(`Failed to load course content: ${error.message}`);
+            }
+        }
+
+        // Handle iframe load errors
+        document.getElementById('courseIframe').addEventListener('error', function() {
+            console.error('Failed to load course:', currentCourseUrl);
+            alert('Course content not available. The file may not exist or may have been moved.');
+        });
+        
+        // Auto-load if course ID is provided in URL
+        document.addEventListener('DOMContentLoaded', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const courseId = urlParams.get('course');
+            const contentType = urlParams.get('type') || 'progressive';
+            
+            if (courseId) {
+                document.getElementById('courseSelect').value = courseId;
+                document.getElementById('contentType').value = contentType;
+                loadCourse();
+            }
+        });
+    </script>
+</body>
+</html>
