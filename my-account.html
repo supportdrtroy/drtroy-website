@@ -3707,7 +3707,7 @@
                 return;
             }
             
-            tbody.innerHTML = escapeHtml(currentAuthors).map(author => `
+            tbody.innerHTML = currentAuthors.map(author => `
                 <tr style="border-bottom: 1px solid #f1f5f9;">
                     <td style="padding: 0.75rem;">
                         <strong>${author.first_name} ${author.last_name}</strong>
@@ -3816,7 +3816,7 @@
                     return;
                 }
                 
-                container.innerHTML = escapeHtml(courseAuthors).map(ca => `
+                container.innerHTML = courseAuthors.map(ca => `
                     <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.5rem; background: #f8fafc; border-radius: 4px; margin-bottom: 0.5rem;">
                         <span><strong>${ca.authors.first_name} ${ca.authors.last_name}</strong> - ${ca.revenue_share}% (${ca.role})</span>
                         <button onclick="removeAuthorFromCourse('${ca.id}')" class="btn btn-secondary" style="font-size: 0.8rem; padding: 0.25rem 0.5rem;">Remove</button>
@@ -4374,7 +4374,7 @@
             if (!txns || txns.length === 0) {
                 listEl.innerHTML = '<p style="color:#94a3b8;text-align:center;padding:2rem;font-size:.95rem;">No credit activity yet. Share your referral link to earn your first $10!</p>';
             } else {
-                listEl.innerHTML = escapeHtml(txns).map(t => `
+                listEl.innerHTML = txns.map(t => `
                     <div style="display:flex;justify-content:space-between;align-items:center;padding:.875rem 1.25rem;border-bottom:1px solid #f1f5f9;font-size:.9rem;">
                         <div>
                             <div style="font-weight:600;color:#1e293b;">${typeLabels[t.type] || t.type}</div>
