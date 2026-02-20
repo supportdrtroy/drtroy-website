@@ -953,13 +953,13 @@
             if (user) {
                 try {
                     await sb.from('profiles').update({
+                        mfa_enabled: true,
+                        mfa_enabled_at: new Date().toISOString(),
+                        recovery_codes: _recoveryCodes.map(c => btoa(c)) // simple encoding
+                    }).eq('id', user.id);
                 } catch (dbError) {
                     console.error('Database error:', dbError);
                 }
-                    mfa_enabled: true,
-                    mfa_enabled_at: new Date().toISOString(),
-                    recovery_codes: _recoveryCodes.map(c => btoa(c)) // simple encoding
-                }).eq('id', user.id);
             }
 
             await logMfaEvent('mfa_setup_complete');
@@ -1080,15 +1080,15 @@
             if (!user) return;
             try {
                 await sb.from('mfa_audit_log').insert({
+                    user_id: user.id,
+                    event_type: eventType,
+                    ip_address: null, // Would need server-side for real IP
+                    user_agent: navigator.userAgent,
+                    created_at: new Date().toISOString()
+                });
             } catch (dbError) {
                 console.error('Database error:', dbError);
             }
-                user_id: user.id,
-                event_type: eventType,
-                ip_address: null, // Would need server-side for real IP
-                user_agent: navigator.userAgent,
-                created_at: new Date().toISOString()
-            });
         } catch (e) {
             console.warn('MFA audit log failed:', e);
         }
