@@ -3590,6 +3590,19 @@
             // Map database course IDs to actual filenames
             const courseIdMapping = {
                 'core-mobility-001': 'mobility-fall-001',
+                'balance-gait': 'balance-gait-001',
+                'documentation': 'documentation-001',
+                'geriatric-care': 'geriatric-care-001',
+                'healthcare-technology': 'healthcare-technology-001',
+                'infection-control': 'infection-control-001',
+                'joint-replacement': 'joint-replacement-001',
+                'mobility-fall': 'mobility-fall-001',
+                'ot-adl': 'ot-adl-001',
+                'patient-education': 'patient-education-001',
+                'physical-agents': 'physical-agents-001',
+                'post-surgical': 'post-surgical-001',
+                'pt-msk': 'pt-msk-001',
+                'pt-neuro': 'pt-neuro-001',
                 // Add more mappings as needed
             };
             
@@ -3597,12 +3610,12 @@
             const actualCourseId = courseIdMapping[courseId] || courseId;
             console.log('Mapped to actual course file:', actualCourseId);
             
-            // Create a popup to choose which part of the course to view
+            // Create a popup to choose which part of the course to view (using admin course viewer)
             const options = [
-                { label: '📚 Course Content (Progressive)', url: `/courses/${actualCourseId}-progressive.html` },
-                { label: '📝 Quiz (if available)', url: `/courses/${actualCourseId}-quiz.html` },
-                { label: '📋 Feedback Form', url: `/courses/${actualCourseId}-feedback.html` },
-                { label: '🏆 Certificate Template', url: `/courses/${actualCourseId}-certificate.html` }
+                { label: '📚 Course Content (Progressive)', url: `/admin-course-viewer.html?course=${actualCourseId}&type=progressive` },
+                { label: '📝 Quiz (if available)', url: `/admin-course-viewer.html?course=${actualCourseId}&type=quiz` },
+                { label: '📋 Feedback Form', url: `/admin-course-viewer.html?course=${actualCourseId}&type=feedback` },
+                { label: '🏆 Certificate Template', url: `/admin-course-viewer.html?course=${actualCourseId}&type=certificate` }
             ];
             
             let optionsHtml = options.map((opt, i) => 
