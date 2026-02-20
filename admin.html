@@ -2084,7 +2084,7 @@
         // More comprehensive authentication verification
         (async function() {
         // SECURITY: Validate admin access
-        if (!(await window.DrTroySecurity?.validateAdminAccess())) {
+        if (!(await window.validateAdminAccess())) {
             window.location.href = "/";
             return;
         }
@@ -2118,6 +2118,7 @@
 
                 // If we get here, user is authenticated and authorized
                 console.log('✅ Admin authentication verified');
+                document.body.classList.add('authenticated');
                 
             } catch (error) {
                 console.error('Authentication check failed:', error);
