@@ -2083,9 +2083,9 @@
         // ─── ENHANCED SECURITY CHECK ────────────────────────────────────────────
         // More comprehensive authentication verification
         (async function() {
-        // TEMP BYPASS: Allow access to set up admin account
-        console.log('🔓 TEMP: Admin authentication bypassed for setup');
-        document.body.classList.add('authenticated');
+        // TEMP REDIRECT: Use working admin panel
+        console.log('🔄 TEMP: Redirecting to working admin panel...');
+        window.location.href = '/admin-simple.html';
         
         // TODO: Remove this bypass after admin account is created
         /*
