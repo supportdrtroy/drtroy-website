@@ -2392,7 +2392,7 @@
                     <td>${new Date(code.created).toLocaleDateString()}</td>
                     <td>
                         <button class="btn btn-secondary" onclick="viewCodeDetails('${code.code}', 'employee')">View</button>
-                        ${code.status === 'active' ? `<button class="btn btn-danger" onclick="deactivateCode('${code.code}', 'employee')">Deactivate</button>`) : ''}
+                        ${code.status === 'active' ? `<button class="btn btn-danger" onclick="deactivateCode('${code.code}', 'employee')">Deactivate</button>` : ''}
                     </td>
                 `;
             });
@@ -2414,7 +2414,7 @@
                     <td>${new Date(code.created).toLocaleDateString()}</td>
                     <td>
                         <button class="btn btn-secondary" onclick="viewCodeDetails('${code.code}', 'marketing')">View</button>
-                        ${code.status === 'active' ? `<button class="btn btn-danger" onclick="deactivateCode('${code.code}', 'marketing')">Deactivate</button>`) : ''}
+                        ${code.status === 'active' ? `<button class="btn btn-danger" onclick="deactivateCode('${code.code}', 'marketing')">Deactivate</button>` : ''}
                     </td>
                 `;
             });
@@ -3069,7 +3069,7 @@
                         </button>
                         ${!u.is_admin ? `<button class="btn-small danger"
                             onclick="deleteAdminUser('${esc(u.id)}', '${esc([u.first_name, u.last_name].filter(Boolean).join(' ') || u.email)}')"
-                            style="margin-left:4px;">🗑️ Delete</button>`) : ''}
+                            style="margin-left:4px;">🗑️ Delete</button>` : ''}
                     </td>`;
                 tbody.appendChild(tr);
             });
@@ -3997,7 +3997,7 @@
                 }
                 if (error || !data) { resultEl.innerHTML = '<span style="color:#dc2626;">User not found.</span>'; return; }
                 creditTargetUserId = data.id;
-                resultEl.innerHTML = `<span style="color:#059669;font-weight:600;">✓ Found: ${escapeHtml(data.first_name || '')} ${escapeHtml(data.last_name || '')} (${escapeHtml(data.profession || 'N/A')})</span>`);
+                resultEl.innerHTML = `<span style="color:#059669;font-weight:600;">✓ Found: ${escapeHtml(data.first_name || '')} ${escapeHtml(data.last_name || '')} (${escapeHtml(data.profession || 'N/A')})</span>`;
                 // Also load their current balance
                 try {
                     const { data: credits } = await sb.from('account_credits').select('balance_cents').eq('user_id', data.id).single();
@@ -4035,12 +4035,12 @@
                 });
                 if (error) throw error;
                 const newBal = (data.new_balance_cents / 100).toFixed(2);
-                feedback.innerHTML = `<span style="color:#059669;font-weight:600;">✓ $${amountDollars.toFixed(2)} credited. New balance: $${newBal}</span>`);
+                feedback.innerHTML = `<span style="color:#059669;font-weight:600;">✓ $${amountDollars.toFixed(2)} credited. New balance: $${newBal}</span>`;
                 document.getElementById('creditAmount').value = '';
                 document.getElementById('creditDescription').value = '';
                 document.getElementById('creditUserResult').innerHTML = escapeHtml(`<span style="color:#059669;font-weight:600;">✓ User found — New balance: <strong>$${newBal}</strong></span>`);
             } catch(e) {
-                feedback.innerHTML = `<span style="color:#dc2626;">Error: ${e.message}</span>`);
+                feedback.innerHTML = `<span style="color:#dc2626;">Error: ${e.message}</span>`;
             }
             btn.disabled = false;
             btn.textContent = 'Grant Credits →';
