@@ -3584,6 +3584,9 @@
         }
 
         function viewCourseContent(courseId) {
+            // Debug: Show the course ID being used
+            console.log('Viewing course with ID:', courseId);
+            
             // Create a popup to choose which part of the course to view
             const options = [
                 { label: '📚 Course Content (Progressive)', url: `/courses/${courseId}-progressive.html` },
@@ -3599,6 +3602,9 @@
             const content = `
                 <div style="padding:1rem;">
                     <h3 style="margin-bottom:1rem;">📖 Review Course: ${courseId}</h3>
+                    <div style="background:#f0f9ff;padding:0.5rem;margin-bottom:1rem;border-radius:4px;font-size:0.9rem;">
+                        <strong>Debug Info:</strong> Looking for files like <code>/courses/${courseId}-progressive.html</code>
+                    </div>
                     <p style="color:#6b7280;margin-bottom:1.5rem;">Choose which part of the course to review:</p>
                     ${optionsHtml}
                     <button class="btn btn-primary" onclick="closeViewModal()" style="width:100%;margin-top:1rem;">Close</button>
@@ -3627,10 +3633,22 @@
             document.addEventListener('keydown', escListener);
         }
         
-        function openCourseUrl(url, label) {
-            window.open(url, '_blank');
-            showAdminToast(`Opening: ${label}`, 'info');
-            closeViewModal();
+        async function openCourseUrl(url, label) {
+            try {
+                // Check if URL exists before opening
+                const response = await fetch(url, { method: 'HEAD' });
+                if (response.ok) {
+                    window.open(url, '_blank');
+                    showAdminToast(`Opening: ${label}`, 'info');
+                    closeViewModal();
+                } else {
+                    showAdminToast(`❌ Course not found: ${url}`, 'error');
+                    console.error('Course URL not found:', url);
+                }
+            } catch (error) {
+                showAdminToast(`❌ Error accessing course: ${label}`, 'error');
+                console.error('Error accessing course URL:', url, error);
+            }
         }
         
         function closeViewModal() {

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Course Files Debug</title>
+    <style>
+        body { font-family: monospace; padding: 2rem; max-width: 800px; margin: 0 auto; }
+        .file-list { background: #f8f9fa; padding: 1rem; border-radius: 8px; margin: 1rem 0; }
+        .file-name { color: #059669; font-weight: 600; }
+        .file-type { color: #6b7280; }
+    </style>
+</head>
+<body>
+    <h1>🔍 Course Files Debug</h1>
+    <p><strong>Purpose:</strong> Debug admin course viewing issues by showing actual course file structure.</p>
+    
+    <div class="file-list">
+        <h3>Available Course Files in /courses/ directory:</h3>
+        
+        <h4>Progressive Course Content:</h4>
+        <div class="file-name">✅ /courses/balance-gait-001-progressive.html</div>
+        <div class="file-name">✅ /courses/documentation-001-progressive.html</div>
+        <div class="file-name">✅ /courses/geriatric-care-001-progressive.html</div>
+        <div class="file-name">✅ /courses/healthcare-technology-001-progressive.html</div>
+        <div class="file-name">✅ /courses/infection-control-001-progressive.html</div>
+        <div class="file-name">✅ /courses/joint-replacement-001-progressive.html</div>
+        <div class="file-name">✅ /courses/mobility-fall-001-progressive.html</div>
+        <div class="file-name">✅ /courses/ot-adl-001-progressive.html</div>
+        <div class="file-name">✅ /courses/patient-education-001-progressive.html</div>
+        <div class="file-name">✅ /courses/physical-agents-001-progressive.html</div>
+        <div class="file-name">✅ /courses/post-surgical-001-progressive.html</div>
+        <div class="file-name">✅ /courses/pt-msk-001-progressive.html</div>
+        <div class="file-name">✅ /courses/pt-neuro-001-progressive.html</div>
+        
+        <h4>Quizzes (where available):</h4>
+        <div class="file-name">✅ /courses/pt-msk-001-quiz.html</div>
+        
+        <h4>Feedback Forms:</h4>
+        <div class="file-name">✅ /courses/balance-gait-001-feedback.html</div>
+        <div class="file-name">✅ /courses/documentation-001-feedback.html</div>
+        <div class="file-name">✅ /courses/geriatric-care-001-feedback.html</div>
+        <div class="file-name">✅ /courses/healthcare-technology-001-feedback.html</div>
+        <div class="file-name">✅ /courses/infection-control-001-feedback.html</div>
+        <div class="file-name">✅ /courses/joint-replacement-001-feedback.html</div>
+        <div class="file-name">✅ /courses/mobility-fall-001-feedback.html</div>
+        <div class="file-name">✅ /courses/ot-adl-001-feedback.html</div>
+        <div class="file-name">✅ /courses/patient-education-001-feedback.html</div>
+        <div class="file-name">✅ /courses/physical-agents-001-feedback.html</div>
+        <div class="file-name">✅ /courses/post-surgical-001-feedback.html</div>
+        <div class="file-name">✅ /courses/pt-msk-001-feedback.html</div>
+        <div class="file-name">✅ /courses/pt-neuro-001-feedback.html</div>
+        
+        <h4>Certificate Templates:</h4>
+        <div class="file-name">✅ /courses/balance-gait-001-certificate.html</div>
+        <div class="file-name">✅ /courses/documentation-001-certificate.html</div>
+        <div class="file-name">✅ /courses/geriatric-care-001-certificate.html</div>
+        <div class="file-name">✅ /courses/healthcare-technology-001-certificate.html</div>
+        <div class="file-name">✅ /courses/infection-control-001-certificate.html</div>
+        <div class="file-name">✅ /courses/joint-replacement-001-certificate.html</div>
+        <div class="file-name">✅ /courses/mobility-fall-001-certificate.html</div>
+        <div class="file-name">✅ /courses/ot-adl-001-certificate.html</div>
+        <div class="file-name">✅ /courses/patient-education-001-certificate.html</div>
+        <div class="file-name">✅ /courses/physical-agents-001-certificate.html</div>
+        <div class="file-name">✅ /courses/post-surgical-001-certificate.html</div>
+        <div class="file-name">✅ /courses/pt-msk-001-certificate.html</div>
+        <div class="file-name">✅ /courses/pt-neuro-001-certificate.html</div>
+    </div>
+    
+    <div style="background: #fef3c7; padding: 1rem; border-radius: 8px; margin: 1rem 0;">
+        <h3>🔍 How to Debug Course ID Mismatch:</h3>
+        <ol>
+            <li>Go to Admin → Course Catalog</li>
+            <li>Click "View" on any course</li>
+            <li>Open browser console (F12)</li>
+            <li>Look for the log: "Viewing course with ID: [COURSE_ID]"</li>
+            <li>Compare that ID with the available files above</li>
+        </ol>
+        <p><strong>Expected:</strong> The course ID should match patterns like <code>balance-gait-001</code>, <code>pt-msk-001</code>, etc.</p>
+        <p><strong>If not matching:</strong> The database course IDs need to be updated to match the actual filenames.</p>
+    </div>
+</body>
+</html>
