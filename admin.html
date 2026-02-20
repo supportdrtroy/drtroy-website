@@ -3019,19 +3019,62 @@
         // ─── USER MANAGEMENT — REAL IMPLEMENTATIONS ───────────────────────────────
 
         async function loadUsers() {
-            if (!window.DrTroySupabase) return;
             const tbody = document.getElementById('usersTableBody');
-            if (tbody) tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:#6b7280;padding:2rem;">Loading users from database...</td></tr>';
-
-            const { data: users, error } = await window.DrTroySupabase.getAllUsers();
-            if (error || !users) {
-                if (tbody) tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:#dc2626;padding:2rem;">Failed to load users. Check console for details.</td></tr>';
+            if (!window.DrTroySupabase) {
+                if (tbody) tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:#dc2626;padding:2rem;">❌ Supabase client not initialized</td></tr>';
+                console.error('DrTroySupabase not available');
                 return;
             }
+            
+            if (tbody) tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:#6b7280;padding:2rem;">Loading users from database...</td></tr>';
 
-            _allUsers = users;
-            renderUsersTable(_allUsers);
-            console.log(`✅ Loaded ${users.length} users from Supabase`);
+            try {
+                // Check authentication first
+                const session = await window.DrTroySupabase.getSession();
+                if (!session || !session.user) {
+                    if (tbody) tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:#dc2626;padding:2rem;">❌ Not authenticated - please log in through secure admin access</td></tr>';
+                    console.error('No authenticated session found');
+                    return;
+                }
+                
+                console.log('🔐 Authenticated as:', session.user.email);
+                
+                // Try the getAllUsers function
+                const { data: users, error } = await window.DrTroySupabase.getAllUsers();
+                
+                if (error) {
+                    console.error('getAllUsers error:', error);
+                    let errorMsg = '❌ Supabase test failed: ' + error.message;
+                    
+                    if (error.message.includes('permission denied') || error.message.includes('RLS')) {
+                        errorMsg += '<br><small>💡 This user may not have admin permissions in the database</small>';
+                    } else if (error.message.includes('Failed to fetch') || error.message.includes('fetch')) {
+                        errorMsg += '<br><small>💡 Network/connection issue - check browser console</small>';
+                    }
+                    
+                    if (tbody) tbody.innerHTML = `<tr><td colspan="7" style="text-align:center;color:#dc2626;padding:2rem;">${errorMsg}</td></tr>`;
+                    return;
+                }
+                
+                if (!users) {
+                    if (tbody) tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:#dc2626;padding:2rem;">❌ No data returned from database</td></tr>';
+                    return;
+                }
+
+                _allUsers = users;
+                renderUsersTable(_allUsers);
+                console.log(`✅ Loaded ${users.length} users from Supabase`);
+                
+            } catch (exception) {
+                console.error('loadUsers exception:', exception);
+                let errorMsg = '❌ Supabase test failed: ' + exception.message;
+                
+                if (exception.message.includes('Failed to fetch')) {
+                    errorMsg += '<br><small>💡 Network error - check internet connection</small>';
+                }
+                
+                if (tbody) tbody.innerHTML = `<tr><td colspan="7" style="text-align:center;color:#dc2626;padding:2rem;">${errorMsg}</td></tr>`;
+            }
         }
 
         function renderUsersTable(users) {
