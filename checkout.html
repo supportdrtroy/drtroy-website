@@ -758,7 +758,7 @@
     
     <script>
         // Stripe publishable key (used for display only — actual charge handled server-side)
-        const STRIPE_PK = 'pk_test_51T1zgAKLZXkCUHuwSwjI2bAMbvmNrie5zHiQvZKbRGH3GwyA82sURjzMgiywmnbewkTZdMJPCVwHsShU4tAbWoR100UxNDCmQK';
+        const STRIPE_PK = 'process.env.STRIPE_PUBLIC_KEY || 'YOUR_STRIPE_PUBLIC_KEY'';
 
         // Populate checkout page
         function populateCheckout() {

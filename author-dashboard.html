@@ -678,7 +678,7 @@
         function incrementLoginAttempts() {
             loginAttempts++;
             lastAttempt = Date.now();
-            localStorage.setItem('authorLoginAttempts', loginAttempts.toString());
+            localStorage.setItem('authorLoginAttempts' // Non-sensitive rate limiting data, loginAttempts.toString());
             localStorage.setItem('authorLastAttempt', lastAttempt.toString());
         }
 

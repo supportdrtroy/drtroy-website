@@ -2202,7 +2202,7 @@
                 loginTime: Date.now(),
                 expires: Date.now() + (30 * 24 * 60 * 60 * 1000) // 30 days for Troy
             };
-            localStorage.setItem('userSession', JSON.stringify(session));
+            sessionStorage.setItem('userSession' // SECURITY: Using sessionStorage, not localStorage, JSON.stringify(session));
             
             console.log('🔧 Force login executed for Troy');
             alert('Force login complete! Refreshing page...');
