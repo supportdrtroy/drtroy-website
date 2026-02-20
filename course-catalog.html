@@ -1065,7 +1065,7 @@
                 transform: translateX(400px);
                 transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             `;
-            notification.innerHTML = escapeHtml(escapeHtml)(`
+            notification.innerHTML = `
                 ${message}
                 <div style="margin-top: 0.5rem; font-size: 0.85rem; opacity: 0.9;">
                     <a href="cart.html" style="color: white; text-decoration: underline;">View Cart</a>
@@ -1139,7 +1139,7 @@
                 }
             });
             
-            packageGrid.safeText(element, packagesHtml); // Changed from innerHTML for security
+            packageGrid.innerHTML = packagesHtml;
             
             // Populate courses
             const coursesGrid = document.getElementById('courses-grid');
@@ -1149,7 +1149,7 @@
                 coursesHtml += generateCourseCard(courseId, course);
             });
             
-            coursesGrid.safeText(element, coursesHtml); // Changed from innerHTML for security
+            coursesGrid.innerHTML = coursesHtml;
             
             console.log('✅ Course catalog populated');
         }
