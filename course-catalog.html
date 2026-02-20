@@ -1131,13 +1131,19 @@
             const packageGrid = document.getElementById('package-grid');
             let packagesHtml = '';
             
+            console.log('🔍 DEBUG: PACKAGE_CATALOG has', Object.keys(PACKAGE_CATALOG).length, 'packages');
+            
             // PT | OT (top row), PTA | COTA (bottom row — directly under parent discipline)
             ['PT', 'OT', 'PTA', 'COTA'].forEach(code => {
                 const pkg = PACKAGE_CATALOG[code];
+                console.log('🔍 DEBUG: Processing package', code, pkg?.title);
                 if (pkg && pkg.featured) {
                     packagesHtml += generatePackageCard(pkg);
                 }
             });
+            
+            console.log('🔍 DEBUG: Generated packages HTML length:', packagesHtml.length);
+            console.log('🔍 DEBUG: packageGrid element:', packageGrid);
             
             packageGrid.innerHTML = packagesHtml;
             
@@ -1145,13 +1151,19 @@
             const coursesGrid = document.getElementById('courses-grid');
             let coursesHtml = '';
             
+            console.log('🔍 DEBUG: COURSE_CATALOG has', Object.keys(COURSE_CATALOG).length, 'courses');
+            
             Object.entries(COURSE_CATALOG).forEach(([courseId, course]) => {
+                console.log('🔍 DEBUG: Processing course', courseId, course.title);
                 coursesHtml += generateCourseCard(courseId, course);
             });
             
+            console.log('🔍 DEBUG: Generated HTML length:', coursesHtml.length);
+            console.log('🔍 DEBUG: coursesGrid element:', coursesGrid);
+            
             coursesGrid.innerHTML = coursesHtml;
             
-            console.log('✅ Course catalog populated');
+            console.log('✅ Course catalog populated - courses should now be visible');
         }
 
         // Initialize page
