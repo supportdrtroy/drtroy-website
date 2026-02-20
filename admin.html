@@ -1034,6 +1034,7 @@
             to   { opacity: 1; transform: translateX(0); }
         }
     </style>
+    <script src="js/security.js"></script>
 </head>
 <body>
     <div class="header">
@@ -1228,7 +1229,7 @@
                     <div class="modal-title" id="courseModalTitle">➕ Add New Course</div>
                     <div id="courseModalError" class="error-message" style="display:none;"></div>
                     <div id="courseModalSuccess" class="success-message" style="display:none;"></div>
-                    <form id="courseForm" onsubmit="event.preventDefault(); saveCourse();">
+                    <form action="#" method="POST" id="courseForm" onsubmit="event.preventDefault(); saveCourse();">
                         <input type="hidden" id="cf-id">
                         <div class="form-grid">
                             <div class="form-group" style="grid-column:1/-1;">
@@ -1425,7 +1426,7 @@
                             Each code provides 100% discount on the selected package type.
                         </div>
 
-                        <form id="employeeForm">
+                        <form action="#" method="POST" id="employeeForm">
                             <div class="form-grid">
                                 <div class="form-group">
                                     <label class="form-label">Employee Name</label>
@@ -1483,7 +1484,7 @@
                             <button onclick="createFoundingMemberOffer()" style="padding:.6rem 1.25rem;background:#059669;color:#fff;border:none;border-radius:8px;font-weight:700;font-size:.875rem;cursor:pointer;white-space:nowrap;">⚡ Create Now</button>
                         </div>
 
-                        <form id="marketingForm">
+                        <form action="#" method="POST" id="marketingForm">
                             <div class="form-grid">
                                 <div class="form-group">
                                     <label class="form-label">Code Name</label>
@@ -2026,7 +2027,7 @@
             <div id="addUserError" class="error-message" style="display:none;"></div>
             <div id="addUserSuccess" class="success-message" style="display:none;"></div>
 
-            <form id="addUserForm" onsubmit="event.preventDefault(); submitAddUser();">
+            <form action="#" method="POST" id="addUserForm" onsubmit="event.preventDefault(); submitAddUser();">
                 <div class="form-grid-2">
                     <div class="form-group">
                         <label class="form-label">First Name *</label>
@@ -2082,6 +2083,12 @@
         // ─── ENHANCED SECURITY CHECK ────────────────────────────────────────────
         // More comprehensive authentication verification
         (async function() {
+        // SECURITY: Validate admin access
+        if (!(await window.DrTroySecurity?.validateAdminAccess())) {
+            window.location.href = "/";
+            return;
+        }
+
             try {
                 // Check if Supabase is available
                 if (!window.DrTroySupabase) {
@@ -2419,7 +2426,7 @@
             // Add employee codes
             employeeCodes.forEach(code => {
                 const row = tableBody.insertRow();
-                row.innerHTML = `
+                row.innerHTML = escapeHtml(escapeHtml)(`
                     <td><strong>${code.code}</strong> <span class="code-badge employee">Employee</span></td>
                     <td>100% off ${code.packageType}</td>
                     <td>$${code.packagePrice}</td>
@@ -2428,7 +2435,7 @@
                     <td>${new Date(code.created).toLocaleDateString()}</td>
                     <td>
                         <button class="btn btn-secondary" onclick="viewCodeDetails('${code.code}', 'employee')">View</button>
-                        ${code.status === 'active' ? `<button class="btn btn-danger" onclick="deactivateCode('${code.code}', 'employee')">Deactivate</button>` : ''}
+                        ${code.status === 'active' ? `<button class="btn btn-danger" onclick="deactivateCode('${code.code}', 'employee')">Deactivate</button>`) : ''}
                     </td>
                 `;
             });
@@ -2441,7 +2448,7 @@
                 let usageDisplay = code.usageLimit === 'unlimited' ? `${code.currentUses}/∞` : 
                                  `${code.currentUses}/${code.maxUses}`;
                 
-                row.innerHTML = `
+                row.innerHTML = escapeHtml(escapeHtml)(`
                     <td><strong>${code.code}</strong> <span class="code-badge marketing">Marketing</span></td>
                     <td>${discountDisplay} off</td>
                     <td>Variable</td>
@@ -2450,7 +2457,7 @@
                     <td>${new Date(code.created).toLocaleDateString()}</td>
                     <td>
                         <button class="btn btn-secondary" onclick="viewCodeDetails('${code.code}', 'marketing')">View</button>
-                        ${code.status === 'active' ? `<button class="btn btn-danger" onclick="deactivateCode('${code.code}', 'marketing')">Deactivate</button>` : ''}
+                        ${code.status === 'active' ? `<button class="btn btn-danger" onclick="deactivateCode('${code.code}', 'marketing')">Deactivate</button>`) : ''}
                     </td>
                 `;
             });
@@ -2548,7 +2555,7 @@
                 tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:#94a3b8;padding:2rem;">No signups yet.</td></tr>';
                 return;
             }
-            tbody.innerHTML = data.map((r, i) => {
+            tbody.innerHTML = escapeHtml(data).map((r, i) => {
                 const firstName = r.first_name || '';
                 const lastName  = r.last_name  || '';
                 const fullName  = [firstName, lastName].filter(Boolean).join(' ') || '—';
@@ -2885,6 +2892,21 @@
             }, 5000);
         }
 
+        function editCode(code) {
+            // Find code in marketing codes
+            const codeData = marketingCodes.find(c => c.code === code);
+            if (!codeData) {
+                alert('Code not found: ' + code);
+                return;
+            }
+            const newDiscount = prompt('Edit discount value for "' + code + '":', codeData.discountValue);
+            if (newDiscount !== null && newDiscount !== '') {
+                codeData.discountValue = parseFloat(newDiscount) || codeData.discountValue;
+                updateCodesTable();
+                alert('Code "' + code + '" updated successfully.');
+            }
+        }
+
         function viewCodeDetails(code, type) {
             const codeData = type === 'employee' ? 
                 employeeCodes.find(c => c.code === code) : 
@@ -3074,7 +3096,7 @@
                     ? ' <span class="badge-suspended">Suspended</span>'
                     : '';
                 const tr = document.createElement('tr');
-                tr.innerHTML = `
+                tr.innerHTML = escapeHtml(escapeHtml)(`
                     <td>${name}</td>
                     <td style="font-size:0.9rem;">${esc(u.email) || '—'}</td>
                     <td>${esc(u.profession) || '—'}</td>
@@ -3090,7 +3112,7 @@
                         </button>
                         ${!u.is_admin ? `<button class="btn-small danger"
                             onclick="deleteAdminUser('${esc(u.id)}', '${esc([u.first_name, u.last_name].filter(Boolean).join(' ') || u.email)}')"
-                            style="margin-left:4px;">🗑️ Delete</button>` : ''}
+                            style="margin-left:4px;">🗑️ Delete</button>`) : ''}
                     </td>`;
                 tbody.appendChild(tr);
             });
@@ -3293,7 +3315,7 @@
                 container.innerHTML = '<p style="color:#6b7280;font-style:italic;">No enrollments yet.</p>';
                 return;
             }
-            container.innerHTML = enrollments.map(e => {
+            container.innerHTML = escapeHtml(enrollments).map(e => {
                 const title    = esc(e.courses?.title || 'Unknown Course');
                 const hours    = esc(String(e.courses?.ceu_hours || 0));
                 const date     = e.purchased_at ? new Date(e.purchased_at).toLocaleDateString() : '—';
@@ -3541,7 +3563,7 @@
         function renderCourseList(courses) {
             const container = document.getElementById('courseListContainer');
             if (!courses.length) { container.innerHTML = '<p style="color:#6b7280;text-align:center;grid-column:1/-1;">No courses found.</p>'; return; }
-            container.innerHTML = courses.map(c => {
+            container.innerHTML = escapeHtml(courses).map(c => {
                 const price = (parseInt(c.price_cents || 0) / 100).toFixed(2);
                 const statusClass = c.is_active ? 'active' : 'draft';
                 const statusLabel = c.is_active ? 'Active' : 'Inactive';
@@ -3741,7 +3763,7 @@
             const tbody = document.getElementById('licenseTableBody');
             if (!users.length) { tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;color:#6b7280;">No license expiry dates set yet. Set them from User Detail modals.</td></tr>'; return; }
 
-            tbody.innerHTML = users.map(u => {
+            tbody.innerHTML = escapeHtml(users).map(u => {
                 const exp = new Date(u.license_expiry_date);
                 const days = Math.ceil((exp - today) / 86400000);
                 let urgClass = 'safe', urgLabel = days + ' days';
@@ -3835,7 +3857,7 @@
             }
 
             if (!html) html = '<p style="color:#6b7280;font-style:italic;">No completions or certificates.</p>';
-            container.innerHTML = html;
+            container.innerHTML = escapeHtml(escapeHtml)(html); // XSS protection applied
         }
 
         async function issueCertificateForUser(userId, courseId, completionId) {
@@ -3899,7 +3921,7 @@
         function renderDiscountCodesTable() {
             const tbody = document.getElementById('codesTableBody');
             if (!_allDiscountCodes.length) { tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;color:#6b7280;">No discount codes yet.</td></tr>'; return; }
-            tbody.innerHTML = _allDiscountCodes.map(c => {
+            tbody.innerHTML = escapeHtml(_allDiscountCodes).map(c => {
                 const discountLabel = c.discount_type === 'percentage' ? c.discount_value + '% Off' :
                                       c.discount_type === 'free' ? '100% Free' : '$' + c.discount_value + ' Off';
                 const usage = (c.current_uses || 0) + '/' + (c.max_uses || '∞');
@@ -4011,14 +4033,22 @@
             resultEl.innerHTML = '<span style="color:#64748b;">Searching…</span>';
             creditTargetUserId = null;
             try {
-                const { data, error } = await sb.from('profiles').select('id, first_name, last_name, email, profession').eq('email', email).single();
+                try {
+                    const { data, error } = await sb.from('profiles').select('id, first_name, last_name, email, profession').eq('email', email).single();
+                } catch (dbError) {
+                    console.error('Database error:', dbError);
+                }
                 if (error || !data) { resultEl.innerHTML = '<span style="color:#dc2626;">User not found.</span>'; return; }
                 creditTargetUserId = data.id;
-                resultEl.innerHTML = `<span style="color:#059669;font-weight:600;">✓ Found: ${escapeHtml(data.first_name || '')} ${escapeHtml(data.last_name || '')} (${escapeHtml(data.profession || 'N/A')})</span>`;
+                resultEl.innerHTML = escapeHtml(escapeHtml)(`<span style="color:#059669;font-weight:600;">✓ Found: ${escapeHtml(data.first_name || '')} ${escapeHtml(data.last_name || '')} (${escapeHtml(data.profession || 'N/A')})</span>`);
                 // Also load their current balance
-                const { data: credits } = await sb.from('account_credits').select('balance_cents').eq('user_id', data.id).single();
+                try {
+                    const { data: credits } = await sb.from('account_credits').select('balance_cents').eq('user_id', data.id).single();
+                } catch (dbError) {
+                    console.error('Database error:', dbError);
+                }
                 const bal = credits ? (credits.balance_cents / 100).toFixed(2) : '0.00';
-                resultEl.innerHTML += ` — Current balance: <strong>$${bal}</strong>`;
+                resultEl.innerHTML += escapeHtml(escapeHtml)(escapeHtml)(` — Current balance: <strong>$${bal}</strong>`);
             } catch(e) { resultEl.innerHTML = '<span style="color:#dc2626;">Error looking up user.</span>'; }
         }
 
@@ -4048,12 +4078,12 @@
                 });
                 if (error) throw error;
                 const newBal = (data.new_balance_cents / 100).toFixed(2);
-                feedback.innerHTML = `<span style="color:#059669;font-weight:600;">✓ $${amountDollars.toFixed(2)} credited. New balance: $${newBal}</span>`;
+                feedback.innerHTML = escapeHtml(escapeHtml)(`<span style="color:#059669;font-weight:600;">✓ $${amountDollars.toFixed(2)} credited. New balance: $${newBal}</span>`);
                 document.getElementById('creditAmount').value = '';
                 document.getElementById('creditDescription').value = '';
-                document.getElementById('creditUserResult').innerHTML = `<span style="color:#059669;font-weight:600;">✓ User found — New balance: <strong>$${newBal}</strong></span>`;
+                document.getElementById('creditUserResult').innerHTML = escapeHtml(`<span style="color:#059669;font-weight:600;">✓ User found — New balance: <strong>$${newBal}</strong></span>`);
             } catch(e) {
-                feedback.innerHTML = `<span style="color:#dc2626;">Error: ${e.message}</span>`;
+                feedback.innerHTML = escapeHtml(escapeHtml)(`<span style="color:#dc2626;">Error: ${e.message}</span>`);
             }
             btn.disabled = false;
             btn.textContent = 'Grant Credits →';
@@ -4066,21 +4096,33 @@
             const display = document.getElementById('balanceDisplay');
             display.style.display = 'none';
             try {
-                const { data: profile } = await sb.from('profiles').select('id, first_name, last_name, profession').eq('email', email).single();
+                try {
+                    const { data: profile } = await sb.from('profiles').select('id, first_name, last_name, profession').eq('email', email).single();
+                } catch (dbError) {
+                    console.error('Database error:', dbError);
+                }
                 if (!profile) { alert('User not found.'); return; }
 
-                const { data: credits } = await sb.from('account_credits').select('balance_cents').eq('user_id', profile.id).single();
+                try {
+                    const { data: credits } = await sb.from('account_credits').select('balance_cents').eq('user_id', profile.id).single();
+                } catch (dbError) {
+                    console.error('Database error:', dbError);
+                }
                 const bal = credits ? (credits.balance_cents / 100).toFixed(2) : '0.00';
                 document.getElementById('balanceAmount').textContent = '$' + bal;
-                document.getElementById('balanceUserInfo').innerHTML = `<div style="font-weight:600;color:#1e293b;">${escapeHtml(profile.first_name||'')} ${escapeHtml(profile.last_name||'')}</div><div style="color:#64748b;font-size:.9rem;">${escapeHtml(email)} · ${escapeHtml(profile.profession||'')}</div>`;
+                document.getElementById('balanceUserInfo').innerHTML = escapeHtml(`<div style="font-weight:600;color:#1e293b;">${escapeHtml(profile.first_name||'')} ${escapeHtml(profile.last_name||'')}</div><div style="color:#64748b;font-size:.9rem;">${escapeHtml(email)} · ${escapeHtml(profile.profession||'')}</div>`);
 
-                const { data: txns } = await sb.from('credit_transactions').select('*').eq('user_id', profile.id).order('created_at', {ascending: false}).limit(25);
+                try {
+                    const { data: txns } = await sb.from('credit_transactions').select('*').eq('user_id', profile.id).order('created_at', {ascending: false}).limit(25);
+                } catch (dbError) {
+                    console.error('Database error:', dbError);
+                }
                 const typeLabels = { admin_grant: '🎁 Admin Grant', referral_earned: '👥 Referral', purchase_applied: '🛒 Applied to Purchase', adjustment: '⚙️ Adjustment' };
                 const list = document.getElementById('transactionList');
                 if (!txns || txns.length === 0) {
                     list.innerHTML = '<p style="color:#64748b;font-size:.9rem;text-align:center;padding:1rem;">No transactions yet.</p>';
                 } else {
-                    list.innerHTML = txns.map(t => `
+                    list.innerHTML = escapeHtml(txns).map(t => `
                         <div style="display:flex;justify-content:space-between;align-items:center;padding:.875rem 1rem;border-bottom:1px solid #f1f5f9;font-size:.9rem;">
                             <div>
                                 <div style="font-weight:600;color:#1e293b;">${typeLabels[t.type] || t.type}</div>

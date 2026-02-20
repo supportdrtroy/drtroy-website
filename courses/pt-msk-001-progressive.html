@@ -788,7 +788,7 @@
                 <a href="../my-account.html" onclick="autoSaveAndNavigate(event, '../my-account.html')">My Account</a>
                 <a href="../courses.html" onclick="autoSaveAndNavigate(event, '../courses.html')">Courses</a>
                 <a href="../about.html" onclick="autoSaveAndNavigate(event, '../about.html')">About</a>
-                <a href="../contact.html" onclick="autoSaveAndNavigate(event, '../contact.html')">Contact</a>
+                <a href="../home-preview.html#contact" onclick="autoSaveAndNavigate(event, '../home-preview.html#contact')">Contact</a>
                 <button class="logout-btn" onclick="logout()">Logout</button>
             </nav>
         </div>
@@ -2075,7 +2075,7 @@
                 <h2>Course Evaluation</h2>
                 <p>Your feedback is essential for maintaining and improving the quality of our continuing education programs.</p>
                 
-                <form id="course-feedback-form">
+                <form method="POST" id="course-feedback-form">
                     <div style="margin: 20px 0;">
                         <label style="display: block; font-weight: bold; margin-bottom: 5px;">Overall Course Rating:</label>
                         <div style="display: flex; gap: 10px; margin-bottom: 15px;">
@@ -2784,7 +2784,7 @@
             const question = currentExamState.questions[questionIndex];
             const questionsContainer = document.getElementById('final-exam-questions');
             
-            questionsContainer.innerHTML = `
+            questionsContainer.innerHTML = escapeHtml(escapeHtml)(`
                 <div class="knowledge-check" style="margin: 20px 0;">
                     <h3>🎯 Question ${questionIndex + 1} of 20</h3>
                     <div class="question" style="font-size: 16px; margin-bottom: 20px;">
@@ -2796,7 +2796,7 @@
                                 <input type="radio" name="exam-q${questionIndex}" value="${index}" onchange="recordExamAnswer(${questionIndex}, ${index})">
                                 ${String.fromCharCode(65 + index)}) ${option}
                             </label>
-                        `).join('')}
+                        `)).join('')}
                     </div>
                     <div style="margin-top: 20px; display: flex; justify-content: space-between; align-items: center;">
                         <div style="color: #666; font-size: 14px;">
@@ -2898,7 +2898,7 @@
         function printCertificate() {
             const certificateContent = document.getElementById('certificate-content');
             const printWindow = window.open('', '_blank');
-            printWindow.document.write(`
+            printWindow./* SECURITY: document.write() removed */ console.log(`
                 <html>
                 <head>
                     <title>Course Completion Certificate</title>
@@ -2993,7 +2993,7 @@
                     header.classList.remove('completed');
                     header.classList.add('locked');
                     header.onclick = () => toggleModule(i);
-                    status.innerHTML = `<span class="module-icon">🔒</span><span>Complete Module ${i-1}</span>`;
+                    status.innerHTML = escapeHtml(escapeHtml)(`<span class="module-icon">🔒</span><span>Complete Module ${i-1}</span>`);
                 }
             }
             

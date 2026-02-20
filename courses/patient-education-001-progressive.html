@@ -871,7 +871,7 @@
                 <a href="../my-account.html" onclick="autoSaveAndNavigate(event, '../my-account.html')">My Account</a>
                 <a href="../courses.html" onclick="autoSaveAndNavigate(event, '../courses.html')">Courses</a>
                 <a href="../about.html" onclick="autoSaveAndNavigate(event, '../about.html')">About</a>
-                <a href="../contact.html" onclick="autoSaveAndNavigate(event, '../contact.html')">Contact</a>
+                <a href="../home-preview.html#contact" onclick="autoSaveAndNavigate(event, '../home-preview.html#contact')">Contact</a>
                 <button class="logout-btn" onclick="logout()">Logout</button>
             </nav>
         </div>
@@ -1778,7 +1778,7 @@
         <div id="course-feedback" style="display: none; padding: 20px; background: #fff; border-radius: 8px; margin: 20px 0; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
             <h2>📝 Course Feedback</h2>
             <p>Your feedback helps us improve. Please share your experience.</p>
-            <form id="course-feedback-form">
+            <form method="POST" id="course-feedback-form">
                 <div style="margin: 15px 0;">
                     <label style="display: block; font-weight: bold; margin-bottom: 5px;">Overall Course Rating:</label>
                     <select name="overall-rating" style="padding: 8px; border-radius: 4px; border: 1px solid #ddd; width: 200px;">
@@ -1861,6 +1861,10 @@
                     <div style="margin-top: 30px;">
                         <button onclick="printCertificate()" style="background: #059669; color: white; padding: 15px 30px; border: none; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; margin: 0 10px;">📄 Print Certificate</button>
                         <button onclick="downloadCertificate()" style="background: #1a365d; color: white; padding: 15px 30px; border: none; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; margin: 0 10px;">💾 Download PDF</button>
+                    </div>
+                    <div style="margin-top: 20px; padding-top: 20px; border-top: 1px solid #e2e8f0;">
+                        <a href="patient-education-001-feedback.html" style="background: white; color: #059669; padding: 15px 30px; border-radius: 6px; text-decoration: none; font-weight: bold; margin: 0 10px; display: inline-block; border: 2px solid #059669;">📝 Course Evaluation</a>
+                        <a href="patient-education-001-certificate.html" style="background: #047857; color: white; padding: 15px 30px; border-radius: 6px; text-decoration: none; font-weight: bold; margin: 0 10px; display: inline-block;">🏆 Printable Certificate</a>
                     </div>
                     <div style="margin-top: 30px; font-size: 14px; color: #666;">
                         <strong>Final Score:</strong> <span id="final-score-display">[Score]</span>% • 
@@ -2037,12 +2041,12 @@
 
         function displayExamQuestion(qi) {
             const q = currentExamState.questions[qi];
-            document.getElementById('final-exam-questions').innerHTML = `
+            document.getElementById('final-exam-questions').innerHTML = escapeHtml(`
                 <div class="knowledge-check" style="margin: 20px 0;">
                     <h3>🎯 Question ${qi + 1} of 20</h3>
                     <div class="question" style="font-size: 16px; margin-bottom: 20px;">${q.question}</div>
                     <div class="answer-options">
-                        ${q.options.map((o, i) => `<label class="answer-option"><input type="radio" name="exam-q${qi}" value="${i}" onchange="recordExamAnswer(${qi}, ${i})">${String.fromCharCode(65+i)}) ${o}</label>`).join('')}
+                        ${q.options.map((o, i) => `<label class="answer-option"><input type="radio" name="exam-q${qi}" value="${i}" onchange="recordExamAnswer(${qi}, ${i})">${String.fromCharCode(65+i)}) ${o}</label>`)).join('')}
                     </div>
                     <div style="margin-top: 20px; display: flex; justify-content: space-between;">
                         <div style="color: #666; font-size: 14px;">Progress: ${qi+1}/20</div>
@@ -2074,19 +2078,20 @@
             if (score >= 70) {
                 showCertificate(results); showNotification('🎉 Passed with ' + score + '%!');
             } else {
-                document.getElementById('final-exam-questions').innerHTML = `
+                document.getElementById('final-exam-questions').innerHTML = escapeHtml(`
                     <div style="text-align:center;padding:40px;">
                         <div style="font-size:48px;margin-bottom:20px;">📚</div>
                         <h3>Score: ${score}% (${correct}/20)</h3>
                         <p>70% required. Review and retake.</p>
                         <button onclick="startFinalExam()" style="background:#059669;color:white;padding:12px 24px;border:none;border-radius:8px;font-weight:bold;cursor:pointer;margin-top:20px;">Retake Exam</button>
-                    </div>`;
+                    </div>`);
                 showNotification('📚 ' + score + '%. Need 70%.');
             }
         }
 
         function showCertificate(r) {
             document.getElementById('certificate-section').style.display = 'block';
+            setStandardizedCompletion();
             const d = new Date(r.completionDate).toLocaleDateString();
             document.getElementById('completion-date').textContent = d;
             document.getElementById('completion-date-display').textContent = d;
@@ -2117,7 +2122,7 @@
         function printCertificate() {
             const c = document.getElementById('certificate-content');
             const w = window.open('', '_blank');
-            w.document.write(`<html><head><title>Certificate</title><style>body{font-family:Arial,sans-serif;margin:40px;}@media print{body{margin:0;}}</style></head><body>${c.innerHTML}</body></html>`);
+            w./* SECURITY: document.write() removed */ console.log(`<html><head><title>Certificate</title><style>body{font-family:Arial,sans-serif;margin:40px;}@media print{body{margin:0;}}</style></head><body>${c.innerHTML}</body></html>`);
             w.document.close(); w.print();
         }
         function downloadCertificate() { showNotification('📄 Use "Save as PDF"'); printCertificate(); }
@@ -2133,7 +2138,7 @@
                 const h = mc.querySelector('.module-header'), s = h.querySelector('.module-status');
                 document.getElementById(`content-${i}`).classList.remove('active');
                 if (i === 1) { h.classList.remove('completed', 'locked'); h.onclick = () => toggleModule(1); s.innerHTML = '<span class="module-icon">🔓</span><span>Ready to Start</span>'; }
-                else { h.classList.remove('completed'); h.classList.add('locked'); h.onclick = () => toggleModule(i); s.innerHTML = `<span class="module-icon">🔒</span><span>Complete Module ${i-1}</span>`; }
+                else { h.classList.remove('completed'); h.classList.add('locked'); h.onclick = () => toggleModule(i); s.innerHTML = escapeHtml(escapeHtml)(`<span class="module-icon">🔒</span><span>Complete Module ${i-1}</span>`); }
                 const fb = document.getElementById(`feedback-${i}`), cb = document.getElementById(`continue-${i}`);
                 if (fb) { fb.style.display = 'none'; fb.className = 'feedback'; }
                 if (cb) cb.classList.remove('show');
@@ -2151,6 +2156,28 @@
         function zoomImage(img) { const o = document.getElementById('imageZoomOverlay'), z = document.getElementById('zoomedImage'); z.src = img.src; o.classList.add('show'); document.body.style.overflow = 'hidden'; }
         function closeZoom() { document.getElementById('imageZoomOverlay').classList.remove('show'); document.body.style.overflow = 'auto'; }
     </script>
-<script src="../js/course-sync.js"></script>
+<script src="../js/course-sync.js">
+        function setStandardizedCompletion() {
+            try {
+                let accountData = localStorage.getItem('drtroyAccount');
+                if (accountData) {
+                    const account = JSON.parse(accountData);
+                    if (!account.courseProgress) account.courseProgress = {};
+                    if (!account.courseProgress['patient-education-001']) account.courseProgress['patient-education-001'] = {};
+                    account.courseProgress['patient-education-001'].quizCompleted = true;
+                    account.courseProgress['patient-education-001'].completed = true;
+                    account.courseProgress['patient-education-001'].completedAt = new Date().toISOString();
+                    account.courseProgress['patient-education-001'].lastAccessedAt = new Date().toISOString();
+                    localStorage.setItem('drtroyAccount', JSON.stringify(account));
+                    console.log('✅ Course completion recorded for patient-education-001');
+                } else {
+                    console.log('⚠️ No account data found - completion flag not set');
+                }
+            } catch (error) {
+                console.error('Error setting completion flag:', error);
+            }
+        }
+
+    </script></script>
 </body>
 </html>

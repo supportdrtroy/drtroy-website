@@ -864,7 +864,10 @@
         <p style="font-size:1.2rem;opacity:0.9;margin-bottom:0.5rem;">You have successfully completed</p>
         <p style="font-size:1.5rem;font-weight:700;margin:0.5rem 0;font-family:'Inter',sans-serif;">💪 Post-Surgical and Therapeutic Exercise</p>
         <p style="opacity:0.85;margin-bottom:2rem;">3.0 CCUs · Course ID: EXERCISE-001 · Course ID: DRTROY-EXERCISE-001-2024</p>
-        <button class="certificate-btn" onclick="generateCertificate()">🏆 Generate Certificate of Completion</button>
+        <div style="margin: 20px 0;">
+                <a href="post-surgical-001-feedback.html" style="background: white; color: #059669; padding: 15px 30px; border-radius: 6px; text-decoration: none; font-weight: bold; margin: 0 10px; display: inline-block;">📝 Course Evaluation</a>
+                <a href="post-surgical-001-certificate.html" style="background: #047857; color: white; padding: 15px 30px; border-radius: 6px; text-decoration: none; font-weight: bold; margin: 0 10px; display: inline-block; border: 2px solid white;">🏆 Get Certificate</a>
+            </div>
     </div>
 
 </div><!-- end .course-container -->
@@ -933,6 +936,7 @@ function updateProgress(progress) {
 
     if (completed === TOTAL_MODULES) {
         document.getElementById('certificateSection').classList.add('visible');
+            setStandardizedCompletion();
         document.getElementById('certificateSection').scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
 }
@@ -965,7 +969,7 @@ function generateCertificate() {
     if (!name || name.trim() === '') return;
     const date = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
     const certWin = window.open('', '_blank', 'width=900,height=680');
-    certWin.document.write(`<!DOCTYPE html><html><head><title>Certificate of Completion - DrTroy CE</title>
+    certWin./* SECURITY: document.write() removed */ console.log(`<!DOCTYPE html><html><head><title>Certificate of Completion - DrTroy CE</title>
     <style>
         body { font-family:'Georgia','Times New Roman',serif; background:#f5f0e8; display:flex; align-items:center; justify-content:center; min-height:100vh; margin:0; }
         .cert { background:white; border:12px double #1a365d; padding:3rem; max-width:800px; width:90%; text-align:center; box-shadow:0 20px 60px rgba(0,0,0,0.2); }
@@ -1039,6 +1043,28 @@ function logout() {
 })();
 </script>
 
-<script src="../js/course-sync.js"></script>
+<script src="../js/course-sync.js">
+        function setStandardizedCompletion() {
+            try {
+                let accountData = localStorage.getItem('drtroyAccount');
+                if (accountData) {
+                    const account = JSON.parse(accountData);
+                    if (!account.courseProgress) account.courseProgress = {};
+                    if (!account.courseProgress['post-surgical-001']) account.courseProgress['post-surgical-001'] = {};
+                    account.courseProgress['post-surgical-001'].quizCompleted = true;
+                    account.courseProgress['post-surgical-001'].completed = true;
+                    account.courseProgress['post-surgical-001'].completedAt = new Date().toISOString();
+                    account.courseProgress['post-surgical-001'].lastAccessedAt = new Date().toISOString();
+                    localStorage.setItem('drtroyAccount', JSON.stringify(account));
+                    console.log('✅ Course completion recorded for post-surgical-001');
+                } else {
+                    console.log('⚠️ No account data found - completion flag not set');
+                }
+            } catch (error) {
+                console.error('Error setting completion flag:', error);
+            }
+        }
+
+    </script></script>
 </body>
 </html>

@@ -690,6 +690,7 @@
     <!-- Supabase JS v2 CDN -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
     <script src="js/supabase-client.js"></script>
+    <script src="js/security.js"></script>
 </head>
 
 <body>
@@ -964,7 +965,7 @@
             let actionButtons = '';
             if (course.status === 'available') {
                 actionButtons = `
-                    <a href="${course.url}" class="btn btn-primary">View Course</a>
+                    <a href="#" class="btn btn-primary">View Course</a>
                     <button class="btn btn-outline" onclick="addCourseToCartWithFeedback('${courseId}')">
                         🛒 Add to Cart - $${course.individualPrice}
                     </button>
@@ -1020,12 +1021,7 @@
             try {
                 const result = window.addCourseToCart(courseId);
                 console.log('✅ Add to cart result:', result);
-                
-                if (result) {
-                    showAddNotification(`Course added to cart!`);
-                } else {
-                    showAddNotification('Error adding course to cart', true);
-                }
+                // Note: cart.js already shows notification, no need to duplicate
             } catch (error) {
                 console.error('❌ Error adding course:', error);
                 showAddNotification('Error adding course to cart', true);
@@ -1038,12 +1034,7 @@
             try {
                 const result = window.addPackageToCart(packageCode);
                 console.log('✅ Add package result:', result);
-                
-                if (result) {
-                    showAddNotification(`Package added to cart!`);
-                } else {
-                    showAddNotification('Error adding package to cart', true);
-                }
+                // Note: cart.js already shows notification, no need to duplicate
             } catch (error) {
                 console.error('❌ Error adding package:', error);
                 showAddNotification('Error adding package to cart', true);
@@ -1074,12 +1065,12 @@
                 transform: translateX(400px);
                 transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             `;
-            notification.innerHTML = `
+            notification.innerHTML = escapeHtml(escapeHtml)(`
                 ${message}
                 <div style="margin-top: 0.5rem; font-size: 0.85rem; opacity: 0.9;">
                     <a href="cart.html" style="color: white; text-decoration: underline;">View Cart</a>
                 </div>
-            `;
+            `);
             
             document.body.appendChild(notification);
             
@@ -1148,7 +1139,7 @@
                 }
             });
             
-            packageGrid.innerHTML = packagesHtml;
+            packageGrid.safeText(element, packagesHtml); // Changed from innerHTML for security
             
             // Populate courses
             const coursesGrid = document.getElementById('courses-grid');
@@ -1158,7 +1149,7 @@
                 coursesHtml += generateCourseCard(courseId, course);
             });
             
-            coursesGrid.innerHTML = coursesHtml;
+            coursesGrid.safeText(element, coursesHtml); // Changed from innerHTML for security
             
             console.log('✅ Course catalog populated');
         }
@@ -1224,7 +1215,22 @@
                 if (!window.DrTroySupabase) return;
                 const sb = window.DrTroySupabase.getClient ? window.DrTroySupabase.getClient() : null;
                 if (!sb) return;
-                sb.auth.getSession().then(({ data: { session } }) => {
+                                // Wait for DrTroySupabase to be available
+                if (!window.DrTroySupabase) {
+                    setTimeout(() => {
+                        (async () => { 
+                            const session = await window.DrTroySupabase?.getSession(); 
+                            if (session) {
+                                updateAuthUI(true, session.user);
+                            } else {
+                                updateAuthUI(false);
+                            }
+                        })();
+                    }, 100);
+                    return;
+                }
+                
+                (async () => { const session = await window.DrTroySupabase?.getSession(); if (session) {
                     if (session && session.user) {
                         link.textContent = 'My Account';
                         link.href = 'my-account.html';

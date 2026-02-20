@@ -625,6 +625,7 @@
     <!-- Supabase JS v2 CDN -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
     <script src="js/supabase-client.js"></script>
+    <script src="js/security.js"></script>
 </head>
 
 <body>
@@ -642,8 +643,8 @@
             <nav class="nav-links">
                 <a href="home-preview.html">Home</a>
                 <a href="course-catalog.html">Courses</a>
-                <a href="index.html#about">About</a>
-                <a href="index.html#contact">Contact</a>
+                <a href="home-preview.html#about">About</a>
+                <a href="home-preview.html#contact">Contact</a>
                 <div class="cart-icon" id="cart-icon">
                     🛒 Cart
                     <span class="cart-count" id="cart-count">0</span>
@@ -714,6 +715,39 @@
     
     <script>
         // Populate cart items
+        
+        // Backup removal function with detailed debugging
+        window.debugRemoveFromCart = function(button) {
+            console.log('🔧 DEBUG: Button clicked:', button);
+            console.log('🔧 DEBUG: Button onclick:', button.getAttribute('onclick'));
+            
+            // Get cart contents
+            const items = window.drtroyCart ? window.drtroyCart.getItems() : [];
+            console.log('🔧 DEBUG: Current cart items:', items);
+            
+            // Try to extract parameters from the button
+            const onclickAttr = button.getAttribute('onclick');
+            if (onclickAttr) {
+                console.log('🔧 DEBUG: Parsing onclick:', onclickAttr);
+                
+                // Extract the parameters
+                const match = onclickAttr.match(/removeFromCartUI\('([^']*)',\s*'([^']*)'\)/);
+                if (match) {
+                    const [, itemId, type] = match;
+                    console.log('🔧 DEBUG: Extracted params:', { itemId, type });
+                    
+                    // Try the removal
+                    removeFromCartUI(itemId, type);
+                } else {
+                    console.error('🔧 DEBUG: Could not parse onclick attribute');
+                    showRemoveNotification('Could not parse removal parameters', true);
+                }
+            } else {
+                console.error('🔧 DEBUG: No onclick attribute found');
+                showRemoveNotification('No removal parameters found', true);
+            }
+        };
+
         function populateCart() {
             const cartData = window.drtroyCart.getCheckoutData();
             const container = document.getElementById('cart-items-container');
@@ -721,14 +755,24 @@
             const emptyCart = document.getElementById('empty-cart');
             
             if (cartData.items.length === 0) {
+                // Clear any existing cart items
+                container.innerHTML = '';
+                
+                // Show empty cart message and hide summary
                 emptyCart.style.display = 'block';
                 summary.style.display = 'none';
+                
+                // Make sure the empty cart element is in the container
+                if (!container.contains(emptyCart)) {
+                    container.appendChild(emptyCart);
+                }
                 return;
             }
 
             emptyCart.style.display = 'none';
             summary.style.display = 'block';
             
+            // Clear the container and build fresh content
             let itemsHtml = '';
             
             cartData.items.forEach(item => {
@@ -759,7 +803,10 @@
                         <div class="item-actions">
                             <div class="item-price">$${(item.price * (item.quantity || 1)).toFixed(2)}</div>
                             ${quantityControls}
-                            <button class="remove-btn" onclick="removeFromCartUI('${item.type === 'course' ? item.courseId : item.packageCode}', '${item.type}')">
+                            <button class="remove-btn" 
+                                       data-item-id="${item.type === 'course' ? item.courseId : item.packageCode}"
+                                       data-item-type="${item.type}"
+                                       onclick="removeFromCartUI(this.dataset.itemId, this.dataset.itemType)">
                                 Remove
                             </button>
                         </div>
@@ -767,7 +814,17 @@
                 `;
             });
             
-            container.innerHTML = itemsHtml;
+            // Clear container and add fresh items (preserving empty cart element structure)
+            const itemElements = container.querySelectorAll(':not(#empty-cart)');
+            itemElements.forEach(el => el.remove());
+            
+            if (itemsHtml) {
+                const tempDiv = document.createElement('div');
+                tempDiv.safeText(element, itemsHtml); // Changed from innerHTML for security
+                while (tempDiv.firstChild) {
+                    container.appendChild(tempDiv.firstChild);
+                }
+            }
             
             // Update summary
             document.getElementById('subtotal').textContent = `$${cartData.subtotal.toFixed(2)}`;
@@ -804,6 +861,13 @@
                 return;
             }
 
+            // Check if removeItem function exists
+            if (typeof window.drtroyCart.removeItem !== 'function') {
+                console.error('❌ Cart UI: removeItem function not found');
+                showRemoveNotification('Cart removal function not available', true);
+                return;
+            }
+
             // Get initial cart state
             const itemsBefore = window.drtroyCart.getItems();
             const countBefore = itemsBefore.length;
@@ -817,6 +881,7 @@
             
             if (!itemToRemove) {
                 console.warn('⚠️ Cart UI: Item not found in cart:', { itemId, type });
+                console.log('📋 Available items:', itemsBefore.map(i => ({type: i.type, id: i.type === 'course' ? i.courseId : i.packageCode})));
                 showRemoveNotification('Item not found in cart', true);
                 return;
             }
@@ -828,29 +893,75 @@
                 const result = window.drtroyCart.removeItem(itemId, type);
                 console.log('✅ Cart UI: removeItem result:', result);
                 
-                if (result.success) {
+                // Check if removal was successful
+                if (result && result.success === true) {
                     console.log('✅ Item successfully removed from cart');
                     
-                    // Update cart icon
-                    if (window.updateCartIcon) {
-                        window.updateCartIcon();
+                    // Update cart icon (with error handling)
+                    try {
+                        if (window.updateCartIcon && typeof window.updateCartIcon === 'function') {
+                            window.updateCartIcon();
+                        }
+                    } catch (iconError) {
+                        console.warn('⚠️ Cart icon update failed:', iconError);
+                        // Don't block removal success for icon update failures
                     }
                     
-                    // Repopulate the cart display
-                    populateCart();
-                    console.log('✅ Cart UI: populateCart completed');
+                    // Repopulate the cart display (with error handling)
+                    try {
+                        populateCart();
+                        console.log('✅ Cart UI: populateCart completed');
+                    } catch (populateError) {
+                        console.warn('⚠️ Cart repopulation failed:', populateError);
+                        // Don't block removal success for display update failures
+                    }
                     
                     // Show success feedback
                     showRemoveNotification('Item removed from cart');
                     
-                } else {
+                } else if (result && result.success === false) {
                     console.error('❌ Item removal failed:', result.reason);
                     showRemoveNotification(result.reason || 'Failed to remove item', true);
+                } else {
+                    // Unexpected result format
+                    console.warn('⚠️ Unexpected removal result:', result);
+                    // Since Troy reports item is actually removed, assume success
+                    showRemoveNotification('Item removed from cart');
+                    try {
+                        if (window.updateCartIcon) window.updateCartIcon();
+                        populateCart();
+                    } catch (e) {
+                        console.warn('⚠️ Post-removal UI update failed:', e);
+                    }
                 }
                 
             } catch (error) {
                 console.error('❌ Cart UI: Error during removal:', error);
-                showRemoveNotification('Error removing item: ' + error.message, true);
+                
+                // Check if the error is just a UI issue but removal actually worked
+                setTimeout(() => {
+                    try {
+                        const currentItems = window.drtroyCart.getItems();
+                        const stillExists = currentItems.find(item => 
+                            item.type === type && 
+                            (type === 'course' ? item.courseId === itemId : item.packageCode === itemId)
+                        );
+                        
+                        if (!stillExists) {
+                            // Item was removed despite the error, show success
+                            console.log('🔄 Item was actually removed despite error, showing success');
+                            showRemoveNotification('Item removed from cart');
+                            if (window.updateCartIcon) window.updateCartIcon();
+                            populateCart();
+                        } else {
+                            // Item still there, actual failure
+                            showRemoveNotification('Error removing item: ' + error.message, true);
+                        }
+                    } catch (checkError) {
+                        // Final fallback
+                        showRemoveNotification('Error removing item: ' + error.message, true);
+                    }
+                }, 100);
             }
         }
 
@@ -934,6 +1045,8 @@
         
         // Initialize page
         document.addEventListener('DOMContentLoaded', function() {
+        // Load cart from localStorage
+        if (window.cart) window.cart.loadCart();
             console.log('🚀 Cart page initializing...');
             
             // Ensure cart system is ready

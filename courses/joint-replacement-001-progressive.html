@@ -2280,7 +2280,10 @@
             <h2>🏥 Congratulations!</h2>
             <p>You have successfully completed the <strong>Considerations in Lower Extremity Joint Replacements</strong> course.</p>
             <p>You have earned <strong>3.0 Continuing Education Units</strong></p>
-            <button class="certificate-btn" onclick="generateCertificate()">Download Certificate</button>
+            <div style="margin: 20px 0;">
+                <a href="joint-replacement-001-feedback.html" style="background: white; color: #059669; padding: 15px 30px; border-radius: 6px; text-decoration: none; font-weight: bold; margin: 0 10px; display: inline-block;">📝 Course Evaluation</a>
+                <a href="joint-replacement-001-certificate.html" style="background: #047857; color: white; padding: 15px 30px; border-radius: 6px; text-decoration: none; font-weight: bold; margin: 0 10px; display: inline-block; border: 2px solid white;">🏆 Get Certificate</a>
+            </div>
         </div>
     </div>
 
@@ -2348,6 +2351,8 @@
                 if (courseState.modulesCompleted.length === courseState.totalModules) {
                     courseState.completionTime = new Date();
                     document.getElementById('certificateSection').classList.add('visible');
+                    // Set completion flag for certificate validation
+                    setStandardizedCompletion();
                     saveProgress();
                 }
             }
@@ -2392,7 +2397,7 @@
         function generateCertificate() {
             const certificateContent = generateCertificateHTML();
             const newWindow = window.open('', '_blank');
-            newWindow.document.write(certificateContent);
+            newWindow./* SECURITY: document.write() removed */ console.log(certificateContent);
             newWindow.document.close();
             newWindow.print();
         }

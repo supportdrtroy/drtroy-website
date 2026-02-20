@@ -1253,7 +1253,10 @@
     <h2>Congratulations! Course Complete!</h2>
     <p>You have successfully completed all 12 modules of <strong>Infection Control and Patient Safety</strong>. You have earned <strong>3.0 Continuing Competency Units (CCUs)</strong>.</p>
     <p style="font-size:0.85rem; opacity:0.7; margin-top:8px;">Course ID: INFECTION-001 | Course ID: DRTROY-INFECTION-001-2024</p>
-    <button class="cert-btn" onclick="generateCertificate()">🎓 Generate & Print Certificate</button>
+    <div style="margin: 20px 0;">
+                <a href="infection-control-001-feedback.html" style="background: white; color: #059669; padding: 15px 30px; border-radius: 6px; text-decoration: none; font-weight: bold; margin: 0 10px; display: inline-block;">📝 Course Evaluation</a>
+                <a href="infection-control-001-certificate.html" style="background: #047857; color: white; padding: 15px 30px; border-radius: 6px; text-decoration: none; font-weight: bold; margin: 0 10px; display: inline-block; border: 2px solid white;">🏆 Get Certificate</a>
+            </div>
   </div>
 
 </main>
@@ -1359,6 +1362,7 @@ function updateProgress() {
   if (text) text.textContent = count + ' of ' + TOTAL_MODULES + ' modules complete';
   if (count === TOTAL_MODULES) {
     document.getElementById('certificate-section').classList.add('visible');
+      setStandardizedCompletion();
   }
 }
 
@@ -1394,7 +1398,7 @@ function generateCertificate() {
   const now = new Date();
   const dateStr = now.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
   const win = window.open('', '_blank', 'width=900,height=700');
-  win.document.write(`<!DOCTYPE html>
+  win./* SECURITY: document.write() removed */ console.log(`<!DOCTYPE html>
 <html>
 <head>
 <title>Certificate of Completion — Infection Control and Patient Safety</title>
@@ -1493,6 +1497,28 @@ document.addEventListener('DOMContentLoaded', function() {
   if (firstIncomplete) toggleModule(firstIncomplete);
 });
 </script>
-<script src="../js/course-sync.js"></script>
+<script src="../js/course-sync.js">
+        function setStandardizedCompletion() {
+            try {
+                let accountData = localStorage.getItem('drtroyAccount');
+                if (accountData) {
+                    const account = JSON.parse(accountData);
+                    if (!account.courseProgress) account.courseProgress = {};
+                    if (!account.courseProgress['infection-control-001']) account.courseProgress['infection-control-001'] = {};
+                    account.courseProgress['infection-control-001'].quizCompleted = true;
+                    account.courseProgress['infection-control-001'].completed = true;
+                    account.courseProgress['infection-control-001'].completedAt = new Date().toISOString();
+                    account.courseProgress['infection-control-001'].lastAccessedAt = new Date().toISOString();
+                    localStorage.setItem('drtroyAccount', JSON.stringify(account));
+                    console.log('✅ Course completion recorded for infection-control-001');
+                } else {
+                    console.log('⚠️ No account data found - completion flag not set');
+                }
+            } catch (error) {
+                console.error('Error setting completion flag:', error);
+            }
+        }
+
+    </script></script>
 </body>
 </html>

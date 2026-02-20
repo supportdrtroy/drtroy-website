@@ -1369,7 +1369,10 @@
     <span class="cert-ccu">3.0 CCUs Earned</span>
     <p style="font-size:13px; opacity:.75;">Course ID: DOCUMENTATION-001 | Course ID: DRTROY-DOC-001-2024</p>
     <p id="certNameLine" style="margin-top:12px; font-size:15px;"></p>
-    <button class="cert-btn" onclick="generateCertificate()">Download Certificate</button>
+    <div style="margin: 20px 0;">
+                <a href="documentation-001-feedback.html" style="background: white; color: #059669; padding: 15px 30px; border-radius: 6px; text-decoration: none; font-weight: bold; margin: 0 10px; display: inline-block;">📝 Course Evaluation</a>
+                <a href="documentation-001-certificate.html" style="background: #047857; color: white; padding: 15px 30px; border-radius: 6px; text-decoration: none; font-weight: bold; margin: 0 10px; display: inline-block; border: 2px solid white;">🏆 Get Certificate</a>
+            </div>
   </div>
 
 </main>
@@ -1537,7 +1540,8 @@
 
   // ── Certificate ─────────────────────────────────────────────────
   function showCertificate() {
-    const cert = document.getElementById('certificateSection');
+    const cert = document.getElementById('certificateSection')
+        setStandardizedCompletion();;
     if (!cert) return;
 
     // Ask for name if not already stored
@@ -1632,6 +1636,28 @@
   });
 </script>
 
-<script src="../js/course-sync.js"></script>
+<script src="../js/course-sync.js">
+        function setStandardizedCompletion() {
+            try {
+                let accountData = localStorage.getItem('drtroyAccount');
+                if (accountData) {
+                    const account = JSON.parse(accountData);
+                    if (!account.courseProgress) account.courseProgress = {};
+                    if (!account.courseProgress['documentation-001']) account.courseProgress['documentation-001'] = {};
+                    account.courseProgress['documentation-001'].quizCompleted = true;
+                    account.courseProgress['documentation-001'].completed = true;
+                    account.courseProgress['documentation-001'].completedAt = new Date().toISOString();
+                    account.courseProgress['documentation-001'].lastAccessedAt = new Date().toISOString();
+                    localStorage.setItem('drtroyAccount', JSON.stringify(account));
+                    console.log('✅ Course completion recorded for documentation-001');
+                } else {
+                    console.log('⚠️ No account data found - completion flag not set');
+                }
+            } catch (error) {
+                console.error('Error setting completion flag:', error);
+            }
+        }
+
+    </script></script>
 </body>
 </html>

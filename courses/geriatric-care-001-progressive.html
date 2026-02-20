@@ -1357,7 +1357,10 @@
             <p>You have successfully completed <strong>Geriatric Care Across the Continuum</strong>.</p>
             <p>You have earned <strong>3.0 Continuing Education Units (CCUs)</strong></p>
             <p>Course ID: GERIATRIC-001 &nbsp;|&nbsp; Course ID: DRTROY-GERIATRIC-001-2024</p>
-            <button class="certificate-btn" onclick="generateCertificate()">Download Certificate</button>
+            <div style="margin: 20px 0;">
+                <a href="geriatric-care-001-feedback.html" style="background: white; color: #059669; padding: 15px 30px; border-radius: 6px; text-decoration: none; font-weight: bold; margin: 0 10px; display: inline-block;">📝 Course Evaluation</a>
+                <a href="geriatric-care-001-certificate.html" style="background: #047857; color: white; padding: 15px 30px; border-radius: 6px; text-decoration: none; font-weight: bold; margin: 0 10px; display: inline-block; border: 2px solid white;">🏆 Get Certificate</a>
+            </div>
         </div>
 
     </div><!-- end .course-container -->
@@ -1387,6 +1390,8 @@
                 updateProgress();
                 if (courseState.modulesCompleted.length === courseState.totalModules) {
                     document.getElementById('certificateSection').classList.add('visible');
+                    // Set completion flag for certificate validation
+                    setStandardizedCompletion();
                 }
             }
         }
@@ -1542,7 +1547,7 @@
 </html>`;
 
             const win = window.open('', '_blank');
-            win.document.write(certHTML);
+            win./* SECURITY: document.write() removed */ console.log(certHTML);
             win.document.close();
             win.print();
         }

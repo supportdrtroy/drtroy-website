@@ -751,7 +751,7 @@
             <p>Discipline-specific packages for Texas PTs, PTAs, OTs, and COTAs — designed to cover your required hours at one fair price.</p>
             <div class="cta-buttons">
                 <a href="course-catalog.html" class="btn-primary">Browse CE Packages →</a>
-                <a href="course-catalog.html#courses-section" class="btn-secondary">View All Courses</a>
+                <a href="course-catalog.html" class="btn-secondary">View All Courses</a>
             </div>
         </div>
     </section>
@@ -814,14 +814,14 @@
             
             function showMessage(message, type) {
                 messagesDiv.style.display = 'block';
-                messagesDiv.innerHTML = `
+                messagesDiv.innerHTML = escapeHtml(escapeHtml)(`
                     <div style="padding: 0.75rem; border-radius: 6px; font-size: 0.9rem; 
                                background-color: ${type === 'success' ? '#d1fae5' : '#fee2e2'}; 
                                color: ${type === 'success' ? '#065f46' : '#991b1b'}; 
                                border: 1px solid ${type === 'success' ? '#a7f3d0' : '#fecaca'};">
                         ${message}
                     </div>
-                `;
+                `);
             }
             
             form.addEventListener('submit', async (e) => {

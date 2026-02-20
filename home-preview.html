@@ -705,6 +705,7 @@
     <meta name="twitter:title" content="DrTroy CE — Continuing Education for PT, OT">
     <meta name="twitter:description" content="Earn your required Texas CCUs online. Discipline-specific packages for PTs, PTAs, OTs, and COTAs. Built by practicing clinicians.">
     <meta name="twitter:image" content="https://drtroy.com/courses/images/og-preview.jpg">
+    <script src="js/security.js"></script>
 </head>
 
 <body>
@@ -712,7 +713,7 @@
     <header class="header">
         <div class="header-container">
             <div class="logo">
-                <a href="index.html">
+                <a href="home-preview.html">
                     <img src="courses/images/drtroy_logo_new.jpg" alt="DrTroy Continuing Education">
                 </a>
             </div>
@@ -720,7 +721,7 @@
                 <span></span><span></span><span></span>
             </button>
             <nav class="nav-links">
-                <a href="index.html">Home</a>
+                <a href="home-preview.html">Home</a>
                 <a href="course-catalog.html">Courses</a>
                 <a href="#about">About</a>
                 <a href="#contact">Contact</a>
@@ -949,7 +950,7 @@
                     <h2 id="account-title" style="font-family: 'Playfair Display', Georgia, serif; font-size: 1.75rem; font-weight: 600; color: var(--primary-navy); margin-bottom: 1rem;">Create Your Free Account</h2>
                     <p style="color: var(--neutral-600); margin-bottom: 1rem; font-size: 0.95rem; line-height: 1.6;">New customers save $10 on bundles and save your course progress. Pick up right where you left off.</p>
                     <p style="color: var(--accent-emerald); font-weight: 600; margin-bottom: 2rem; font-size: 0.95rem;">Get a $10 credit on future purchases when you refer a colleague!</p>
-                    <form id="account-form" autocomplete="off">
+                    <form action="#" method="POST" id="account-form" autocomplete="off">
                         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 1.5rem;">
                             <div>
                                 <label style="display: block; margin-bottom: 0.75rem; font-weight: 600; color: var(--neutral-700); font-size: 0.95rem; text-align: left;">Email Address</label>
@@ -1057,7 +1058,7 @@
             
             // Update account form title to reflect selection
             const accountTitle = document.getElementById('account-title');
-            accountTitle.innerHTML = `Create Account to Get ${packageName}`;
+            accountTitle.innerHTML = escapeHtml(escapeHtml)(`Create Account to Get ${packageName}`);
             accountTitle.style.color = 'var(--accent-emerald)';
             
             // Add selection indicator to form
@@ -1097,10 +1098,10 @@
                 max-width: 350px;
                 text-align: center;
             `;
-            confirmation.innerHTML = `
+            confirmation.innerHTML = escapeHtml(escapeHtml)(`
                 <div style="margin-bottom: 0.5rem;">📦 ${packageName} Selected!</div>
                 <div style="font-size: 0.85rem; opacity: 0.9;">Create your free account below to get started</div>
-            `;
+            `);
             
             document.body.appendChild(confirmation);
             
@@ -1219,7 +1220,23 @@
                 if (!window.DrTroySupabase) return;
                 const sb = window.DrTroySupabase.getClient ? window.DrTroySupabase.getClient() : null;
                 if (!sb) return;
-                sb.auth.getSession().then(({ data: { session } }) => {
+                                // Wait for DrTroySupabase to be available
+                if (!window.DrTroySupabase) {
+                    setTimeout(() => {
+                        (async () => { 
+                            const session = await window.DrTroySupabase?.getSession(); 
+                            if (session) {
+                                updateAuthUI(true, session.user);
+                            } else {
+                                updateAuthUI(false);
+                            }
+                        })();
+                    }, 100);
+                    return;
+                }
+                
+                (async () => {
+                    const session = await window.DrTroySupabase?.getSession();
                     if (session && session.user) {
                         link.textContent = 'My Account';
                         link.href = 'my-account.html';
@@ -1227,7 +1244,7 @@
                         link.textContent = 'Log In';
                         link.href = 'my-account.html';
                     }
-                });
+                })();
             }
             if (document.readyState === 'loading') {
                 document.addEventListener('DOMContentLoaded', updateNavLink);

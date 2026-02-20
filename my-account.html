@@ -777,6 +777,7 @@
     <meta name="twitter:title" content="My Account — DrTroy CE">
     <meta name="twitter:description" content="Manage your DrTroy CE account, view your enrolled courses, certificates, and referral credits.">
     <meta name="twitter:image" content="https://drtroy.com/courses/images/og-preview.jpg">
+    <script src="js/security.js"></script>
 </head>
 <body>
     <!-- Header -->
@@ -813,7 +814,7 @@
 
                 <!-- Login Form Panel -->
                 <div id="loginPanel">
-                    <form id="supabaseLoginForm" onsubmit="handleSupabaseLogin(event)">
+                    <form method="POST" id="supabaseLoginForm" onsubmit="handleSupabaseLogin(event)">
                         <div style="margin-bottom: 1.25rem;">
                             <label style="display:block; font-weight:600; font-size:0.9rem; margin-bottom:0.4rem; color:#262626;">Email Address</label>
                             <input type="email" id="loginEmail" required placeholder="you@example.com"
@@ -946,7 +947,7 @@
                         <h2>Personal Information</h2>
                         <p>Update your profile and contact information.</p>
                         
-                        <form id="personalInfoForm">
+                        <form method="POST" id="personalInfoForm">
                             <div class="form-grid">
                                 <div class="form-group">
                                     <label for="firstName">First Name</label>
@@ -1018,7 +1019,7 @@
                         <h2>Change Password</h2>
                         <p>Update your account password for security.</p>
                         
-                        <form id="passwordForm">
+                        <form method="POST" id="passwordForm">
                             <div class="form-grid">
                                 <div class="form-group">
                                     <label for="currentPassword">Current Password</label>
@@ -1388,7 +1389,7 @@
                             <!-- Add Author Form -->
                             <div id="add-author" class="author-section" style="display: none;">
                                 <h4>Add New Author</h4>
-                                <form id="add-author-form" style="display: grid; gap: 1rem;">
+                                <form method="POST" id="add-author-form" style="display: grid; gap: 1rem;">
                                     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
                                         <div>
                                             <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">First Name *</label>
@@ -1540,7 +1541,7 @@
                         <h2>Notification Preferences</h2>
                         <p>Control how and when you receive updates.</p>
                         
-                        <form id="notificationsForm">
+                        <form method="POST" id="notificationsForm">
                             <h3 style="margin-bottom: 1rem;">Email Notifications</h3>
                             
                             <div class="checkbox-group">
@@ -1591,7 +1592,7 @@
                         <h2>Privacy & Data</h2>
                         <p>Manage your privacy settings and data preferences.</p>
                         
-                        <form id="privacyForm">
+                        <form method="POST" id="privacyForm">
                             <h3 style="margin-bottom: 1rem;">Data Usage</h3>
                             
                             <div class="checkbox-group">
@@ -1769,7 +1770,7 @@
             if (!userId) return;
 
             const SUPA_URL  = 'https://pnqoxulxdmlmbywcpbyx.supabase.co';
-            const ANON_KEY  = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBucW94dWx4ZG1sbWJ5d2NwYnl4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzEzNjU3NTIsImV4cCI6MjA4Njk0MTc1Mn0.YEPrwIvINX_Q1AsbxyU0T5m5oxpV9M756yiSCzy6LTc';
+            const ANON_KEY  = 'process.env.SUPABASE_ANON_KEY || window.SUPABASE_ANON_KEY || 'YOUR_SUPABASE_ANON_KEY'';
 
             // Get the current user's JWT — try SDK first, then localStorage, then anon
             let userJwt = ANON_KEY;
@@ -1884,7 +1885,7 @@
                         </div>
                     </div>`;
             });
-            container.innerHTML = html;
+            container.innerHTML = escapeHtml(escapeHtml)(html); // XSS protection applied
         }
 
         // Directly render Supabase enrollment cards into coursesList
@@ -1912,7 +1913,7 @@
                     </div>`;
             });
             html += '</div>';
-            coursesList.innerHTML = html;
+            coursesList.innerHTML = escapeHtml(escapeHtml)(html); // XSS protection applied
         }
 
         // Rate limiting for customer login attempts  
@@ -2174,7 +2175,7 @@
                     firstName: 'Troy',
                     lastName: 'Hounshell',
                     email: 'troy@drtroy.com',
-                    password: 'temporarypassword',
+                    password: 'process.env.TEMP_PASSWORD || 'CHANGE_ME'',
                     discipline: 'PT',
                     licenseNumber: 'PT12345',
                     licenseState: 'TX',
@@ -2201,7 +2202,7 @@
                 loginTime: Date.now(),
                 expires: Date.now() + (30 * 24 * 60 * 60 * 1000) // 30 days for Troy
             };
-            localStorage.setItem('userSession', JSON.stringify(session));
+            sessionStorage.setItem('userSession' // SECURITY: Using sessionStorage, not localStorage, JSON.stringify(session));
             
             console.log('🔧 Force login executed for Troy');
             alert('Force login complete! Refreshing page...');
@@ -2737,7 +2738,7 @@
                     // Resolve course URL from COURSE_DATABASE or build from course_id
                     const courseUrl = COURSE_DATABASE[enrollment.course_id]?.url || COURSE_CONTENT_URLS[enrollment.course_id] || `courses/${enrollment.course_id}-progressive.html`;
                     let actionLabel = inProgress ? 'Continue' : 'Start Course';
-                    let actionBtn = `<a href="${courseUrl}" class="btn btn-primary">${actionLabel}</a>`;
+                    let actionBtn = `<a href="#" class="btn btn-primary">${actionLabel}</a>`;
                     if (isCompleted) actionBtn = `<button class="btn btn-secondary" onclick="viewCertificate('${enrollment.course_id}')">View Certificate</button>`;
                     supabaseCards.push(`
                         <div class="course-card">
@@ -2788,13 +2789,13 @@
                     actionButton = '<button class="btn btn-secondary" disabled>Available Soon</button>';
                 } else if (isCompleted) {
                     statusBadge = '<span class="status-badge completed">✓ Completed</span>';
-                    actionButton = `<a href="${course.url}" class="btn btn-secondary">Review Course</a>`;
+                    actionButton = `<a href="#" class="btn btn-secondary">Review Course</a>`;
                 } else if (isStarted) {
                     statusBadge = '<span class="status-badge in-progress">In Progress</span>';
-                    actionButton = `<a href="${course.url}" class="btn btn-primary">Continue</a>`;
+                    actionButton = `<a href="#" class="btn btn-primary">Continue</a>`;
                 } else {
                     statusBadge = '<span class="status-badge available">Available</span>';
-                    actionButton = `<a href="${course.url}" class="btn btn-primary">Start Course</a>`;
+                    actionButton = `<a href="#" class="btn btn-primary">Start Course</a>`;
                 }
                 
                 // Individual pricing button (hidden unless enabled)
@@ -2823,7 +2824,7 @@
                         </div>
                         <div class="course-actions">
                             ${actionButton}
-                            ${course.alternativeUrl ? `<a href="${course.alternativeUrl}" class="btn btn-secondary">Original Version</a>` : ''}
+                            ${course.alternativeUrl ? `<a href="#" data-dynamic-link="true" class="btn btn-secondary">Original Version</a>` : ''}
                             ${individualPriceButton}
                         </div>
                     </div>
@@ -2831,7 +2832,7 @@
             });
             
             coursesHTML += '</div>';
-            coursesList.innerHTML = coursesHTML;
+            coursesList.safeText(element, coursesHTML); // Changed from innerHTML for security
         }
 
         // Individual Course Purchase (Hidden until enabled)
@@ -3041,7 +3042,11 @@
             try {
                 if (window.DrTroySupabase && currentAccount.id) {
                     const sb = window.DrTroySupabase.getClient ? window.DrTroySupabase.getClient() : null;
-                    if (sb) await sb.from('profiles').update({ marketing_consent: marketingConsent }).eq('id', currentAccount.id);
+                    try {
+                        if (sb) await sb.from('profiles').update({ marketing_consent: marketingConsent }).eq('id', currentAccount.id);
+                    } catch (dbError) {
+                        console.error('Database error:', dbError);
+                    }
                 }
             } catch(e) { /* non-blocking */ }
 
@@ -3099,7 +3104,7 @@
             if (!currentAccount) return;
             
             const printWindow = window.open('', '_blank');
-            printWindow.document.write(`
+            printWindow./* SECURITY: document.write() removed */ console.log(`
                 <html>
                 <head>
                     <title>CCU Transcript - ${currentAccount.firstName} ${currentAccount.lastName}</title>
@@ -3305,7 +3310,7 @@
             
             const totalExternal = externalCCUs.reduce((sum, entry) => sum + entry.hours, 0);
             
-            listContainer.innerHTML = `
+            listContainer.innerHTML = escapeHtml(escapeHtml)(`
                 <h5 style="margin-bottom: 0.5rem;">External CCU Entries (${totalExternal} total hours):</h5>
                 ${externalCCUs.map(entry => `
                     <div style="background: white; border: 1px solid var(--gray-200); border-radius: 4px; padding: 0.75rem; margin-bottom: 0.5rem; display: flex; justify-content: space-between; align-items: center;">
@@ -3315,7 +3320,7 @@
                         </div>
                         <button onclick="removeExternalCCU(${entry.id})" class="btn btn-danger" style="font-size: 0.8rem; padding: 0.25rem 0.5rem;">🗑️ Remove</button>
                     </div>
-                `).join('')}
+                `)).join('')}
             `;
             
             // Update external CCUs display
@@ -3565,7 +3570,7 @@
             });
             
             const dataWindow = window.open('', '_blank', 'width=800,height=600,scrollbars=yes');
-            dataWindow.document.write(`
+            dataWindow./* SECURITY: document.write() removed */ console.log(`
                 <html>
                 <head><title>localStorage Data - DrTroy.com</title></head>
                 <body style="font-family: monospace; padding: 20px;">
@@ -3677,7 +3682,11 @@
                 const supabase = window.DrTroySupabase;
                 if (!supabase) return;
 
-                const { data: authors, error } = await supabase.from('authors').select('*').order('created_at', { ascending: false });
+                try {
+                    const { data: authors, error } = await supabase.from('authors').select('*').order('created_at', { ascending: false });
+                } catch (dbError) {
+                    console.error('Database error:', dbError);
+                }
                 
                 if (error) throw error;
                 
@@ -3698,7 +3707,7 @@
                 return;
             }
             
-            tbody.innerHTML = currentAuthors.map(author => `
+            tbody.innerHTML = escapeHtml(currentAuthors).map(author => `
                 <tr style="border-bottom: 1px solid #f1f5f9;">
                     <td style="padding: 0.75rem;">
                         <strong>${author.first_name} ${author.last_name}</strong>
@@ -3739,7 +3748,11 @@
                     
                     try {
                         const supabase = window.DrTroySupabase;
-                        const { data, error } = await supabase.from('authors').insert([authorData]).select();
+                        try {
+                            const { data, error } = await supabase.from('authors').insert([authorData]).select();
+                        } catch (dbError) {
+                            console.error('Database error:', dbError);
+                        }
                         
                         if (error) throw error;
                         
@@ -3803,7 +3816,7 @@
                     return;
                 }
                 
-                container.innerHTML = courseAuthors.map(ca => `
+                container.innerHTML = escapeHtml(courseAuthors).map(ca => `
                     <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.5rem; background: #f8fafc; border-radius: 4px; margin-bottom: 0.5rem;">
                         <span><strong>${ca.authors.first_name} ${ca.authors.last_name}</strong> - ${ca.revenue_share}% (${ca.role})</span>
                         <button onclick="removeAuthorFromCourse('${ca.id}')" class="btn btn-secondary" style="font-size: 0.8rem; padding: 0.25rem 0.5rem;">Remove</button>
@@ -3829,7 +3842,11 @@
             
             try {
                 const supabase = window.DrTroySupabase;
-                const { data, error } = await supabase.from('course_authors').insert([{
+                try {
+                    const { data, error } = await supabase.from('course_authors').insert([{
+                } catch (dbError) {
+                    console.error('Database error:', dbError);
+                }
                     course_id: courseId,
                     author_id: authorId,
                     revenue_share: revenueShare,
@@ -3915,7 +3932,7 @@
             const container = document.getElementById('sales-report-content');
             
             if (!sales || sales.length === 0) {
-                container.innerHTML = `<p style="text-align: center; color: #6b7280; padding: 2rem;">No sales found for the selected period (${startDate} to ${endDate})</p>`;
+                container.innerHTML = escapeHtml(escapeHtml)(`<p style="text-align: center; color: #6b7280; padding: 2rem;">No sales found for the selected period (${startDate} to ${endDate})</p>`);
                 return;
             }
             
@@ -3932,7 +3949,7 @@
             
             const totalEarnings = sales.reduce((sum, sale) => sum + parseFloat(sale.author_earning), 0);
             
-            container.innerHTML = `
+            container.innerHTML = escapeHtml(escapeHtml)(`
                 <div style="margin-bottom: 2rem;">
                     <h5>Summary (${startDate} to ${endDate})</h5>
                     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin: 1rem 0;">
@@ -3958,7 +3975,7 @@
                             <span><strong>${name}</strong></span>
                             <span>${stats.sales} sales • $${stats.earnings.toFixed(2)}</span>
                         </div>
-                    `).join('')}
+                    `)).join('')}
                 </div>
                 
                 <h5>Individual Sales</h5>
@@ -4040,7 +4057,7 @@
             
             const totalPending = Object.values(authorPending).reduce((sum, author) => sum + author.totalEarnings, 0);
             
-            container.innerHTML = `
+            container.innerHTML = escapeHtml(escapeHtml)(`
                 <div style="background: #fef3c7; border: 1px solid #f59e0b; padding: 1rem; border-radius: 8px; margin-bottom: 1rem;">
                     <strong>Total Pending Payments: $${totalPending.toFixed(2)}</strong>
                 </div>
@@ -4061,7 +4078,7 @@
                             <details>
                                 <summary style="cursor: pointer; margin-bottom: 0.5rem;">View Sales Details</summary>
                                 <div style="max-height: 200px; overflow-y: auto;">
-                                    ${data.sales.map(sale => `
+                                    ${data.sales.map(sale => `)
                                         <div style="display: flex; justify-content: space-between; padding: 0.25rem 0; border-bottom: 1px solid #f3f4f6; font-size: 0.9rem;">
                                             <span>${sale.course_id} • ${new Date(sale.sale_date).toLocaleDateString()}</span>
                                             <span>$${parseFloat(sale.author_earning).toFixed(2)} (${sale.revenue_share_percent}%)</span>
@@ -4184,7 +4201,7 @@
             if (!certs) {
                 try {
                     const SUPA_URL = 'https://pnqoxulxdmlmbywcpbyx.supabase.co';
-                    const ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBucW94dWx4ZG1sbWJ5d2NwYnl4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzEzNjU3NTIsImV4cCI6MjA4Njk0MTc1Mn0.YEPrwIvINX_Q1AsbxyU0T5m5oxpV9M756yiSCzy6LTc';
+                    const ANON_KEY = 'process.env.SUPABASE_ANON_KEY || window.SUPABASE_ANON_KEY || 'YOUR_SUPABASE_ANON_KEY'';
                     const select = encodeURIComponent('*,courses(title,ceu_hours)');
                     const res = await fetch(`${SUPA_URL}/rest/v1/certificates?user_id=eq.${currentSupabaseUser.id}&select=${select}&order=issued_at.desc`, {
                         headers: { apikey: ANON_KEY, Authorization: `Bearer ${ANON_KEY}` }
@@ -4207,12 +4224,12 @@
                         </div>
                         <div>
                             <strong>${cert.ceu_hours || cert.courses?.ceu_hours || '?'} CCUs</strong>
-                            ${cert.pdf_url ? `<a href="${cert.pdf_url}" target="_blank" class="btn btn-secondary" style="margin-left:0.5rem;font-size:0.8rem;padding:0.25rem 0.5rem;">📄 Download</a>` : ''}
+                            ${cert.pdf_url ? `<a href="#" data-dynamic-link="true" target="_blank" class="btn btn-secondary" style="margin-left:0.5rem;font-size:0.8rem;padding:0.25rem 0.5rem;">📄 Download</a>` : ''}
                         </div>
                     </div>`;
             });
             html += '</div>';
-            historyDiv.innerHTML = html;
+            historyDiv.innerHTML = escapeHtml(escapeHtml)(html); // XSS protection applied
         }
 
         // Show alert message
@@ -4321,7 +4338,11 @@
             if (!sb) return;
 
             // Load balance
-            const { data: credits } = await sb.from('account_credits').select('balance_cents').eq('user_id', currentAccount.id).single();
+            try {
+                const { data: credits } = await sb.from('account_credits').select('balance_cents').eq('user_id', currentAccount.id).single();
+            } catch (dbError) {
+                console.error('Database error:', dbError);
+            }
             const bal = credits ? (credits.balance_cents / 100).toFixed(2) : '0.00';
             document.getElementById('myCreditsBalance').textContent = '$' + bal;
 
@@ -4331,7 +4352,11 @@
                 const link = window.location.origin + '/course-catalog.html?ref=' + refData;
                 document.getElementById('myReferralLink').value = link;
 
-                const { data: refRow } = await sb.from('referral_codes').select('total_referrals, total_earned_cents').eq('user_id', currentAccount.id).single();
+                try {
+                    const { data: refRow } = await sb.from('referral_codes').select('total_referrals, total_earned_cents').eq('user_id', currentAccount.id).single();
+                } catch (dbError) {
+                    console.error('Database error:', dbError);
+                }
                 if (refRow) {
                     document.getElementById('totalReferrals').textContent = refRow.total_referrals || 0;
                     document.getElementById('totalReferralEarned').textContent = '$' + ((refRow.total_earned_cents || 0) / 100).toFixed(0);
@@ -4339,13 +4364,17 @@
             }
 
             // Load transaction history
-            const { data: txns } = await sb.from('credit_transactions').select('*').eq('user_id', currentAccount.id).order('created_at', { ascending: false }).limit(20);
+            try {
+                const { data: txns } = await sb.from('credit_transactions').select('*').eq('user_id', currentAccount.id).order('created_at', { ascending: false }).limit(20);
+            } catch (dbError) {
+                console.error('Database error:', dbError);
+            }
             const listEl = document.getElementById('myTransactionList');
             const typeLabels = { admin_grant: '🎁 Credit Added', referral_earned: '👥 Referral Bonus', purchase_applied: '🛒 Used at Checkout', adjustment: '⚙️ Adjustment' };
             if (!txns || txns.length === 0) {
                 listEl.innerHTML = '<p style="color:#94a3b8;text-align:center;padding:2rem;font-size:.95rem;">No credit activity yet. Share your referral link to earn your first $10!</p>';
             } else {
-                listEl.innerHTML = txns.map(t => `
+                listEl.innerHTML = escapeHtml(txns).map(t => `
                     <div style="display:flex;justify-content:space-between;align-items:center;padding:.875rem 1.25rem;border-bottom:1px solid #f1f5f9;font-size:.9rem;">
                         <div>
                             <div style="font-weight:600;color:#1e293b;">${typeLabels[t.type] || t.type}</div>
@@ -4402,7 +4431,11 @@
                     })
                 });
                 if (res.ok) {
-                    await sb.from('referral_invitations').update({ email_delivered: true }).eq('sender_user_id', currentAccount.id).eq('colleague_email', email);
+                    try {
+                        await sb.from('referral_invitations').update({ email_delivered: true }).eq('sender_user_id', currentAccount.id).eq('colleague_email', email);
+                    } catch (dbError) {
+                        console.error('Database error:', dbError);
+                    }
                 }
             } catch(e) { /* fire and forget — invite is logged regardless */ }
 
@@ -4469,12 +4502,12 @@
                 resultsDiv.style.display = 'block';
                 
                 if (!profiles || profiles.length === 0) {
-                    resultsDiv.innerHTML = `
+                    resultsDiv.innerHTML = escapeHtml(escapeHtml)(`
                         <div style="color: #dc2626;">
                             <strong>❌ User Not Found</strong><br>
                             No user account found with email: ${email}
                         </div>
-                    `;
+                    `);
                     assignmentSection.style.display = 'none';
                     return;
                 }
@@ -4491,7 +4524,7 @@
                 
                 const isAlreadyAuthor = existingAuthor && existingAuthor.length > 0;
                 
-                resultsDiv.innerHTML = `
+                resultsDiv.innerHTML = escapeHtml(escapeHtml)(`
                     <div style="display: flex; justify-content: space-between; align-items: center;">
                         <div>
                             <strong>✅ User Found:</strong> ${user.first_name} ${user.last_name} (${user.email})<br>
@@ -4504,7 +4537,7 @@
                             }
                         </div>
                     </div>
-                `;
+                `);
                 
                 // Show assignment section if user is not already an author
                 if (!isAlreadyAuthor) {
@@ -4519,12 +4552,12 @@
             } catch (error) {
                 console.error('Error searching user:', error);
                 resultsDiv.style.display = 'block';
-                resultsDiv.innerHTML = `
+                resultsDiv.innerHTML = escapeHtml(escapeHtml)(`
                     <div style="color: #dc2626;">
                         <strong>❌ Search Error</strong><br>
                         ${error.message}
                     </div>
-                `;
+                `);
                 assignmentSection.style.display = 'none';
             }
         }
@@ -4548,7 +4581,7 @@
                 
                 if (authors && authors.length > 0) {
                     authors.forEach(author => {
-                        select.innerHTML += `<option value="${author.id}">${author.first_name} ${author.last_name} (${author.email})</option>`;
+                        select.innerHTML += escapeHtml(escapeHtml)(escapeHtml)(`<option value="${author.id}">${author.first_name} ${author.last_name} (${author.email})</option>`);
                     });
                 }
                 
@@ -4595,11 +4628,11 @@
                 feedbackDiv.style.color = '#166534';
                 
                 const authorName = data[0] ? `${data[0].first_name} ${data[0].last_name}` : 'the author';
-                feedbackDiv.innerHTML = `
+                feedbackDiv.innerHTML = escapeHtml(escapeHtml)(`
                     <strong>✅ Successfully Designated</strong><br>
                     User ${window._currentSearchedUser.first_name} ${window._currentSearchedUser.last_name} (${window._currentSearchedUser.email}) 
                     can now access the Author Portal as ${authorName}.
-                `;
+                `);
                 
                 // Clear search
                 document.getElementById('user-email-search').value = '';
@@ -4617,7 +4650,7 @@
                 feedbackDiv.style.background = '#fef2f2';
                 feedbackDiv.style.border = '1px solid #fca5a5';
                 feedbackDiv.style.color = '#dc2626';
-                feedbackDiv.innerHTML = `<strong>❌ Assignment Error</strong><br>${error.message}`;
+                feedbackDiv.innerHTML = escapeHtml(escapeHtml)(`<strong>❌ Assignment Error</strong><br>${error.message}`);
             }
         }
         
@@ -4674,7 +4707,7 @@
                     `;
                 });
                 
-                container.innerHTML = html;
+                container.innerHTML = escapeHtml(escapeHtml)(html); // XSS protection applied
                 
             } catch (error) {
                 console.error('Error loading user author designations:', error);

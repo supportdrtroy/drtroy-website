@@ -18,7 +18,7 @@
   'use strict';
 
   const SUPABASE_URL = 'https://pnqoxulxdmlmbywcpbyx.supabase.co';
-  const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBucW94dWx4ZG1sbWJ5d2NwYnl4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzEzNjU3NTIsImV4cCI6MjA4Njk0MTc1Mn0.YEPrwIvINX_Q1AsbxyU0T5m5oxpV9M756yiSCzy6LTc';
+  const SUPABASE_ANON_KEY = 'process.env.SUPABASE_ANON_KEY || window.SUPABASE_ANON_KEY || 'YOUR_SUPABASE_ANON_KEY'';
 
   /* ── Detect course ID from <html data-course-id="..."> ── */
   function getCourseId() {
@@ -90,6 +90,18 @@
     });
   }
 
+
+  /* ── Wait for DrTroySupabase wrapper ── */
+  function waitForDrTroySupabase(timeout) {
+    return new Promise(function (resolve, reject) {
+      var start = Date.now();
+      (function check() {
+        if (window.DrTroySupabase && window.DrTroySupabase.getSession) return resolve();
+        if (Date.now() - start > timeout) return reject(new Error('DrTroySupabase timeout'));
+        setTimeout(check, 50);
+      })();
+    });
+  }
   /* ── Main guard logic ── */
   async function runGuard() {
     var courseId = getCourseId();
@@ -102,19 +114,24 @@
 
     try {
       await waitForSupabase(8000);
+      // Also wait for DrTroySupabase wrapper to be available
+      await waitForDrTroySupabase(3000);
     } catch (e) {
-      // If Supabase CDN fails to load, deny access (fail closed)
+      // If Supabase CDN or wrapper fails to load, deny access (fail closed)
+      console.error('[course-guard]', e);
       redirectLogin();
       return;
     }
 
-    var sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
-      auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: true }
-    });
+    // Use shared DrTroySupabase instance for consistent auth state
+    if (!window.DrTroySupabase) {
+      console.error('[course-guard] DrTroySupabase not available');
+      redirectLogin();
+      return;
+    }
 
-    /* 1. Check session */
-    var sessionRes = await sb.auth.getSession();
-    var session = sessionRes.data && sessionRes.data.session;
+    /* 1. Check session using shared wrapper */
+    var session = await window.DrTroySupabase.getSession();
     if (!session || !session.user) {
       redirectLogin();
       return;
@@ -123,14 +140,14 @@
     var userId = session.user.id;
 
     /* 2. Check admin status */
-    var profileRes = await sb.from('profiles').select('is_admin').eq('id', userId).single();
+    var profileRes = await window.DrTroySupabase.getClient().from('profiles').select('is_admin').eq('id', userId).single();
     if (profileRes.data && profileRes.data.is_admin === true) {
       removeOverlay();
       return; // Admins can access everything
     }
 
     /* 3. Check enrollment */
-    var enrollRes = await sb.from('enrollments')
+    var enrollRes = await window.DrTroySupabase.getClient().from('enrollments')
       .select('id')
       .eq('user_id', userId)
       .eq('course_id', courseId)
