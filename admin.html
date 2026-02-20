@@ -2588,8 +2588,9 @@
                 console.warn(`❌ Could not find content for tab: ${tabName}`);
             }
             
-            // Save current tab to localStorage
+            // Save current tab to localStorage AND URL hash
             localStorage.setItem('currentAdminTab', tabName);
+            window.location.hash = tabName;
             console.log(`💾 Saved tab: ${tabName}`);
             
             // Load data when switching to specific tabs
@@ -2610,36 +2611,54 @@
 
         // Restore saved tab on page load
         function restoreSavedTab() {
-            const savedTab = localStorage.getItem('currentAdminTab') || 'dashboard';
+            // Check URL hash first, then localStorage, fallback to dashboard
+            let targetTab = 'dashboard';
+            
+            if (window.location.hash) {
+                const hashTab = window.location.hash.replace('#', '');
+                if (['dashboard', 'users', 'courses', 'emails', 'licenses', 'discount-codes', 'credits', 'waitlist'].includes(hashTab)) {
+                    targetTab = hashTab;
+                }
+            } else {
+                const savedTab = localStorage.getItem('currentAdminTab');
+                if (savedTab && ['dashboard', 'users', 'courses', 'emails', 'licenses', 'discount-codes', 'credits', 'waitlist'].includes(savedTab)) {
+                    targetTab = savedTab;
+                }
+            }
+            
+            console.log(`🔄 Restoring tab: ${targetTab}`);
             
             // Always clear all active states first
             document.querySelectorAll('.main-tab').forEach(tab => tab.classList.remove('active'));
             document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
             
             // Activate the correct tab
-            const tabButton = document.querySelector(`[onclick="switchMainTab('${savedTab}')"]`);
-            const tabContent = document.getElementById(savedTab);
+            const tabButton = document.querySelector(`[onclick*="switchMainTab('${targetTab}')"]`);
+            const tabContent = document.getElementById(targetTab);
             
             if (tabButton && tabContent) {
                 tabButton.classList.add('active');
                 tabContent.classList.add('active');
                 
+                // Update localStorage to match
+                localStorage.setItem('currentAdminTab', targetTab);
+                
                 // Load data for the active tab
-                if (savedTab === 'dashboard') {
+                if (targetTab === 'dashboard') {
                     updateDashboard();
-                } else if (savedTab === 'users') {
+                } else if (targetTab === 'users') {
                     loadUsers();
-                } else if (savedTab === 'courses') {
+                } else if (targetTab === 'courses') {
                     loadCourses();
-                } else if (savedTab === 'emails') {
+                } else if (targetTab === 'emails') {
                     loadEmailData();
-                } else if (savedTab === 'licenses') {
+                } else if (targetTab === 'licenses') {
                     loadLicenseData();
-                } else if (savedTab === 'discount-codes') {
+                } else if (targetTab === 'discount-codes') {
                     updateDiscountCodeStats();
                 }
                 
-                console.log(`✅ Restored tab: ${savedTab}`);
+                console.log(`✅ Restored tab: ${targetTab}`);
             } else {
                 // Fallback: activate dashboard
                 document.querySelector(`[onclick="switchMainTab('dashboard')"]`).classList.add('active');
@@ -4099,6 +4118,12 @@
                 }
             }
         }
+
+        // Handle browser back/forward navigation
+        window.addEventListener('hashchange', function() {
+            console.log('🔄 Hash changed, restoring tab');
+            restoreSavedTab();
+        });
 
         // Initialize when page loads
         document.addEventListener('DOMContentLoaded', async function() {
