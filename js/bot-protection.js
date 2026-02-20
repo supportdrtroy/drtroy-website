@@ -11,6 +11,7 @@
         maxRequestsPerMinute: 10,
         blockDuration: 300000, // 5 minutes
         sensitivePages: ['/course-catalog.html', '/courses/', '/checkout.html'],
+        // ADMIN REMOVED - '/admin.html' excluded to allow admin access
         blockedUserAgents: [
             'bot', 'crawler', 'spider', 'scraper', 'ahrefs', 'semrush', 
             'moz', 'screaming frog', 'wget', 'curl', 'python', 'scrapy'
