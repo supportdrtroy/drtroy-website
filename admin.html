@@ -3587,12 +3587,22 @@
             // Debug: Show the course ID being used
             console.log('Viewing course with ID:', courseId);
             
+            // Map database course IDs to actual filenames
+            const courseIdMapping = {
+                'core-mobility-001': 'mobility-fall-001',
+                // Add more mappings as needed
+            };
+            
+            // Use mapped ID if available, otherwise use original ID
+            const actualCourseId = courseIdMapping[courseId] || courseId;
+            console.log('Mapped to actual course file:', actualCourseId);
+            
             // Create a popup to choose which part of the course to view
             const options = [
-                { label: '📚 Course Content (Progressive)', url: `/courses/${courseId}-progressive.html` },
-                { label: '📝 Quiz (if available)', url: `/courses/${courseId}-quiz.html` },
-                { label: '📋 Feedback Form', url: `/courses/${courseId}-feedback.html` },
-                { label: '🏆 Certificate Template', url: `/courses/${courseId}-certificate.html` }
+                { label: '📚 Course Content (Progressive)', url: `/courses/${actualCourseId}-progressive.html` },
+                { label: '📝 Quiz (if available)', url: `/courses/${actualCourseId}-quiz.html` },
+                { label: '📋 Feedback Form', url: `/courses/${actualCourseId}-feedback.html` },
+                { label: '🏆 Certificate Template', url: `/courses/${actualCourseId}-certificate.html` }
             ];
             
             let optionsHtml = options.map((opt, i) => 
@@ -3603,7 +3613,11 @@
                 <div style="padding:1rem;">
                     <h3 style="margin-bottom:1rem;">📖 Review Course: ${courseId}</h3>
                     <div style="background:#f0f9ff;padding:0.5rem;margin-bottom:1rem;border-radius:4px;font-size:0.9rem;">
-                        <strong>Debug Info:</strong> Looking for files like <code>/courses/${courseId}-progressive.html</code>
+                        <strong>Debug Info:</strong> 
+                        ${actualCourseId !== courseId 
+                            ? `Database ID <code>${courseId}</code> mapped to file <code>${actualCourseId}</code>`
+                            : `Looking for files like <code>/courses/${courseId}-progressive.html</code>`
+                        }
                     </div>
                     <p style="color:#6b7280;margin-bottom:1.5rem;">Choose which part of the course to review:</p>
                     ${optionsHtml}
