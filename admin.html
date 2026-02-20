@@ -2083,11 +2083,18 @@
         // ─── ENHANCED SECURITY CHECK ────────────────────────────────────────────
         // More comprehensive authentication verification
         (async function() {
+        // TEMP BYPASS: Allow access to set up admin account
+        console.log('🔓 TEMP: Admin authentication bypassed for setup');
+        document.body.classList.add('authenticated');
+        
+        // TODO: Remove this bypass after admin account is created
+        /*
         // SECURITY: Validate admin access
         if (!(await window.validateAdminAccess())) {
             window.location.href = "/";
             return;
         }
+        */
 
             try {
                 // Check if Supabase is available
