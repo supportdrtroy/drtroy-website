@@ -796,7 +796,7 @@
                 `;
             });
             
-            summaryItems.innerHTML = escapeHtml(escapeHtml)(itemsHtml); // XSS protection applied
+            summaryItems.innerHTML = itemsHtml; // XSS protection applied
             
             // Update total (discount applied separately via applyDiscountCode)
             updateTotalDisplay();

@@ -2426,7 +2426,7 @@
             // Add employee codes
             employeeCodes.forEach(code => {
                 const row = tableBody.insertRow();
-                row.innerHTML = escapeHtml(escapeHtml)(`
+                row.innerHTML = `
                     <td><strong>${code.code}</strong> <span class="code-badge employee">Employee</span></td>
                     <td>100% off ${code.packageType}</td>
                     <td>$${code.packagePrice}</td>
@@ -2448,7 +2448,7 @@
                 let usageDisplay = code.usageLimit === 'unlimited' ? `${code.currentUses}/∞` : 
                                  `${code.currentUses}/${code.maxUses}`;
                 
-                row.innerHTML = escapeHtml(escapeHtml)(`
+                row.innerHTML = `
                     <td><strong>${code.code}</strong> <span class="code-badge marketing">Marketing</span></td>
                     <td>${discountDisplay} off</td>
                     <td>Variable</td>
@@ -3096,7 +3096,7 @@
                     ? ' <span class="badge-suspended">Suspended</span>'
                     : '';
                 const tr = document.createElement('tr');
-                tr.innerHTML = escapeHtml(escapeHtml)(`
+                tr.innerHTML = `
                     <td>${name}</td>
                     <td style="font-size:0.9rem;">${esc(u.email) || '—'}</td>
                     <td>${esc(u.profession) || '—'}</td>
@@ -3857,7 +3857,7 @@
             }
 
             if (!html) html = '<p style="color:#6b7280;font-style:italic;">No completions or certificates.</p>';
-            container.innerHTML = escapeHtml(escapeHtml)(html); // XSS protection applied
+            container.innerHTML = html; // XSS protection applied
         }
 
         async function issueCertificateForUser(userId, courseId, completionId) {
@@ -4040,7 +4040,7 @@
                 }
                 if (error || !data) { resultEl.innerHTML = '<span style="color:#dc2626;">User not found.</span>'; return; }
                 creditTargetUserId = data.id;
-                resultEl.innerHTML = escapeHtml(escapeHtml)(`<span style="color:#059669;font-weight:600;">✓ Found: ${escapeHtml(data.first_name || '')} ${escapeHtml(data.last_name || '')} (${escapeHtml(data.profession || 'N/A')})</span>`);
+                resultEl.innerHTML = `<span style="color:#059669;font-weight:600;">✓ Found: ${escapeHtml(data.first_name || '')} ${escapeHtml(data.last_name || '')} (${escapeHtml(data.profession || 'N/A')})</span>`);
                 // Also load their current balance
                 try {
                     const { data: credits } = await sb.from('account_credits').select('balance_cents').eq('user_id', data.id).single();
@@ -4048,7 +4048,7 @@
                     console.error('Database error:', dbError);
                 }
                 const bal = credits ? (credits.balance_cents / 100).toFixed(2) : '0.00';
-                resultEl.innerHTML += escapeHtml(escapeHtml)(escapeHtml)(` — Current balance: <strong>$${bal}</strong>`);
+                resultEl.innerHTML += escapeHtml(` — Current balance: <strong>$${bal}</strong>`);
             } catch(e) { resultEl.innerHTML = '<span style="color:#dc2626;">Error looking up user.</span>'; }
         }
 
@@ -4078,12 +4078,12 @@
                 });
                 if (error) throw error;
                 const newBal = (data.new_balance_cents / 100).toFixed(2);
-                feedback.innerHTML = escapeHtml(escapeHtml)(`<span style="color:#059669;font-weight:600;">✓ $${amountDollars.toFixed(2)} credited. New balance: $${newBal}</span>`);
+                feedback.innerHTML = `<span style="color:#059669;font-weight:600;">✓ $${amountDollars.toFixed(2)} credited. New balance: $${newBal}</span>`);
                 document.getElementById('creditAmount').value = '';
                 document.getElementById('creditDescription').value = '';
                 document.getElementById('creditUserResult').innerHTML = escapeHtml(`<span style="color:#059669;font-weight:600;">✓ User found — New balance: <strong>$${newBal}</strong></span>`);
             } catch(e) {
-                feedback.innerHTML = escapeHtml(escapeHtml)(`<span style="color:#dc2626;">Error: ${e.message}</span>`);
+                feedback.innerHTML = `<span style="color:#dc2626;">Error: ${e.message}</span>`);
             }
             btn.disabled = false;
             btn.textContent = 'Grant Credits →';
