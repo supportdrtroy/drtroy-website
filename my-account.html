@@ -785,7 +785,7 @@
         <div class="header-container">
             <div class="logo">
                 <a href="home-preview.html">
-                    <img src="courses/images/drtroy_logo_transparent.jpg" alt="DrTroy Continuing Education">
+                    <img src="courses/images/drtroy_logo_new.jpg" alt="DrTroy Continuing Education">
                 </a>
             </div>
             <button class="hamburger" aria-label="Open menu">
@@ -805,7 +805,7 @@
     <!-- Main Content -->
     <main class="container">
         <!-- Login Form -->
-        <div id="loginRequired" class="login-required" style="display: block;">
+        <div id="loginRequired" class="login-required" style="display: none;">
             <div style="max-width: 420px; margin: 3rem auto; background: white; border-radius: 12px; padding: 2.5rem; box-shadow: 0 4px 24px rgba(0,0,0,0.08);">
                 <h2 style="font-family: 'Playfair Display', serif; font-size: 1.75rem; margin-bottom: 0.5rem; color: #1a365d;">Welcome Back</h2>
                 <p style="color: #737373; margin-bottom: 2rem; font-size: 0.95rem;">Sign in to access your courses and certificates.</p>
@@ -1670,16 +1670,8 @@
                 });
             }
 
-            // Check existing session with timeout failsafe
-            try {
-                await Promise.race([
-                    checkLoginStatus(),
-                    new Promise((_, reject) => setTimeout(() => reject(new Error('Auth timeout')), 3000))
-                ]);
-            } catch (error) {
-                console.warn('🚨 Auth check timeout or error, showing login form:', error.message);
-                showLoginRequired();
-            }
+            // Check existing session
+            await checkLoginStatus();
         });
 
         // Check login status — Supabase first, legacy localStorage fallback
@@ -1698,8 +1690,7 @@
                 console.log('ℹ️ No Supabase session found, checking localStorage...');
             }
 
-            // No valid Supabase session — ensure login form is visible
-            console.log('🔍 No session found - showing login form');
+            // No valid Supabase session — legacy localStorage login removed for security
             showLoginRequired();
         }
 
@@ -1779,7 +1770,7 @@
             if (!userId) return;
 
             const SUPA_URL  = 'https://pnqoxulxdmlmbywcpbyx.supabase.co';
-            const ANON_KEY  = 'process.env.SUPABASE_ANON_KEY || window.SUPABASE_ANON_KEY || 'YOUR_SUPABASE_ANON_KEY'';
+            const ANON_KEY  = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBucW94dWx4ZG1sbWJ5d2NwYnl4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzEzNjU3NTIsImV4cCI6MjA4Njk0MTc1Mn0.YEPrwIvINX_Q1AsbxyU0T5m5oxpV9M756yiSCzy6LTc';
 
             // Get the current user's JWT — try SDK first, then localStorage, then anon
             let userJwt = ANON_KEY;
@@ -4787,4 +4778,4 @@
         })();
     </script>
 </body>
-</html>
+</html><!-- Urgent deploy 1771601612 -->
