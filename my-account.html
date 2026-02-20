@@ -3320,7 +3320,7 @@
                         </div>
                         <button onclick="removeExternalCCU(${entry.id})" class="btn btn-danger" style="font-size: 0.8rem; padding: 0.25rem 0.5rem;">🗑️ Remove</button>
                     </div>
-                `).join('')}
+                `).join('')
             `;
             
             // Update external CCUs display
@@ -4001,7 +4001,7 @@
                                     <td style="padding: 0.5rem; text-align: right;">$${parseFloat(sale.author_earning).toFixed(2)}</td>
                                     <td style="padding: 0.5rem; text-align: right;">${sale.revenue_share_percent}%</td>
                                 </tr>
-                            `).join('')}
+                            `).join('')
                         </tbody>
                     </table>
                 </div>
@@ -4078,17 +4078,17 @@
                             <details>
                                 <summary style="cursor: pointer; margin-bottom: 0.5rem;">View Sales Details</summary>
                                 <div style="max-height: 200px; overflow-y: auto;">
-                                    ${data.sales.map(sale => `)
+                                    ${data.sales.map(sale => `
                                         <div style="display: flex; justify-content: space-between; padding: 0.25rem 0; border-bottom: 1px solid #f3f4f6; font-size: 0.9rem;">
                                             <span>${sale.course_id} • ${new Date(sale.sale_date).toLocaleDateString()}</span>
                                             <span>$${parseFloat(sale.author_earning).toFixed(2)} (${sale.revenue_share_percent}%)</span>
                                         </div>
-                                    `).join('')}
+                                    `).join('')
                                 </div>
                             </details>
                         </div>
                     </div>
-                `).join('')}
+                `).join('')
             `;
         }
 
