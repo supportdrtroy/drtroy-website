@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Account | DrTroy CE</title>
+    <title>Login | DrTroy CE</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
@@ -70,19 +70,6 @@
 
         nav a:hover {
             color: var(--navy);
-        }
-
-        .login-link {
-            background: var(--gold) !important;
-            color: white !important;
-            padding: 0.5rem 1rem !important;
-            border-radius: 6px !important;
-            font-weight: 600 !important;
-            transition: all 0.3s ease !important;
-        }
-
-        .login-link:hover {
-            background: var(--gold-light) !important;
         }
 
         .container {
@@ -192,29 +179,6 @@
             font-size: 0.9rem;
             text-align: center;
         }
-
-        @media (max-width: 768px) {
-            .header-container {
-                padding: 1rem;
-                flex-direction: column;
-                gap: 1rem;
-            }
-            
-            nav {
-                gap: 1.5rem;
-                flex-wrap: wrap;
-                justify-content: center;
-            }
-            
-            .container {
-                padding: 1rem;
-            }
-            
-            .login-form-container {
-                padding: 1.5rem;
-                margin: 1.5rem auto;
-            }
-        }
     </style>
 </head>
 <body>
@@ -227,9 +191,9 @@
             <nav>
                 <a href="/">Home</a>
                 <a href="course-catalog.html">Course Catalog</a>
-                <a href="/#about">About</a>
-                <a href="/#contact">Contact</a>
-                <a href="my-account.html" class="login-link">Log In</a>
+                <a href="#about">About</a>
+                <a href="#contact">Contact</a>
+                <a href="my-account.html" style="background: var(--gold); color: white; padding: 0.5rem 1rem; border-radius: 6px;">Log In</a>
             </nav>
         </div>
     </header>
@@ -241,7 +205,7 @@
             <p>Sign in to access your courses and certificates.</p>
             
             <div class="maintenance-notice">
-                🔧 Authentication system currently being restored. All functionality will return shortly.
+                ⚡ Database connection temporarily offline. System will be restored shortly.
             </div>
             
             <form id="loginForm">
@@ -256,7 +220,7 @@
                 </div>
                 
                 <div class="forgot-link">
-                    <a href="#" id="forgotPassword">Forgot password?</a>
+                    <a href="#" onclick="alert('Password reset will be available when the database is restored.')">Forgot password?</a>
                 </div>
                 
                 <button type="submit" class="btn">Sign In</button>
@@ -271,12 +235,7 @@
     <script>
         document.getElementById('loginForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            alert('Login system is being restored. You will be notified when full access returns.');
-        });
-        
-        document.getElementById('forgotPassword').addEventListener('click', function(e) {
-            e.preventDefault();
-            alert('Password reset will be available when authentication system is restored.');
+            alert('Authentication system is temporarily offline. We\'re working to restore full login functionality shortly.');
         });
     </script>
 </body>
