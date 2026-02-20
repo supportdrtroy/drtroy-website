@@ -99,6 +99,9 @@
             border-radius: 8px;
             box-shadow: 0 1px 3px rgba(0,0,0,0.1);
             margin-bottom: 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
 
         .main-tab {
@@ -2566,6 +2569,9 @@
         function switchMainTab(tabName, skipHashUpdate = false) {
             console.log(`🔄 Switching to tab: ${tabName}`);
             
+            // Store current scroll position
+            const currentScrollY = window.scrollY;
+            
             // Update tab buttons - find the correct button by onclick attribute
             document.querySelectorAll('.main-tab').forEach(tab => tab.classList.remove('active'));
             
@@ -2584,6 +2590,14 @@
             if (targetContent) {
                 targetContent.classList.add('active');
                 console.log(`✅ Activated content for: ${tabName}`);
+                
+                // Prevent auto-scroll after content becomes visible
+                requestAnimationFrame(() => {
+                    if (window.scrollY !== currentScrollY) {
+                        window.scrollTo(0, currentScrollY);
+                        console.log(`🔧 Restored scroll position to: ${currentScrollY}`);
+                    }
+                });
             } else {
                 console.warn(`❌ Could not find content for tab: ${tabName}`);
             }
