@@ -126,7 +126,7 @@
 
 [[redirects]]
   from = "/login"
-  to = "/login-temp.html"
+  to = "/my-account.html"
   status = 200
 
 [[redirects]]
@@ -146,7 +146,7 @@
 
 [[redirects]]
   from = "/admin"
-  to = "/secure-admin-access-2026.html"
+  to = "/admin-working.html"
   status = 301
 
 [[redirects]]
