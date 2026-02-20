@@ -3598,20 +3598,81 @@
             
             // Map database course IDs to actual filenames
             const courseIdMapping = {
+                // Mobility and Fall Prevention (known working)
                 'core-mobility-001': 'mobility-fall-001',
-                'balance-gait': 'balance-gait-001',
-                'documentation': 'documentation-001',
-                'geriatric-care': 'geriatric-care-001',
-                'healthcare-technology': 'healthcare-technology-001',
-                'infection-control': 'infection-control-001',
-                'joint-replacement': 'joint-replacement-001',
                 'mobility-fall': 'mobility-fall-001',
+                'comprehensive-mobility': 'mobility-fall-001',
+                'fall-prevention': 'mobility-fall-001',
+                
+                // Balance and Gait
+                'balance-gait': 'balance-gait-001',
+                'balance-training': 'balance-gait-001',
+                'gait-training': 'balance-gait-001',
+                'core-balance': 'balance-gait-001',
+                
+                // Documentation
+                'documentation': 'documentation-001',
+                'doc-001': 'documentation-001',
+                'clinical-documentation': 'documentation-001',
+                
+                // Geriatric Care
+                'geriatric-care': 'geriatric-care-001',
+                'geriatric': 'geriatric-care-001',
+                'elderly-care': 'geriatric-care-001',
+                'senior-care': 'geriatric-care-001',
+                
+                // Healthcare Technology
+                'healthcare-technology': 'healthcare-technology-001',
+                'health-tech': 'healthcare-technology-001',
+                'medical-technology': 'healthcare-technology-001',
+                'tech-001': 'healthcare-technology-001',
+                
+                // Infection Control
+                'infection-control': 'infection-control-001',
+                'infection-prevention': 'infection-control-001',
+                'ic-001': 'infection-control-001',
+                
+                // Joint Replacement
+                'joint-replacement': 'joint-replacement-001',
+                'joint-replace': 'joint-replacement-001',
+                'orthopedic': 'joint-replacement-001',
+                'joint-surgery': 'joint-replacement-001',
+                
+                // OT ADL
                 'ot-adl': 'ot-adl-001',
+                'occupational-therapy': 'ot-adl-001',
+                'activities-daily-living': 'ot-adl-001',
+                'adl-training': 'ot-adl-001',
+                
+                // Patient Education
                 'patient-education': 'patient-education-001',
+                'patient-ed': 'patient-education-001',
+                'education-001': 'patient-education-001',
+                
+                // Physical Agents
                 'physical-agents': 'physical-agents-001',
+                'modalities': 'physical-agents-001',
+                'therapeutic-modalities': 'physical-agents-001',
+                'agents-001': 'physical-agents-001',
+                
+                // Post-Surgical
                 'post-surgical': 'post-surgical-001',
+                'post-surgery': 'post-surgical-001',
+                'surgical-rehab': 'post-surgical-001',
+                'postop': 'post-surgical-001',
+                
+                // PT MSK (Musculoskeletal)
                 'pt-msk': 'pt-msk-001',
+                'musculoskeletal': 'pt-msk-001',
+                'msk-001': 'pt-msk-001',
+                'orthopedic-pt': 'pt-msk-001',
+                
+                // PT Neuro (Neurological)
                 'pt-neuro': 'pt-neuro-001',
+                'neurological': 'pt-neuro-001',
+                'neuro-001': 'pt-neuro-001',
+                'neurologic-pt': 'pt-neuro-001',
+                
                 // Add more mappings as needed
             };
             
