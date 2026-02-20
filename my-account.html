@@ -2832,7 +2832,7 @@
             });
             
             coursesHTML += '</div>';
-            coursesList.innerHTML = coursesHTML); // Changed from innerHTML for security
+            coursesList.innerHTML = coursesHTML;
         }
 
         // Individual Course Purchase (Hidden until enabled)
@@ -3932,7 +3932,7 @@
             const container = document.getElementById('sales-report-content');
             
             if (!sales || sales.length === 0) {
-                container.innerHTML = `<p style="text-align: center; color: #6b7280; padding: 2rem;">No sales found for the selected period (${startDate} to ${endDate})</p>`);
+                container.innerHTML = `<p style="text-align: center; color: #6b7280; padding: 2rem;">No sales found for the selected period (${startDate} to ${endDate})</p>`;
                 return;
             }
             
@@ -4507,7 +4507,7 @@
                             <strong>❌ User Not Found</strong><br>
                             No user account found with email: ${email}
                         </div>
-                    `);
+                    `;
                     assignmentSection.style.display = 'none';
                     return;
                 }
@@ -4537,8 +4537,8 @@
                             }
                         </div>
                     </div>
-                `);
-                
+                `;
+
                 // Show assignment section if user is not already an author
                 if (!isAlreadyAuthor) {
                     assignmentSection.style.display = 'block';
@@ -4557,7 +4557,7 @@
                         <strong>❌ Search Error</strong><br>
                         ${error.message}
                     </div>
-                `);
+                `;
                 assignmentSection.style.display = 'none';
             }
         }
@@ -4630,9 +4630,9 @@
                 const authorName = data[0] ? `${data[0].first_name} ${data[0].last_name}` : 'the author';
                 feedbackDiv.innerHTML = `
                     <strong>✅ Successfully Designated</strong><br>
-                    User ${window._currentSearchedUser.first_name} ${window._currentSearchedUser.last_name} (${window._currentSearchedUser.email}) 
+                    User ${window._currentSearchedUser.first_name} ${window._currentSearchedUser.last_name} (${window._currentSearchedUser.email})
                     can now access the Author Portal as ${authorName}.
-                `);
+                `;
                 
                 // Clear search
                 document.getElementById('user-email-search').value = '';
@@ -4650,7 +4650,7 @@
                 feedbackDiv.style.background = '#fef2f2';
                 feedbackDiv.style.border = '1px solid #fca5a5';
                 feedbackDiv.style.color = '#dc2626';
-                feedbackDiv.innerHTML = `<strong>❌ Assignment Error</strong><br>${error.message}`);
+                feedbackDiv.innerHTML = `<strong>❌ Assignment Error</strong><br>${error.message}`;
             }
         }
         
