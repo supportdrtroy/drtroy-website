@@ -146,7 +146,7 @@
 
 [[redirects]]
   from = "/admin"
-  to = "/admin-working.html"
+  to = "/secure-admin-access-2026.html"
   status = 301
 
 [[redirects]]
