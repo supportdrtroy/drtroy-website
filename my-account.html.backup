@@ -833,7 +833,7 @@
                         </button>
                     </form>
                     <p style="text-align:center; margin-top:1.25rem; font-size:0.875rem; color:#737373;">
-                        Don't have an account? <a href="courses.html" style="color:#1a365d; font-weight:600;">Browse Courses</a>
+                        Don't have an account? <a href="course-catalog.html" style="color:#1a365d; font-weight:600;">Browse Courses</a>
                     </p>
                 </div>
 
@@ -3294,15 +3294,37 @@
 
         // Update external CCU display
         function updateExternalCCUDisplay() {
-            // TEMPORARILY DISABLED: Complex template literal causing syntax errors
+            if (!currentAccount || !currentAccount.externalCCUs) return;
+            
             const listContainer = document.getElementById('externalCCUList');
-            if (listContainer) {
-                listContainer.innerHTML = '<div style="text-align: center; color: #6b7280; padding: 1rem; font-style: italic;">External CCU tracking temporarily disabled</div>';
+            const externalCCUs = currentAccount.externalCCUs;
+            
+            if (externalCCUs.length === 0) {
+                listContainer.innerHTML = `
+                    <div style="text-align: center; color: var(--gray-600); padding: 1rem; font-style: italic;">
+                        No external CCUs added yet
+                    </div>
+                `;
+                return;
             }
-            const totalEl = document.getElementById('externalCCUs');
-            if (totalEl) {
-                totalEl.textContent = '0';
-            }
+            
+            const totalExternal = externalCCUs.reduce((sum, entry) => sum + entry.hours, 0);
+            
+            listContainer.innerHTML = `
+                <h5 style="margin-bottom: 0.5rem;">External CCU Entries (${totalExternal} total hours):</h5>
+                ${externalCCUs.map(entry => `
+                    <div style="background: white; border: 1px solid var(--gray-200); border-radius: 4px; padding: 0.75rem; margin-bottom: 0.5rem; display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <strong>${entry.hours} CCU${entry.hours !== 1 ? 's' : ''}</strong> - ${entry.description}
+                            <div style="font-size: 0.8rem; color: var(--gray-600);">Added: ${new Date(entry.dateAdded).toLocaleDateString()}</div>
+                        </div>
+                        <button onclick="removeExternalCCU(${entry.id})" class="btn btn-danger" style="font-size: 0.8rem; padding: 0.25rem 0.5rem;">🗑️ Remove</button>
+                    </div>
+                `).join('')
+            `;
+            
+            // Update external CCUs display
+            document.getElementById('externalCCUs').textContent = totalExternal;
         }
 
         // Remove external CCU entry
@@ -3822,14 +3844,14 @@
                 const supabase = window.DrTroySupabase;
                 try {
                     const { data, error } = await supabase.from('course_authors').insert([{
-                        course_id: courseId,
-                        author_id: authorId,
-                        revenue_share: revenueShare,
-                        role: role
-                    }]).select();
                 } catch (dbError) {
                     console.error('Database error:', dbError);
                 }
+                    course_id: courseId,
+                    author_id: authorId,
+                    revenue_share: revenueShare,
+                    role: role
+                }]).select();
                 
                 if (error) throw error;
                 
@@ -3907,11 +3929,83 @@
 
         // Display sales report
         function displaySalesReport(sales, startDate, endDate) {
-            // TEMPORARILY DISABLED: Complex template literal causing syntax errors
             const container = document.getElementById('sales-report-content');
-            if (container) {
-                container.innerHTML = '<div style="text-align: center; color: #6b7280; padding: 2rem;">Sales reporting temporarily disabled</div>';
+            
+            if (!sales || sales.length === 0) {
+                container.innerHTML = `<p style="text-align: center; color: #6b7280; padding: 2rem;">No sales found for the selected period (${startDate} to ${endDate})</p>`;
+                return;
             }
+            
+            // Calculate summary statistics
+            const authorStats = {};
+            sales.forEach(sale => {
+                const authorName = `${sale.authors.first_name} ${sale.authors.last_name}`;
+                if (!authorStats[authorName]) {
+                    authorStats[authorName] = { sales: 0, earnings: 0 };
+                }
+                authorStats[authorName].sales += 1;
+                authorStats[authorName].earnings += parseFloat(sale.author_earning);
+            });
+            
+            const totalEarnings = sales.reduce((sum, sale) => sum + parseFloat(sale.author_earning), 0);
+            
+            container.innerHTML = `
+                <div style="margin-bottom: 2rem;">
+                    <h5>Summary (${startDate} to ${endDate})</h5>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin: 1rem 0;">
+                        <div style="background: #f0f9ff; padding: 1rem; border-radius: 8px; text-align: center;">
+                            <div style="font-size: 1.5rem; font-weight: 600; color: #0369a1;">${sales.length}</div>
+                            <div style="color: #6b7280;">Total Sales</div>
+                        </div>
+                        <div style="background: #f0fdf4; padding: 1rem; border-radius: 8px; text-align: center;">
+                            <div style="font-size: 1.5rem; font-weight: 600; color: #059669;">$${totalEarnings.toFixed(2)}</div>
+                            <div style="color: #6b7280;">Author Earnings</div>
+                        </div>
+                        <div style="background: #fefce8; padding: 1rem; border-radius: 8px; text-align: center;">
+                            <div style="font-size: 1.5rem; font-weight: 600; color: #ca8a04;">${Object.keys(authorStats).length}</div>
+                            <div style="color: #6b7280;">Authors Earning</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <h5>Author Breakdown</h5>
+                <div style="display: grid; gap: 0.5rem; margin-bottom: 2rem;">
+                    ${Object.entries(authorStats).map(([name, stats]) => `
+                        <div style="display: flex; justify-content: between; padding: 0.75rem; background: #f8fafc; border-radius: 6px;">
+                            <span><strong>${name}</strong></span>
+                            <span>${stats.sales} sales • $${stats.earnings.toFixed(2)}</span>
+                        </div>
+                    `).join('')}
+                </div>
+                
+                <h5>Individual Sales</h5>
+                <div style="max-height: 400px; overflow-y: auto;">
+                    <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem;">
+                        <thead>
+                            <tr style="background: #f8fafc; position: sticky; top: 0;">
+                                <th style="padding: 0.5rem; text-align: left; border-bottom: 2px solid #e2e8f0;">Date</th>
+                                <th style="padding: 0.5rem; text-align: left; border-bottom: 2px solid #e2e8f0;">Author</th>
+                                <th style="padding: 0.5rem; text-align: left; border-bottom: 2px solid #e2e8f0;">Course</th>
+                                <th style="padding: 0.5rem; text-align: right; border-bottom: 2px solid #e2e8f0;">Sale Amount</th>
+                                <th style="padding: 0.5rem; text-align: right; border-bottom: 2px solid #e2e8f0;">Author Earning</th>
+                                <th style="padding: 0.5rem; text-align: right; border-bottom: 2px solid #e2e8f0;">%</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${sales.map(sale => `
+                                <tr style="border-bottom: 1px solid #f1f5f9;">
+                                    <td style="padding: 0.5rem;">${new Date(sale.sale_date).toLocaleDateString()}</td>
+                                    <td style="padding: 0.5rem;">${sale.authors.first_name} ${sale.authors.last_name}</td>
+                                    <td style="padding: 0.5rem;">${sale.course_id}</td>
+                                    <td style="padding: 0.5rem; text-align: right;">$${parseFloat(sale.sale_amount).toFixed(2)}</td>
+                                    <td style="padding: 0.5rem; text-align: right;">$${parseFloat(sale.author_earning).toFixed(2)}</td>
+                                    <td style="padding: 0.5rem; text-align: right;">${sale.revenue_share_percent}%</td>
+                                </tr>
+                            `).join('')
+                        </tbody>
+                    </table>
+                </div>
+            `;
         }
 
         // Load pending payments
@@ -3954,11 +4048,48 @@
 
         // Display pending payments
         function displayPendingPayments(authorPending) {
-            // TEMPORARILY DISABLED: Complex template literal causing syntax errors
             const container = document.getElementById('payments-content');
-            if (container) {
-                container.innerHTML = '<div style="text-align: center; color: #6b7280; padding: 2rem;">Pending payments temporarily disabled</div>';
+            
+            if (Object.keys(authorPending).length === 0) {
+                container.innerHTML = '<p style="text-align: center; color: #6b7280; padding: 2rem;">No pending payments found</p>';
+                return;
             }
+            
+            const totalPending = Object.values(authorPending).reduce((sum, author) => sum + author.totalEarnings, 0);
+            
+            container.innerHTML = `
+                <div style="background: #fef3c7; border: 1px solid #f59e0b; padding: 1rem; border-radius: 8px; margin-bottom: 1rem;">
+                    <strong>Total Pending Payments: $${totalPending.toFixed(2)}</strong>
+                </div>
+                
+                ${Object.entries(authorPending).map(([authorId, data]) => `
+                    <div style="border: 1px solid #e5e7eb; border-radius: 8px; margin-bottom: 1rem; overflow: hidden;">
+                        <div style="background: #f9fafb; padding: 1rem; display: flex; justify-content: space-between; align-items: center;">
+                            <div>
+                                <strong>${data.author.first_name} ${data.author.last_name}</strong>
+                                <div style="color: #6b7280; font-size: 0.9rem;">${data.author.email}</div>
+                            </div>
+                            <div style="text-align: right;">
+                                <div style="font-size: 1.2rem; font-weight: 600; color: #059669;">$${data.totalEarnings.toFixed(2)}</div>
+                                <div style="color: #6b7280; font-size: 0.9rem;">${data.salesCount} sales</div>
+                            </div>
+                        </div>
+                        <div style="padding: 1rem;">
+                            <details>
+                                <summary style="cursor: pointer; margin-bottom: 0.5rem;">View Sales Details</summary>
+                                <div style="max-height: 200px; overflow-y: auto;">
+                                    ${data.sales.map(sale => `
+                                        <div style="display: flex; justify-content: space-between; padding: 0.25rem 0; border-bottom: 1px solid #f3f4f6; font-size: 0.9rem;">
+                                            <span>${sale.course_id} • ${new Date(sale.sale_date).toLocaleDateString()}</span>
+                                            <span>$${parseFloat(sale.author_earning).toFixed(2)} (${sale.revenue_share_percent}%)</span>
+                                        </div>
+                                    `).join('')
+                                </div>
+                            </details>
+                        </div>
+                    </div>
+                `).join('')
+            `;
         }
 
         // Generate payment batch
@@ -4070,7 +4201,7 @@
             if (!certs) {
                 try {
                     const SUPA_URL = 'https://pnqoxulxdmlmbywcpbyx.supabase.co';
-                    const ANON_KEY = process.env.SUPABASE_ANON_KEY || window.SUPABASE_ANON_KEY || 'YOUR_SUPABASE_ANON_KEY';
+                    const ANON_KEY = 'process.env.SUPABASE_ANON_KEY || window.SUPABASE_ANON_KEY || 'YOUR_SUPABASE_ANON_KEY'';
                     const select = encodeURIComponent('*,courses(title,ceu_hours)');
                     const res = await fetch(`${SUPA_URL}/rest/v1/certificates?user_id=eq.${currentSupabaseUser.id}&select=${select}&order=issued_at.desc`, {
                         headers: { apikey: ANON_KEY, Authorization: `Bearer ${ANON_KEY}` }

@@ -755,7 +755,13 @@
     }
 
     // ─── FORM 1: Login ───────────────────────────────────────────────────────
-    document.getElementById('loginForm').addEventListener('submit', async (e) => {
+    function attachLoginHandler() {
+        const form = document.getElementById('loginForm');
+        if (!form) {
+            console.error('Login form not found');
+            return;
+        }
+        form.addEventListener('submit', async (e) => {
         e.preventDefault();
         hideAlert('loginAlert');
 
@@ -805,7 +811,8 @@
             showAlert('loginAlert', 'Something went wrong. Please try again.');
             setLoading('loginBtn', false, 'loginEmail', 'loginPassword');
         }
-    });
+        });
+    }
 
     // ─── MFA Enrollment ─────────────────────────────────────────────────
     async function startMfaEnrollment() {
@@ -1095,7 +1102,13 @@
     }
 
     // ─── FORM 2: Forgot Password ─────────────────────────────────────────────
-    document.getElementById('forgotForm').addEventListener('submit', async (e) => {
+    function attachForgotHandler() {
+        const form = document.getElementById('forgotForm');
+        if (!form) {
+            console.error('Forgot form not found');
+            return;
+        }
+        form.addEventListener('submit', async (e) => {
         e.preventDefault();
         hideAlert('forgotAlert');
 
