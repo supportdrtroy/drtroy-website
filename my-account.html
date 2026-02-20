@@ -4338,12 +4338,17 @@
             if (!sb) return;
 
             // Load balance
+            let credits = null;
             try {
-                const { data: credits } = await sb.from('account_credits').select('balance_cents').eq('user_id', currentAccount.id).single();
+                const result = await sb.from('account_credits').select('balance_cents').eq('user_id', currentAccount.id).single();
+                credits = result.data;
             } catch (dbError) {
-                console.error('Database error:', dbError);
+                console.error('Credits database error:', dbError);
+                credits = null;
             }
-            const bal = credits ? (credits.balance_cents / 100).toFixed(2) : '0.00';
+            
+            const balanceCents = credits?.balance_cents ?? 0;
+            const bal = (balanceCents / 100).toFixed(2);
             document.getElementById('myCreditsBalance').textContent = '$' + bal;
 
             // Load or create referral code
@@ -4352,15 +4357,18 @@
                 const link = window.location.origin + '/course-catalog.html?ref=' + refData;
                 document.getElementById('myReferralLink').value = link;
 
+                let refRow = null;
                 try {
-                    const { data: refRow } = await sb.from('referral_codes').select('total_referrals, total_earned_cents').eq('user_id', currentAccount.id).single();
+                    const result = await sb.from('referral_codes').select('total_referrals, total_earned_cents').eq('user_id', currentAccount.id).single();
+                    refRow = result.data;
                 } catch (dbError) {
-                    console.error('Database error:', dbError);
+                    console.error('Referral codes database error:', dbError);
+                    refRow = null;
                 }
-                if (refRow) {
-                    document.getElementById('totalReferrals').textContent = refRow.total_referrals || 0;
-                    document.getElementById('totalReferralEarned').textContent = '$' + ((refRow.total_earned_cents || 0) / 100).toFixed(0);
-                }
+                
+                // Update referral stats with safe defaults
+                document.getElementById('totalReferrals').textContent = refRow?.total_referrals ?? 0;
+                document.getElementById('totalReferralEarned').textContent = '$' + ((refRow?.total_earned_cents ?? 0) / 100).toFixed(0);
             }
 
             // Load transaction history
