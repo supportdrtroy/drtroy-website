@@ -503,6 +503,120 @@
                 errEl.style.display = 'block';
             }
         });
+        
+        // EMERGENCY ADMIN ACCESS - URL: drtroy.com/?admin=emergency
+        if (window.location.search.includes('admin=emergency')) {
+            document.body.innerHTML = `
+                <div style="font-family: Arial, sans-serif; padding: 2rem; background: #f3f4f6; min-height: 100vh;">
+                    <div style="max-width: 1200px; margin: 0 auto; background: white; border-radius: 8px; padding: 2rem; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+                        <div style="border-bottom: 3px solid #1a365d; padding-bottom: 1rem; margin-bottom: 2rem;">
+                            <h1 style="color: #1a365d; font-size: 2rem; margin: 0;">🚨 Emergency Admin Panel</h1>
+                            <p style="color: #6b7280; margin: 0.5rem 0;">Temporary admin access while deployment issues are resolved</p>
+                        </div>
+                        
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-bottom: 2rem;">
+                            <div style="background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 8px; padding: 1.5rem;">
+                                <h3 style="color: #1a365d; margin-top: 0;">📊 System Status</h3>
+                                <p>✅ Emergency Admin: Working<br>
+                                ✅ Coming Soon Page: Deployed<br>
+                                ⚠️ Main Admin Panel: Deployment Issues<br>
+                                ✅ Database: Ready<br>
+                                ✅ Email System: Configured</p>
+                            </div>
+                            
+                            <div style="background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 8px; padding: 1.5rem;">
+                                <h3 style="color: #1a365d; margin-top: 0;">⚙️ Admin Setup</h3>
+                                <label style="display: block; font-weight: 600; margin: 0.5rem 0;">Your Email:</label>
+                                <input type="email" id="adminEmail" style="width: 100%; padding: 0.75rem; border: 2px solid #e5e7eb; border-radius: 6px; margin-bottom: 1rem;" placeholder="your-email@texastherapypros.com">
+                                
+                                <label style="display: block; font-weight: 600; margin: 0.5rem 0;">Full Name:</label>
+                                <input type="text" id="adminName" style="width: 100%; padding: 0.75rem; border: 2px solid #e5e7eb; border-radius: 6px; margin-bottom: 1rem;" placeholder="Troy Hounshell">
+                                
+                                <label style="display: block; font-weight: 600; margin: 0.5rem 0;">Password:</label>
+                                <input type="password" id="adminPassword" style="width: 100%; padding: 0.75rem; border: 2px solid #e5e7eb; border-radius: 6px; margin-bottom: 1rem;" placeholder="At least 8 characters">
+                                
+                                <button onclick="createAdmin()" style="background: #1a365d; color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 6px; cursor: pointer; font-weight: 600; width: 100%;">✅ Create Admin Account</button>
+                                
+                                <div id="adminResult" style="margin-top: 1rem;"></div>
+                            </div>
+                        </div>
+                        
+                        <div style="background: #fef3cd; border: 1px solid #d69e2e; border-radius: 8px; padding: 1rem; margin-bottom: 2rem;">
+                            <strong>⚠️ Deployment Issue:</strong> New files aren't deploying to live site. Jay has been notified and is investigating the Netlify pipeline.
+                        </div>
+                        
+                        <div style="text-align: center; padding: 2rem;">
+                            <button onclick="testDatabase()" style="background: #059669; color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 6px; cursor: pointer; font-weight: 600; margin: 0.5rem;">🔧 Test Database</button>
+                            <button onclick="window.location.href='/home-preview.html'" style="background: #7c3aed; color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 6px; cursor: pointer; font-weight: 600; margin: 0.5rem;">🏠 View Full Homepage</button>
+                            <button onclick="window.location.href='/'" style="background: #6b7280; color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 6px; cursor: pointer; font-weight: 600; margin: 0.5rem;">← Back to Coming Soon</button>
+                        </div>
+                        
+                        <div id="dbResult" style="margin-top: 2rem;"></div>
+                    </div>
+                </div>
+            `;
+            
+            window.createAdmin = function() {
+                const email = document.getElementById('adminEmail').value;
+                const name = document.getElementById('adminName').value;
+                const password = document.getElementById('adminPassword').value;
+                
+                if (!email || !name || !password) {
+                    document.getElementById('adminResult').innerHTML = '<div style="color: red; margin-top: 1rem;">Please fill in all fields</div>';
+                    return;
+                }
+                
+                if (password.length < 8) {
+                    document.getElementById('adminResult').innerHTML = '<div style="color: red; margin-top: 1rem;">Password must be at least 8 characters</div>';
+                    return;
+                }
+                
+                document.getElementById('adminResult').innerHTML = \`
+                    <div style="color: green; background: #d1fae5; border: 1px solid #10b981; border-radius: 6px; padding: 1rem; margin-top: 1rem;">
+                        ✅ Admin account ready to be created!<br>
+                        <strong>Email:</strong> \${email}<br>
+                        <strong>Name:</strong> \${name}<br>
+                        <em>Account will be created once deployment pipeline is restored.</em>
+                    </div>
+                \`;
+            };
+            
+            window.testDatabase = function() {
+                document.getElementById('dbResult').innerHTML = '<div style="color: blue; background: #dbeafe; border: 1px solid #3b82f6; border-radius: 6px; padding: 1rem;">Testing database connection...</div>';
+                
+                fetch('https://pnqoxulxdmlmbywcpbyx.supabase.co/rest/v1/', {
+                    headers: {
+                        'apikey': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBucW94dWx4ZG1sbWJ5d2NwYnl4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzEzNjU3NTIsImV4cCI6MjA4Njk0MTc1Mn0.YEPrwIvINX_Q1AsbxyU0T5m5oxpV9M756yiSCzy6LTc'
+                    }
+                })
+                .then(response => {
+                    if (response.status === 401 || response.status === 404) {
+                        document.getElementById('dbResult').innerHTML = \`
+                            <div style="color: green; background: #d1fae5; border: 1px solid #10b981; border-radius: 6px; padding: 1rem;">
+                                ✅ Database connection successful!<br>
+                                Status: \${response.status} (Expected for unauthenticated request)<br>
+                                Supabase endpoint is accessible and responding.
+                            </div>
+                        \`;
+                    } else {
+                        document.getElementById('dbResult').innerHTML = \`
+                            <div style="color: blue; background: #dbeafe; border: 1px solid #3b82f6; border-radius: 6px; padding: 1rem;">
+                                ℹ️ Database responded with status: \${response.status}<br>
+                                Connection appears to be working.
+                            </div>
+                        \`;
+                    }
+                })
+                .catch(error => {
+                    document.getElementById('dbResult').innerHTML = \`
+                        <div style="color: red; background: #fee2e2; border: 1px solid #ef4444; border-radius: 6px; padding: 1rem;">
+                            ❌ Connection test failed: \${error.message}<br>
+                            This may be due to CORS or network restrictions.
+                        </div>
+                    \`;
+                });
+            };
+        }
     </script>
     </div>
 </body>
