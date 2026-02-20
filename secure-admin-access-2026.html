@@ -413,7 +413,7 @@
     <div id="panelLogin" class="panel active">
         <div id="loginAlert"   class="alert alert-error"></div>
 
-        <form action="#" method="POST" id="loginForm" novalidate>
+        <form action="#" method="POST" id="loginForm" novalidate data-netlify="false">
             <div class="form-group">
                 <label for="loginEmail">Email Address</label>
                 <div class="input-wrap">
@@ -456,7 +456,7 @@
 
         <!-- default: email entry -->
         <div id="forgotEntry">
-            <form action="#" method="POST" id="forgotForm" novalidate>
+            <form action="#" method="POST" id="forgotForm" novalidate data-netlify="false">
                 <div class="form-group">
                     <label for="forgotEmail">Email Address</label>
                     <div class="input-wrap">
@@ -492,7 +492,7 @@
         <div id="resetAlert" class="alert alert-error"></div>
         <div id="resetSuccess" class="alert alert-success"></div>
 
-        <form action="#" method="POST" id="resetForm" novalidate>
+        <form action="#" method="POST" id="resetForm" novalidate data-netlify="false">
             <div class="form-group">
                 <label for="newPassword">New Password</label>
                 <div class="input-wrap">
@@ -785,29 +785,9 @@
                 return;
             }
 
-            // ─── MFA Check ──────────────────────────────────────────────
-            const { data: aal } = await sb.auth.mfa.getAuthenticatorAssuranceLevel();
-            const { data: factors } = await sb.auth.mfa.listFactors();
-            const totpFactors = (factors?.totp || []).filter(f => f.status === 'verified');
-
-            if (totpFactors.length > 0) {
-                // Has MFA enrolled — show challenge
-                _mfaFactorId = totpFactors[0].id;
-                const { data: challenge, error: cErr } = await sb.auth.mfa.challenge({ factorId: _mfaFactorId });
-                if (cErr) {
-                    showAlert('loginAlert', 'Could not initiate 2FA challenge. Please try again.');
-                    setLoading('loginBtn', false, 'loginEmail', 'loginPassword');
-                    return;
-                }
-                _mfaChallengeId = challenge.id;
-                showPanel('mfa');
-                initCodeInputs('mfaCodeInputs');
-                setLoading('loginBtn', false, 'loginEmail', 'loginPassword');
-            } else {
-                // No MFA enrolled — must set up
-                await startMfaEnrollment();
-                setLoading('loginBtn', false, 'loginEmail', 'loginPassword');
-            }
+            // ─── Admin verified — redirect to dashboard ──────────────
+            showAlert('loginAlert', `Welcome back, ${profile.first_name}! Redirecting…`, 'success');
+            setTimeout(() => window.location.replace('admin.html'), 800);
 
         } catch (err) {
             console.error(err);
