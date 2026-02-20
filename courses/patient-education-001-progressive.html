@@ -2138,7 +2138,7 @@
                 const h = mc.querySelector('.module-header'), s = h.querySelector('.module-status');
                 document.getElementById(`content-${i}`).classList.remove('active');
                 if (i === 1) { h.classList.remove('completed', 'locked'); h.onclick = () => toggleModule(1); s.innerHTML = '<span class="module-icon">🔓</span><span>Ready to Start</span>'; }
-                else { h.classList.remove('completed'); h.classList.add('locked'); h.onclick = () => toggleModule(i); s.innerHTML = escapeHtml(`<span class="module-icon">🔒</span><span>Complete Module ${i-1}</span>`); }
+                else { h.classList.remove('completed'); h.classList.add('locked'); h.onclick = () => toggleModule(i); s.innerHTML = escapeHtml(escapeHtml)(`<span class="module-icon">🔒</span><span>Complete Module ${i-1}</span>`); }
                 const fb = document.getElementById(`feedback-${i}`), cb = document.getElementById(`continue-${i}`);
                 if (fb) { fb.style.display = 'none'; fb.className = 'feedback'; }
                 if (cb) cb.classList.remove('show');

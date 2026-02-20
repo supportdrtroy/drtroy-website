@@ -796,7 +796,7 @@
                 `;
             });
             
-            summaryItems.innerHTML = escapeHtml(itemsHtml); // XSS protection applied
+            summaryItems.innerHTML = escapeHtml(escapeHtml)(itemsHtml); // XSS protection applied
             
             // Update total (discount applied separately via applyDiscountCode)
             updateTotalDisplay();
@@ -835,7 +835,7 @@
 
             try {
                 const SUPA_URL = 'https://pnqoxulxdmlmbywcpbyx.supabase.co';
-                const ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBucW94dWx4ZG1sbWJ5d2NwYnl4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzEzNjU3NTIsImV4cCI6MjA4Njk0MTc1Mn0.YEPrwIvINX_Q1AsbxyU0T5m5oxpV9M756yiSCzy6LTc';
+                const ANON_KEY = 'process.env.SUPABASE_ANON_KEY || window.SUPABASE_ANON_KEY || 'YOUR_SUPABASE_ANON_KEY'';
                 const res  = await fetch(`${SUPA_URL}/rest/v1/discount_codes?code=eq.${encodeURIComponent(code)}&is_active=eq.true&select=*`,
                     { headers: { apikey: ANON_KEY, Authorization: `Bearer ${ANON_KEY}` } });
                 const rows = await res.json();

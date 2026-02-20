@@ -628,7 +628,7 @@
     <script>
         // Initialize Supabase
         const supabaseUrl = 'https://pnqoxulxdmlmbywcpbyx.supabase.co';
-        const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBucW94dWx4ZG1sbWJ5d2NwYnl4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzEzNjU3NTIsImV4cCI6MjA4Njk0MTc1Mn0.YEPrwIvINX_Q1AsbxyU0T5m5oxpV9M756yiSCzy6LTc';
+        const supabaseAnonKey = 'process.env.SUPABASE_ANON_KEY || window.SUPABASE_ANON_KEY || 'YOUR_SUPABASE_ANON_KEY'';
         const supabase = supabase.createClient(supabaseUrl, supabaseAnonKey);
 
         let currentAuthor = null;
@@ -827,7 +827,7 @@
                 
                 const courseCard = document.createElement('div');
                 courseCard.className = 'course-card';
-                courseCard.innerHTML = escapeHtml(`
+                courseCard.innerHTML = escapeHtml(escapeHtml)(`
                     <div class="course-header">
                         <div>
                             <div class="course-title">${courseAssignment.course_id}</div>
@@ -896,7 +896,7 @@
                 return;
             }
             
-            container.innerHTML = sales.map(sale => `
+            container.innerHTML = escapeHtml(sales).map(sale => `
                 <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.75rem 0; border-bottom: 1px solid var(--gray-200);">
                     <div>
                         <div style="font-weight: 600; font-size: 0.9rem;">${sale.course_id}</div>
@@ -927,7 +927,7 @@
                 return;
             }
             
-            container.innerHTML = payments.map(payment => `
+            container.innerHTML = escapeHtml(payments).map(payment => `
                 <div style="margin-bottom: 1rem; padding: 1rem; border: 1px solid var(--gray-200); border-radius: 6px;">
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
                         <div style="font-weight: 600;">$${parseFloat(payment.total_earnings).toFixed(2)}</div>

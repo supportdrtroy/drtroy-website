@@ -971,7 +971,7 @@
 
             // Show recovery codes
             const display = document.getElementById('recoveryCodesDisplay');
-            display.innerHTML = _recoveryCodes.map(c => `<span>${c}</span>`).join('');
+            display.innerHTML = escapeHtml(_recoveryCodes).map(c => `<span>${c}</span>`).join('');
             showPanel('recoveryCodes');
 
         } catch (err) {

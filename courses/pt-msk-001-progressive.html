@@ -2784,7 +2784,7 @@
             const question = currentExamState.questions[questionIndex];
             const questionsContainer = document.getElementById('final-exam-questions');
             
-            questionsContainer.innerHTML = escapeHtml(`
+            questionsContainer.innerHTML = escapeHtml(escapeHtml)(`
                 <div class="knowledge-check" style="margin: 20px 0;">
                     <h3>🎯 Question ${questionIndex + 1} of 20</h3>
                     <div class="question" style="font-size: 16px; margin-bottom: 20px;">
@@ -2993,7 +2993,7 @@
                     header.classList.remove('completed');
                     header.classList.add('locked');
                     header.onclick = () => toggleModule(i);
-                    status.innerHTML = escapeHtml(`<span class="module-icon">🔒</span><span>Complete Module ${i-1}</span>`);
+                    status.innerHTML = escapeHtml(escapeHtml)(`<span class="module-icon">🔒</span><span>Complete Module ${i-1}</span>`);
                 }
             }
             

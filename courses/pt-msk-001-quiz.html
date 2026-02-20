@@ -709,7 +709,7 @@
 
             if (passed) {
                 resultMessage.className = 'result-message result-pass';
-                resultMessage.innerHTML = escapeHtml(`
+                resultMessage.innerHTML = escapeHtml(escapeHtml)(`
                     <h3>Congratulations! You Passed!</h3>
                     <p>You answered ${correctAnswers} out of ${quizQuestions.length} questions correctly (${score}%).</p>
                     <p>You have successfully completed the knowledge check for PT Musculoskeletal Evaluation and Diagnosis.</p>
@@ -721,7 +721,7 @@
                 `;
             } else {
                 resultMessage.className = 'result-message result-fail';
-                resultMessage.innerHTML = escapeHtml(`
+                resultMessage.innerHTML = escapeHtml(escapeHtml)(`
                     <h3>Not Quite There Yet</h3>
                     <p>You answered ${correctAnswers} out of ${quizQuestions.length} questions correctly (${score}%).</p>
                     <p>You need 70% or higher to pass. Review your answers below, then try again.</p>
@@ -807,7 +807,7 @@
                 `;
             });
 
-            questionReview.innerHTML = escapeHtml(reviewHTML); // XSS protection applied
+            questionReview.innerHTML = escapeHtml(escapeHtml)(reviewHTML); // XSS protection applied
             questionReview.classList.remove('hidden');
         }
     </script>

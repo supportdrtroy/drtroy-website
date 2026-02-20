@@ -1770,7 +1770,7 @@
             if (!userId) return;
 
             const SUPA_URL  = 'https://pnqoxulxdmlmbywcpbyx.supabase.co';
-            const ANON_KEY  = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBucW94dWx4ZG1sbWJ5d2NwYnl4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzEzNjU3NTIsImV4cCI6MjA4Njk0MTc1Mn0.YEPrwIvINX_Q1AsbxyU0T5m5oxpV9M756yiSCzy6LTc';
+            const ANON_KEY  = 'process.env.SUPABASE_ANON_KEY || window.SUPABASE_ANON_KEY || 'YOUR_SUPABASE_ANON_KEY'';
 
             // Get the current user's JWT — try SDK first, then localStorage, then anon
             let userJwt = ANON_KEY;
@@ -1885,7 +1885,7 @@
                         </div>
                     </div>`;
             });
-            container.innerHTML = escapeHtml(html); // XSS protection applied
+            container.innerHTML = escapeHtml(escapeHtml)(html); // XSS protection applied
         }
 
         // Directly render Supabase enrollment cards into coursesList
@@ -1913,7 +1913,7 @@
                     </div>`;
             });
             html += '</div>';
-            coursesList.innerHTML = escapeHtml(html); // XSS protection applied
+            coursesList.innerHTML = escapeHtml(escapeHtml)(html); // XSS protection applied
         }
 
         // Rate limiting for customer login attempts  
@@ -2175,7 +2175,7 @@
                     firstName: 'Troy',
                     lastName: 'Hounshell',
                     email: 'troy@drtroy.com',
-                    password: 'temporarypassword',
+                    password: 'process.env.TEMP_PASSWORD || 'CHANGE_ME'',
                     discipline: 'PT',
                     licenseNumber: 'PT12345',
                     licenseState: 'TX',
@@ -3306,7 +3306,7 @@
             
             const totalExternal = externalCCUs.reduce((sum, entry) => sum + entry.hours, 0);
             
-            listContainer.innerHTML = escapeHtml(`
+            listContainer.innerHTML = escapeHtml(escapeHtml)(`
                 <h5 style="margin-bottom: 0.5rem;">External CCU Entries (${totalExternal} total hours):</h5>
                 ${externalCCUs.map(entry => `
                     <div style="background: white; border: 1px solid var(--gray-200); border-radius: 4px; padding: 0.75rem; margin-bottom: 0.5rem; display: flex; justify-content: space-between; align-items: center;">
@@ -3699,7 +3699,7 @@
                 return;
             }
             
-            tbody.innerHTML = currentAuthors.map(author => `
+            tbody.innerHTML = escapeHtml(currentAuthors).map(author => `
                 <tr style="border-bottom: 1px solid #f1f5f9;">
                     <td style="padding: 0.75rem;">
                         <strong>${author.first_name} ${author.last_name}</strong>
@@ -3804,7 +3804,7 @@
                     return;
                 }
                 
-                container.innerHTML = courseAuthors.map(ca => `
+                container.innerHTML = escapeHtml(courseAuthors).map(ca => `
                     <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.5rem; background: #f8fafc; border-radius: 4px; margin-bottom: 0.5rem;">
                         <span><strong>${ca.authors.first_name} ${ca.authors.last_name}</strong> - ${ca.revenue_share}% (${ca.role})</span>
                         <button onclick="removeAuthorFromCourse('${ca.id}')" class="btn btn-secondary" style="font-size: 0.8rem; padding: 0.25rem 0.5rem;">Remove</button>
@@ -3916,7 +3916,7 @@
             const container = document.getElementById('sales-report-content');
             
             if (!sales || sales.length === 0) {
-                container.innerHTML = escapeHtml(`<p style="text-align: center; color: #6b7280; padding: 2rem;">No sales found for the selected period (${startDate} to ${endDate})</p>`);
+                container.innerHTML = escapeHtml(escapeHtml)(`<p style="text-align: center; color: #6b7280; padding: 2rem;">No sales found for the selected period (${startDate} to ${endDate})</p>`);
                 return;
             }
             
@@ -3933,7 +3933,7 @@
             
             const totalEarnings = sales.reduce((sum, sale) => sum + parseFloat(sale.author_earning), 0);
             
-            container.innerHTML = escapeHtml(`
+            container.innerHTML = escapeHtml(escapeHtml)(`
                 <div style="margin-bottom: 2rem;">
                     <h5>Summary (${startDate} to ${endDate})</h5>
                     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin: 1rem 0;">
@@ -4041,7 +4041,7 @@
             
             const totalPending = Object.values(authorPending).reduce((sum, author) => sum + author.totalEarnings, 0);
             
-            container.innerHTML = escapeHtml(`
+            container.innerHTML = escapeHtml(escapeHtml)(`
                 <div style="background: #fef3c7; border: 1px solid #f59e0b; padding: 1rem; border-radius: 8px; margin-bottom: 1rem;">
                     <strong>Total Pending Payments: $${totalPending.toFixed(2)}</strong>
                 </div>
@@ -4185,7 +4185,7 @@
             if (!certs) {
                 try {
                     const SUPA_URL = 'https://pnqoxulxdmlmbywcpbyx.supabase.co';
-                    const ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBucW94dWx4ZG1sbWJ5d2NwYnl4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzEzNjU3NTIsImV4cCI6MjA4Njk0MTc1Mn0.YEPrwIvINX_Q1AsbxyU0T5m5oxpV9M756yiSCzy6LTc';
+                    const ANON_KEY = 'process.env.SUPABASE_ANON_KEY || window.SUPABASE_ANON_KEY || 'YOUR_SUPABASE_ANON_KEY'';
                     const select = encodeURIComponent('*,courses(title,ceu_hours)');
                     const res = await fetch(`${SUPA_URL}/rest/v1/certificates?user_id=eq.${currentSupabaseUser.id}&select=${select}&order=issued_at.desc`, {
                         headers: { apikey: ANON_KEY, Authorization: `Bearer ${ANON_KEY}` }
@@ -4213,7 +4213,7 @@
                     </div>`;
             });
             html += '</div>';
-            historyDiv.innerHTML = escapeHtml(html); // XSS protection applied
+            historyDiv.innerHTML = escapeHtml(escapeHtml)(html); // XSS protection applied
         }
 
         // Show alert message
@@ -4346,7 +4346,7 @@
             if (!txns || txns.length === 0) {
                 listEl.innerHTML = '<p style="color:#94a3b8;text-align:center;padding:2rem;font-size:.95rem;">No credit activity yet. Share your referral link to earn your first $10!</p>';
             } else {
-                listEl.innerHTML = txns.map(t => `
+                listEl.innerHTML = escapeHtml(txns).map(t => `
                     <div style="display:flex;justify-content:space-between;align-items:center;padding:.875rem 1.25rem;border-bottom:1px solid #f1f5f9;font-size:.9rem;">
                         <div>
                             <div style="font-weight:600;color:#1e293b;">${typeLabels[t.type] || t.type}</div>
@@ -4470,7 +4470,7 @@
                 resultsDiv.style.display = 'block';
                 
                 if (!profiles || profiles.length === 0) {
-                    resultsDiv.innerHTML = escapeHtml(`
+                    resultsDiv.innerHTML = escapeHtml(escapeHtml)(`
                         <div style="color: #dc2626;">
                             <strong>❌ User Not Found</strong><br>
                             No user account found with email: ${email}
@@ -4492,7 +4492,7 @@
                 
                 const isAlreadyAuthor = existingAuthor && existingAuthor.length > 0;
                 
-                resultsDiv.innerHTML = escapeHtml(`
+                resultsDiv.innerHTML = escapeHtml(escapeHtml)(`
                     <div style="display: flex; justify-content: space-between; align-items: center;">
                         <div>
                             <strong>✅ User Found:</strong> ${user.first_name} ${user.last_name} (${user.email})<br>
@@ -4520,7 +4520,7 @@
             } catch (error) {
                 console.error('Error searching user:', error);
                 resultsDiv.style.display = 'block';
-                resultsDiv.innerHTML = escapeHtml(`
+                resultsDiv.innerHTML = escapeHtml(escapeHtml)(`
                     <div style="color: #dc2626;">
                         <strong>❌ Search Error</strong><br>
                         ${error.message}
@@ -4549,7 +4549,7 @@
                 
                 if (authors && authors.length > 0) {
                     authors.forEach(author => {
-                        select.innerHTML += escapeHtml(escapeHtml)(`<option value="${author.id}">${author.first_name} ${author.last_name} (${author.email})</option>`);
+                        select.innerHTML += escapeHtml(escapeHtml)(escapeHtml)(`<option value="${author.id}">${author.first_name} ${author.last_name} (${author.email})</option>`);
                     });
                 }
                 
@@ -4596,7 +4596,7 @@
                 feedbackDiv.style.color = '#166534';
                 
                 const authorName = data[0] ? `${data[0].first_name} ${data[0].last_name}` : 'the author';
-                feedbackDiv.innerHTML = escapeHtml(`
+                feedbackDiv.innerHTML = escapeHtml(escapeHtml)(`
                     <strong>✅ Successfully Designated</strong><br>
                     User ${window._currentSearchedUser.first_name} ${window._currentSearchedUser.last_name} (${window._currentSearchedUser.email}) 
                     can now access the Author Portal as ${authorName}.
@@ -4618,7 +4618,7 @@
                 feedbackDiv.style.background = '#fef2f2';
                 feedbackDiv.style.border = '1px solid #fca5a5';
                 feedbackDiv.style.color = '#dc2626';
-                feedbackDiv.innerHTML = escapeHtml(`<strong>❌ Assignment Error</strong><br>${error.message}`);
+                feedbackDiv.innerHTML = escapeHtml(escapeHtml)(`<strong>❌ Assignment Error</strong><br>${error.message}`);
             }
         }
         
@@ -4675,7 +4675,7 @@
                     `;
                 });
                 
-                container.innerHTML = escapeHtml(html); // XSS protection applied
+                container.innerHTML = escapeHtml(escapeHtml)(html); // XSS protection applied
                 
             } catch (error) {
                 console.error('Error loading user author designations:', error);
