@@ -1156,7 +1156,7 @@
     <div class="container">
         <!-- Main Navigation -->
         <div class="main-tabs">
-            <button class="main-tab" onclick="switchMainTab('dashboard')">
+            <button class="main-tab active" onclick="switchMainTab('dashboard')">
                 📊 Dashboard
             </button>
             <button class="main-tab" onclick="switchMainTab('users')">
@@ -1183,7 +1183,7 @@
         </div>
 
         <!-- Dashboard Tab -->
-        <div id="dashboard" class="tab-content">
+        <div id="dashboard" class="tab-content active">
             <!-- Platform Overview -->
             <div class="card">
                 <div class="card-header">
@@ -2691,8 +2691,11 @@
 
         // Restore saved tab on page load
         function restoreSavedTab() {
-            const savedTab = localStorage.getItem('currentAdminTab') || 'dashboard';
-            switchMainTab(savedTab);
+            const savedTab = localStorage.getItem('currentAdminTab');
+            if (savedTab) {
+                switchMainTab(savedTab);
+            }
+            // If no saved tab, leave the default HTML active state
         }
 
         function switchSubTab(tabName) {
