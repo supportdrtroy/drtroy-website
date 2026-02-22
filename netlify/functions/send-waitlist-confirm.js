@@ -90,7 +90,7 @@ exports.handler = async (event) => {
     const name     = (firstName || '').trim() || 'there';
     const fullName = [firstName, lastName].filter(Boolean).map(s => s.trim()).join(' ') || 'there';
     const discLine = discipline && discipline !== 'prefer_not'
-        ? `<p style="color:#4b5563;font-size:15px;line-height:1.7;margin:0 0 20px;">We've noted that you work in <strong>${discipline}</strong> — we'll make sure to highlight relevant courses for your license when we launch.</p>`
+        ? `<p style="color:#4b5563;font-size:15px;line-height:1.7;margin:0 0 20px;">We see that you work as a <strong>${discipline}</strong> — we'll make sure to highlight relevant courses for your license when we launch.</p>`
         : '';
 
     const html = `<!DOCTYPE html>
@@ -114,7 +114,7 @@ exports.handler = async (event) => {
             </div>
             <p style="color:#4b5563;font-size:16px;line-height:1.7;margin:0 0 20px;">Thanks for signing up — you're officially on the early access list for <strong>DrTroy Continuing Education</strong>. When we launch, you'll be the first to know.</p>
             ${discLine}
-            <p style="color:#4b5563;font-size:15px;line-height:1.7;margin:0 0 24px;">Keep an eye on your inbox. We'll send you a launch alert the moment the platform goes live — along with an exclusive early-access offer reserved just for waitlist members.</p>
+            <p style="color:#4b5563;font-size:15px;line-height:1.7;margin:0 0 24px;">Keep an eye on your inbox. We'll send you a launch notification when the platform goes live, including early access information.</p>
             <table width="100%" cellpadding="0" cellspacing="0" style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px;margin:0 0 28px;">
               <tr><td style="padding:24px;">
                 <p style="font-size:12px;font-weight:700;color:#1a365d;text-transform:uppercase;letter-spacing:.08em;margin:0 0 14px;">What's coming</p>
@@ -155,7 +155,7 @@ exports.handler = async (event) => {
         const r1 = await resendPost(apiKey, {
             from:    'DrTroy Continuing Education <no-reply@drtroy.com>',
             to:      [email],
-            subject: `You're on the list, ${name}! 🎉 DrTroy CE is coming`,
+            subject: `Thanks for signing up, ${name} — DrTroy CE updates`,
             html
         });
 
