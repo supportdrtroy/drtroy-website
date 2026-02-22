@@ -132,7 +132,7 @@ exports.handler = async (event) => {
         </tr>
         <tr>
           <td style="background:#f8fafc;border-top:1px solid #e5e7eb;padding:20px 40px;text-align:center;">
-            <p style="color:#9ca3af;font-size:12px;margin:0 0 6px;">&copy; 2026 DrTroy Continuing Education &nbsp;&middot;&nbsp; Lubbock, Texas</p>
+            <p style="color:#9ca3af;font-size:12px;margin:0 0 6px;">&copy; 2026 DrTroy Continuing Education &nbsp;&middot;&nbsp; Texas</p>
             <p style="color:#9ca3af;font-size:12px;margin:0;"><a href="https://drtroy.com/terms.html" style="color:#9ca3af;">Terms of Service</a> &nbsp;&middot;&nbsp; You're receiving this because you signed up at drtroy.com</p>
           </td>
         </tr>
