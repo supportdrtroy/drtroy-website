@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="500">
+  <rect width="800" height="500" fill="white" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="400" y="35" font-family="Arial, sans-serif" font-size="22" font-weight="bold" fill="#1a56a0" text-anchor="middle">Level 4: Functional Balance Training</text>
+  <circle cx="400" cy="140" r="30" fill="#ffdbcb" stroke="#1a56a0" stroke-width="2"/>
+  <ellipse cx="400" cy="240" rx="45" ry="80" fill="#e3f2fd" stroke="#1a56a0" stroke-width="2"/>
+  <line x1="355" y1="200" x2="330" y2="250" stroke="#1a56a0" stroke-width="6"/>
+  <line x1="445" y1="200" x2="470" y2="220" stroke="#1a56a0" stroke-width="6"/>
+  <circle cx="330" cy="250" r="8" fill="#ffdbcb" stroke="#1a56a0" stroke-width="2"/>
+  <circle cx="470" cy="220" r="8" fill="#ffdbcb" stroke="#1a56a0" stroke-width="2"/>
+  <rect x="310" y="250" width="40" height="10" fill="#8d6e63" stroke="#5d4037" stroke-width="2"/>
+  <rect x="305" y="240" width="50" height="10" fill="#e3f2fd" stroke="#5d4037" stroke-width="2"/>
+  <text x="330" y="248" font-family="Arial, sans-serif" font-size="8" fill="#333333" text-anchor="middle">Tray</text>
+  <line x1="380" y1="320" x2="360" y2="420" stroke="#1a56a0" stroke-width="8"/>
+  <line x1="420" y1="320" x2="440" y2="420" stroke="#1a56a0" stroke-width="8"/>
+  <ellipse cx="360" cy="435" rx="20" ry="10" fill="#333333"/>
+  <ellipse cx="440" cy="435" rx="20" ry="10" fill="#333333"/>
+  <path d="M300 300 Q350 280, 400 290 Q450 280, 500 310" stroke="#ff9800" stroke-width="3" stroke-dasharray="8,4" fill="none"/>
+  <polygon points="495,305 505,315 495,320" fill="#ff9800"/>
+  <rect x="50" y="350" width="200" height="130" fill="#fff3e0" stroke="#ff9800" stroke-width="2" rx="5"/>
+  <text x="150" y="375" font-family="Arial, sans-serif" font-size="14" fill="#ff6f00" text-anchor="middle" font-weight="bold">DUAL-TASK ACTIVITIES</text>
+  <text x="60" y="400" font-family="Arial, sans-serif" font-size="11" fill="#333333">• Walking while carrying objects</text>
+  <text x="60" y="415" font-family="Arial, sans-serif" font-size="11" fill="#333333">• Walking while talking</text>
+  <text x="60" y="430" font-family="Arial, sans-serif" font-size="11" fill="#333333">• Navigation with distractions</text>
+  <text x="60" y="445" font-family="Arial, sans-serif" font-size="11" fill="#333333">• Multi-sensory challenges</text>
+  <text x="60" y="465" font-family="Arial, sans-serif" font-size="11" fill="#333333">• Real-world activity simulation</text>
+  <text x="400" y="470" font-family="Arial, sans-serif" font-size="16" fill="#1a56a0" text-anchor="middle" font-weight="bold">Dual-Task Conditions • Real-World Activity Integration</text>
+</svg>

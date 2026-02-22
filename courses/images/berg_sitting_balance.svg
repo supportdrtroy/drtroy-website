@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="500" viewBox="0 0 800 500">
+  <rect width="800" height="500" fill="white" stroke="#e0e0e0" stroke-width="1"/>
+  
+  <!-- Title -->
+  <text x="400" y="35" text-anchor="middle" font-family="Arial, sans-serif" font-size="22" font-weight="bold" fill="#1a56a0">
+    Berg Balance Scale: Sitting Balance
+  </text>
+  
+  <!-- Chair -->
+  <rect x="320" y="350" width="160" height="80" fill="#e8f4fd" stroke="#1a56a0" stroke-width="2" rx="10"/>
+  <rect x="310" y="340" width="20" height="100" fill="#e8f4fd" stroke="#1a56a0" stroke-width="2" rx="5"/>
+  <rect x="470" y="340" width="20" height="100" fill="#e8f4fd" stroke="#1a56a0" stroke-width="2" rx="5"/>
+  <rect x="300" y="320" width="200" height="30" fill="#e8f4fd" stroke="#1a56a0" stroke-width="2" rx="15"/>
+  
+  <!-- Person sitting -->
+  <!-- Head -->
+  <circle cx="400" cy="240" r="25" fill="white" stroke="#1a56a0" stroke-width="2"/>
+  
+  <!-- Body -->
+  <line x1="400" y1="265" x2="400" y2="350" stroke="#1a56a0" stroke-width="4"/>
+  
+  <!-- Arms positioned normally at sides -->
+  <line x1="400" y1="285" x2="360" y2="320" stroke="#1a56a0" stroke-width="3"/>
+  <line x1="400" y1="285" x2="440" y2="320" stroke="#1a56a0" stroke-width="3"/>
+  <line x1="360" y1="320" x2="340" y2="340" stroke="#1a56a0" stroke-width="3"/>
+  <line x1="440" y1="320" x2="460" y2="340" stroke="#1a56a0" stroke-width="3"/>
+  
+  <!-- Legs -->
+  <line x1="400" y1="350" x2="380" y2="420" stroke="#1a56a0" stroke-width="3"/>
+  <line x1="400" y1="350" x2="420" y2="420" stroke="#1a56a0" stroke-width="3"/>
+  <line x1="380" y1="420" x2="370" y2="440" stroke="#1a56a0" stroke-width="3"/>
+  <line x1="420" y1="420" x2="430" y2="440" stroke="#1a56a0" stroke-width="3"/>
+  
+  <!-- Test instructions box -->
+  <rect x="100" y="100" width="250" height="120" fill="#e8f4fd" stroke="#1a56a0" stroke-width="1" rx="10"/>
+  <text x="225" y="125" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#1a56a0">Test Instructions</text>
+  <text x="110" y="145" font-family="Arial, sans-serif" font-size="11" fill="#333">• Sit with arms folded across chest</text>
+  <text x="110" y="165" font-family="Arial, sans-serif" font-size="11" fill="#333">• Sit without back support for 2 minutes</text>
+  <text x="110" y="185" font-family="Arial, sans-serif" font-size="11" fill="#333">• Maintain upright posture</text>
+  <text x="110" y="205" font-family="Arial, sans-serif" font-size="11" fill="#333">• Score: 4 = Safe, 0 = Unable</text>
+  
+  <!-- Scoring box -->
+  <rect x="450" y="100" width="250" height="120" fill="#fff3e0" stroke="#1a56a0" stroke-width="1" rx="10"/>
+  <text x="575" y="125" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#ff9800">Scoring Criteria</text>
+  <text x="460" y="145" font-family="Arial, sans-serif" font-size="11" fill="#333">4 - Sits safely 2 minutes</text>
+  <text x="460" y="165" font-family="Arial, sans-serif" font-size="11" fill="#333">3 - Sits 2 min with supervision</text>
+  <text x="460" y="185" font-family="Arial, sans-serif" font-size="11" fill="#333">2 - Sits 30 seconds</text>
+  <text x="460" y="205" font-family="Arial, sans-serif" font-size="11" fill="#333">1 - Sits 10 seconds, 0 - Unable</text>
+  
+  <!-- Stability indicators -->
+  <circle cx="400" cy="240" r="50" fill="none" stroke="#2e7d32" stroke-width="2" stroke-dasharray="5,5" opacity="0.7"/>
+  <text x="460" y="240" font-family="Arial, sans-serif" font-size="11" fill="#2e7d32">Stable position</text>
+  
+  <!-- Safety note -->
+  <text x="400" y="470" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#d32f2f" font-weight="bold">
+    ⚠ Always have spotter ready to assist if needed
+  </text>
+</svg>

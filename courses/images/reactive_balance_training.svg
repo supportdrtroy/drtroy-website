@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="500">
+  <rect width="800" height="500" fill="white" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="400" y="35" font-family="Arial, sans-serif" font-size="22" font-weight="bold" fill="#1a56a0" text-anchor="middle">Level 3: Reactive Balance Training</text>
+  <circle cx="400" cy="140" r="30" fill="#ffdbcb" stroke="#1a56a0" stroke-width="2"/>
+  <ellipse cx="400" cy="240" rx="45" ry="80" fill="#e3f2fd" stroke="#1a56a0" stroke-width="2"/>
+  <line x1="355" y1="200" x2="320" y2="160" stroke="#1a56a0" stroke-width="6"/>
+  <line x1="445" y1="200" x2="480" y2="240" stroke="#1a56a0" stroke-width="6"/>
+  <circle cx="320" cy="160" r="8" fill="#ffdbcb" stroke="#1a56a0" stroke-width="2"/>
+  <circle cx="480" cy="240" r="8" fill="#ffdbcb" stroke="#1a56a0" stroke-width="2"/>
+  <line x1="380" y1="320" x2="350" y2="410" stroke="#1a56a0" stroke-width="8"/>
+  <line x1="420" y1="320" x2="450" y2="400" stroke="#1a56a0" stroke-width="8"/>
+  <ellipse cx="350" cy="425" rx="20" ry="10" fill="#333333"/>
+  <ellipse cx="450" cy="415" rx="20" ry="10" fill="#333333"/>
+  <line x1="250" y1="200" x2="340" y2="220" stroke="#d32f2f" stroke-width="4"/>
+  <polygon points="335,215 350,220 335,225" fill="#d32f2f"/>
+  <text x="200" y="195" font-family="Arial, sans-serif" font-size="12" fill="#d32f2f" font-weight="bold">External Perturbation</text>
+  <path d="M360 440 Q340 420, 330 400" stroke="#4caf50" stroke-width="3" fill="none"/>
+  <polygon points="325,405 330,395 335,405" fill="#4caf50"/>
+  <text x="280" y="380" font-family="Arial, sans-serif" font-size="12" fill="#2e7d32" font-weight="bold">Protective Step</text>
+  <path d="M440 420 Q460 440, 480 450" stroke="#4caf50" stroke-width="3" fill="none"/>
+  <polygon points="475,445 485,455 475,460" fill="#4caf50"/>
+  <text x="520" y="440" font-family="Arial, sans-serif" font-size="12" fill="#2e7d32" font-weight="bold">Hip Strategy</text>
+  <circle cx="550" cy="250" r="30" fill="#ffdbcb" stroke="#1a56a0" stroke-width="2"/>
+  <ellipse cx="550" cy="310" rx="25" ry="40" fill="#90a4ae" stroke="#546e7a" stroke-width="2"/>
+  <text x="550" y="330" font-family="Arial, sans-serif" font-size="10" fill="white" text-anchor="middle" font-weight="bold">PT</text>
+  <text x="400" y="470" font-family="Arial, sans-serif" font-size="16" fill="#1a56a0" text-anchor="middle" font-weight="bold">Unexpected Perturbations • Protective Stepping • Hip/Ankle Strategies</text>
+</svg>

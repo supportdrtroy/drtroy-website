@@ -1,0 +1,98 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="700" viewBox="0 0 800 700">
+  <rect width="800" height="700" fill="white" stroke="#e0e0e0" stroke-width="1"/>
+  
+  <!-- Title -->
+  <text x="400" y="35" text-anchor="middle" font-family="Arial, sans-serif" font-size="22" font-weight="bold" fill="#1a56a0">
+    SNF Fall Prevention Program Structure
+  </text>
+  
+  <!-- Top Level: Medical Director -->
+  <rect x="325" y="70" width="150" height="60" fill="#1a56a0" stroke="#1a56a0" stroke-width="2" rx="10"/>
+  <text x="400" y="95" text-anchor="middle" font-family="Arial, sans-serif" font-size="13" font-weight="bold" fill="white">Medical Director</text>
+  <text x="400" y="110" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="white">Program Oversight</text>
+  
+  <!-- Second Level: Administrator and DON -->
+  <rect x="150" y="180" width="150" height="60" fill="#2e7d32" stroke="#1a56a0" stroke-width="2" rx="10"/>
+  <text x="225" y="205" text-anchor="middle" font-family="Arial, sans-serif" font-size="13" font-weight="bold" fill="white">Administrator</text>
+  <text x="225" y="220" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="white">Policy & Resources</text>
+  
+  <rect x="500" y="180" width="150" height="60" fill="#2e7d32" stroke="#1a56a0" stroke-width="2" rx="10"/>
+  <text x="575" y="205" text-anchor="middle" font-family="Arial, sans-serif" font-size="13" font-weight="bold" fill="white">Director of Nursing</text>
+  <text x="575" y="220" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="white">Clinical Leadership</text>
+  
+  <!-- Third Level: Core Team -->
+  <rect x="50" y="290" width="120" height="60" fill="#ff9800" stroke="#1a56a0" stroke-width="2" rx="10"/>
+  <text x="110" y="315" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="white">Physical Therapy</text>
+  <text x="110" y="330" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="white">Assessment & Training</text>
+  
+  <rect x="200" y="290" width="120" height="60" fill="#ff9800" stroke="#1a56a0" stroke-width="2" rx="10"/>
+  <text x="260" y="315" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="white">Nursing Staff</text>
+  <text x="260" y="330" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="white">Direct Care</text>
+  
+  <rect x="340" y="290" width="120" height="60" fill="#ff9800" stroke="#1a56a0" stroke-width="2" rx="10"/>
+  <text x="400" y="315" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="white">Pharmacist</text>
+  <text x="400" y="330" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="white">Medication Review</text>
+  
+  <rect x="480" y="290" width="120" height="60" fill="#ff9800" stroke="#1a56a0" stroke-width="2" rx="10"/>
+  <text x="540" y="315" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="white">Social Worker</text>
+  <text x="540" y="330" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="white">Psychosocial Factors</text>
+  
+  <rect x="630" y="290" width="120" height="60" fill="#ff9800" stroke="#1a56a0" stroke-width="2" rx="10"/>
+  <text x="690" y="315" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="white">Dietary</text>
+  <text x="690" y="330" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="white">Nutrition Support</text>
+  
+  <!-- Fourth Level: Support Team -->
+  <rect x="100" y="400" width="120" height="60" fill="#e8f4fd" stroke="#1a56a0" stroke-width="2" rx="10"/>
+  <text x="160" y="425" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#1a56a0">Maintenance</text>
+  <text x="160" y="440" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#1a56a0">Environmental Safety</text>
+  
+  <rect x="250" y="400" width="120" height="60" fill="#e8f4fd" stroke="#1a56a0" stroke-width="2" rx="10"/>
+  <text x="310" y="425" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#1a56a0">Activities</text>
+  <text x="310" y="440" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#1a56a0">Exercise Programs</text>
+  
+  <rect x="400" y="400" width="120" height="60" fill="#e8f4fd" stroke="#1a56a0" stroke-width="2" rx="10"/>
+  <text x="460" y="425" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#1a56a0">Housekeeping</text>
+  <text x="460" y="440" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#1a56a0">Hazard Prevention</text>
+  
+  <rect x="550" y="400" width="120" height="60" fill="#e8f4fd" stroke="#1a56a0" stroke-width="2" rx="10"/>
+  <text x="610" y="425" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#1a56a0">Quality Assurance</text>
+  <text x="610" y="440" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#1a56a0">Data Collection</text>
+  
+  <!-- Bottom Level: Residents and Families -->
+  <rect x="325" y="520" width="150" height="60" fill="#2e7d32" stroke="#1a56a0" stroke-width="2" rx="10"/>
+  <text x="400" y="545" text-anchor="middle" font-family="Arial, sans-serif" font-size="13" font-weight="bold" fill="white">Residents & Families</text>
+  <text x="400" y="560" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="white">Active Participants</text>
+  
+  <!-- Connection lines -->
+  <line x1="400" y1="130" x2="225" y2="180" stroke="#1a56a0" stroke-width="2"/>
+  <line x1="400" y1="130" x2="575" y2="180" stroke="#1a56a0" stroke-width="2"/>
+  
+  <line x1="225" y1="240" x2="110" y2="290" stroke="#1a56a0" stroke-width="2"/>
+  <line x1="225" y1="240" x2="260" y2="290" stroke="#1a56a0" stroke-width="2"/>
+  <line x1="400" y1="150" x2="400" y2="290" stroke="#1a56a0" stroke-width="2"/>
+  <line x1="575" y1="240" x2="540" y2="290" stroke="#1a56a0" stroke-width="2"/>
+  <line x1="575" y1="240" x2="690" y2="290" stroke="#1a56a0" stroke-width="2"/>
+  
+  <line x1="110" y1="350" x2="160" y2="400" stroke="#1a56a0" stroke-width="2"/>
+  <line x1="260" y1="350" x2="310" y2="400" stroke="#1a56a0" stroke-width="2"/>
+  <line x1="400" y1="350" x2="460" y2="400" stroke="#1a56a0" stroke-width="2"/>
+  <line x1="540" y1="350" x2="610" y2="400" stroke="#1a56a0" stroke-width="2"/>
+  
+  <line x1="400" y1="460" x2="400" y2="520" stroke="#1a56a0" stroke-width="2"/>
+  
+  <!-- Legend -->
+  <rect x="50" y="620" width="700" height="60" fill="white" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="60" y="640" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#1a56a0">Team Roles:</text>
+  <rect x="150" y="630" width="15" height="15" fill="#1a56a0"/>
+  <text x="175" y="642" font-family="Arial, sans-serif" font-size="11" fill="#333">Leadership</text>
+  <rect x="250" y="630" width="15" height="15" fill="#2e7d32"/>
+  <text x="275" y="642" font-family="Arial, sans-serif" font-size="11" fill="#333">Management</text>
+  <rect x="370" y="630" width="15" height="15" fill="#ff9800"/>
+  <text x="395" y="642" font-family="Arial, sans-serif" font-size="11" fill="#333">Clinical Team</text>
+  <rect x="480" y="630" width="15" height="15" fill="#e8f4fd"/>
+  <text x="505" y="642" font-family="Arial, sans-serif" font-size="11" fill="#333">Support Services</text>
+  
+  <text x="400" y="665" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#555">
+    Effective fall prevention requires interdisciplinary collaboration and clear communication pathways
+  </text>
+</svg>

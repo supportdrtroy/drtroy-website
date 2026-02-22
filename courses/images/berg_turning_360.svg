@@ -1,0 +1,88 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="500" viewBox="0 0 800 500">
+  <rect width="800" height="500" fill="white" stroke="#e0e0e0" stroke-width="1"/>
+  
+  <!-- Title -->
+  <text x="400" y="35" text-anchor="middle" font-family="Arial, sans-serif" font-size="22" font-weight="bold" fill="#1a56a0">
+    Berg Balance Scale: 360° Turn (Top View)
+  </text>
+  
+  <!-- Center circle showing turn area -->
+  <circle cx="400" cy="250" r="100" fill="#e8f4fd" stroke="#1a56a0" stroke-width="2" opacity="0.3"/>
+  
+  <!-- Person (top view - shoulders and head) -->
+  <!-- Head -->
+  <circle cx="400" cy="220" r="15" fill="white" stroke="#1a56a0" stroke-width="2"/>
+  <!-- Shoulders -->
+  <line x1="370" y1="235" x2="430" y2="235" stroke="#1a56a0" stroke-width="4"/>
+  <!-- Body indicator -->
+  <line x1="400" y1="235" x2="400" y2="265" stroke="#1a56a0" stroke-width="3"/>
+  
+  <!-- Feet positions (top view) -->
+  <ellipse cx="390" cy="270" rx="8" ry="15" fill="#1a56a0"/>
+  <ellipse cx="410" cy="270" rx="8" ry="15" fill="#1a56a0"/>
+  
+  <!-- Turn direction arrows -->
+  <path d="M 500 250 A 100 100 0 0 1 400 350" stroke="#2e7d32" stroke-width="4" fill="none" marker-end="url(#arrowhead)"/>
+  <path d="M 400 350 A 100 100 0 0 1 300 250" stroke="#2e7d32" stroke-width="4" fill="none" marker-end="url(#arrowhead)"/>
+  <path d="M 300 250 A 100 100 0 0 1 400 150" stroke="#2e7d32" stroke-width="4" fill="none" marker-end="url(#arrowhead)"/>
+  <path d="M 400 150 A 100 100 0 0 1 480 190" stroke="#2e7d32" stroke-width="4" fill="none" marker-end="url(#arrowhead)"/>
+  
+  <!-- Position markers -->
+  <circle cx="500" cy="250" r="5" fill="#ff9800"/>
+  <text x="520" y="255" font-family="Arial, sans-serif" font-size="11" fill="#ff9800">Start</text>
+  
+  <circle cx="400" cy="350" r="5" fill="#ff9800"/>
+  <text x="410" y="370" font-family="Arial, sans-serif" font-size="11" fill="#ff9800">90°</text>
+  
+  <circle cx="300" cy="250" r="5" fill="#ff9800"/>
+  <text x="260" y="255" font-family="Arial, sans-serif" font-size="11" fill="#ff9800">180°</text>
+  
+  <circle cx="400" cy="150" r="5" fill="#ff9800"/>
+  <text x="410" y="140" font-family="Arial, sans-serif" font-size="11" fill="#ff9800">270°</text>
+  
+  <!-- Center reference -->
+  <circle cx="400" cy="250" r="3" fill="#d32f2f"/>
+  <text x="380" y="245" font-family="Arial, sans-serif" font-size="10" fill="#d32f2f">Center</text>
+  
+  <!-- Test instructions box -->
+  <rect x="100" y="80" width="250" height="140" fill="#e8f4fd" stroke="#1a56a0" stroke-width="1" rx="10"/>
+  <text x="225" y="105" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#1a56a0">Test Instructions</text>
+  <text x="110" y="125" font-family="Arial, sans-serif" font-size="11" fill="#333">• Turn completely around 360°</text>
+  <text x="110" y="145" font-family="Arial, sans-serif" font-size="11" fill="#333">• Pause briefly at each 90°</text>
+  <text x="110" y="165" font-family="Arial, sans-serif" font-size="11" fill="#333">• Turn in both directions</text>
+  <text x="110" y="185" font-family="Arial, sans-serif" font-size="11" fill="#333">• No external support</text>
+  <text x="110" y="205" font-family="Arial, sans-serif" font-size="11" fill="#333">• Count steps if needed</text>
+  
+  <!-- Scoring box -->
+  <rect x="450" y="80" width="280" height="140" fill="#fff3e0" stroke="#1a56a0" stroke-width="1" rx="10"/>
+  <text x="590" y="105" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#ff9800">Scoring Criteria</text>
+  <text x="460" y="125" font-family="Arial, sans-serif" font-size="11" fill="#333">4 - Turns safely in ≤ 4 seconds</text>
+  <text x="460" y="145" font-family="Arial, sans-serif" font-size="11" fill="#333">3 - Turns safely in > 4 seconds</text>
+  <text x="460" y="165" font-family="Arial, sans-serif" font-size="11" fill="#333">2 - Turns safely but needs supervision</text>
+  <text x="460" y="185" font-family="Arial, sans-serif" font-size="11" fill="#333">1 - Needs verbal cuing or touching</text>
+  <text x="460" y="205" font-family="Arial, sans-serif" font-size="11" fill="#333">0 - Needs assistance while turning</text>
+  
+  <!-- Step counting guide -->
+  <rect x="100" y="380" width="250" height="80" fill="#fff3cd" stroke="#ff9800" stroke-width="1" rx="10"/>
+  <text x="225" y="405" text-anchor="middle" font-family="Arial, sans-serif" font-size="13" font-weight="bold" fill="#ff9800">Step Count Guide</text>
+  <text x="110" y="425" font-family="Arial, sans-serif" font-size="11" fill="#333">• Normal: 4-6 steps for 360°</text>
+  <text x="110" y="445" font-family="Arial, sans-serif" font-size="11" fill="#333">• > 8 steps may indicate instability</text>
+  
+  <!-- Direction options -->
+  <rect x="450" y="380" width="280" height="80" fill="#e8f4fd" stroke="#1a56a0" stroke-width="1" rx="10"/>
+  <text x="590" y="405" text-anchor="middle" font-family="Arial, sans-serif" font-size="13" font-weight="bold" fill="#1a56a0">Test Both Directions</text>
+  <text x="460" y="425" font-family="Arial, sans-serif" font-size="11" fill="#333">1. Clockwise (right) turn first</text>
+  <text x="460" y="445" font-family="Arial, sans-serif" font-size="11" fill="#333">2. Counterclockwise (left) turn second</text>
+  
+  <!-- Arrow marker definition -->
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#2e7d32"/>
+    </marker>
+  </defs>
+  
+  <!-- Safety note -->
+  <text x="400" y="485" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#d32f2f" font-weight="bold">
+    ⚠ Stay within arm's reach throughout entire turn
+  </text>
+</svg>

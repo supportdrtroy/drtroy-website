@@ -1,0 +1,96 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="500" viewBox="0 0 800 500">
+  <rect width="800" height="500" fill="white" stroke="#e0e0e0" stroke-width="1"/>
+  
+  <!-- Title -->
+  <text x="400" y="35" text-anchor="middle" font-family="Arial, sans-serif" font-size="22" font-weight="bold" fill="#1a56a0">
+    10-Meter Walk Test Setup
+  </text>
+  
+  <!-- Walking path -->
+  <rect x="50" y="200" width="700" height="100" fill="#e8f4fd" stroke="#1a56a0" stroke-width="2" rx="10"/>
+  <text x="400" y="190" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#1a56a0">14-Meter Total Walking Path</text>
+  
+  <!-- Start line -->
+  <line x1="100" y1="180" x2="100" y2="320" stroke="#1a56a0" stroke-width="4"/>
+  <text x="100" y="170" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#1a56a0">START</text>
+  <text x="100" y="340" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#333">0m</text>
+  
+  <!-- 2-meter acceleration zone -->
+  <rect x="100" y="200" width="100" height="100" fill="#fff3cd" opacity="0.7"/>
+  <text x="150" y="250" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#ff9800" font-weight="bold">Acceleration</text>
+  <text x="150" y="265" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#ff9800" font-weight="bold">Zone (2m)</text>
+  
+  <!-- Timing start line -->
+  <line x1="200" y1="180" x2="200" y2="320" stroke="#2e7d32" stroke-width="4"/>
+  <text x="200" y="170" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#2e7d32">TIMER START</text>
+  <text x="200" y="340" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#333">2m</text>
+  
+  <!-- 10-meter timed zone -->
+  <rect x="200" y="200" width="400" height="100" fill="#e8f5e9" opacity="0.9"/>
+  <text x="400" y="240" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#2e7d32">10-METER TIMED ZONE</text>
+  <text x="400" y="260" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#2e7d32">Record time for this section only</text>
+  
+  <!-- Timing stop line -->
+  <line x1="600" y1="180" x2="600" y2="320" stroke="#d32f2f" stroke-width="4"/>
+  <text x="600" y="170" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#d32f2f">TIMER STOP</text>
+  <text x="600" y="340" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#333">12m</text>
+  
+  <!-- 2-meter deceleration zone -->
+  <rect x="600" y="200" width="100" height="100" fill="#fff3cd" opacity="0.7"/>
+  <text x="650" y="250" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#ff9800" font-weight="bold">Deceleration</text>
+  <text x="650" y="265" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#ff9800" font-weight="bold">Zone (2m)</text>
+  
+  <!-- Finish line -->
+  <line x1="700" y1="180" x2="700" y2="320" stroke="#1a56a0" stroke-width="4"/>
+  <text x="700" y="170" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#1a56a0">FINISH</text>
+  <text x="700" y="340" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#333">14m</text>
+  
+  <!-- Person walking (stick figure) -->
+  <circle cx="300" cy="230" r="15" fill="white" stroke="#1a56a0" stroke-width="2"/>
+  <line x1="300" y1="245" x2="300" y2="290" stroke="#1a56a0" stroke-width="3"/>
+  <line x1="300" y1="260" x2="280" y2="285" stroke="#1a56a0" stroke-width="2"/>
+  <line x1="300" y1="260" x2="320" y2="275" stroke="#1a56a0" stroke-width="2"/>
+  <line x1="300" y1="290" x2="285" y2="305" stroke="#1a56a0" stroke-width="2"/>
+  <line x1="300" y1="290" x2="315" y2="305" stroke="#1a56a0" stroke-width="2"/>
+  
+  <!-- Walking direction arrow -->
+  <path d="M 350 250 L 380 250" stroke="#1a56a0" stroke-width="3" marker-end="url(#arrowhead)"/>
+  <text x="365" y="240" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#1a56a0">Walking direction</text>
+  
+  <!-- Stopwatch illustration -->
+  <circle cx="150" cy="120" r="30" fill="white" stroke="#1a56a0" stroke-width="2"/>
+  <circle cx="150" cy="120" r="20" fill="none" stroke="#1a56a0" stroke-width="1"/>
+  <line x1="150" y1="120" x2="150" y2="105" stroke="#1a56a0" stroke-width="2"/>
+  <line x1="150" y1="120" x2="165" y2="120" stroke="#1a56a0" stroke-width="2"/>
+  <text x="200" y="125" font-family="Arial, sans-serif" font-size="12" fill="#333">Stopwatch</text>
+  
+  <!-- Instructions box -->
+  <rect x="450" y="80" width="300" height="100" fill="#e8f4fd" stroke="#1a56a0" stroke-width="1" rx="10"/>
+  <text x="600" y="100" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#1a56a0">Test Instructions</text>
+  <text x="460" y="120" font-family="Arial, sans-serif" font-size="11" fill="#333">1. Patient starts walking before timer</text>
+  <text x="460" y="135" font-family="Arial, sans-serif" font-size="11" fill="#333">2. Start timer when foot crosses 2m line</text>
+  <text x="460" y="150" font-family="Arial, sans-serif" font-size="11" fill="#333">3. Stop timer when foot crosses 12m line</text>
+  <text x="460" y="165" font-family="Arial, sans-serif" font-size="11" fill="#333">4. Walk at comfortable, usual pace</text>
+  
+  <!-- Calculation box -->
+  <rect x="100" y="380" width="300" height="100" fill="#fff3e0" stroke="#1a56a0" stroke-width="1" rx="10"/>
+  <text x="250" y="400" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#ff9800">Calculation</text>
+  <text x="110" y="420" font-family="Arial, sans-serif" font-size="12" fill="#333">Gait Speed = Distance ÷ Time</text>
+  <text x="110" y="440" font-family="Arial, sans-serif" font-size="12" fill="#333">Gait Speed = 10 meters ÷ [time in seconds]</text>
+  <text x="110" y="460" font-family="Arial, sans-serif" font-size="11" fill="#d32f2f">Result in meters/second (m/s)</text>
+  
+  <!-- Interpretation box -->
+  <rect x="450" y="380" width="300" height="100" fill="#e8f5e9" stroke="#1a56a0" stroke-width="1" rx="10"/>
+  <text x="600" y="400" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#2e7d32">Interpretation</text>
+  <text x="460" y="420" font-family="Arial, sans-serif" font-size="11" fill="#333">≥ 1.2 m/s = Normal gait speed</text>
+  <text x="460" y="435" font-family="Arial, sans-serif" font-size="11" fill="#333">0.8-1.2 m/s = Mild impairment</text>
+  <text x="460" y="450" font-family="Arial, sans-serif" font-size="11" fill="#333">< 0.8 m/s = Significant impairment</text>
+  <text x="460" y="470" font-family="Arial, sans-serif" font-size="11" fill="#d32f2f">< 0.6 m/s = High fall risk</text>
+  
+  <!-- Arrow marker definition -->
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#1a56a0"/>
+    </marker>
+  </defs>
+</svg>

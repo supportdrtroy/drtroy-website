@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="700">
+  <rect width="800" height="700" fill="white" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="400" y="35" font-family="Arial, sans-serif" font-size="22" font-weight="bold" fill="#1a56a0" text-anchor="middle">Deprescribing Algorithm</text>
+  <rect x="250" y="60" width="300" height="50" fill="#4fc3f7" stroke="#1a56a0" stroke-width="2" rx="5"/>
+  <text x="400" y="90" font-family="Arial, sans-serif" font-size="14" fill="white" text-anchor="middle" font-weight="bold">Identify Potentially Inappropriate</text>
+  <text x="400" y="105" font-family="Arial, sans-serif" font-size="14" fill="white" text-anchor="middle" font-weight="bold">Medication</text>
+  <line x1="400" y1="110" x2="400" y2="140" stroke="#1a56a0" stroke-width="2"/>
+  <polygon points="395,135 400,145 405,135" fill="#1a56a0"/>
+  <polygon points="400,170 450,200 400,230 350,200" fill="#fff3e0" stroke="#1a56a0" stroke-width="2"/>
+  <text x="400" y="195" font-family="Arial, sans-serif" font-size="12" fill="#333333" text-anchor="middle">Current</text>
+  <text x="400" y="210" font-family="Arial, sans-serif" font-size="12" fill="#333333" text-anchor="middle">indication?</text>
+  <line x1="450" y1="200" x2="520" y2="200" stroke="#1a56a0" stroke-width="2"/>
+  <text x="485" y="195" font-family="Arial, sans-serif" font-size="12" fill="#333333" font-weight="bold">Yes</text>
+  <line x1="350" y1="200" x2="280" y2="200" stroke="#1a56a0" stroke-width="2"/>
+  <text x="315" y="195" font-family="Arial, sans-serif" font-size="12" fill="#333333" font-weight="bold">No</text>
+  <rect x="520" y="175" width="200" height="50" fill="#e8f4fd" stroke="#1a56a0" stroke-width="2" rx="5"/>
+  <text x="620" y="195" font-family="Arial, sans-serif" font-size="12" fill="#1a56a0" text-anchor="middle" font-weight="bold">Consider</text>
+  <text x="620" y="210" font-family="Arial, sans-serif" font-size="12" fill="#1a56a0" text-anchor="middle" font-weight="bold">discontinuation</text>
+  <rect x="180" y="175" width="100" height="50" fill="#ffebee" stroke="#d32f2f" stroke-width="2" rx="5"/>
+  <text x="230" y="195" font-family="Arial, sans-serif" font-size="12" fill="#d32f2f" text-anchor="middle" font-weight="bold">Continue</text>
+  <text x="230" y="210" font-family="Arial, sans-serif" font-size="12" fill="#d32f2f" text-anchor="middle" font-weight="bold">monitoring</text>
+  <line x1="620" y1="225" x2="620" y2="270" stroke="#1a56a0" stroke-width="2"/>
+  <polygon points="615,265 620,275 625,265" fill="#1a56a0"/>
+  <polygon points="620,295 670,325 620,355 570,325" fill="#fff3e0" stroke="#1a56a0" stroke-width="2"/>
+  <text x="620" y="320" font-family="Arial, sans-serif" font-size="12" fill="#333333" text-anchor="middle">Benefit &gt;</text>
+  <text x="620" y="335" font-family="Arial, sans-serif" font-size="12" fill="#333333" text-anchor="middle">harm/risk?</text>
+  <line x1="670" y1="325" x2="720" y2="325" stroke="#1a56a0" stroke-width="2"/>
+  <text x="695" y="320" font-family="Arial, sans-serif" font-size="12" fill="#333333" font-weight="bold">Yes</text>
+  <line x1="570" y1="325" x2="500" y2="325" stroke="#1a56a0" stroke-width="2"/>
+  <text x="535" y="320" font-family="Arial, sans-serif" font-size="12" fill="#333333" font-weight="bold">No</text>
+  <rect x="720" y="300" width="70" height="50" fill="#e8f5e8" stroke="#2e7d32" stroke-width="2" rx="5"/>
+  <text x="755" y="330" font-family="Arial, sans-serif" font-size="12" fill="#2e7d32" text-anchor="middle" font-weight="bold">Continue</text>
+  <rect x="400" y="300" width="100" height="50" fill="#ffeb3b" stroke="#f57f00" stroke-width="2" rx="5"/>
+  <text x="450" y="330" font-family="Arial, sans-serif" font-size="12" fill="#333333" text-anchor="middle" font-weight="bold">Initiate</text>
+  <text x="450" y="345" font-family="Arial, sans-serif" font-size="12" fill="#333333" text-anchor="middle" font-weight="bold">deprescribing</text>
+  <line x1="450" y1="350" x2="450" y2="390" stroke="#1a56a0" stroke-width="2"/>
+  <polygon points="445,385 450,395 455,385" fill="#1a56a0"/>
+  <polygon points="450,420 500,450 450,480 400,450" fill="#fff3e0" stroke="#1a56a0" stroke-width="2"/>
+  <text x="450" y="445" font-family="Arial, sans-serif" font-size="12" fill="#333333" text-anchor="middle">Patient/family</text>
+  <text x="450" y="460" font-family="Arial, sans-serif" font-size="12" fill="#333333" text-anchor="middle">consent?</text>
+  <line x1="500" y1="450" x2="550" y2="450" stroke="#1a56a0" stroke-width="2"/>
+  <text x="525" y="445" font-family="Arial, sans-serif" font-size="12" fill="#333333" font-weight="bold">Yes</text>
+  <line x1="400" y1="450" x2="300" y2="450" stroke="#1a56a0" stroke-width="2"/>
+  <text x="350" y="445" font-family="Arial, sans-serif" font-size="12" fill="#333333" font-weight="bold">No</text>
+  <rect x="250" y="425" width="50" height="50" fill="#ffebee" stroke="#d32f2f" stroke-width="2" rx="5"/>
+  <text x="275" y="455" font-family="Arial, sans-serif" font-size="10" fill="#d32f2f" text-anchor="middle" font-weight="bold">Document</text>
+  <line x1="550" y1="450" x2="620" y2="450" stroke="#1a56a0" stroke-width="2"/>
+  <polygon points="615,445 625,450 615,455" fill="#1a56a0"/>
+  <rect x="620" y="425" width="150" height="50" fill="#4caf50" stroke="#2e7d32" stroke-width="2" rx="5"/>
+  <text x="695" y="455" font-family="Arial, sans-serif" font-size="12" fill="white" text-anchor="middle" font-weight="bold">Create tapering protocol</text>
+  <line x1="695" y1="475" x2="695" y2="520" stroke="#1a56a0" stroke-width="2"/>
+  <polygon points="690,515 695,525 700,515" fill="#1a56a0"/>
+  <rect x="620" y="525" width="150" height="50" fill="#e8f4fd" stroke="#1a56a0" stroke-width="2" rx="5"/>
+  <text x="695" y="555" font-family="Arial, sans-serif" font-size="12" fill="#1a56a0" text-anchor="middle" font-weight="bold">Monitor for withdrawal</text>
+  <line x1="695" y1="575" x2="695" y2="620" stroke="#1a56a0" stroke-width="2"/>
+  <polygon points="690,615 695,625 700,615" fill="#1a56a0"/>
+  <rect x="620" y="625" width="150" height="50" fill="#4fc3f7" stroke="#1a56a0" stroke-width="2" rx="5"/>
+  <text x="695" y="655" font-family="Arial, sans-serif" font-size="12" fill="white" text-anchor="middle" font-weight="bold">Document outcome</text>
+</svg>

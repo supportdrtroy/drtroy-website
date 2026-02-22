@@ -1,0 +1,101 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="500" viewBox="0 0 800 500">
+  <rect width="800" height="500" fill="white" stroke="#e0e0e0" stroke-width="1"/>
+  
+  <!-- Title -->
+  <text x="400" y="35" text-anchor="middle" font-family="Arial, sans-serif" font-size="22" font-weight="bold" fill="#1a56a0">
+    Antalgic Gait Pattern
+  </text>
+  
+  <!-- Ground line -->
+  <line x1="100" y1="420" x2="700" y2="420" stroke="#1a56a0" stroke-width="2"/>
+  
+  <!-- Person with antalgic gait -->
+  <!-- Head -->
+  <circle cx="400" cy="180" r="25" fill="white" stroke="#1a56a0" stroke-width="2"/>
+  <circle cx="390" cy="175" r="3" fill="#1a56a0"/>
+  <circle cx="410" cy="175" r="3" fill="#1a56a0"/>
+  <path d="M 385 190 Q 400 185 415 190" stroke="#d32f2f" stroke-width="2" fill="none"/>
+  
+  <!-- Body leaning toward painful side -->
+  <line x1="400" y1="205" x2="380" y2="340" stroke="#1a56a0" stroke-width="4"/>
+  
+  <!-- Arms - one supporting, one free -->
+  <line x1="390" y1="230" x2="350" y2="260" stroke="#1a56a0" stroke-width="3"/>
+  <line x1="350" y1="260" x2="330" y2="290" stroke="#1a56a0" stroke-width="3"/>
+  <line x1="390" y1="240" x2="420" y2="270" stroke="#1a56a0" stroke-width="3"/>
+  <line x1="420" y1="270" x2="440" y2="300" stroke="#1a56a0" stroke-width="3"/>
+  
+  <!-- Legs - painful leg and normal leg -->
+  <!-- Painful leg (right) -->
+  <line x1="380" y1="340" x2="390" y2="410" stroke="#d32f2f" stroke-width="4"/>
+  <ellipse cx="395" cy="420" rx="15" ry="5" fill="#d32f2f"/>
+  
+  <!-- Normal leg (left) -->
+  <line x1="380" y1="340" x2="370" y2="415" stroke="#1a56a0" stroke-width="3"/>
+  <ellipse cx="365" cy="420" rx="15" ry="5" fill="#1a56a0"/>
+  
+  <!-- Pain indicators -->
+  <circle cx="395" cy="380" r="8" fill="#d32f2f" opacity="0.7"/>
+  <text x="405" y="385" font-family="Arial, sans-serif" font-size="12" fill="#d32f2f" font-weight="bold">PAIN</text>
+  
+  <!-- Body lean indicator -->
+  <path d="M 420 250 Q 440 270 450 290" stroke="#d32f2f" stroke-width="2" fill="none" marker-end="url(#redarrow)"/>
+  <text x="460" y="280" font-family="Arial, sans-serif" font-size="11" fill="#d32f2f">Lean toward</text>
+  <text x="460" y="295" font-family="Arial, sans-serif" font-size="11" fill="#d32f2f">painful side</text>
+  
+  <!-- Characteristics box -->
+  <rect x="100" y="80" width="280" height="140" fill="#ffebee" stroke="#d32f2f" stroke-width="1" rx="10"/>
+  <text x="240" y="105" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#d32f2f">Antalgic Gait Characteristics</text>
+  <text x="110" y="125" font-family="Arial, sans-serif" font-size="11" fill="#333">• Shortened stance phase on painful leg</text>
+  <text x="110" y="145" font-family="Arial, sans-serif" font-size="11" fill="#333">• Rapid transfer of weight to unaffected leg</text>
+  <text x="110" y="165" font-family="Arial, sans-serif" font-size="11" fill="#333">• Lateral lean toward painful side</text>
+  <text x="110" y="185" font-family="Arial, sans-serif" font-size="11" fill="#333">• Decreased step length</text>
+  <text x="110" y="205" font-family="Arial, sans-serif" font-size="11" fill="#333">• May use assistive device</text>
+  
+  <!-- Timing diagram -->
+  <rect x="450" y="80" width="280" height="140" fill="#e8f4fd" stroke="#1a56a0" stroke-width="1" rx="10"/>
+  <text x="590" y="105" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#1a56a0">Stance Phase Timing</text>
+  
+  <!-- Normal vs Antalgic timing bars -->
+  <text x="460" y="130" font-family="Arial, sans-serif" font-size="12" fill="#333">Normal stance:</text>
+  <rect x="560" y="120" width="120" height="15" fill="#2e7d32" rx="7"/>
+  <text x="620" y="150" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#333">60% of cycle</text>
+  
+  <text x="460" y="170" font-family="Arial, sans-serif" font-size="12" fill="#333">Antalgic stance:</text>
+  <rect x="560" y="160" width="80" height="15" fill="#d32f2f" rx="7"/>
+  <text x="600" y="190" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#333">40% of cycle</text>
+  
+  <!-- Cane illustration -->
+  <line x1="330" y1="290" x2="320" y2="410" stroke="#8d6e63" stroke-width="4"/>
+  <ellipse cx="315" cy="420" rx="10" ry="3" fill="#8d6e63"/>
+  <text x="290" y="350" font-family="Arial, sans-serif" font-size="11" fill="#333">Walking aid</text>
+  <text x="290" y="365" font-family="Arial, sans-serif" font-size="11" fill="#333">often used</text>
+  
+  <!-- Causes box -->
+  <rect x="100" y="250" width="280" height="120" fill="#fff3cd" stroke="#ff9800" stroke-width="1" rx="10"/>
+  <text x="240" y="275" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#ff9800">Common Causes</text>
+  <text x="110" y="295" font-family="Arial, sans-serif" font-size="11" fill="#333">• Hip osteoarthritis</text>
+  <text x="110" y="315" font-family="Arial, sans-serif" font-size="11" fill="#333">• Knee pain/injury</text>
+  <text x="110" y="335" font-family="Arial, sans-serif" font-size="11" fill="#333">• Ankle sprain/fracture</text>
+  <text x="110" y="355" font-family="Arial, sans-serif" font-size="11" fill="#333">• Plantar fasciitis</text>
+  
+  <!-- Treatment considerations -->
+  <rect x="450" y="250" width="280" height="120" fill="#e8f5e9" stroke="#2e7d32" stroke-width="1" rx="10"/>
+  <text x="590" y="275" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#2e7d32">Treatment Focus</text>
+  <text x="460" y="295" font-family="Arial, sans-serif" font-size="11" fill="#333">• Address underlying pain source</text>
+  <text x="460" y="315" font-family="Arial, sans-serif" font-size="11" fill="#333">• Pain management strategies</text>
+  <text x="460" y="335" font-family="Arial, sans-serif" font-size="11" fill="#333">• Assistive device training</text>
+  <text x="460" y="355" font-family="Arial, sans-serif" font-size="11" fill="#333">• Gradual weight-bearing progression</text>
+  
+  <!-- Arrow marker definition -->
+  <defs>
+    <marker id="redarrow" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#d32f2f"/>
+    </marker>
+  </defs>
+  
+  <!-- Bottom note -->
+  <text x="400" y="470" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#d32f2f" font-weight="bold">
+    Key Feature: Shortened stance phase on painful limb to minimize weight-bearing time
+  </text>
+</svg>

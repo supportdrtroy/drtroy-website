@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="500">
+  <rect width="800" height="500" fill="white" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="400" y="35" font-family="Arial, sans-serif" font-size="22" font-weight="bold" fill="#1a56a0" text-anchor="middle">30-Second Chair Stand Test</text>
+  <rect x="150" y="300" width="120" height="100" fill="#8d6e63" stroke="#5d4037" stroke-width="3" rx="5"/>
+  <rect x="160" y="290" width="100" height="12" fill="#8d6e63" stroke="#5d4037" stroke-width="2"/>
+  <text x="210" y="355" font-family="Arial, sans-serif" font-size="12" fill="white" text-anchor="middle">Chair</text>
+  <g transform="translate(210, 260)">
+    <circle cx="0" cy="0" r="15" fill="#ffdbcb" stroke="#1a56a0" stroke-width="2"/>
+    <ellipse cx="0" cy="35" rx="22" ry="35" fill="#e3f2fd" stroke="#1a56a0" stroke-width="2"/>
+    <line x1="-18" y1="25" x2="-25" y2="45" stroke="#1a56a0" stroke-width="4"/>
+    <line x1="18" y1="25" x2="25" y2="45" stroke="#1a56a0" stroke-width="4"/>
+    <line x1="-8" y1="70" x2="-8" y2="90" stroke="#1a56a0" stroke-width="5"/>
+    <line x1="8" y1="70" x2="8" y2="90" stroke="#1a56a0" stroke-width="5"/>
+  </g>
+  <circle cx="100" cy="150" r="40" fill="none" stroke="#1a56a0" stroke-width="4"/>
+  <text x="100" y="158" font-family="Arial, sans-serif" font-size="24" fill="#1a56a0" text-anchor="middle" font-weight="bold">30</text>
+  <text x="100" y="210" font-family="Arial, sans-serif" font-size="14" fill="#1a56a0" text-anchor="middle" font-weight="bold">Seconds</text>
+  <path d="M340 250 Q380 200, 420 250" stroke="#ff9800" stroke-width="3" fill="none"/>
+  <polygon points="415,245 425,255 415,260" fill="#ff9800"/>
+  <g transform="translate(420, 200)">
+    <circle cx="0" cy="0" r="15" fill="#ffdbcb" stroke="#1a56a0" stroke-width="2"/>
+    <ellipse cx="0" cy="35" rx="22" ry="35" fill="#e3f2fd" stroke="#1a56a0" stroke-width="2"/>
+    <line x1="-18" y1="25" x2="-10" y2="50" stroke="#1a56a0" stroke-width="4"/>
+    <line x1="18" y1="25" x2="10" y2="50" stroke="#1a56a0" stroke-width="4"/>
+    <line x1="-8" y1="70" x2="-5" y2="100" stroke="#1a56a0" stroke-width="5"/>
+    <line x1="8" y1="70" x2="15" y2="100" stroke="#1a56a0" stroke-width="5"/>
+    <ellipse cx="-5" cy="110" rx="12" ry="6" fill="#333333"/>
+    <ellipse cx="15" cy="110" rx="12" ry="6" fill="#333333"/>
+  </g>
+  <rect x="500" y="150" width="250" height="200" fill="#ffebee" stroke="#d32f2f" stroke-width="2" rx="5"/>
+  <text x="625" y="180" font-family="Arial, sans-serif" font-size="16" fill="#d32f2f" text-anchor="middle" font-weight="bold">Reference Values</text>
+  <text x="520" y="210" font-family="Arial, sans-serif" font-size="14" fill="#333333" font-weight="bold">&lt;8 reps = HIGH FALL RISK</text>
+  <text x="520" y="240" font-family="Arial, sans-serif" font-size="14" fill="#ff6f00" font-weight="bold">8-11 reps = MODERATE RISK</text>
+  <text x="520" y="270" font-family="Arial, sans-serif" font-size="14" fill="#2e7d32" font-weight="bold">≥12 reps = NORMAL</text>
+  <text x="520" y="300" font-family="Arial, sans-serif" font-size="11" fill="#333333">Instructions:</text>
+  <text x="520" y="315" font-family="Arial, sans-serif" font-size="10" fill="#555555">• Sit in chair, arms crossed</text>
+  <text x="520" y="330" font-family="Arial, sans-serif" font-size="10" fill="#555555">• Stand up and sit down</text>
+  <text x="520" y="345" font-family="Arial, sans-serif" font-size="10" fill="#555555">• Count reps in 30 seconds</text>
+</svg>

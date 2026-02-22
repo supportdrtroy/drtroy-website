@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="500" viewBox="0 0 800 500">
+  <rect width="800" height="500" fill="white" stroke="#e0e0e0" stroke-width="1"/>
+  
+  <!-- Title -->
+  <text x="400" y="35" text-anchor="middle" font-family="Arial, sans-serif" font-size="22" font-weight="bold" fill="#1a56a0">
+    Berg Balance Scale: Tandem Standing
+  </text>
+  
+  <!-- Ground line -->
+  <line x1="200" y1="420" x2="600" y2="420" stroke="#1a56a0" stroke-width="2"/>
+  
+  <!-- Person in tandem stance -->
+  <!-- Head -->
+  <circle cx="400" cy="150" r="25" fill="white" stroke="#1a56a0" stroke-width="2"/>
+  <circle cx="390" cy="145" r="3" fill="#1a56a0"/>
+  <circle cx="410" cy="145" r="3" fill="#1a56a0"/>
+  <path d="M 385 160 Q 400 170 415 160" stroke="#1a56a0" stroke-width="2" fill="none"/>
+  
+  <!-- Body -->
+  <line x1="400" y1="175" x2="400" y2="340" stroke="#1a56a0" stroke-width="4"/>
+  
+  <!-- Arms slightly out for balance -->
+  <line x1="400" y1="200" x2="370" y2="230" stroke="#1a56a0" stroke-width="3"/>
+  <line x1="400" y1="200" x2="430" y2="230" stroke="#1a56a0" stroke-width="3"/>
+  <line x1="370" y1="230" x2="360" y2="260" stroke="#1a56a0" stroke-width="3"/>
+  <line x1="430" y1="230" x2="440" y2="260" stroke="#1a56a0" stroke-width="3"/>
+  
+  <!-- Legs in tandem position -->
+  <line x1="400" y1="340" x2="395" y2="415" stroke="#1a56a0" stroke-width="4"/>
+  <line x1="400" y1="340" x2="405" y2="415" stroke="#1a56a0" stroke-width="4"/>
+  
+  <!-- Feet - front foot -->
+  <ellipse cx="395" cy="420" rx="15" ry="5" fill="#1a56a0"/>
+  <!-- Feet - back foot (heel-to-toe) -->
+  <ellipse cx="405" cy="420" rx="15" ry="5" fill="#2e7d32"/>
+  
+  <!-- Test instructions box -->
+  <rect x="100" y="80" width="250" height="150" fill="#e8f4fd" stroke="#1a56a0" stroke-width="1" rx="10"/>
+  <text x="225" y="105" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#1a56a0">Test Instructions</text>
+  <text x="110" y="125" font-family="Arial, sans-serif" font-size="11" fill="#333">• Place one foot in front of other</text>
+  <text x="110" y="145" font-family="Arial, sans-serif" font-size="11" fill="#333">• Heel of front foot touches</text>
+  <text x="110" y="160" font-family="Arial, sans-serif" font-size="11" fill="#333">  toe of back foot</text>
+  <text x="110" y="180" font-family="Arial, sans-serif" font-size="11" fill="#333">• Stand for 30 seconds</text>
+  <text x="110" y="200" font-family="Arial, sans-serif" font-size="11" fill="#333">• No external support</text>
+  <text x="110" y="220" font-family="Arial, sans-serif" font-size="11" fill="#333">• Choose preferred foot forward</text>
+  
+  <!-- Scoring box -->
+  <rect x="450" y="80" width="250" height="150" fill="#fff3e0" stroke="#1a56a0" stroke-width="1" rx="10"/>
+  <text x="575" y="105" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#ff9800">Scoring Criteria</text>
+  <text x="460" y="125" font-family="Arial, sans-serif" font-size="11" fill="#333">4 - Stands 30 sec independently</text>
+  <text x="460" y="145" font-family="Arial, sans-serif" font-size="11" fill="#333">3 - Stands 30 sec with supervision</text>
+  <text x="460" y="165" font-family="Arial, sans-serif" font-size="11" fill="#333">2 - Stands 10 sec independently</text>
+  <text x="460" y="185" font-family="Arial, sans-serif" font-size="11" fill="#333">1 - Needs help to step, holds 15 sec</text>
+  <text x="460" y="205" font-family="Arial, sans-serif" font-size="11" fill="#333">0 - Loses balance while stepping</text>
+  
+  <!-- Foot positioning detail -->
+  <rect x="100" y="280" width="200" height="80" fill="#e8f4fd" stroke="#1a56a0" stroke-width="1" rx="10"/>
+  <text x="200" y="300" text-anchor="middle" font-family="Arial, sans-serif" font-size="13" font-weight="bold" fill="#1a56a0">Foot Position</text>
+  <ellipse cx="170" cy="325" rx="15" ry="5" fill="#1a56a0"/>
+  <ellipse cx="200" cy="325" rx="15" ry="5" fill="#2e7d32"/>
+  <text x="200" y="345" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#333">Heel-to-toe alignment</text>
+  
+  <!-- Balance challenge indicator -->
+  <circle cx="400" cy="250" r="60" fill="none" stroke="#d32f2f" stroke-width="2" stroke-dasharray="5,5" opacity="0.5"/>
+  <text x="480" y="250" font-family="Arial, sans-serif" font-size="11" fill="#d32f2f">Reduced base of support</text>
+  
+  <!-- Stability note -->
+  <rect x="450" y="280" width="250" height="80" fill="#fff3cd" stroke="#ff9800" stroke-width="1" rx="10"/>
+  <text x="575" y="300" text-anchor="middle" font-family="Arial, sans-serif" font-size="13" font-weight="bold" fill="#ff9800">Key Points</text>
+  <text x="460" y="320" font-family="Arial, sans-serif" font-size="11" fill="#333">• Most challenging static position</text>
+  <text x="460" y="340" font-family="Arial, sans-serif" font-size="11" fill="#333">• Tests medial-lateral stability</text>
+  
+  <!-- Safety note -->
+  <text x="400" y="470" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#d32f2f" font-weight="bold">
+    ⚠ Stand very close - highest fall risk position
+  </text>
+</svg>
