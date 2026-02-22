@@ -1065,7 +1065,7 @@
             <button class="main-tab" onclick="switchMainTab('credits')">
                 💳 Credits
             </button>
-            <button class="main-tab" onclick="switchMainTab('waitlist'); loadWaitlist();">
+            <button class="main-tab" onclick="switchMainTab('waitlist')">
                 📋 Waitlist
             </button>
         </div>
@@ -2536,50 +2536,15 @@
                 loadLicenseData();
             } else if (tabName === 'discount-codes') {
                 loadDiscountCodesFromDB();
+            } else if (tabName === 'waitlist') {
+                loadWaitlist();
             }
         }
 
         // Restore saved tab on page load
         function restoreSavedTab() {
             const savedTab = localStorage.getItem('currentAdminTab') || 'dashboard';
-            
-            // Always clear all active states first
-            document.querySelectorAll('.main-tab').forEach(tab => tab.classList.remove('active'));
-            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
-            
-            // Activate the correct tab
-            const tabButton = document.querySelector(`[onclick*="switchMainTab('${savedTab}')"]`);
-            const tabContent = document.getElementById(savedTab);
-            
-            if (tabButton && tabContent) {
-                tabButton.classList.add('active');
-                tabContent.classList.add('active');
-                
-                // Load data for the active tab
-                if (savedTab === 'dashboard') {
-                    updateDashboard();
-                } else if (savedTab === 'users') {
-                    loadUsers();
-                } else if (savedTab === 'courses') {
-                    loadCourses();
-                } else if (savedTab === 'emails') {
-                    loadEmailData();
-                } else if (savedTab === 'licenses') {
-                    loadLicenseData();
-                } else if (savedTab === 'discount-codes') {
-                    updateDiscountCodeStats();
-                } else if (savedTab === 'waitlist') {
-                    loadWaitlist();
-                }
-                
-                console.log(`✅ Restored tab: ${savedTab}`);
-            } else {
-                // Fallback: activate dashboard
-                document.querySelector(`[onclick="switchMainTab('dashboard')"]`).classList.add('active');
-                document.getElementById('dashboard').classList.add('active');
-                updateDashboard();
-                console.log('⚠️ Fallback to dashboard');
-            }
+            switchMainTab(savedTab);
         }
 
         function switchSubTab(tabName) {
