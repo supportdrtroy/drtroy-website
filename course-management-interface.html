@@ -212,6 +212,24 @@
                 <button type="button" onclick="addLearningObjective()" class="btn btn-secondary">+ Add Objective</button>
             </div>
             
+            <!-- Author Assignment -->
+            <div class="form-section">
+                <h4 class="form-section-title">👥 Author Assignment</h4>
+                <p class="form-section-desc">Assign authors and set revenue sharing for this course</p>
+                
+                <div class="form-group">
+                    <label class="form-label">Primary Author *</label>
+                    <select id="coursePrimaryAuthor" class="form-input" required>
+                        <option value="">Select Primary Author</option>
+                    </select>
+                </div>
+                
+                <div id="courseAuthorsContainer">
+                    <!-- Dynamic author assignments -->
+                </div>
+                <button type="button" onclick="addCourseAuthor()" class="btn btn-secondary">+ Add Co-Author</button>
+            </div>
+            
             <!-- Pricing and Business -->
             <div class="form-section">
                 <h4 class="form-section-title">💰 Pricing & Business</h4>
