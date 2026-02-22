@@ -723,6 +723,8 @@
             transition: all 0.2s;
             text-decoration: none;
             display: inline-block;
+            text-decoration: none;
+            display: inline-block;
         }
 
         .btn-small:hover {
@@ -3400,6 +3402,23 @@
             document.getElementById('courseStatCEU').textContent = _allCourseData.reduce((s, c) => s + parseFloat(c.ceu_hours || 0), 0);
         }
 
+        // Maps Supabase course IDs → actual HTML file names
+        const COURSE_FILE_MAP = {
+            'core-balance-001':    'balance-gait-001',
+            'core-mobility-001':   'mobility-fall-001',
+            'core-joint-001':      'joint-replacement-001',
+            'core-geriatric-001':  'geriatric-care-001',
+            'core-tech-001':       'healthcare-technology-001',
+            'core-infection-001':  'infection-control-001',
+            'core-neuro-001':      'pt-neuro-001',
+            'core-education-001':  'patient-education-001',
+            'core-agents-001':     'physical-agents-001',
+            'core-postsurg-001':   'post-surgical-001',
+            'core-doc-001':        'documentation-001',
+            'ot-adl-001':          'ot-adl-001',
+            'pt-msk-001':          'pt-msk-001'
+        };
+
         function renderCourseList(courses) {
             const container = document.getElementById('courseListContainer');
             if (!courses.length) { container.innerHTML = '<p style="color:#6b7280;text-align:center;grid-column:1/-1;">No courses found.</p>'; return; }
@@ -3407,6 +3426,8 @@
                 const price = (parseInt(c.price_cents || 0) / 100).toFixed(2);
                 const statusClass = c.is_active ? 'active' : 'draft';
                 const statusLabel = c.is_active ? 'Active' : 'Inactive';
+                const fileId = COURSE_FILE_MAP[c.id] || c.id;
+                const courseUrl = `/courses/${fileId}-progressive.html`;
                 return `<div class="course-card">
                     <div class="course-header"><h3>${esc(c.title)}</h3><div class="course-status ${statusClass}">${statusLabel}</div></div>
                     <div class="course-meta">
@@ -3415,6 +3436,7 @@
                         <div>Professions: ${(c.professions || []).join(', ') || 'All'}</div>
                     </div>
                     <div class="course-actions">
+                        <a class="btn-small" href="${courseUrl}" target="_blank">👁️ View</a>
                         <button class="btn-small" onclick="editCourse('${esc(c.id)}')">✏️ Edit</button>
                         <button class="btn-small ${c.is_active ? 'danger' : ''}" onclick="toggleCourseActive('${esc(c.id)}', ${!c.is_active})">${c.is_active ? '⏸️ Deactivate' : '🚀 Activate'}</button>
                     </div>
