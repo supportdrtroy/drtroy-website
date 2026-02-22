@@ -567,39 +567,6 @@
 
         /* Mobile Responsive */
         @media (max-width: 768px) {
-            .header-container {
-                padding: 1rem;
-            }
-            
-            .logo img {
-            mix-blend-mode: multiply;
-                height: 120px;
-                max-width: 100%;
-            }
-            
-            nav {
-                margin-top: 1rem;
-                display: grid;
-                grid-template-columns: repeat(2, 1fr);
-                gap: 0.5rem;
-                width: 100%;
-                max-width: 400px;
-            }
-            
-            nav a {
-                font-size: 0.8rem;
-                padding: 0.4rem 0.6rem;
-                text-align: center;
-                border-radius: 4px;
-                background: var(--gray-100);
-                border: 1px solid var(--gray-200);
-            }
-            
-            .login-link {
-                font-size: 0.8rem !important;
-                padding: 0.4rem 0.6rem !important;
-            }
-
             .account-layout {
                 grid-template-columns: 1fr;
                 gap: 1rem;
@@ -629,21 +596,6 @@
         }
 
         @media (max-width: 480px) {
-            .logo img {
-            mix-blend-mode: multiply;
-                height: 100px;
-            }
-            
-            nav {
-                grid-template-columns: 1fr;
-                gap: 0.3rem;
-            }
-            
-            nav a {
-                font-size: 0.85rem;
-                padding: 0.6rem;
-            }
-            
             .ccu-card h3 {
                 font-size: 0.9rem;
             }
@@ -671,46 +623,6 @@
             border-radius: 2px;
             transition: all 0.3s ease;
         }
-        @media (max-width: 768px) {
-            .hamburger { display: flex; }
-            .nav-links {
-                display: none;
-                position: absolute;
-                top: 100%;
-                left: 0;
-                right: 0;
-                background: white;
-                flex-direction: column;
-                padding: 1rem 2rem;
-                box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-                z-index: 100;
-                border-top: 1px solid #e5e7eb;
-            }
-            .nav-links.active { display: flex; }
-            .nav-links a { padding: 0.75rem 0; border-bottom: 1px solid #f3f4f6; }
-            .header-container, header > div { position: relative; }
-        }
-        .nav-login-link {
-            background: #1e3a8a;
-            color: white !important;
-            padding: 0.5rem 1.25rem;
-            border-radius: 6px;
-            font-weight: 600;
-            font-size: 0.9rem;
-        }
-        .nav-login-link:hover { background: #1e40af; }
-        .cart-icon {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            color: #059669;
-            font-weight: 600;
-            font-size: 0.95rem;
-            position: relative;
-            cursor: pointer;
-            text-decoration: none;
-        }
-        .cart-icon:hover { color: #047857; }
         .cart-count {
             background: #dc2626;
             color: white;
