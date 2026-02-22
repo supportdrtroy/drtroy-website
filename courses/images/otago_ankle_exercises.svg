@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="500" viewBox="0 0 800 500">
+  <rect width="800" height="500" fill="white" stroke="#e0e0e0" stroke-width="1"/>
+  
+  <!-- Title -->
+  <text x="400" y="35" text-anchor="middle" font-family="Arial, sans-serif" font-size="22" font-weight="bold" fill="#1a56a0">
+    Otago Exercise Program: Ankle Strengthening
+  </text>
+  
+  <!-- Chair -->
+  <rect x="150" y="250" width="100" height="60" fill="#e8f4fd" stroke="#1a56a0" stroke-width="2" rx="5"/>
+  
+  <!-- Person seated -->
+  <circle cx="200" cy="180" r="18" fill="white" stroke="#1a56a0" stroke-width="2"/>
+  <line x1="200" y1="198" x2="200" y2="250" stroke="#1a56a0" stroke-width="3"/>
+  <line x1="200" y1="210" x2="180" y2="240" stroke="#1a56a0" stroke-width="2"/>
+  <line x1="200" y1="220" x2="220" y2="250" stroke="#1a56a0" stroke-width="2"/>
+  
+  <!-- Legs and feet -->
+  <line x1="200" y1="250" x2="190" y2="300" stroke="#1a56a0" stroke-width="3"/>
+  <line x1="200" y1="250" x2="210" y2="300" stroke="#1a56a0" stroke-width="3"/>
+  
+  <!-- Foot positions showing dorsiflexion and plantarflexion -->
+  <!-- Dorsiflexion -->
+  <ellipse cx="185" cy="305" rx="15" ry="5" fill="#2e7d32" transform="rotate(-20 185 305)"/>
+  <path d="M 175 295 L 165 285" stroke="#2e7d32" stroke-width="3" marker-end="url(#greenarrow)"/>
+  <text x="130" y="280" font-family="Arial, sans-serif" font-size="10" fill="#2e7d32" font-weight="bold">Dorsiflexion</text>
+  
+  <!-- Plantarflexion -->
+  <ellipse cx="215" cy="305" rx="15" ry="5" fill="#ff9800" transform="rotate(20 215 305)"/>
+  <path d="M 225 315 L 235 325" stroke="#ff9800" stroke-width="3" marker-end="url(#orangearrow)"/>
+  <text x="240" y="340" font-family="Arial, sans-serif" font-size="10" fill="#ff9800" font-weight="bold">Plantarflexion</text>
+  
+  <!-- Exercise instructions -->
+  <rect x="350" y="100" width="350" height="200" fill="#e8f4fd" stroke="#1a56a0" stroke-width="2" rx="10"/>
+  <text x="525" y="125" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#1a56a0">Ankle Pumps Exercise</text>
+  
+  <text x="365" y="150" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#2e7d32">Dorsiflexion (Toes Up):</text>
+  <text x="375" y="165" font-family="Arial, sans-serif" font-size="11" fill="#333">• Pull toes toward shin</text>
+  <text x="375" y="180" font-family="Arial, sans-serif" font-size="11" fill="#333">• Feel stretch in calf</text>
+  <text x="375" y="195" font-family="Arial, sans-serif" font-size="11" fill="#333">• Hold 2-3 seconds</text>
+  
+  <text x="365" y="220" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#ff9800">Plantarflexion (Toes Down):</text>
+  <text x="375" y="235" font-family="Arial, sans-serif" font-size="11" fill="#333">• Point toes downward</text>
+  <text x="375" y="250" font-family="Arial, sans-serif" font-size="11" fill="#333">• Feel contraction in calf</text>
+  <text x="375" y="265" font-family="Arial, sans-serif" font-size="11" fill="#333">• Hold 2-3 seconds</text>
+  <text x="375" y="280" font-family="Arial, sans-serif" font-size="11" fill="#333">• Alternate movements</text>
+  
+  <!-- Progression -->
+  <rect x="100" y="350" width="600" height="80" fill="#fff3e0" stroke="#ff9800" stroke-width="1" rx="10"/>
+  <text x="400" y="375" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#ff9800">Exercise Progression</text>
+  <text x="120" y="395" font-family="Arial, sans-serif" font-size="11" fill="#333">Begin: 10 pumps each direction, 2-3 times daily</text>
+  <text x="120" y="410" font-family="Arial, sans-serif" font-size="11" fill="#333">Progress: Up to 20 repetitions, add resistance band or weight</text>
+  
+  <!-- Benefits -->
+  <rect x="100" y="450" width="600" height="40" fill="#e8f5e9" stroke="#2e7d32" stroke-width="1" rx="10"/>
+  <text x="120" y="470" font-family="Arial, sans-serif" font-size="11" fill="#333">Benefits: Improves ankle strength, circulation, balance reactions, and walking push-off power</text>
+  
+  <defs>
+    <marker id="greenarrow" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#2e7d32"/>
+    </marker>
+    <marker id="orangearrow" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#ff9800"/>
+    </marker>
+  </defs>
+</svg>

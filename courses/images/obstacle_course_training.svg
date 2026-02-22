@@ -1,58 +1,105 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="800" height="500">
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="500" viewBox="0 0 800 500">
   <rect width="800" height="500" fill="white" stroke="#e0e0e0" stroke-width="1"/>
   
   <!-- Title -->
-  <text x="400" y="35" font-family="Arial, sans-serif" font-size="22" font-weight="bold" fill="#1a56a0" text-anchor="middle">
-    Obstacle Course Training
+  <text x="400" y="35" text-anchor="middle" font-family="Arial, sans-serif" font-size="22" font-weight="bold" fill="#1a56a0">
+    Obstacle Course Training Layout
   </text>
   
   <!-- PT gym floor -->
-  <rect x="50" y="80" width="700" height="320" fill="#f5f5f5" stroke="#333333" stroke-width="2"/>
+  <rect x="80" y="80" width="640" height="340" fill="#e8f4fd" stroke="#1a56a0" stroke-width="2" rx="10"/>
   
-  <!-- Cones -->
-  <polygon points="150,180 160,200 140,200" fill="#ff9800" stroke="#f57c00" stroke-width="2"/>
-  <polygon points="250,180 260,200 240,200" fill="#ff9800" stroke="#f57c00" stroke-width="2"/>
-  <polygon points="350,180 360,200 340,200" fill="#ff9800" stroke="#f57c00" stroke-width="2"/>
-  <polygon points="450,180 460,200 440,200" fill="#ff9800" stroke="#f57c00" stroke-width="2"/>
+  <!-- Start position -->
+  <circle cx="120" cy="250" r="20" fill="#2e7d32" stroke="#1a56a0" stroke-width="2"/>
+  <text x="120" y="255" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="white">START</text>
   
-  <!-- Step-over hurdles -->
-  <rect x="180" y="280" width="60" height="8" fill="#2196f3" stroke="#1565c0" stroke-width="2"/>
-  <rect x="175" y="288" width="5" height="15" fill="#2196f3"/>
-  <rect x="240" y="288" width="5" height="15" fill="#2196f3"/>
+  <!-- Station 1: Cones for weaving -->
+  <circle cx="200" cy="220" r="8" fill="#ff9800"/>
+  <circle cx="220" cy="250" r="8" fill="#ff9800"/>
+  <circle cx="240" cy="220" r="8" fill="#ff9800"/>
+  <circle cx="260" cy="250" r="8" fill="#ff9800"/>
+  <text x="230" y="200" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#ff9800" font-weight="bold">Weave Cones</text>
   
-  <rect x="320" y="280" width="60" height="8" fill="#2196f3" stroke="#1565c0" stroke-width="2"/>
-  <rect x="315" y="288" width="5" height="15" fill="#2196f3"/>
-  <rect x="380" y="288" width="5" height="15" fill="#2196f3"/>
+  <!-- Station 2: Step ups -->
+  <rect x="320" y="230" width="40" height="20" fill="#8d6e63" stroke="#1a56a0" stroke-width="2"/>
+  <text x="340" y="210" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#333" font-weight="bold">Step Up</text>
+  <text x="340" y="225" text-anchor="middle" font-family="Arial, sans-serif" font-size="9" fill="#333">6" platform</text>
   
-  <!-- Different surface patches -->
-  <rect x="500" y="150" width="80" height="80" fill="#8d6e63" stroke="#5d4037" stroke-width="2"/>
-  <text x="540" y="195" font-family="Arial, sans-serif" font-size="10" fill="white" text-anchor="middle" font-weight="bold">Foam</text>
+  <!-- Station 3: Foam pad -->
+  <rect x="420" y="240" width="30" height="20" fill="#ffeb3b" stroke="#1a56a0" stroke-width="2" rx="5"/>
+  <text x="435" y="220" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#333" font-weight="bold">Foam Pad</text>
+  <text x="435" y="235" text-anchor="middle" font-family="Arial, sans-serif" font-size="9" fill="#333">Balance</text>
   
-  <rect x="600" y="250" width="80" height="60" fill="#4caf50" stroke="#2e7d32" stroke-width="2"/>
-  <text x="640" y="285" font-family="Arial, sans-serif" font-size="10" fill="white" text-anchor="middle" font-weight="bold">Carpet</text>
+  <!-- Station 4: Hurdles -->
+  <rect x="500" y="248" width="3" height="15" fill="#1a56a0"/>
+  <rect x="520" y="248" width="3" height="15" fill="#1a56a0"/>
+  <line x1="500" y1="250" x2="523" y2="250" stroke="#1a56a0" stroke-width="2"/>
+  <text x="511" y="240" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#333" font-weight="bold">Hurdles</text>
+  <text x="511" y="225" text-anchor="middle" font-family="Arial, sans-serif" font-size="9" fill="#333">4" high</text>
   
-  <!-- Patient figure navigating -->
-  <g transform="translate(200, 120)">
-    <circle cx="0" cy="0" r="15" fill="#ffdbcb" stroke="#1a56a0" stroke-width="2"/>
-    <ellipse cx="0" cy="30" rx="25" ry="40" fill="#e3f2fd" stroke="#1a56a0" stroke-width="2"/>
-    <line x1="-20" y1="20" x2="-30" y2="10" stroke="#1a56a0" stroke-width="4"/>
-    <line x1="20" y1="20" x2="30" y2="30" stroke="#1a56a0" stroke-width="4"/>
-    <line x1="-10" y1="70" x2="-10" y2="120" stroke="#1a56a0" stroke-width="6"/>
-    <line x1="10" y1="70" x2="15" y2="120" stroke="#1a56a0" stroke-width="6"/>
-  </g>
+  <!-- Station 5: Target stepping -->
+  <circle cx="590" cy="200" r="12" fill="#e91e63" opacity="0.7"/>
+  <circle cx="620" cy="230" r="12" fill="#e91e63" opacity="0.7"/>
+  <circle cx="650" cy="200" r="12" fill="#e91e63" opacity="0.7"/>
+  <text x="620" y="180" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#e91e63" font-weight="bold">Step Targets</text>
   
-  <!-- Movement path -->
-  <path d="M120 140 Q200 120, 250 160 Q350 140, 450 180 Q550 170, 620 280" 
-        stroke="#2e7d32" stroke-width="3" stroke-dasharray="8,4" fill="none"/>
-  <polygon points="615,275 625,285 615,290" fill="#2e7d32"/>
+  <!-- Finish -->
+  <circle cx="680" cy="250" r="20" fill="#d32f2f" stroke="#1a56a0" stroke-width="2"/>
+  <text x="680" y="255" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="white">FINISH</text>
   
-  <!-- Benefits box -->
-  <rect x="50" y="420" width="700" height="60" fill="#e8f5e8" stroke="#2e7d32" stroke-width="2" rx="5"/>
-  <text x="400" y="440" font-family="Arial, sans-serif" font-size="14" fill="#2e7d32" text-anchor="middle" font-weight="bold">
-    Benefits: Improves Adaptability and Dynamic Balance
-  </text>
-  <text x="400" y="460" font-family="Arial, sans-serif" font-size="12" fill="#333333" text-anchor="middle">
-    Challenges multiple balance systems • Enhances motor planning • Builds confidence in complex environments
-  </text>
+  <!-- Path arrows -->
+  <path d="M 150 250 L 180 235" stroke="#1a56a0" stroke-width="2" marker-end="url(#arrowhead)"/>
+  <path d="M 280 235 L 310 240" stroke="#1a56a0" stroke-width="2" marker-end="url(#arrowhead)"/>
+  <path d="M 370 240 L 400 245" stroke="#1a56a0" stroke-width="2" marker-end="url(#arrowhead)"/>
+  <path d="M 460 250 L 485 250" stroke="#1a56a0" stroke-width="2" marker-end="url(#arrowhead)"/>
+  <path d="M 540 250 L 570 215" stroke="#1a56a0" stroke-width="2" marker-end="url(#arrowhead)"/>
+  <path d="M 665 215 L 665 240" stroke="#1a56a0" stroke-width="2" marker-end="url(#arrowhead)"/>
   
+  <!-- Safety equipment -->
+  <rect x="100" y="150" width="80" height="60" fill="#fff3cd" stroke="#ff9800" stroke-width="1" rx="5"/>
+  <text x="140" y="170" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#ff9800">Safety Setup</text>
+  <text x="110" y="185" font-family="Arial, sans-serif" font-size="9" fill="#333">• Gait belt ready</text>
+  <text x="110" y="195" font-family="Arial, sans-serif" font-size="9" fill="#333">• Spotter position</text>
+  <text x="110" y="205" font-family="Arial, sans-serif" font-size="9" fill="#333">• Clear pathways</text>
+  
+  <!-- Training objectives -->
+  <rect x="550" y="300" width="160" height="100" fill="#e8f5e9" stroke="#2e7d32" stroke-width="1" rx="5"/>
+  <text x="630" y="320" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#2e7d32">Training Goals</text>
+  <text x="560" y="335" font-family="Arial, sans-serif" font-size="9" fill="#333">• Dynamic balance</text>
+  <text x="560" y="345" font-family="Arial, sans-serif" font-size="9" fill="#333">• Directional changes</text>
+  <text x="560" y="355" font-family="Arial, sans-serif" font-size="9" fill="#333">• Obstacle navigation</text>
+  <text x="560" y="365" font-family="Arial, sans-serif" font-size="9" fill="#333">• Dual-task training</text>
+  <text x="560" y="375" font-family="Arial, sans-serif" font-size="9" fill="#333">• Confidence building</text>
+  <text x="560" y="385" font-family="Arial, sans-serif" font-size="9" fill="#333">• Fall prevention skills</text>
+  
+  <!-- Progression levels -->
+  <rect x="100" y="450" width="600" height="40" fill="#e8f4fd" stroke="#1a56a0" stroke-width="1" rx="5"/>
+  <text x="120" y="470" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#1a56a0">Progression:</text>
+  <text x="200" y="470" font-family="Arial, sans-serif" font-size="10" fill="#333">Level 1: Contact guard → Level 2: Supervision → Level 3: Independent → Level 4: Add cognitive tasks</text>
+  
+  <!-- Equipment list -->
+  <rect x="100" y="300" width="200" height="120" fill="#fff3e0" stroke="#ff9800" stroke-width="1" rx="5"/>
+  <text x="200" y="320" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#ff9800">Equipment Needed</text>
+  <text x="110" y="335" font-family="Arial, sans-serif" font-size="10" fill="#333">• Traffic cones (6-8)</text>
+  <text x="110" y="350" font-family="Arial, sans-serif" font-size="10" fill="#333">• 6" step platform</text>
+  <text x="110" y="365" font-family="Arial, sans-serif" font-size="10" fill="#333">• Foam balance pad</text>
+  <text x="110" y="380" font-family="Arial, sans-serif" font-size="10" fill="#333">• Low hurdles (4")</text>
+  <text x="110" y="395" font-family="Arial, sans-serif" font-size="10" fill="#333">• Floor targets/circles</text>
+  <text x="110" y="410" font-family="Arial, sans-serif" font-size="10" fill="#333">• Timer/stopwatch</text>
+  
+  <!-- Modifications -->
+  <rect x="350" y="300" width="180" height="100" fill="#ffebee" stroke="#d32f2f" stroke-width="1" rx="5"/>
+  <text x="440" y="320" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#d32f2f">Modifications</text>
+  <text x="360" y="335" font-family="Arial, sans-serif" font-size="10" fill="#333">• Reduce obstacle height</text>
+  <text x="360" y="350" font-family="Arial, sans-serif" font-size="10" fill="#333">• Increase spacing</text>
+  <text x="360" y="365" font-family="Arial, sans-serif" font-size="10" fill="#333">• Add handheld support</text>
+  <text x="360" y="380" font-family="Arial, sans-serif" font-size="10" fill="#333">• Use visual markers</text>
+  <text x="360" y="395" font-family="Arial, sans-serif" font-size="10" fill="#333">• Practice components first</text>
+  
+  <!-- Arrow marker definition -->
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#1a56a0"/>
+    </marker>
+  </defs>
 </svg>

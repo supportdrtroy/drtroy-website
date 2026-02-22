@@ -1,34 +1,96 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="800" height="500">
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="500" viewBox="0 0 800 500">
   <rect width="800" height="500" fill="white" stroke="#e0e0e0" stroke-width="1"/>
-  <text x="400" y="35" font-family="Arial, sans-serif" font-size="22" font-weight="bold" fill="#1a56a0" text-anchor="middle">Heel Rise Test</text>
-  <circle cx="400" cy="140" r="30" fill="#ffdbcb" stroke="#1a56a0" stroke-width="2"/>
-  <ellipse cx="400" cy="240" rx="45" ry="80" fill="#e3f2fd" stroke="#1a56a0" stroke-width="2"/>
-  <line x1="355" y1="220" x2="330" y2="280" stroke="#1a56a0" stroke-width="6"/>
-  <line x1="445" y1="220" x2="470" y2="280" stroke="#1a56a0" stroke-width="6"/>
-  <circle cx="330" cy="280" r="8" fill="#ffdbcb" stroke="#1a56a0" stroke-width="2"/>
-  <circle cx="470" cy="280" r="8" fill="#ffdbcb" stroke="#1a56a0" stroke-width="2"/>
-  <line x1="380" y1="320" x2="370" y2="420" stroke="#1a56a0" stroke-width="8"/>
-  <line x1="420" y1="320" x2="430" y2="420" stroke="#1a56a0" stroke-width="8"/>
-  <ellipse cx="380" cy="440" rx="20" ry="8" fill="#333333"/>
-  <ellipse cx="430" cy="440" rx="20" ry="8" fill="#333333"/>
-  <path d="M400 360 L400 300" stroke="#d32f2f" stroke-width="4"/>
-  <polygon points="395,305 400,295 405,305" fill="#d32f2f"/>
-  <polygon points="395,355 400,365 405,355" fill="#d32f2f"/>
-  <text x="420" y="330" font-family="Arial, sans-serif" font-size="12" fill="#d32f2f" font-weight="bold">Lift</text>
-  <rect x="50" y="150" width="200" height="180" fill="#e8f5e8" stroke="#2e7d32" stroke-width="2" rx="5"/>
-  <text x="150" y="180" font-family="Arial, sans-serif" font-size="16" fill="#2e7d32" text-anchor="middle" font-weight="bold">Plantar Flexor Strength</text>
-  <text x="150" y="210" font-family="Arial, sans-serif" font-size="14" fill="#333333" text-anchor="middle">Normal: 25+ repetitions</text>
-  <text x="70" y="240" font-family="Arial, sans-serif" font-size="12" fill="#333333">Test Procedure:</text>
-  <text x="70" y="260" font-family="Arial, sans-serif" font-size="11" fill="#555555">1. Stand with support</text>
-  <text x="70" y="275" font-family="Arial, sans-serif" font-size="11" fill="#555555">2. Rise onto toes</text>
-  <text x="70" y="290" font-family="Arial, sans-serif" font-size="11" fill="#555555">3. Full heel clearance</text>
-  <text x="70" y="305" font-family="Arial, sans-serif" font-size="11" fill="#555555">4. Count repetitions</text>
-  <rect x="550" y="150" width="220" height="180" fill="#fff3e0" stroke="#ff9800" stroke-width="2" rx="5"/>
-  <text x="660" y="180" font-family="Arial, sans-serif" font-size="16" fill="#ff6f00" text-anchor="middle" font-weight="bold">Clinical Significance</text>
-  <text x="560" y="210" font-family="Arial, sans-serif" font-size="12" fill="#333333">• Push-off for gait</text>
-  <text x="560" y="230" font-family="Arial, sans-serif" font-size="12" fill="#333333">• Stair climbing</text>
-  <text x="560" y="250" font-family="Arial, sans-serif" font-size="12" fill="#333333">• Balance recovery</text>
-  <text x="560" y="270" font-family="Arial, sans-serif" font-size="12" fill="#333333">• Fall prevention</text>
-  <text x="560" y="300" font-family="Arial, sans-serif" font-size="11" fill="#d32f2f" font-weight="bold">&lt;15 reps = increased fall risk</text>
-  <text x="400" y="470" font-family="Arial, sans-serif" font-size="16" fill="#1a56a0" text-anchor="middle" font-weight="bold">Heel Rise Test - Plantar Flexor Strength Assessment</text>
+  
+  <!-- Title -->
+  <text x="400" y="35" text-anchor="middle" font-family="Arial, sans-serif" font-size="22" font-weight="bold" fill="#1a56a0">
+    Heel Rise Test (Calf Strength Assessment)
+  </text>
+  
+  <!-- Support wall -->
+  <rect x="100" y="100" width="20" height="320" fill="#8d6e63" stroke="#1a56a0" stroke-width="2"/>
+  
+  <!-- Starting position -->
+  <g transform="translate(200, 0)">
+    <text x="100" y="80" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#1a56a0">Starting Position</text>
+    <circle cx="100" cy="180" r="20" fill="white" stroke="#1a56a0" stroke-width="2"/>
+    <line x1="100" y1="200" x2="100" y2="340" stroke="#1a56a0" stroke-width="3"/>
+    <line x1="100" y1="220" x2="80" y2="250" stroke="#1a56a0" stroke-width="2"/>
+    <line x1="80" y1="250" x2="70" y2="280" stroke="#1a56a0" stroke-width="2"/>
+    <line x1="100" y1="230" x2="120" y2="260" stroke="#1a56a0" stroke-width="2"/>
+    <line x1="120" y1="260" x2="130" y2="290" stroke="#1a56a0" stroke-width="2"/>
+    <line x1="100" y1="340" x2="90" y2="380" stroke="#1a56a0" stroke-width="3"/>
+    <line x1="100" y1="340" x2="110" y2="380" stroke="#1a56a0" stroke-width="3"/>
+    <ellipse cx="85" cy="385" rx="15" ry="5" fill="#1a56a0"/>
+    <ellipse cx="115" cy="385" rx="15" ry="5" fill="#1a56a0"/>
+    <text x="100" y="410" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#333">Feet flat</text>
+  </g>
+  
+  <!-- Heel rise position -->
+  <g transform="translate(350, 0)">
+    <text x="100" y="80" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#2e7d32">Heel Rise Position</text>
+    <circle cx="100" cy="160" r="20" fill="white" stroke="#1a56a0" stroke-width="2"/>
+    <line x1="100" y1="180" x2="100" y2="320" stroke="#1a56a0" stroke-width="3"/>
+    <line x1="100" y1="200" x2="80" y2="230" stroke="#1a56a0" stroke-width="2"/>
+    <line x1="80" y1="230" x2="70" y2="260" stroke="#1a56a0" stroke-width="2"/>
+    <line x1="100" y1="210" x2="120" y2="240" stroke="#1a56a0" stroke-width="2"/>
+    <line x1="120" y1="240" x2="130" y2="270" stroke="#1a56a0" stroke-width="2"/>
+    <line x1="100" y1="320" x2="90" y2="360" stroke="#1a56a0" stroke-width="3"/>
+    <line x1="100" y1="320" x2="110" y2="360" stroke="#1a56a0" stroke-width="3"/>
+    <!-- Toes on ground, heels raised -->
+    <ellipse cx="85" cy="365" rx="8" ry="3" fill="#2e7d32"/>
+    <ellipse cx="115" cy="365" rx="8" ry="3" fill="#2e7d32"/>
+    <text x="100" y="390" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#2e7d32" font-weight="bold">On toes</text>
+  </g>
+  
+  <!-- Height measurement -->
+  <line x1="450" y1="365" x2="450" y2="385" stroke="#d32f2f" stroke-width="2"/>
+  <line x1="445" y1="365" x2="455" y2="365" stroke="#d32f2f" stroke-width="2"/>
+  <line x1="445" y1="385" x2="455" y2="385" stroke="#d32f2f" stroke-width="2"/>
+  <text x="470" y="375" font-family="Arial, sans-serif" font-size="11" fill="#d32f2f" font-weight="bold">Rise height</text>
+  
+  <!-- Test variations -->
+  <rect x="550" y="100" width="200" height="160" fill="#e8f4fd" stroke="#1a56a0" stroke-width="1" rx="10"/>
+  <text x="650" y="125" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#1a56a0">Test Variations</text>
+  
+  <text x="560" y="145" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#2e7d32">Bilateral:</text>
+  <text x="570" y="160" font-family="Arial, sans-serif" font-size="10" fill="#333">• Both feet together</text>
+  <text x="570" y="175" font-family="Arial, sans-serif" font-size="10" fill="#333">• Count maximum repetitions</text>
+  
+  <text x="560" y="195" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#ff9800">Unilateral:</text>
+  <text x="570" y="210" font-family="Arial, sans-serif" font-size="10" fill="#333">• Single leg heel raises</text>
+  <text x="570" y="225" font-family="Arial, sans-serif" font-size="10" fill="#333">• More challenging</text>
+  <text x="570" y="240" font-family="Arial, sans-serif" font-size="10" fill="#333">• Test each leg separately</text>
+  
+  <!-- Instructions -->
+  <rect x="100" y="450" width="600" height="40" fill="#e8f4fd" stroke="#1a56a0" stroke-width="1" rx="10"/>
+  <text x="120" y="470" font-family="Arial, sans-serif" font-size="11" fill="#333">Instructions: Rise up on toes as high as possible, hold 2 seconds, lower slowly. Repeat until fatigued or form breaks down.</text>
+  
+  <!-- Normative values -->
+  <rect x="100" y="280" width="400" height="150" fill="#fff3e0" stroke="#ff9800" stroke-width="1" rx="10"/>
+  <text x="300" y="305" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#ff9800">Normative Values (Bilateral)</text>
+  
+  <text x="120" y="325" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#333">Age-based norms:</text>
+  <text x="130" y="345" font-family="Arial, sans-serif" font-size="10" fill="#333">20-29 years: 22-28 repetitions</text>
+  <text x="130" y="360" font-family="Arial, sans-serif" font-size="10" fill="#333">30-39 years: 17-25 repetitions</text>
+  <text x="130" y="375" font-family="Arial, sans-serif" font-size="10" fill="#333">40-49 years: 14-21 repetitions</text>
+  <text x="130" y="390" font-family="Arial, sans-serif" font-size="10" fill="#333">50-59 years: 11-20 repetitions</text>
+  <text x="130" y="405" font-family="Arial, sans-serif" font-size="10" fill="#333">60+ years: 10-19 repetitions</text>
+  
+  <text x="320" y="345" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#d32f2f">Impairment indicators:</text>
+  <text x="330" y="365" font-family="Arial, sans-serif" font-size="10" fill="#333">< 10 reps: Significant weakness</text>
+  <text x="330" y="380" font-family="Arial, sans-serif" font-size="10" fill="#333">Unable to perform: Severe deficit</text>
+  <text x="330" y="395" font-family="Arial, sans-serif" font-size="10" fill="#333">Unilateral < 5: Consider intervention</text>
+  
+  <!-- Clinical significance -->
+  <rect x="550" y="280" width="200" height="150" fill="#e8f5e9" stroke="#2e7d32" stroke-width="1" rx="10"/>
+  <text x="650" y="305" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#2e7d32">Clinical Significance</text>
+  
+  <text x="560" y="325" font-family="Arial, sans-serif" font-size="11" fill="#333">Assesses:</text>
+  <text x="570" y="340" font-family="Arial, sans-serif" font-size="10" fill="#333">• Gastrocnemius strength</text>
+  <text x="570" y="355" font-family="Arial, sans-serif" font-size="10" fill="#333">• Soleus strength</text>
+  <text x="570" y="370" font-family="Arial, sans-serif" font-size="10" fill="#333">• Ankle plantarflexor power</text>
+  
+  <text x="560" y="390" font-family="Arial, sans-serif" font-size="11" fill="#333">Important for:</text>
+  <text x="570" y="405" font-family="Arial, sans-serif" font-size="10" fill="#333">• Push-off during gait</text>
+  <text x="570" y="420" font-family="Arial, sans-serif" font-size="10" fill="#333">• Balance reactions</text>
 </svg>

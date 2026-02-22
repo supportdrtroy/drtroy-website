@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="500" viewBox="0 0 800 500">
+  <rect width="800" height="500" fill="white" stroke="#e0e0e0" stroke-width="1"/>
+  
+  <!-- Title -->
+  <text x="400" y="35" text-anchor="middle" font-family="Arial, sans-serif" font-size="22" font-weight="bold" fill="#1a56a0">
+    Smart Flooring Sensor Grid System
+  </text>
+  
+  <!-- Room floor -->
+  <rect x="100" y="100" width="600" height="300" fill="#f5f5f5" stroke="#1a56a0" stroke-width="2"/>
+  
+  <!-- Sensor grid -->
+  <g id="sensorGrid">
+    <!-- Row 1 -->
+    <rect x="150" y="150" width="40" height="40" fill="#2e7d32" opacity="0.6" stroke="#1a56a0" stroke-width="1"/>
+    <rect x="200" y="150" width="40" height="40" fill="#2e7d32" opacity="0.6" stroke="#1a56a0" stroke-width="1"/>
+    <rect x="250" y="150" width="40" height="40" fill="#ff9800" opacity="0.8" stroke="#1a56a0" stroke-width="1"/>
+    <rect x="300" y="150" width="40" height="40" fill="#ff9800" opacity="0.8" stroke="#1a56a0" stroke-width="1"/>
+    <rect x="350" y="150" width="40" height="40" fill="#2e7d32" opacity="0.6" stroke="#1a56a0" stroke-width="1"/>
+    
+    <!-- Row 2 -->
+    <rect x="150" y="200" width="40" height="40" fill="#2e7d32" opacity="0.6" stroke="#1a56a0" stroke-width="1"/>
+    <rect x="200" y="200" width="40" height="40" fill="#ff9800" opacity="0.8" stroke="#1a56a0" stroke-width="1"/>
+    <rect x="250" y="200" width="40" height="40" fill="#d32f2f" opacity="0.9" stroke="#1a56a0" stroke-width="2"/>
+    <rect x="300" y="200" width="40" height="40" fill="#ff9800" opacity="0.8" stroke="#1a56a0" stroke-width="1"/>
+    <rect x="350" y="200" width="40" height="40" fill="#2e7d32" opacity="0.6" stroke="#1a56a0" stroke-width="1"/>
+    
+    <!-- Row 3 -->
+    <rect x="150" y="250" width="40" height="40" fill="#2e7d32" opacity="0.6" stroke="#1a56a0" stroke-width="1"/>
+    <rect x="200" y="250" width="40" height="40" fill="#2e7d32" opacity="0.6" stroke="#1a56a0" stroke-width="1"/>
+    <rect x="250" y="250" width="40" height="40" fill="#ff9800" opacity="0.8" stroke="#1a56a0" stroke-width="1"/>
+    <rect x="300" y="250" width="40" height="40" fill="#2e7d32" opacity="0.6" stroke="#1a56a0" stroke-width="1"/>
+    <rect x="350" y="250" width="40" height="40" fill="#2e7d32" opacity="0.6" stroke="#1a56a0" stroke-width="1"/>
+  </g>
+  
+  <!-- Person position indicator -->
+  <circle cx="270" cy="220" r="15" fill="white" stroke="#d32f2f" stroke-width="3"/>
+  <text x="270" y="180" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#d32f2f" font-weight="bold">Fall detected!</text>
+  
+  <!-- Control unit -->
+  <rect x="450" y="200" width="80" height="60" fill="#1a56a0" stroke="#1a56a0" stroke-width="2" rx="5"/>
+  <circle cx="490" cy="220" r="8" fill="#2e7d32"/>
+  <circle cx="490" cy="240" r="6" fill="#ff9800"/>
+  <text x="490" y="180" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#1a56a0" font-weight="bold">Control Unit</text>
+  
+  <!-- Wireless transmission -->
+  <g transform="translate(530, 220)">
+    <circle cx="0" cy="0" r="15" fill="none" stroke="#ff9800" stroke-width="2" opacity="0.8"/>
+    <circle cx="0" cy="0" r="25" fill="none" stroke="#ff9800" stroke-width="2" opacity="0.6"/>
+    <circle cx="0" cy="0" r="35" fill="none" stroke="#ff9800" stroke-width="2" opacity="0.4"/>
+  </g>
+  
+  <!-- Alert center -->
+  <rect x="600" y="180" width="80" height="80" fill="#ffebee" stroke="#d32f2f" stroke-width="2" rx="10"/>
+  <text x="640" y="200" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#d32f2f" font-weight="bold">ALERT</text>
+  <text x="640" y="220" text-anchor="middle" font-family="Arial, sans-serif" font-size="9" fill="#333">Fall detected</text>
+  <text x="640" y="235" text-anchor="middle" font-family="Arial, sans-serif" font-size="9" fill="#333">Room 2A</text>
+  <text x="640" y="250" text-anchor="middle" font-family="Arial, sans-serif" font-size="9" fill="#333">11:47 PM</text>
+  
+  <!-- Legend -->
+  <rect x="100" y="420" width="300" height="60" fill="#e8f4fd" stroke="#1a56a0" stroke-width="1" rx="5"/>
+  <text x="250" y="440" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#1a56a0">Sensor Status</text>
+  <rect x="120" y="450" width="15" height="15" fill="#2e7d32" opacity="0.6"/>
+  <text x="145" y="462" font-family="Arial, sans-serif" font-size="10" fill="#333">Normal</text>
+  <rect x="190" y="450" width="15" height="15" fill="#ff9800" opacity="0.8"/>
+  <text x="215" y="462" font-family="Arial, sans-serif" font-size="10" fill="#333">Activity</text>
+  <rect x="260" y="450" width="15" height="15" fill="#d32f2f" opacity="0.9"/>
+  <text x="285" y="462" font-family="Arial, sans-serif" font-size="10" fill="#333">Alert</text>
+  
+  <!-- Features -->
+  <rect x="420" y="420" width="300" height="60" fill="#fff3e0" stroke="#ff9800" stroke-width="1" rx="5"/>
+  <text x="570" y="440" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#ff9800">System Features</text>
+  <text x="430" y="455" font-family="Arial, sans-serif" font-size="10" fill="#333">• Pressure-sensitive floor tiles</text>
+  <text x="430" y="470" font-family="Arial, sans-serif" font-size="10" fill="#333">• Real-time location tracking • Pattern analysis</text>
+  
+  <!-- Connection lines -->
+  <path d="M 390 220 L 450 220" stroke="#1a56a0" stroke-width="2" stroke-dasharray="3,3"/>
+  <path d="M 530 230 Q 560 220 600 220" stroke="#ff9800" stroke-width="2" stroke-dasharray="3,3"/>
+</svg>

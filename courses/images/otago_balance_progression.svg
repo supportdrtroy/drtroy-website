@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="500" viewBox="0 0 800 500">
+  <rect width="800" height="500" fill="white" stroke="#e0e0e0" stroke-width="1"/>
+  
+  <!-- Title -->
+  <text x="400" y="35" text-anchor="middle" font-family="Arial, sans-serif" font-size="22" font-weight="bold" fill="#1a56a0">
+    Otago Balance Exercise Progression
+  </text>
+  
+  <!-- Level 1: Two-foot stance -->
+  <g transform="translate(150, 100)">
+    <rect x="-75" y="-20" width="150" height="250" fill="#e8f5e9" stroke="#2e7d32" stroke-width="2" rx="10"/>
+    <text x="0" y="0" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#2e7d32">Level 1: Two-Foot</text>
+    
+    <circle cx="0" cy="60" r="15" fill="white" stroke="#1a56a0" stroke-width="2"/>
+    <line x1="0" y1="75" x2="0" y2="150" stroke="#1a56a0" stroke-width="3"/>
+    <line x1="0" y1="150" x2="-10" y2="180" stroke="#1a56a0" stroke-width="3"/>
+    <line x1="0" y1="150" x2="10" y2="180" stroke="#1a56a0" stroke-width="3"/>
+    <ellipse cx="-10" cy="185" rx="8" ry="3" fill="#1a56a0"/>
+    <ellipse cx="10" cy="185" rx="8" ry="3" fill="#1a56a0"/>
+    
+    <text x="0" y="210" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#333">Feet apart</text>
+    <text x="0" y="225" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#333">30-60 seconds</text>
+  </g>
+  
+  <!-- Level 2: Semi-tandem -->
+  <g transform="translate(400, 100)">
+    <rect x="-75" y="-20" width="150" height="250" fill="#fff3e0" stroke="#ff9800" stroke-width="2" rx="10"/>
+    <text x="0" y="0" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#ff9800">Level 2: Semi-Tandem</text>
+    
+    <circle cx="0" cy="60" r="15" fill="white" stroke="#1a56a0" stroke-width="2"/>
+    <line x1="0" y1="75" x2="0" y2="150" stroke="#1a56a0" stroke-width="3"/>
+    <line x1="0" y1="150" x2="-5" y2="180" stroke="#1a56a0" stroke-width="3"/>
+    <line x1="0" y1="150" x2="5" y2="185" stroke="#1a56a0" stroke-width="3"/>
+    <ellipse cx="-5" cy="185" rx="8" ry="3" fill="#1a56a0"/>
+    <ellipse cx="5" cy="190" rx="8" ry="3" fill="#ff9800"/>
+    
+    <text x="0" y="210" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#333">One foot forward</text>
+    <text x="0" y="225" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#333">30 seconds</text>
+  </g>
+  
+  <!-- Level 3: Full tandem -->
+  <g transform="translate(650, 100)">
+    <rect x="-75" y="-20" width="150" height="250" fill="#ffebee" stroke="#d32f2f" stroke-width="2" rx="10"/>
+    <text x="0" y="0" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#d32f2f">Level 3: Tandem</text>
+    
+    <circle cx="0" cy="60" r="15" fill="white" stroke="#1a56a0" stroke-width="2"/>
+    <line x1="0" y1="75" x2="0" y2="150" stroke="#1a56a0" stroke-width="3"/>
+    <line x1="0" y1="150" x2="0" y2="180" stroke="#1a56a0" stroke-width="3"/>
+    <line x1="0" y1="150" x2="0" y2="185" stroke="#1a56a0" stroke-width="3"/>
+    <ellipse cx="0" cy="185" rx="8" ry="3" fill="#1a56a0"/>
+    <ellipse cx="0" cy="190" rx="8" ry="3" fill="#d32f2f"/>
+    
+    <text x="0" y="210" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#333">Heel-to-toe</text>
+    <text x="0" y="225" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#333">30 seconds</text>
+  </g>
+  
+  <!-- Progression arrows -->
+  <path d="M 225 200 L 325 200" stroke="#1a56a0" stroke-width="3" marker-end="url(#arrowhead)"/>
+  <path d="M 475 200 L 575 200" stroke="#1a56a0" stroke-width="3" marker-end="url(#arrowhead)"/>
+  
+  <!-- Additional challenges -->
+  <rect x="100" y="380" width="600" height="80" fill="#e8f4fd" stroke="#1a56a0" stroke-width="1" rx="10"/>
+  <text x="400" y="405" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#1a56a0">Additional Challenges (When Able)</text>
+  <text x="120" y="425" font-family="Arial, sans-serif" font-size="11" fill="#333">• Close eyes for any position</text>
+  <text x="120" y="440" font-family="Arial, sans-serif" font-size="11" fill="#333">• Turn head side to side while balancing</text>
+  <text x="120" y="455" font-family="Arial, sans-serif" font-size="11" fill="#333">• Stand on foam pad</text>
+  <text x="420" y="425" font-family="Arial, sans-serif" font-size="11" fill="#333">• Add arm movements</text>
+  <text x="420" y="440" font-family="Arial, sans-serif" font-size="11" fill="#333">• Progress to single-leg stance</text>
+  <text x="420" y="455" font-family="Arial, sans-serif" font-size="11" fill="#333">• Increase hold time</text>
+  
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#1a56a0"/>
+    </marker>
+  </defs>
+</svg>

@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="500" viewBox="0 0 800 500">
+  <rect width="800" height="500" fill="white" stroke="#e0e0e0" stroke-width="1"/>
+  
+  <!-- Title -->
+  <text x="400" y="35" text-anchor="middle" font-family="Arial, sans-serif" font-size="22" font-weight="bold" fill="#1a56a0">
+    Tai Chi: Weight Shifting Exercise
+  </text>
+  
+  <!-- Center position -->
+  <g transform="translate(400, 250)">
+    <circle cx="0" cy="-80" r="20" fill="white" stroke="#1a56a0" stroke-width="2"/>
+    <line x1="0" y1="-60" x2="0" y2="50" stroke="#1a56a0" stroke-width="3"/>
+    <line x1="0" y1="-40" x2="-30" y2="-20" stroke="#1a56a0" stroke-width="2"/>
+    <line x1="0" y1="-30" x2="30" y2="-10" stroke="#1a56a0" stroke-width="2"/>
+    <line x1="0" y1="50" x2="-15" y2="100" stroke="#1a56a0" stroke-width="3"/>
+    <line x1="0" y1="50" x2="15" y2="100" stroke="#1a56a0" stroke-width="3"/>
+    <ellipse cx="-15" cy="105" rx="10" ry="4" fill="#1a56a0"/>
+    <ellipse cx="15" cy="105" rx="10" ry="4" fill="#1a56a0"/>
+    <text x="0" y="130" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#1a56a0" font-weight="bold">Center</text>
+  </g>
+  
+  <!-- Weight shift indicators -->
+  <!-- Left shift -->
+  <g transform="translate(250, 250)">
+    <circle cx="0" cy="-80" r="18" fill="white" stroke="#2e7d32" stroke-width="2"/>
+    <line x1="0" y1="-62" x2="-20" y2="50" stroke="#2e7d32" stroke-width="3"/>
+    <line x1="-5" y1="-40" x2="-35" y2="-20" stroke="#2e7d32" stroke-width="2"/>
+    <line x1="-5" y1="-30" x2="25" y2="-10" stroke="#2e7d32" stroke-width="2"/>
+    <line x1="-20" y1="50" x2="-25" y2="100" stroke="#2e7d32" stroke-width="4"/>
+    <line x1="-20" y1="50" x2="5" y2="100" stroke="#2e7d32" stroke-width="2"/>
+    <ellipse cx="-25" cy="105" rx="12" ry="5" fill="#2e7d32"/>
+    <ellipse cx="5" cy="105" rx="8" ry="3" fill="#2e7d32" opacity="0.5"/>
+    <text x="0" y="130" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#2e7d32" font-weight="bold">Left weight shift</text>
+  </g>
+  
+  <!-- Right shift -->
+  <g transform="translate(550, 250)">
+    <circle cx="0" cy="-80" r="18" fill="white" stroke="#ff9800" stroke-width="2"/>
+    <line x1="0" y1="-62" x2="20" y2="50" stroke="#ff9800" stroke-width="3"/>
+    <line x1="5" y1="-40" x2="-25" y2="-20" stroke="#ff9800" stroke-width="2"/>
+    <line x1="5" y1="-30" x2="35" y2="-10" stroke="#ff9800" stroke-width="2"/>
+    <line x1="20" y1="50" x2="-5" y2="100" stroke="#ff9800" stroke-width="2"/>
+    <line x1="20" y1="50" x2="25" y2="100" stroke="#ff9800" stroke-width="4"/>
+    <ellipse cx="-5" cy="105" rx="8" ry="3" fill="#ff9800" opacity="0.5"/>
+    <ellipse cx="25" cy="105" rx="12" ry="5" fill="#ff9800"/>
+    <text x="0" y="130" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#ff9800" font-weight="bold">Right weight shift</text>
+  </g>
+  
+  <!-- Movement arrows -->
+  <path d="M 350 280 Q 325 250 300 280" stroke="#2e7d32" stroke-width="3" marker-end="url(#greenarrow)"/>
+  <path d="M 450 280 Q 475 250 500 280" stroke="#ff9800" stroke-width="3" marker-end="url(#orangearrow)"/>
+  
+  <!-- Instructions -->
+  <rect x="100" y="80" width="600" height="120" fill="#e8f4fd" stroke="#1a56a0" stroke-width="2" rx="10"/>
+  <text x="400" y="105" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#1a56a0">Weight Shifting Technique</text>
+  
+  <text x="120" y="130" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#333">Starting Position:</text>
+  <text x="130" y="145" font-family="Arial, sans-serif" font-size="11" fill="#333">• Feet shoulder-width apart</text>
+  <text x="130" y="160" font-family="Arial, sans-serif" font-size="11" fill="#333">• Knees slightly bent</text>
+  <text x="130" y="175" font-family="Arial, sans-serif" font-size="11" fill="#333">• Arms relaxed at sides</text>
+  <text x="130" y="190" font-family="Arial, sans-serif" font-size="11" fill="#333">• Spine straight, head up</text>
+  
+  <text x="420" y="130" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#333">Movement:</text>
+  <text x="430" y="145" font-family="Arial, sans-serif" font-size="11" fill="#333">• Slowly shift weight to left foot</text>
+  <text x="430" y="160" font-family="Arial, sans-serif" font-size="11" fill="#333">• Feel the weight transfer</text>
+  <text x="430" y="175" font-family="Arial, sans-serif" font-size="11" fill="#333">• Hold 3-5 seconds</text>
+  <text x="430" y="190" font-family="Arial, sans-serif" font-size="11" fill="#333">• Shift to right, repeat</text>
+  
+  <!-- Benefits -->
+  <rect x="100" y="400" width="600" height="80" fill="#e8f5e9" stroke="#2e7d32" stroke-width="1" rx="10"/>
+  <text x="400" y="425" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#2e7d32">Benefits of Weight Shifting</text>
+  <text x="120" y="445" font-family="Arial, sans-serif" font-size="11" fill="#333">• Improves balance control • Enhances proprioception • Strengthens stabilizing muscles</text>
+  <text x="120" y="465" font-family="Arial, sans-serif" font-size="11" fill="#333">• Prepares for walking • Builds confidence in movement • Reduces fall risk through better control</text>
+  
+  <defs>
+    <marker id="greenarrow" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#2e7d32"/>
+    </marker>
+    <marker id="orangearrow" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#ff9800"/>
+    </marker>
+  </defs>
+</svg>
