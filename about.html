@@ -513,6 +513,11 @@
         .delay-1 { animation-delay: .1s; }
         .delay-2 { animation-delay: .2s; }
         .delay-3 { animation-delay: .3s; }
+        .nav-login-link { background: #1e3a8a; color: white !important; padding: 0.5rem 1.25rem; border-radius: 6px; font-weight: 600; font-size: 0.9rem; text-decoration: none; display: inline-block; }
+        .nav-login-link:hover { background: #1e40af; }
+        .cart-icon { display: flex; align-items: center; gap: 0.5rem; color: #059669; font-weight: 600; font-size: 0.95rem; position: relative; text-decoration: none; }
+        .cart-icon:hover { color: #047857; }
+        .cart-count { background: #dc2626; color: white; border-radius: 50%; width: 20px; height: 20px; display: none; align-items: center; justify-content: center; font-size: 0.7rem; font-weight: 700; position: absolute; top: -8px; right: -8px; }
     </style>
     <!-- Open Graph / Social Preview -->
     <meta property="og:type" content="website">
@@ -546,7 +551,12 @@
                 <a href="home-preview.html">Home</a>
                 <a href="course-catalog.html">Courses</a>
                 <a href="about.html" style="color: var(--navy); font-weight: 600;">About</a>
-                <a href="my-account.html" class="nav-btn">Log In</a>
+                <a href="home-preview.html#contact">Contact</a>
+                <a href="cart.html" class="cart-icon" id="cart-icon">
+                    🛒 Cart
+                    <span class="cart-count" id="cart-count">0</span>
+                </a>
+                <a href="my-account.html" id="navAccountLink" class="nav-login-link">Log In</a>
             </nav>
         </div>
     </header>
