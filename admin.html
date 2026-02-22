@@ -2237,27 +2237,68 @@
 
         // Initialize admin dashboard
         async function initAdmin() {
-            const authed = await checkAuthentication();
-            if (!authed) return;
+            console.log('🚀 Starting admin initialization...');
+            
+            try {
+                const authed = await checkAuthentication();
+                if (!authed) {
+                    console.log('❌ Authentication failed');
+                    return;
+                }
+                console.log('✅ Authentication successful');
 
-            updateLastUpdate();
-            loadStoredData();
-            createSampleData();
-            updateStats();
-            updateCodesTable();
-            updateAnalytics();
+                console.log('📊 Loading basic data...');
+                updateLastUpdate();
+                loadStoredData();
+                createSampleData();
+                updateStats();
+                updateCodesTable();
+                updateAnalytics();
+                console.log('✅ Basic data loaded');
 
-            // Load live Supabase data
-            await updateDashboard();
-            await loadUsers();
-            await loadSupabaseRevenue();
+                console.log('🔄 Loading Supabase data...');
+                // Load live Supabase data - wrapped in try/catch to prevent breaking
+                try {
+                    await updateDashboard();
+                    console.log('✅ Dashboard updated');
+                } catch(e) { console.warn('Dashboard update failed:', e); }
+                
+                try {
+                    await loadUsers();
+                    console.log('✅ Users loaded');
+                } catch(e) { console.warn('User loading failed:', e); }
+                
+                try {
+                    await loadSupabaseRevenue();
+                    console.log('✅ Revenue loaded');
+                } catch(e) { console.warn('Revenue loading failed:', e); }
 
-            // Load feature data
-            await refreshCourses();
-            await loadDiscountCodesFromDB();
-            await loadLicenseData();
-            await loadCampaignCourses();
+                // Load feature data
+                try {
+                    await refreshCourses();
+                    console.log('✅ Courses loaded');
+                } catch(e) { console.warn('Course loading failed:', e); }
+                
+                try {
+                    await loadDiscountCodesFromDB();
+                    console.log('✅ Discount codes loaded');
+                } catch(e) { console.warn('Discount codes loading failed:', e); }
+                
+                try {
+                    await loadLicenseData();
+                    console.log('✅ License data loaded');
+                } catch(e) { console.warn('License data loading failed:', e); }
+                
+                try {
+                    await loadCampaignCourses();
+                    console.log('✅ Campaign courses loaded');
+                } catch(e) { console.warn('Campaign courses loading failed:', e); }
 
+                console.log('🎉 Admin initialization complete');
+            } catch (error) {
+                console.error('💥 Fatal error during initialization:', error);
+                alert('Admin initialization failed. Check console for details.');
+            }
         }
 
         // Update last update timestamp and session info
@@ -2645,47 +2686,61 @@
         function switchMainTab(tabName) {
             console.log(`🔄 Switching to tab: ${tabName}`);
             
-            // Update tab buttons - find the correct button by onclick attribute
-            document.querySelectorAll('.main-tab').forEach(tab => tab.classList.remove('active'));
-            
-            // Find and activate the correct tab button
-            const targetButton = document.querySelector(`[onclick*="switchMainTab('${tabName}')"]`);
-            if (targetButton) {
-                targetButton.classList.add('active');
-                console.log(`✅ Activated button for: ${tabName}`);
-            } else {
-                console.warn(`❌ Could not find button for tab: ${tabName}`);
-            }
-            
-            // Update tab content
-            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
-            const targetContent = document.getElementById(tabName);
-            if (targetContent) {
-                targetContent.classList.add('active');
-                console.log(`✅ Activated content for: ${tabName}`);
-            } else {
-                console.warn(`❌ Could not find content for tab: ${tabName}`);
-            }
-            
-            // Save current tab to localStorage
-            localStorage.setItem('currentAdminTab', tabName);
-            console.log(`💾 Saved tab: ${tabName}`);
-            
-            // Load data when switching to specific tabs
-            if (tabName === 'dashboard') {
-                updateDashboard();
-            } else if (tabName === 'users') {
-                loadUsers();
-            } else if (tabName === 'courses') {
-                loadCourses();
-            } else if (tabName === 'emails') {
-                loadEmailData();
-            } else if (tabName === 'licenses') {
-                loadLicenseData();
-            } else if (tabName === 'discount-codes') {
-                loadDiscountCodesFromDB();
-            } else if (tabName === 'waitlist') {
-                loadWaitlist();
+            try {
+                // Update tab buttons - find the correct button by onclick attribute
+                document.querySelectorAll('.main-tab').forEach(tab => tab.classList.remove('active'));
+                
+                // Find and activate the correct tab button
+                const targetButton = document.querySelector(`[onclick*="switchMainTab('${tabName}')"]`);
+                if (targetButton) {
+                    targetButton.classList.add('active');
+                    console.log(`✅ Activated button for: ${tabName}`);
+                } else {
+                    console.warn(`❌ Could not find button for tab: ${tabName}`);
+                }
+                
+                // Update tab content
+                document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+                const targetContent = document.getElementById(tabName);
+                if (targetContent) {
+                    targetContent.classList.add('active');
+                    console.log(`✅ Activated content for: ${tabName}`);
+                } else {
+                    console.warn(`❌ Could not find content for tab: ${tabName}`);
+                    return; // Exit if content not found
+                }
+                
+                // Save current tab to localStorage
+                try {
+                    localStorage.setItem('currentAdminTab', tabName);
+                    console.log(`💾 Saved tab: ${tabName}`);
+                } catch(e) {
+                    console.warn('Could not save tab to localStorage:', e);
+                }
+                
+                // Load data when switching to specific tabs - with error handling
+                try {
+                    if (tabName === 'dashboard') {
+                        updateDashboard().catch(e => console.warn('Dashboard load error:', e));
+                    } else if (tabName === 'users') {
+                        loadUsers().catch(e => console.warn('Users load error:', e));
+                    } else if (tabName === 'courses') {
+                        loadCourses().catch(e => console.warn('Courses load error:', e));
+                    } else if (tabName === 'emails') {
+                        loadEmailData();
+                    } else if (tabName === 'licenses') {
+                        loadLicenseData().catch(e => console.warn('License data load error:', e));
+                    } else if (tabName === 'discount-codes') {
+                        loadDiscountCodesFromDB().catch(e => console.warn('Discount codes load error:', e));
+                    } else if (tabName === 'waitlist') {
+                        loadWaitlist().catch(e => console.warn('Waitlist load error:', e));
+                    }
+                } catch (dataLoadError) {
+                    console.warn(`Tab data loading error for ${tabName}:`, dataLoadError);
+                }
+            } catch (error) {
+                console.error(`Error switching to tab ${tabName}:`, error);
+                alert(`Error switching to ${tabName} tab. Check console for details.`);
             }
         }
 
@@ -4012,23 +4067,54 @@
 
         // Initialize when page loads
         document.addEventListener('DOMContentLoaded', async function() {
-            await initAdmin();
-            restoreSavedTab();
+            console.log('📄 DOM loaded, starting initialization...');
+            
+            try {
+                await initAdmin();
+                console.log('✅ InitAdmin completed');
+                
+                restoreSavedTab();
+                console.log('✅ Saved tab restored');
 
-            // Live search / filter for user table
-            const userSearchEl = document.getElementById('userSearch');
-            if (userSearchEl) userSearchEl.addEventListener('input', filterUsers);
-            const userFilterEl = document.getElementById('userFilter');
-            if (userFilterEl) userFilterEl.addEventListener('change', filterUsers);
+                // Live search / filter for user table
+                const userSearchEl = document.getElementById('userSearch');
+                if (userSearchEl) {
+                    userSearchEl.addEventListener('input', filterUsers);
+                    console.log('✅ User search listener added');
+                }
+                
+                const userFilterEl = document.getElementById('userFilter');
+                if (userFilterEl) {
+                    userFilterEl.addEventListener('change', filterUsers);
+                    console.log('✅ User filter listener added');
+                }
 
-            // Update timestamps every minute
-            setInterval(updateLastUpdate, 60000);
+                // Update timestamps every minute
+                setInterval(updateLastUpdate, 60000);
+                console.log('✅ Update interval set');
 
-            // Refresh Supabase data every 5 minutes
-            setInterval(async () => {
-                await updateDashboard();
-                await loadUsers();
-            }, 300000);
+                // Refresh Supabase data every 5 minutes
+                setInterval(async () => {
+                    try {
+                        await updateDashboard();
+                        await loadUsers();
+                    } catch(e) {
+                        console.warn('Periodic data update failed:', e);
+                    }
+                }, 300000);
+                console.log('✅ Refresh interval set');
+                
+                console.log('🎉 Full initialization completed successfully');
+            } catch (error) {
+                console.error('💥 Critical error during page initialization:', error);
+                // Still try to make basic functionality work
+                try {
+                    document.querySelector('.main-tab').classList.add('active');
+                    document.getElementById('dashboard').classList.add('active');
+                } catch(fallbackError) {
+                    console.error('Even fallback failed:', fallbackError);
+                }
+            }
         });
 
         // ── CREDITS ──────────────────────────────────────────────────────
