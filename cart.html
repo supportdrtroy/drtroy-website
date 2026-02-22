@@ -639,15 +639,15 @@
             <nav class="nav-links">
                 <a href="home-preview.html">Home</a>
                 <a href="course-catalog.html">Courses</a>
-                <a href="home-preview.html#about">About</a>
+                <a href="about.html">About</a>
                 <a href="home-preview.html#contact">Contact</a>
-                <div class="cart-icon" id="cart-icon">
+                <a href="cart.html" class="cart-icon" id="cart-icon">
                     🛒 Cart
                     <span class="cart-count" id="cart-count">0</span>
-                </div>
+                </a>
                 <a href="my-account.html" id="navAccountLink" class="nav-login-link">Log In</a>
             </nav>
-        </div>
+        </a>
     </header>
 
     <!-- Main Content -->
@@ -655,7 +655,7 @@
         <div class="page-header">
             <h1>Shopping Cart</h1>
             <p>Review your selected courses and packages before checkout</p>
-        </div>
+        </a>
 
         <div class="cart-layout">
             <!-- Cart Items -->
@@ -667,9 +667,9 @@
                         <h3>Your cart is empty</h3>
                         <p>Add some courses or packages to get started with your continuing education journey.</p>
                         <a href="course-catalog.html" class="btn btn-primary" style="margin-top: 2rem;">Browse Courses</a>
-                    </div>
-                </div>
-            </div>
+                    </a>
+                </a>
+            </a>
 
             <!-- Cart Summary -->
             <div class="cart-summary" id="cart-summary" style="display: none;">
@@ -678,32 +678,32 @@
                 <div class="summary-row">
                     <span>Subtotal:</span>
                     <span id="subtotal">$0.00</span>
-                </div>
+                </a>
                 
                 <div class="summary-row discount-row" id="discount-row" style="display: none;">
                     <span>New Account Discount:</span>
                     <span id="discount-amount">-$0.00</span>
-                </div>
+                </a>
                 
                 <div class="summary-row total">
                     <span>Total:</span>
                     <span id="total">$0.00</span>
-                </div>
+                </a>
 
                 <div class="discount-notice" id="discount-notice" style="display: none;">
                     <strong>New Customer Discount Applied!</strong>
                     New customers save $10 on bundles!
-                </div>
+                </a>
 
                 <a href="checkout.html?from=cart" class="btn btn-primary btn-block" id="checkout-btn">Proceed to Checkout</a>
                 
                 <button class="btn btn-secondary btn-block" onclick="clearCart()">Clear Cart</button>
-            </div>
-        </div>
+            </a>
+        </a>
 
         <div class="continue-shopping">
             <a href="course-catalog.html" class="btn btn-outline">← Continue Shopping</a>
-        </div>
+        </a>
     </main>
 
     <!-- Include cart system -->
@@ -739,28 +739,28 @@
                             <button class="qty-btn" onclick="updateQuantityUI('${item.courseId}', ${item.quantity - 1})">−</button>
                             <span class="qty-display">${item.quantity}</span>
                             <button class="qty-btn" onclick="updateQuantityUI('${item.courseId}', ${item.quantity + 1})">+</button>
-                        </div>
+                        </a>
                     `;
                 }
                 
                 itemsHtml += `
                     <div class="cart-item">
                         <div class="item-details">
-                            <div class="item-title">${item.title}</div>
+                            <div class="item-title">${item.title}</a>
                             <div class="item-meta">
                                 ${item.credits} CCU${item.credits !== 1 ? 's' : ''} • 
                                 Course #: ${item.courseNumber || item.packageCode}
-                            </div>
+                            </a>
                             <span class="item-type ${itemTypeClass}">${itemTypeLabel}</span>
-                        </div>
+                        </a>
                         <div class="item-actions">
-                            <div class="item-price">$${(item.price * (item.quantity || 1)).toFixed(2)}</div>
+                            <div class="item-price">$${(item.price * (item.quantity || 1)).toFixed(2)}</a>
                             ${quantityControls}
                             <button class="remove-btn" onclick="removeFromCartUI('${item.type === 'course' ? item.courseId : item.packageCode}', '${item.type}')">
                                 Remove
                             </button>
-                        </div>
-                    </div>
+                        </a>
+                    </a>
                 `;
             });
             
