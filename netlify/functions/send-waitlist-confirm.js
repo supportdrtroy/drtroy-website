@@ -17,8 +17,8 @@ function isValidEmail(email) {
 
 // Verify email is in the waitlist table (prevents endpoint spam abuse)
 async function emailInWaitlist(email) {
-    const sbUrl  = process.env.SUPABASE_URL;
-    const sbKey  = process.env.SUPABASE_SERVICE_ROLE_KEY;
+    const sbUrl  = process.env.SUPABASE_URL || 'https://pnqoxulxdmlmbywcpbyx.supabase.co';
+    const sbKey  = process.env.SUPABASE_SERVICE_ROLE_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBucW94dWx4ZG1sbWJ5d2NwYnl4Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3MTM2NTc1MiwiZXhwIjoyMDg2OTQxNzUyfQ.P3qGeWVSvEbp3hjBXcJHfbHKxlhNUbQdn5IIi3WEjkE';
     if (!sbUrl || !sbKey) return true; // If env missing, fail open (don't block legitimate sends)
     return new Promise((resolve) => {
         const path = `/rest/v1/waitlist?email=eq.${encodeURIComponent(email)}&select=email&limit=1`;
