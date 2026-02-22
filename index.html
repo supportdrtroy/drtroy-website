@@ -465,16 +465,17 @@
             errEl.style.display = 'none';
 
             try {
+                // Upsert: insert new OR update existing record by email
                 const res = await fetch(SUPA_URL + '/rest/v1/waitlist', {
                     method:  'POST',
                     headers: {
                         'Content-Type':  'application/json',
                         'apikey':        SUPA_ANON,
                         'Authorization': 'Bearer ' + SUPA_ANON,
-                        'Prefer':        'return=minimal'
+                        'Prefer':        'resolution=merge-duplicates,return=representation'
                     },
                     body: JSON.stringify({
-                        email:      email,
+                        email:      email.toLowerCase(),
                         first_name: name     || null,
                         last_name:  lastName || null,
                         discipline: disc     || null,
@@ -482,17 +483,19 @@
                     })
                 });
 
+                const data = await res.json();
+                const isNew = Array.isArray(data) && data[0] && !data[0].notified_at;
+
                 if (res.ok || res.status === 201) {
                     showSuccess();
-                    // Send confirmation email (fire and forget — don't block UI)
-                    fetch('/.netlify/functions/send-waitlist-confirm', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ email, firstName: name, lastName, discipline: disc })
-                    }).catch(() => {});
-                } else if (res.status === 409) {
-                    // Duplicate email — still show success, no email re-send
-                    showSuccess();
+                    // Only send confirmation email for brand new signups
+                    if (isNew) {
+                        fetch('/.netlify/functions/send-waitlist-confirm', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ email, firstName: name, lastName, discipline: disc })
+                        }).catch(() => {});
+                    }
                 } else {
                     throw new Error('Server error');
                 }
