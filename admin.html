@@ -868,6 +868,34 @@
             .template-actions {
                 flex-direction: column;
             }
+
+            /* Mobile Waitlist Responsiveness */
+            #waitlist-table {
+                font-size: 0.85rem;
+            }
+            
+            #waitlist-table th,
+            #waitlist-table td {
+                padding: 0.6rem 0.4rem;
+            }
+            
+            /* Hide less critical columns on mobile */
+            #waitlist-table th:first-child,
+            #waitlist-table td:first-child {
+                display: none;
+            }
+            
+            /* Keep Actions column visible but make it smaller */
+            #waitlist-table th:last-child,
+            #waitlist-table td:last-child {
+                min-width: 80px;
+                text-align: center;
+            }
+            
+            #waitlist-table td:last-child .btn-small {
+                font-size: 0.7rem;
+                padding: 0.3rem 0.6rem;
+            }
         }
 
         @media (max-width: 480px) {
@@ -877,6 +905,88 @@
 
             .renewal-stats {
                 grid-template-columns: 1fr;
+            }
+
+            /* Extra mobile adjustments for waitlist */
+            .card-header {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 1rem;
+            }
+            
+            .card-header > div:last-child {
+                display: flex;
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+            
+            .card-header > div:last-child > div:first-child {
+                display: flex;
+                justify-content: center;
+            }
+            
+            .card-header > div:last-child > div:last-child {
+                display: flex;
+                gap: 0.5rem;
+                justify-content: center;
+            }
+            
+            /* Stack waitlist table for very small screens */
+            #waitlist-table thead {
+                display: none;
+            }
+            
+            #waitlist-table,
+            #waitlist-table tbody,
+            #waitlist-table tr,
+            #waitlist-table td {
+                display: block;
+            }
+            
+            #waitlist-table tr {
+                border: 1px solid var(--gray-200);
+                border-radius: 8px;
+                padding: 1rem;
+                margin-bottom: 1rem;
+                background: white;
+                box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            }
+            
+            #waitlist-table td {
+                border: none;
+                padding: 0.25rem 0;
+                position: relative;
+                padding-left: 40%;
+            }
+            
+            #waitlist-table td:before {
+                content: attr(data-label);
+                position: absolute;
+                left: 0;
+                width: 35%;
+                font-weight: 600;
+                color: var(--gray-600);
+                font-size: 0.8rem;
+            }
+            
+            #waitlist-table td:first-child:before { content: "#"; }
+            #waitlist-table td:nth-child(2):before { content: "Name"; }
+            #waitlist-table td:nth-child(3):before { content: "Email"; }
+            #waitlist-table td:nth-child(4):before { content: "Discipline"; }
+            #waitlist-table td:nth-child(5):before { content: "Signed Up"; }
+            #waitlist-table td:nth-child(6):before { content: "Source"; }
+            #waitlist-table td:last-child:before { content: "Actions"; }
+            
+            /* Make the action button full width on mobile card layout */
+            #waitlist-table td:last-child {
+                padding-left: 0;
+                text-align: center;
+                margin-top: 0.5rem;
+            }
+            
+            #waitlist-table td:last-child .btn-small {
+                width: 100%;
+                font-size: 0.8rem;
             }
         }
 
@@ -1882,10 +1992,11 @@
                                     <th>Discipline</th>
                                     <th>Signed Up</th>
                                     <th>Source</th>
+                                    <th>Actions</th>
                                 </tr>
                             </thead>
                             <tbody id="waitlist-tbody">
-                                <tr><td colspan="6" style="text-align:center;color:#94a3b8;padding:2rem;">Loading waitlist…</td></tr>
+                                <tr><td colspan="7" style="text-align:center;color:#94a3b8;padding:2rem;">Loading waitlist…</td></tr>
                             </tbody>
                         </table>
                     </div>
@@ -2069,6 +2180,8 @@
     <script>
         // ─── ADMIN AUTH (Supabase) ────────────────────────────────────────────────
         const SB = window.DrTroySupabase || {};
+        const SUPABASE_URL = 'https://pnqoxulxdmlmbywcpbyx.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBucW94dWx4ZG1sbWJ5d2NwYnl4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzEzNjU3NTIsImV4cCI6MjA4Njk0MTc1Mn0.B1xCLzWHYm8PrFb-oI8rKhKC0qvWbsJGI-qM4QfYJnI';
         let _adminUser   = null;
         let _adminAuthed = false;
 
@@ -2442,7 +2555,7 @@
         function renderWaitlist(data) {
             const tbody = document.getElementById('waitlist-tbody');
             if (!data.length) {
-                tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:#94a3b8;padding:2rem;">No signups yet.</td></tr>';
+                tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:#94a3b8;padding:2rem;">No signups yet.</td></tr>';
                 return;
             }
             tbody.innerHTML = data.map((r, i) => {
@@ -2461,6 +2574,11 @@
                     <td><span style="background:#e0f2fe;color:#0369a1;padding:.2rem .65rem;border-radius:12px;font-size:.8rem;font-weight:600;">${escapeHtml(disc)}</span></td>
                     <td style="color:#64748b;font-size:.875rem;">${date}</td>
                     <td style="color:#94a3b8;font-size:.8rem;">${escapeHtml(src)}</td>
+                    <td>
+                        <button class="btn-small danger" onclick="deleteWaitlistEntry('${escapeHtml(r.id)}', '${escapeHtml(r.email || 'this person')}')" title="Delete from waitlist">
+                            🗑️ Delete
+                        </button>
+                    </td>
                 </tr>`;
             }).join('');
         }
@@ -2474,6 +2592,34 @@
                 (r.last_name  || '').toLowerCase().includes(q)
             );
             renderWaitlist(filtered);
+        }
+
+        async function deleteWaitlistEntry(waitlistId, emailOrName) {
+            if (!confirm(`Delete ${emailOrName} from the waitlist?\n\nThis cannot be undone.`)) return;
+            
+            try {
+                const res = await fetch(SUPABASE_URL + '/rest/v1/waitlist?id=eq.' + waitlistId, {
+                    method: 'DELETE',
+                    headers: {
+                        'apikey': SUPABASE_ANON_KEY,
+                        'Authorization': 'Bearer ' + SUPABASE_ANON_KEY,
+                        'Content-Type': 'application/json'
+                    }
+                });
+                
+                if (!res.ok) {
+                    throw new Error('Failed to delete waitlist entry');
+                }
+                
+                // Remove from local data and re-render
+                waitlistData = waitlistData.filter(r => r.id !== waitlistId);
+                document.getElementById('waitlist-count').textContent = waitlistData.length + ' signups';
+                renderWaitlist(waitlistData);
+                
+                showAdminToast(`Deleted ${emailOrName} from waitlist`, 'success');
+            } catch(e) {
+                showAdminToast('Failed to delete: ' + e.message, 'error');
+            }
         }
 
         function exportWaitlistCSV() {
