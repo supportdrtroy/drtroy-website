@@ -22,6 +22,54 @@
     <!-- DrTroy Supabase client -->
     <script src="js/supabase-client.js"></script>
     
+    <!-- Emergency tab switching function -->
+    <script>
+        console.log('🚨 Emergency script loading at:', new Date().toISOString());
+        
+        // Define function immediately - no dependencies
+        function switchMainTab(tabName) {
+            console.log('🔄 Emergency switchMainTab called:', tabName);
+            
+            try {
+                // Remove active from all tabs
+                const tabs = document.querySelectorAll('.main-tab');
+                const contents = document.querySelectorAll('.tab-content');
+                
+                console.log('Found tabs:', tabs.length, 'contents:', contents.length);
+                
+                tabs.forEach(tab => tab.classList.remove('active'));
+                contents.forEach(content => content.classList.remove('active'));
+                
+                // Add active to target button
+                const targetButton = document.querySelector(`button[onclick*="${tabName}"]`);
+                if (targetButton) {
+                    targetButton.classList.add('active');
+                    console.log('✅ Button activated');
+                } else {
+                    console.error('❌ Button not found for:', tabName);
+                }
+                
+                // Add active to target content
+                const targetContent = document.getElementById(tabName);
+                if (targetContent) {
+                    targetContent.classList.add('active');
+                    console.log('✅ Content activated');
+                } else {
+                    console.error('❌ Content not found:', tabName);
+                }
+            } catch (error) {
+                console.error('❌ Error in switchMainTab:', error);
+            }
+        }
+        
+        // Also put it on window object
+        window.switchMainTab = switchMainTab;
+        
+        console.log('✅ Emergency switchMainTab defined - testing...');
+        console.log('Function exists:', typeof switchMainTab);
+        console.log('Window function exists:', typeof window.switchMainTab);
+    </script>
+    
     <style>
         * {
             margin: 0;
@@ -2177,8 +2225,8 @@
         </div>
     </div>
 
-    <script>
-        console.log('📄 Admin script loading...');
+    <script type="text/plain">
+        console.log('📄 Admin script loading... (DISABLED FOR DEBUGGING)');
         
         // Test if basic functions work
         window.switchMainTab = function(tabName) {
