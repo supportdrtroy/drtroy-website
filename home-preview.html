@@ -992,11 +992,34 @@
                     <p><a href="#about">About Dr. Troy</a></p>
                 </div>
                 
-                <div class="footer-section">
-                    <h3>Contact Information</h3>
-                    <p>Texas Therapy Pros</p>
-                    <p>Serving West Texas</p>
-                    <p>Professional continuing education nationwide</p>
+                <div class="footer-section" style="min-width:280px;">
+                    <h3>Contact Us</h3>
+                    <form id="contact-form" onsubmit="submitContact(event)" style="display:flex;flex-direction:column;gap:0.6rem;margin-top:0.5rem;">
+                        <!-- Honeypot — bots fill this, humans don't see it -->
+                        <input type="text" name="_honey" id="_honey" style="display:none;" tabindex="-1" autocomplete="off">
+
+                        <input type="text" id="cf-name" placeholder="Your name" required
+                            style="padding:0.6rem 0.85rem;border:1px solid rgba(255,255,255,0.2);border-radius:8px;background:rgba(255,255,255,0.08);color:#fff;font-size:0.9rem;outline:none;width:100%;box-sizing:border-box;">
+
+                        <input type="email" id="cf-email" placeholder="Your email" required
+                            style="padding:0.6rem 0.85rem;border:1px solid rgba(255,255,255,0.2);border-radius:8px;background:rgba(255,255,255,0.08);color:#fff;font-size:0.9rem;outline:none;width:100%;box-sizing:border-box;">
+
+                        <textarea id="cf-message" placeholder="Your message" rows="3" required
+                            style="padding:0.6rem 0.85rem;border:1px solid rgba(255,255,255,0.2);border-radius:8px;background:rgba(255,255,255,0.08);color:#fff;font-size:0.9rem;outline:none;width:100%;box-sizing:border-box;resize:vertical;font-family:inherit;"></textarea>
+
+                        <!-- Math captcha -->
+                        <div style="display:flex;align-items:center;gap:0.5rem;">
+                            <span id="captcha-question" style="color:rgba(255,255,255,0.8);font-size:0.85rem;white-space:nowrap;"></span>
+                            <input type="text" id="cf-captcha" placeholder="Answer" required maxlength="4"
+                                style="padding:0.5rem 0.75rem;border:1px solid rgba(255,255,255,0.2);border-radius:8px;background:rgba(255,255,255,0.08);color:#fff;font-size:0.9rem;outline:none;width:80px;">
+                        </div>
+
+                        <button type="submit" id="cf-submit"
+                            style="padding:0.65rem 1.25rem;background:#059669;color:#fff;border:none;border-radius:8px;font-weight:600;font-size:0.9rem;cursor:pointer;transition:background 0.2s;text-align:center;">
+                            Send Message
+                        </button>
+                        <p id="cf-status" style="font-size:0.82rem;margin:0;display:none;"></p>
+                    </form>
                 </div>
             </div>
             
@@ -1230,6 +1253,75 @@
                 document.addEventListener('DOMContentLoaded', updateNavLink);
             } else { updateNavLink(); }
             document.addEventListener('supabase:authchange', updateNavLink);
+        })();
+    </script>
+
+    <script>
+        // Contact form — math captcha + honeypot
+        (function() {
+            let captchaAnswer = 0;
+
+            function generateCaptcha() {
+                const a = Math.floor(Math.random() * 9) + 1;
+                const b = Math.floor(Math.random() * 9) + 1;
+                captchaAnswer = a + b;
+                const q = document.getElementById('captcha-question');
+                if (q) q.textContent = `Security check: ${a} + ${b} =`;
+            }
+
+            generateCaptcha();
+
+            window.submitContact = async function(e) {
+                e.preventDefault();
+                const btn     = document.getElementById('cf-submit');
+                const status  = document.getElementById('cf-status');
+                const honey   = document.getElementById('_honey').value;
+                const name    = document.getElementById('cf-name').value.trim();
+                const email   = document.getElementById('cf-email').value.trim();
+                const message = document.getElementById('cf-message').value.trim();
+                const answer  = parseInt(document.getElementById('cf-captcha').value.trim(), 10);
+
+                // Honeypot check
+                if (honey) return;
+
+                // Captcha check
+                if (answer !== captchaAnswer) {
+                    status.textContent = '❌ Incorrect answer — please try again.';
+                    status.style.color = '#fca5a5';
+                    status.style.display = 'block';
+                    generateCaptcha();
+                    document.getElementById('cf-captcha').value = '';
+                    return;
+                }
+
+                btn.disabled = true;
+                btn.textContent = 'Sending…';
+                status.style.display = 'none';
+
+                try {
+                    const res = await fetch('/.netlify/functions/send-contact', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ name, email, message })
+                    });
+                    if (res.ok) {
+                        status.textContent = '✅ Message sent! We\'ll get back to you soon.';
+                        status.style.color = '#6ee7b7';
+                        status.style.display = 'block';
+                        document.getElementById('contact-form').reset();
+                        generateCaptcha();
+                    } else {
+                        throw new Error('Send failed');
+                    }
+                } catch(err) {
+                    status.textContent = '❌ Something went wrong. Email us at support@drtroy.com';
+                    status.style.color = '#fca5a5';
+                    status.style.display = 'block';
+                } finally {
+                    btn.disabled = false;
+                    btn.textContent = 'Send Message';
+                }
+            };
         })();
     </script>
 </body>
