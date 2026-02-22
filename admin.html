@@ -2548,7 +2548,7 @@
             document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
             
             // Activate the correct tab
-            const tabButton = document.querySelector(`[onclick="switchMainTab('${savedTab}')"]`);
+            const tabButton = document.querySelector(`[onclick*="switchMainTab('${savedTab}')"]`);
             const tabContent = document.getElementById(savedTab);
             
             if (tabButton && tabContent) {
@@ -2568,6 +2568,8 @@
                     loadLicenseData();
                 } else if (savedTab === 'discount-codes') {
                     updateDiscountCodeStats();
+                } else if (savedTab === 'waitlist') {
+                    loadWaitlist();
                 }
                 
                 console.log(`✅ Restored tab: ${savedTab}`);
