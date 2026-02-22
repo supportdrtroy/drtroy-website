@@ -142,6 +142,10 @@
         });
         
         console.log('✅ Emergency admin functions initialized');
+        
+        // Override with enhanced version if main script loads successfully
+        window.switchMainTabOriginal = window.switchMainTab; // Keep emergency backup
+        
     </script>
     
     <style>
@@ -2388,67 +2392,119 @@
             console.log('🚀 Starting admin initialization...');
             
             try {
-                // Skip authentication for now to avoid breaking tabs
-                console.log('⚠️ Skipping authentication for emergency mode');
+                console.log('🔐 Re-enabling authentication...');
                 
-                // const authed = await checkAuthentication();
-                // if (!authed) {
-                //     console.log('❌ Authentication failed');
-                //     return;
-                // }
-                console.log('✅ Authentication skipped for emergency mode');
+                try {
+                    const authed = await checkAuthentication();
+                    if (!authed) {
+                        console.log('❌ Authentication failed');
+                        return;
+                    }
+                    console.log('✅ Authentication successful');
+                } catch (authError) {
+                    console.warn('⚠️ Authentication error, continuing in demo mode:', authError);
+                    // Continue even if auth fails so tabs still work
+                }
 
                 console.log('📊 Loading basic data...');
-                updateLastUpdate();
-                loadStoredData();
-                createSampleData();
-                updateStats();
-                updateCodesTable();
-                updateAnalytics();
-                console.log('✅ Basic data loaded');
+                try {
+                    updateLastUpdate();
+                    console.log('✅ Timestamps updated');
+                } catch(e) { console.warn('Timestamp error:', e); }
+                
+                try {
+                    loadStoredData();
+                    console.log('✅ Local data loaded');
+                } catch(e) { console.warn('Local data error:', e); }
+                
+                try {
+                    createSampleData();
+                    console.log('✅ Sample data created');
+                } catch(e) { console.warn('Sample data error:', e); }
+                
+                try {
+                    updateStats();
+                    console.log('✅ Stats updated');
+                } catch(e) { console.warn('Stats error:', e); }
+                
+                try {
+                    updateCodesTable();
+                    console.log('✅ Codes table updated');
+                } catch(e) { console.warn('Codes table error:', e); }
+                
+                try {
+                    updateAnalytics();
+                    console.log('✅ Analytics updated');
+                } catch(e) { console.warn('Analytics error:', e); }
+                
+                console.log('✅ Basic data loading completed');
 
                 console.log('🔄 Loading Supabase data...');
                 // Load live Supabase data - wrapped in try/catch to prevent breaking
-                try {
-                    await updateDashboard();
-                    console.log('✅ Dashboard updated');
-                } catch(e) { console.warn('Dashboard update failed:', e); }
-                
-                try {
-                    await loadUsers();
-                    console.log('✅ Users loaded');
-                } catch(e) { console.warn('User loading failed:', e); }
-                
-                try {
-                    await loadSupabaseRevenue();
-                    console.log('✅ Revenue loaded');
-                } catch(e) { console.warn('Revenue loading failed:', e); }
+                if (window.DrTroySupabase) {
+                    try {
+                        await updateDashboard();
+                        console.log('✅ Dashboard updated');
+                    } catch(e) { console.warn('Dashboard update failed:', e); }
+                    
+                    try {
+                        await loadUsers();
+                        console.log('✅ Users loaded');
+                    } catch(e) { console.warn('User loading failed:', e); }
+                    
+                    try {
+                        await loadSupabaseRevenue();
+                        console.log('✅ Revenue loaded');
+                    } catch(e) { console.warn('Revenue loading failed:', e); }
+                } else {
+                    console.warn('⚠️ DrTroySupabase not available, using sample data');
+                }
 
-                // Load feature data
-                try {
-                    await refreshCourses();
-                    console.log('✅ Courses loaded');
-                } catch(e) { console.warn('Course loading failed:', e); }
-                
-                try {
-                    await loadDiscountCodesFromDB();
-                    console.log('✅ Discount codes loaded');
-                } catch(e) { console.warn('Discount codes loading failed:', e); }
-                
-                try {
-                    await loadLicenseData();
-                    console.log('✅ License data loaded');
-                } catch(e) { console.warn('License data loading failed:', e); }
-                
-                try {
-                    await loadCampaignCourses();
-                    console.log('✅ Campaign courses loaded');
-                } catch(e) { console.warn('Campaign courses loading failed:', e); }
+                // Load feature data - only if Supabase is available
+                console.log('🔧 Loading feature data...');
+                if (window.DrTroySupabase) {
+                    try {
+                        await refreshCourses();
+                        console.log('✅ Courses loaded');
+                    } catch(e) { console.warn('Course loading failed:', e); }
+                    
+                    try {
+                        await loadDiscountCodesFromDB();
+                        console.log('✅ Discount codes loaded');
+                    } catch(e) { console.warn('Discount codes loading failed:', e); }
+                    
+                    try {
+                        await loadLicenseData();
+                        console.log('✅ License data loaded');
+                    } catch(e) { console.warn('License data loading failed:', e); }
+                    
+                    try {
+                        await loadCampaignCourses();
+                        console.log('✅ Campaign courses loaded');
+                    } catch(e) { console.warn('Campaign courses loading failed:', e); }
+                    
+                    try {
+                        await loadWaitlist();
+                        console.log('✅ Waitlist loaded');
+                    } catch(e) { console.warn('Waitlist loading failed:', e); }
+                } else {
+                    console.warn('⚠️ Skipping feature data load - Supabase unavailable');
+                }
 
                 console.log('🎉 Admin initialization complete');
+                
+                // Replace emergency tab function with enhanced version
+                if (typeof switchMainTabEnhanced === 'function') {
+                    window.switchMainTab = switchMainTabEnhanced;
+                    console.log('✅ Enhanced tab switching enabled');
+                } else {
+                    console.log('⚠️ Using emergency tab switching');
+                }
+                
             } catch (error) {
                 console.error('💥 Fatal error during initialization:', error);
-                alert('Admin initialization failed. Check console for details.');
+                console.log('🚨 Falling back to emergency mode');
+                // Keep emergency functions working even if main init fails
             }
         }
 
@@ -2833,8 +2889,8 @@
             a.click();
         }
 
-        // Tab switching functions (complex version - commented out for debugging)
-        function switchMainTabComplex(tabName) {
+        // Enhanced tab switching with data loading
+        function switchMainTabEnhanced(tabName) {
             console.log(`🔄 Switching to tab: ${tabName}`);
             
             try {
