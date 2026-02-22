@@ -89,8 +89,9 @@ exports.handler = async (event) => {
 
     const name     = (firstName || '').trim() || 'there';
     const fullName = [firstName, lastName].filter(Boolean).map(s => s.trim()).join(' ') || 'there';
+    const article = discipline === 'OT' ? 'an' : 'a';
     const discLine = discipline && discipline !== 'prefer_not'
-        ? `<p style="color:#4b5563;font-size:15px;line-height:1.7;margin:0 0 20px;">We see that you work as a <strong>${discipline}</strong> — we'll make sure to highlight relevant courses for your license when we launch.</p>`
+        ? `<p style="color:#4b5563;font-size:15px;line-height:1.7;margin:0 0 20px;">We see that you work as ${article} <strong>${discipline}</strong> — we'll make sure to highlight relevant courses for your license when we launch.</p>`
         : '';
 
     const html = `<!DOCTYPE html>
