@@ -3913,16 +3913,10 @@
         // ══════════════════════════════════════════════════════════════
 
         async function loadLicenseData() {
-            const sb = _sbClient();
-            if (!sb) return;
-            // Get all profiles that have a license expiry set
-            const { data, error } = await sb.from('profiles')
-                .select('id, email, first_name, last_name, license_number, license_state, profession, license_expiry_date')
-                .not('license_expiry_date', 'is', null)
-                .order('license_expiry_date', { ascending: true });
-
-            if (error) { showAdminToast('Failed to load license data', 'error'); return; }
-            const users = data || [];
+            try {
+                const result = await SB.adminAction('get_license_data', {});
+                if (result.error) { showAdminToast('Failed to load license data: ' + result.error, 'error'); return; }
+                const users = (result.data && result.data.profiles) || [];
             const today = new Date(); today.setHours(0,0,0,0);
 
             let expired = 0, within30 = 0, within90 = 0;
@@ -3961,6 +3955,7 @@
                     <td><button class="btn-small" onclick="viewUser('${u.id}')">👁️ View</button></td>
                 </tr>`;
             }).join('');
+            } catch(e) { showAdminToast('License data error: ' + e.message, 'error'); }
         }
 
         // ══════════════════════════════════════════════════════════════
@@ -4081,11 +4076,13 @@
         let _allDiscountCodes = [];
 
         async function loadDiscountCodesFromDB() {
-            const { data, error } = await SB.adminGetDiscountCodes();
-            if (error) { showAdminToast('Failed to load discount codes', 'error'); return; }
-            _allDiscountCodes = data || [];
-            renderDiscountCodesTable();
-            updateDiscountCodeStats();
+            try {
+                const result = await SB.adminAction('get_discount_codes', {});
+                if (result.error) { showAdminToast('Failed to load discount codes: ' + result.error, 'error'); return; }
+                _allDiscountCodes = (result.data && result.data.codes) || [];
+                renderDiscountCodesTable();
+                updateDiscountCodeStats();
+            } catch(e) { showAdminToast('Discount codes error: ' + e.message, 'error'); }
         }
 
         function updateDiscountCodeStats() {
@@ -4123,16 +4120,16 @@
         }
 
         async function toggleDiscountCode(codeId, makeActive) {
-            const { error } = await SB.adminUpdateDiscountCode(codeId, { is_active: makeActive });
-            if (error) { showAdminToast('❌ ' + (error.message || error), 'error'); return; }
+            const result = await SB.adminAction('update_discount_code', { id: codeId, updates: { is_active: makeActive } });
+            if (result.error) { showAdminToast('❌ ' + result.error, 'error'); return; }
             showAdminToast(`✅ Code ${makeActive ? 'activated' : 'deactivated'}`, 'success');
             await loadDiscountCodesFromDB();
         }
 
         async function deleteDiscountCode(codeId) {
             if (!confirm('Permanently delete this discount code?')) return;
-            const { error } = await SB.adminDeleteDiscountCode(codeId);
-            if (error) { showAdminToast('❌ ' + (error.message || error), 'error'); return; }
+            const result = await SB.adminAction('delete_discount_code', { id: codeId });
+            if (result.error) { showAdminToast('❌ ' + result.error, 'error'); return; }
             showAdminToast('✅ Code deleted', 'success');
             await loadDiscountCodesFromDB();
         }
@@ -4248,26 +4245,25 @@
         function _sbClient() { return window.DrTroySupabase ? window.DrTroySupabase.getClient() : null; }
 
         async function lookupCreditUser() {
-            const sb = _sbClient(); if (!sb) return;
             const email = document.getElementById('creditUserEmail').value.trim();
             const resultEl = document.getElementById('creditUserResult');
             if (!email) return;
             resultEl.innerHTML = '<span style="color:#64748b;">Searching…</span>';
             creditTargetUserId = null;
             try {
-                const { data, error } = await sb.from('profiles').select('id, first_name, last_name, email, profession').eq('email', email).single();
-                if (error || !data) { resultEl.innerHTML = '<span style="color:#dc2626;">User not found.</span>'; return; }
+                const userResult = await SB.adminAction('lookup_user', { email });
+                if (userResult.error) { resultEl.innerHTML = '<span style="color:#dc2626;">' + esc(userResult.error) + '</span>'; return; }
+                const data = userResult.data.user;
                 creditTargetUserId = data.id;
                 resultEl.innerHTML = `<span style="color:#059669;font-weight:600;">✓ Found: ${escapeHtml(data.first_name || '')} ${escapeHtml(data.last_name || '')} (${escapeHtml(data.profession || 'N/A')})</span>`;
                 // Also load their current balance
-                const { data: credits } = await sb.from('account_credits').select('balance_cents').eq('user_id', data.id).single();
-                const bal = credits ? (credits.balance_cents / 100).toFixed(2) : '0.00';
+                const credResult = await SB.adminAction('get_user_credits', { userId: data.id });
+                const bal = (credResult.data && credResult.data.balance_cents) ? (credResult.data.balance_cents / 100).toFixed(2) : '0.00';
                 resultEl.innerHTML += ` — Current balance: <strong>$${bal}</strong>`;
             } catch(e) { resultEl.innerHTML = '<span style="color:#dc2626;">Error looking up user.</span>'; }
         }
 
         async function grantCredits() {
-            const sb = _sbClient(); if (!sb) return;
             const btn = document.getElementById('grantCreditsBtn');
             const feedback = document.getElementById('grantCreditsFeedback');
             const amountDollars = parseFloat(document.getElementById('creditAmount').value);
@@ -4282,46 +4278,45 @@
 
             try {
                 const amountCents = Math.round(amountDollars * 100);
-                const adminUser = sb.auth ? (await sb.auth.getUser()).data?.user : null;
-                const { data, error } = await sb.rpc('grant_credits', {
-                    p_user_id:      creditTargetUserId,
-                    p_amount_cents: amountCents,
-                    p_type:         'admin_grant',
-                    p_description:  description || 'Admin credit grant',
-                    p_admin_id:     adminUser?.id || null
+                const result = await SB.adminAction('grant_credits', {
+                    userId: creditTargetUserId,
+                    amountCents: amountCents,
+                    description: description || 'Admin credit grant',
+                    adminId: _adminUser?.id || null
                 });
-                if (error) throw error;
-                const newBal = (data.new_balance_cents / 100).toFixed(2);
+                if (result.error) throw new Error(result.error);
+                const newBal = result.data && result.data.new_balance_cents ? (result.data.new_balance_cents / 100).toFixed(2) : amountDollars.toFixed(2);
                 feedback.innerHTML = `<span style="color:#059669;font-weight:600;">✓ $${amountDollars.toFixed(2)} credited. New balance: $${newBal}</span>`;
                 document.getElementById('creditAmount').value = '';
                 document.getElementById('creditDescription').value = '';
                 document.getElementById('creditUserResult').innerHTML = `<span style="color:#059669;font-weight:600;">✓ User found — New balance: <strong>$${newBal}</strong></span>`;
             } catch(e) {
-                feedback.innerHTML = `<span style="color:#dc2626;">Error: ${e.message}</span>`;
+                feedback.innerHTML = `<span style="color:#dc2626;">Error: ${esc(e.message)}</span>`;
             }
             btn.disabled = false;
             btn.textContent = 'Grant Credits →';
         }
 
         async function loadUserBalance() {
-            const sb = _sbClient(); if (!sb) return;
             const email = document.getElementById('balanceUserEmail').value.trim();
             if (!email) return;
             const display = document.getElementById('balanceDisplay');
             display.style.display = 'none';
             try {
-                const { data: profile } = await sb.from('profiles').select('id, first_name, last_name, profession').eq('email', email).single();
-                if (!profile) { alert('User not found.'); return; }
+                const userResult = await SB.adminAction('lookup_user', { email });
+                if (userResult.error) { alert('User not found: ' + userResult.error); return; }
+                const profile = userResult.data.user;
 
-                const { data: credits } = await sb.from('account_credits').select('balance_cents').eq('user_id', profile.id).single();
-                const bal = credits ? (credits.balance_cents / 100).toFixed(2) : '0.00';
+                const credResult = await SB.adminAction('get_user_credits', { userId: profile.id });
+                const creditData = credResult.data || {};
+                const bal = creditData.balance_cents ? (creditData.balance_cents / 100).toFixed(2) : '0.00';
                 document.getElementById('balanceAmount').textContent = '$' + bal;
                 document.getElementById('balanceUserInfo').innerHTML = `<div style="font-weight:600;color:#1e293b;">${escapeHtml(profile.first_name||'')} ${escapeHtml(profile.last_name||'')}</div><div style="color:#64748b;font-size:.9rem;">${escapeHtml(email)} · ${escapeHtml(profile.profession||'')}</div>`;
 
-                const { data: txns } = await sb.from('credit_transactions').select('*').eq('user_id', profile.id).order('created_at', {ascending: false}).limit(25);
+                const txns = creditData.transactions || [];
                 const typeLabels = { admin_grant: '🎁 Admin Grant', referral_earned: '👥 Referral', purchase_applied: '🛒 Applied to Purchase', adjustment: '⚙️ Adjustment' };
                 const list = document.getElementById('transactionList');
-                if (!txns || txns.length === 0) {
+                if (!txns.length) {
                     list.innerHTML = '<p style="color:#64748b;font-size:.9rem;text-align:center;padding:1rem;">No transactions yet.</p>';
                 } else {
                     list.innerHTML = txns.map(t => `
