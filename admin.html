@@ -10,9 +10,9 @@
     <!-- Supabase JS v2 CDN -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
     <!-- DrTroy Supabase client -->
-    <script src="js/supabase-client.js"></script>
+    <script src="js/supabase-client.js?v=20260223"></script>
     <!-- Advanced Course Management System -->
-    <script src="js/course-management.js"></script>
+    <script src="js/course-management.js?v=20260223"></script>
 
     <!-- Emergency tab switching function -->
     <script>
@@ -105,25 +105,15 @@
             }
         }
         
-        // Basic placeholder data for tabs
+        // Basic placeholder data for tabs — zeroes until real data loads
         function loadBasicData() {
             try {
-                // Dashboard stats
-                const stats = {
-                    totalUsers: Math.floor(Math.random() * 50) + 25,
-                    monthlyRevenue: '$' + (Math.floor(Math.random() * 5000) + 2500).toLocaleString(),
-                    courseCompletions: Math.floor(Math.random() * 100) + 50,
-                    upcomingRenewals: Math.floor(Math.random() * 15) + 5
-                };
-                
+                const stats = { totalUsers: '—', monthlyRevenue: '—', courseCompletions: '—', upcomingRenewals: '—' };
                 Object.keys(stats).forEach(key => {
                     const el = document.getElementById(key);
                     if (el) el.textContent = stats[key];
                 });
-                console.log('✅ Basic dashboard data loaded');
-            } catch(e) {
-                console.warn('Load basic data error:', e);
-            }
+            } catch(e) { /* non-critical */ }
         }
         
         // Initialize when DOM is ready
