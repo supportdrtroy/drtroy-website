@@ -55,9 +55,15 @@ async function processFile(srcPath, distPath) {
   try {
     if (HTML_EXT.has(ext)) {
       const src    = fs.readFileSync(srcPath, 'utf8');
-      const result = await minifyHtml(src, HTML_OPTS);
-      fs.writeFileSync(distPath, result, 'utf8');
-      processed++;
+      // Skip minification for admin.html — large inline script breaks when minified
+      if (path.basename(srcPath) === 'admin.html') {
+        fs.writeFileSync(distPath, src, 'utf8');
+        processed++;
+      } else {
+        const result = await minifyHtml(src, HTML_OPTS);
+        fs.writeFileSync(distPath, result, 'utf8');
+        processed++;
+      }
     } else if (JS_EXT.has(ext)) {
       const src    = fs.readFileSync(srcPath, 'utf8');
       const result = await minifyJs(src, JS_OPTS);
