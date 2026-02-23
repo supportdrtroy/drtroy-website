@@ -3,10 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DrTroy Admin v2.24</title>
-    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-    <meta http-equiv="Pragma" content="no-cache">
-    <meta http-equiv="Expires" content="0">
+    <title>DrTroy Admin Dashboard</title>
 
     <!-- Security headers set via netlify.toml -->
 
@@ -1249,19 +1246,6 @@
     </style>
 </head>
 <body>
-    <!-- PURE HTML DEBUG BANNER - NO JAVASCRIPT REQUIRED -->
-    <div id="versionBanner" style="background:#7c3aed;color:#fff;text-align:center;padding:10px;font:bold 16px sans-serif;position:relative;z-index:99999;">
-        BUILD v2.24 | If you see this, HTML is fresh. Check for alert popup and colored text below.
-        <button onclick="this.parentNode.remove()" style="margin-left:20px;background:#fff;color:#7c3aed;border:none;padding:4px 12px;border-radius:4px;cursor:pointer;font-weight:bold;">Dismiss</button>
-    </div>
-    <!-- TINY JS TEST - separate from main script block -->
-    <script>
-        try {
-            document.getElementById('versionBanner').innerHTML += '<br><span style="font-size:13px;color:#fde68a;">JS TEST: Script execution is WORKING. Supabase loaded: ' + (typeof window.supabase !== 'undefined') + ' | DrTroySupabase loaded: ' + (typeof window.DrTroySupabase !== 'undefined') + ' | CourseManagement loaded: ' + (typeof window.CourseManagement !== 'undefined') + '</span>';
-        } catch(e) {
-            document.getElementById('versionBanner').innerHTML += '<br><span style="color:#fca5a5;">JS ERROR: ' + e.message + '</span>';
-        }
-    </script>
     <div class="header">
         <h1>DrTroy.com Admin Dashboard</h1>
         <div class="header-info">
@@ -2215,8 +2199,6 @@
     </div>
 
     <!-- Admin panel logic - external file -->
-    <script>document.getElementById('versionBanner').innerHTML += '<br><span style="color:#93c5fd;">LOADING: About to load admin.js...</span>';</script>
-    <script src="js/admin.js?v=20260224" onerror="document.getElementById('versionBanner').innerHTML += '<br><span style=color:red;font-weight:bold>FAILED: admin.js did not load! Network or server error.</span>'"></script>
-    <script>document.getElementById('versionBanner').innerHTML += '<br><span style="color:#86efac;">LOADED: admin.js finished loading.</span>';</script>
+    <script src="js/admin.js?v=20260224b"></script>
 </body>
 </html>

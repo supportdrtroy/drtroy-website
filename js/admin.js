@@ -1,10 +1,5 @@
-        // ═══ ADMIN.JS v2.24 — If you can see this in View Source, file is deployed ═══
-        alert('ADMIN.JS IS RUNNING — v2.24 — Click OK to continue');
-        document.title = 'ADMIN JS WORKS v2.24';
-        (function(){
-            var b = document.getElementById('versionBanner');
-            if(b) b.innerHTML += '<br><span style="color:#86efac;font-weight:bold;font-size:16px;">SCRIPT4: admin.js IS EXECUTING - v2.24</span>';
-        })();
+        // ═══ ADMIN.JS — Main admin panel logic ═══
+        console.log('admin.js loaded successfully');
 
         // ─── GLOBAL ERROR DISPLAY (catches ALL JS errors on the page) ────────
         window.onerror = function(msg, src, line, col, err) {
@@ -62,7 +57,10 @@
                 .replace(/"/g, '&quot;')
                 .replace(/'/g, '&#x27;');
         }
-        const escapeHtml = esc;
+        // NOTE: Do NOT use const/let here — escapeHtml already exists as a global
+        // function from course-management.js. Redeclaring with const causes a
+        // SyntaxError that silently kills the entire script.
+        var escapeHtml = esc;
 
         async function checkAuthentication() {
             if (!window.DrTroySupabase) {
