@@ -104,11 +104,33 @@ async function validateDiscount(code, supabaseUrl, serviceRoleKey) {
   });
 }
 
+// ─── CORS ────────────────────────────────────────────────────
+
+const ALLOWED_ORIGINS = ['https://drtroy.com', 'https://www.drtroy.com'];
+
+function getCorsHeaders(event) {
+  const origin = (event.headers && (event.headers.origin || event.headers.Origin)) || '';
+  const allowedOrigin = ALLOWED_ORIGINS.includes(origin) ? origin : ALLOWED_ORIGINS[0];
+  return {
+    'Access-Control-Allow-Origin': allowedOrigin,
+    'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+    'Access-Control-Allow-Methods': 'POST, OPTIONS',
+    'Content-Type': 'application/json',
+    'Vary': 'Origin',
+  };
+}
+
 // ─── handler ─────────────────────────────────────────────────
 
 exports.handler = async (event) => {
+  const cors = getCorsHeaders(event);
+
+  if (event.httpMethod === 'OPTIONS') {
+    return { statusCode: 204, headers: cors, body: '' };
+  }
+
   if (event.httpMethod !== 'POST') {
-    return { statusCode: 405, body: JSON.stringify({ error: 'Method not allowed' }) };
+    return { statusCode: 405, headers: cors, body: JSON.stringify({ error: 'Method not allowed' }) };
   }
 
   const STRIPE_SECRET_KEY = process.env.STRIPE_SECRET_KEY;
@@ -117,12 +139,12 @@ exports.handler = async (event) => {
 
   if (!STRIPE_SECRET_KEY || !SUPABASE_URL || !SERVICE_ROLE) {
     console.error('[create-checkout] Missing environment variables');
-    return { statusCode: 500, body: JSON.stringify({ error: 'Server configuration error. Contact support.' }) };
+    return { statusCode: 500, headers: cors, body: JSON.stringify({ error: 'Server configuration error. Contact support.' }) };
   }
 
   let body;
   try { body = JSON.parse(event.body || '{}'); }
-  catch { return { statusCode: 400, body: JSON.stringify({ error: 'Invalid request body' }) }; }
+  catch { return { statusCode: 400, headers: cors, body: JSON.stringify({ error: 'Invalid request body' }) }; }
 
   const { itemId, itemType = 'course', userId, userEmail, discountCode, successUrl, cancelUrl } = body;
 
@@ -130,7 +152,7 @@ exports.handler = async (event) => {
   const resolvedItemId = itemId || body.courseId;
 
   if (!resolvedItemId || !userId || !userEmail) {
-    return { statusCode: 400, body: JSON.stringify({ error: 'Missing required fields: itemId, userId, userEmail' }) };
+    return { statusCode: 400, headers: cors, body: JSON.stringify({ error: 'Missing required fields: itemId, userId, userEmail' }) };
   }
 
   try {
@@ -183,7 +205,7 @@ exports.handler = async (event) => {
     if (finalPrice === 0) {
       return {
         statusCode: 200,
-        headers: { 'Content-Type': 'application/json' },
+        headers: cors,
         body: JSON.stringify({ free: true, message: 'Item is free with discount.' }),
       };
     }
@@ -192,17 +214,17 @@ exports.handler = async (event) => {
 
     if (session.error) {
       console.error('[create-checkout] Stripe error:', session.error);
-      return { statusCode: 400, body: JSON.stringify({ error: session.error.message }) };
+      return { statusCode: 400, headers: cors, body: JSON.stringify({ error: session.error.message }) };
     }
 
     return {
       statusCode: 200,
-      headers: { 'Content-Type': 'application/json' },
+      headers: cors,
       body: JSON.stringify({ url: session.url }),
     };
 
   } catch (err) {
     console.error('[create-checkout] Error:', err.message);
-    return { statusCode: 500, body: JSON.stringify({ error: 'Something went wrong. Please try again.' }) };
+    return { statusCode: 500, headers: cors, body: JSON.stringify({ error: 'Something went wrong. Please try again.' }) };
   }
 };

@@ -30,23 +30,43 @@ function resendPost(apiKey, payload) {
     });
 }
 
+const ALLOWED_ORIGINS = ['https://drtroy.com', 'https://www.drtroy.com'];
+
+function getCorsHeaders(event) {
+    const origin = (event.headers && (event.headers.origin || event.headers.Origin)) || '';
+    const allowedOrigin = ALLOWED_ORIGINS.includes(origin) ? origin : ALLOWED_ORIGINS[0];
+    return {
+        'Access-Control-Allow-Origin': allowedOrigin,
+        'Access-Control-Allow-Headers': 'Content-Type',
+        'Access-Control-Allow-Methods': 'POST, OPTIONS',
+        'Content-Type': 'application/json',
+        'Vary': 'Origin',
+    };
+}
+
 exports.handler = async (event) => {
+    const cors = getCorsHeaders(event);
+
+    if (event.httpMethod === 'OPTIONS') {
+        return { statusCode: 204, headers: cors, body: '' };
+    }
+
     if (event.httpMethod !== 'POST') {
-        return { statusCode: 405, body: 'Method not allowed' };
+        return { statusCode: 405, headers: cors, body: JSON.stringify({ error: 'Method not allowed' }) };
     }
 
     let body;
     try { body = JSON.parse(event.body || '{}'); } catch {
-        return { statusCode: 400, body: 'Invalid JSON' };
+        return { statusCode: 400, headers: cors, body: JSON.stringify({ error: 'Invalid JSON' }) };
     }
 
     const { to, senderName, refLink, refCode } = body;
     if (!to || !refLink) {
-        return { statusCode: 400, body: 'Missing required fields' };
+        return { statusCode: 400, headers: cors, body: JSON.stringify({ error: 'Missing required fields' }) };
     }
 
     const apiKey = process.env.RESEND_API_KEY;
-    if (!apiKey) return { statusCode: 500, body: 'Email service not configured' };
+    if (!apiKey) return { statusCode: 500, headers: cors, body: JSON.stringify({ error: 'Email service not configured' }) };
 
     const senderDisplay = (senderName || '').trim() || 'A colleague';
 
@@ -91,7 +111,7 @@ exports.handler = async (event) => {
         </tr>
         <tr>
           <td style="background:#f8fafc;border-top:1px solid #e5e7eb;padding:20px 40px;text-align:center;">
-            <p style="color:#9ca3af;font-size:12px;margin:0 0 6px;">&copy; 2026 DrTroy Continuing Education &nbsp;&middot;&nbsp; Lubbock, Texas</p>
+            <p style="color:#9ca3af;font-size:12px;margin:0 0 6px;">&copy; 2026 DrTroy Continuing Education &nbsp;&middot;&nbsp; Texas</p>
             <p style="color:#9ca3af;font-size:12px;margin:0;">Questions? <a href="mailto:support@drtroy.com" style="color:#059669;">support@drtroy.com</a> &nbsp;&middot;&nbsp; <a href="https://drtroy.com/terms.html" style="color:#9ca3af;">Terms of Service</a></p>
           </td>
         </tr>
@@ -113,12 +133,12 @@ exports.handler = async (event) => {
 
         if (result.status >= 400) {
             console.error('Resend error:', result.body);
-            return { statusCode: 500, body: JSON.stringify({ error: 'Email send failed' }) };
+            return { statusCode: 500, headers: cors, body: JSON.stringify({ error: 'Email send failed' }) };
         }
 
-        return { statusCode: 200, body: JSON.stringify({ sent: true }) };
+        return { statusCode: 200, headers: cors, body: JSON.stringify({ sent: true }) };
     } catch (err) {
         console.error('send-referral error:', err.message);
-        return { statusCode: 500, body: JSON.stringify({ error: err.message }) };
+        return { statusCode: 500, headers: cors, body: JSON.stringify({ error: err.message }) };
     }
 };

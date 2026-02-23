@@ -33,32 +33,52 @@ function resendPost(apiKey, payload) {
     });
 }
 
+const ALLOWED_ORIGINS = ['https://drtroy.com', 'https://www.drtroy.com'];
+
+function getCorsHeaders(event) {
+    const origin = (event.headers && (event.headers.origin || event.headers.Origin)) || '';
+    const allowedOrigin = ALLOWED_ORIGINS.includes(origin) ? origin : ALLOWED_ORIGINS[0];
+    return {
+        'Access-Control-Allow-Origin': allowedOrigin,
+        'Access-Control-Allow-Headers': 'Content-Type',
+        'Access-Control-Allow-Methods': 'POST, OPTIONS',
+        'Content-Type': 'application/json',
+        'Vary': 'Origin',
+    };
+}
+
 exports.handler = async (event) => {
+    const cors = getCorsHeaders(event);
+
+    if (event.httpMethod === 'OPTIONS') {
+        return { statusCode: 204, headers: cors, body: '' };
+    }
+
     if (event.httpMethod !== 'POST') {
-        return { statusCode: 405, body: 'Method not allowed' };
+        return { statusCode: 405, headers: cors, body: JSON.stringify({ error: 'Method not allowed' }) };
     }
 
     let body;
     try { body = JSON.parse(event.body || '{}'); } catch {
-        return { statusCode: 400, body: 'Invalid JSON' };
+        return { statusCode: 400, headers: cors, body: JSON.stringify({ error: 'Invalid JSON' }) };
     }
 
     const { name, email, message } = body;
 
     if (!name || !email || !message) {
-        return { statusCode: 400, body: 'Missing required fields' };
+        return { statusCode: 400, headers: cors, body: JSON.stringify({ error: 'Missing required fields' }) };
     }
 
     if (!isValidEmail(email)) {
-        return { statusCode: 400, body: 'Invalid email address' };
+        return { statusCode: 400, headers: cors, body: JSON.stringify({ error: 'Invalid email address' }) };
     }
 
     if (message.length > 5000) {
-        return { statusCode: 400, body: 'Message too long' };
+        return { statusCode: 400, headers: cors, body: JSON.stringify({ error: 'Message too long' }) };
     }
 
     const apiKey = process.env.RESEND_API_KEY;
-    if (!apiKey) return { statusCode: 500, body: 'Email service not configured' };
+    if (!apiKey) return { statusCode: 500, headers: cors, body: JSON.stringify({ error: 'Email service not configured' }) };
 
     const safeName    = name.replace(/</g, '&lt;').replace(/>/g, '&gt;');
     const safeEmail   = email.replace(/</g, '&lt;').replace(/>/g, '&gt;');
@@ -88,12 +108,12 @@ exports.handler = async (event) => {
 
         if (result.status >= 400) {
             console.error('Resend error:', result.body);
-            return { statusCode: 500, body: JSON.stringify({ error: 'Email send failed' }) };
+            return { statusCode: 500, headers: cors, body: JSON.stringify({ error: 'Email send failed' }) };
         }
 
-        return { statusCode: 200, body: JSON.stringify({ sent: true }) };
+        return { statusCode: 200, headers: cors, body: JSON.stringify({ sent: true }) };
     } catch (err) {
         console.error('send-contact error:', err.message);
-        return { statusCode: 500, body: JSON.stringify({ error: err.message }) };
+        return { statusCode: 500, headers: cors, body: JSON.stringify({ error: err.message }) };
     }
 };

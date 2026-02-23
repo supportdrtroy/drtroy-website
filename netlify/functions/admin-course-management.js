@@ -6,8 +6,11 @@
 const https = require('https');
 
 // Supabase configuration
-const SUPABASE_URL = process.env.SUPABASE_URL || 'https://pnqoxulxdmlmbywcpbyx.supabase.co';
-const SUPABASE_SERVICE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBucW94dWx4ZG1sbWJ5d2NwYnl4Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3MTM2NTc1MiwiZXhwIjoyMDg2OTQxNzUyfQ.P3qGeWVSvEbp3hjBXcJHfbHKxlhNUbQdn5IIi3WEjkE';
+const SUPABASE_URL = process.env.SUPABASE_URL;
+const SUPABASE_SERVICE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
+if (!SUPABASE_URL || !SUPABASE_SERVICE_KEY) {
+    console.error('Missing required environment variables: SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY');
+}
 
 /**
  * Make a request to Supabase REST API
@@ -137,12 +140,17 @@ function prepareCourseData(course) {
 /**
  * Main handler function
  */
+const ALLOWED_ORIGINS = ['https://drtroy.com', 'https://www.drtroy.com'];
+
 exports.handler = async (event) => {
-    // CORS headers
+    // CORS headers — restrict to allowed origins
+    const origin = (event.headers && (event.headers.origin || event.headers.Origin)) || '';
+    const allowedOrigin = ALLOWED_ORIGINS.includes(origin) ? origin : ALLOWED_ORIGINS[0];
     const headers = {
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Headers': 'Content-Type',
-        'Access-Control-Allow-Methods': 'GET, POST, PATCH, DELETE, OPTIONS'
+        'Access-Control-Allow-Origin': allowedOrigin,
+        'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+        'Access-Control-Allow-Methods': 'GET, POST, PATCH, DELETE, OPTIONS',
+        'Vary': 'Origin'
     };
     
     if (event.httpMethod === 'OPTIONS') {
@@ -396,7 +404,7 @@ async function handleDeleteCourse(requestData, headers) {
         
         // Prevent deletion of published courses with enrollments
         if (course.status === 'published') {
-            const enrollmentCheck = await supabaseRequest('GET', `/rest/v1/user_course_progress?course_id=eq.${courseId}&select=id`);
+            const enrollmentCheck = await supabaseRequest('GET', `/rest/v1/enrollments?course_id=eq.${courseId}&select=id`);
             if (enrollmentCheck.data && enrollmentCheck.data.length > 0) {
                 return {
                     statusCode: 400,

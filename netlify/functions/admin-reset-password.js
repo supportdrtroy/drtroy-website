@@ -6,7 +6,7 @@
 const https = require('https');
 
 const SUPABASE_HOST = 'pnqoxulxdmlmbywcpbyx.supabase.co';
-const SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBucW94dWx4ZG1sbWJ5d2NwYnl4Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3MTM2NTc1MiwiZXhwIjoyMDg2OTQxNzUyfQ.P3qGeWVSvEbp3hjBXcJHfbHKxlhNUbQdn5IIi3WEjkE';
+const SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
 const ALLOWED_ORIGINS = ['https://drtroy.com', 'https://www.drtroy.com'];
 
@@ -46,7 +46,6 @@ async function verifyAdmin(authHeader) {
     headers: { apikey: SERVICE_ROLE_KEY, Authorization: `Bearer ${token}` }
   }, null);
   if (userRes.status !== 200 || !userRes.body?.id) return { valid: false };
-  const profileBody = JSON.stringify({ query: '' }); // unused
   const profileRes = await httpRequest({
     hostname: SUPABASE_HOST,
     path: `/rest/v1/profiles?id=eq.${userRes.body.id}&select=is_admin`,
@@ -54,7 +53,10 @@ async function verifyAdmin(authHeader) {
     headers: { apikey: SERVICE_ROLE_KEY, Authorization: `Bearer ${SERVICE_ROLE_KEY}`, 'Content-Type': 'application/json' }
   }, null);
   if (profileRes.status !== 200) return { valid: false };
-  const profiles = typeof profileRes.body === 'string' ? JSON.parse(profileRes.body) : profileRes.body;
+  let profiles;
+  try {
+    profiles = typeof profileRes.body === 'string' ? JSON.parse(profileRes.body) : profileRes.body;
+  } catch { return { valid: false }; }
   if (!Array.isArray(profiles) || !profiles[0]?.is_admin) return { valid: false };
   return { valid: true };
 }

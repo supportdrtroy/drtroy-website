@@ -5,22 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DrTroy.com - Admin Dashboard</title>
     
-    <!-- Security Headers -->
-    <meta http-equiv="Content-Security-Policy" content="
-        default-src 'self';
-        script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net;
-        style-src 'self' 'unsafe-inline';
-        img-src 'self' data: https:;
-        connect-src 'self' https://*.supabase.co https://*.netlify.app https://cdn.jsdelivr.net;
-    ">
-    <meta http-equiv="X-Content-Type-Options" content="nosniff">
-    <meta http-equiv="X-XSS-Protection" content="1; mode=block">
+    <!-- Security headers set via netlify.toml -->
 
     <!-- Supabase JS v2 CDN -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
     <!-- DrTroy Supabase client -->
     <script src="js/supabase-client.js"></script>
-    
+    <!-- Advanced Course Management System -->
+    <script src="js/course-management.js"></script>
+
     <!-- Emergency tab switching function -->
     <script>
         console.log('🚨 Emergency script loading at:', new Date().toISOString());

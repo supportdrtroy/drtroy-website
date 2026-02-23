@@ -35,50 +35,73 @@ function supabaseDelete(url, apiKey, table, id) {
     });
 }
 
+const ALLOWED_ORIGINS = ['https://drtroy.com', 'https://www.drtroy.com'];
+
+function getCorsHeaders(event) {
+    const origin = (event.headers && (event.headers.origin || event.headers.Origin)) || '';
+    const allowedOrigin = ALLOWED_ORIGINS.includes(origin) ? origin : ALLOWED_ORIGINS[0];
+    return {
+        'Access-Control-Allow-Origin': allowedOrigin,
+        'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+        'Access-Control-Allow-Methods': 'DELETE, OPTIONS',
+        'Content-Type': 'application/json',
+        'Vary': 'Origin',
+    };
+}
+
 exports.handler = async (event) => {
+    const cors = getCorsHeaders(event);
+
+    if (event.httpMethod === 'OPTIONS') {
+        return { statusCode: 204, headers: cors, body: '' };
+    }
+
     if (event.httpMethod !== 'DELETE') {
-        return { statusCode: 405, body: 'Method not allowed' };
+        return { statusCode: 405, headers: cors, body: JSON.stringify({ error: 'Method not allowed' }) };
     }
 
     let body;
     try { 
         body = JSON.parse(event.body || '{}'); 
     } catch {
-        return { statusCode: 400, body: 'Invalid JSON' };
+        return { statusCode: 400, headers: cors, body: JSON.stringify({ error: 'Invalid JSON' }) };
     }
 
     const { id } = body;
     if (!id || typeof id !== 'string') {
-        return { statusCode: 400, body: 'Missing or invalid waitlist ID' };
+        return { statusCode: 400, headers: cors, body: JSON.stringify({ error: 'Missing or invalid waitlist ID' }) };
     }
 
-    const supabaseUrl = process.env.SUPABASE_URL || 'https://pnqoxulxdmlmbywcpbyx.supabase.co';
-    const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBucW94dWx4ZG1sbWJ5d2NwYnl4Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3MTM2NTc1MiwiZXhwIjoyMDg2OTQxNzUyfQ.P3qGeWVSvEbp3hjBXcJHfbHKxlhNUbQdn5IIi3WEjkE';
+    const supabaseUrl = process.env.SUPABASE_URL;
+    const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
     
     if (!supabaseUrl || !serviceKey) {
-        return { statusCode: 500, body: 'Database configuration missing' };
+        return { statusCode: 500, headers: cors, body: JSON.stringify({ error: 'Database configuration missing' }) };
     }
 
     try {
         const result = await supabaseDelete(supabaseUrl, serviceKey, 'waitlist', id);
         
         if (result.status >= 200 && result.status < 300) {
-            return { 
-                statusCode: 200, 
-                body: JSON.stringify({ success: true, deleted: id }) 
+            return {
+                statusCode: 200,
+                headers: cors,
+                body: JSON.stringify({ success: true, deleted: id })
             };
         } else {
             console.error('Delete failed:', result.status, result.body);
-            return { 
-                statusCode: 500, 
-                body: JSON.stringify({ error: 'Delete failed', details: result.body }) 
+            return {
+                statusCode: 500,
+                headers: cors,
+                body: JSON.stringify({ error: 'Delete failed', details: result.body })
             };
         }
     } catch (err) {
         console.error('admin-delete-waitlist error:', err.message);
-        return { 
-            statusCode: 500, 
-            body: JSON.stringify({ error: err.message }) 
+        return {
+            statusCode: 500,
+            headers: cors,
+            body: JSON.stringify({ error: err.message })
         };
     }
 };
