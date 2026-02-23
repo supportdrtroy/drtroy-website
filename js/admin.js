@@ -1467,153 +1467,9 @@
         }
 
         // ══════════════════════════════════════════════════════════════
-        // COURSE MANAGEMENT — Real CRUD
+        // COURSE MANAGEMENT — Delegated to js/course-management.js
+        // All course CRUD, rendering, content editing lives there.
         // ══════════════════════════════════════════════════════════════
-
-        let _allCourseData = [];
-
-        // Integration with Advanced Course Management System
-        async function loadCourses() {
-            if (window.CourseManagement && window.CourseManagement.loadCourses) {
-                await window.CourseManagement.loadCourses();
-            } else {
-                // Fallback: wait for course management to load
-                setTimeout(() => {
-                    if (window.CourseManagement) {
-                        window.CourseManagement.loadCourses();
-                    }
-                }, 100);
-            }
-        }
-
-        async function refreshCourses() {
-            if (window.CourseManagement && window.CourseManagement.refreshCourses) {
-                window.CourseManagement.refreshCourses();
-            }
-        }
-
-        // Maps Supabase course IDs → actual HTML file names
-        const COURSE_FILE_MAP = {
-            'core-balance-001':    'balance-gait-001',
-            'core-mobility-001':   'mobility-fall-001',
-            'core-joint-001':      'joint-replacement-001',
-            'core-geriatric-001':  'geriatric-care-001',
-            'core-tech-001':       'healthcare-technology-001',
-            'core-infection-001':  'infection-control-001',
-            'core-neuro-001':      'pt-neuro-001',
-            'core-education-001':  'patient-education-001',
-            'core-agents-001':     'physical-agents-001',
-            'core-postsurg-001':   'post-surgical-001',
-            'core-doc-001':        'documentation-001',
-            'ot-adl-001':          'ot-adl-001',
-            'pt-msk-001':          'pt-msk-001'
-        };
-
-        function renderCourseList(courses) {
-            const container = document.getElementById('courseListContainer');
-            if (!courses.length) { container.innerHTML = '<p style="color:#6b7280;text-align:center;grid-column:1/-1;">No courses found.</p>'; return; }
-            container.innerHTML = courses.map(c => {
-                const price = (parseInt(c.price_cents || 0) / 100).toFixed(2);
-                const statusClass = c.is_active ? 'active' : 'draft';
-                const statusLabel = c.is_active ? 'Active' : 'Inactive';
-                const fileId = COURSE_FILE_MAP[c.id] || c.id;
-                const courseUrl = `/courses/${fileId}-progressive.html`;
-                return `<div class="course-card">
-                    <div class="course-header"><h3>${esc(c.title)}</h3><div class="course-status ${statusClass}">${statusLabel}</div></div>
-                    <div class="course-meta">
-                        <div>ID: ${esc(c.id)}</div>
-                        <div>CEU: ${c.ceu_hours} hrs · $${price}</div>
-                        <div>Professions: ${(c.professions || []).join(', ') || 'All'}</div>
-                    </div>
-                    <div class="course-actions">
-                        <a class="btn-small" href="${courseUrl}" target="_blank">👁️ View</a>
-                        <button class="btn-small" onclick="editCourse('${esc(c.id)}')">✏️ Edit</button>
-                        <button class="btn-small ${c.is_active ? 'danger' : ''}" onclick="toggleCourseActive('${esc(c.id)}', ${!c.is_active})">${c.is_active ? '⏸️ Deactivate' : '🚀 Activate'}</button>
-                    </div>
-                </div>`;
-            }).join('');
-        }
-
-        function showAddCourseForm() {
-            document.getElementById('courseModalTitle').textContent = '➕ Add New Course';
-            document.getElementById('cf-id').value = '';
-            document.getElementById('cf-slug').value = '';
-            document.getElementById('cf-slug').disabled = false;
-            document.getElementById('cf-title').value = '';
-            document.getElementById('cf-description').value = '';
-            document.getElementById('cf-ceu').value = '';
-            document.getElementById('cf-price').value = '';
-            document.getElementById('cf-professions').value = 'PT,PTA,OT,COTA';
-            document.getElementById('cf-sort').value = '0';
-            document.getElementById('cf-active').checked = true;
-            document.getElementById('courseModalError').style.display = 'none';
-            document.getElementById('courseModalSuccess').style.display = 'none';
-            document.getElementById('courseModal').classList.add('active');
-        }
-
-        function editCourse(courseId) {
-            const c = _allCourseData.find(x => x.id === courseId);
-            if (!c) return;
-            document.getElementById('courseModalTitle').textContent = '✏️ Edit Course';
-            document.getElementById('cf-id').value = c.id;
-            document.getElementById('cf-slug').value = c.id;
-            document.getElementById('cf-slug').disabled = true;
-            document.getElementById('cf-title').value = c.title || '';
-            document.getElementById('cf-description').value = c.description || '';
-            document.getElementById('cf-ceu').value = c.ceu_hours || '';
-            document.getElementById('cf-price').value = c.price_cents || '';
-            document.getElementById('cf-professions').value = (c.professions || []).join(',');
-            document.getElementById('cf-sort').value = c.sort_order || 0;
-            document.getElementById('cf-active').checked = c.is_active;
-            document.getElementById('courseModalError').style.display = 'none';
-            document.getElementById('courseModalSuccess').style.display = 'none';
-            document.getElementById('courseModal').classList.add('active');
-        }
-
-        function closeCourseModal() { document.getElementById('courseModal').classList.remove('active'); }
-
-        async function saveCourse() {
-            const existingId = document.getElementById('cf-id').value;
-            const slug = document.getElementById('cf-slug').value.trim();
-            const profStr = document.getElementById('cf-professions').value.trim();
-            const courseData = {
-                title: document.getElementById('cf-title').value.trim(),
-                description: document.getElementById('cf-description').value.trim(),
-                ceu_hours: parseFloat(document.getElementById('cf-ceu').value),
-                price_cents: parseInt(document.getElementById('cf-price').value),
-                professions: profStr ? profStr.split(',').map(s => s.trim()) : [],
-                sort_order: parseInt(document.getElementById('cf-sort').value) || 0,
-                is_active: document.getElementById('cf-active').checked,
-            };
-
-            let result;
-            if (existingId) {
-                result = await SB.adminUpdateCourse(existingId, courseData);
-            } else {
-                courseData.id = slug;
-                result = await SB.adminCreateCourse(courseData);
-            }
-
-            if (result.error) {
-                const errEl = document.getElementById('courseModalError');
-                errEl.textContent = '❌ ' + (result.error.message || result.error);
-                errEl.style.display = 'block';
-            } else {
-                const sucEl = document.getElementById('courseModalSuccess');
-                sucEl.textContent = existingId ? '✅ Course updated!' : '✅ Course created!';
-                sucEl.style.display = 'block';
-                setTimeout(() => closeCourseModal(), 1500);
-                await refreshCourses();
-            }
-        }
-
-        async function toggleCourseActive(courseId, makeActive) {
-            const verb = makeActive ? 'activate' : 'deactivate';
-            if (!confirm(`${verb.charAt(0).toUpperCase()+verb.slice(1)} this course?`)) return;
-            const { error } = await SB.adminToggleCourseActive(courseId, makeActive);
-            if (error) { showAdminToast('❌ ' + (error.message || error), 'error'); }
-            else { showAdminToast(`✅ Course ${makeActive ? 'activated' : 'deactivated'}!`, 'success'); await refreshCourses(); }
-        }
 
         // ══════════════════════════════════════════════════════════════
         // EMAIL CAMPAIGNS — Real Resend integration
@@ -1810,7 +1666,7 @@
         async function issueCertificateForUser(userId, courseId, completionId) {
             if (!_currentViewedUser) return;
             showUDMStatus('Issuing certificate…', 'info');
-            const course = _allCourseData.find(c => c.id === courseId);
+            const course = (window.CourseManagement ? window.CourseManagement.getCourseData() : []).find(c => c.id === courseId);
             const result = await SB.adminIssueCertificate({
                 userId, courseId, completionId,
                 userEmail: _currentViewedUser.email,
@@ -1829,7 +1685,7 @@
             if (!confirm('Re-issue this certificate? A new certificate number will be generated and emailed.')) return;
             if (!_currentViewedUser) return;
             showUDMStatus('Re-issuing certificate…', 'info');
-            const course = _allCourseData.find(c => c.id === courseId);
+            const course = (window.CourseManagement ? window.CourseManagement.getCourseData() : []).find(c => c.id === courseId);
             const result = await SB.adminIssueCertificate({
                 userId, courseId, reissue: true,
                 userEmail: _currentViewedUser.email,
