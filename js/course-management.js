@@ -26,6 +26,23 @@ var COURSE_FILE_MAP = {
     'pt-msk-001':          'pt-msk-001'
 };
 
+// Helper: call admin-course-management Netlify function (bypasses RLS)
+async function courseApi(method, body) {
+    var session = window.DrTroySupabase ? await window.DrTroySupabase.getSession() : null;
+    var headers = { 'Content-Type': 'application/json' };
+    if (session && session.access_token) {
+        headers['Authorization'] = 'Bearer ' + session.access_token;
+    }
+    var opts = { method: method, headers: headers };
+    if (body && (method === 'POST' || method === 'PATCH' || method === 'DELETE')) {
+        opts.body = JSON.stringify(body);
+    }
+    var resp = await fetch('/.netlify/functions/admin-course-management', opts);
+    var json = await resp.json();
+    if (!resp.ok) throw new Error(json.error || ('HTTP ' + resp.status));
+    return json.data;
+}
+
 // ============================================================================
 // COURSE LOADING AND DISPLAY
 // ============================================================================
@@ -686,23 +703,17 @@ async function addModule() {
             ? Math.max.apply(null, modules.map(function(m) { return m.order_index || 0; })) + 1
             : 1;
 
-        var client = window.DrTroySupabase.getClient();
-        var result = await client
-            .from('course_modules')
-            .insert([{
-                course_id: currentCourse.id,
-                title: title.trim(),
-                order_index: nextOrder
-            }])
-            .select()
-            .single();
-
-        if (result.error) throw new Error(result.error.message);
+        var data = await courseApi('POST', {
+            resource: 'module',
+            course_id: currentCourse.id,
+            title: title.trim(),
+            order_index: nextOrder
+        });
 
         // Update local state
         if (!currentCourse.course_modules) currentCourse.course_modules = [];
-        result.data.course_lessons = [];
-        currentCourse.course_modules.push(result.data);
+        if (data) { data.course_lessons = []; }
+        currentCourse.course_modules.push(data || { id: 'temp-' + Date.now(), title: title.trim(), order_index: nextOrder, course_lessons: [] });
 
         loadCourseStructure(currentCourse);
         if (typeof showAdminToast === 'function') showAdminToast('Module added', 'success');
@@ -752,28 +763,29 @@ function selectModule(moduleId) {
 
 async function saveModule(moduleId) {
     try {
-        var updates = {
-            title: document.getElementById('editModuleTitle').value.trim(),
-            description: document.getElementById('editModuleDescription').value.trim() || null,
-            estimated_duration: parseInt(document.getElementById('editModuleDuration').value) || null
-        };
+        var title = document.getElementById('editModuleTitle').value.trim();
+        var description = document.getElementById('editModuleDescription').value.trim() || null;
+        var estimated_duration = parseInt(document.getElementById('editModuleDuration').value) || null;
 
-        if (!updates.title) {
+        if (!title) {
             if (typeof showAdminToast === 'function') showAdminToast('Module title is required', 'error');
             return;
         }
 
-        var client = window.DrTroySupabase.getClient();
-        var result = await client.from('course_modules').update(updates).eq('id', moduleId);
-
-        if (result.error) throw new Error(result.error.message);
+        await courseApi('PATCH', {
+            resource: 'module',
+            id: moduleId,
+            title: title,
+            description: description,
+            estimated_duration: estimated_duration
+        });
 
         // Update local state
         var mod = currentCourse.course_modules.find(function(m) { return m.id === moduleId; });
         if (mod) {
-            mod.title = updates.title;
-            mod.description = updates.description;
-            mod.estimated_duration = updates.estimated_duration;
+            mod.title = title;
+            mod.description = description;
+            mod.estimated_duration = estimated_duration;
         }
 
         loadCourseStructure(currentCourse);
@@ -788,12 +800,7 @@ async function deleteModule(moduleId) {
     if (!confirm('Delete this module and ALL its lessons? This cannot be undone.')) return;
 
     try {
-        var client = window.DrTroySupabase.getClient();
-        // Delete child lessons first in case no cascade constraint
-        await client.from('course_lessons').delete().eq('module_id', moduleId);
-        var result = await client.from('course_modules').delete().eq('id', moduleId);
-
-        if (result.error) throw new Error(result.error.message);
+        await courseApi('DELETE', { resource: 'module', id: moduleId });
 
         // Update local state
         currentCourse.course_modules = currentCourse.course_modules.filter(function(m) { return m.id !== moduleId; });
@@ -823,23 +830,17 @@ async function addLesson(moduleId) {
             ? Math.max.apply(null, lessons.map(function(l) { return l.order_index || 0; })) + 1
             : 1;
 
-        var client = window.DrTroySupabase.getClient();
-        var result = await client
-            .from('course_lessons')
-            .insert([{
-                module_id: moduleId,
-                title: title.trim(),
-                lesson_type: 'content',
-                order_index: nextOrder
-            }])
-            .select()
-            .single();
-
-        if (result.error) throw new Error(result.error.message);
+        var data = await courseApi('POST', {
+            resource: 'lesson',
+            module_id: moduleId,
+            title: title.trim(),
+            lesson_type: 'content',
+            order_index: nextOrder
+        });
 
         // Update local state
         if (!mod.course_lessons) mod.course_lessons = [];
-        mod.course_lessons.push(result.data);
+        mod.course_lessons.push(data || { id: 'temp-' + Date.now(), title: title.trim(), lesson_type: 'content', order_index: nextOrder });
 
         loadCourseStructure(currentCourse);
         if (typeof showAdminToast === 'function') showAdminToast('Lesson added', 'success');
@@ -916,23 +917,26 @@ function selectLesson(lessonId) {
 
 async function saveLesson(lessonId) {
     try {
-        var updates = {
-            title: document.getElementById('editLessonTitle').value.trim(),
-            lesson_type: document.getElementById('editLessonType').value,
-            video_url: document.getElementById('editLessonVideoUrl').value.trim() || null,
-            content: document.getElementById('editLessonContent').value || null,
-            required: document.getElementById('editLessonRequired').checked
-        };
+        var title = document.getElementById('editLessonTitle').value.trim();
+        var lesson_type = document.getElementById('editLessonType').value;
+        var video_url = document.getElementById('editLessonVideoUrl').value.trim() || null;
+        var content = document.getElementById('editLessonContent').value || null;
+        var required = document.getElementById('editLessonRequired').checked;
 
-        if (!updates.title) {
+        if (!title) {
             if (typeof showAdminToast === 'function') showAdminToast('Lesson title is required', 'error');
             return;
         }
 
-        var client = window.DrTroySupabase.getClient();
-        var result = await client.from('course_lessons').update(updates).eq('id', lessonId);
-
-        if (result.error) throw new Error(result.error.message);
+        await courseApi('PATCH', {
+            resource: 'lesson',
+            id: lessonId,
+            title: title,
+            lesson_type: lesson_type,
+            video_url: video_url,
+            content: content,
+            required: required
+        });
 
         // Update local state
         for (var i = 0; i < currentCourse.course_modules.length; i++) {
@@ -940,11 +944,11 @@ async function saveLesson(lessonId) {
             if (!mod.course_lessons) continue;
             var lesson = mod.course_lessons.find(function(l) { return l.id === lessonId; });
             if (lesson) {
-                lesson.title = updates.title;
-                lesson.lesson_type = updates.lesson_type;
-                lesson.video_url = updates.video_url;
-                lesson.content = updates.content;
-                lesson.required = updates.required;
+                lesson.title = title;
+                lesson.lesson_type = lesson_type;
+                lesson.video_url = video_url;
+                lesson.content = content;
+                lesson.required = required;
                 break;
             }
         }
@@ -961,10 +965,7 @@ async function deleteLesson(lessonId) {
     if (!confirm('Delete this lesson? This cannot be undone.')) return;
 
     try {
-        var client = window.DrTroySupabase.getClient();
-        var result = await client.from('course_lessons').delete().eq('id', lessonId);
-
-        if (result.error) throw new Error(result.error.message);
+        await courseApi('DELETE', { resource: 'lesson', id: lessonId });
 
         // Update local state
         for (var i = 0; i < currentCourse.course_modules.length; i++) {

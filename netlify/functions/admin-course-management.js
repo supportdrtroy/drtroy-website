@@ -175,20 +175,28 @@ exports.handler = async (event) => {
             }
         }
         
-        // Route requests based on method and action
+        // Route requests based on method and resource type
+        const resource = body.resource || 'course';
+
         switch (method) {
             case 'GET':
                 return await handleGetCourses(queryParams, headers);
-            
+
             case 'POST':
+                if (resource === 'module') return await handleCreateModule(body, headers);
+                if (resource === 'lesson') return await handleCreateLesson(body, headers);
                 return await handleCreateCourse(body, headers);
-            
+
             case 'PATCH':
+                if (resource === 'module') return await handleUpdateModule(body, headers);
+                if (resource === 'lesson') return await handleUpdateLesson(body, headers);
                 return await handleUpdateCourse(body, headers);
-            
+
             case 'DELETE':
+                if (resource === 'module') return await handleDeleteModule(body, headers);
+                if (resource === 'lesson') return await handleDeleteLesson(body, headers);
                 return await handleDeleteCourse(body, headers);
-            
+
             default:
                 return {
                     statusCode: 405,
@@ -438,5 +446,153 @@ async function handleDeleteCourse(requestData, headers) {
             headers,
             body: JSON.stringify({ error: 'Failed to delete course' })
         };
+    }
+}
+
+// ============================================================================
+// MODULE CRUD
+// ============================================================================
+
+async function handleCreateModule(body, headers) {
+    try {
+        const { course_id, title, order_index, description, estimated_duration } = body;
+        if (!course_id || !title) {
+            return { statusCode: 400, headers, body: JSON.stringify({ error: 'course_id and title are required' }) };
+        }
+
+        const data = { course_id, title: title.trim(), order_index: order_index || 1 };
+        if (description) data.description = description;
+        if (estimated_duration) data.estimated_duration = estimated_duration;
+
+        const result = await supabaseRequest('POST', '/rest/v1/course_modules', data);
+        if (result.status !== 201) {
+            return { statusCode: result.status || 500, headers, body: JSON.stringify({ error: 'Failed to create module', details: result.data }) };
+        }
+
+        return { statusCode: 201, headers, body: JSON.stringify({ success: true, data: Array.isArray(result.data) ? result.data[0] : result.data }) };
+    } catch (error) {
+        console.error('Create module error:', error);
+        return { statusCode: 500, headers, body: JSON.stringify({ error: 'Failed to create module' }) };
+    }
+}
+
+async function handleUpdateModule(body, headers) {
+    try {
+        const { id, title, description, estimated_duration, order_index } = body;
+        if (!id) {
+            return { statusCode: 400, headers, body: JSON.stringify({ error: 'Module id is required' }) };
+        }
+
+        const updates = {};
+        if (title !== undefined) updates.title = title;
+        if (description !== undefined) updates.description = description;
+        if (estimated_duration !== undefined) updates.estimated_duration = estimated_duration;
+        if (order_index !== undefined) updates.order_index = order_index;
+
+        const result = await supabaseRequest('PATCH', `/rest/v1/course_modules?id=eq.${id}`, updates);
+        if (result.status !== 200) {
+            return { statusCode: result.status || 500, headers, body: JSON.stringify({ error: 'Failed to update module', details: result.data }) };
+        }
+
+        return { statusCode: 200, headers, body: JSON.stringify({ success: true, data: Array.isArray(result.data) ? result.data[0] : result.data }) };
+    } catch (error) {
+        console.error('Update module error:', error);
+        return { statusCode: 500, headers, body: JSON.stringify({ error: 'Failed to update module' }) };
+    }
+}
+
+async function handleDeleteModule(body, headers) {
+    try {
+        const { id } = body;
+        if (!id) {
+            return { statusCode: 400, headers, body: JSON.stringify({ error: 'Module id is required' }) };
+        }
+
+        // Delete child lessons first
+        await supabaseRequest('DELETE', `/rest/v1/course_lessons?module_id=eq.${id}`);
+        // Delete the module
+        const result = await supabaseRequest('DELETE', `/rest/v1/course_modules?id=eq.${id}`);
+        if (result.status !== 200 && result.status !== 204) {
+            return { statusCode: result.status || 500, headers, body: JSON.stringify({ error: 'Failed to delete module', details: result.data }) };
+        }
+
+        return { statusCode: 200, headers, body: JSON.stringify({ success: true }) };
+    } catch (error) {
+        console.error('Delete module error:', error);
+        return { statusCode: 500, headers, body: JSON.stringify({ error: 'Failed to delete module' }) };
+    }
+}
+
+// ============================================================================
+// LESSON CRUD
+// ============================================================================
+
+async function handleCreateLesson(body, headers) {
+    try {
+        const { module_id, title, lesson_type, order_index, content, video_url, required } = body;
+        if (!module_id || !title) {
+            return { statusCode: 400, headers, body: JSON.stringify({ error: 'module_id and title are required' }) };
+        }
+
+        const data = { module_id, title: title.trim(), lesson_type: lesson_type || 'content', order_index: order_index || 1 };
+        if (content) data.content = content;
+        if (video_url) data.video_url = video_url;
+        if (required !== undefined) data.required = required;
+
+        const result = await supabaseRequest('POST', '/rest/v1/course_lessons', data);
+        if (result.status !== 201) {
+            return { statusCode: result.status || 500, headers, body: JSON.stringify({ error: 'Failed to create lesson', details: result.data }) };
+        }
+
+        return { statusCode: 201, headers, body: JSON.stringify({ success: true, data: Array.isArray(result.data) ? result.data[0] : result.data }) };
+    } catch (error) {
+        console.error('Create lesson error:', error);
+        return { statusCode: 500, headers, body: JSON.stringify({ error: 'Failed to create lesson' }) };
+    }
+}
+
+async function handleUpdateLesson(body, headers) {
+    try {
+        const { id } = body;
+        if (!id) {
+            return { statusCode: 400, headers, body: JSON.stringify({ error: 'Lesson id is required' }) };
+        }
+
+        const updates = {};
+        if (body.title !== undefined) updates.title = body.title;
+        if (body.lesson_type !== undefined) updates.lesson_type = body.lesson_type;
+        if (body.content !== undefined) updates.content = body.content;
+        if (body.video_url !== undefined) updates.video_url = body.video_url;
+        if (body.required !== undefined) updates.required = body.required;
+        if (body.order_index !== undefined) updates.order_index = body.order_index;
+
+        const result = await supabaseRequest('PATCH', `/rest/v1/course_lessons?id=eq.${id}`, updates);
+        if (result.status !== 200) {
+            return { statusCode: result.status || 500, headers, body: JSON.stringify({ error: 'Failed to update lesson', details: result.data }) };
+        }
+
+        return { statusCode: 200, headers, body: JSON.stringify({ success: true, data: Array.isArray(result.data) ? result.data[0] : result.data }) };
+    } catch (error) {
+        console.error('Update lesson error:', error);
+        return { statusCode: 500, headers, body: JSON.stringify({ error: 'Failed to update lesson' }) };
+    }
+}
+
+async function handleDeleteLesson(body, headers) {
+    try {
+        const { id } = body;
+        if (!id) {
+            return { statusCode: 400, headers, body: JSON.stringify({ error: 'Lesson id is required' }) };
+        }
+
+        const result = await supabaseRequest('DELETE', `/rest/v1/course_lessons?id=eq.${id}`);
+        if (result.status !== 200 && result.status !== 204) {
+            return { statusCode: result.status || 500, headers, body: JSON.stringify({ error: 'Failed to delete lesson', details: result.data }) };
+        }
+
+        return { statusCode: 200, headers, body: JSON.stringify({ success: true }) };
+    } catch (error) {
+        console.error('Delete lesson error:', error);
+        return { statusCode: 500, headers, body: JSON.stringify({ error: 'Failed to delete lesson' }) };
     }
 }
