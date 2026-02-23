@@ -2199,8 +2199,22 @@
     </div>
 
     <script>
+        // ─── GLOBAL ERROR DISPLAY (catches ALL JS errors on the page) ────────
+        window.onerror = function(msg, src, line, col, err) {
+            var box = document.getElementById('_jsErrors');
+            if (!box) {
+                box = document.createElement('div');
+                box.id = '_jsErrors';
+                box.style.cssText = 'position:fixed;top:0;left:0;right:0;background:#dc2626;color:#fff;font:bold 13px/1.5 monospace;padding:12px 16px;z-index:999999;max-height:40vh;overflow-y:auto;';
+                box.innerHTML = '<b>JS ERRORS DETECTED:</b><br>';
+                document.body.appendChild(box);
+            }
+            box.innerHTML += 'Line ' + line + ': ' + msg + '<br>';
+            return false;
+        };
+
         console.log('📄 Admin script loading...');
-        
+
         // Test if basic functions work
         window.switchMainTab = function(tabName) {
             console.log('🔄 Basic switchMainTab called with:', tabName);
