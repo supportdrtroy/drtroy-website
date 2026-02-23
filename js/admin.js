@@ -1,7 +1,9 @@
-        // ─── SCRIPT 4 START MARKER ────────
+        // ═══ ADMIN.JS v2.24 — If you can see this in View Source, file is deployed ═══
+        alert('ADMIN.JS IS RUNNING — v2.24 — Click OK to continue');
+        document.title = 'ADMIN JS WORKS v2.24';
         (function(){
             var b = document.getElementById('versionBanner');
-            if(b) b.innerHTML += '<br><span style="color:#86efac;">SCRIPT4: Body script block started executing.</span>';
+            if(b) b.innerHTML += '<br><span style="color:#86efac;font-weight:bold;font-size:16px;">SCRIPT4: admin.js IS EXECUTING - v2.24</span>';
         })();
 
         // ─── GLOBAL ERROR DISPLAY (catches ALL JS errors on the page) ────────
