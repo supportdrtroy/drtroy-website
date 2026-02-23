@@ -1,17 +1,9 @@
         // ═══ ADMIN.JS — Main admin panel logic ═══
         console.log('admin.js loaded successfully');
 
-        // ─── GLOBAL ERROR DISPLAY (catches ALL JS errors on the page) ────────
+        // Log JS errors to console (no overlay banner)
         window.onerror = function(msg, src, line, col, err) {
-            var box = document.getElementById('_jsErrors');
-            if (!box) {
-                box = document.createElement('div');
-                box.id = '_jsErrors';
-                box.style.cssText = 'position:fixed;top:0;left:0;right:0;background:#dc2626;color:#fff;font:bold 13px/1.5 monospace;padding:12px 16px;z-index:999999;max-height:40vh;overflow-y:auto;';
-                box.innerHTML = '<b>JS ERRORS DETECTED:</b><br>';
-                document.body.appendChild(box);
-            }
-            box.innerHTML += 'Line ' + line + ': ' + msg + '<br>';
+            console.error('Admin error at line ' + line + ': ' + msg);
             return false;
         };
 
@@ -704,7 +696,8 @@
         }
 
         // Form handlers
-        document.getElementById('employeeForm').addEventListener('submit', function(e) {
+        var _empForm = document.getElementById('employeeForm');
+        if (_empForm) _empForm.addEventListener('submit', function(e) {
             e.preventDefault();
             
             const employeeName = document.getElementById('employeeName').value;
@@ -745,7 +738,8 @@
             this.reset();
         });
 
-        document.getElementById('marketingForm').addEventListener('submit', async function(e) {
+        var _mktForm = document.getElementById('marketingForm');
+        if (_mktForm) _mktForm.addEventListener('submit', async function(e) {
             e.preventDefault();
 
             const codeName     = document.getElementById('marketingCodeName').value.toUpperCase();
