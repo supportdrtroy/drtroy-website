@@ -1251,6 +1251,14 @@
         BUILD v2.23-debug | If you see this purple banner, the new code IS deployed and working.
         <button onclick="this.parentNode.remove()" style="margin-left:20px;background:#fff;color:#7c3aed;border:none;padding:4px 12px;border-radius:4px;cursor:pointer;font-weight:bold;">Dismiss</button>
     </div>
+    <!-- TINY JS TEST - separate from main script block -->
+    <script>
+        try {
+            document.getElementById('versionBanner').innerHTML += '<br><span style="font-size:13px;color:#fde68a;">JS TEST: Script execution is WORKING. Supabase loaded: ' + (typeof window.supabase !== 'undefined') + ' | DrTroySupabase loaded: ' + (typeof window.DrTroySupabase !== 'undefined') + ' | CourseManagement loaded: ' + (typeof window.CourseManagement !== 'undefined') + '</span>';
+        } catch(e) {
+            document.getElementById('versionBanner').innerHTML += '<br><span style="color:#fca5a5;">JS ERROR: ' + e.message + '</span>';
+        }
+    </script>
     <div class="header">
         <h1>DrTroy.com Admin Dashboard</h1>
         <div class="header-info">
