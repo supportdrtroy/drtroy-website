@@ -72,6 +72,8 @@
         async function logout() {
             if (confirm('Are you sure you want to logout?')) {
                 if (window.DrTroySupabase) await window.DrTroySupabase.signOut();
+                // Clear saved tab so next login starts on dashboard
+                localStorage.removeItem('currentAdminTab');
                 window.location.replace('secure-admin-access-2026.html');
             }
         }

@@ -79,6 +79,8 @@
                 } catch(e) {
                     console.warn('Supabase signout error:', e);
                 }
+                // Clear saved tab so next login starts on dashboard
+                localStorage.removeItem('currentAdminTab');
                 window.location.replace('secure-admin-access-2026.html');
             }
         }
