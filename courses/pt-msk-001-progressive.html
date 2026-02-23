@@ -3049,15 +3049,21 @@
         });
 
         // Logout function
-        function logout() {
+        async function logout() {
+            // Sign out from Supabase
+            if (typeof supabase !== 'undefined') {
+                await supabase.auth.signOut();
+            }
+            
             // Clear course progress
             localStorage.removeItem('pt-msk-001-progress');
             
             // Clear any other user session data
             localStorage.removeItem('userSession');
             localStorage.removeItem('loginState');
+            localStorage.removeItem('sb-pnqoxulxdmlmbywcpbyx-auth-token');
             
-            // Redirect to login page
+            // Redirect to account page
             showNotification('👋 Logging out...');
             setTimeout(() => {
                 window.location.href = '../my-account.html';

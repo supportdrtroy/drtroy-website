@@ -2445,9 +2445,16 @@
         }
 
         // Logout function
-        function logout() {
-            localStorage.clear();
-            window.location.href = '../index.html';
+        async function logout() {
+            // Sign out from Supabase
+            if (typeof supabase !== 'undefined') {
+                await supabase.auth.signOut();
+            }
+            
+            localStorage.removeItem('userSession');
+            localStorage.removeItem('loginState');
+            localStorage.removeItem('sb-pnqoxulxdmlmbywcpbyx-auth-token');
+            window.location.href = '../my-account.html';
         }
 
         // Initialize course

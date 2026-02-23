@@ -1255,9 +1255,17 @@
             }
         }
 
-        function logout() {
+        async function logout() {
             if (confirm('Are you sure you want to logout? Your progress has been saved.')) {
-                window.location.href = '../index.html';
+                // Sign out from Supabase
+                if (typeof supabase !== 'undefined') {
+                    await supabase.auth.signOut();
+                }
+                
+                localStorage.removeItem('userSession');
+                localStorage.removeItem('loginState');
+                localStorage.removeItem('sb-pnqoxulxdmlmbywcpbyx-auth-token');
+                window.location.href = '../my-account.html';
             }
         }
 

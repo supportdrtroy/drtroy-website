@@ -1546,10 +1546,18 @@
             win.print();
         }
 
-        // Logout — clear progress and redirect
-        function logout() {
+        // Logout — sign out and redirect
+        async function logout() {
+            // Sign out from Supabase
+            if (typeof supabase !== 'undefined') {
+                await supabase.auth.signOut();
+            }
+            
             localStorage.removeItem('geriatricCareProgress');
-            window.location.href = '../index.html';
+            localStorage.removeItem('userSession');
+            localStorage.removeItem('loginState');
+            localStorage.removeItem('sb-pnqoxulxdmlmbywcpbyx-auth-token');
+            window.location.href = '../my-account.html';
         }
 
         // Init on page load

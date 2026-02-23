@@ -1336,8 +1336,18 @@
   }
 
   /* ── LOGOUT ── */
-  function logout() {
+  async function logout() {
     if (confirm('Log out of DrTroy CE?')) {
+      // Sign out from Supabase
+      if (typeof supabase !== 'undefined') {
+        await supabase.auth.signOut();
+      }
+      
+      // Clear session data
+      localStorage.removeItem('userSession');
+      localStorage.removeItem('loginState');
+      localStorage.removeItem('sb-pnqoxulxdmlmbywcpbyx-auth-token');
+      
       window.location.href = '../my-account.html';
     }
   }
