@@ -66,9 +66,15 @@ async function processFile(srcPath, distPath) {
       }
     } else if (JS_EXT.has(ext)) {
       const src    = fs.readFileSync(srcPath, 'utf8');
-      const result = await minifyJs(src, JS_OPTS);
-      fs.writeFileSync(distPath, result.code, 'utf8');
-      processed++;
+      // Skip minification for admin.js — global functions referenced from HTML onclick handlers
+      if (path.basename(srcPath) === 'admin.js') {
+        fs.writeFileSync(distPath, src, 'utf8');
+        processed++;
+      } else {
+        const result = await minifyJs(src, JS_OPTS);
+        fs.writeFileSync(distPath, result.code, 'utf8');
+        processed++;
+      }
     } else {
       fs.copyFileSync(srcPath, distPath);
       copied++;
