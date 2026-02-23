@@ -15,7 +15,8 @@ const DIST = path.join(__dirname, 'dist');
 // Files/dirs to skip entirely
 const SKIP = new Set([
   'node_modules', 'dist', '.git', 'build.js',
-  'package.json', 'package-lock.json',
+  'package.json', 'package-lock.json', 'validate-site.js',
+  'CLAUDE.md',
 ]);
 
 // Extensions we actively minify
