@@ -2212,6 +2212,12 @@
     </div>
 
     <script>
+        // ─── SCRIPT 4 START MARKER ────────
+        (function(){
+            var b = document.getElementById('versionBanner');
+            if(b) b.innerHTML += '<br><span style="color:#86efac;">SCRIPT4: Body script block started executing.</span>';
+        })();
+
         // ─── GLOBAL ERROR DISPLAY (catches ALL JS errors on the page) ────────
         window.onerror = function(msg, src, line, col, err) {
             var box = document.getElementById('_jsErrors');
