@@ -39,28 +39,23 @@ async function loadCoursesFromDatabase() {
     if (!window.DrTroySupabase) {
         throw new Error('Database connection not available');
     }
-    
-    const { data, error } = await window.DrTroySupabase.getClient()
+
+    const client = window.DrTroySupabase.getClient();
+    if (!client) {
+        throw new Error('Supabase client not initialized');
+    }
+
+    // Query courses table directly — avoid nested joins on tables that may not exist
+    const { data, error } = await client
         .from('courses')
-        .select(`
-            *,
-            course_modules (
-                id, title, description, order_index,
-                course_lessons (
-                    id, title, lesson_type, content, video_url, order_index
-                )
-            ),
-            course_assessments (
-                id, title, description, assessment_type, passing_score
-            )
-        `)
+        .select('*')
         .order('created_at', { ascending: false });
-    
+
     if (error) {
         console.error('Database error:', error);
         return null;
     }
-    
+
     return data;
 }
 
@@ -231,12 +226,13 @@ function updateCourseStats(courses) {
         completions: 0 // TODO: Implement from user progress data
     };
     
-    document.getElementById('courseStatTotal').textContent = stats.total;
-    document.getElementById('courseStatPublished').textContent = stats.published;
-    document.getElementById('courseStatDrafts').textContent = stats.drafts;
-    document.getElementById('courseStatCeuHours').textContent = stats.ceuHours.toFixed(1);
-    document.getElementById('courseStatRevenue').textContent = `$${stats.revenue.toFixed(2)}`;
-    document.getElementById('courseStatCompletions').textContent = stats.completions;
+    const el = (id) => document.getElementById(id);
+    if (el('courseStatTotal'))       el('courseStatTotal').textContent = stats.total;
+    if (el('courseStatPublished'))   el('courseStatPublished').textContent = stats.published;
+    if (el('courseStatDrafts'))      el('courseStatDrafts').textContent = stats.drafts;
+    if (el('courseStatCeuHours'))    el('courseStatCeuHours').textContent = stats.ceuHours.toFixed(1);
+    if (el('courseStatRevenue'))     el('courseStatRevenue').textContent = `$${stats.revenue.toFixed(2)}`;
+    if (el('courseStatCompletions')) el('courseStatCompletions').textContent = stats.completions;
 }
 
 // ============================================================================
@@ -277,14 +273,14 @@ function filterCourses() {
     renderCourseList(filtered);
 }
 
-function refreshCourses() {
+async function refreshCourses() {
     document.getElementById('courseListContainer').innerHTML = `
         <div class="loading-state" style="text-align:center;color:#64748b;padding:3rem;">
             <div style="font-size:3rem;margin-bottom:1rem;">🔄</div>
             <p>Refreshing courses...</p>
         </div>
     `;
-    loadCourses();
+    await loadCourses();
 }
 
 // ============================================================================

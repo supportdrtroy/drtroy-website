@@ -288,7 +288,7 @@ async function getAllEnrollments() {
     const sb = getSupabaseClient();
     if (!sb) return { data: [], error: { message: 'Database unavailable' } };
     return await sb.from('enrollments')
-        .select('*, profiles(first_name, last_name, email), courses(title, ceu_hours)')
+        .select('*, courses(title, ceu_hours)')
         .order('purchased_at', { ascending: false });
 }
 

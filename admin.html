@@ -18,9 +18,8 @@
     <script>
         console.log('🚨 Emergency script loading at:', new Date().toISOString());
         
-        // Supabase constants (define here to avoid duplicates in main script)
-        const SUPABASE_URL = 'https://pnqoxulxdmlmbywcpbyx.supabase.co';
-        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBucW94dWx4ZG1sbWJ5d2NwYnl4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzEzNjU3NTIsImV4cCI6MjA4Njk0MTc1Mn0.YEPrwIvINX_Q1AsbxyU0T5m5oxpV9M756yiSCzy6LTc';
+        // Supabase constants — reuse from supabase-client.js (already declared as const there)
+        // Do NOT redeclare with const — causes SyntaxError (duplicate binding)
         
         // Define function immediately - no dependencies
         function switchMainTab(tabName) {
@@ -3177,62 +3176,58 @@
         // Dashboard Functions
         // Dashboard stats — pull from Supabase
         async function updateDashboard() {
-            if (!window.DrTroySupabase) return;
-
             try {
-                const [usersRes, enrollRes, completionsRes] = await Promise.all([
-                    window.DrTroySupabase.getAllUsers(),
-                    window.DrTroySupabase.getAllEnrollments(),
-                    window.DrTroySupabase.getCourseCompletionStats()
-                ]);
+                // Use Netlify function with service role key to bypass RLS
+                const result = await SB.adminAction('get_dashboard', {});
+                if (result.error) {
+                    console.warn('Dashboard load error:', result.error);
+                    return;
+                }
 
-                const users       = usersRes.data       || [];
-                const enrollments = enrollRes.data       || [];
-                const completions = completionsRes.data  || [];
-
-                // Total revenue (amount_paid_cents → dollars)
-                const revenue = enrollments.reduce((sum, e) => sum + (parseInt(e.amount_paid_cents) || 0), 0) / 100;
+                const stats = result.data || {};
 
                 // Update stat cards
                 const totalEl    = document.getElementById('totalUsers');
                 const revenueEl  = document.getElementById('monthlyRevenue');
                 const complEl    = document.getElementById('courseCompletions');
 
-                if (totalEl)   totalEl.textContent   = users.length;
-                if (revenueEl) revenueEl.textContent  = '$' + revenue.toLocaleString('en-US', {minimumFractionDigits:2, maximumFractionDigits:2});
-                if (complEl)   complEl.textContent    = completions.length;
+                if (totalEl)   totalEl.textContent   = stats.totalUsers || 0;
+                if (revenueEl) revenueEl.textContent  = '$' + (stats.revenue || 0).toLocaleString('en-US', {minimumFractionDigits:2, maximumFractionDigits:2});
+                if (complEl)   complEl.textContent    = stats.totalCompletions || 0;
 
             } catch (err) {
                 console.warn('Dashboard Supabase load error:', err.message);
             }
         }
 
-        // Load Supabase revenue into dashboard
+        // Load Supabase revenue into dashboard — now handled by updateDashboard via Netlify function
         async function loadSupabaseRevenue() {
-            if (!window.DrTroySupabase) return;
-            const { data: enrollments } = await window.DrTroySupabase.getAllEnrollments();
-            if (!enrollments) return;
-            const total = enrollments.reduce((sum, e) => sum + (parseInt(e.amount_paid_cents) || 0), 0) / 100;
-            const el = document.getElementById('totalRevenue');
-            if (el) el.textContent = '$' + total.toFixed(2);
+            // Revenue is now fetched via the get_dashboard admin action
+            // This function is kept for backwards compatibility but does nothing
         }
 
         // ─── USER MANAGEMENT — REAL IMPLEMENTATIONS ───────────────────────────────
 
         async function loadUsers() {
-            if (!window.DrTroySupabase) return;
             const tbody = document.getElementById('usersTableBody');
             if (tbody) tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:#6b7280;padding:2rem;">Loading users from database...</td></tr>';
 
-            const { data: users, error } = await window.DrTroySupabase.getAllUsers();
-            if (error || !users) {
-                if (tbody) tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:#dc2626;padding:2rem;">Failed to load users. Check console for details.</td></tr>';
-                return;
-            }
+            try {
+                // Use Netlify function with service role key to bypass RLS
+                const result = await SB.adminAction('get_users', {});
+                if (result.error) {
+                    console.error('loadUsers error:', result.error);
+                    if (tbody) tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:#dc2626;padding:2rem;">Failed to load users: ' + esc(result.error) + '</td></tr>';
+                    return;
+                }
 
-            _allUsers = users;
-            renderUsersTable(_allUsers);
-            console.log(`✅ Loaded ${users.length} users from Supabase`);
+                _allUsers = (result.data && result.data.users) || [];
+                renderUsersTable(_allUsers);
+                console.log(`✅ Loaded ${_allUsers.length} users from Supabase`);
+            } catch (err) {
+                console.error('loadUsers exception:', err);
+                if (tbody) tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:#dc2626;padding:2rem;">Error loading users: ' + esc(err.message || 'Unknown error') + '</td></tr>';
+            }
         }
 
         function renderUsersTable(users) {

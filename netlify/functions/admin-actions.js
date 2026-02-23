@@ -252,6 +252,47 @@ async function removeEnrollment({ enrollmentId }) {
   return { removed: true };
 }
 
+/* ─── Read-only admin data actions ────────────────────────── */
+
+async function getUsers() {
+  const res = await sbRest(
+    'GET',
+    '/rest/v1/profiles?select=*&order=created_at.desc'
+  );
+  if (res.status >= 400) throw new Error(res.body?.message || 'Failed to fetch users');
+  return { users: Array.isArray(res.body) ? res.body : [] };
+}
+
+async function getDashboard() {
+  const [usersRes, enrollRes, completionsRes] = await Promise.all([
+    sbRest('GET', '/rest/v1/profiles?select=id'),
+    sbRest('GET', '/rest/v1/enrollments?select=id,amount_paid_cents'),
+    sbRest('GET', '/rest/v1/completions?select=id'),
+  ]);
+  const users = Array.isArray(usersRes.body) ? usersRes.body : [];
+  const enrollments = Array.isArray(enrollRes.body) ? enrollRes.body : [];
+  const completions = Array.isArray(completionsRes.body) ? completionsRes.body : [];
+  const revenue = enrollments.reduce((sum, e) => sum + (parseInt(e.amount_paid_cents) || 0), 0) / 100;
+  return { totalUsers: users.length, totalEnrollments: enrollments.length, totalCompletions: completions.length, revenue };
+}
+
+async function getEnrollments() {
+  // Fetch enrollments and profiles separately (no FK between them in PostgREST)
+  const [enrollRes, profilesRes] = await Promise.all([
+    sbRest('GET', '/rest/v1/enrollments?select=*,courses(title,ceu_hours)&order=purchased_at.desc'),
+    sbRest('GET', '/rest/v1/profiles?select=id,first_name,last_name,email'),
+  ]);
+  const enrollments = Array.isArray(enrollRes.body) ? enrollRes.body : [];
+  const profiles = Array.isArray(profilesRes.body) ? profilesRes.body : [];
+  const profileMap = {};
+  profiles.forEach(p => { profileMap[p.id] = p; });
+  // Attach profile data to each enrollment
+  enrollments.forEach(e => {
+    e.profiles = profileMap[e.user_id] || null;
+  });
+  return { enrollments };
+}
+
 /* ─── Main handler ────────────────────────────────────────── */
 
 exports.handler = async (event) => {
@@ -297,6 +338,9 @@ exports.handler = async (event) => {
   try {
     let result;
     switch (action) {
+      case 'get_users':         result = await getUsers();                break;
+      case 'get_dashboard':     result = await getDashboard();            break;
+      case 'get_enrollments':   result = await getEnrollments();          break;
       case 'toggle_admin':      result = await toggleAdmin(payload);      break;
       case 'create_user':       result = await createUser(payload);       break;
       case 'suspend_user':      result = await suspendUser(payload);      break;
