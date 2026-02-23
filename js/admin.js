@@ -1,11 +1,4 @@
         // ═══ ADMIN.JS — Main admin panel logic ═══
-        console.log('admin.js loaded successfully');
-
-        // Log JS errors to console (no overlay banner)
-        window.onerror = function(msg, src, line, col, err) {
-            console.error('Admin error at line ' + line + ': ' + msg);
-            return false;
-        };
 
         console.log('📄 Admin script loading...');
 
@@ -92,21 +85,8 @@
         let _allUsers          = [];
         let _currentViewedUser = null;
 
-        // ─── VISIBLE DEBUG LOG (survives drop_console minification) ─────────────
-        function _dbg(msg) {
-            var d = document.getElementById('_adminDebugLog');
-            if (!d) {
-                d = document.createElement('div');
-                d.id = '_adminDebugLog';
-                d.style.cssText = 'position:fixed;bottom:0;right:0;width:420px;max-height:260px;overflow-y:auto;background:#111;color:#0f0;font:11px/1.4 monospace;padding:8px;z-index:99999;border:2px solid #0f0;border-radius:8px 0 0 0;opacity:0.92;';
-                d.innerHTML = '<b style="color:#ff0">Admin Debug Log</b> <button onclick="this.parentNode.remove()" style="float:right;background:none;color:#f00;border:none;cursor:pointer;font:bold 14px monospace">X</button><hr style="border-color:#333">';
-                document.body.appendChild(d);
-            }
-            var line = document.createElement('div');
-            line.textContent = new Date().toLocaleTimeString() + ' ' + msg;
-            d.appendChild(line);
-            d.scrollTop = d.scrollHeight;
-        }
+        // Debug logging (console only)
+        function _dbg(msg) { console.log('[Admin]', msg); }
 
         // Initialize admin dashboard
         async function initAdmin() {
