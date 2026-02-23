@@ -895,9 +895,9 @@
         }
 
         async function logout() {
-            // Sign out from Supabase
-            if (typeof supabase !== 'undefined') {
-                await supabase.auth.signOut();
+            // Sign out from Supabase using the proper client
+            if (typeof window.DrTroySupabase !== 'undefined') {
+                await window.DrTroySupabase.signOut();
             }
             
             // Clear all session data

@@ -1476,9 +1476,9 @@ function generateCertificate() {
 // ── Logout ─────────────────────────────────────────────────────────────────
 async function logout() {
   if (confirm('Are you sure you want to log out? Your progress has been saved.')) {
-    // Sign out from Supabase
-    if (typeof supabase !== 'undefined') {
-      await supabase.auth.signOut();
+    // Sign out from Supabase using the proper client
+    if (typeof window.DrTroySupabase !== 'undefined') {
+      await window.DrTroySupabase.signOut();
     }
     
     // Clear session data
