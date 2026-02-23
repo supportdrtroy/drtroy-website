@@ -36,11 +36,12 @@ const HTML_OPTS = {
   useShortDoctype:           true,
   minifyCSS:                 true,
   // Compress inline JS but don't rename variables — cross-file globals must stay intact
-  minifyJS: { compress: { drop_console: true, passes: 2 }, mangle: false },
+  // NOTE: drop_console disabled temporarily for debugging admin panel issues
+  minifyJS: { compress: { drop_console: false, passes: 2 }, mangle: false },
 };
 
 const JS_OPTS = {
-  compress: { drop_console: true, passes: 2 },
+  compress: { drop_console: false, passes: 2 },
   mangle:   true,
   format:   { comments: false },
 };

@@ -2280,124 +2280,113 @@
         let _allUsers          = [];
         let _currentViewedUser = null;
 
+        // ─── VISIBLE DEBUG LOG (survives drop_console minification) ─────────────
+        function _dbg(msg) {
+            var d = document.getElementById('_adminDebugLog');
+            if (!d) {
+                d = document.createElement('div');
+                d.id = '_adminDebugLog';
+                d.style.cssText = 'position:fixed;bottom:0;right:0;width:420px;max-height:260px;overflow-y:auto;background:#111;color:#0f0;font:11px/1.4 monospace;padding:8px;z-index:99999;border:2px solid #0f0;border-radius:8px 0 0 0;opacity:0.92;';
+                d.innerHTML = '<b style="color:#ff0">Admin Debug Log</b> <button onclick="this.parentNode.remove()" style="float:right;background:none;color:#f00;border:none;cursor:pointer;font:bold 14px monospace">X</button><hr style="border-color:#333">';
+                document.body.appendChild(d);
+            }
+            var line = document.createElement('div');
+            line.textContent = new Date().toLocaleTimeString() + ' ' + msg;
+            d.appendChild(line);
+            d.scrollTop = d.scrollHeight;
+        }
+
         // Initialize admin dashboard
         async function initAdmin() {
-            console.log('🚀 Starting admin initialization...');
-            
+            _dbg('initAdmin started');
+
             try {
-                console.log('🔐 Re-enabling authentication...');
-                
+                _dbg('Checking authentication...');
+
                 try {
                     const authed = await checkAuthentication();
                     if (!authed) {
-                        console.log('❌ Authentication failed');
+                        _dbg('AUTH FAILED — redirecting');
                         return;
                     }
-                    console.log('✅ Authentication successful');
+                    _dbg('AUTH OK — admin verified');
                 } catch (authError) {
-                    console.warn('⚠️ Authentication error, continuing in demo mode:', authError);
+                    _dbg('AUTH ERROR: ' + (authError.message || authError));
                     // Continue even if auth fails so tabs still work
                 }
 
-                console.log('📊 Loading basic data...');
-                try {
-                    updateLastUpdate();
-                    console.log('✅ Timestamps updated');
-                } catch(e) { console.warn('Timestamp error:', e); }
-                
-                try {
-                    loadStoredData();
-                    console.log('✅ Local data loaded');
-                } catch(e) { console.warn('Local data error:', e); }
-                
-                try {
-                    createSampleData();
-                    console.log('✅ Sample data created');
-                } catch(e) { console.warn('Sample data error:', e); }
-                
-                try {
-                    updateStats();
-                    console.log('✅ Stats updated');
-                } catch(e) { console.warn('Stats error:', e); }
-                
-                try {
-                    updateCodesTable();
-                    console.log('✅ Codes table updated');
-                } catch(e) { console.warn('Codes table error:', e); }
-                
-                try {
-                    updateAnalytics();
-                    console.log('✅ Analytics updated');
-                } catch(e) { console.warn('Analytics error:', e); }
-                
-                console.log('✅ Basic data loading completed');
+                try { updateLastUpdate(); } catch(e) { _dbg('Timestamp err: ' + e.message); }
+                try { loadStoredData(); } catch(e) { _dbg('StoredData err: ' + e.message); }
+                try { createSampleData(); } catch(e) { _dbg('SampleData err: ' + e.message); }
+                try { updateStats(); } catch(e) { _dbg('Stats err: ' + e.message); }
+                try { updateCodesTable(); } catch(e) { _dbg('CodesTable err: ' + e.message); }
+                try { updateAnalytics(); } catch(e) { _dbg('Analytics err: ' + e.message); }
 
-                console.log('🔄 Loading Supabase data...');
-                // Load live Supabase data - wrapped in try/catch to prevent breaking
+                _dbg('Basic data done. Loading Supabase data...');
+
+                // Load live Supabase data
                 if (window.DrTroySupabase) {
+                    _dbg('DrTroySupabase available — loading dashboard...');
                     try {
                         await updateDashboard();
-                        console.log('✅ Dashboard updated');
-                    } catch(e) { console.warn('Dashboard update failed:', e); }
-                    
+                        _dbg('Dashboard OK');
+                    } catch(e) { _dbg('Dashboard FAIL: ' + (e.message || e)); }
+
+                    _dbg('Loading users...');
                     try {
                         await loadUsers();
-                        console.log('✅ Users loaded');
-                    } catch(e) { console.warn('User loading failed:', e); }
-                    
+                        _dbg('Users OK (' + (_allUsers ? _allUsers.length : '?') + ' found)');
+                    } catch(e) { _dbg('Users FAIL: ' + (e.message || e)); }
+
                     try {
                         await loadSupabaseRevenue();
-                        console.log('✅ Revenue loaded');
-                    } catch(e) { console.warn('Revenue loading failed:', e); }
+                    } catch(e) { _dbg('Revenue FAIL: ' + (e.message || e)); }
                 } else {
-                    console.warn('⚠️ DrTroySupabase not available, using sample data');
+                    _dbg('WARNING: DrTroySupabase NOT available');
                 }
 
-                // Load feature data - only if Supabase is available
-                console.log('🔧 Loading feature data...');
+                // Load feature data
                 if (window.DrTroySupabase) {
+                    _dbg('Loading courses...');
                     try {
                         await refreshCourses();
-                        console.log('✅ Courses loaded');
-                    } catch(e) { console.warn('Course loading failed:', e); }
-                    
+                        _dbg('Courses OK');
+                    } catch(e) { _dbg('Courses FAIL: ' + (e.message || e)); }
+
+                    _dbg('Loading discount codes...');
                     try {
                         await loadDiscountCodesFromDB();
-                        console.log('✅ Discount codes loaded');
-                    } catch(e) { console.warn('Discount codes loading failed:', e); }
-                    
+                        _dbg('Discount codes OK');
+                    } catch(e) { _dbg('DiscountCodes FAIL: ' + (e.message || e)); }
+
+                    _dbg('Loading license data...');
                     try {
                         await loadLicenseData();
-                        console.log('✅ License data loaded');
-                    } catch(e) { console.warn('License data loading failed:', e); }
-                    
+                        _dbg('License data OK');
+                    } catch(e) { _dbg('License FAIL: ' + (e.message || e)); }
+
                     try {
                         await loadCampaignCourses();
-                        console.log('✅ Campaign courses loaded');
-                    } catch(e) { console.warn('Campaign courses loading failed:', e); }
-                    
+                        _dbg('Campaigns OK');
+                    } catch(e) { _dbg('Campaigns FAIL: ' + (e.message || e)); }
+
                     try {
                         await loadWaitlist();
-                        console.log('✅ Waitlist loaded');
-                    } catch(e) { console.warn('Waitlist loading failed:', e); }
+                        _dbg('Waitlist OK');
+                    } catch(e) { _dbg('Waitlist FAIL: ' + (e.message || e)); }
                 } else {
-                    console.warn('⚠️ Skipping feature data load - Supabase unavailable');
+                    _dbg('Skipping features — no Supabase');
                 }
 
-                console.log('🎉 Admin initialization complete');
-                
+                _dbg('INIT COMPLETE');
+
                 // Replace emergency tab function with enhanced version
                 if (typeof switchMainTabEnhanced === 'function') {
                     window.switchMainTab = switchMainTabEnhanced;
-                    console.log('✅ Enhanced tab switching enabled');
-                } else {
-                    console.log('⚠️ Using emergency tab switching');
                 }
-                
+
             } catch (error) {
-                console.error('💥 Fatal error during initialization:', error);
-                console.log('🚨 Falling back to emergency mode');
-                // Keep emergency functions working even if main init fails
+                _dbg('FATAL ERROR: ' + (error.message || error));
             }
         }
 
@@ -3167,16 +3156,15 @@
         // Dashboard stats — pull from Supabase
         async function updateDashboard() {
             try {
-                // Use Netlify function with service role key to bypass RLS
                 const result = await SB.adminAction('get_dashboard', {});
                 if (result.error) {
-                    console.warn('Dashboard load error:', result.error);
+                    _dbg('Dashboard error: ' + result.error);
                     return;
                 }
 
                 const stats = result.data || {};
+                _dbg('Dashboard data: users=' + stats.totalUsers + ' rev=' + stats.revenue + ' comp=' + stats.totalCompletions);
 
-                // Update stat cards
                 const totalEl    = document.getElementById('totalUsers');
                 const revenueEl  = document.getElementById('monthlyRevenue');
                 const complEl    = document.getElementById('courseCompletions');
@@ -3186,7 +3174,7 @@
                 if (complEl)   complEl.textContent    = stats.totalCompletions || 0;
 
             } catch (err) {
-                console.warn('Dashboard Supabase load error:', err.message);
+                _dbg('Dashboard EXCEPTION: ' + (err.message || err));
             }
         }
 
@@ -3203,19 +3191,20 @@
             if (tbody) tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:#6b7280;padding:2rem;">Loading users from database...</td></tr>';
 
             try {
-                // Use Netlify function with service role key to bypass RLS
+                _dbg('loadUsers: calling adminAction...');
                 const result = await SB.adminAction('get_users', {});
+                _dbg('loadUsers result: ' + JSON.stringify(result).substring(0, 200));
                 if (result.error) {
-                    console.error('loadUsers error:', result.error);
+                    _dbg('loadUsers ERROR: ' + result.error);
                     if (tbody) tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:#dc2626;padding:2rem;">Failed to load users: ' + esc(result.error) + '</td></tr>';
                     return;
                 }
 
                 _allUsers = (result.data && result.data.users) || [];
+                _dbg('loadUsers: ' + _allUsers.length + ' users loaded');
                 renderUsersTable(_allUsers);
-                console.log(`✅ Loaded ${_allUsers.length} users from Supabase`);
             } catch (err) {
-                console.error('loadUsers exception:', err);
+                _dbg('loadUsers EXCEPTION: ' + (err.message || err));
                 if (tbody) tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:#dc2626;padding:2rem;">Error loading users: ' + esc(err.message || 'Unknown error') + '</td></tr>';
             }
         }
