@@ -2966,7 +2966,7 @@
         function printCertificate() {
             const certificateContent = document.getElementById('certificate-content');
             const printWindow = window.open('', '_blank');
-            printWindow./* SECURITY: document.write() removed */ console.log(`
+            printWindow.document.write(`
                 <html>
                 <head>
                     <title>Course Completion Certificate</title>
@@ -2977,6 +2977,8 @@
                 </head>
                 <body>
                     ${certificateContent.innerHTML}
+                </body>
+                </html>
             `);
             printWindow.document.close();
             printWindow.print();
@@ -3166,13 +3168,6 @@
             const newScale = Math.min(Math.max(currentScale * scaleFactor, 0.5), 3);
             
             img.style.transform = `scale(${newScale})`;
-        });
-    
-        // Initialize admin controls on page load
-        document.addEventListener("DOMContentLoaded", async function() {
-            if (await isAdmin()) {
-                document.getElementById("adminControls").style.display = "block";
-            }
         });
     </script>
 <script src="../js/course-sync.js"></script>
