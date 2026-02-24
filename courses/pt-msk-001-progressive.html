@@ -2858,32 +2858,60 @@
                     <div class="question" style="font-size: 16px; margin-bottom: 20px;">
                         ${escapeHtml(question.question)}
                     </div>
-                    <div class="answer-options">
-                        ${question.options.map((option, index) => `
-                            <label class="answer-option">
-                                <input type="radio" name="exam-q${questionIndex}" value="${index}" onchange="recordExamAnswer(${questionIndex}, ${index})">
-                                ${String.fromCharCode(65 + index)}) ${escapeHtml(option)}
-                            </label>
-                        `).join('')}
-                    </div>
+                    <div class="answer-options" id="exam-options-${questionIndex}"></div>
                     <div style="margin-top: 20px; display: flex; justify-content: space-between; align-items: center;">
                         <div style="color: #666; font-size: 14px;">
                             Progress: ${questionIndex + 1}/20 questions
                         </div>
-                        <div>
-                            ${questionIndex > 0 ? `<button onclick="displayExamQuestion(${questionIndex - 1})" style="background: #6b7280; color: white; padding: 8px 16px; border: none; border-radius: 4px; margin-right: 10px;">← Previous</button>` : ''}
-                            ${questionIndex < 19 ? `<button onclick="displayExamQuestion(${questionIndex + 1})" style="background: #059669; color: white; padding: 8px 16px; border: none; border-radius: 4px;">Next →</button>` : `<button onclick="submitFinalExam()" style="background: #dc2626; color: white; padding: 12px 24px; border: none; border-radius: 4px; font-weight: bold;">Submit Final Exam</button>`}
-                        </div>
+                        <div id="exam-nav-buttons-${questionIndex}"></div>
                     </div>
                     <div style="margin-top: 15px; padding: 15px; background: #f9fafb; border-radius: 6px; font-size: 14px; color: #4b5563;">
-                        <strong>Answered:</strong> ${currentExamState.answers.filter(a => a !== null).length}/20 questions
+                        <strong>Answered:</strong> <span id="exam-answered-count-${questionIndex}"></span>/20 questions
                     </div>
                 </div>
             `;
             
+            // Add navigation buttons, answered count, and answer options separately
+            const navContainer = document.getElementById('exam-nav-buttons-' + questionIndex);
+            const answeredCountSpan = document.getElementById('exam-answered-count-' + questionIndex);
+            const optionsContainer = document.getElementById('exam-options-' + questionIndex);
+
+            if (optionsContainer) {
+                var optionsHtml = '';
+                for (var idx = 0; idx < question.options.length; idx++) {
+                    var letter = String.fromCharCode(65 + idx);
+                    var escapedOption = escapeHtml(question.options[idx]);
+                    optionsHtml += '<label class="answer-option">' +
+                        '<input type="radio" name="exam-q' + questionIndex + '" value="' + idx + '" onchange="recordExamAnswer(' + questionIndex + ', ' + idx + ')">' +
+                        letter + ') ' + escapedOption +
+                        '</label>';
+                }
+                optionsContainer.innerHTML = optionsHtml;
+            }
+
+            if (navContainer) {
+                var navHtml = '';
+                if (questionIndex > 0) {
+                    navHtml += '<button onclick="displayExamQuestion(' + (questionIndex - 1) + ')" style="background: #6b7280; color: white; padding: 8px 16px; border: none; border-radius: 4px; margin-right: 10px;">← Previous</button>';
+                }
+                if (questionIndex < 19) {
+                    navHtml += '<button onclick="displayExamQuestion(' + (questionIndex + 1) + ')" style="background: #059669; color: white; padding: 8px 16px; border: none; border-radius: 4px;">Next →</button>';
+                } else {
+                    navHtml += '<button onclick="submitFinalExam()" style="background: #dc2626; color: white; padding: 12px 24px; border: none; border-radius: 4px; font-weight: bold;">Submit Final Exam</button>';
+                }
+                navContainer.innerHTML = navHtml;
+            }
+            if (answeredCountSpan) {
+                var answeredCount = 0;
+                for (var i = 0; i < currentExamState.answers.length; i++) {
+                    if (currentExamState.answers[i] !== null) answeredCount++;
+                }
+                answeredCountSpan.textContent = answeredCount;
+            }
+
             // Restore previous answer if exists
             if (currentExamState.answers[questionIndex] !== null) {
-                const radioButton = document.querySelector(`input[name="exam-q${questionIndex}"][value="${currentExamState.answers[questionIndex]}"]`);
+                const radioButton = document.querySelector('input[name="exam-q' + questionIndex + '"][value="' + currentExamState.answers[questionIndex] + '"]');
                 if (radioButton) radioButton.checked = true;
             }
         }
