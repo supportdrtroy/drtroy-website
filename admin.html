@@ -1435,6 +1435,9 @@
             <button class="main-tab" onclick="switchMainTab('courses')">
                 📚 Course Content
             </button>
+            <button class="main-tab" onclick="switchMainTab('feedback')">
+                ⭐ Course Feedback
+            </button>
             <button class="main-tab" onclick="switchMainTab('emails')">
                 📧 Email System
             </button>
@@ -2140,6 +2143,264 @@
     color: #1d4ed8;
 }
 </style>
+
+        <!-- ══════════════════════════════════════════════════════════════
+             COURSE FEEDBACK TAB
+        ══════════════════════════════════════════════════════════════ -->
+        <div id="feedback" class="tab-content">
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">⭐ Course Feedback</h2>
+                    <p style="color:#64748b;margin-top:.5rem;font-size:.95rem;">View aggregated feedback ratings and individual responses.</p>
+                </div>
+                <div class="card-body">
+                    <!-- Course Selector -->
+                    <div style="margin-bottom:1.5rem;">
+                        <label style="font-weight:600;font-size:.85rem;color:#374151;display:block;margin-bottom:.4rem;">Select Course</label>
+                        <select id="feedback-course-select" onchange="loadFeedbackStats()" style="width:100%;padding:.75rem;border:1px solid #d1d5db;border-radius:6px;font-size:.95rem;">
+                            <option value="">All Courses</option>
+                            <option value="pt-msk-001">MSK Evaluation & Management (3.0 CEU)</option>
+                            <option value="balance-gait-001">Balance, Gait & Vestibular (3.0 CEU)</option>
+                        </select>
+                    </div>
+
+                    <!-- Stats Overview -->
+                    <div id="feedback-stats-container" style="display:none;">
+                        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;margin-bottom:2rem;">
+                            <div style="background:linear-gradient(135deg,#7c3aed,#a855f7);color:#fff;padding:1.25rem;border-radius:8px;">
+                                <div style="font-size:.875rem;opacity:.9;margin-bottom:.25rem;">Total Responses</div>
+                                <div id="stat-total-responses" style="font-size:2rem;font-weight:700;">0</div>
+                            </div>
+                            <div style="background:linear-gradient(135deg,#059669,#10b981);color:#fff;padding:1.25rem;border-radius:8px;">
+                                <div style="font-size:.875rem;opacity:.9;margin-bottom:.25rem;">Overall Rating</div>
+                                <div id="stat-overall-rating" style="font-size:2rem;font-weight:700;">0.0</div>
+                                <div style="font-size:.75rem;opacity:.8;">out of 5</div>
+                            </div>
+                            <div style="background:linear-gradient(135deg,#2563eb,#3b82f6);color:#fff;padding:1.25rem;border-radius:8px;">
+                                <div style="font-size:.875rem;opacity:.9;margin-bottom:.25rem;">Would Recommend</div>
+                                <div id="stat-recommend-yes" style="font-size:2rem;font-weight:700;">0%</div>
+                            </div>
+                        </div>
+
+                        <!-- Detailed Ratings -->
+                        <h3 style="font-size:1.1rem;font-weight:600;margin:1.5rem 0 1rem;">Detailed Ratings (Average)</h3>
+                        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1rem;margin-bottom:2rem;">
+                            <div style="background:#f8fafc;padding:1rem;border-radius:8px;border:1px solid #e2e8f0;">
+                                <div style="font-size:.8rem;color:#64748b;margin-bottom:.25rem;">Content Quality</div>
+                                <div id="stat-content-quality" style="font-size:1.5rem;font-weight:700;color:#1e293b;">0.0</div>
+                            </div>
+                            <div style="background:#f8fafc;padding:1rem;border-radius:8px;border:1px solid #e2e8f0;">
+                                <div style="font-size:.8rem;color:#64748b;margin-bottom:.25rem;">Learning Format</div>
+                                <div id="stat-format-rating" style="font-size:1.5rem;font-weight:700;color:#1e293b;">0.0</div>
+                            </div>
+                            <div style="background:#f8fafc;padding:1rem;border-radius:8px;border:1px solid #e2e8f0;">
+                                <div style="font-size:.8rem;color:#64748b;margin-bottom:.25rem;">Objectives Met</div>
+                                <div id="stat-objectives-met" style="font-size:1.5rem;font-weight:700;color:#1e293b;">0.0</div>
+                            </div>
+                            <div style="background:#f8fafc;padding:1rem;border-radius:8px;border:1px solid #e2e8f0;">
+                                <div style="font-size:.8rem;color:#64748b;margin-bottom:.25rem;">Practice Relevance</div>
+                                <div id="stat-practice-relevance" style="font-size:1.5rem;font-weight:700;color:#1e293b;">0.0</div>
+                            </div>
+                        </div>
+
+                        <!-- Recommend Breakdown -->
+                        <h3 style="font-size:1.1rem;font-weight:600;margin:1.5rem 0 1rem;">Recommendation Breakdown</h3>
+                        <div style="display:flex;gap:1rem;margin-bottom:2rem;">
+                            <div style="flex:1;background:#ecfdf5;padding:1rem;border-radius:8px;border:1px solid #a7f3d0;text-align:center;">
+                                <div style="font-size:1.5rem;font-weight:700;color:#059669;" id="stat-recommend-yes-count">0</div>
+                                <div style="font-size:.8rem;color:#047857;">Yes, definitely</div>
+                            </div>
+                            <div style="flex:1;background:#fef3c7;padding:1rem;border-radius:8px;border:1px solid #fde68a;text-align:center;">
+                                <div style="font-size:1.5rem;font-weight:700;color:#d97706;" id="stat-recommend-maybe-count">0</div>
+                                <div style="font-size:.8rem;color:#b45309;">Maybe</div>
+                            </div>
+                            <div style="flex:1;background:#fee2e2;padding:1rem;border-radius:8px;border:1px solid #fecaca;text-align:center;">
+                                <div style="font-size:1.5rem;font-weight:700;color:#dc2626;" id="stat-recommend-no-count">0</div>
+                                <div style="font-size:.8rem;color:#b91c1c;">No</div>
+                            </div>
+                        </div>
+
+                        <!-- Recent Feedback -->
+                        <h3 style="font-size:1.1rem;font-weight:600;margin:1.5rem 0 1rem;">Recent Feedback</h3>
+                        <div id="recent-feedback-list" style="max-height:400px;overflow-y:auto;">
+                            <!-- Dynamically populated -->
+                        </div>
+                    </div>
+
+                    <!-- Loading State -->
+                    <div id="feedback-loading" style="display:none;text-align:center;padding:2rem;">
+                        <div style="font-size:1.1rem;color:#64748b;">Loading feedback data...</div>
+                    </div>
+
+                    <!-- No Data State -->
+                    <div id="feedback-no-data" style="display:none;text-align:center;padding:2rem;background:#f8fafc;border-radius:8px;border:1px dashed #cbd5e1;">
+                        <div style="font-size:1.1rem;color:#64748b;margin-bottom:.5rem;">No feedback data yet</div>
+                        <div style="font-size:.9rem;color:#94a3b8;">Feedback will appear here when students submit their course evaluations.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+        // Load feedback statistics
+        async function loadFeedbackStats() {
+            const courseId = document.getElementById('feedback-course-select').value;
+            const container = document.getElementById('feedback-stats-container');
+            const loading = document.getElementById('feedback-loading');
+            const noData = document.getElementById('feedback-no-data');
+
+            // Show loading
+            container.style.display = 'none';
+            noData.style.display = 'none';
+            loading.style.display = 'block';
+
+            try {
+                const session = await window.DrTroySupabase.getSession();
+                if (!session) {
+                    showAdminToast('Please log in to view feedback', 'error');
+                    return;
+                }
+
+                const url = courseId 
+                    ? '/.netlify/functions/get-course-feedback-stats?course_id=' + courseId
+                    : '/.netlify/functions/get-course-feedback-stats';
+
+                const response = await fetch(url, {
+                    headers: {
+                        'Authorization': 'Bearer ' + session.access_token
+                    }
+                });
+
+                const result = await response.json();
+
+                if (!response.ok) {
+                    throw new Error(result.error || 'Failed to load feedback');
+                }
+
+                const stats = result.stats;
+
+                if (stats.total_responses === 0) {
+                    loading.style.display = 'none';
+                    noData.style.display = 'block';
+                    return;
+                }
+
+                // Calculate totals for all courses or specific course
+                let totalResponses = 0;
+                let overallSum = 0, overallCount = 0;
+                let contentSum = 0, contentCount = 0;
+                let formatSum = 0, formatCount = 0;
+                let objectivesSum = 0, objectivesCount = 0;
+                let relevanceSum = 0, relevanceCount = 0;
+                let recommendYes = 0, recommendMaybe = 0, recommendNo = 0;
+
+                Object.values(stats.by_course).forEach(course => {
+                    totalResponses += course.total_responses;
+                    
+                    overallSum += course.overall_rating.sum;
+                    overallCount += course.overall_rating.count;
+                    
+                    contentSum += course.content_quality.sum;
+                    contentCount += course.content_quality.count;
+                    
+                    formatSum += course.format_rating.sum;
+                    formatCount += course.format_rating.count;
+                    
+                    objectivesSum += course.objectives_met.sum;
+                    objectivesCount += course.objectives_met.count;
+                    
+                    relevanceSum += course.practice_relevance.sum;
+                    relevanceCount += course.practice_relevance.count;
+                    
+                    recommendYes += course.recommend.yes;
+                    recommendMaybe += course.recommend.maybe;
+                    recommendNo += course.recommend.no;
+                });
+
+                // Update display
+                document.getElementById('stat-total-responses').textContent = totalResponses;
+                document.getElementById('stat-overall-rating').textContent = overallCount > 0 ? (overallSum / overallCount).toFixed(1) : '0.0';
+                document.getElementById('stat-content-quality').textContent = contentCount > 0 ? (contentSum / contentCount).toFixed(1) : '0.0';
+                document.getElementById('stat-format-rating').textContent = formatCount > 0 ? (formatSum / formatCount).toFixed(1) : '0.0';
+                document.getElementById('stat-objectives-met').textContent = objectivesCount > 0 ? (objectivesSum / objectivesCount).toFixed(1) : '0.0';
+                document.getElementById('stat-practice-relevance').textContent = relevanceCount > 0 ? (relevanceSum / relevanceCount).toFixed(1) : '0.0';
+
+                const totalRecommend = recommendYes + recommendMaybe + recommendNo;
+                const recommendYesPercent = totalRecommend > 0 ? Math.round((recommendYes / totalRecommend) * 100) : 0;
+                document.getElementById('stat-recommend-yes').textContent = recommendYesPercent + '%';
+                document.getElementById('stat-recommend-yes-count').textContent = recommendYes;
+                document.getElementById('stat-recommend-maybe-count').textContent = recommendMaybe;
+                document.getElementById('stat-recommend-no-count').textContent = recommendNo;
+
+                // Populate recent feedback
+                const recentList = document.getElementById('recent-feedback-list');
+                recentList.innerHTML = '';
+
+                // Collect all recent feedback from all courses
+                let allRecent = [];
+                Object.values(stats.by_course).forEach(course => {
+                    allRecent = allRecent.concat(course.recent_feedback.map(f => ({...f, course_id: course.course_id})));
+                });
+
+                // Sort by date (newest first) and take top 10
+                allRecent.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+                allRecent = allRecent.slice(0, 10);
+
+                if (allRecent.length === 0) {
+                    recentList.innerHTML = '<div style="text-align:center;color:#64748b;padding:1rem;">No detailed feedback yet</div>';
+                } else {
+                    allRecent.forEach(feedback => {
+                        const item = document.createElement('div');
+                        item.style.cssText = 'background:#f8fafc;padding:1rem;border-radius:8px;border:1px solid #e2e8f0;margin-bottom:.75rem;';
+                        
+                        const date = new Date(feedback.created_at).toLocaleDateString();
+                        const stars = '⭐'.repeat(feedback.overall_rating || 0);
+                        
+                        item.innerHTML = `
+                            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:.5rem;">
+                                <span style="font-weight:600;color:#1e293b;">${feedback.course_id}</span>
+                                <span style="font-size:.8rem;color:#64748b;">${date}</span>
+                            </div>
+                            <div style="margin-bottom:.5rem;">${stars}</div>
+                            ${feedback.improvements ? `<div style="font-size:.9rem;color:#475569;font-style:italic;">"${feedback.improvements.substring(0, 100)}${feedback.improvements.length > 100 ? '...' : ''}"</div>` : ''}
+                            <div style="display:flex;gap:1rem;margin-top:.5rem;font-size:.8rem;color:#64748b;">
+                                <span>Content: ${feedback.content_quality || '-'}</span>
+                                <span>Format: ${feedback.format_rating || '-'}</span>
+                                <span>Objectives: ${feedback.objectives_met || '-'}</span>
+                                <span>Relevance: ${feedback.practice_relevance || '-'}</span>
+                                <span>Recommend: ${feedback.recommend || '-'}</span>
+                            </div>
+                        `;
+                        recentList.appendChild(item);
+                    });
+                }
+
+                loading.style.display = 'none';
+                container.style.display = 'block';
+
+            } catch (error) {
+                console.error('Error loading feedback:', error);
+                loading.style.display = 'none';
+                showAdminToast('Error loading feedback: ' + error.message, 'error');
+            }
+        }
+
+        // Load feedback when tab is opened
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check if we're on the feedback tab
+            const observer = new MutationObserver(function(mutations) {
+                const feedbackTab = document.getElementById('feedback');
+                if (feedbackTab && feedbackTab.classList.contains('active')) {
+                    loadFeedbackStats();
+                }
+            });
+
+            const tabContainer = document.querySelector('.main-tabs');
+            if (tabContainer) {
+                observer.observe(tabContainer, { attributes: true, subtree: true });
+            }
+        });
+        </script>
 
         <!-- ══════════════════════════════════════════════════════════════
              EMAIL SYSTEM TAB

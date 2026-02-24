@@ -2754,7 +2754,7 @@
         }
 
         // Submit Course Feedback
-        function submitFeedback() {
+        async function submitFeedback() {
             const form = document.getElementById('course-feedback-form');
             const formData = new FormData(form);
             
@@ -2764,25 +2764,55 @@
                 return;
             }
 
-            // Store feedback (in real implementation, this would go to a database)
+            // Get auth token
+            const token = localStorage.getItem('sb-pnqoxulxdmlmbywcpbyx-auth-token');
+            if (!token) {
+                showNotification('⚠️ Please log in to submit feedback');
+                return;
+            }
+
+            const session = JSON.parse(token);
+            
+            // Prepare feedback data
             const feedback = {
-                overallRating: formData.get('overall-rating'),
-                contentQuality: formData.get('content-quality'),
-                formatRating: formData.get('format-rating'),
-                objectivesMet: formData.get('objectives-met'),
-                practiceRelevance: formData.get('practice-relevance'),
+                course_id: 'pt-msk-001',
+                overall_rating: parseInt(formData.get('overall-rating')),
+                content_quality: parseInt(formData.get('content-quality')),
+                format_rating: parseInt(formData.get('format-rating')),
+                objectives_met: parseInt(formData.get('objectives-met')),
+                practice_relevance: parseInt(formData.get('practice-relevance')),
                 improvements: formData.get('improvements'),
                 recommend: formData.get('recommend'),
-                timestamp: new Date().toISOString()
+                user_token: session.access_token
             };
 
-            localStorage.setItem('pt-msk-001-feedback', JSON.stringify(feedback));
+            try {
+                // Submit to database
+                const response = await fetch('/.netlify/functions/submit-course-feedback', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + session.access_token
+                    },
+                    body: JSON.stringify(feedback)
+                });
+
+                const result = await response.json();
+
+                if (response.ok) {
+                    showNotification('✅ Thank you for your feedback! Final exam is now available.');
+                } else {
+                    console.error('Feedback submission error:', result);
+                    showNotification('⚠️ ' + (result.error || 'Error submitting feedback'));
+                }
+            } catch (error) {
+                console.error('Error submitting feedback:', error);
+                showNotification('⚠️ Error submitting feedback. Please try again.');
+            }
             
-            // Show final assessment
+            // Show final assessment (regardless of save success)
             document.getElementById('final-assessment').style.display = 'block';
             document.getElementById('final-exam-content').style.display = 'block';
-            
-            showNotification('✅ Thank you for your feedback! Final exam is now available.');
             
             // Scroll to final assessment
             setTimeout(() => {
