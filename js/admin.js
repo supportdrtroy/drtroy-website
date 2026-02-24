@@ -74,6 +74,7 @@
                 if (window.DrTroySupabase) await window.DrTroySupabase.signOut();
                 // Clear saved tab so next login starts on dashboard
                 localStorage.removeItem('currentAdminTab');
+                sessionStorage.removeItem('adminVisitedThisSession');
                 window.location.replace('secure-admin-access-2026.html');
             }
         }
@@ -628,13 +629,21 @@
             }
         }
 
-        // Restore saved tab on page load
+        // Restore saved tab on page load (only within same session, not on fresh login)
         function restoreSavedTab() {
             const savedTab = localStorage.getItem('currentAdminTab');
-            if (savedTab) {
+            const hasVisitedThisSession = sessionStorage.getItem('adminVisitedThisSession');
+            
+            if (savedTab && savedTab !== 'dashboard' && hasVisitedThisSession) {
+                // Only restore tab if we've been on admin page this session
                 switchMainTab(savedTab);
+            } else {
+                // Fresh login - clear saved tab and stay on dashboard
+                localStorage.removeItem('currentAdminTab');
             }
-            // If no saved tab, leave the default HTML active state
+            
+            // Mark that we've visited admin this session
+            sessionStorage.setItem('adminVisitedThisSession', 'true');
         }
 
         function switchSubTab(tabName) {
