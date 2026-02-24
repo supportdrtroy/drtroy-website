@@ -2301,8 +2301,33 @@
             startTime: Date.now()
         };
 
+        // Reset all modules to locked state (except module 1)
+        function resetAllModules() {
+            for (let i = 2; i <= 12; i++) {
+                const moduleContainer = document.getElementById(`module-${i}`);
+                if (!moduleContainer) continue;
+                
+                const header = moduleContainer.querySelector('.module-header');
+                const status = header.querySelector('.module-status');
+                
+                header.classList.add('locked');
+                header.onclick = () => toggleModule(i);
+                status.innerHTML = '<span class="module-icon">🔒</span><span>Complete Module ' + (i-1) + '</span>';
+            }
+            
+            // Hide completion sections
+            document.getElementById('references-section').style.display = 'none';
+            document.getElementById('course-feedback').style.display = 'none';
+            document.getElementById('final-assessment').style.display = 'none';
+            document.getElementById('certificate-section').style.display = 'none';
+        }
+
         // Load saved progress on page load
         window.addEventListener('load', async function() {
+            // First reset all modules to locked state
+            resetAllModules();
+            
+            // Then load any saved progress
             loadProgress();
             updateProgressDisplay();
             startAutoSave();
