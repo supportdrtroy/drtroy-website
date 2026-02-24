@@ -1,0 +1,112 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600">
+  <rect width="800" height="600" fill="white" stroke="#e0e0e0" stroke-width="1"/>
+  
+  <!-- Title -->
+  <text x="400" y="35" text-anchor="middle" font-family="Arial, sans-serif" font-size="22" font-weight="bold" fill="#1a56a0">
+    Normal Gait Cycle Phases
+  </text>
+  
+  <!-- Timeline -->
+  <line x1="100" y1="120" x2="700" y2="120" stroke="#1a56a0" stroke-width="3"/>
+  
+  <!-- Phase markers -->
+  <line x1="100" y1="100" x2="100" y2="140" stroke="#1a56a0" stroke-width="2"/>
+  <text x="100" y="90" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#333">0%</text>
+  
+  <line x1="400" y1="100" x2="400" y2="140" stroke="#1a56a0" stroke-width="2"/>
+  <text x="400" y="90" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#333">60%</text>
+  
+  <line x1="700" y1="100" x2="700" y2="140" stroke="#1a56a0" stroke-width="2"/>
+  <text x="700" y="90" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#333">100%</text>
+  
+  <!-- Stance Phase -->
+  <rect x="100" y="160" width="300" height="60" fill="#2e7d32" opacity="0.8" stroke="#1a56a0" stroke-width="2" rx="10"/>
+  <text x="250" y="195" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="white">STANCE PHASE (60%)</text>
+  
+  <!-- Swing Phase -->
+  <rect x="400" y="160" width="300" height="60" fill="#ff9800" opacity="0.8" stroke="#1a56a0" stroke-width="2" rx="10"/>
+  <text x="550" y="195" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="white">SWING PHASE (40%)</text>
+  
+  <!-- Stance Phase Subdivisions -->
+  <text x="250" y="250" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#2e7d32">Stance Phase Components</text>
+  
+  <!-- Initial Contact -->
+  <rect x="100" y="270" width="60" height="40" fill="#4caf50" stroke="#1a56a0" stroke-width="1" rx="5"/>
+  <text x="130" y="285" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="white">Initial</text>
+  <text x="130" y="300" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="white">Contact</text>
+  <text x="130" y="325" text-anchor="middle" font-family="Arial, sans-serif" font-size="9" fill="#333">0-2%</text>
+  
+  <!-- Loading Response -->
+  <rect x="170" y="270" width="60" height="40" fill="#66bb6a" stroke="#1a56a0" stroke-width="1" rx="5"/>
+  <text x="200" y="285" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="white">Loading</text>
+  <text x="200" y="300" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="white">Response</text>
+  <text x="200" y="325" text-anchor="middle" font-family="Arial, sans-serif" font-size="9" fill="#333">2-12%</text>
+  
+  <!-- Mid Stance -->
+  <rect x="240" y="270" width="60" height="40" fill="#81c784" stroke="#1a56a0" stroke-width="1" rx="5"/>
+  <text x="270" y="290" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="white">Mid Stance</text>
+  <text x="270" y="325" text-anchor="middle" font-family="Arial, sans-serif" font-size="9" fill="#333">12-31%</text>
+  
+  <!-- Terminal Stance -->
+  <rect x="310" y="270" width="60" height="40" fill="#a5d6a7" stroke="#1a56a0" stroke-width="1" rx="5"/>
+  <text x="340" y="285" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="white">Terminal</text>
+  <text x="340" y="300" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="white">Stance</text>
+  <text x="340" y="325" text-anchor="middle" font-family="Arial, sans-serif" font-size="9" fill="#333">31-50%</text>
+  
+  <!-- Pre-swing -->
+  <rect x="380" y="270" width="40" height="40" fill="#c8e6c9" stroke="#1a56a0" stroke-width="1" rx="5"/>
+  <text x="400" y="285" text-anchor="middle" font-family="Arial, sans-serif" font-size="9" font-weight="bold" fill="white">Pre-</text>
+  <text x="400" y="298" text-anchor="middle" font-family="Arial, sans-serif" font-size="9" font-weight="bold" fill="white">swing</text>
+  <text x="400" y="325" text-anchor="middle" font-family="Arial, sans-serif" font-size="9" fill="#333">50-60%</text>
+  
+  <!-- Swing Phase Subdivisions -->
+  <text x="550" y="250" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#ff9800">Swing Phase Components</text>
+  
+  <!-- Initial Swing -->
+  <rect x="420" y="270" width="80" height="40" fill="#ffa726" stroke="#1a56a0" stroke-width="1" rx="5"/>
+  <text x="460" y="285" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="white">Initial Swing</text>
+  <text x="460" y="325" text-anchor="middle" font-family="Arial, sans-serif" font-size="9" fill="#333">60-73%</text>
+  
+  <!-- Mid Swing -->
+  <rect x="510" y="270" width="80" height="40" fill="#ffb74d" stroke="#1a56a0" stroke-width="1" rx="5"/>
+  <text x="550" y="285" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="white">Mid Swing</text>
+  <text x="550" y="325" text-anchor="middle" font-family="Arial, sans-serif" font-size="9" fill="#333">73-87%</text>
+  
+  <!-- Terminal Swing -->
+  <rect x="600" y="270" width="80" height="40" fill="#ffcc02" stroke="#1a56a0" stroke-width="1" rx="5"/>
+  <text x="640" y="285" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="white">Terminal Swing</text>
+  <text x="640" y="325" text-anchor="middle" font-family="Arial, sans-serif" font-size="9" fill="#333">87-100%</text>
+  
+  <!-- Foot contact illustrations -->
+  <text x="400" y="370" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#1a56a0">Foot Contact Pattern</text>
+  
+  <!-- Ground line -->
+  <line x1="100" y1="450" x2="700" y2="450" stroke="#1a56a0" stroke-width="2"/>
+  
+  <!-- Foot positions during cycle -->
+  <!-- Heel strike -->
+  <ellipse cx="150" cy="445" rx="20" ry="8" fill="#2e7d32" transform="rotate(-15 150 445)"/>
+  <text x="150" y="470" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#333">Heel Strike</text>
+  
+  <!-- Flat foot -->
+  <ellipse cx="300" cy="445" rx="25" ry="8" fill="#2e7d32"/>
+  <text x="300" y="470" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#333">Flat Foot</text>
+  
+  <!-- Toe off -->
+  <ellipse cx="450" cy="435" rx="20" ry="8" fill="#ff9800" transform="rotate(15 450 435)"/>
+  <text x="450" y="470" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#333">Toe Off</text>
+  
+  <!-- Swing clearance -->
+  <ellipse cx="600" cy="420" rx="25" ry="8" fill="#ff9800"/>
+  <text x="600" y="470" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#333">Clearance</text>
+  
+  <!-- Key characteristics -->
+  <rect x="100" y="500" width="600" height="80" fill="#e8f4fd" stroke="#1a56a0" stroke-width="1" rx="10"/>
+  <text x="400" y="520" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#1a56a0">Normal Gait Characteristics</text>
+  <text x="120" y="540" font-family="Arial, sans-serif" font-size="11" fill="#333">• Stance phase: 60% of cycle (weight bearing)</text>
+  <text x="120" y="555" font-family="Arial, sans-serif" font-size="11" fill="#333">• Swing phase: 40% of cycle (limb advancement)</text>
+  <text x="120" y="570" font-family="Arial, sans-serif" font-size="11" fill="#333">• Double support: ~10-12% of cycle (both feet on ground)</text>
+  <text x="450" y="540" font-family="Arial, sans-serif" font-size="11" fill="#333">• Normal walking speed: 1.2-1.4 m/s</text>
+  <text x="450" y="555" font-family="Arial, sans-serif" font-size="11" fill="#333">• Step length: 60-70cm</text>
+  <text x="450" y="570" font-family="Arial, sans-serif" font-size="11" fill="#333">• Cadence: 100-120 steps/min</text>
+</svg>

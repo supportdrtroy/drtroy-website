@@ -2,13 +2,15 @@
  * DrTroy CE Platform — Netlify Function: create-checkout
  * POST /.netlify/functions/create-checkout
  *
- * Creates a Stripe Checkout Session for one or more courses/packages.
+ * Creates a Stripe Checkout Session for a course OR package purchase.
  *
- * Request body (multi-item):
- *   { items: [{ itemId, itemType }], userId, userEmail, discountCode?, successUrl, cancelUrl }
- *
- * Legacy single-item body (still supported):
+ * Request body:
  *   { itemId, itemType, userId, userEmail, discountCode?, successUrl, cancelUrl }
+ *   itemType: 'course' | 'package'
+ *
+ * Response:
+ *   { url } — Stripe hosted checkout URL
+ *   { error } — on failure
  */
 
 const https = require('https');
@@ -102,11 +104,33 @@ async function validateDiscount(code, supabaseUrl, serviceRoleKey) {
   });
 }
 
+// ─── CORS ────────────────────────────────────────────────────
+
+const ALLOWED_ORIGINS = ['https://drtroy.com', 'https://www.drtroy.com'];
+
+function getCorsHeaders(event) {
+  const origin = (event.headers && (event.headers.origin || event.headers.Origin)) || '';
+  const allowedOrigin = ALLOWED_ORIGINS.includes(origin) ? origin : ALLOWED_ORIGINS[0];
+  return {
+    'Access-Control-Allow-Origin': allowedOrigin,
+    'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+    'Access-Control-Allow-Methods': 'POST, OPTIONS',
+    'Content-Type': 'application/json',
+    'Vary': 'Origin',
+  };
+}
+
 // ─── handler ─────────────────────────────────────────────────
 
 exports.handler = async (event) => {
+  const cors = getCorsHeaders(event);
+
+  if (event.httpMethod === 'OPTIONS') {
+    return { statusCode: 204, headers: cors, body: '' };
+  }
+
   if (event.httpMethod !== 'POST') {
-    return { statusCode: 405, body: JSON.stringify({ error: 'Method not allowed' }) };
+    return { statusCode: 405, headers: cors, body: JSON.stringify({ error: 'Method not allowed' }) };
   }
 
   const STRIPE_SECRET_KEY = process.env.STRIPE_SECRET_KEY;
@@ -115,203 +139,74 @@ exports.handler = async (event) => {
 
   if (!STRIPE_SECRET_KEY || !SUPABASE_URL || !SERVICE_ROLE) {
     console.error('[create-checkout] Missing environment variables');
-    return { statusCode: 500, body: JSON.stringify({ error: 'Server configuration error. Contact support.' }) };
+    return { statusCode: 500, headers: cors, body: JSON.stringify({ error: 'Server configuration error. Contact support.' }) };
   }
 
   let body;
   try { body = JSON.parse(event.body || '{}'); }
-  catch { return { statusCode: 400, body: JSON.stringify({ error: 'Invalid request body' }) }; }
+  catch { return { statusCode: 400, headers: cors, body: JSON.stringify({ error: 'Invalid request body' }) }; }
 
-  const { userId, userEmail, discountCode, successUrl, cancelUrl } = body;
+  const { itemId, itemType = 'course', userId, userEmail, discountCode, successUrl, cancelUrl } = body;
 
-  // Support both multi-item { items: [...] } and legacy single-item { itemId, itemType }
-  let items = body.items;
-  if (!items || !Array.isArray(items) || items.length === 0) {
-    const resolvedItemId = body.itemId || body.courseId;
-    if (resolvedItemId) {
-      items = [{ itemId: resolvedItemId, itemType: body.itemType || 'course' }];
-    }
-  }
+  // Support legacy courseId field
+  const resolvedItemId = itemId || body.courseId;
 
-  if (!items || items.length === 0 || !userId || !userEmail) {
-    return { statusCode: 400, body: JSON.stringify({ error: 'Missing required fields: items, userId, userEmail' }) };
+  if (!resolvedItemId || !userId || !userEmail) {
+    return { statusCode: 400, headers: cors, body: JSON.stringify({ error: 'Missing required fields: itemId, userId, userEmail' }) };
   }
 
   try {
-    // Validate discount if provided
+    // 1. Look up item (course or package)
+    let item, itemLabel, ceuInfo;
+
+    if (itemType === 'package') {
+      item = await supabaseGet(
+        `/rest/v1/packages?id=eq.${encodeURIComponent(resolvedItemId)}&select=id,title,price_cents,total_ceu_hours`,
+        SUPABASE_URL, SERVICE_ROLE
+      );
+      ceuInfo = `${item.total_ceu_hours} CEU Hours`;
+      itemLabel = item.title;
+    } else {
+      item = await supabaseGet(
+        `/rest/v1/courses?id=eq.${encodeURIComponent(resolvedItemId)}&select=id,title,price_cents,ceu_hours`,
+        SUPABASE_URL, SERVICE_ROLE
+      );
+      ceuInfo = `${item.ceu_hours} CEU Hours`;
+      itemLabel = item.title;
+    }
+
+    // 2. Apply discount if provided
+    let finalPrice = item.price_cents;
     let discountRow = null;
     if (discountCode && discountCode.trim()) {
       discountRow = await validateDiscount(discountCode, SUPABASE_URL, SERVICE_ROLE);
+      if (discountRow) finalPrice = applyDiscount(finalPrice, discountRow);
     }
 
-    // Look up each item and build Stripe line items
+    // 3. Build Stripe Checkout session
     const sessionParams = {
       'payment_method_types[]': 'card',
+      'line_items[0][price_data][currency]': 'usd',
+      'line_items[0][price_data][product_data][name]': itemLabel,
+      'line_items[0][price_data][product_data][description]': `${ceuInfo} | DrTroy.com CE Platform`,
+      'line_items[0][price_data][unit_amount]': String(finalPrice),
+      'line_items[0][quantity]': '1',
       mode: 'payment',
       customer_email: userEmail,
+      'metadata[item_id]':      resolvedItemId,
+      'metadata[item_type]':    itemType,
       'metadata[user_id]':      userId,
       'metadata[discount_code]': discountCode || '',
       success_url: successUrl,
       cancel_url:  cancelUrl,
     };
 
-    const allItemIds = [];
-    const allItemTypes = [];
-    let totalFinalPrice = 0;
-
-    for (let i = 0; i < items.length; i++) {
-      const { itemId, itemType = 'course' } = items[i];
-      let item, ceuInfo;
-
-      if (itemType === 'package') {
-        item = await supabaseGet(
-          `/rest/v1/packages?id=eq.${encodeURIComponent(itemId)}&select=id,title,price_cents,total_ceu_hours`,
-          SUPABASE_URL, SERVICE_ROLE
-        );
-        ceuInfo = `${item.total_ceu_hours} CEU Hours`;
-      } else {
-        item = await supabaseGet(
-          `/rest/v1/courses?id=eq.${encodeURIComponent(itemId)}&select=id,title,price_cents,ceu_hours`,
-          SUPABASE_URL, SERVICE_ROLE
-        );
-        ceuInfo = `${item.ceu_hours} CEU Hours`;
-      }
-
-      let finalPrice = item.price_cents;
-      if (discountRow) finalPrice = applyDiscount(finalPrice, discountRow);
-      totalFinalPrice += finalPrice;
-
-      sessionParams[`line_items[${i}][price_data][currency]`] = 'usd';
-      sessionParams[`line_items[${i}][price_data][product_data][name]`] = item.title;
-      sessionParams[`line_items[${i}][price_data][product_data][description]`] = `${ceuInfo} | DrTroy.com CE Platform`;
-      sessionParams[`line_items[${i}][price_data][unit_amount]`] = String(finalPrice);
-      sessionParams[`line_items[${i}][quantity]`] = '1';
-
-      allItemIds.push(itemId);
-      allItemTypes.push(itemType);
-    }
-
-    // Store all item IDs in metadata (Stripe metadata values max 500 chars)
-    sessionParams['metadata[item_ids]'] = allItemIds.join(',');
-    sessionParams['metadata[item_types]'] = allItemTypes.join(',');
-    // Keep legacy single-item fields for backward compat
-    sessionParams['metadata[item_id]'] = allItemIds[0];
-    sessionParams['metadata[item_type]'] = allItemTypes[0];
-
-    // Free items: create enrollments server-side directly (don't rely on client)
-    if (totalFinalPrice === 0) {
-      // Resolve all course IDs (expand packages)
-      let allCourseIds = [];
-      for (let i = 0; i < items.length; i++) {
-        const { itemId, itemType = 'course' } = items[i];
-        if (itemType === 'package') {
-          try {
-            const pkg = await supabaseGet(
-              `/rest/v1/packages?id=eq.${encodeURIComponent(itemId)}&select=id,course_ids`,
-              SUPABASE_URL, SERVICE_ROLE
-            );
-            if (pkg.course_ids && Array.isArray(pkg.course_ids)) {
-              allCourseIds.push(...pkg.course_ids);
-            }
-          } catch { /* skip if package not found */ }
-        } else {
-          allCourseIds.push(itemId);
-        }
-      }
-      allCourseIds = [...new Set(allCourseIds)];
-
-      // Create enrollment for each course
-      const now = new Date().toISOString();
-      for (const cId of allCourseIds) {
-        const enrollBody = JSON.stringify({
-          user_id: userId,
-          course_id: cId,
-          stripe_payment_intent_id: `free_${discountCode || 'promo'}_${Date.now()}`,
-          amount_paid_cents: 0,
-          is_active: true,
-          purchased_at: now,
-        });
-        const enrollUrl = new URL(`${SUPABASE_URL}/rest/v1/enrollments`);
-        try {
-          await new Promise((resolve, reject) => {
-            const opts = {
-              hostname: enrollUrl.hostname,
-              path: enrollUrl.pathname,
-              method: 'POST',
-              headers: {
-                apikey: SERVICE_ROLE,
-                Authorization: `Bearer ${SERVICE_ROLE}`,
-                'Content-Type': 'application/json',
-                Prefer: 'return=representation',
-                'Content-Length': Buffer.byteLength(enrollBody),
-              },
-            };
-            const req = https.request(opts, (res) => {
-              let data = '';
-              res.on('data', (c) => (data += c));
-              res.on('end', () => resolve({ status: res.statusCode, data }));
-            });
-            req.on('error', reject);
-            req.write(enrollBody);
-            req.end();
-          });
-        } catch { /* best effort - may already be enrolled */ }
-
-        // Create progress row
-        const progressBody = JSON.stringify({
-          user_id: userId,
-          course_id: cId,
-          module_id: '0',
-          status: 'not_started',
-          progress_percent: 0,
-        });
-        try {
-          await new Promise((resolve, reject) => {
-            const opts = {
-              hostname: enrollUrl.hostname,
-              path: new URL(`${SUPABASE_URL}/rest/v1/course_progress`).pathname,
-              method: 'POST',
-              headers: {
-                apikey: SERVICE_ROLE,
-                Authorization: `Bearer ${SERVICE_ROLE}`,
-                'Content-Type': 'application/json',
-                Prefer: 'return=representation',
-                'Content-Length': Buffer.byteLength(progressBody),
-              },
-            };
-            const req = https.request(opts, (res) => {
-              let data = '';
-              res.on('data', (c) => (data += c));
-              res.on('end', () => resolve({ status: res.statusCode, data }));
-            });
-            req.on('error', reject);
-            req.write(progressBody);
-            req.end();
-          });
-        } catch { /* best effort */ }
-      }
-
-      // Increment discount usage
-      if (discountCode) {
-        try {
-          const rpcBody = JSON.stringify({ code_input: discountCode });
-          const rpcUrl = new URL(`${SUPABASE_URL}/rest/v1/rpc/increment_discount_usage`);
-          await new Promise((resolve) => {
-            const req = https.request({
-              hostname: rpcUrl.hostname, path: rpcUrl.pathname, method: 'POST',
-              headers: { apikey: SERVICE_ROLE, Authorization: `Bearer ${SERVICE_ROLE}`, 'Content-Type': 'application/json', 'Content-Length': Buffer.byteLength(rpcBody) },
-            }, (res) => { let d = ''; res.on('data', c => d += c); res.on('end', () => resolve()); });
-            req.on('error', () => resolve());
-            req.write(rpcBody);
-            req.end();
-          });
-        } catch { /* best effort */ }
-      }
-
+    // Free items: skip Stripe
+    if (finalPrice === 0) {
       return {
         statusCode: 200,
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ free: true, enrolled: true, message: 'Free enrollment created successfully.' }),
+        headers: cors,
+        body: JSON.stringify({ free: true, message: 'Item is free with discount.' }),
       };
     }
 
@@ -319,17 +214,17 @@ exports.handler = async (event) => {
 
     if (session.error) {
       console.error('[create-checkout] Stripe error:', session.error);
-      return { statusCode: 400, body: JSON.stringify({ error: session.error.message }) };
+      return { statusCode: 400, headers: cors, body: JSON.stringify({ error: session.error.message }) };
     }
 
     return {
       statusCode: 200,
-      headers: { 'Content-Type': 'application/json' },
+      headers: cors,
       body: JSON.stringify({ url: session.url }),
     };
 
   } catch (err) {
     console.error('[create-checkout] Error:', err.message);
-    return { statusCode: 500, body: JSON.stringify({ error: 'Something went wrong. Please try again.' }) };
+    return { statusCode: 500, headers: cors, body: JSON.stringify({ error: 'Something went wrong. Please try again.' }) };
   }
 };

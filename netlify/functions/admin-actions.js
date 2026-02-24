@@ -252,6 +252,123 @@ async function removeEnrollment({ enrollmentId }) {
   return { removed: true };
 }
 
+/* ─── Read-only admin data actions ────────────────────────── */
+
+async function getUsers() {
+  const res = await sbRest(
+    'GET',
+    '/rest/v1/profiles?select=*&order=created_at.desc'
+  );
+  if (res.status >= 400) throw new Error(res.body?.message || 'Failed to fetch users');
+  return { users: Array.isArray(res.body) ? res.body : [] };
+}
+
+async function getDashboard() {
+  const [usersRes, enrollRes, completionsRes] = await Promise.all([
+    sbRest('GET', '/rest/v1/profiles?select=id'),
+    sbRest('GET', '/rest/v1/enrollments?select=id,amount_paid_cents'),
+    sbRest('GET', '/rest/v1/completions?select=id'),
+  ]);
+  const users = Array.isArray(usersRes.body) ? usersRes.body : [];
+  const enrollments = Array.isArray(enrollRes.body) ? enrollRes.body : [];
+  const completions = Array.isArray(completionsRes.body) ? completionsRes.body : [];
+  const revenue = enrollments.reduce((sum, e) => sum + (parseInt(e.amount_paid_cents) || 0), 0) / 100;
+  return { totalUsers: users.length, totalEnrollments: enrollments.length, totalCompletions: completions.length, revenue };
+}
+
+async function getEnrollments() {
+  // Fetch enrollments and profiles separately (no FK between them in PostgREST)
+  const [enrollRes, profilesRes] = await Promise.all([
+    sbRest('GET', '/rest/v1/enrollments?select=*,courses(title,ceu_hours)&order=purchased_at.desc'),
+    sbRest('GET', '/rest/v1/profiles?select=id,first_name,last_name,email'),
+  ]);
+  const enrollments = Array.isArray(enrollRes.body) ? enrollRes.body : [];
+  const profiles = Array.isArray(profilesRes.body) ? profilesRes.body : [];
+  const profileMap = {};
+  profiles.forEach(p => { profileMap[p.id] = p; });
+  // Attach profile data to each enrollment
+  enrollments.forEach(e => {
+    e.profiles = profileMap[e.user_id] || null;
+  });
+  return { enrollments };
+}
+
+async function getLicenseData() {
+  const res = await sbRest(
+    'GET',
+    '/rest/v1/profiles?select=id,email,first_name,last_name,license_number,license_state,profession,license_expiry_date&license_expiry_date=not.is.null&order=license_expiry_date.asc'
+  );
+  if (res.status >= 400) throw new Error(res.body?.message || 'Failed to fetch license data');
+  return { profiles: Array.isArray(res.body) ? res.body : [] };
+}
+
+async function getDiscountCodes() {
+  const res = await sbRest(
+    'GET',
+    '/rest/v1/discount_codes?select=*&order=created_at.desc'
+  );
+  if (res.status >= 400) throw new Error(res.body?.message || 'Failed to fetch discount codes');
+  return { codes: Array.isArray(res.body) ? res.body : [] };
+}
+
+async function updateDiscountCode({ id, updates }) {
+  if (!id) throw new Error('id is required');
+  const res = await sbRest(
+    'PATCH',
+    `/rest/v1/discount_codes?id=eq.${encodeURIComponent(id)}`,
+    updates
+  );
+  if (res.status >= 400) throw new Error(res.body?.message || 'Failed to update discount code');
+  return { updated: true };
+}
+
+async function deleteDiscountCodeAction({ id }) {
+  if (!id) throw new Error('id is required');
+  const res = await sbRest(
+    'DELETE',
+    `/rest/v1/discount_codes?id=eq.${encodeURIComponent(id)}`
+  );
+  if (res.status >= 400) throw new Error(res.body?.message || 'Failed to delete discount code');
+  return { deleted: true };
+}
+
+async function lookupUser({ email }) {
+  if (!email) throw new Error('email is required');
+  const res = await sbRest(
+    'GET',
+    `/rest/v1/profiles?email=eq.${encodeURIComponent(email)}&select=id,first_name,last_name,email,profession`
+  );
+  if (res.status >= 400) throw new Error(res.body?.message || 'Failed to lookup user');
+  const profiles = Array.isArray(res.body) ? res.body : [];
+  if (profiles.length === 0) throw new Error('User not found');
+  return { user: profiles[0] };
+}
+
+async function getUserCredits({ userId }) {
+  if (!userId) throw new Error('userId is required');
+  const [creditsRes, txnsRes] = await Promise.all([
+    sbRest('GET', `/rest/v1/account_credits?user_id=eq.${encodeURIComponent(userId)}&select=balance_cents`),
+    sbRest('GET', `/rest/v1/credit_transactions?user_id=eq.${encodeURIComponent(userId)}&select=*&order=created_at.desc&limit=25`),
+  ]);
+  const credits = Array.isArray(creditsRes.body) && creditsRes.body[0] ? creditsRes.body[0] : { balance_cents: 0 };
+  const transactions = Array.isArray(txnsRes.body) ? txnsRes.body : [];
+  return { balance_cents: credits.balance_cents, transactions };
+}
+
+async function grantCreditsAction({ userId, amountCents, description, adminId }) {
+  if (!userId || !amountCents) throw new Error('userId and amountCents are required');
+  // Call the grant_credits RPC function using PostgREST
+  const res = await sbRest('POST', '/rest/v1/rpc/grant_credits', {
+    p_user_id: userId,
+    p_amount_cents: amountCents,
+    p_type: 'admin_grant',
+    p_description: description || 'Admin credit grant',
+    p_admin_id: adminId || null,
+  });
+  if (res.status >= 400) throw new Error(res.body?.message || 'Failed to grant credits');
+  return res.body || { success: true };
+}
+
 /* ─── Main handler ────────────────────────────────────────── */
 
 exports.handler = async (event) => {
@@ -311,7 +428,17 @@ exports.handler = async (event) => {
   try {
     let result;
     switch (action) {
-      case 'toggle_admin':      result = await toggleAdmin(payload);      break;
+      case 'get_users':         result = await getUsers();                       break;
+      case 'get_dashboard':     result = await getDashboard();                   break;
+      case 'get_enrollments':   result = await getEnrollments();                 break;
+      case 'get_license_data':  result = await getLicenseData();                 break;
+      case 'get_discount_codes': result = await getDiscountCodes();              break;
+      case 'update_discount_code': result = await updateDiscountCode(payload);   break;
+      case 'delete_discount_code': result = await deleteDiscountCodeAction(payload); break;
+      case 'lookup_user':       result = await lookupUser(payload);              break;
+      case 'get_user_credits':  result = await getUserCredits(payload);          break;
+      case 'grant_credits':     result = await grantCreditsAction(payload);      break;
+      case 'toggle_admin':      result = await toggleAdmin(payload);             break;
       case 'create_user':       result = await createUser(payload);       break;
       case 'suspend_user':      result = await suspendUser(payload);      break;
       case 'delete_user':       result = await deleteUser(payload);       break;

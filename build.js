@@ -15,7 +15,9 @@ const DIST = path.join(__dirname, 'dist');
 // Files/dirs to skip entirely
 const SKIP = new Set([
   'node_modules', 'dist', '.git', 'build.js',
-  'package.json', 'package-lock.json',
+  'package.json', 'package-lock.json', 'validate-site.js',
+  'CLAUDE.md',
+  'BANE-BRIEFING.md',
 ]);
 
 // Extensions we actively minify
@@ -36,11 +38,12 @@ const HTML_OPTS = {
   useShortDoctype:           true,
   minifyCSS:                 true,
   // Compress inline JS but don't rename variables — cross-file globals must stay intact
-  minifyJS: { compress: { drop_console: true, passes: 2 }, mangle: false },
+  // NOTE: drop_console disabled temporarily for debugging admin panel issues
+  minifyJS: { compress: { drop_console: false, passes: 2 }, mangle: false },
 };
 
 const JS_OPTS = {
-  compress: { drop_console: true, passes: 2 },
+  compress: { drop_console: false, passes: 2 },
   mangle:   true,
   format:   { comments: false },
 };
@@ -53,15 +56,11 @@ async function processFile(srcPath, distPath) {
 
   try {
     if (HTML_EXT.has(ext)) {
-      const src = fs.readFileSync(srcPath, 'utf8');
-      
-      // Skip minification for course files that contain medical content with < symbols
-      const isCoursePage = srcPath.includes('/courses/') || srcPath.includes('\\courses\\');
-      
-      if (isCoursePage) {
-        // Copy course files without minification to avoid parsing issues
+      const src    = fs.readFileSync(srcPath, 'utf8');
+      // Skip minification for admin.html — large inline script breaks when minified
+      if (path.basename(srcPath) === 'admin.html') {
         fs.writeFileSync(distPath, src, 'utf8');
-        copied++;
+        processed++;
       } else {
         const result = await minifyHtml(src, HTML_OPTS);
         fs.writeFileSync(distPath, result, 'utf8');
@@ -69,9 +68,15 @@ async function processFile(srcPath, distPath) {
       }
     } else if (JS_EXT.has(ext)) {
       const src    = fs.readFileSync(srcPath, 'utf8');
-      const result = await minifyJs(src, JS_OPTS);
-      fs.writeFileSync(distPath, result.code, 'utf8');
-      processed++;
+      // Skip minification for admin.js — global functions referenced from HTML onclick handlers
+      if (path.basename(srcPath) === 'admin.js') {
+        fs.writeFileSync(distPath, src, 'utf8');
+        processed++;
+      } else {
+        const result = await minifyJs(src, JS_OPTS);
+        fs.writeFileSync(distPath, result.code, 'utf8');
+        processed++;
+      }
     } else {
       fs.copyFileSync(srcPath, distPath);
       copied++;
@@ -112,13 +117,4 @@ async function build() {
   console.log(`✅ Build complete in ${elapsed}s — ${processed} minified, ${copied} copied${errors ? `, ${errors} fallback copies` : ''}`);
 }
 
-build().catch(err => { 
-  console.error('Build failed:', err); 
-  // Don't exit with error if some files failed minification but were copied as fallback
-  if (errors > 0 && processed + copied > 0) {
-    console.log('⚠️ Build completed with fallback copies due to minification failures');
-    process.exit(0);
-  } else {
-    process.exit(1);
-  }
-});
+build().catch(err => { console.error('Build failed:', err); process.exit(1); });

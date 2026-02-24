@@ -1,0 +1,592 @@
+<!-- ════════════════════════════════════════════════════════════════════════════
+     ADVANCED COURSE MANAGEMENT INTERFACE
+     Professional-grade content management system for CE courses
+     ════════════════════════════════════════════════════════════════════════════ -->
+
+<!-- Course Management Tab -->
+<div id="courses" class="tab-content">
+    <!-- Course Overview Dashboard -->
+    <div class="card">
+        <div class="card-header" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;">
+            <div>
+                <h2 class="card-title">📚 Course Management</h2>
+                <p style="color:#64748b;margin-top:.5rem;font-size:.95rem;">Create, manage, and publish your continuing education courses</p>
+            </div>
+            <div style="display:flex;gap:.75rem;align-items:center;flex-wrap:wrap;">
+                <select id="courseStatusFilter" onchange="filterCourses()" class="form-input" style="width:auto;">
+                    <option value="all">All Courses</option>
+                    <option value="draft">Drafts</option>
+                    <option value="review">In Review</option>
+                    <option value="published">Published</option>
+                    <option value="retired">Retired</option>
+                </select>
+                <button onclick="refreshCourses()" class="btn btn-secondary">🔄 Refresh</button>
+                <button onclick="showCreateCourseModal()" class="btn btn-primary">➕ Create Course</button>
+            </div>
+        </div>
+        
+        <!-- Course Analytics Dashboard -->
+        <div class="card-body">
+            <div class="stats-grid" style="margin-bottom:2rem;">
+                <div class="stat-card">
+                    <div class="stat-number" id="courseStatTotal">—</div>
+                    <div class="stat-label">Total Courses</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="courseStatPublished">—</div>
+                    <div class="stat-label">Published</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="courseStatDrafts">—</div>
+                    <div class="stat-label">Drafts</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="courseStatCeuHours">—</div>
+                    <div class="stat-label">Total CEU Hours</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="courseStatRevenue">$0</div>
+                    <div class="stat-label">Course Revenue</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="courseStatCompletions">—</div>
+                    <div class="stat-label">Completions</div>
+                </div>
+            </div>
+            
+            <!-- Search and Filters -->
+            <div style="display:flex;gap:1rem;margin-bottom:1.5rem;flex-wrap:wrap;">
+                <input type="text" id="courseSearch" placeholder="Search courses..." oninput="searchCourses()" 
+                       class="form-input" style="flex:1;min-width:250px;">
+                <select id="courseCategoryFilter" onchange="filterCourses()" class="form-input" style="width:auto;">
+                    <option value="">All Categories</option>
+                    <option value="musculoskeletal">Musculoskeletal</option>
+                    <option value="neurological">Neurological</option>
+                    <option value="cardiopulmonary">Cardiopulmonary</option>
+                    <option value="ethics">Ethics</option>
+                    <option value="pediatric">Pediatric</option>
+                    <option value="geriatric">Geriatric</option>
+                </select>
+                <select id="courseProfessionFilter" onchange="filterCourses()" class="form-input" style="width:auto;">
+                    <option value="">All Professions</option>
+                    <option value="PT">Physical Therapist</option>
+                    <option value="PTA">Physical Therapist Assistant</option>
+                    <option value="OT">Occupational Therapist</option>
+                    <option value="COTA">Certified OT Assistant</option>
+                </select>
+            </div>
+            
+            <!-- Course List -->
+            <div id="courseListContainer">
+                <div class="loading-state" style="text-align:center;color:#64748b;padding:3rem;">
+                    <div style="font-size:3rem;margin-bottom:1rem;">📚</div>
+                    <p>Loading courses...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ════════════════════════════════════════════════════════════════════════════
+     COURSE CREATION/EDITING MODAL
+     ════════════════════════════════════════════════════════════════════════════ -->
+
+<div class="modal-overlay" id="courseModal">
+    <div class="modal-box" style="max-width:900px;max-height:90vh;overflow-y:auto;">
+        <button class="modal-close" onclick="closeCourseModal()">×</button>
+        
+        <!-- Modal Header -->
+        <div class="modal-title-section">
+            <h3 id="courseModalTitle">Create New Course</h3>
+            <div id="courseModalStatus" style="display:none;"></div>
+        </div>
+        
+        <!-- Course Form -->
+        <form id="courseForm" onsubmit="saveCourse(event)">
+            <input type="hidden" id="courseId">
+            
+            <!-- Basic Information -->
+            <div class="form-section">
+                <h4 class="form-section-title">📋 Basic Information</h4>
+                
+                <div class="form-grid">
+                    <div class="form-group" style="grid-column:1/-1;">
+                        <label class="form-label">Course Title *</label>
+                        <input type="text" id="courseTitle" class="form-input" required 
+                               placeholder="Advanced Musculoskeletal Assessment">
+                    </div>
+                    
+                    <div class="form-group" style="grid-column:1/-1;">
+                        <label class="form-label">Subtitle</label>
+                        <input type="text" id="courseSubtitle" class="form-input" 
+                               placeholder="Evidence-based evaluation techniques">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">URL Slug *</label>
+                        <input type="text" id="courseSlug" class="form-input" required 
+                               placeholder="advanced-msk-assessment">
+                        <small class="form-help">Used in URL: drtroy.com/courses/{slug}</small>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Status</label>
+                        <select id="courseStatus" class="form-input">
+                            <option value="draft">Draft</option>
+                            <option value="review">Ready for Review</option>
+                            <option value="published">Published</option>
+                            <option value="retired">Retired</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group" style="grid-column:1/-1;">
+                        <label class="form-label">Description</label>
+                        <textarea id="courseDescription" class="form-input" rows="4"
+                                  placeholder="Comprehensive course covering..."></textarea>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- CE Credits and Compliance -->
+            <div class="form-section">
+                <h4 class="form-section-title">🏆 CE Credits & Compliance</h4>
+                
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label class="form-label">CEU Hours *</label>
+                        <input type="number" id="courseCeuHours" class="form-input" step="0.5" min="0.5" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">CE Category</label>
+                        <select id="courseCeCategory" class="form-input">
+                            <option value="general">General</option>
+                            <option value="ethics">Ethics</option>
+                            <option value="specialty">Specialty</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Category</label>
+                        <select id="courseCategory" class="form-input">
+                            <option value="">Select Category</option>
+                            <option value="musculoskeletal">Musculoskeletal</option>
+                            <option value="neurological">Neurological</option>
+                            <option value="cardiopulmonary">Cardiopulmonary</option>
+                            <option value="pediatric">Pediatric</option>
+                            <option value="geriatric">Geriatric</option>
+                            <option value="ethics">Ethics</option>
+                            <option value="documentation">Documentation</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Difficulty Level</label>
+                        <select id="courseDifficulty" class="form-input">
+                            <option value="beginner">Beginner</option>
+                            <option value="intermediate">Intermediate</option>
+                            <option value="advanced">Advanced</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group" style="grid-column:1/-1;">
+                        <label class="form-label">Target Audience</label>
+                        <div class="checkbox-group">
+                            <label><input type="checkbox" id="targetPT"> Physical Therapist (PT)</label>
+                            <label><input type="checkbox" id="targetPTA"> Physical Therapist Assistant (PTA)</label>
+                            <label><input type="checkbox" id="targetOT"> Occupational Therapist (OT)</label>
+                            <label><input type="checkbox" id="targetCOTA"> Certified OT Assistant (COTA)</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Learning Objectives -->
+            <div class="form-section">
+                <h4 class="form-section-title">🎯 Learning Objectives</h4>
+                <p class="form-section-desc">Define what students will learn in this course</p>
+                
+                <div id="learningObjectivesContainer">
+                    <!-- Dynamic objectives list -->
+                </div>
+                <button type="button" onclick="addLearningObjective()" class="btn btn-secondary">+ Add Objective</button>
+            </div>
+            
+            <!-- Author Assignment -->
+            <div class="form-section">
+                <h4 class="form-section-title">👥 Author Assignment</h4>
+                <p class="form-section-desc">Assign authors and set revenue sharing for this course</p>
+                
+                <div class="form-group">
+                    <label class="form-label">Primary Author *</label>
+                    <select id="coursePrimaryAuthor" class="form-input" required>
+                        <option value="">Select Primary Author</option>
+                    </select>
+                </div>
+                
+                <div id="courseAuthorsContainer">
+                    <!-- Dynamic author assignments -->
+                </div>
+                <button type="button" onclick="addCourseAuthor()" class="btn btn-secondary">+ Add Co-Author</button>
+            </div>
+            
+            <!-- Pricing and Business -->
+            <div class="form-section">
+                <h4 class="form-section-title">💰 Pricing & Business</h4>
+                
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label class="form-label">Price</label>
+                        <div class="input-group">
+                            <span class="input-prefix">$</span>
+                            <input type="number" id="coursePrice" class="form-input" step="0.01" min="0" 
+                                   placeholder="49.00">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Package Only</label>
+                        <select id="coursePackageOnly" class="form-input">
+                            <option value="false">Available Individually</option>
+                            <option value="true">Package Only</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Featured Course</label>
+                        <select id="courseFeatured" class="form-input">
+                            <option value="false">No</option>
+                            <option value="true">Yes</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Sort Order</label>
+                        <input type="number" id="courseSortOrder" class="form-input" value="0">
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Media and Assets -->
+            <div class="form-section">
+                <h4 class="form-section-title">🎬 Media & Assets</h4>
+                
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label class="form-label">Thumbnail Image URL</label>
+                        <input type="url" id="courseThumbnail" class="form-input" 
+                               placeholder="https://example.com/course-thumbnail.jpg">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Preview Video URL</label>
+                        <input type="url" id="coursePreviewVideo" class="form-input" 
+                               placeholder="https://vimeo.com/123456789">
+                    </div>
+                </div>
+            </div>
+            
+            <!-- SEO and Marketing -->
+            <div class="form-section">
+                <h4 class="form-section-title">🔍 SEO & Marketing</h4>
+                
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label class="form-label">Meta Title</label>
+                        <input type="text" id="courseMetaTitle" class="form-input" maxlength="60"
+                               placeholder="Advanced Musculoskeletal Assessment Course">
+                        <small class="form-help">60 characters max</small>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Meta Description</label>
+                        <textarea id="courseMetaDescription" class="form-input" rows="2" maxlength="160"
+                                  placeholder="Learn evidence-based assessment techniques..."></textarea>
+                        <small class="form-help">160 characters max</small>
+                    </div>
+                    
+                    <div class="form-group" style="grid-column:1/-1;">
+                        <label class="form-label">Tags</label>
+                        <input type="text" id="courseTags" class="form-input" 
+                               placeholder="orthopedic, assessment, manual therapy">
+                        <small class="form-help">Comma-separated tags for search</small>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Form Actions -->
+            <div class="form-actions">
+                <button type="button" onclick="closeCourseModal()" class="btn btn-secondary">Cancel</button>
+                <button type="submit" class="btn btn-primary">Save Course</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- ════════════════════════════════════════════════════════════════════════════
+     COURSE CONTENT EDITOR MODAL
+     ════════════════════════════════════════════════════════════════════════════ -->
+
+<div class="modal-overlay" id="courseContentModal">
+    <div class="modal-box" style="max-width:1200px;max-height:95vh;overflow-y:auto;">
+        <button class="modal-close" onclick="closeCourseContentModal()">×</button>
+        
+        <div class="modal-title-section">
+            <h3 id="courseContentModalTitle">Course Content Editor</h3>
+            <div style="display:flex;gap:1rem;align-items:center;">
+                <button onclick="saveAllContent()" class="btn btn-primary">💾 Save All</button>
+                <button onclick="previewCourse()" class="btn btn-secondary">👁️ Preview</button>
+            </div>
+        </div>
+        
+        <!-- Course Content Structure -->
+        <div style="display:grid;grid-template-columns:300px 1fr;gap:2rem;height:70vh;">
+            <!-- Module Tree -->
+            <div style="border:1px solid #e2e8f0;border-radius:12px;overflow:hidden;">
+                <div style="background:#f8fafc;padding:1rem;border-bottom:1px solid #e2e8f0;display:flex;justify-content:space-between;align-items:center;">
+                    <h4 style="margin:0;">Course Structure</h4>
+                    <button onclick="addModule()" class="btn btn-small btn-primary">+ Module</button>
+                </div>
+                <div id="moduleTree" style="padding:1rem;overflow-y:auto;height:calc(100% - 60px);">
+                    <!-- Dynamic module/lesson tree -->
+                </div>
+            </div>
+            
+            <!-- Content Editor -->
+            <div style="border:1px solid #e2e8f0;border-radius:12px;overflow:hidden;">
+                <div style="background:#f8fafc;padding:1rem;border-bottom:1px solid #e2e8f0;">
+                    <h4 id="contentEditorTitle" style="margin:0;">Select content to edit</h4>
+                </div>
+                <div id="contentEditor" style="padding:1rem;overflow-y:auto;height:calc(100% - 60px);">
+                    <div style="text-align:center;color:#64748b;padding:3rem;">
+                        <div style="font-size:3rem;margin-bottom:1rem;">📝</div>
+                        <p>Select a module or lesson from the left to edit its content</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ════════════════════════════════════════════════════════════════════════════
+     STYLES FOR COURSE MANAGEMENT
+     ════════════════════════════════════════════════════════════════════════════ -->
+
+<style>
+.course-card {
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+    transition: all 0.2s;
+    background: white;
+}
+
+.course-card:hover {
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    border-color: #cbd5e0;
+}
+
+.course-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 1rem;
+}
+
+.course-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #1a365d;
+    margin: 0;
+    line-height: 1.3;
+}
+
+.course-subtitle {
+    color: #64748b;
+    font-size: 0.9rem;
+    margin: 0.25rem 0 0;
+}
+
+.course-status {
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.course-status.draft {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+.course-status.review {
+    background: #ddd6fe;
+    color: #6b46c1;
+}
+
+.course-status.published {
+    background: #d1fae5;
+    color: #065f46;
+}
+
+.course-status.retired {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+.course-meta {
+    display: flex;
+    gap: 1.5rem;
+    margin: 1rem 0;
+    flex-wrap: wrap;
+}
+
+.course-meta-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #64748b;
+    font-size: 0.875rem;
+}
+
+.course-actions {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.course-description {
+    color: #4b5563;
+    line-height: 1.6;
+    margin: 1rem 0;
+}
+
+.learning-objectives {
+    background: #f8fafc;
+    border-radius: 8px;
+    padding: 1rem;
+    margin: 1rem 0;
+}
+
+.learning-objectives h5 {
+    margin: 0 0 0.5rem;
+    color: #374151;
+    font-size: 0.875rem;
+    font-weight: 600;
+}
+
+.learning-objectives ul {
+    margin: 0;
+    padding-left: 1.5rem;
+    color: #4b5563;
+}
+
+.learning-objectives li {
+    margin-bottom: 0.25rem;
+}
+
+.form-section {
+    margin-bottom: 2rem;
+    padding: 1.5rem;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    background: #f9fafb;
+}
+
+.form-section-title {
+    margin: 0 0 0.5rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #374151;
+}
+
+.form-section-desc {
+    margin: 0 0 1rem;
+    color: #6b7280;
+    font-size: 0.875rem;
+}
+
+.checkbox-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.checkbox-group label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: normal;
+    color: #374151;
+}
+
+.input-group {
+    position: relative;
+    display: flex;
+}
+
+.input-prefix {
+    background: #f3f4f6;
+    border: 2px solid #d1d5db;
+    border-right: none;
+    border-radius: 8px 0 0 8px;
+    padding: 0.75rem 1rem;
+    color: #6b7280;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+}
+
+.input-group .form-input {
+    border-radius: 0 8px 8px 0;
+    border-left: none;
+}
+
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid #e5e7eb;
+    margin-top: 2rem;
+}
+
+.module-item {
+    padding: 0.75rem;
+    border-radius: 6px;
+    margin-bottom: 0.5rem;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.module-item:hover {
+    background: #f1f5f9;
+}
+
+.module-item.active {
+    background: #dbeafe;
+    border-left: 3px solid #3b82f6;
+}
+
+.lesson-item {
+    padding: 0.5rem 0.5rem 0.5rem 1.5rem;
+    margin: 0.25rem 0;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.875rem;
+    color: #64748b;
+}
+
+.lesson-item:hover {
+    background: #f8fafc;
+    color: #475569;
+}
+
+.lesson-item.active {
+    background: #eff6ff;
+    color: #1d4ed8;
+}
+</style>

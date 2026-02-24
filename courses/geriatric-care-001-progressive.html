@@ -443,7 +443,7 @@
     <header class="course-header">
         <div class="course-header-container">
             <div class="logo">
-                <img src="../images/drtroy_logo_transparent.jpg" alt="DrTroy CE">
+                <img src="../images/drtroy_logo_new.jpg" alt="DrTroy CE">
             </div>
             <div class="course-nav">
                 <a href="../course-catalog.html">Course Catalog</a>
@@ -1357,10 +1357,7 @@
             <p>You have successfully completed <strong>Geriatric Care Across the Continuum</strong>.</p>
             <p>You have earned <strong>3.0 Continuing Education Units (CCUs)</strong></p>
             <p>Course ID: GERIATRIC-001 &nbsp;|&nbsp; Course ID: DRTROY-GERIATRIC-001-2024</p>
-            <div style="margin: 20px 0;">
-                <a href="geriatric-care-001-feedback.html" style="background: white; color: #059669; padding: 15px 30px; border-radius: 6px; text-decoration: none; font-weight: bold; margin: 0 10px; display: inline-block;">📝 Course Evaluation</a>
-                <a href="geriatric-care-001-certificate.html" style="background: #047857; color: white; padding: 15px 30px; border-radius: 6px; text-decoration: none; font-weight: bold; margin: 0 10px; display: inline-block; border: 2px solid white;">🏆 Get Certificate</a>
-            </div>
+            <button class="certificate-btn" onclick="generateCertificate()">Download Certificate</button>
         </div>
 
     </div><!-- end .course-container -->
@@ -1390,8 +1387,6 @@
                 updateProgress();
                 if (courseState.modulesCompleted.length === courseState.totalModules) {
                     document.getElementById('certificateSection').classList.add('visible');
-                    // Set completion flag for certificate validation
-                    setStandardizedCompletion();
                 }
             }
         }
@@ -1542,30 +1537,99 @@
             12 Modules × 15 Minutes | 180 Minutes Total
         </div>
     </div>
-<script src="../js/course-sync.js"></script>
 </body>
 </html>`;
 
             const win = window.open('', '_blank');
-            win./* SECURITY: document.write() removed */ console.log(certHTML);
+            win.document.write(certHTML);
             win.document.close();
             win.print();
         }
 
-        // Logout — clear progress and redirect
-        function logout() {
+        // Logout — sign out and redirect
+        async function logout() {
+            // Sign out from Supabase using the proper client
+            if (typeof window.DrTroySupabase !== 'undefined') {
+                await window.DrTroySupabase.signOut();
+            }
+            
             localStorage.removeItem('geriatricCareProgress');
-            window.location.href = '../home-preview.html';
+            localStorage.removeItem('userSession');
+            localStorage.removeItem('loginState');
+            localStorage.removeItem('sb-pnqoxulxdmlmbywcpbyx-auth-token');
+            window.location.href = '../my-account.html';
         }
 
         // Init on page load
         document.addEventListener('DOMContentLoaded', function() {
+    // Initialize admin controls
+    initAdminControls();
             loadProgress();
         });
 
         // Auto-save every 30 seconds
         setInterval(saveProgress, 30000);
-    </script>
-<script src="../js/course-sync.js"></script>
+    
+// Admin check function
+async function isAdmin() {
+    if (!window.DrTroySupabase) return false;
+    try {
+        const session = await window.DrTroySupabase.getSession();
+        if (!session || !session.user) return false;
+        const profile = await window.DrTroySupabase.getClient()
+            .from('profiles')
+            .select('is_admin')
+            .eq('id', session.user.id)
+            .single();
+        return profile.data && profile.data.is_admin === true;
+    } catch (e) {
+        return false;
+    }
+}
+
+// Admin unlock all modules
+async function adminUnlockAll() {
+    if (!await isAdmin()) {
+        if (typeof showNotification === 'function') {
+            showNotification('⚠️ Admin access required');
+        } else {
+            alert('⚠️ Admin access required');
+        }
+        return;
+    }
+    
+    // Find all module blocks and unlock them
+    const modules = document.querySelectorAll('.module-block, [id^="module-"]');
+    modules.forEach((mod) => {
+        mod.classList.remove('locked');
+        mod.classList.add('open');
+        // Update status if there's a status element
+        const statusEl = mod.querySelector('.module-status, [id^="status-"]');
+        if (statusEl) {
+            statusEl.textContent = 'Unlocked (Admin)';
+        }
+    });
+    
+    // Show all module content
+    document.querySelectorAll('.module-content').forEach(content => {
+        content.style.display = 'block';
+    });
+    
+    if (typeof showNotification === 'function') {
+        showNotification('🔓 Admin: All modules unlocked!');
+    } else {
+        alert('🔓 Admin: All modules unlocked!');
+    }
+}
+
+// Show admin controls on page load if admin
+async function initAdminControls() {
+    if (await isAdmin()) {
+        const adminPanel = document.getElementById('adminControls');
+        if (adminPanel) adminPanel.style.display = 'block';
+    }
+}
+
+</script>
 </body>
 </html>

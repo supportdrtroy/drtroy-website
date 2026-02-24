@@ -1,0 +1,100 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="500" viewBox="0 0 800 500">
+  <rect width="800" height="500" fill="white" stroke="#e0e0e0" stroke-width="1"/>
+  
+  <!-- Title -->
+  <text x="400" y="35" text-anchor="middle" font-family="Arial, sans-serif" font-size="22" font-weight="bold" fill="#1a56a0">
+    Static Balance Training
+  </text>
+  
+  <!-- Ground line -->
+  <line x1="100" y1="420" x2="700" y2="420" stroke="#1a56a0" stroke-width="2"/>
+  
+  <!-- Support rail/wall -->
+  <rect x="150" y="150" width="20" height="270" fill="#8d6e63" stroke="#1a56a0" stroke-width="2"/>
+  <text x="180" y="140" font-family="Arial, sans-serif" font-size="11" fill="#333">Support available</text>
+  
+  <!-- Person in static balance position -->
+  <!-- Head -->
+  <circle cx="300" cy="180" r="25" fill="white" stroke="#1a56a0" stroke-width="2"/>
+  <circle cx="290" cy="175" r="3" fill="#1a56a0"/>
+  <circle cx="310" cy="175" r="3" fill="#1a56a0"/>
+  <path d="M 285 190 Q 300 200 315 190" stroke="#1a56a0" stroke-width="2" fill="none"/>
+  
+  <!-- Body -->
+  <line x1="300" y1="205" x2="300" y2="350" stroke="#1a56a0" stroke-width="4"/>
+  
+  <!-- One arm near support -->
+  <line x1="300" y1="230" x2="200" y2="260" stroke="#1a56a0" stroke-width="3"/>
+  <line x1="200" y1="260" x2="180" y2="290" stroke="#1a56a0" stroke-width="3"/>
+  
+  <!-- Other arm for balance -->
+  <line x1="300" y1="230" x2="330" y2="270" stroke="#1a56a0" stroke-width="3"/>
+  <line x1="330" y1="270" x2="350" y2="300" stroke="#1a56a0" stroke-width="3"/>
+  
+  <!-- Legs in stable stance -->
+  <line x1="300" y1="350" x2="285" y2="415" stroke="#1a56a0" stroke-width="3"/>
+  <line x1="300" y1="350" x2="315" y2="415" stroke="#1a56a0" stroke-width="3"/>
+  <ellipse cx="280" cy="420" rx="15" ry="5" fill="#1a56a0"/>
+  <ellipse cx="320" cy="420" rx="15" ry="5" fill="#1a56a0"/>
+  
+  <!-- Training characteristics -->
+  <rect x="100" y="80" width="280" height="140" fill="#e8f5e9" stroke="#2e7d32" stroke-width="2" rx="10"/>
+  <text x="240" y="105" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#2e7d32">Static Balance Features</text>
+  
+  <text x="110" y="125" font-family="Arial, sans-serif" font-size="11" fill="#333">• Maintaining position without movement</text>
+  <text x="110" y="140" font-family="Arial, sans-serif" font-size="11" fill="#333">• Fixed base of support</text>
+  <text x="110" y="155" font-family="Arial, sans-serif" font-size="11" fill="#333">• Focus on postural control</text>
+  <text x="110" y="170" font-family="Arial, sans-serif" font-size="11" fill="#333">• Support available for safety</text>
+  <text x="110" y="185" font-family="Arial, sans-serif" font-size="11" fill="#333">• Progressive difficulty levels</text>
+  <text x="110" y="200" font-family="Arial, sans-serif" font-size="11" fill="#333">• Hold positions 30-60 seconds</text>
+  
+  <!-- Exercise progressions -->
+  <rect x="450" y="80" width="280" height="180" fill="#e8f4fd" stroke="#1a56a0" stroke-width="2" rx="10"/>
+  <text x="590" y="105" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#1a56a0">Progression Levels</text>
+  
+  <text x="460" y="125" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#2e7d32">Level 1: Two feet, eyes open</text>
+  <text x="470" y="140" font-family="Arial, sans-serif" font-size="10" fill="#333">• Normal stance width • Support nearby</text>
+  
+  <text x="460" y="160" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#ff9800">Level 2: Narrow base</text>
+  <text x="470" y="175" font-family="Arial, sans-serif" font-size="10" fill="#333">• Feet together • Semi-tandem • Tandem stance</text>
+  
+  <text x="460" y="195" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#d32f2f">Level 3: Single leg</text>
+  <text x="470" y="210" font-family="Arial, sans-serif" font-size="10" fill="#333">• Unilateral stance • Most challenging</text>
+  
+  <text x="460" y="230" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#1a56a0">Sensory Challenge:</text>
+  <text x="470" y="245" font-family="Arial, sans-serif" font-size="10" fill="#333">• Add eyes closed • Foam surface • Head turns</text>
+  
+  <!-- Exercise examples -->
+  <rect x="100" y="240" width="600" height="120" fill="#fff3e0" stroke="#ff9800" stroke-width="1" rx="10"/>
+  <text x="400" y="265" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#ff9800">Common Static Balance Exercises</text>
+  
+  <text x="120" y="285" font-family="Arial, sans-serif" font-size="11" fill="#333">• Standing with feet together (30 sec)</text>
+  <text x="120" y="300" font-family="Arial, sans-serif" font-size="11" fill="#333">• Tandem stance (heel-to-toe)</text>
+  <text x="120" y="315" font-family="Arial, sans-serif" font-size="11" fill="#333">• Single leg stance progression</text>
+  <text x="120" y="330" font-family="Arial, sans-serif" font-size="11" fill="#333">• Standing on foam pad</text>
+  <text x="120" y="345" font-family="Arial, sans-serif" font-size="11" fill="#333">• Eyes closed variations</text>
+  
+  <text x="420" y="285" font-family="Arial, sans-serif" font-size="11" fill="#333">• Standing while turning head</text>
+  <text x="420" y="300" font-family="Arial, sans-serif" font-size="11" fill="#333">• Clock reach (standing center)</text>
+  <text x="420" y="315" font-family="Arial, sans-serif" font-size="11" fill="#333">• Standing weight shifts</text>
+  <text x="420" y="330" font-family="Arial, sans-serif" font-size="11" fill="#333">• Standing with perturbations</text>
+  <text x="420" y="345" font-family="Arial, sans-serif" font-size="11" fill="#333">• Modified positions (arms up)</text>
+  
+  <!-- Goals and benefits -->
+  <rect x="400" y="380" width="280" height="80" fill="#e8f5e9" stroke="#2e7d32" stroke-width="1" rx="10"/>
+  <text x="540" y="405" text-anchor="middle" font-family="Arial, sans-serif" font-size="13" font-weight="bold" fill="#2e7d32">Training Goals</text>
+  <text x="410" y="425" font-family="Arial, sans-serif" font-size="11" fill="#333">• Improve postural stability</text>
+  <text x="410" y="440" font-family="Arial, sans-serif" font-size="11" fill="#333">• Enhance proprioceptive awareness</text>
+  <text x="410" y="455" font-family="Arial, sans-serif" font-size="11" fill="#333">• Build confidence in static positions</text>
+  
+  <!-- Safety considerations -->
+  <rect x="100" y="380" width="280" height="80" fill="#ffebee" stroke="#d32f2f" stroke-width="1" rx="10"/>
+  <text x="240" y="405" text-anchor="middle" font-family="Arial, sans-serif" font-size="13" font-weight="bold" fill="#d32f2f">Safety Tips</text>
+  <text x="110" y="425" font-family="Arial, sans-serif" font-size="11" fill="#333">• Keep support within arm's reach</text>
+  <text x="110" y="440" font-family="Arial, sans-serif" font-size="11" fill="#333">• Start with easier positions</text>
+  <text x="110" y="455" font-family="Arial, sans-serif" font-size="11" fill="#333">• Progress gradually</text>
+  
+  <!-- Stability zone indicator -->
+  <circle cx="300" cy="280" r="40" fill="none" stroke="#2e7d32" stroke-width="2" stroke-dasharray="5,5" opacity="0.5"/>
+  <text x="350" y="245" font-family="Arial, sans-serif" font-size="10" fill="#2e7d32">Stable position</text>
+</svg>

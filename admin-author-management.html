@@ -1,0 +1,409 @@
+<!-- ════════════════════════════════════════════════════════════════════════════
+     AUTHOR MANAGEMENT & SALES TRACKING
+     Multi-author platform with revenue attribution
+     ════════════════════════════════════════════════════════════════════════════ -->
+
+<!-- Authors Tab -->
+<div id="authors" class="tab-content">
+    <div class="card">
+        <div class="card-header" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;">
+            <div>
+                <h2 class="card-title">👥 Author Management</h2>
+                <p style="color:#64748b;margin-top:.5rem;font-size:.95rem;">Manage content creators and track sales attribution</p>
+            </div>
+            <div style="display:flex;gap:.75rem;align-items:center;flex-wrap:wrap;">
+                <button onclick="exportAuthorReport()" class="btn btn-secondary">📊 Export Report</button>
+                <button onclick="processPayouts()" class="btn btn-secondary">💰 Process Payouts</button>
+                <button onclick="showAddAuthorModal()" class="btn btn-primary">➕ Add Author</button>
+            </div>
+        </div>
+        
+        <!-- Author Analytics Dashboard -->
+        <div class="card-body">
+            <div class="stats-grid" style="margin-bottom:2rem;">
+                <div class="stat-card">
+                    <div class="stat-number" id="authorStatTotal">—</div>
+                    <div class="stat-label">Total Authors</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="authorStatActive">—</div>
+                    <div class="stat-label">Active Authors</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="authorStatTotalRevenue">$0</div>
+                    <div class="stat-label">Total Revenue</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="authorStatMonthlyRevenue">$0</div>
+                    <div class="stat-label">This Month</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="authorStatPendingPayouts">$0</div>
+                    <div class="stat-label">Pending Payouts</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="authorStatTotalCourses">—</div>
+                    <div class="stat-label">Total Courses</div>
+                </div>
+            </div>
+            
+            <!-- Author List -->
+            <div id="authorListContainer">
+                <div class="loading-state" style="text-align:center;color:#64748b;padding:3rem;">
+                    <div style="font-size:3rem;margin-bottom:1rem;">👥</div>
+                    <p>Loading authors...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Sales Analytics Tab -->
+<div id="sales-analytics" class="tab-content">
+    <div class="card">
+        <div class="card-header">
+            <h2 class="card-title">📈 Sales Analytics by Author</h2>
+            <p style="color:#64748b;margin-top:.5rem;font-size:.95rem;">Detailed revenue tracking and sales attribution</p>
+        </div>
+        
+        <div class="card-body">
+            <!-- Date Range Filter -->
+            <div style="display:flex;gap:1rem;margin-bottom:2rem;flex-wrap:wrap;align-items:center;">
+                <div>
+                    <label style="display:block;font-weight:600;margin-bottom:.5rem;">Date Range:</label>
+                    <select id="dateRangeFilter" onchange="updateSalesAnalytics()" class="form-input" style="width:auto;">
+                        <option value="7">Last 7 days</option>
+                        <option value="30" selected>Last 30 days</option>
+                        <option value="90">Last 90 days</option>
+                        <option value="365">Last year</option>
+                        <option value="all">All time</option>
+                    </select>
+                </div>
+                <div>
+                    <label style="display:block;font-weight:600;margin-bottom:.5rem;">Author:</label>
+                    <select id="authorFilter" onchange="updateSalesAnalytics()" class="form-input" style="width:auto;">
+                        <option value="">All Authors</option>
+                    </select>
+                </div>
+                <div style="margin-left:auto;">
+                    <button onclick="refreshSalesAnalytics()" class="btn btn-secondary">🔄 Refresh</button>
+                </div>
+            </div>
+            
+            <!-- Sales Charts -->
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:2rem;margin-bottom:2rem;">
+                <div class="chart-container">
+                    <h4>Revenue by Author</h4>
+                    <canvas id="revenueByAuthorChart"></canvas>
+                </div>
+                <div class="chart-container">
+                    <h4>Sales Over Time</h4>
+                    <canvas id="salesTimeChart"></canvas>
+                </div>
+            </div>
+            
+            <!-- Detailed Sales Table -->
+            <div style="overflow-x:auto;">
+                <table class="table" id="salesAnalyticsTable">
+                    <thead>
+                        <tr>
+                            <th>Course</th>
+                            <th>Author</th>
+                            <th>Role</th>
+                            <th>Royalty %</th>
+                            <th>Sales</th>
+                            <th>Gross Revenue</th>
+                            <th>Author Revenue</th>
+                            <th>Avg. Sale Price</th>
+                        </tr>
+                    </thead>
+                    <tbody id="salesAnalyticsBody">
+                        <tr><td colspan="8" style="text-align:center;color:#94a3b8;padding:2rem;">Loading sales data...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ════════════════════════════════════════════════════════════════════════════
+     ADD/EDIT AUTHOR MODAL
+     ════════════════════════════════════════════════════════════════════════════ -->
+
+<div class="modal-overlay" id="authorModal">
+    <div class="modal-box" style="max-width:700px;">
+        <button class="modal-close" onclick="closeAuthorModal()">×</button>
+        
+        <div class="modal-title-section">
+            <h3 id="authorModalTitle">Add New Author</h3>
+        </div>
+        
+        <form id="authorForm" onsubmit="saveAuthor(event)">
+            <input type="hidden" id="authorId">
+            
+            <!-- Basic Information -->
+            <div class="form-section">
+                <h4 class="form-section-title">👤 Author Information</h4>
+                
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label class="form-label">Full Name *</label>
+                        <input type="text" id="authorName" class="form-input" required 
+                               placeholder="Dr. Jane Smith">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Credentials</label>
+                        <input type="text" id="authorCredentials" class="form-input" 
+                               placeholder="PT, DPT, PhD">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Email *</label>
+                        <input type="email" id="authorEmail" class="form-input" required 
+                               placeholder="jane@example.com">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Phone</label>
+                        <input type="tel" id="authorPhone" class="form-input" 
+                               placeholder="(555) 123-4567">
+                    </div>
+                    
+                    <div class="form-group" style="grid-column:1/-1;">
+                        <label class="form-label">Bio</label>
+                        <textarea id="authorBio" class="form-input" rows="3"
+                                  placeholder="Professional background and expertise..."></textarea>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Revenue Settings -->
+            <div class="form-section">
+                <h4 class="form-section-title">💰 Revenue Settings</h4>
+                
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label class="form-label">Default Royalty %</label>
+                        <div class="input-group">
+                            <input type="number" id="authorRoyalty" class="form-input" 
+                                   step="0.01" min="0" max="100" placeholder="50.00">
+                            <span class="input-suffix">%</span>
+                        </div>
+                        <small class="form-help">Can be overridden per course</small>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Payment Method</label>
+                        <select id="authorPaymentMethod" class="form-input">
+                            <option value="manual">Manual</option>
+                            <option value="paypal">PayPal</option>
+                            <option value="stripe">Stripe Connect</option>
+                            <option value="bank">Bank Transfer</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group" style="grid-column:1/-1;">
+                        <label class="form-label">Payment Details</label>
+                        <textarea id="authorPaymentDetails" class="form-input" rows="2"
+                                  placeholder="PayPal email, bank account info, etc."></textarea>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Profile & Social -->
+            <div class="form-section">
+                <h4 class="form-section-title">🌐 Profile & Social</h4>
+                
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label class="form-label">Website URL</label>
+                        <input type="url" id="authorWebsite" class="form-input" 
+                               placeholder="https://example.com">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Profile Image URL</label>
+                        <input type="url" id="authorProfileImage" class="form-input" 
+                               placeholder="https://example.com/photo.jpg">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">LinkedIn URL</label>
+                        <input type="url" id="authorLinkedIn" class="form-input" 
+                               placeholder="https://linkedin.com/in/...">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Tax ID (Optional)</label>
+                        <input type="text" id="authorTaxId" class="form-input" 
+                               placeholder="123-45-6789 or EIN">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-actions">
+                <button type="button" onclick="closeAuthorModal()" class="btn btn-secondary">Cancel</button>
+                <button type="submit" class="btn btn-primary">Save Author</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- ════════════════════════════════════════════════════════════════════════════
+     AUTHOR MANAGEMENT STYLES
+     ════════════════════════════════════════════════════════════════════════════ -->
+
+<style>
+.author-card {
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+    background: white;
+    transition: all 0.2s;
+}
+
+.author-card:hover {
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    border-color: #cbd5e0;
+}
+
+.author-card-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.author-avatar {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: #f3f4f6;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #6b7280;
+    flex-shrink: 0;
+}
+
+.author-info h3 {
+    margin: 0 0 0.25rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #1a365d;
+}
+
+.author-credentials {
+    color: #059669;
+    font-size: 0.875rem;
+    font-weight: 500;
+    margin: 0 0 0.5rem;
+}
+
+.author-email {
+    color: #64748b;
+    font-size: 0.875rem;
+}
+
+.author-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 1rem;
+    margin: 1rem 0;
+    padding: 1rem;
+    background: #f8fafc;
+    border-radius: 8px;
+}
+
+.author-stat {
+    text-align: center;
+}
+
+.author-stat-number {
+    display: block;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #1a365d;
+}
+
+.author-stat-label {
+    font-size: 0.75rem;
+    color: #64748b;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.author-actions {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin-top: 1rem;
+}
+
+.revenue-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.revenue-badge.positive {
+    background: #d1fae5;
+    color: #065f46;
+}
+
+.revenue-badge.zero {
+    background: #f3f4f6;
+    color: #6b7280;
+}
+
+.chart-container {
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 1.5rem;
+}
+
+.chart-container h4 {
+    margin: 0 0 1rem;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #374151;
+}
+
+.input-suffix {
+    background: #f3f4f6;
+    border: 2px solid #d1d5db;
+    border-left: none;
+    border-radius: 0 8px 8px 0;
+    padding: 0.75rem 1rem;
+    color: #6b7280;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+}
+
+.input-group .form-input {
+    border-radius: 8px 0 0 8px;
+    border-right: none;
+}
+
+@media (max-width: 768px) {
+    .author-card-header {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+    
+    .author-stats {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+</style>

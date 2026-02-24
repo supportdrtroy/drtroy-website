@@ -85,7 +85,7 @@
 <body>
     <header class="course-header">
         <div class="course-header-container">
-            <div class="logo"><img src="../images/drtroy_logo_transparent.jpg" alt="DrTroy CE"></div>
+            <div class="logo"><img src="../images/drtroy_logo_new.jpg" alt="DrTroy CE"></div>
             <div class="course-nav">
                 <a href="../course-catalog.html">Course Catalog</a>
                 <a href="../my-account.html">My Account</a>
@@ -805,10 +805,7 @@
             <h2>🧘 Congratulations!</h2>
             <p>You have successfully completed the <strong>Balance, Gait, and Vestibular Management</strong> course.</p>
             <p>You have earned <strong>3.0 Continuing Education Units</strong></p>
-            <div style="margin: 20px 0;">
-                <a href="balance-gait-001-feedback.html" style="background: white; color: #059669; padding: 15px 30px; border-radius: 6px; text-decoration: none; font-weight: bold; margin: 0 10px; display: inline-block;">📝 Course Evaluation</a>
-                <a href="balance-gait-001-certificate.html" style="background: #047857; color: white; padding: 15px 30px; border-radius: 6px; text-decoration: none; font-weight: bold; margin: 0 10px; display: inline-block; border: 2px solid white;">🏆 Get Certificate</a>
-            </div>
+            <button class="certificate-btn" onclick="generateCertificate()">Download Certificate</button>
         </div>
     </div>
 
@@ -831,8 +828,6 @@
                 updateProgress();
                 if (courseState.modulesCompleted.length === courseState.totalModules) {
                     document.getElementById('certificateSection').classList.add('visible');
-                    // Set completion flag for certificate validation
-                    setStandardizedCompletion();
                 }
             }
         }
@@ -861,8 +856,6 @@
                 if (courseState.modulesCompleted.length === courseState.totalModules) {
                     courseState.completionTime = new Date();
                     document.getElementById('certificateSection').classList.add('visible');
-                    // Set completion flag for certificate validation
-                    setStandardizedCompletion();
                     saveProgress();
                 }
             }
@@ -896,23 +889,93 @@
         function generateCertificate() {
             const completionDate = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
             const w = window.open('', '_blank');
-            w./* SECURITY: document.write() removed */ console.log(`<!DOCTYPE html><html><head><title>Certificate - Balance, Gait, and Vestibular Management</title><style>body{font-family:'Georgia',serif;text-align:center;padding:50px;background:#f8f9fa}.certificate{background:white;padding:60px;border:10px solid #1a365d;max-width:800px;margin:0 auto}.header{color:#1a365d;font-size:36px;margin-bottom:20px}.title{font-size:24px;color:#059669;margin:30px 0}.recipient{font-size:28px;color:#333;margin:20px 0;border-bottom:2px solid #1a365d;padding-bottom:10px}.content{font-size:18px;line-height:1.6;margin:30px 0}.signature{margin-top:60px;display:flex;justify-content:space-around}.sig-line{border-top:2px solid #333;width:200px;padding-top:10px}.date{color:#666;margin-top:20px}</style></head><body><div class="certificate"><div class="header">CERTIFICATE OF COMPLETION</div><div class="title">🧘 Balance, Gait, and Vestibular Management</div><div class="content">This certifies that<br><div class="recipient">[Participant Name]</div>has successfully completed the continuing education course<br><strong>Balance, Gait, and Vestibular Management</strong><br>consisting of 3.0 contact hours of instruction</div><div class="signature"><div class="sig-line">Dr. Troy Hounshell, PT, ScD<br>Course Director</div><div class="sig-line">DrTroy Continuing Education<br>DrTroy CE</div></div><div class="date">Completed: ${completionDate}<br>Course ID: BALANCE-001<br>Course ID: DRTROY-BALANCE-001-2024</div></div><script src="../js/course-sync.js"></script>
-</body></html>`);
+            w.document.write(`<!DOCTYPE html><html><head><title>Certificate - Balance, Gait, and Vestibular Management</title><style>body{font-family:'Georgia',serif;text-align:center;padding:50px;background:#f8f9fa}.certificate{background:white;padding:60px;border:10px solid #1a365d;max-width:800px;margin:0 auto}.header{color:#1a365d;font-size:36px;margin-bottom:20px}.title{font-size:24px;color:#059669;margin:30px 0}.recipient{font-size:28px;color:#333;margin:20px 0;border-bottom:2px solid #1a365d;padding-bottom:10px}.content{font-size:18px;line-height:1.6;margin:30px 0}.signature{margin-top:60px;display:flex;justify-content:space-around}.sig-line{border-top:2px solid #333;width:200px;padding-top:10px}.date{color:#666;margin-top:20px}</style></head><body><div class="certificate"><div class="header">CERTIFICATE OF COMPLETION</div><div class="title">🧘 Balance, Gait, and Vestibular Management</div><div class="content">This certifies that<br><div class="recipient">[Participant Name]</div>has successfully completed the continuing education course<br><strong>Balance, Gait, and Vestibular Management</strong><br>consisting of 3.0 contact hours of instruction</div><div class="signature"><div class="sig-line">Dr. Troy Hounshell, PT, ScD<br>Course Director</div><div class="sig-line">DrTroy Continuing Education<br>DrTroy CE</div></div><div class="date">Completed: ${completionDate}<br>Course ID: BALANCE-001<br>Course ID: DRTROY-BALANCE-001-2024</div></div></body></html>`);
             w.document.close();
             w.print();
         }
 
-        function logout() {
-            localStorage.clear();
-            window.location.href = '../home-preview.html';
+        async function logout() {
+            // Sign out from Supabase using the proper client
+            if (typeof window.DrTroySupabase !== 'undefined') {
+                await window.DrTroySupabase.signOut();
+            }
+            
+            // Clear all session data
+            localStorage.removeItem('userSession');
+            localStorage.removeItem('loginState');
+            localStorage.removeItem('sb-pnqoxulxdmlmbywcpbyx-auth-token');
+            
+            window.location.href = '../my-account.html';
         }
 
         document.addEventListener('DOMContentLoaded', function () {
+    // Initialize admin controls
+    initAdminControls();
             loadProgress();
         });
 
         setInterval(saveProgress, 30000);
-    </script>
-<script src="../js/course-sync.js"></script>
+    
+// Admin check function
+async function isAdmin() {
+    if (!window.DrTroySupabase) return false;
+    try {
+        const session = await window.DrTroySupabase.getSession();
+        if (!session || !session.user) return false;
+        const profile = await window.DrTroySupabase.getClient()
+            .from('profiles')
+            .select('is_admin')
+            .eq('id', session.user.id)
+            .single();
+        return profile.data && profile.data.is_admin === true;
+    } catch (e) {
+        return false;
+    }
+}
+
+// Admin unlock all modules
+async function adminUnlockAll() {
+    if (!await isAdmin()) {
+        if (typeof showNotification === 'function') {
+            showNotification('⚠️ Admin access required');
+        } else {
+            alert('⚠️ Admin access required');
+        }
+        return;
+    }
+    
+    // Find all module blocks and unlock them
+    const modules = document.querySelectorAll('.module-block, [id^="module-"]');
+    modules.forEach((mod) => {
+        mod.classList.remove('locked');
+        mod.classList.add('open');
+        // Update status if there's a status element
+        const statusEl = mod.querySelector('.module-status, [id^="status-"]');
+        if (statusEl) {
+            statusEl.textContent = 'Unlocked (Admin)';
+        }
+    });
+    
+    // Show all module content
+    document.querySelectorAll('.module-content').forEach(content => {
+        content.style.display = 'block';
+    });
+    
+    if (typeof showNotification === 'function') {
+        showNotification('🔓 Admin: All modules unlocked!');
+    } else {
+        alert('🔓 Admin: All modules unlocked!');
+    }
+}
+
+// Show admin controls on page load if admin
+async function initAdminControls() {
+    if (await isAdmin()) {
+        const adminPanel = document.getElementById('adminControls');
+        if (adminPanel) adminPanel.style.display = 'block';
+    }
+}
+
+</script>
 </body>
 </html>

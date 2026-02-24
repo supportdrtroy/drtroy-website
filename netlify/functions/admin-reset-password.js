@@ -7,7 +7,6 @@ const https = require('https');
 
 const SUPABASE_HOST = 'pnqoxulxdmlmbywcpbyx.supabase.co';
 const SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
-if (!SERVICE_ROLE_KEY) { console.error('[admin-reset-password] Missing SUPABASE_SERVICE_ROLE_KEY'); }
 
 const ALLOWED_ORIGINS = ['https://drtroy.com', 'https://www.drtroy.com'];
 
@@ -47,7 +46,6 @@ async function verifyAdmin(authHeader) {
     headers: { apikey: SERVICE_ROLE_KEY, Authorization: `Bearer ${token}` }
   }, null);
   if (userRes.status !== 200 || !userRes.body?.id) return { valid: false };
-  const profileBody = JSON.stringify({ query: '' }); // unused
   const profileRes = await httpRequest({
     hostname: SUPABASE_HOST,
     path: `/rest/v1/profiles?id=eq.${userRes.body.id}&select=is_admin`,
@@ -55,7 +53,10 @@ async function verifyAdmin(authHeader) {
     headers: { apikey: SERVICE_ROLE_KEY, Authorization: `Bearer ${SERVICE_ROLE_KEY}`, 'Content-Type': 'application/json' }
   }, null);
   if (profileRes.status !== 200) return { valid: false };
-  const profiles = typeof profileRes.body === 'string' ? JSON.parse(profileRes.body) : profileRes.body;
+  let profiles;
+  try {
+    profiles = typeof profileRes.body === 'string' ? JSON.parse(profileRes.body) : profileRes.body;
+  } catch { return { valid: false }; }
   if (!Array.isArray(profiles) || !profiles[0]?.is_admin) return { valid: false };
   return { valid: true };
 }
@@ -89,25 +90,6 @@ exports.handler = async (event) => {
   }, recoverBody);
 
   if (res.status < 300) {
-    // Audit log password reset
-    try {
-      const token = authHeader.replace('Bearer ', '');
-      const adminUserRes = await httpRequest({
-        hostname: SUPABASE_HOST, path: '/auth/v1/user', method: 'GET',
-        headers: { apikey: SERVICE_ROLE_KEY, Authorization: `Bearer ${token}` }
-      }, null);
-      const logBody = JSON.stringify({
-        admin_user_id: adminUserRes.body?.id || null,
-        action_type: 'admin_reset_password',
-        details: { target_email: email },
-        ip_address: event.headers['x-forwarded-for'] || event.headers['client-ip'] || 'unknown',
-        created_at: new Date().toISOString(),
-      });
-      await httpRequest({
-        hostname: SUPABASE_HOST, path: '/rest/v1/admin_log', method: 'POST',
-        headers: { apikey: SERVICE_ROLE_KEY, Authorization: `Bearer ${SERVICE_ROLE_KEY}`, 'Content-Type': 'application/json', Prefer: 'return=representation', 'Content-Length': Buffer.byteLength(logBody) }
-      }, logBody);
-    } catch (e) { /* non-critical */ }
     return { statusCode: 200, headers: getCorsHeaders(event), body: JSON.stringify({ success: true }) };
   } else {
     return { statusCode: res.status, headers: getCorsHeaders(event), body: JSON.stringify({ error: res.body?.msg || res.body?.message || 'Failed to send reset email' }) };

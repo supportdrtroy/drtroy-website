@@ -2252,13 +2252,19 @@ Positive: Paresthesia in plantar foot distribution
 
 <script>
 // Logout function
-function logout() {
+async function logout() {
+    // Sign out from Supabase using the proper client
+    if (typeof window.DrTroySupabase !== 'undefined') {
+        await window.DrTroySupabase.signOut();
+    }
+    
     // Clear any user session data
     localStorage.removeItem('userSession');
     localStorage.removeItem('loginState');
+    localStorage.removeItem('sb-pnqoxulxdmlmbywcpbyx-auth-token');
     
-    // Redirect to login page
-    window.location.href = '../login.html';
+    // Redirect to account page (will show login form when not authenticated)
+    window.location.href = '../my-account.html';
 }
 </script>
 

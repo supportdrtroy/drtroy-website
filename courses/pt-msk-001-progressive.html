@@ -825,6 +825,21 @@
             <div class="progress-text" id="progressText">Ready to begin • 0 of 12 modules completed</div>
         </div>
 
+        <!-- Admin Controls (hidden by default, shown for admins) -->
+        <div id="adminControls" style="display: none; padding: 15px 20px; background: linear-gradient(135deg, #1a365d, #2c5282); border-radius: 8px; margin-bottom: 20px; color: white;">
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+                <div>
+                    <strong>🛡️ Admin Controls</strong>
+                    <span style="opacity: 0.8; margin-left: 10px; font-size: 0.9rem;">Review mode enabled</span>
+                </div>
+                <div style="display: flex; gap: 10px;">
+                    <button onclick="adminUnlockAll()" style="background: #059669; color: white; border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-weight: 600;">
+                        🔓 Unlock All Modules
+                    </button>
+                </div>
+            </div>
+        </div>
+
         <!-- Course Introduction -->
         <div style="padding: 20px; background: #f7fafc; border-radius: 8px; margin-bottom: 30px;">
             <h2>🎓 Complete Interactive MSK Course</h2>
@@ -2286,12 +2301,18 @@
         };
 
         // Load saved progress on page load
-        window.addEventListener('load', function() {
+        window.addEventListener('load', async function() {
             loadProgress();
             updateProgressDisplay();
             startAutoSave();
             trackTimeSpent();
             enableImageZoom();
+            
+            // Show admin controls if user is admin
+            if (await isAdmin()) {
+                const adminPanel = document.getElementById('adminControls');
+                if (adminPanel) adminPanel.style.display = 'block';
+            }
         });
 
         // Enable zoom for all images
@@ -2374,13 +2395,59 @@
             }, 60000); // Every minute
         }
 
+        // Admin check function
+        async function isAdmin() {
+            if (!window.DrTroySupabase) return false;
+            try {
+                const session = await window.DrTroySupabase.getSession();
+                if (!session || !session.user) return false;
+                const profile = await window.DrTroySupabase.getClient()
+                    .from('profiles')
+                    .select('is_admin')
+                    .eq('id', session.user.id)
+                    .single();
+                return profile.data && profile.data.is_admin === true;
+            } catch (e) {
+                return false;
+            }
+        }
+
+        // Admin unlock all modules
+        async function adminUnlockAll() {
+            if (!await isAdmin()) {
+                showNotification('⚠️ Admin access required');
+                return;
+            }
+            
+            const totalModules = 12;
+            for (let i = 1; i <= totalModules; i++) {
+                unlockModule(i, false);
+            }
+            
+            // Show all completion sections
+            document.getElementById('references-section').style.display = 'block';
+            document.getElementById('course-feedback').style.display = 'block';
+            document.getElementById('final-assessment').style.display = 'block';
+            document.getElementById('certificate-section').style.display = 'block';
+            
+            saveProgress(false);
+            showNotification('🔓 Admin: All modules unlocked!');
+        }
+
         // Module Management
-        function toggleModule(moduleNum) {
+        async function toggleModule(moduleNum) {
             const moduleContainer = document.getElementById(`module-${moduleNum}`);
             const content = document.getElementById(`content-${moduleNum}`);
             const header = moduleContainer.querySelector('.module-header');
             
             if (header.classList.contains('locked')) {
+                // Check if admin
+                if (await isAdmin()) {
+                    if (confirm(`🔓 Admin Override: Unlock Module ${moduleNum}?`)) {
+                        unlockModule(moduleNum);
+                    }
+                    return;
+                }
                 showNotification('⚠️ Complete previous modules first');
                 return;
             }
@@ -3050,18 +3117,24 @@
         });
 
         // Logout function
-        function logout() {
+        async function logout() {
+            // Sign out from Supabase using the proper client
+            if (typeof window.DrTroySupabase !== 'undefined') {
+                await window.DrTroySupabase.signOut();
+            }
+            
             // Clear course progress
             localStorage.removeItem('pt-msk-001-progress');
             
             // Clear any other user session data
             localStorage.removeItem('userSession');
             localStorage.removeItem('loginState');
+            localStorage.removeItem('sb-pnqoxulxdmlmbywcpbyx-auth-token');
             
-            // Redirect to login page
+            // Redirect to account page
             showNotification('👋 Logging out...');
             setTimeout(() => {
-                window.location.href = '../login.html';
+                window.location.href = '../my-account.html';
             }, 1000);
         }
 

@@ -74,7 +74,7 @@
 
 <header class="course-header">
     <div class="course-header-container">
-        <div class="logo"><img src="../images/drtroy_logo_transparent.jpg" alt="DrTroy CE"></div>
+        <div class="logo"><img src="../images/drtroy_logo_new.jpg" alt="DrTroy CE"></div>
         <div class="course-nav">
             <a href="../course-catalog.html">Course Catalog</a>
             <a href="../my-account.html">My Account</a>
@@ -864,10 +864,7 @@
         <p style="font-size:1.2rem;opacity:0.9;margin-bottom:0.5rem;">You have successfully completed</p>
         <p style="font-size:1.5rem;font-weight:700;margin:0.5rem 0;font-family:'Inter',sans-serif;">💪 Post-Surgical and Therapeutic Exercise</p>
         <p style="opacity:0.85;margin-bottom:2rem;">3.0 CCUs · Course ID: EXERCISE-001 · Course ID: DRTROY-EXERCISE-001-2024</p>
-        <div style="margin: 20px 0;">
-                <a href="post-surgical-001-feedback.html" style="background: white; color: #059669; padding: 15px 30px; border-radius: 6px; text-decoration: none; font-weight: bold; margin: 0 10px; display: inline-block;">📝 Course Evaluation</a>
-                <a href="post-surgical-001-certificate.html" style="background: #047857; color: white; padding: 15px 30px; border-radius: 6px; text-decoration: none; font-weight: bold; margin: 0 10px; display: inline-block; border: 2px solid white;">🏆 Get Certificate</a>
-            </div>
+        <button class="certificate-btn" onclick="generateCertificate()">🏆 Generate Certificate of Completion</button>
     </div>
 
 </div><!-- end .course-container -->
@@ -936,7 +933,6 @@ function updateProgress(progress) {
 
     if (completed === TOTAL_MODULES) {
         document.getElementById('certificateSection').classList.add('visible');
-            setStandardizedCompletion();
         document.getElementById('certificateSection').scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
 }
@@ -969,7 +965,7 @@ function generateCertificate() {
     if (!name || name.trim() === '') return;
     const date = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
     const certWin = window.open('', '_blank', 'width=900,height=680');
-    certWin./* SECURITY: document.write() removed */ console.log(`<!DOCTYPE html><html><head><title>Certificate of Completion - DrTroy CE</title>
+    certWin.document.write(`<!DOCTYPE html><html><head><title>Certificate of Completion - DrTroy CE</title>
     <style>
         body { font-family:'Georgia','Times New Roman',serif; background:#f5f0e8; display:flex; align-items:center; justify-content:center; min-height:100vh; margin:0; }
         .cert { background:white; border:12px double #1a365d; padding:3rem; max-width:800px; width:90%; text-align:center; box-shadow:0 20px 60px rgba(0,0,0,0.2); }
@@ -1002,14 +998,21 @@ function generateCertificate() {
         </div>
         <button class="print-btn" onclick="window.print()">🖨 Print Certificate</button>
     </div>
-    <script src="../js/course-sync.js"></script>
-</body></html>`);
+    </body></html>`);
     certWin.document.close();
 }
 
-function logout() {
+async function logout() {
     if (confirm('Are you sure you want to logout?')) {
-        window.location.href = '../home-preview.html';
+        // Sign out from Supabase using the proper client
+        if (typeof window.DrTroySupabase !== 'undefined') {
+            await window.DrTroySupabase.signOut();
+        }
+        
+        localStorage.removeItem('userSession');
+        localStorage.removeItem('loginState');
+        localStorage.removeItem('sb-pnqoxulxdmlmbywcpbyx-auth-token');
+        window.location.href = '../my-account.html';
     }
 }
 
@@ -1041,30 +1044,68 @@ function logout() {
         }
     }
 })();
+
+// Admin check function
+async function isAdmin() {
+    if (!window.DrTroySupabase) return false;
+    try {
+        const session = await window.DrTroySupabase.getSession();
+        if (!session || !session.user) return false;
+        const profile = await window.DrTroySupabase.getClient()
+            .from('profiles')
+            .select('is_admin')
+            .eq('id', session.user.id)
+            .single();
+        return profile.data && profile.data.is_admin === true;
+    } catch (e) {
+        return false;
+    }
+}
+
+// Admin unlock all modules
+async function adminUnlockAll() {
+    if (!await isAdmin()) {
+        if (typeof showNotification === 'function') {
+            showNotification('⚠️ Admin access required');
+        } else {
+            alert('⚠️ Admin access required');
+        }
+        return;
+    }
+    
+    // Find all module blocks and unlock them
+    const modules = document.querySelectorAll('.module-block, [id^="module-"]');
+    modules.forEach((mod) => {
+        mod.classList.remove('locked');
+        mod.classList.add('open');
+        // Update status if there's a status element
+        const statusEl = mod.querySelector('.module-status, [id^="status-"]');
+        if (statusEl) {
+            statusEl.textContent = 'Unlocked (Admin)';
+        }
+    });
+    
+    // Show all module content
+    document.querySelectorAll('.module-content').forEach(content => {
+        content.style.display = 'block';
+    });
+    
+    if (typeof showNotification === 'function') {
+        showNotification('🔓 Admin: All modules unlocked!');
+    } else {
+        alert('🔓 Admin: All modules unlocked!');
+    }
+}
+
+// Show admin controls on page load if admin
+async function initAdminControls() {
+    if (await isAdmin()) {
+        const adminPanel = document.getElementById('adminControls');
+        if (adminPanel) adminPanel.style.display = 'block';
+    }
+}
+
 </script>
 
-<script src="../js/course-sync.js">
-        function setStandardizedCompletion() {
-            try {
-                let accountData = localStorage.getItem('drtroyAccount');
-                if (accountData) {
-                    const account = JSON.parse(accountData);
-                    if (!account.courseProgress) account.courseProgress = {};
-                    if (!account.courseProgress['post-surgical-001']) account.courseProgress['post-surgical-001'] = {};
-                    account.courseProgress['post-surgical-001'].quizCompleted = true;
-                    account.courseProgress['post-surgical-001'].completed = true;
-                    account.courseProgress['post-surgical-001'].completedAt = new Date().toISOString();
-                    account.courseProgress['post-surgical-001'].lastAccessedAt = new Date().toISOString();
-                    localStorage.setItem('drtroyAccount', JSON.stringify(account));
-                    console.log('✅ Course completion recorded for post-surgical-001');
-                } else {
-                    console.log('⚠️ No account data found - completion flag not set');
-                }
-            } catch (error) {
-                console.error('Error setting completion flag:', error);
-            }
-        }
-
-    </script></script>
 </body>
 </html>

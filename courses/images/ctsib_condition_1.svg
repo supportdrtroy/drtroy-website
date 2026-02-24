@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="500" viewBox="0 0 800 500">
+  <rect width="800" height="500" fill="white" stroke="#e0e0e0" stroke-width="1"/>
+  
+  <!-- Title -->
+  <text x="400" y="35" text-anchor="middle" font-family="Arial, sans-serif" font-size="22" font-weight="bold" fill="#1a56a0">
+    CTSIB Condition 1: Firm Surface, Eyes Open
+  </text>
+  
+  <!-- Ground/firm surface -->
+  <rect x="100" y="380" width="600" height="50" fill="#8d6e63" stroke="#1a56a0" stroke-width="2"/>
+  <text x="400" y="460" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" fill="#333">Firm, Stable Surface</text>
+  
+  <!-- Person standing -->
+  <!-- Head with open eyes -->
+  <circle cx="400" cy="180" r="25" fill="white" stroke="#1a56a0" stroke-width="2"/>
+  <circle cx="390" cy="175" r="4" fill="#1a56a0"/>
+  <circle cx="410" cy="175" r="4" fill="#1a56a0"/>
+  <path d="M 385 190 Q 400 200 415 190" stroke="#1a56a0" stroke-width="2" fill="none"/>
+  
+  <!-- Body -->
+  <line x1="400" y1="205" x2="400" y2="350" stroke="#1a56a0" stroke-width="4"/>
+  
+  <!-- Arms at sides -->
+  <line x1="400" y1="230" x2="370" y2="280" stroke="#1a56a0" stroke-width="3"/>
+  <line x1="370" y1="280" x2="360" y2="320" stroke="#1a56a0" stroke-width="3"/>
+  <line x1="400" y1="230" x2="430" y2="280" stroke="#1a56a0" stroke-width="3"/>
+  <line x1="430" y1="280" x2="440" y2="320" stroke="#1a56a0" stroke-width="3"/>
+  
+  <!-- Legs -->
+  <line x1="400" y1="350" x2="385" y2="375" stroke="#1a56a0" stroke-width="3"/>
+  <line x1="400" y1="350" x2="415" y2="375" stroke="#1a56a0" stroke-width="3"/>
+  <ellipse cx="380" cy="380" rx="15" ry="5" fill="#1a56a0"/>
+  <ellipse cx="420" cy="380" rx="15" ry="5" fill="#1a56a0"/>
+  
+  <!-- Sensory systems available -->
+  <rect x="100" y="80" width="250" height="160" fill="#e8f5e9" stroke="#2e7d32" stroke-width="2" rx="10"/>
+  <text x="225" y="105" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#2e7d32">All Systems Available</text>
+  
+  <!-- Visual system -->
+  <circle cx="135" cy="130" r="12" fill="#2e7d32"/>
+  <text x="155" y="135" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#333">Visual System ✓</text>
+  <text x="155" y="150" font-family="Arial, sans-serif" font-size="11" fill="#333">Eyes open - full visual input</text>
+  
+  <!-- Somatosensory system -->
+  <circle cx="135" cy="170" r="12" fill="#2e7d32"/>
+  <text x="155" y="175" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#333">Somatosensory ✓</text>
+  <text x="155" y="190" font-family="Arial, sans-serif" font-size="11" fill="#333">Firm surface - accurate feedback</text>
+  
+  <!-- Vestibular system -->
+  <circle cx="135" cy="210" r="12" fill="#2e7d32"/>
+  <text x="155" y="215" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#333">Vestibular System ✓</text>
+  <text x="155" y="230" font-family="Arial, sans-serif" font-size="11" fill="#333">Inner ear functioning normally</text>
+  
+  <!-- Test details -->
+  <rect x="450" y="80" width="280" height="160" fill="#e8f4fd" stroke="#1a56a0" stroke-width="2" rx="10"/>
+  <text x="590" y="105" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#1a56a0">Test Protocol</text>
+  
+  <text x="460" y="130" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#1a56a0">Position:</text>
+  <text x="460" y="145" font-family="Arial, sans-serif" font-size="11" fill="#333">• Feet together or comfortable stance</text>
+  <text x="460" y="160" font-family="Arial, sans-serif" font-size="11" fill="#333">• Arms at sides or across chest</text>
+  
+  <text x="460" y="180" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#1a56a0">Duration:</text>
+  <text x="460" y="195" font-family="Arial, sans-serif" font-size="11" fill="#333">• 30 seconds per trial</text>
+  <text x="460" y="210" font-family="Arial, sans-serif" font-size="11" fill="#333">• 3 trials total</text>
+  <text x="460" y="225" font-family="Arial, sans-serif" font-size="11" fill="#333">• Record best performance</text>
+  
+  <!-- Expected outcome -->
+  <rect x="100" y="260" width="600" height="80" fill="#e8f5e9" stroke="#2e7d32" stroke-width="1" rx="10"/>
+  <text x="400" y="280" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#2e7d32">Expected Performance</text>
+  <text x="120" y="300" font-family="Arial, sans-serif" font-size="12" fill="#333">• EASIEST condition - all sensory systems available</text>
+  <text x="120" y="315" font-family="Arial, sans-serif" font-size="12" fill="#333">• Normal individuals: minimal to no sway</text>
+  <text x="120" y="330" font-family="Arial, sans-serif" font-size="12" fill="#333">• Should complete 30 seconds without difficulty</text>
+  
+  <!-- Visual cues -->
+  <circle cx="400" cy="180" r="60" fill="none" stroke="#2e7d32" stroke-width="2" stroke-dasharray="5,5" opacity="0.5"/>
+  <text x="480" y="180" font-family="Arial, sans-serif" font-size="11" fill="#2e7d32">Visual reference</text>
+  <text x="480" y="195" font-family="Arial, sans-serif" font-size="11" fill="#2e7d32">available</text>
+  
+  <!-- Stability indicator -->
+  <rect x="370" y="370" width="60" height="15" fill="#2e7d32" opacity="0.3"/>
+  <text x="400" y="365" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#2e7d32">Stable base</text>
+</svg>

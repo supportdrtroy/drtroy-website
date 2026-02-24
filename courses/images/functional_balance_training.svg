@@ -1,0 +1,125 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="500" viewBox="0 0 800 500">
+  <rect width="800" height="500" fill="white" stroke="#e0e0e0" stroke-width="1"/>
+  
+  <!-- Title -->
+  <text x="400" y="35" text-anchor="middle" font-family="Arial, sans-serif" font-size="22" font-weight="bold" fill="#1a56a0">
+    Functional Balance Training (Dual-Task)
+  </text>
+  
+  <!-- Ground line -->
+  <line x1="100" y1="420" x2="700" y2="420" stroke="#1a56a0" stroke-width="2"/>
+  
+  <!-- Person performing dual task -->
+  <!-- Head with cognitive focus -->
+  <circle cx="350" cy="160" r="25" fill="white" stroke="#1a56a0" stroke-width="2"/>
+  <circle cx="340" cy="155" r="3" fill="#1a56a0"/>
+  <circle cx="360" cy="155" r="3" fill="#1a56a0"/>
+  <path d="M 335 170 Q 350 180 365 170" stroke="#1a56a0" stroke-width="2" fill="none"/>
+  
+  <!-- Thought bubble for cognitive task -->
+  <circle cx="300" cy="120" r="15" fill="white" stroke="#9c27b0" stroke-width="2" opacity="0.8"/>
+  <circle cx="310" cy="130" r="8" fill="white" stroke="#9c27b0" stroke-width="1" opacity="0.6"/>
+  <text x="300" y="125" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#9c27b0" font-weight="bold">3-7=?</text>
+  <text x="250" y="105" font-family="Arial, sans-serif" font-size="10" fill="#9c27b0">Mental math</text>
+  
+  <!-- Body in functional position -->
+  <line x1="350" y1="185" x2="350" y2="340" stroke="#1a56a0" stroke-width="4"/>
+  
+  <!-- Arms performing task -->
+  <line x1="350" y1="210" x2="320" y2="240" stroke="#1a56a0" stroke-width="3"/>
+  <line x1="320" y1="240" x2="300" y2="270" stroke="#1a56a0" stroke-width="3"/>
+  <line x1="350" y1="220" x2="380" y2="250" stroke="#1a56a0" stroke-width="3"/>
+  <line x1="380" y1="250" x2="400" y2="280" stroke="#1a56a0" stroke-width="3"/>
+  
+  <!-- Object being carried -->
+  <rect x="395" y="275" width="15" height="10" fill="#ff9800" stroke="#1a56a0" stroke-width="1" rx="2"/>
+  <text x="420" y="285" font-family="Arial, sans-serif" font-size="10" fill="#ff9800">Carrying task</text>
+  
+  <!-- Legs showing walking -->
+  <line x1="350" y1="340" x2="340" y2="415" stroke="#1a56a0" stroke-width="3"/>
+  <line x1="350" y1="340" x2="360" y2="415" stroke="#1a56a0" stroke-width="3"/>
+  <ellipse cx="335" cy="420" rx="15" ry="5" fill="#1a56a0"/>
+  <ellipse cx="365" cy="420" rx="15" ry="5" fill="#1a56a0"/>
+  
+  <!-- Walking path -->
+  <path d="M 300 430 Q 350 425 400 430 Q 450 435 500 430" stroke="#2e7d32" stroke-width="2" stroke-dasharray="5,5"/>
+  <text x="400" y="445" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#2e7d32">Walking path</text>
+  
+  <!-- Training characteristics -->
+  <rect x="100" y="80" width="280" height="160" fill="#f3e5f5" stroke="#9c27b0" stroke-width="2" rx="10"/>
+  <text x="240" y="105" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#9c27b0">Functional Training Features</text>
+  
+  <text x="110" y="125" font-family="Arial, sans-serif" font-size="11" fill="#333">• Real-world activity simulation</text>
+  <text x="110" y="140" font-family="Arial, sans-serif" font-size="11" fill="#333">• Dual-task performance</text>
+  <text x="110" y="155" font-family="Arial, sans-serif" font-size="11" fill="#333">• Cognitive + motor demands</text>
+  <text x="110" y="170" font-family="Arial, sans-serif" font-size="11" fill="#333">• Divided attention training</text>
+  <text x="110" y="185" font-family="Arial, sans-serif" font-size="11" fill="#333">• Task-specific practice</text>
+  <text x="110" y="200" font-family="Arial, sans-serif" font-size="11" fill="#333">• Environmental challenges</text>
+  <text x="110" y="215" font-family="Arial, sans-serif" font-size="11" fill="#333">• Prepares for daily activities</text>
+  
+  <!-- Dual-task examples -->
+  <rect x="450" y="80" width="280" height="160" fill="#e8f4fd" stroke="#1a56a0" stroke-width="2" rx="10"/>
+  <text x="590" y="105" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#1a56a0">Dual-Task Combinations</text>
+  
+  <text x="460" y="125" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#9c27b0">Cognitive Tasks:</text>
+  <text x="470" y="140" font-family="Arial, sans-serif" font-size="10" fill="#333">• Counting backwards by 3s or 7s</text>
+  <text x="470" y="152" font-family="Arial, sans-serif" font-size="10" fill="#333">• Reciting days/months backwards</text>
+  <text x="470" y="164" font-family="Arial, sans-serif" font-size="10" fill="#333">• Word association games</text>
+  
+  <text x="460" y="185" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#ff9800">Motor Tasks:</text>
+  <text x="470" y="200" font-family="Arial, sans-serif" font-size="10" fill="#333">• Carrying objects while walking</text>
+  <text x="470" y="212" font-family="Arial, sans-serif" font-size="10" fill="#333">• Throwing/catching ball</text>
+  <text x="470" y="224" font-family="Arial, sans-serif" font-size="10" fill="#333">• Opening containers</text>
+  
+  <!-- Functional activities -->
+  <rect x="100" y="260" width="600" height="100" fill="#e8f5e9" stroke="#2e7d32" stroke-width="1" rx="10"/>
+  <text x="400" y="285" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#2e7d32">Real-World Functional Activities</text>
+  
+  <text x="120" y="305" font-family="Arial, sans-serif" font-size="11" fill="#333">• Walking while talking on phone</text>
+  <text x="120" y="320" font-family="Arial, sans-serif" font-size="11" fill="#333">• Carrying groceries while navigating</text>
+  <text x="120" y="335" font-family="Arial, sans-serif" font-size="11" fill="#333">• Looking for items while walking</text>
+  <text x="120" y="350" font-family="Arial, sans-serif" font-size="11" fill="#333">• Walking through crowded areas</text>
+  
+  <text x="420" y="305" font-family="Arial, sans-serif" font-size="11" fill="#333">• Reaching while standing on ladder</text>
+  <text x="420" y="320" font-family="Arial, sans-serif" font-size="11" fill="#333">• Multitasking in kitchen</text>
+  <text x="420" y="335" font-family="Arial, sans-serif" font-size="11" fill="#333">• Playing with grandchildren</text>
+  <text x="420" y="350" font-family="Arial, sans-serif" font-size="11" fill="#333">• Garden/yard work activities</text>
+  
+  <!-- Attention demands illustration -->
+  <g transform="translate(600, 200)">
+    <circle cx="0" cy="0" r="40" fill="none" stroke="#9c27b0" stroke-width="2" stroke-dasharray="3,3"/>
+    <circle cx="-15" cy="-10" r="12" fill="#ff9800" opacity="0.7"/>
+    <text x="-15" y="-5" text-anchor="middle" font-family="Arial, sans-serif" font-size="8" fill="white" font-weight="bold">Motor</text>
+    <circle cx="15" cy="10" r="12" fill="#9c27b0" opacity="0.7"/>
+    <text x="15" y="15" text-anchor="middle" font-family="Arial, sans-serif" font-size="8" fill="white" font-weight="bold">Cognitive</text>
+    <text x="0" y="60" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#9c27b0">Divided attention</text>
+  </g>
+  
+  <!-- Progression levels -->
+  <rect x="100" y="380" width="300" height="80" fill="#fff3e0" stroke="#ff9800" stroke-width="1" rx="10"/>
+  <text x="250" y="405" text-anchor="middle" font-family="Arial, sans-serif" font-size="13" font-weight="bold" fill="#ff9800">Progression Levels</text>
+  <text x="110" y="425" font-family="Arial, sans-serif" font-size="11" fill="#333">Level 1: Simple cognitive + static balance</text>
+  <text x="110" y="440" font-family="Arial, sans-serif" font-size="11" fill="#333">Level 2: Complex cognitive + dynamic balance</text>
+  <text x="110" y="455" font-family="Arial, sans-serif" font-size="11" fill="#333">Level 3: Multiple tasks + environmental challenges</text>
+  
+  <!-- Clinical benefits -->
+  <rect x="420" y="380" width="280" height="80" fill="#e8f5e9" stroke="#2e7d32" stroke-width="1" rx="10"/>
+  <text x="560" y="405" text-anchor="middle" font-family="Arial, sans-serif" font-size="13" font-weight="bold" fill="#2e7d32">Clinical Benefits</text>
+  <text x="430" y="425" font-family="Arial, sans-serif" font-size="11" fill="#333">• Improves real-world balance</text>
+  <text x="430" y="440" font-family="Arial, sans-serif" font-size="11" fill="#333">• Reduces cognitive-motor interference</text>
+  <text x="430" y="455" font-family="Arial, sans-serif" font-size="11" fill="#333">• Enhances automatic balance responses</text>
+  
+  <!-- Attention allocation arrows -->
+  <path d="M 340 140 Q 330 150 340 160" stroke="#9c27b0" stroke-width="2" fill="none" marker-end="url(#purplearrow)"/>
+  <path d="M 360 170 Q 370 180 360 190" stroke="#ff9800" stroke-width="2" fill="none" marker-end="url(#orangearrow)"/>
+  
+  <!-- Arrow marker definitions -->
+  <defs>
+    <marker id="purplearrow" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#9c27b0"/>
+    </marker>
+    <marker id="orangearrow" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#ff9800"/>
+    </marker>
+  </defs>
+</svg>

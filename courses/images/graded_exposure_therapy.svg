@@ -1,0 +1,87 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="500" viewBox="0 0 800 500">
+  <rect width="800" height="500" fill="white" stroke="#e0e0e0" stroke-width="1"/>
+  
+  <!-- Title -->
+  <text x="400" y="35" text-anchor="middle" font-family="Arial, sans-serif" font-size="22" font-weight="bold" fill="#1a56a0">
+    Graded Exposure Therapy: Fear of Falling Hierarchy
+  </text>
+  
+  <!-- Anxiety hierarchy ladder -->
+  <!-- Ladder structure -->
+  <line x1="200" y1="120" x2="200" y2="420" stroke="#8d6e63" stroke-width="6"/>
+  <line x1="250" y1="120" x2="250" y2="420" stroke="#8d6e63" stroke-width="6"/>
+  
+  <!-- Rungs with anxiety levels -->
+  <!-- Level 10 - Highest anxiety -->
+  <rect x="200" y="120" width="50" height="10" fill="#d32f2f" stroke="#8d6e63" stroke-width="2"/>
+  <rect x="280" y="105" width="400" height="40" fill="#ffebee" stroke="#d32f2f" stroke-width="2" rx="10"/>
+  <text x="300" y="120" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="#d32f2f">10 - Highest</text>
+  <text x="300" y="135" font-family="Arial, sans-serif" font-size="11" fill="#333">Walking alone outside on uneven surfaces</text>
+  
+  <!-- Level 8-9 -->
+  <rect x="200" y="150" width="50" height="10" fill="#ff5722" stroke="#8d6e63" stroke-width="2"/>
+  <rect x="280" y="135" width="400" height="40" fill="#fff3e0" stroke="#ff5722" stroke-width="1" rx="10"/>
+  <text x="300" y="150" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="#ff5722">8-9 - High</text>
+  <text x="300" y="165" font-family="Arial, sans-serif" font-size="11" fill="#333">Walking up/down stairs without holding rail</text>
+  
+  <!-- Level 6-7 -->
+  <rect x="200" y="180" width="50" height="10" fill="#ff9800" stroke="#8d6e63" stroke-width="2"/>
+  <rect x="280" y="165" width="400" height="40" fill="#fff8e1" stroke="#ff9800" stroke-width="1" rx="10"/>
+  <text x="300" y="180" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="#ff9800">6-7 - Moderate-High</text>
+  <text x="300" y="195" font-family="Arial, sans-serif" font-size="11" fill="#333">Walking in crowded places (mall, grocery store)</text>
+  
+  <!-- Level 4-5 -->
+  <rect x="200" y="210" width="50" height="10" fill="#ffc107" stroke="#8d6e63" stroke-width="2"/>
+  <rect x="280" y="195" width="400" height="40" fill="#fffde7" stroke="#ffc107" stroke-width="1" rx="10"/>
+  <text x="300" y="210" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="#e65100">4-5 - Moderate</text>
+  <text x="300" y="225" font-family="Arial, sans-serif" font-size="11" fill="#333">Walking outside on familiar sidewalks</text>
+  
+  <!-- Level 2-3 -->
+  <rect x="200" y="240" width="50" height="10" fill="#8bc34a" stroke="#8d6e63" stroke-width="2"/>
+  <rect x="280" y="225" width="400" height="40" fill="#f1f8e9" stroke="#8bc34a" stroke-width="1" rx="10"/>
+  <text x="300" y="240" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="#33691e">2-3 - Low-Moderate</text>
+  <text x="300" y="255" font-family="Arial, sans-serif" font-size="11" fill="#333">Walking room to room in own home</text>
+  
+  <!-- Level 1 -->
+  <rect x="200" y="270" width="50" height="10" fill="#4caf50" stroke="#8d6e63" stroke-width="2"/>
+  <rect x="280" y="255" width="400" height="40" fill="#e8f5e9" stroke="#4caf50" stroke-width="1" rx="10"/>
+  <text x="300" y="270" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="#2e7d32">1 - Minimal</text>
+  <text x="300" y="285" font-family="Arial, sans-serif" font-size="11" fill="#333">Standing still with support nearby</text>
+  
+  <!-- Person climbing ladder -->
+  <circle cx="225" cy="300" r="12" fill="white" stroke="#1a56a0" stroke-width="2"/>
+  <line x1="225" y1="312" x2="225" y2="380" stroke="#1a56a0" stroke-width="3"/>
+  <line x1="225" y1="325" x2="210" y2="340" stroke="#1a56a0" stroke-width="2"/>
+  <line x1="225" y1="335" x2="240" y2="350" stroke="#1a56a0" stroke-width="2"/>
+  <line x1="225" y1="380" x2="220" y2="390" stroke="#1a56a0" stroke-width="2"/>
+  <line x1="225" y1="380" x2="230" y2="390" stroke="#1a56a0" stroke-width="2"/>
+  
+  <!-- Progress arrow -->
+  <path d="M 170 350 Q 150 300 170 250 Q 160 200 170 150" stroke="#2e7d32" stroke-width="4" marker-end="url(#greenarrow)"/>
+  <text x="120" y="250" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#2e7d32" font-weight="bold" transform="rotate(-90 120 250)">Progress upward</text>
+  
+  <!-- Treatment principles -->
+  <rect x="100" y="320" width="600" height="160" fill="#e8f4fd" stroke="#1a56a0" stroke-width="2" rx="10"/>
+  <text x="400" y="345" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#1a56a0">Graded Exposure Treatment Principles</text>
+  
+  <text x="120" y="370" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#2e7d32">Step-by-step approach:</text>
+  <text x="130" y="385" font-family="Arial, sans-serif" font-size="11" fill="#333">1. Start with lowest anxiety situation</text>
+  <text x="130" y="400" font-family="Arial, sans-serif" font-size="11" fill="#333">2. Practice until anxiety decreases</text>
+  <text x="130" y="415" font-family="Arial, sans-serif" font-size="11" fill="#333">3. Move to next level when comfortable</text>
+  <text x="130" y="430" font-family="Arial, sans-serif" font-size="11" fill="#333">4. Repeat until all levels mastered</text>
+  <text x="130" y="445" font-family="Arial, sans-serif" font-size="11" fill="#333">5. Practice real-world applications</text>
+  
+  <text x="420" y="370" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#ff9800">Key strategies:</text>
+  <text x="430" y="385" font-family="Arial, sans-serif" font-size="11" fill="#333">• Relaxation techniques</text>
+  <text x="430" y="400" font-family="Arial, sans-serif" font-size="11" fill="#333">• Positive self-talk</text>
+  <text x="430" y="415" font-family="Arial, sans-serif" font-size="11" fill="#333">• Gradual progression only</text>
+  <text x="430" y="430" font-family="Arial, sans-serif" font-size="11" fill="#333">• Safety measures in place</text>
+  <text x="430" y="445" font-family="Arial, sans-serif" font-size="11" fill="#333">• Professional guidance</text>
+  <text x="430" y="460" font-family="Arial, sans-serif" font-size="11" fill="#333">• Celebrate progress</text>
+  
+  <defs>
+    <marker id="greenarrow" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#2e7d32"/>
+    </marker>
+  </defs>
+</svg>

@@ -1,0 +1,108 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="500" viewBox="0 0 800 500">
+  <rect width="800" height="500" fill="white" stroke="#e0e0e0" stroke-width="1"/>
+  
+  <!-- Title -->
+  <text x="400" y="35" text-anchor="middle" font-family="Arial, sans-serif" font-size="22" font-weight="bold" fill="#1a56a0">
+    30-Second Chair Stand Test
+  </text>
+  
+  <!-- Chair -->
+  <rect x="200" y="320" width="120" height="80" fill="#e8f4fd" stroke="#1a56a0" stroke-width="2" rx="5"/>
+  <rect x="190" y="310" width="20" height="100" fill="#e8f4fd" stroke="#1a56a0" stroke-width="2" rx="5"/>
+  <rect x="320" y="310" width="20" height="100" fill="#e8f4fd" stroke="#1a56a0" stroke-width="2" rx="5"/>
+  <rect x="180" y="290" width="160" height="30" fill="#e8f4fd" stroke="#1a56a0" stroke-width="2" rx="15"/>
+  <text x="260" y="450" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#333">Standard chair (17" seat height)</text>
+  
+  <!-- Sequence showing sit-to-stand -->
+  <!-- Position 1: Sitting -->
+  <g transform="translate(100, 0)">
+    <circle cx="160" cy="250" r="20" fill="white" stroke="#1a56a0" stroke-width="2"/>
+    <line x1="160" y1="270" x2="160" y2="320" stroke="#1a56a0" stroke-width="3"/>
+    <line x1="160" y1="285" x2="140" y2="310" stroke="#1a56a0" stroke-width="2"/>
+    <line x1="160" y1="295" x2="180" y2="320" stroke="#1a56a0" stroke-width="2"/>
+    <line x1="160" y1="320" x2="150" y2="350" stroke="#1a56a0" stroke-width="2"/>
+    <line x1="160" y1="320" x2="170" y2="350" stroke="#1a56a0" stroke-width="2"/>
+    <text x="160" y="380" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#333">1. Sitting</text>
+  </g>
+  
+  <!-- Position 2: Rising -->
+  <g transform="translate(200, 0)">
+    <circle cx="160" cy="230" r="20" fill="white" stroke="#1a56a0" stroke-width="2"/>
+    <line x1="160" y1="250" x2="165" y2="340" stroke="#1a56a0" stroke-width="3"/>
+    <line x1="160" y1="270" x2="140" y2="290" stroke="#1a56a0" stroke-width="2"/>
+    <line x1="160" y1="280" x2="180" y2="300" stroke="#1a56a0" stroke-width="2"/>
+    <line x1="165" y1="340" x2="155" y2="380" stroke="#1a56a0" stroke-width="2"/>
+    <line x1="165" y1="340" x2="175" y2="380" stroke="#1a56a0" stroke-width="2"/>
+    <text x="160" y="400" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#333">2. Rising</text>
+  </g>
+  
+  <!-- Position 3: Standing -->
+  <g transform="translate(300, 0)">
+    <circle cx="160" cy="200" r="20" fill="white" stroke="#1a56a0" stroke-width="2"/>
+    <line x1="160" y1="220" x2="160" y2="340" stroke="#1a56a0" stroke-width="3"/>
+    <line x1="160" y1="240" x2="140" y2="270" stroke="#1a56a0" stroke-width="2"/>
+    <line x1="160" y1="250" x2="180" y2="280" stroke="#1a56a0" stroke-width="2"/>
+    <line x1="160" y1="340" x2="150" y2="380" stroke="#1a56a0" stroke-width="2"/>
+    <line x1="160" y1="340" x2="170" y2="380" stroke="#1a56a0" stroke-width="2"/>
+    <text x="160" y="400" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#333">3. Full Stand</text>
+  </g>
+  
+  <!-- Timer -->
+  <circle cx="600" cy="150" r="40" fill="white" stroke="#1a56a0" stroke-width="3"/>
+  <circle cx="600" cy="150" r="30" fill="none" stroke="#1a56a0" stroke-width="2"/>
+  <line x1="600" y1="150" x2="600" y2="130" stroke="#d32f2f" stroke-width="3"/>
+  <line x1="600" y1="150" x2="620" y2="150" stroke="#d32f2f" stroke-width="2"/>
+  <text x="600" y="210" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#d32f2f">30 SECONDS</text>
+  
+  <!-- Test instructions -->
+  <rect x="450" y="250" width="300" height="120" fill="#e8f4fd" stroke="#1a56a0" stroke-width="1" rx="10"/>
+  <text x="600" y="275" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#1a56a0">Test Instructions</text>
+  <text x="460" y="295" font-family="Arial, sans-serif" font-size="11" fill="#333">• Arms folded across chest</text>
+  <text x="460" y="310" font-family="Arial, sans-serif" font-size="11" fill="#333">• Sit fully back in chair</text>
+  <text x="460" y="325" font-family="Arial, sans-serif" font-size="11" fill="#333">• Stand completely upright</text>
+  <text x="460" y="340" font-family="Arial, sans-serif" font-size="11" fill="#333">• Count complete stands in 30 seconds</text>
+  <text x="460" y="355" font-family="Arial, sans-serif" font-size="11" fill="#333">• Stop if unsafe or unable</text>
+  
+  <!-- Scoring table -->
+  <rect x="100" y="100" width="320" height="140" fill="#fff3e0" stroke="#ff9800" stroke-width="1" rx="10"/>
+  <text x="260" y="125" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#ff9800">Normative Values</text>
+  
+  <!-- Men's scores -->
+  <text x="120" y="150" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#1a56a0">Men (stands):</text>
+  <text x="120" y="165" font-family="Arial, sans-serif" font-size="10" fill="#333">60-64 years: 14-19</text>
+  <text x="120" y="180" font-family="Arial, sans-serif" font-size="10" fill="#333">65-69 years: 12-18</text>
+  <text x="120" y="195" font-family="Arial, sans-serif" font-size="10" fill="#333">70-74 years: 12-17</text>
+  <text x="120" y="210" font-family="Arial, sans-serif" font-size="10" fill="#333">75-79 years: 11-17</text>
+  <text x="120" y="225" font-family="Arial, sans-serif" font-size="10" fill="#333">80+ years: 10-15</text>
+  
+  <!-- Women's scores -->
+  <text x="270" y="150" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#d32f2f">Women (stands):</text>
+  <text x="270" y="165" font-family="Arial, sans-serif" font-size="10" fill="#333">60-64 years: 12-17</text>
+  <text x="270" y="180" font-family="Arial, sans-serif" font-size="10" fill="#333">65-69 years: 11-16</text>
+  <text x="270" y="195" font-family="Arial, sans-serif" font-size="10" fill="#333">70-74 years: 10-15</text>
+  <text x="270" y="210" font-family="Arial, sans-serif" font-size="10" fill="#333">75-79 years: 10-15</text>
+  <text x="270" y="225" font-family="Arial, sans-serif" font-size="10" fill="#333">80+ years: 9-14</text>
+  
+  <!-- Clinical interpretation -->
+  <rect x="450" y="390" width="300" height="80" fill="#ffebee" stroke="#d32f2f" stroke-width="1" rx="10"/>
+  <text x="600" y="415" text-anchor="middle" font-family="Arial, sans-serif" font-size="13" font-weight="bold" fill="#d32f2f">Fall Risk Interpretation</text>
+  <text x="460" y="435" font-family="Arial, sans-serif" font-size="11" fill="#333">• < 8 stands = High fall risk</text>
+  <text x="460" y="450" font-family="Arial, sans-serif" font-size="11" fill="#333">• 8-11 stands = Moderate risk</text>
+  <text x="460" y="465" font-family="Arial, sans-serif" font-size="11" fill="#333">• ≥ 12 stands = Lower risk</text>
+  
+  <!-- What it measures -->
+  <rect x="100" y="390" width="320" height="80" fill="#e8f5e9" stroke="#2e7d32" stroke-width="1" rx="10"/>
+  <text x="260" y="415" text-anchor="middle" font-family="Arial, sans-serif" font-size="13" font-weight="bold" fill="#2e7d32">Assesses</text>
+  <text x="110" y="435" font-family="Arial, sans-serif" font-size="11" fill="#333">• Lower extremity strength</text>
+  <text x="110" y="450" font-family="Arial, sans-serif" font-size="11" fill="#333">• Functional mobility</text>
+  <text x="110" y="465" font-family="Arial, sans-serif" font-size="11" fill="#333">• Balance and coordination</text>
+  
+  <!-- Arrow showing movement -->
+  <path d="M 260 380 Q 280 350 300 380" stroke="#2e7d32" stroke-width="3" fill="none" marker-end="url(#arrowhead)"/>
+  
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#2e7d32"/>
+    </marker>
+  </defs>
+</svg>

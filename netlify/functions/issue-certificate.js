@@ -4,12 +4,10 @@
  * Issues or re-issues a certificate and optionally emails it via Resend.
  */
 const https = require('https');
-const crypto = require('crypto');
 
 const SUPABASE_HOST = 'pnqoxulxdmlmbywcpbyx.supabase.co';
 const SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
 const RESEND_API_KEY = process.env.RESEND_API_KEY;
-if (!SERVICE_ROLE_KEY || !RESEND_API_KEY) { console.error('[issue-certificate] Missing required env vars'); }
 const FROM_EMAIL = '"DrTroy Continuing Education" <no-reply@drtroy.com>';
 
 const ALLOWED_ORIGINS = ['https://drtroy.com', 'https://www.drtroy.com'];
@@ -76,24 +74,13 @@ exports.handler = async (event) => {
   const admin = await verifyAdmin(authHeader);
   if (!admin.valid) return { statusCode: 403, headers: getCorsHeaders(event), body: JSON.stringify({ error: 'Unauthorized' }) };
 
-  // Extract admin userId for audit logging
-  const adminToken = authHeader.replace('Bearer ', '');
-  let adminUserId = null;
-  try {
-    const adminUserRes = await httpRequest({
-      hostname: SUPABASE_HOST, path: '/auth/v1/user', method: 'GET',
-      headers: { apikey: SERVICE_ROLE_KEY, Authorization: `Bearer ${adminToken}` }
-    }, null);
-    adminUserId = adminUserRes.body?.id;
-  } catch (e) { /* non-critical */ }
-
   let body;
   try { body = JSON.parse(event.body || '{}'); } catch { return { statusCode: 400, headers: getCorsHeaders(event), body: JSON.stringify({ error: 'Invalid JSON' }) }; }
 
   const { userId, courseId, userEmail, userName, courseTitle, ceuHours, completionId, reissue } = body;
   if (!userId || !courseId) return { statusCode: 400, headers: getCorsHeaders(event), body: JSON.stringify({ error: 'userId and courseId are required' }) };
 
-  const certNumber = `DRTROY-${new Date().getFullYear()}-${crypto.randomBytes(6).toString('hex').toUpperCase()}`;
+  const certNumber = `DRTROY-${new Date().getFullYear()}-${String(Date.now()).slice(-8)}`;
   const now = new Date().toISOString();
 
   let certRecord;
@@ -156,18 +143,6 @@ exports.handler = async (event) => {
       }
     } catch { /* email failed but cert still issued */ }
   }
-
-  // Audit log certificate issuance
-  try {
-    await sbRest('POST', '/rest/v1/admin_log', {
-      admin_user_id: adminUserId,
-      action_type: reissue ? 'reissue_certificate' : 'issue_certificate',
-      target_user_id: userId,
-      details: { courseId, certNumber, emailSent, completionId: completionId || null },
-      ip_address: event.headers['x-forwarded-for'] || event.headers['client-ip'] || 'unknown',
-      created_at: new Date().toISOString(),
-    });
-  } catch (e) { /* non-critical */ }
 
   return {
     statusCode: 200,

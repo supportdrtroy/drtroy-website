@@ -19,7 +19,7 @@ function isValidEmail(email) {
 async function emailInWaitlist(email) {
     const sbUrl  = process.env.SUPABASE_URL;
     const sbKey  = process.env.SUPABASE_SERVICE_ROLE_KEY;
-    if (!sbUrl || !sbKey) return true; // If env missing, fail open (don't block legitimate sends)
+    if (!sbUrl || !sbKey) return false; // Fail closed — block if env vars are missing
     return new Promise((resolve) => {
         const path = `/rest/v1/waitlist?email=eq.${encodeURIComponent(email)}&select=email&limit=1`;
         const url  = new URL(sbUrl + path);
@@ -35,7 +35,7 @@ async function emailInWaitlist(email) {
                 try { resolve(JSON.parse(body).length > 0); } catch { resolve(false); }
             });
         });
-        req.on('error', () => resolve(true)); // Fail open on network error
+        req.on('error', () => resolve(false)); // Fail closed on network error
         req.end();
     });
 }
@@ -63,34 +63,55 @@ function resendPost(apiKey, payload) {
     });
 }
 
+const ALLOWED_ORIGINS = ['https://drtroy.com', 'https://www.drtroy.com'];
+
+function getCorsHeaders(event) {
+    const origin = (event.headers && (event.headers.origin || event.headers.Origin)) || '';
+    const allowedOrigin = ALLOWED_ORIGINS.includes(origin) ? origin : ALLOWED_ORIGINS[0];
+    return {
+        'Access-Control-Allow-Origin': allowedOrigin,
+        'Access-Control-Allow-Headers': 'Content-Type',
+        'Access-Control-Allow-Methods': 'POST, OPTIONS',
+        'Content-Type': 'application/json',
+        'Vary': 'Origin',
+    };
+}
+
 exports.handler = async (event) => {
+    const cors = getCorsHeaders(event);
+
+    if (event.httpMethod === 'OPTIONS') {
+        return { statusCode: 204, headers: cors, body: '' };
+    }
+
     if (event.httpMethod !== 'POST') {
-        return { statusCode: 405, body: 'Method not allowed' };
+        return { statusCode: 405, headers: cors, body: JSON.stringify({ error: 'Method not allowed' }) };
     }
 
     let body;
     try { body = JSON.parse(event.body || '{}'); } catch {
-        return { statusCode: 400, body: 'Invalid JSON' };
+        return { statusCode: 400, headers: cors, body: JSON.stringify({ error: 'Invalid JSON' }) };
     }
 
     const { email, firstName, lastName, discipline } = body;
-    if (!email) return { statusCode: 400, body: 'Missing email' };
-    if (!isValidEmail(email)) return { statusCode: 400, body: 'Invalid email address' };
+    if (!email) return { statusCode: 400, headers: cors, body: JSON.stringify({ error: 'Missing email' }) };
+    if (!isValidEmail(email)) return { statusCode: 400, headers: cors, body: JSON.stringify({ error: 'Invalid email address' }) };
 
     // Anti-abuse: verify email is actually in the waitlist before sending
     const exists = await emailInWaitlist(email.trim().toLowerCase());
     if (!exists) {
         console.warn('send-waitlist-confirm: email not in waitlist, refusing send:', email);
-        return { statusCode: 200, body: JSON.stringify({ sent: false, reason: 'not_in_waitlist' }) };
+        return { statusCode: 200, headers: cors, body: JSON.stringify({ sent: false, reason: 'not_in_waitlist' }) };
     }
 
     const apiKey  = process.env.RESEND_API_KEY;
-    if (!apiKey)  return { statusCode: 500, body: 'Email service not configured' };
+    if (!apiKey)  return { statusCode: 500, headers: cors, body: JSON.stringify({ error: 'Email service not configured' }) };
 
     const name     = (firstName || '').trim() || 'there';
     const fullName = [firstName, lastName].filter(Boolean).map(s => s.trim()).join(' ') || 'there';
+    const article = discipline === 'OT' ? 'an' : 'a';
     const discLine = discipline && discipline !== 'prefer_not'
-        ? `<p style="color:#4b5563;font-size:15px;line-height:1.7;margin:0 0 20px;">We've noted that you work in <strong>${discipline}</strong> — we'll make sure to highlight relevant courses for your license when we launch.</p>`
+        ? `<p style="color:#4b5563;font-size:15px;line-height:1.7;margin:0 0 20px;">We see that you work as ${article} <strong>${discipline}</strong> — we'll make sure to highlight relevant courses for your license when we launch.</p>`
         : '';
 
     const html = `<!DOCTYPE html>
@@ -114,7 +135,7 @@ exports.handler = async (event) => {
             </div>
             <p style="color:#4b5563;font-size:16px;line-height:1.7;margin:0 0 20px;">Thanks for signing up — you're officially on the early access list for <strong>DrTroy Continuing Education</strong>. When we launch, you'll be the first to know.</p>
             ${discLine}
-            <p style="color:#4b5563;font-size:15px;line-height:1.7;margin:0 0 24px;">Keep an eye on your inbox. We'll send you a launch alert the moment the platform goes live — along with an exclusive early-access offer reserved just for waitlist members.</p>
+            <p style="color:#4b5563;font-size:15px;line-height:1.7;margin:0 0 24px;">Keep an eye on your inbox. We'll send you a launch notification when the platform goes live, including early access information.</p>
             <table width="100%" cellpadding="0" cellspacing="0" style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px;margin:0 0 28px;">
               <tr><td style="padding:24px;">
                 <p style="font-size:12px;font-weight:700;color:#1a365d;text-transform:uppercase;letter-spacing:.08em;margin:0 0 14px;">What's coming</p>
@@ -131,7 +152,7 @@ exports.handler = async (event) => {
         </tr>
         <tr>
           <td style="background:#f8fafc;border-top:1px solid #e5e7eb;padding:20px 40px;text-align:center;">
-            <p style="color:#9ca3af;font-size:12px;margin:0 0 6px;">&copy; 2026 DrTroy Continuing Education &nbsp;&middot;&nbsp; Lubbock, Texas</p>
+            <p style="color:#9ca3af;font-size:12px;margin:0 0 6px;">&copy; 2026 DrTroy Continuing Education &nbsp;&middot;&nbsp; Texas</p>
             <p style="color:#9ca3af;font-size:12px;margin:0;"><a href="https://drtroy.com/terms.html" style="color:#9ca3af;">Terms of Service</a> &nbsp;&middot;&nbsp; You're receiving this because you signed up at drtroy.com</p>
           </td>
         </tr>
@@ -155,7 +176,7 @@ exports.handler = async (event) => {
         const r1 = await resendPost(apiKey, {
             from:    'DrTroy Continuing Education <no-reply@drtroy.com>',
             to:      [email],
-            subject: `You're on the list, ${name}! 🎉 DrTroy CE is coming`,
+            subject: `Thanks for signing up, ${name} — DrTroy CE updates`,
             html
         });
 
@@ -171,12 +192,12 @@ exports.handler = async (event) => {
 
         if (r1.status >= 400) {
             console.error('Resend error (user):', r1.body);
-            return { statusCode: 500, body: JSON.stringify({ error: 'Email send failed' }) };
+            return { statusCode: 500, headers: cors, body: JSON.stringify({ error: 'Email send failed' }) };
         }
 
-        return { statusCode: 200, body: JSON.stringify({ sent: true }) };
+        return { statusCode: 200, headers: cors, body: JSON.stringify({ sent: true }) };
     } catch (err) {
         console.error('send-waitlist-confirm error:', err.message);
-        return { statusCode: 500, body: JSON.stringify({ error: err.message }) };
+        return { statusCode: 500, headers: cors, body: JSON.stringify({ error: err.message }) };
     }
 };

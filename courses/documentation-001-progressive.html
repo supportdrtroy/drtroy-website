@@ -1609,14 +1609,26 @@
   }
 
   // ── Logout ───────────────────────────────────────────────────────
-  function logout() {
+  async function logout() {
     if (confirm('Are you sure you want to log out? Your progress has been saved.')) {
+      // Sign out from Supabase using the proper client
+      if (typeof window.DrTroySupabase !== 'undefined') {
+        await window.DrTroySupabase.signOut();
+      }
+      
+      // Clear session data
+      localStorage.removeItem('userSession');
+      localStorage.removeItem('loginState');
+      localStorage.removeItem('sb-pnqoxulxdmlmbywcpbyx-auth-token');
+      
       window.location.href = '../my-account.html';
     }
   }
 
   // ── Init ─────────────────────────────────────────────────────────
   document.addEventListener('DOMContentLoaded', function() {
+    // Initialize admin controls
+    initAdminControls();
     loadProgress();
 
     // Open first incomplete module by default
@@ -1634,6 +1646,67 @@
       showCertificate();
     }
   });
+
+// Admin check function
+async function isAdmin() {
+    if (!window.DrTroySupabase) return false;
+    try {
+        const session = await window.DrTroySupabase.getSession();
+        if (!session || !session.user) return false;
+        const profile = await window.DrTroySupabase.getClient()
+            .from('profiles')
+            .select('is_admin')
+            .eq('id', session.user.id)
+            .single();
+        return profile.data && profile.data.is_admin === true;
+    } catch (e) {
+        return false;
+    }
+}
+
+// Admin unlock all modules
+async function adminUnlockAll() {
+    if (!await isAdmin()) {
+        if (typeof showNotification === 'function') {
+            showNotification('⚠️ Admin access required');
+        } else {
+            alert('⚠️ Admin access required');
+        }
+        return;
+    }
+    
+    // Find all module blocks and unlock them
+    const modules = document.querySelectorAll('.module-block, [id^="module-"]');
+    modules.forEach((mod) => {
+        mod.classList.remove('locked');
+        mod.classList.add('open');
+        // Update status if there's a status element
+        const statusEl = mod.querySelector('.module-status, [id^="status-"]');
+        if (statusEl) {
+            statusEl.textContent = 'Unlocked (Admin)';
+        }
+    });
+    
+    // Show all module content
+    document.querySelectorAll('.module-content').forEach(content => {
+        content.style.display = 'block';
+    });
+    
+    if (typeof showNotification === 'function') {
+        showNotification('🔓 Admin: All modules unlocked!');
+    } else {
+        alert('🔓 Admin: All modules unlocked!');
+    }
+}
+
+// Show admin controls on page load if admin
+async function initAdminControls() {
+    if (await isAdmin()) {
+        const adminPanel = document.getElementById('adminControls');
+        if (adminPanel) adminPanel.style.display = 'block';
+    }
+}
+
 </script>
 
 <script src="../js/course-sync.js">

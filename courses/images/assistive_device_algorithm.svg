@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="500" viewBox="0 0 800 500">
+  <rect width="800" height="500" fill="white" stroke="#e0e0e0" stroke-width="1"/>
+  
+  <!-- Title -->
+  <text x="400" y="35" text-anchor="middle" font-family="Arial, sans-serif" font-size="22" font-weight="bold" fill="#1a56a0">
+    Assistive Device Selection Algorithm
+  </text>
+  
+  <!-- Start node -->
+  <rect x="350" y="60" width="100" height="40" fill="#e8f4fd" stroke="#1a56a0" stroke-width="2" rx="20"/>
+  <text x="400" y="85" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#1a56a0">Patient Assessment</text>
+  
+  <!-- Decision diamond 1 -->
+  <polygon points="400,120 460,150 400,180 340,150" fill="#fff3cd" stroke="#1a56a0" stroke-width="2"/>
+  <text x="400" y="150" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#333">Balance Impaired?</text>
+  
+  <!-- Yes branch - Walker/Rollator -->
+  <rect x="200" y="220" width="120" height="50" fill="#2e7d32" stroke="#1a56a0" stroke-width="2" rx="10" opacity="0.8"/>
+  <text x="260" y="240" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="white">Walker/Rollator</text>
+  <text x="260" y="255" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="white">Stability support</text>
+  
+  <!-- No branch - Decision diamond 2 -->
+  <polygon points="550,200 610,230 550,260 490,230" fill="#fff3cd" stroke="#1a56a0" stroke-width="2"/>
+  <text x="550" y="230" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#333">Weight bearing issue?</text>
+  
+  <!-- Cane branch -->
+  <rect x="450" y="300" width="100" height="50" fill="#2e7d32" stroke="#1a56a0" stroke-width="2" rx="10" opacity="0.8"/>
+  <text x="500" y="320" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="white">Single Point Cane</text>
+  <text x="500" y="335" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="white">Mild support</text>
+  
+  <!-- Quad cane branch -->
+  <rect x="600" y="300" width="100" height="50" fill="#2e7d32" stroke="#1a56a0" stroke-width="2" rx="10" opacity="0.8"/>
+  <text x="650" y="320" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="white">Quad Cane</text>
+  <text x="650" y="335" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="white">More stability</text>
+  
+  <!-- No device needed -->
+  <rect x="100" y="300" width="100" height="50" fill="#e8f4fd" stroke="#1a56a0" stroke-width="2" rx="10"/>
+  <text x="150" y="320" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#1a56a0">No Device</text>
+  <text x="150" y="335" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#1a56a0">Independent</text>
+  
+  <!-- Arrows -->
+  <line x1="400" y1="100" x2="400" y2="120" stroke="#1a56a0" stroke-width="2" marker-end="url(#arrowhead)"/>
+  <line x1="360" y1="165" x2="280" y2="210" stroke="#1a56a0" stroke-width="2" marker-end="url(#arrowhead)"/>
+  <line x1="440" y1="165" x2="520" y2="200" stroke="#1a56a0" stroke-width="2" marker-end="url(#arrowhead)"/>
+  <line x1="510" y1="245" x2="480" y2="290" stroke="#1a56a0" stroke-width="2" marker-end="url(#arrowhead)"/>
+  <line x1="590" y1="245" x2="630" y2="290" stroke="#1a56a0" stroke-width="2" marker-end="url(#arrowhead)"/>
+  <line x1="320" y1="165" x2="180" y2="290" stroke="#1a56a0" stroke-width="2" marker-end="url(#arrowhead)"/>
+  
+  <!-- Labels -->
+  <text x="320" y="190" font-family="Arial, sans-serif" font-size="11" fill="#d32f2f" font-weight="bold">YES</text>
+  <text x="480" y="190" font-family="Arial, sans-serif" font-size="11" fill="#2e7d32" font-weight="bold">NO</text>
+  <text x="480" y="275" font-family="Arial, sans-serif" font-size="11" fill="#2e7d32" font-weight="bold">NO</text>
+  <text x="620" y="275" font-family="Arial, sans-serif" font-size="11" fill="#d32f2f" font-weight="bold">YES</text>
+  <text x="220" y="280" font-family="Arial, sans-serif" font-size="11" fill="#2e7d32" font-weight="bold">Stable</text>
+  
+  <!-- Arrow marker definition -->
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#1a56a0"/>
+    </marker>
+  </defs>
+  
+  <!-- Bottom note -->
+  <text x="400" y="450" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#555">
+    Consider patient preferences, environment, and training requirements
+  </text>
+</svg>

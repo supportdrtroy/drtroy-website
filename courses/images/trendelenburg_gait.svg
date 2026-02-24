@@ -1,0 +1,116 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="500" viewBox="0 0 800 500">
+  <rect width="800" height="500" fill="white" stroke="#e0e0e0" stroke-width="1"/>
+  
+  <!-- Title -->
+  <text x="400" y="35" text-anchor="middle" font-family="Arial, sans-serif" font-size="22" font-weight="bold" fill="#1a56a0">
+    Trendelenburg Gait Pattern
+  </text>
+  
+  <!-- Ground line -->
+  <line x1="100" y1="420" x2="700" y2="420" stroke="#1a56a0" stroke-width="2"/>
+  
+  <!-- Person with Trendelenburg gait -->
+  <!-- Head -->
+  <circle cx="380" cy="160" r="25" fill="white" stroke="#1a56a0" stroke-width="2"/>
+  <circle cx="370" cy="155" r="3" fill="#1a56a0"/>
+  <circle cx="390" cy="155" r="3" fill="#1a56a0"/>
+  <path d="M 365 170 Q 380 180 395 170" stroke="#1a56a0" stroke-width="2" fill="none"/>
+  
+  <!-- Body tilted -->
+  <line x1="380" y1="185" x2="370" y2="320" stroke="#1a56a0" stroke-width="4"/>
+  
+  <!-- Arms for balance -->
+  <line x1="375" y1="210" x2="340" y2="240" stroke="#1a56a0" stroke-width="3"/>
+  <line x1="340" y1="240" x2="320" y2="270" stroke="#1a56a0" stroke-width="3"/>
+  <line x1="375" y1="220" x2="410" y2="250" stroke="#1a56a0" stroke-width="3"/>
+  <line x1="410" y1="250" x2="430" y2="280" stroke="#1a56a0" stroke-width="3"/>
+  
+  <!-- Legs showing hip drop -->
+  <!-- Stance leg (right - on ground) -->
+  <line x1="370" y1="320" x2="380" y2="415" stroke="#1a56a0" stroke-width="4"/>
+  <ellipse cx="385" cy="420" rx="15" ry="5" fill="#1a56a0"/>
+  
+  <!-- Swing leg (left - elevated but shows hip drop) -->
+  <line x1="370" y1="320" x2="340" y2="390" stroke="#d32f2f" stroke-width="3"/>
+  <line x1="340" y1="390" x2="320" y2="405" stroke="#d32f2f" stroke-width="3"/>
+  <ellipse cx="315" cy="410" rx="15" ry="5" fill="#d32f2f"/>
+  
+  <!-- Hip level indicators -->
+  <line x1="300" y1="320" x2="450" y2="300" stroke="#d32f2f" stroke-width="2" stroke-dasharray="5,5"/>
+  <text x="350" y="295" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#d32f2f" font-weight="bold">Hip drop</text>
+  
+  <!-- Normal hip level reference -->
+  <line x1="300" y1="280" x2="450" y2="280" stroke="#2e7d32" stroke-width="1" stroke-dasharray="3,3"/>
+  <text x="350" y="275" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#2e7d32">Normal hip level</text>
+  
+  <!-- Lateral shift arrow -->
+  <path d="M 420 200 Q 450 220 470 240" stroke="#d32f2f" stroke-width="3" marker-end="url(#redarrow)"/>
+  <text x="480" y="230" font-family="Arial, sans-serif" font-size="11" fill="#d32f2f" font-weight="bold">Lateral trunk shift</text>
+  <text x="480" y="245" font-family="Arial, sans-serif" font-size="11" fill="#d32f2f">toward stance leg</text>
+  
+  <!-- Characteristics box -->
+  <rect x="100" y="80" width="280" height="160" fill="#ffebee" stroke="#d32f2f" stroke-width="1" rx="10"/>
+  <text x="240" y="105" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#d32f2f">Trendelenburg Gait Features</text>
+  <text x="110" y="125" font-family="Arial, sans-serif" font-size="11" fill="#333">• Hip drop on swing leg side</text>
+  <text x="110" y="145" font-family="Arial, sans-serif" font-size="11" fill="#333">• Lateral trunk shift toward stance leg</text>
+  <text x="110" y="165" font-family="Arial, sans-serif" font-size="11" fill="#333">• Compensatory pelvic tilt</text>
+  <text x="110" y="185" font-family="Arial, sans-serif" font-size="11" fill="#333">• Waddling appearance</text>
+  <text x="110" y="205" font-family="Arial, sans-serif" font-size="11" fill="#333">• Increased energy expenditure</text>
+  <text x="110" y="225" font-family="Arial, sans-serif" font-size="11" fill="#333">• May have positive Trendelenburg sign</text>
+  
+  <!-- Normal vs abnormal hip mechanics -->
+  <rect x="450" y="80" width="280" height="160" fill="#e8f4fd" stroke="#1a56a0" stroke-width="1" rx="10"/>
+  <text x="590" y="105" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#1a56a0">Hip Mechanics Comparison</text>
+  
+  <!-- Normal hip -->
+  <text x="460" y="130" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#2e7d32">Normal:</text>
+  <rect x="520" y="120" width="80" height="20" fill="#2e7d32" rx="10"/>
+  <text x="560" y="135" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="white">Level pelvis</text>
+  
+  <!-- Trendelenberg hip -->
+  <text x="460" y="165" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#d32f2f">Trendelenburg:</text>
+  <polygon points="520,150 600,150 590,170 530,170" fill="#d32f2f"/>
+  <text x="560" y="165" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="white">Tilted pelvis</text>
+  
+  <text x="460" y="190" font-family="Arial, sans-serif" font-size="11" fill="#333">Weak gluteus medius cannot</text>
+  <text x="460" y="205" font-family="Arial, sans-serif" font-size="11" fill="#333">maintain pelvic level during</text>
+  <text x="460" y="220" font-family="Arial, sans-serif" font-size="11" fill="#333">single-limb support phase</text>
+  
+  <!-- Muscle weakness indicator -->
+  <circle cx="370" cy="320" r="15" fill="#d32f2f" opacity="0.3"/>
+  <text x="370" y="345" text-anchor="middle" font-family="Arial, sans-serif" font-size="9" fill="#d32f2f" font-weight="bold">Weak</text>
+  <text x="370" y="355" text-anchor="middle" font-family="Arial, sans-serif" font-size="9" fill="#d32f2f" font-weight="bold">Glut Med</text>
+  
+  <!-- Causes box -->
+  <rect x="100" y="260" width="280" height="120" fill="#fff3cd" stroke="#ff9800" stroke-width="1" rx="10"/>
+  <text x="240" y="285" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#ff9800">Common Causes</text>
+  <text x="110" y="305" font-family="Arial, sans-serif" font-size="11" fill="#333">• Gluteus medius weakness</text>
+  <text x="110" y="325" font-family="Arial, sans-serif" font-size="11" fill="#333">• Hip abductor insufficiency</text>
+  <text x="110" y="345" font-family="Arial, sans-serif" font-size="11" fill="#333">• Developmental hip dysplasia</text>
+  <text x="110" y="365" font-family="Arial, sans-serif" font-size="11" fill="#333">• Post-surgical hip weakness</text>
+  
+  <!-- Treatment box -->
+  <rect x="450" y="260" width="280" height="120" fill="#e8f5e9" stroke="#2e7d32" stroke-width="1" rx="10"/>
+  <text x="590" y="285" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#2e7d32">Treatment Approach</text>
+  <text x="460" y="305" font-family="Arial, sans-serif" font-size="11" fill="#333">• Hip abductor strengthening</text>
+  <text x="460" y="325" font-family="Arial, sans-serif" font-size="11" fill="#333">• Core stabilization exercises</text>
+  <text x="460" y="345" font-family="Arial, sans-serif" font-size="11" fill="#333">• Pelvic control training</text>
+  <text x="460" y="365" font-family="Arial, sans-serif" font-size="11" fill="#333">• Gait training with mirrors</text>
+  
+  <!-- Arrow marker definition -->
+  <defs>
+    <marker id="redarrow" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#d32f2f"/>
+    </marker>
+  </defs>
+  
+  <!-- Bottom note -->
+  <text x="400" y="450" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#d32f2f" font-weight="bold">
+    Key Feature: Hip drop on swing side due to stance-side gluteus medius weakness
+  </text>
+  
+  <!-- Test reminder -->
+  <text x="400" y="470" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#555">
+    Test: Single-leg stance reveals positive Trendelenburg sign (hip drop on unsupported side)
+  </text>
+</svg>

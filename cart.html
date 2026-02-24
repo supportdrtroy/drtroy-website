@@ -5,18 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Shopping Cart | DrTroy CE</title>
     
-    <!-- Security Headers -->
-    <meta http-equiv="Content-Security-Policy" content="
-        default-src 'self';
-        script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net;
-        style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
-        font-src 'self' https://fonts.gstatic.com;
-        img-src 'self' data: https:;
-        connect-src 'self' https://*.supabase.co;
-    ">
-    <meta http-equiv="X-Content-Type-Options" content="nosniff">
-    <meta http-equiv="X-Frame-Options" content="DENY">
-    <meta http-equiv="X-XSS-Protection" content="1; mode=block">
+    <!-- Security headers set via netlify.toml -->
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Source+Sans+Pro:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -622,10 +611,7 @@
         }
         .nav-login-link:hover { background: #1e40af; }
     </style>
-    <!-- Supabase JS v2 CDN -->
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
-    <script src="js/supabase-client.js"></script>
-    <script src="js/security.js"></script>
+  <link rel="stylesheet" href="css/nav.css">
 </head>
 
 <body>
@@ -634,7 +620,7 @@
         <div class="header-container">
             <div class="logo">
                 <a href="home-preview.html">
-                    <img src="courses/images/drtroy_logo_transparent.jpg" alt="DrTroy Continuing Education">
+                    <img src="courses/images/drtroy_logo_new.jpg" alt="DrTroy Continuing Education">
                 </a>
             </div>
             <button class="hamburger" aria-label="Open menu">
@@ -643,15 +629,15 @@
             <nav class="nav-links">
                 <a href="home-preview.html">Home</a>
                 <a href="course-catalog.html">Courses</a>
-                <a href="home-preview.html#about">About</a>
+                <a href="about.html">About</a>
                 <a href="home-preview.html#contact">Contact</a>
-                <div class="cart-icon" id="cart-icon">
+                <a href="cart.html" class="cart-icon" id="cart-icon">
                     🛒 Cart
                     <span class="cart-count" id="cart-count">0</span>
-                </div>
+                </a>
                 <a href="my-account.html" id="navAccountLink" class="nav-login-link">Log In</a>
             </nav>
-        </div>
+        </a>
     </header>
 
     <!-- Main Content -->
@@ -659,7 +645,7 @@
         <div class="page-header">
             <h1>Shopping Cart</h1>
             <p>Review your selected courses and packages before checkout</p>
-        </div>
+        </a>
 
         <div class="cart-layout">
             <!-- Cart Items -->
@@ -671,9 +657,9 @@
                         <h3>Your cart is empty</h3>
                         <p>Add some courses or packages to get started with your continuing education journey.</p>
                         <a href="course-catalog.html" class="btn btn-primary" style="margin-top: 2rem;">Browse Courses</a>
-                    </div>
-                </div>
-            </div>
+                    </a>
+                </a>
+            </a>
 
             <!-- Cart Summary -->
             <div class="cart-summary" id="cart-summary" style="display: none;">
@@ -682,32 +668,32 @@
                 <div class="summary-row">
                     <span>Subtotal:</span>
                     <span id="subtotal">$0.00</span>
-                </div>
+                </a>
                 
                 <div class="summary-row discount-row" id="discount-row" style="display: none;">
                     <span>New Account Discount:</span>
                     <span id="discount-amount">-$0.00</span>
-                </div>
+                </a>
                 
                 <div class="summary-row total">
                     <span>Total:</span>
                     <span id="total">$0.00</span>
-                </div>
+                </a>
 
                 <div class="discount-notice" id="discount-notice" style="display: none;">
                     <strong>New Customer Discount Applied!</strong>
                     New customers save $10 on bundles!
-                </div>
+                </a>
 
                 <a href="checkout.html?from=cart" class="btn btn-primary btn-block" id="checkout-btn">Proceed to Checkout</a>
                 
                 <button class="btn btn-secondary btn-block" onclick="clearCart()">Clear Cart</button>
-            </div>
-        </div>
+            </a>
+        </a>
 
         <div class="continue-shopping">
             <a href="course-catalog.html" class="btn btn-outline">← Continue Shopping</a>
-        </div>
+        </a>
     </main>
 
     <!-- Include cart system -->
@@ -715,39 +701,6 @@
     
     <script>
         // Populate cart items
-        
-        // Backup removal function with detailed debugging
-        window.debugRemoveFromCart = function(button) {
-            console.log('🔧 DEBUG: Button clicked:', button);
-            console.log('🔧 DEBUG: Button onclick:', button.getAttribute('onclick'));
-            
-            // Get cart contents
-            const items = window.drtroyCart ? window.drtroyCart.getItems() : [];
-            console.log('🔧 DEBUG: Current cart items:', items);
-            
-            // Try to extract parameters from the button
-            const onclickAttr = button.getAttribute('onclick');
-            if (onclickAttr) {
-                console.log('🔧 DEBUG: Parsing onclick:', onclickAttr);
-                
-                // Extract the parameters
-                const match = onclickAttr.match(/removeFromCartUI\('([^']*)',\s*'([^']*)'\)/);
-                if (match) {
-                    const [, itemId, type] = match;
-                    console.log('🔧 DEBUG: Extracted params:', { itemId, type });
-                    
-                    // Try the removal
-                    removeFromCartUI(itemId, type);
-                } else {
-                    console.error('🔧 DEBUG: Could not parse onclick attribute');
-                    showRemoveNotification('Could not parse removal parameters', true);
-                }
-            } else {
-                console.error('🔧 DEBUG: No onclick attribute found');
-                showRemoveNotification('No removal parameters found', true);
-            }
-        };
-
         function populateCart() {
             const cartData = window.drtroyCart.getCheckoutData();
             const container = document.getElementById('cart-items-container');
@@ -755,24 +708,14 @@
             const emptyCart = document.getElementById('empty-cart');
             
             if (cartData.items.length === 0) {
-                // Clear any existing cart items
-                container.innerHTML = '';
-                
-                // Show empty cart message and hide summary
                 emptyCart.style.display = 'block';
                 summary.style.display = 'none';
-                
-                // Make sure the empty cart element is in the container
-                if (!container.contains(emptyCart)) {
-                    container.appendChild(emptyCart);
-                }
                 return;
             }
 
             emptyCart.style.display = 'none';
             summary.style.display = 'block';
             
-            // Clear the container and build fresh content
             let itemsHtml = '';
             
             cartData.items.forEach(item => {
@@ -786,45 +729,32 @@
                             <button class="qty-btn" onclick="updateQuantityUI('${item.courseId}', ${item.quantity - 1})">−</button>
                             <span class="qty-display">${item.quantity}</span>
                             <button class="qty-btn" onclick="updateQuantityUI('${item.courseId}', ${item.quantity + 1})">+</button>
-                        </div>
+                        </a>
                     `;
                 }
                 
                 itemsHtml += `
                     <div class="cart-item">
                         <div class="item-details">
-                            <div class="item-title">${item.title}</div>
+                            <div class="item-title">${item.title}</a>
                             <div class="item-meta">
                                 ${item.credits} CCU${item.credits !== 1 ? 's' : ''} • 
                                 Course #: ${item.courseNumber || item.packageCode}
-                            </div>
+                            </a>
                             <span class="item-type ${itemTypeClass}">${itemTypeLabel}</span>
-                        </div>
+                        </a>
                         <div class="item-actions">
-                            <div class="item-price">$${(item.price * (item.quantity || 1)).toFixed(2)}</div>
+                            <div class="item-price">$${(item.price * (item.quantity || 1)).toFixed(2)}</a>
                             ${quantityControls}
-                            <button class="remove-btn" 
-                                       data-item-id="${item.type === 'course' ? item.courseId : item.packageCode}"
-                                       data-item-type="${item.type}"
-                                       onclick="removeFromCartUI(this.dataset.itemId, this.dataset.itemType)">
+                            <button class="remove-btn" onclick="removeFromCartUI('${item.type === 'course' ? item.courseId : item.packageCode}', '${item.type}')">
                                 Remove
                             </button>
-                        </div>
-                    </div>
+                        </a>
+                    </a>
                 `;
             });
             
-            // Clear container and add fresh items (preserving empty cart element structure)
-            const itemElements = container.querySelectorAll(':not(#empty-cart)');
-            itemElements.forEach(el => el.remove());
-            
-            if (itemsHtml) {
-                const tempDiv = document.createElement('div');
-                tempDiv.innerHTML = itemsHtml); // Changed from innerHTML for security
-                while (tempDiv.firstChild) {
-                    container.appendChild(tempDiv.firstChild);
-                }
-            }
+            container.innerHTML = itemsHtml;
             
             // Update summary
             document.getElementById('subtotal').textContent = `$${cartData.subtotal.toFixed(2)}`;
@@ -861,13 +791,6 @@
                 return;
             }
 
-            // Check if removeItem function exists
-            if (typeof window.drtroyCart.removeItem !== 'function') {
-                console.error('❌ Cart UI: removeItem function not found');
-                showRemoveNotification('Cart removal function not available', true);
-                return;
-            }
-
             // Get initial cart state
             const itemsBefore = window.drtroyCart.getItems();
             const countBefore = itemsBefore.length;
@@ -881,7 +804,6 @@
             
             if (!itemToRemove) {
                 console.warn('⚠️ Cart UI: Item not found in cart:', { itemId, type });
-                console.log('📋 Available items:', itemsBefore.map(i => ({type: i.type, id: i.type === 'course' ? i.courseId : i.packageCode})));
                 showRemoveNotification('Item not found in cart', true);
                 return;
             }
@@ -893,75 +815,29 @@
                 const result = window.drtroyCart.removeItem(itemId, type);
                 console.log('✅ Cart UI: removeItem result:', result);
                 
-                // Check if removal was successful
-                if (result && result.success === true) {
+                if (result.success) {
                     console.log('✅ Item successfully removed from cart');
                     
-                    // Update cart icon (with error handling)
-                    try {
-                        if (window.updateCartIcon && typeof window.updateCartIcon === 'function') {
-                            window.updateCartIcon();
-                        }
-                    } catch (iconError) {
-                        console.warn('⚠️ Cart icon update failed:', iconError);
-                        // Don't block removal success for icon update failures
+                    // Update cart icon
+                    if (window.updateCartIcon) {
+                        window.updateCartIcon();
                     }
                     
-                    // Repopulate the cart display (with error handling)
-                    try {
-                        populateCart();
-                        console.log('✅ Cart UI: populateCart completed');
-                    } catch (populateError) {
-                        console.warn('⚠️ Cart repopulation failed:', populateError);
-                        // Don't block removal success for display update failures
-                    }
+                    // Repopulate the cart display
+                    populateCart();
+                    console.log('✅ Cart UI: populateCart completed');
                     
                     // Show success feedback
                     showRemoveNotification('Item removed from cart');
                     
-                } else if (result && result.success === false) {
+                } else {
                     console.error('❌ Item removal failed:', result.reason);
                     showRemoveNotification(result.reason || 'Failed to remove item', true);
-                } else {
-                    // Unexpected result format
-                    console.warn('⚠️ Unexpected removal result:', result);
-                    // Since Troy reports item is actually removed, assume success
-                    showRemoveNotification('Item removed from cart');
-                    try {
-                        if (window.updateCartIcon) window.updateCartIcon();
-                        populateCart();
-                    } catch (e) {
-                        console.warn('⚠️ Post-removal UI update failed:', e);
-                    }
                 }
                 
             } catch (error) {
                 console.error('❌ Cart UI: Error during removal:', error);
-                
-                // Check if the error is just a UI issue but removal actually worked
-                setTimeout(() => {
-                    try {
-                        const currentItems = window.drtroyCart.getItems();
-                        const stillExists = currentItems.find(item => 
-                            item.type === type && 
-                            (type === 'course' ? item.courseId === itemId : item.packageCode === itemId)
-                        );
-                        
-                        if (!stillExists) {
-                            // Item was removed despite the error, show success
-                            console.log('🔄 Item was actually removed despite error, showing success');
-                            showRemoveNotification('Item removed from cart');
-                            if (window.updateCartIcon) window.updateCartIcon();
-                            populateCart();
-                        } else {
-                            // Item still there, actual failure
-                            showRemoveNotification('Error removing item: ' + error.message, true);
-                        }
-                    } catch (checkError) {
-                        // Final fallback
-                        showRemoveNotification('Error removing item: ' + error.message, true);
-                    }
-                }, 100);
+                showRemoveNotification('Error removing item: ' + error.message, true);
             }
         }
 
@@ -1045,8 +921,6 @@
         
         // Initialize page
         document.addEventListener('DOMContentLoaded', function() {
-        // Load cart from localStorage
-        if (window.cart) window.cart.loadCart();
             console.log('🚀 Cart page initializing...');
             
             // Ensure cart system is ready

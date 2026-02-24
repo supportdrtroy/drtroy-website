@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="800" height="500">
+  <rect width="800" height="500" fill="white" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="400" y="40" text-anchor="middle" font-family="Arial, sans-serif" font-size="22" font-weight="bold" fill="#1a56a0">Three Balance Systems Integration Model</text>
+  
+  <!-- Visual System Box -->
+  <rect x="50" y="80" width="180" height="120" fill="#e3f2fd" stroke="#4fc3f7" stroke-width="2" rx="8"/>
+  <text x="140" y="110" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#0277bd">VISUAL SYSTEM</text>
+  <ellipse cx="140" cy="150" rx="25" ry="15" fill="white" stroke="#0277bd" stroke-width="2"/>
+  <circle cx="140" cy="150" r="8" fill="#0277bd"/>
+  <circle cx="142" cy="148" r="3" fill="white"/>
+  <text x="140" y="185" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#555">Environmental orientation</text>
+  <text x="140" y="198" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#555">Motion detection</text>
+  
+  <!-- Vestibular System Box -->
+  <rect x="50" y="220" width="180" height="120" fill="#e8f5e9" stroke="#81c784" stroke-width="2" rx="8"/>
+  <text x="140" y="250" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#2e7d32">VESTIBULAR SYSTEM</text>
+  <path d="M125 275 Q140 265 155 275 Q160 285 155 295 Q145 305 135 295 Q130 290 130 285" fill="none" stroke="#2e7d32" stroke-width="2"/>
+  <circle cx="140" cy="285" r="3" fill="#2e7d32"/>
+  <text x="140" y="325" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#555">Head position</text>
+  <text x="140" y="338" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#555">Linear/angular acceleration</text>
+  
+  <!-- Somatosensory Box -->
+  <rect x="50" y="360" width="180" height="120" fill="#fff3e0" stroke="#ffb74d" stroke-width="2" rx="8"/>
+  <text x="140" y="390" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#e65100">SOMATOSENSORY SYSTEM</text>
+  <ellipse cx="135" cy="420" rx="15" ry="10" fill="white" stroke="#e65100" stroke-width="2"/>
+  <line x1="135" y1="420" x2="135" y2="435" stroke="#e65100" stroke-width="2"/>
+  <line x1="130" y1="435" x2="140" y2="435" stroke="#e65100" stroke-width="2"/>
+  <text x="140" y="465" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#555">Proprioception</text>
+  <text x="140" y="478" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#555">Surface condition sensing</text>
+  
+  <!-- Arrows to CNS -->
+  <line x1="250" y1="140" x2="290" y2="250" stroke="#666" stroke-width="2" marker-end="url(#arrow)"/>
+  <line x1="250" y1="280" x2="290" y2="270" stroke="#666" stroke-width="2" marker-end="url(#arrow)"/>
+  <line x1="250" y1="420" x2="290" y2="290" stroke="#666" stroke-width="2" marker-end="url(#arrow)"/>
+  
+  <!-- CNS Box -->
+  <rect x="300" y="180" width="200" height="140" fill="#1a56a0" stroke="#1a56a0" stroke-width="2" rx="10"/>
+  <text x="400" y="215" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="white">CENTRAL NERVOUS</text>
+  <text x="400" y="235" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="white">SYSTEM</text>
+  <path d="M370 260 Q380 245 400 245 Q420 245 430 260 Q430 275 415 280 L400 285 L385 280 Q370 275 370 260" fill="none" stroke="#4fc3f7" stroke-width="2"/>
+  <path d="M380 255 Q390 250 400 250" fill="none" stroke="#4fc3f7" stroke-width="1"/>
+  
+  <!-- Arrow to Output -->
+  <line x1="510" y1="250" x2="540" y2="250" stroke="#666" stroke-width="3" marker-end="url(#arrow)"/>
+  
+  <!-- Postural Control Box -->
+  <rect x="560" y="180" width="200" height="140" fill="#e8f4fd" stroke="#1a56a0" stroke-width="3" rx="8"/>
+  <text x="660" y="215" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#1a56a0">POSTURAL CONTROL</text>
+  <text x="660" y="240" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#1a56a0">& BALANCE</text>
+  <circle cx="660" cy="275" r="20" fill="none" stroke="#1a56a0" stroke-width="2"/>
+  <line x1="660" y1="275" x2="660" y2="255" stroke="#1a56a0" stroke-width="2"/>
+  <circle cx="660" cy="253" r="3" fill="#1a56a0"/>
+  
+  <!-- Bottom Note -->
+  <rect x="150" y="440" width="500" height="45" fill="#fff8e1" stroke="#ffc107" stroke-width="1" rx="5"/>
+  <text x="400" y="460" text-anchor="middle" font-family="Arial, sans-serif" font-size="13" font-weight="bold" fill="#5d4037">⚠ Age-related decline in any system increases fall risk exponentially</text>
+  <text x="400" y="478" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#666">Multiple system impairment creates synergistic fall risk that exceeds sum of individual risks</text>
+  
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#666"/>
+    </marker>
+  </defs>
+</svg>

@@ -4,36 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Course Catalog | DrTroy CE</title>
-    <meta name="description" content="Texas continuing education packages for PT, PTA, OT, COTA professionals. Evidence-based courses for license renewal. $99-$149 complete packages.">
     
-    <!-- Google Analytics 4 -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-XXXXXXXXXX');
-    </script>
-    
-    <!-- Security Headers -->
-    <meta http-equiv="Content-Security-Policy" content="
-        default-src 'self';
-        script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://www.googletagmanager.com https://www.google-analytics.com;
-        style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
-        font-src 'self' https://fonts.gstatic.com;
-        img-src 'self' data: https:;
-        connect-src 'self' https://*.supabase.co https://www.google-analytics.com https://analytics.google.com;
-    ">
-    <meta http-equiv="X-Content-Type-Options" content="nosniff">
-    <meta http-equiv="X-Frame-Options" content="DENY">
-    <meta http-equiv="X-XSS-Protection" content="1; mode=block">
-    
-    <!-- Security: Bot Protection & Pricing Protection -->
-    <!-- <script src="js/bot-protection.js"></script> DISABLED - too aggressive, blocking legitimate users -->
-    <script src="js/pricing-protection.js"></script>
+    <!-- Security headers set via netlify.toml -->
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&font=Source+Sans+Pro:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Source+Sans+Pro:wght@300;400;500;600&display=swap" rel="stylesheet">
     
     <style>
         :root {
@@ -687,10 +662,7 @@
     <meta name="twitter:title" content="Course Catalog — DrTroy CE">
     <meta name="twitter:description" content="Browse DrTroy CE course packages for PT, PTA, OT, and COTA. Complete your required Texas CCUs online at your own pace.">
     <meta name="twitter:image" content="https://drtroy.com/courses/images/og-preview.jpg">
-    <!-- Supabase JS v2 CDN -->
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
-    <script src="js/supabase-client.js"></script>
-    <script src="js/security.js"></script>
+  <link rel="stylesheet" href="css/nav.css">
 </head>
 
 <body>
@@ -699,7 +671,7 @@
         <div class="header-container">
             <div class="logo">
                 <a href="home-preview.html">
-                    <img src="courses/images/drtroy_logo_transparent.jpg" alt="DrTroy Continuing Education">
+                    <img src="courses/images/drtroy_logo_new.jpg" alt="DrTroy Continuing Education">
                 </a>
             </div>
             <button class="hamburger" aria-label="Open menu">
@@ -708,7 +680,7 @@
             <nav class="nav-links">
                 <a href="home-preview.html">Home</a>
                 <a href="course-catalog.html">Courses</a>
-                <a href="home-preview.html#about">About</a>
+                <a href="about.html">About</a>
                 <a href="home-preview.html#contact">Contact</a>
                 <a href="cart.html" class="cart-icon" id="cart-icon">
                     🛒 Cart
@@ -772,7 +744,7 @@
         // Course Data - Enhanced for new design
         const COURSE_CATALOG = {
             // PT-Specific Courses
-            'pt-msk-001': {
+            'PT-MSK-001': {
                 title: 'PT Musculoskeletal Evaluation and Diagnosis',
                 credits: 3,
                 description: 'Comprehensive MSK evaluation and treatment approaches across all body regions',
@@ -782,19 +754,19 @@
                 category: 'pt-specific',
                 url: 'courses/pt-msk-001.html'
             },
-            'core-joint-001': {
+            'JOINT-001': {
                 title: 'Considerations in Lower Extremity Joint Replacements',
                 credits: 3,
                 description: 'Comprehensive management of hip, knee, and ankle arthroplasty from pre-op to long-term care',
                 status: 'available',
                 courseNumber: 'DRTROY-JOINT-001-2024',
-                individualPrice: 29,
+                individualPrice: 34,
                 category: 'pt-specific',
                 url: 'courses/joint-replacement-001-progressive.html'
             },
             
             // OT-Specific Courses
-            'ot-adl-001': {
+            'OT-ADL-001': {
                 title: 'OT Evaluation and Assessment of ADLs',
                 credits: 3,
                 description: 'Comprehensive ADL assessment and intervention strategies for occupational therapists',
@@ -806,7 +778,7 @@
             },
             
             // Core Courses
-            'core-mobility-001': {
+            'MOBILITY-001': {
                 title: 'Comprehensive Mobility and Fall Prevention',
                 credits: 3,
                 description: 'Evidence-based mobility assessment and fall prevention strategies across healthcare settings',
@@ -816,7 +788,7 @@
                 category: 'core',
                 url: 'courses/mobility-fall-001-progressive.html'
             },
-            'core-balance-001': {
+            'BALANCE-001': {
                 title: 'Balance, Gait, and Vestibular Management',
                 credits: 3,
                 description: 'Assessment and treatment of balance and vestibular disorders in rehabilitation',
@@ -826,7 +798,7 @@
                 category: 'core',
                 url: 'courses/balance-gait-001-progressive.html'
             },
-            'core-postsurg-001': {
+            'EXERCISE-001': {
                 title: 'Post-Surgical and Therapeutic Exercise',
                 credits: 3,
                 description: 'Post-operative rehabilitation and evidence-based exercise prescription',
@@ -836,7 +808,7 @@
                 category: 'core',
                 url: 'courses/post-surgical-001-progressive.html'
             },
-            'core-geriatric-001': {
+            'GERIATRIC-001': {
                 title: 'Geriatric Care Across the Continuum',
                 credits: 3,
                 description: 'Comprehensive geriatric rehabilitation approaches for all care settings',
@@ -846,7 +818,7 @@
                 category: 'core',
                 url: 'courses/geriatric-care-001-progressive.html'
             },
-            'core-doc-001': {
+            'DOCUMENTATION-001': {
                 title: 'Professional Documentation and Communication',
                 credits: 3,
                 description: 'Clinical documentation standards and professional communication skills',
@@ -856,7 +828,7 @@
                 category: 'core',
                 url: 'courses/documentation-001-progressive.html'
             },
-            'core-agents-001': {
+            'MODALITIES-001': {
                 title: 'Physical Agents, Modalities, and Wound Care',
                 credits: 3,
                 description: 'Therapeutic modalities and comprehensive wound care management',
@@ -866,7 +838,7 @@
                 category: 'core',
                 url: 'courses/physical-agents-001-progressive.html'
             },
-            'core-neuro-001': {
+            'NEURO-001': {
                 title: 'Neurological Rehabilitation',
                 credits: 3,
                 description: 'Comprehensive neurological rehabilitation covering stroke, TBI, SCI, Parkinson\'s, MS, and emerging technologies',
@@ -876,7 +848,7 @@
                 category: 'core',
                 url: 'courses/pt-neuro-001-progressive.html'
             },
-            'core-infection-001': {
+            'INFECTION-001': {
                 title: 'Infection Control and Patient Safety',
                 credits: 3,
                 description: 'Infection prevention protocols and patient safety in healthcare settings',
@@ -886,7 +858,7 @@
                 category: 'core',
                 url: 'courses/infection-control-001-progressive.html'
             },
-            'core-education-001': {
+            'EDUCATION-001': {
                 title: 'Patient Education and Health Promotion',
                 credits: 2,
                 description: 'Evidence-based strategies for effective patient education and health behavior change',
@@ -896,9 +868,9 @@
                 category: 'core',
                 url: 'courses/patient-education-001-progressive.html'
             },
-            'core-tech-001': {
+            'HEALTHTECH-001': {
                 title: 'Healthcare Technology and Electronic Records',
-                credits: 1,
+                credits: 1.5,
                 description: 'Comprehensive technology skills including EHR systems, HIPAA compliance, clinical documentation, interoperability, and emerging healthcare technologies',
                 status: 'available',
                 courseNumber: 'DRTROY-HEALTHTECH-001-2024',
@@ -918,7 +890,7 @@
                 originalPrice: 149,
                 finalPrice: 139,
                 savings: 10,
-                courses: ['pt-msk-001', 'core-joint-001', 'core-mobility-001', 'core-neuro-001', 'core-education-001', 'core-tech-001', 'core-balance-001', 'core-postsurg-001', 'core-geriatric-001'],
+                courses: ['PT-MSK-001', 'JOINT-001', 'MOBILITY-001', 'NEURO-001', 'EDUCATION-001', 'HEALTHTECH-001', 'BALANCE-001', 'EXERCISE-001', 'GERIATRIC-001'],
                 featured: true
             },
             'OT': {
@@ -929,7 +901,7 @@
                 originalPrice: 129,
                 finalPrice: 119,
                 savings: 10,
-                courses: ['ot-adl-001', 'core-mobility-001', 'core-neuro-001', 'core-education-001', 'core-tech-001', 'core-geriatric-001', 'core-infection-001'],
+                courses: ['OT-ADL-001', 'MOBILITY-001', 'NEURO-001', 'EDUCATION-001', 'HEALTHTECH-001', 'GERIATRIC-001', 'INFECTION-001'],
                 featured: true
             },
             'PTA': {
@@ -940,7 +912,7 @@
                 originalPrice: 119,
                 finalPrice: 109,
                 savings: 10,
-                courses: ['core-mobility-001', 'core-neuro-001', 'core-education-001', 'core-tech-001', 'core-geriatric-001'],
+                courses: ['MOBILITY-001', 'NEURO-001', 'EDUCATION-001', 'HEALTHTECH-001', 'GERIATRIC-001'],
                 featured: true
             },
             'COTA': {
@@ -951,7 +923,7 @@
                 originalPrice: 109,
                 finalPrice: 99,
                 savings: 10,
-                courses: ['core-mobility-001', 'core-neuro-001', 'core-education-001', 'core-tech-001', 'core-geriatric-001'],
+                courses: ['MOBILITY-001', 'NEURO-001', 'EDUCATION-001', 'HEALTHTECH-001', 'GERIATRIC-001'],
                 featured: true
             }
         };
@@ -965,7 +937,7 @@
             let actionButtons = '';
             if (course.status === 'available') {
                 actionButtons = `
-                    <a href="#" class="btn btn-primary">View Course</a>
+                    <a href="${course.url}" class="btn btn-primary">View Course</a>
                     <button class="btn btn-outline" onclick="addCourseToCartWithFeedback('${courseId}')">
                         🛒 Add to Cart - $${course.individualPrice}
                     </button>
@@ -1021,7 +993,12 @@
             try {
                 const result = window.addCourseToCart(courseId);
                 console.log('✅ Add to cart result:', result);
-                // Note: cart.js already shows notification, no need to duplicate
+                
+                if (result) {
+                    showAddNotification(`Course added to cart!`);
+                } else {
+                    showAddNotification('Error adding course to cart', true);
+                }
             } catch (error) {
                 console.error('❌ Error adding course:', error);
                 showAddNotification('Error adding course to cart', true);
@@ -1034,7 +1011,12 @@
             try {
                 const result = window.addPackageToCart(packageCode);
                 console.log('✅ Add package result:', result);
-                // Note: cart.js already shows notification, no need to duplicate
+                
+                if (result) {
+                    showAddNotification(`Package added to cart!`);
+                } else {
+                    showAddNotification('Error adding package to cart', true);
+                }
             } catch (error) {
                 console.error('❌ Error adding package:', error);
                 showAddNotification('Error adding package to cart', true);
@@ -1131,19 +1113,13 @@
             const packageGrid = document.getElementById('package-grid');
             let packagesHtml = '';
             
-            console.log('🔍 DEBUG: PACKAGE_CATALOG has', Object.keys(PACKAGE_CATALOG).length, 'packages');
-            
             // PT | OT (top row), PTA | COTA (bottom row — directly under parent discipline)
             ['PT', 'OT', 'PTA', 'COTA'].forEach(code => {
                 const pkg = PACKAGE_CATALOG[code];
-                console.log('🔍 DEBUG: Processing package', code, pkg?.title);
                 if (pkg && pkg.featured) {
                     packagesHtml += generatePackageCard(pkg);
                 }
             });
-            
-            console.log('🔍 DEBUG: Generated packages HTML length:', packagesHtml.length);
-            console.log('🔍 DEBUG: packageGrid element:', packageGrid);
             
             packageGrid.innerHTML = packagesHtml;
             
@@ -1151,54 +1127,43 @@
             const coursesGrid = document.getElementById('courses-grid');
             let coursesHtml = '';
             
-            console.log('🔍 DEBUG: COURSE_CATALOG has', Object.keys(COURSE_CATALOG).length, 'courses');
-            
             Object.entries(COURSE_CATALOG).forEach(([courseId, course]) => {
-                console.log('🔍 DEBUG: Processing course', courseId, course.title);
                 coursesHtml += generateCourseCard(courseId, course);
             });
             
-            console.log('🔍 DEBUG: Generated HTML length:', coursesHtml.length);
-            console.log('🔍 DEBUG: coursesGrid element:', coursesGrid);
-            
             coursesGrid.innerHTML = coursesHtml;
             
-            console.log('✅ Course catalog populated - courses should now be visible');
+            console.log('✅ Course catalog populated');
         }
 
         // Initialize page
         document.addEventListener('DOMContentLoaded', function() {
             console.log('🚀 Course catalog initializing...');
             
-            // Always populate the page first, regardless of cart system
+            // Ensure cart system is ready
+            if (!window.drtroyCart) {
+                console.error('❌ Cart system not available');
+                return;
+            }
+            
+            console.log('✅ Cart system ready');
+            
+            // Populate the page
             populatePage();
             
-            // Then try to initialize cart system (non-blocking)
-            setTimeout(function() {
-                if (window.drtroyCart) {
-                    console.log('✅ Cart system ready');
-                    
-                    // Update cart icon
-                    if (window.updateCartIcon) {
-                        window.updateCartIcon();
-                    }
-                    
-                    // Listen for cart changes
-                    try {
-                        window.drtroyCart.addListener(function() {
-                            console.log('🔔 Cart changed, updating icon');
-                            if (window.updateCartIcon) {
-                                window.updateCartIcon();
-                            }
-                        });
-                        console.log('✅ Cart change listener added');
-                    } catch (error) {
-                        console.error('❌ Error adding cart listener:', error);
-                    }
-                } else {
-                    console.warn('⚠️ Cart system not available, continuing without cart functionality');
-                }
-            }, 100); // Small delay to let cart.js load
+            // Update cart icon
+            window.updateCartIcon();
+            
+            // Listen for cart changes
+            try {
+                window.drtroyCart.addListener(function() {
+                    console.log('🔔 Cart changed, updating icon');
+                    window.updateCartIcon();
+                });
+                console.log('✅ Cart change listener added');
+            } catch (error) {
+                console.error('❌ Error adding cart listener:', error);
+            }
         });
     </script>
 
@@ -1227,23 +1192,7 @@
                 if (!window.DrTroySupabase) return;
                 const sb = window.DrTroySupabase.getClient ? window.DrTroySupabase.getClient() : null;
                 if (!sb) return;
-                                // Wait for DrTroySupabase to be available
-                if (!window.DrTroySupabase) {
-                    setTimeout(() => {
-                        (async () => { 
-                            const session = await window.DrTroySupabase?.getSession(); 
-                            if (session) {
-                                updateAuthUI(true, session.user);
-                            } else {
-                                updateAuthUI(false);
-                            }
-                        })();
-                    }, 100);
-                    return;
-                }
-                
-                (async () => {
-                    const session = await window.DrTroySupabase?.getSession();
+                sb.auth.getSession().then(({ data: { session } }) => {
                     if (session && session.user) {
                         link.textContent = 'My Account';
                         link.href = 'my-account.html';
@@ -1251,7 +1200,7 @@
                         link.textContent = 'Log In';
                         link.href = 'my-account.html';
                     }
-                })();
+                });
             }
             if (document.readyState === 'loading') {
                 document.addEventListener('DOMContentLoaded', updateNavLink);

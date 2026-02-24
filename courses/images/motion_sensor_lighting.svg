@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="500" viewBox="0 0 800 500">
+  <rect width="800" height="500" fill="white" stroke="#e0e0e0" stroke-width="1"/>
+  
+  <!-- Title -->
+  <text x="400" y="35" text-anchor="middle" font-family="Arial, sans-serif" font-size="22" font-weight="bold" fill="#1a56a0">
+    Motion Sensor Lighting for Fall Prevention
+  </text>
+  
+  <!-- Room/hallway outline -->
+  <rect x="100" y="80" width="600" height="300" fill="#f5f5f5" stroke="#1a56a0" stroke-width="2"/>
+  
+  <!-- Motion sensor -->
+  <circle cx="200" cy="120" r="20" fill="#ff9800" stroke="#1a56a0" stroke-width="2"/>
+  <circle cx="200" cy="120" r="8" fill="#d32f2f"/>
+  <text x="200" y="155" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#ff9800">Motion Sensor</text>
+  
+  <!-- Detection zone -->
+  <path d="M 200 120 Q 350 150 450 200 Q 400 250 350 300 Q 250 250 200 120" fill="#ffeb3b" opacity="0.3" stroke="#ff9800" stroke-width="2" stroke-dasharray="5,5"/>
+  <text x="320" y="190" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#ff9800" font-weight="bold">Detection Zone</text>
+  
+  <!-- Light fixtures -->
+  <circle cx="300" cy="100" r="15" fill="#ffeb3b" stroke="#1a56a0" stroke-width="2"/>
+  <circle cx="500" cy="100" r="15" fill="#ffeb3b" stroke="#1a56a0" stroke-width="2"/>
+  <circle cx="600" cy="200" r="15" fill="#ffeb3b" stroke="#1a56a0" stroke-width="2"/>
+  
+  <!-- Light beams -->
+  <circle cx="300" cy="100" r="60" fill="#ffeb3b" opacity="0.2"/>
+  <circle cx="500" cy="100" r="60" fill="#ffeb3b" opacity="0.2"/>
+  <circle cx="600" cy="200" r="60" fill="#ffeb3b" opacity="0.2"/>
+  
+  <!-- Person walking -->
+  <circle cx="350" cy="240" r="15" fill="white" stroke="#1a56a0" stroke-width="2"/>
+  <line x1="350" y1="255" x2="350" y2="320" stroke="#1a56a0" stroke-width="3"/>
+  <line x1="350" y1="270" x2="330" y2="295" stroke="#1a56a0" stroke-width="2"/>
+  <line x1="350" y1="280" x2="370" y2="305" stroke="#1a56a0" stroke-width="2"/>
+  <line x1="350" y1="320" x2="340" y2="350" stroke="#1a56a0" stroke-width="2"/>
+  <line x1="350" y1="320" x2="360" y2="350" stroke="#1a56a0" stroke-width="2"/>
+  
+  <!-- Walking path -->
+  <path d="M 120 250 Q 350 240 680 250" stroke="#2e7d32" stroke-width="2" stroke-dasharray="5,5"/>
+  <text x="400" y="270" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#2e7d32">Walking path</text>
+  
+  <!-- Features list -->
+  <rect x="100" y="400" width="600" height="80" fill="#e8f4fd" stroke="#1a56a0" stroke-width="1" rx="10"/>
+  <text x="400" y="425" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#1a56a0">Motion Sensor Lighting Features</text>
+  <text x="120" y="445" font-family="Arial, sans-serif" font-size="11" fill="#333">• Automatic activation when movement detected</text>
+  <text x="120" y="460" font-family="Arial, sans-serif" font-size="11" fill="#333">• Battery-powered or hardwired options</text>
+  <text x="120" y="475" font-family="Arial, sans-serif" font-size="11" fill="#333">• Adjustable sensitivity and timer settings</text>
+  <text x="420" y="445" font-family="Arial, sans-serif" font-size="11" fill="#333">• LED technology for energy efficiency</text>
+  <text x="420" y="460" font-family="Arial, sans-serif" font-size="11" fill="#333">• Night-time only activation options</text>
+  <text x="420" y="475" font-family="Arial, sans-serif" font-size="11" fill="#333">• Easy installation in hallways, bathrooms, stairs</text>
+</svg>

@@ -5,17 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Complete Your Purchase | DrTroy CE</title>
     
-    <!-- Security Headers -->
-    <meta http-equiv="Content-Security-Policy" content="
-        default-src 'self';
-        script-src 'self' 'unsafe-inline' https://js.stripe.com https://checkout.stripe.com https://cdn.jsdelivr.net;
-        style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
-        font-src 'self' https://fonts.gstatic.com;
-        img-src 'self' data: https:;
-        connect-src 'self' https://*.stripe.com https://*.supabase.co;
-        frame-src https://js.stripe.com https://hooks.stripe.com;
-    ">
-    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <!-- Security headers set via netlify.toml -->
     <meta http-equiv="X-Frame-Options" content="DENY">
     <meta http-equiv="X-XSS-Protection" content="1; mode=block">
     
@@ -29,7 +19,7 @@
     <!-- Supabase JS v2 CDN -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
     <!-- DrTroy Supabase client -->
-    <script src="js/supabase-client.js"></script>
+    <script src="js/supabase-client.js?v=20260223"></script>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Source+Sans+Pro:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -587,6 +577,7 @@
     <meta name="twitter:title" content="Checkout — DrTroy CE">
     <meta name="twitter:description" content="Complete your DrTroy CE course package purchase securely.">
     <meta name="twitter:image" content="https://drtroy.com/courses/images/og-preview.jpg">
+  <link rel="stylesheet" href="css/nav.css">
 </head>
 
 <body>
@@ -604,7 +595,12 @@
             <nav class="nav-links">
                 <a href="home-preview.html">Home</a>
                 <a href="course-catalog.html">Courses</a>
-                <a href="cart.html">Cart</a>
+                <a href="about.html">About</a>
+                <a href="home-preview.html#contact">Contact</a>
+                <a href="cart.html" class="cart-icon" id="cart-icon">
+                    🛒 Cart
+                    <span class="cart-count" id="cart-count">0</span>
+                </a>
                 <a href="my-account.html" id="navAccountLink" class="nav-login-link">Log In</a>
             </nav>
         </div>

@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="500" viewBox="0 0 800 500">
+  <rect width="800" height="500" fill="white" stroke="#e0e0e0" stroke-width="1"/>
+  
+  <!-- Title -->
+  <text x="400" y="35" text-anchor="middle" font-family="Arial, sans-serif" font-size="22" font-weight="bold" fill="#1a56a0">
+    Berg Balance Scale: Standing Eyes Closed
+  </text>
+  
+  <!-- Ground line -->
+  <line x1="200" y1="420" x2="600" y2="420" stroke="#1a56a0" stroke-width="2"/>
+  
+  <!-- Person standing -->
+  <!-- Head with closed eyes -->
+  <circle cx="400" cy="160" r="25" fill="white" stroke="#1a56a0" stroke-width="2"/>
+  <line x1="385" y1="155" x2="395" y2="155" stroke="#1a56a0" stroke-width="3"/>
+  <line x1="405" y1="155" x2="415" y2="155" stroke="#1a56a0" stroke-width="3"/>
+  <text x="350" y="140" font-family="Arial, sans-serif" font-size="12" fill="#d32f2f">Eyes X</text>
+  <text x="450" y="140" font-family="Arial, sans-serif" font-size="12" fill="#d32f2f">Closed X</text>
+  
+  <!-- Body -->
+  <line x1="400" y1="185" x2="400" y2="340" stroke="#1a56a0" stroke-width="4"/>
+  
+  <!-- Arms at sides -->
+  <line x1="400" y1="220" x2="370" y2="280" stroke="#1a56a0" stroke-width="3"/>
+  <line x1="400" y1="220" x2="430" y2="280" stroke="#1a56a0" stroke-width="3"/>
+  <line x1="370" y1="280" x2="360" y2="310" stroke="#1a56a0" stroke-width="3"/>
+  <line x1="430" y1="280" x2="440" y2="310" stroke="#1a56a0" stroke-width="3"/>
+  
+  <!-- Legs - feet together -->
+  <line x1="400" y1="340" x2="395" y2="415" stroke="#1a56a0" stroke-width="3"/>
+  <line x1="400" y1="340" x2="405" y2="415" stroke="#1a56a0" stroke-width="3"/>
+  <ellipse cx="393" cy="420" rx="15" ry="5" fill="#1a56a0"/>
+  <ellipse cx="407" cy="420" rx="15" ry="5" fill="#1a56a0"/>
+  
+  <!-- Test instructions box -->
+  <rect x="100" y="80" width="250" height="140" fill="#e8f4fd" stroke="#1a56a0" stroke-width="1" rx="10"/>
+  <text x="225" y="105" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#1a56a0">Test Instructions</text>
+  <text x="110" y="125" font-family="Arial, sans-serif" font-size="11" fill="#333">• Stand with feet together</text>
+  <text x="110" y="145" font-family="Arial, sans-serif" font-size="11" fill="#333">• Close eyes</text>
+  <text x="110" y="165" font-family="Arial, sans-serif" font-size="11" fill="#333">• Stand for 10 seconds</text>
+  <text x="110" y="185" font-family="Arial, sans-serif" font-size="11" fill="#333">• Arms at sides or crossed</text>
+  <text x="110" y="205" font-family="Arial, sans-serif" font-size="11" fill="#333">• No external support</text>
+  
+  <!-- Scoring box -->
+  <rect x="450" y="80" width="250" height="140" fill="#fff3e0" stroke="#1a56a0" stroke-width="1" rx="10"/>
+  <text x="575" y="105" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#ff9800">Scoring Criteria</text>
+  <text x="460" y="125" font-family="Arial, sans-serif" font-size="11" fill="#333">4 - Stands 10 seconds safely</text>
+  <text x="460" y="145" font-family="Arial, sans-serif" font-size="11" fill="#333">3 - Stands 10 sec with supervision</text>
+  <text x="460" y="165" font-family="Arial, sans-serif" font-size="11" fill="#333">2 - Stands 3 seconds</text>
+  <text x="460" y="185" font-family="Arial, sans-serif" font-size="11" fill="#333">1 - Unable to close eyes, stays steady</text>
+  <text x="460" y="205" font-family="Arial, sans-serif" font-size="11" fill="#333">0 - Needs help not to fall</text>
+  
+  <!-- Balance indicators - sway lines -->
+  <path d="M 400 160 Q 395 180 400 200 Q 405 220 400 240" stroke="#d32f2f" stroke-width="2" fill="none" stroke-dasharray="3,3" opacity="0.7"/>
+  <text x="420" y="200" font-family="Arial, sans-serif" font-size="11" fill="#d32f2f">Potential sway</text>
+  
+  <!-- Feet position indicator -->
+  <text x="400" y="450" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#1a56a0">Feet together</text>
+  <line x1="380" y1="435" x2="420" y2="435" stroke="#1a56a0" stroke-width="1" stroke-dasharray="2,2"/>
+  
+  <!-- Safety note -->
+  <text x="400" y="480" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#d32f2f" font-weight="bold">
+    ⚠ Stand close behind patient - ready to catch if needed
+  </text>
+</svg>
