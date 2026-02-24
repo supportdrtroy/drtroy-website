@@ -2124,6 +2124,28 @@
                     </div>
 
                     <div style="margin: 20px 0;">
+                        <label style="display: block; font-weight: bold; margin-bottom: 5px;">Learning Objectives Were Met:</label>
+                        <div style="display: flex; gap: 10px; margin-bottom: 15px;">
+                            <label><input type="radio" name="objectives-met" value="5"> Strongly Agree</label>
+                            <label><input type="radio" name="objectives-met" value="4"> Agree</label>
+                            <label><input type="radio" name="objectives-met" value="3"> Neutral</label>
+                            <label><input type="radio" name="objectives-met" value="2"> Disagree</label>
+                            <label><input type="radio" name="objectives-met" value="1"> Strongly Disagree</label>
+                        </div>
+                    </div>
+
+                    <div style="margin: 20px 0;">
+                        <label style="display: block; font-weight: bold; margin-bottom: 5px;">Relevance to My Practice:</label>
+                        <div style="display: flex; gap: 10px; margin-bottom: 15px;">
+                            <label><input type="radio" name="practice-relevance" value="5"> Highly Relevant</label>
+                            <label><input type="radio" name="practice-relevance" value="4"> Relevant</label>
+                            <label><input type="radio" name="practice-relevance" value="3"> Somewhat Relevant</label>
+                            <label><input type="radio" name="practice-relevance" value="2"> Minimally Relevant</label>
+                            <label><input type="radio" name="practice-relevance" value="1"> Not Relevant</label>
+                        </div>
+                    </div>
+
+                    <div style="margin: 20px 0;">
                         <label for="improvements" style="display: block; font-weight: bold; margin-bottom: 5px;">What could be improved?</label>
                         <textarea id="improvements" name="improvements" rows="3" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;" placeholder="Optional suggestions for course improvements..."></textarea>
                     </div>
@@ -2747,6 +2769,8 @@
                 overallRating: formData.get('overall-rating'),
                 contentQuality: formData.get('content-quality'),
                 formatRating: formData.get('format-rating'),
+                objectivesMet: formData.get('objectives-met'),
+                practiceRelevance: formData.get('practice-relevance'),
                 improvements: formData.get('improvements'),
                 recommend: formData.get('recommend'),
                 timestamp: new Date().toISOString()
