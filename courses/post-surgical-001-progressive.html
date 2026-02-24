@@ -68,7 +68,11 @@
         @media print{ .course-header,.progress-container,.complete-btn,.certificate-section{display:none!important} .module-content{display:block!important} }
     </style>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
-  <script src="../js/course-guard.js"></script>
+  <script src="../js/supabase-client.js"></script>
+  <script src="../js/course-guard.js">
+// Initialize admin controls
+document.addEventListener("DOMContentLoaded", initAdminControls);
+</script>
 </head>
 <body>
 

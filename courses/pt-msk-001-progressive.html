@@ -772,6 +772,7 @@
         }
     </style>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  <script src="../js/supabase-client.js"></script>
   <script src="../js/course-guard.js"></script>
 </head>
 <body>
@@ -2976,7 +2977,18 @@
                 </head>
                 <body>
                     ${certificateContent.innerHTML}
-                <script src="../js/course-sync.js"></script>
+                <script src="../js/course-sync.js">
+// Admin controls initialization
+async function initAdminControls() {
+    if (await isAdmin()) {
+        const adminPanel = document.getElementById('adminControls');
+        if (adminPanel) adminPanel.style.display = 'block';
+    }
+}
+
+// Initialize on page load
+document.addEventListener("DOMContentLoaded", initAdminControls);
+</script>
 </body>
                 </html>
             `);
@@ -3168,6 +3180,13 @@
             const newScale = Math.min(Math.max(currentScale * scaleFactor, 0.5), 3);
             
             img.style.transform = `scale(${newScale})`;
+        });
+    
+        // Initialize admin controls on page load
+        document.addEventListener("DOMContentLoaded", async function() {
+            if (await isAdmin()) {
+                document.getElementById("adminControls").style.display = "block";
+            }
         });
     </script>
 <script src="../js/course-sync.js"></script>
