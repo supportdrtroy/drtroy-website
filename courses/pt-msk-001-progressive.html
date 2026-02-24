@@ -2977,20 +2977,6 @@
                 </head>
                 <body>
                     ${certificateContent.innerHTML}
-                <script src="../js/course-sync.js">
-// Admin controls initialization
-async function initAdminControls() {
-    if (await isAdmin()) {
-        const adminPanel = document.getElementById('adminControls');
-        if (adminPanel) adminPanel.style.display = 'block';
-    }
-}
-
-// Initialize on page load
-document.addEventListener("DOMContentLoaded", initAdminControls);
-</script>
-</body>
-                </html>
             `);
             printWindow.document.close();
             printWindow.print();
