@@ -2322,13 +2322,37 @@
             document.getElementById('certificate-section').style.display = 'none';
         }
 
+        // Check if user is logged in by checking for auth token
+        function isLoggedIn() {
+            const token = localStorage.getItem('sb-pnqoxulxdmlmbywcpbyx-auth-token');
+            return !!token;
+        }
+
         // Load saved progress on page load
         window.addEventListener('load', async function() {
             // First reset all modules to locked state
             resetAllModules();
             
-            // Then load any saved progress
-            loadProgress();
+            // Check if this is a fresh session (no auth token but has saved progress)
+            // If so, clear the progress to start fresh
+            const saved = localStorage.getItem('pt-msk-001-progress');
+            if (saved && !isLoggedIn()) {
+                localStorage.removeItem('pt-msk-001-progress');
+                courseProgress = {
+                    currentModule: 1,
+                    completedModules: [],
+                    unlockedModules: [1],
+                    knowledgeCheckAnswers: {},
+                    scrollPositions: {},
+                    timeSpent: 0,
+                    lastSaved: null,
+                    startTime: Date.now()
+                };
+            } else {
+                // Then load any saved progress
+                loadProgress();
+            }
+            
             updateProgressDisplay();
             startAutoSave();
             trackTimeSpent();
