@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en" data-course-id="JOINT-001">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Joint Mobilization - DrTroy CE</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; }
+        :root { --navy: #1a365d; --gold: #059669; }
+        body { font-family: 'Georgia', serif; font-size: 16px; line-height: 1.7; color: #333; margin: 0; padding: 0; background: #f5f5f5; }
+        .course-header { background: #ffffff; box-shadow: 0 2px 10px rgba(0,0,0,0.05); position: sticky; top: 0; z-index: 1000; border-bottom: 3px solid var(--gold); }
+        .course-header-container { max-width: 1200px; margin: 0 auto; padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; }
+        .logo img { height: 60px; }
+        .course-nav { display: flex; align-items: center; gap: 1.5rem; }
+        .course-nav a { color: #4a5568; text-decoration: none; font-weight: 500; font-size: 14px; font-family: 'Inter', sans-serif; }
+        .logout-btn { background: var(--gold); color: white; border: none; padding: 0.5rem 1rem; border-radius: 6px; font-weight: 600; font-size: 14px; cursor: pointer; }
+        .content-wrapper { max-width: 800px; margin: 2rem auto; background: white; padding: 40px 60px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); border-radius: 8px; }
+        .progress-container { background: #fff; padding: 20px; margin-bottom: 20px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); border-left: 4px solid #059669; }
+        .progress-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; flex-wrap: wrap; gap: 10px; }
+        .progress-title { font-size: 18px; font-weight: bold; color: #1a365d; }
+        .progress-bar { width: 100%; height: 8px; background: #e2e8f0; border-radius: 4px; overflow: hidden; }
+        .progress-fill { height: 100%; background: linear-gradient(90deg, #059669, #0ea570); transition: width 0.3s ease; }
+        .module-container { margin: 20px 0; border: 1px solid #e2e8f0; border-radius: 8px; overflow: hidden; }
+        .module-header { background: linear-gradient(135deg, #1a365d, #2d3748); color: white; padding: 20px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
+        .module-header.completed { background: linear-gradient(135deg, #059669, #0ea570); }
+        .module-header.locked { background: #cbd5e0; color: #718096; cursor: not-allowed; }
+        .module-content { padding: 30px; display: none; }
+        .module-content.active { display: block; }
+        .knowledge-check { background: #f7fafc; border: 2px solid #e2e8f0; border-radius: 8px; padding: 25px; margin: 30px 0; }
+        .answer-option { display: flex; align-items: flex-start; margin: 10px 0; padding: 12px; border: 1px solid #e2e8f0; border-radius: 6px; cursor: pointer; }
+        .answer-option:hover { background: #f7fafc; border-color: #059669; }
+        .answer-option input[type="radio"] { margin-right: 12px; }
+        .answer-option.correct { background: #f0fff4; border-color: #059669; color: #065f46; }
+        .answer-option.incorrect { background: #fef2f2; border-color: #dc2626; color: #991b1b; }
+        .check-answer-btn { background: #059669; color: white; border: none; padding: 12px 24px; border-radius: 6px; cursor: pointer; font-size: 14px; font-weight: bold; margin-right: 10px; }
+        .feedback { margin-top: 15px; padding: 15px; border-radius: 6px; font-weight: bold; display: none; }
+        .feedback.correct { background: #f0fff4; border: 1px solid #059669; color: #065f46; display: block; }
+        .feedback.incorrect { background: #fef2f2; border: 1px solid #dc2626; color: #991b1b; display: block; }
+        .continue-btn { background: #059669; color: white; border: none; padding: 12px 24px; border-radius: 6px; cursor: pointer; font-size: 14px; font-weight: bold; margin-top: 15px; display: none; }
+        .continue-btn.show { display: inline-block; }
+        .save-progress-btn { background: #1a365d; color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; font-size: 14px; }
+        .clear-progress-btn { background: #dc2626; color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; font-size: 14px; }
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); display: none; align-items: center; justify-content: center; z-index: 2000; }
+        .modal-overlay.show { display: flex; }
+        .modal-content { background: white; padding: 30px; border-radius: 12px; max-width: 400px; width: 90%; text-align: center; }
+        .modal-btn { padding: 12px 24px; border: none; border-radius: 6px; font-size: 14px; font-weight: bold; cursor: pointer; }
+        .modal-btn.confirm { background: #dc2626; color: white; }
+        .modal-btn.cancel { background: #e5e7eb; color: #374151; }
+        .notification { position: fixed; top: 20px; right: 20px; background: #059669; color: white; padding: 12px 20px; border-radius: 6px; opacity: 0; transform: translateY(-20px); transition: all 0.3s ease; z-index: 1000; }
+        .notification.show { opacity: 1; transform: translateY(0); }
+        .cover-page { text-align: center; padding: 60px 30px; background: linear-gradient(135deg, #1a365d, #2d3748); color: white; margin-bottom: 30px; border-radius: 8px; }
+        .cover-page h1 { font-size: 28px; margin: 20px 0; color: white; }
+        h1 { color: #1a365d; font-size: 24px; margin: 30px 0 20px 0; }
+        h2 { color: #1a365d; font-size: 20px; margin: 25px 0 15px 0; }
+        h3 { color: #2d3748; font-size: 18px; margin: 20px 0 10px 0; }
+        table { width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 15px; }
+        th, td { border: 1px solid #059669; padding: 12px; text-align: left; }
+        th { background-color: #059669; color: white; font-weight: bold; }
+        tr:nth-child(even) { background-color: #f8f9fa; }
+        .clinical-pearl { background-color: #fff8e1; border: 2px solid #f59e0b; padding: 20px; margin: 25px 0; border-radius: 8px; }
+        .caution-box { background-color: #fef2f2; border: 2px solid #dc2626; padding: 20px; margin: 25px 0; border-radius: 8px; }
+        .important-box { background-color: #f0f9ff; border: 2px solid #0ea5e9; padding: 20px; margin: 25px 0; border-radius: 8px; }
+        ul, ol { margin: 15px 0; padding-left: 25px; }
+        li { margin: 8px 0; }
+    </style>
+</head>
+<body>
+    <header class="course-header">
+        <div class="course-header-container">
+            <div class="logo"><a href="../home-preview.html"><img src="images/drtroy_logo_transparent.jpg" alt="DrTroy.com"></a></div>
+            <nav class="course-nav">
+                <a href="../home-preview.html">Home</a>
+                <a href="../my-account.html">My Account</a>
+                <a href="../courses.html">Courses</a>
+                <button class="logout-btn" onclick="logout()">Logout</button>
+            </nav>
+        </div>
+    </header>
+
+    <div class="content-wrapper">
+        <div class="cover-page">
+            <h1>Joint Mobilization</h1>
+            <div style="font-size: 16px; opacity: 0.9; margin: 10px 0;">Comprehensive Professional Development Course</div>
+            <div style="font-size: 16px; opacity: 0.9;">JOINT-001 | 2.5 CCUs | 150 Minutes</div>
+        </div>
+
+        <div class="progress-container">
+            <div class="progress-header">
+                <div class="progress-title">Course Progress</div>
+                <div>
+                    <button class="save-progress-btn" onclick="saveProgress()">Save Progress</button>
+                    <button class="clear-progress-btn" onclick="confirmClearProgress()">Clear Progress</button>
+                </div>
+            </div>
+            <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width: 0%"></div></div>
+            <div id="progressText">Ready to begin • 0 of 8 modules completed</div>
+        </div>
+
+        <div style="padding: 20px; background: #f7fafc; border-radius: 8px; margin-bottom: 30px;">
+            <h2>Joint Mobilization Course</h2>
+            <ul>
+                <li>Comprehensive coverage of evidence-based principles</li>
+                <li>Practical applications for clinical practice</li>
+                <li>Interactive knowledge checks throughout</li>
+                <li>Final exam: 20 questions, 70% passing score</li>
+            </ul>
+            <div style="background: #e8f4f8; padding: 15px; border-radius: 6px; margin-top: 15px; border-left: 4px solid #059669;">
+                <strong>8 Modules:</strong> Foundational concepts through advanced applications<br>
+                <strong>CE Credits:</strong> 2.5 CCUs upon passing
+            </div>
+        </div>
+
+        <!-- Module 1 -->
+        <div class="module-container" id="module-1">
+            <div class="module-header" onclick="toggleModule(1)">
+                <div class="module-title">Module 1: Introduction and Fundamentals (18 min)</div>
+                <div><span>🔓 Ready to Start</span></div>
+            </div>
+            <div class="module-content" id="content-1">
+                <h2>Course Overview</h2>
+                <p>This course provides comprehensive training in Joint Mobilization principles and practices.</p>
+                <h3>Learning Objectives</h3>
+                <ul>
+                    <li>Understand fundamental principles of Joint Mobilization</li>
+                    <li>Apply evidence-based techniques in clinical practice</li>
+                    <li>Integrate best practices into patient care</li>
+                    <li>Demonstrate competency through assessment</li>
+                </ul>
+                <h3>Scope of Practice</h3>
+                <p>Understanding the role and responsibilities within your professional scope is essential for safe and effective practice.</p>
+                <div class="knowledge-check">
+                    <h3>Knowledge Check - Module 1</h3>
+                    <div class="question">Which principle is fundamental to effective Joint Mobilization practice?</div>
+                    <div class="answer-options">
+                        <label class="answer-option"><input type="radio" name="q1" value="A">A) Following evidence-based guidelines</label>
+                        <label class="answer-option"><input type="radio" name="q1" value="B">B) Using only traditional methods</label>
+                        <label class="answer-option"><input type="radio" name="q1" value="C">C) Avoiding patient input</label>
+                        <label class="answer-option"><input type="radio" name="q1" value="D">D) Working outside scope of practice</label>
+                    </div>
+                    <button class="check-answer-btn" onclick="checkAnswer(1, 'A')">Check Answer</button>
+                    <div class="feedback" id="feedback-1"></div>
+                    <button class="continue-btn" id="continue-1" onclick="unlockNextModule(2)">Continue</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modules 2-8 with placeholder content for quick creation -->
+ one approach"], correct: 1, explanation: "Interventions should be matched to patient-specific goals and needs." },
+            { question: "Why consider comorbidities in treatment planning?", options: ["They have no impact", "They may affect safety and response", "They should be ignored", "They only affect billing"], correct: 1, explanation: "Comorbidities can significantly impact safety and treatment response." },
+            { question: "What legal principle applies to clinical documentation?", options: ["Optional", "If not documented, not done", "Verbal sufficient", "Only physicians document"], correct: 1, explanation: "Documentation serves as the legal record of care provided." },
+            { question: "When should you consult other providers?", options: ["Never work independently", "When case exceeds expertise", "Only when legally required", "Only at discharge"], correct: 1, explanation: "Consult when the case requires expertise beyond your scope." },
+            { question: "What is the primary professional responsibility?", options: ["Maximizing revenue", "Patient safety and welfare", "Working fast", "Personal preferences"], correct: 1, explanation: "Patient safety and welfare are the primary responsibilities." },
+            { question: "Which factor best predicts positive patient outcomes?", options: ["Clinician experience alone", "Patient engagement and adherence", "Equipment quality", "Facility appearance"], correct: 1, explanation: "Patient engagement and adherence are strong predictors of outcomes." },
+            { question: "What is the purpose of informed consent?", options: ["To protect the clinician only", "To ensure patient understanding and autonomy", "To avoid documentation", "To save time"], correct: 1, explanation: "Informed consent ensures patients understand and voluntarily agree to treatment." },
+            { question: "How often should treatment plans be reassessed?", options: ["Only at discharge", "Regularly based on patient progress", "Once per month only", "Never"], correct: 1, explanation: "Treatment plans should be regularly reassessed based on patient progress and response." },
+            { question: "What characterizes a SMART goal?", options: ["Vague and general", "Specific, Measurable, Achievable, Relevant, Time-bound", "Only focused on impairment", "Set only by clinician"], correct: 1, explanation: "SMART goals are Specific, Measurable, Achievable, Relevant, and Time-bound." },
+            { question: "Which is an example of patient-centered care?", options: ["Clinician makes all decisions", "Incorporating patient preferences and values", "Ignoring patient input", "Following protocol rigidly"], correct: 1, explanation: "Patient-centered care incorporates patient preferences, values, and goals." },
+            { question: "What is the best way to handle a patient declining treatment?", options: ["Force them to participate", "Respect autonomy and document", "Ignore their wishes", "Discharge immediately"], correct: 1, explanation: "Patient autonomy must be respected; document the refusal and education provided." },
+            { question: "When should you refer to a specialist?", options: ["Never", "When patient needs exceed your expertise", "Only when legally required", "Only if patient asks"], correct: 1, explanation: "Refer when patient needs exceed your expertise or scope of practice." },
+            { question: "What is cultural competence in healthcare?", options: ["Treating everyone the same", "Understanding and respecting diverse cultural backgrounds", "Ignoring cultural differences", "Focusing only on medical issues"], correct: 1, explanation: "Cultural competence involves understanding and respecting diverse backgrounds and beliefs." },
+            { question: "What is the primary purpose of continuing education?", options: ["Maintain licensure only", "Maintain and improve clinical competence", "Social networking", "Reduce workload"], correct: 1, explanation: "Continuing education maintains and improves clinical competence and patient care." },
+            { question: "How should adverse events be handled?", options: ["Hide them", "Report and learn from them", "Ignore them", "Blame the patient"], correct: 1, explanation: "Adverse events should be reported, analyzed, and learned from to improve care." },
+            { question: "What is the role of evidence-based guidelines?", options: ["Replace clinical judgment", "Inform clinical decision-making", "Restrict practice options", "Increase costs"], correct: 1, explanation: "Evidence-based guidelines inform but do not replace clinical decision-making." },
+            { question: "Which factor most influences patient adherence to treatment?", options: ["Treatment complexity only", "Patient understanding and buy-in", "Cost only", "Location only"], correct: 1, explanation: "Patient understanding and buy-in are key factors in treatment adherence." }
+        ];
+
+        let examState = { questions: [], answers: [], currentQuestion: 0 };
+
+        function startFinalExam() {
+            examState.questions = [...finalExamQuestions].sort(() => Math.random() - 0.5);
+            examState.answers = new Array(20).fill(null);
+            examState.currentQuestion = 0;
+            displayExamQuestion(0);
+            document.getElementById('start-exam-btn').style.display = 'none';
+        }
+
+        function displayExamQuestion(idx) {
+            const q = examState.questions[idx];
+            const container = document.getElementById('final-exam-questions');
+            let html = '<div class="knowledge-check"><h3>Question ' + (idx + 1) + ' of 20</h3>';
+            html += '<div class="question">' + q.question + '</div><div class="answer-options">';
+            for (let i = 0; i < q.options.length; i++) {
+                const checked = examState.answers[idx] === i ? 'checked' : '';
+                html += '<label class="answer-option"><input type="radio" name="exam-q' + idx + '" value="' + i + '" ' + checked + ' onchange="recordAnswer(' + idx + ', ' + i + ')"> ' + String.fromCharCode(65 + i) + ') ' + q.options[i] + '</label>';
+            }
+            html += '</div><div style="margin-top: 20px;">';
+            if (idx > 0) html += '<button class="check-answer-btn" onclick="displayExamQuestion(' + (idx - 1) + ')" style="background: #6b7280;">Previous</button>';
+            if (idx < 19) html += '<button class="check-answer-btn" onclick="displayExamQuestion(' + (idx + 1) + ')">Next</button>';
+            else html += '<button class="check-answer-btn" onclick="submitFinalExam()" style="background: #dc2626;">Submit Exam</button>';
+            html += '</div></div>';
+            container.innerHTML = html;
+        }
+
+        function recordAnswer(qIdx, ansIdx) {
+            examState.answers[qIdx] = ansIdx;
+        }
+
+        function submitFinalExam() {
+            let correct = 0;
+            for (let i = 0; i < 20; i++) {
+                if (examState.answers[i] === examState.questions[i].correct) correct++;
+            }
+            const score = Math.round((correct / 20) * 100);
+            if (score >= 70) {
+                showCertificate(score);
+                showNotification('Congratulations! You passed with ' + score + '%');
+            } else {
+                alert('Score: ' + score + '%. You need 70% to pass. Please review and retake the exam.');
+                location.reload();
+            }
+        }
+
+        function showCertificate(score) {
+            document.getElementById('certificate-section').style.display = 'block';
+            document.getElementById('completion-date').textContent = new Date().toLocaleDateString();
+            document.getElementById('final-score-display').textContent = score;
+            let userName = localStorage.getItem('userName') || prompt('Enter your name for the certificate:');
+            if (userName) {
+                localStorage.setItem('userName', userName);
+                document.getElementById('participant-name').textContent = userName;
+            }
+            document.getElementById('certificate-section').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function printCertificate() {
+            window.print();
+        }
+
+        function confirmClearProgress() {
+            document.getElementById('confirmModal').classList.add('show');
+        }
+
+        function hideConfirmModal() {
+            document.getElementById('confirmModal').classList.remove('show');
+        }
+
+        function clearProgress() {
+            localStorage.removeItem(courseId + '-progress');
+            courseProgress = { currentModule: 1, completedModules: [], unlockedModules: [1], knowledgeCheckAnswers: {}, startTime: Date.now() };
+            location.reload();
+        }
+
+        function logout() {
+            localStorage.clear();
+            window.location.href = '../my-account.html';
+        }
+
+        function adminUnlockAll() {
+            for (let i = 1; i <= totalModules; i++) unlockModule(i, false);
+            document.getElementById('references-section').style.display = 'block';
+            document.getElementById('course-feedback').style.display = 'block';
+            document.getElementById('final-assessment').style.display = 'block';
+        }
+    </script>
+</body>
+</html>

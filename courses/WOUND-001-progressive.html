@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en" data-course-id="WOUND-001">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wound Care Management - DrTroy CE</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        @page { size: letter; margin: 0.75in; @bottom-center { content: counter(page); font-size: 10pt; color: #666; } }
+        * { box-sizing: border-box; }
+        :root { --navy: #1a365d; --gold: #059669; }
+        body { font-family: 'Georgia', serif; font-size: 16px; line-height: 1.7; color: #333; margin: 0; padding: 0; background: #f5f5f5; }
+        .course-header { background: #ffffff; box-shadow: 0 2px 10px rgba(0,0,0,0.05); position: sticky; top: 0; z-index: 1000; border-bottom: 3px solid var(--gold); }
+        .course-header-container { max-width: 1200px; margin: 0 auto; padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; }
+        .logo img { height: 60px; }
+        .course-nav { display: flex; align-items: center; gap: 1.5rem; }
+        .course-nav a { color: #4a5568; text-decoration: none; font-weight: 500; font-size: 14px; font-family: 'Inter', sans-serif; }
+        .logout-btn { background: var(--gold); color: white; border: none; padding: 0.5rem 1rem; border-radius: 6px; font-weight: 600; font-size: 14px; cursor: pointer; }
+        .content-wrapper { max-width: 800px; margin: 2rem auto; background: white; padding: 40px 60px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); border-radius: 8px; }
+        .progress-container { background: #fff; padding: 20px; margin-bottom: 20px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); border-left: 4px solid #059669; }
+        .progress-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; flex-wrap: wrap; gap: 10px; }
+        .progress-title { font-size: 18px; font-weight: bold; color: #1a365d; }
+        .progress-bar { width: 100%; height: 8px; background: #e2e8f0; border-radius: 4px; overflow: hidden; }
+        .progress-fill { height: 100%; background: linear-gradient(90deg, #059669, #0ea570); transition: width 0.3s ease; }
+        .module-container { margin: 20px 0; border: 1px solid #e2e8f0; border-radius: 8px; overflow: hidden; }
+        .module-header { background: linear-gradient(135deg, #1a365d, #2d3748); color: white; padding: 20px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
+        .module-header.completed { background: linear-gradient(135deg, #059669, #0ea570); }
+        .module-header.locked { background: #cbd5e0; color: #718096; cursor: not-allowed; }
+        .module-content { padding: 30px; display: none; }
+        .module-content.active { display: block; }
+        .knowledge-check { background: #f7fafc; border: 2px solid #e2e8f0; border-radius: 8px; padding: 25px; margin: 30px 0; }
+        .answer-option { display: flex; align-items: flex-start; margin: 10px 0; padding: 12px; border: 1px solid #e2e8f0; border-radius: 6px; cursor: pointer; }
+        .answer-option:hover { background: #f7fafc; border-color: #059669; }
+        .answer-option input[type="radio"] { margin-right: 12px; }
+        .answer-option.correct { background: #f0fff4; border-color: #059669; color: #065f46; }
+        .answer-option.incorrect { background: #fef2f2; border-color: #dc2626; color: #991b1b; }
+        .check-answer-btn { background: #059669; color: white; border: none; padding: 12px 24px; border-radius: 6px; cursor: pointer; font-size: 14px; font-weight: bold; margin-right: 10px; }
+        .feedback { margin-top: 15px; padding: 15px; border-radius: 6px; font-weight: bold; display: none; }
+        .feedback.correct { background: #f0fff4; border: 1px solid #059669; color: #065f46; display: block; }
+        .feedback.incorrect { background: #fef2f2; border: 1px solid #dc2626; color: #991b1b; display: block; }
+        .continue-btn { background: #059669; color: white; border: none; padding: 12px 24px; border-radius: 6px; cursor: pointer; font-size: 14px; font-weight: bold; margin-top: 15px; display: none; }
+        .continue-btn.show { display: inline-block; }
+        .save-progress-btn { background: #1a365d; color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; font-size: 14px; }
+        .clear-progress-btn { background: #dc2626; color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; font-size: 14px; }
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); display: none; align-items: center; justify-content: center; z-index: 2000; }
+        .modal-overlay.show { display: flex; }
+        .modal-content { background: white; padding: 30px; border-radius: 12px; max-width: 400px; width: 90%; text-align: center; }
+        .modal-btn { padding: 12px 24px; border: none; border-radius: 6px; font-size: 14px; font-weight: bold; cursor: pointer; }
+        .modal-btn.confirm { background: #dc2626; color: white; }
+        .modal-btn.cancel { background: #e5e7eb; color: #374151; }
+        .notification { position: fixed; top: 20px; right: 20px; background: #059669; color: white; padding: 12px 20px; border-radius: 6px; opacity: 0; transform: translateY(-20px); transition: all 0.3s ease; z-index: 1000; }
+        .notification.show { opacity: 1; transform: translateY(0); }
+        .cover-page { text-align: center; padding: 60px 30px; background: linear-gradient(135deg, #1a365d, #2d3748); color: white; margin-bottom: 30px; border-radius: 8px; }
+        .cover-page h1 { font-size: 28px; margin: 20px 0; color: white; }
+        h1 { color: #1a365d; font-size: 24px; margin: 30px 0 20px 0; }
+        h2 { color: #1a365d; font-size: 20px; margin: 25px 0 15px 0; }
+        h3 { color: #2d3748; font-size: 18px; margin: 20px 0 10px 0; }
+        table { width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 15px; }
+        th, td { border: 1px solid #059669; padding: 12px; text-align: left; }
+        th { background-color: #059669; color: white; font-weight: bold; }
+        tr:nth-child(even) { background-color: #f8f9fa; }
+        .clinical-pearl { background-color: #fff8e1; border: 2px solid #f59e0b; padding: 20px; margin: 25px 0; border-radius: 8px; }
+        .caution-box { background-color: #fef2f2; border: 2px solid #dc2626; padding: 20px; margin: 25px 0; border-radius: 8px; }
+        .important-box { background-color: #f0f9ff; border: 2px solid #0ea5e9; padding: 20px; margin: 25px 0; border-radius: 8px; }
+        ul, ol { margin: 15px 0; padding-left: 25px; }
+        li { margin: 8px 0; }
+    </style>
+</head>
+<body>
+    <header class="course-header">
+        <div class="course-header-container">
+            <div class="logo"><a href="../home-preview.html"><img src="images/drtroy_logo_transparent.jpg" alt="DrTroy.com"></a></div>
+            <nav class="course-nav">
+                <a href="../home-preview.html">Home</a>
+                <a href="../my-account.html">My Account</a>
+                <a href="../courses.html">Courses</a>
+                <button class="logout-btn" onclick="logout()">Logout</button>
+            </nav>
+        </div>
+    </header>
+
+    <div class="content-wrapper">
+        <div class="cover-page">
+            <h1>Wound Care Management</h1>
+            <div style="font-size: 16px; opacity: 0.9; margin: 10px 0;">Evidence-Based Assessment and Treatment of Chronic Wounds</div>
+            <div style="font-size: 16px; opacity: 0.9;">WOUND-001 | 2.5 CCUs | 150 Minutes</div>
+        </div>
+
+        <div class="progress-container">
+            <div class="progress-header">
+                <div class="progress-title">Course Progress</div>
+                <div>
+                    <button class="save-progress-btn" onclick="saveProgress()">Save Progress</button>
+                    <button class="clear-progress-btn" onclick="confirmClearProgress()">Clear Progress</button>
+                </div>
+            </div>
+            <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width: 0%"></div></div>
+            <div id="progressText">Ready to begin • 0 of 8 modules completed</div>
+        </div>
+
+        <div id="adminControls" style="display: none; padding: 15px; background: linear-gradient(135deg, #1a365d, #2c5282); border-radius: 8px; margin-bottom: 20px; color: white;">
+            <strong>Admin Controls</strong>
+            <button onclick="adminUnlockAll()" style="margin-left: 10px; padding: 8px 16px; background: #059669; border: none; border-radius: 6px; color: white; cursor: pointer;">Unlock All Modules</button>
+        </div>
+
+        <div style="padding: 20px; background: #f7fafc; border-radius: 8px; margin-bottom: 30px;">
+            <h2>Wound Care Management Course</h2>
+            <ul>
+                <li>Learn wound healing physiology and assessment techniques</li>
+                <li>Master dressing selection and treatment protocols</li>
+                <li>Understand pressure injury prevention and staging</li>
+                <li>Final exam: 20 questions, 70% passing score</li>
+            </ul>
+            <div style="background: #e8f4f8; padding: 15px; border-radius: 6px; margin-top: 15px; border-left: 4px solid #059669;">
+                <strong>8 Modules:</strong> Wound Healing, Assessment, Pressure Injuries, Dressings, Infection, Debridement, Negative Pressure, Special Populations<br>
+                <strong>CE Credits:</strong> 2.5 CCUs upon passing
+            </div>
+        </div>
+
+        <!-- Module 1 -->
+        <div class="module-container" id="module-1">
+            <div class="module-header" onclick="toggleModule(1)">
+                <div class="module-title">Module 1: Physiology of Wound Healing (18 min)</div>
+                <div><span>🔓 Ready to Start</span></div>
+            </div>
+            <div class="module-content" id="content-1">
+                <h2>Phases of Wound Healing</h2>
+                <p>Wound healing occurs through a complex series of overlapping phases that restore tissue integrity.</p>
+                <h3>1. Hemostasis (Minutes to Hours)</h3>
+                <ul>
+                    <li>Vasoconstriction and platelet aggregation</li>
+                    <li>Formation of fibrin clot</li>
+                    <li>Release of growth factors and cytokines</li>
+                </ul>
+                <h3>2. Inflammatory Phase (Days 1-6)</h3>
+                <ul>
+                    <li>Vasodilation and increased permeability</li>
+                    <li>Neutrophil infiltration (first 24-48 hours)</li>
+                    <li>Macrophage activation (days 2-6)</li>
+                    <li>Phagocytosis of bacteria and debris</li>
+                </ul>
+                <h3>3. Proliferative Phase (Days 3-21)</h3>
+                <ul>
+                    <li>Angiogenesis (new blood vessel formation)</li>
+                    <li>Fibroblast proliferation and collagen synthesis</li>
+                    <li>Granulation tissue formation</li>
+                    <li>Epithelialization from wound edges</li>
+                </ul>
+                <h3>4. Maturation/Remodeling (Weeks to Years)</h3>
+                <ul>
+                    <li>Collagen remodeling and cross-linking</li>
+                    <li>Wound contraction</li>
+                    <li>Scar formation and strengthening</li>
+                </ul>
+                <div class="clinical-pearl"><strong>Clinical Pearl:</strong> Chronic wounds often stall in the inflammatory phase. Identifying and addressing barriers to healing is essential for progression.</div>
+                <div class="knowledge-check">
+                    <h3>Knowledge Check - Module 1</h3>
+                    <div class="question">During which phase of wound healing does collagen synthesis and granulation tissue formation occur?</div>
+                    <div class="answer-options">
+                        <label class="answer-option"><input type="radio" name="q1" value="A">A) Hemostasis phase</label>
+                        <label class="answer-option"><input type="radio" name="q1" value="B">B) Inflammatory phase</label>
+                        <label class="answer-option"><input type="radio" name="q1" value="C">C) Proliferative phase</label>
+                        <label class="answer-option"><input type="radio" name="q1" value="D">D) Maturation phase</label>
+                    </div>
+                    <button class="check-answer-btn" onclick="checkAnswer(1, 'C')">Check Answer</button>
+                    <div class="feedback" id="feedback-1"></div>
+                    <button class="continue-btn" id="continue-1" onclick="unlockNextModule(2)">Continue to Module 2</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Module 2 -->
+        <div class="module-container" id="module-2">
+            <div class="module-header locked" onclick="toggleModule(2)">
+                <div class="module-title">Module 2: Wound Assessment (20 min)</div>
+                <div><span>🔒 Complete Module 1</span></div>
+            </div>
+            <div class="module-content" id="content-2">
+                <h2>Comprehensive Wound Assessment</h2>
+                <p>Systematic wound assessment guides treatment decisions and monitors healing progress.</p>
+                <h3>Wound Assessment Components</h3>
+                <ul>
+                    <li><strong>Location:</strong> Anatomical site, pressure points</li>
+                    <li><strong>Size:</strong> Length x width x depth in centimeters</li>
+                    <li><strong>Tunneling/Undermining:</strong> Clock method documentation</li>
+                    <li><strong>Wound bed:</strong> Tissue types and percentages</li>
+                    <li><strong>Exudate:</strong> Amount, color, consistency, odor</li>
+                    <li><strong>Periwound:</strong> Skin condition, edema, erythema</li>
+                    <li><strong>Pain:</strong> Location, intensity, quality</li>
+                </ul>
+                <table>
+                    <tr><th>Tissue Type</th><th>Appearance</th><th>Clinical Significance</th></tr>
+                    <tr><td>Granulation</td><td>Beefy red, bumpy</td><td>Healthy healing tissue</td></tr>
+                    <tr><td>Slough</td><td>Yellow, soft, moist</td><td>Devitalized tissue, needs debridement</td></tr>
+                    <tr><td>Eschar</td><td>Black/brown, dry, hard</td><td>Non-viable tissue, often needs removal</td></tr>
+                    <tr><td>Epithelial</td><td>Pink, flat, translucent</td><td>New skin formation from edges</td></tr>
+                </table>
+                <div class="knowledge-check">
+                    <h3>Knowledge Check - Module 2</h3>
+                    <div class="question">Which wound tissue type appears as yellow, soft, moist material and indicates the need for debridement?</div>
+                    <div class="answer-options">
+                        <label class="answer-option"><input type="radio" name="q2" value="A">A) Granulation tissue</label>
+                        <label class="answer-option"><input type="radio" name="q2" value="B">B) Slough</label>
+                        <label class="answer-option"><input type="radio" name="q2" value="C">C) Eschar</label>
+                        <label class="answer-option"><input type="radio" name="q2" value="D">D) Epithelial tissue</label>
+                    </div>
+                    <button class="check-answer-btn" onclick="checkAnswer(2, 'B')">Check Answer</button>
+                    <div class="feedback" id="feedback-2"></div>
+                    <button class="continue-btn" id="continue-2" onclick="unlockNextModule(3)">Continue to Module 3</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Module 3 -->
+        <div class="module-container" id="module-3">
+            <div class="module-header locked" onclick="toggleModule(3)">
+                <div class="module-title">Module 3: Pressure Injury Prevention and Staging (20 min)</div>
+                <div><span>🔒 Complete Module 2</span></div>
+            </div>
+            <div class="module-content" id="content-3">
+                <h2>Pressure Injury Staging (NPIAP 2016)</h2>
+                <p>The National Pressure Injury Advisory Panel staging system provides consistent classification.</p>
+                <h3>Stage 1 - Non-Blanchable Erythema</h3>
+                <ul>
+                    <li>Intact skin with non-blanchable redness</li>
+                    <li>Usually over bony prominence</li>
+                    <li>May be difficult to detect in dark skin tones</li>
+                </ul>
+                <h3>Stage 2 - Partial Thickness</h3>
+                <ul>
+                    <li>Partial-thickness loss of dermis</li>
+                    <li>Shiny or dry shallow ulcer without slough</li>
+                    <li>May present as intact or ruptured blister</li>
+                </ul>
+                <h3>Stage 3 - Full Thickness</h3>
+                <ul>
+                    <li>Full-thickness tissue loss</li>
+                    <li>Subcutaneous fat may be visible</li>
+                    <li>No bone, tendon, or muscle exposed</li>
+                </ul>
+                <h3>Stage 4 - Full Thickness with Exposed Structures</h3>
+                <ul>
+                    <li>Full-thickness tissue loss with exposed bone, tendon, or muscle</li>
+                    <li>Often includes undermining and tunneling</li>
+                </ul>
+                <h3>Unstageable</h3>
+                <p>Full-thickness wound with base covered by slough or eschar, preventing true depth assessment.</p>
+                <h3>Deep Tissue Pressure Injury</h3>
+                <p>Purple or maroon localized area of discolored intact skin or blood-filled blister due to damage of underlying soft tissue.</p>
+                <div class="caution-box"><strong>Important:</strong> Never use staging to describe wounds other than pressure injuries (e.g., diabetic foot ulcers, arterial ulcers).</div>
+                <div class="knowledge-check">
+                    <h3>Knowledge Check - Module 3</h3>
+                    <div class="question">A patient has intact skin with a localized area of non-blanchable redness over the sacrum. What is the correct pressure injury stage?</div>
+                    <div class="answer-options">
+                        <label class="answer-option"><input type="radio" name="q3" value="A">A) Stage 2</label>
+                        <label class="answer-option"><input type="radio" name="q3" value="B">B) Stage 1</label>
+                        <label class="answer-option"><input type="radio" name="q3" value="C">C) Deep Tissue Pressure Injury</label>
+                        <label class="answer-option"><input type="radio" name="q3" value="D">D) Unstageable</label>
+                    </div>
+                    <button class="check-answer-btn" onclick="checkAnswer(3, 'B')">Check Answer</button>
+                    <div class="feedback" id="feedback-3"></div>
+                    <button class="continue-btn" id="continue-3" onclick="unlockNextModule(4)">Continue to Module 4</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Module 4 -->
+        <div class="module-container" id="module-4">
+            <div class="module-header locked" onclick="toggleModule(4)">
+                <div class="module-title">Module 4: Wound Dressing Selection (18 min)</div>
+                <div><span>🔒 Complete Module 3</span></div>
+            </div>
+            <div class="module-content" id="content-4">
+                <h2>Dressing Categories and Indications</h2>
+                <p>Selection of appropriate dressings depends on wound characteristics and treatment goals.</p>
+                <table>
+                    <tr><th>Dressing Type</th><th>Indications</th><th>Contraindications</th></tr>
+                    <tr><td>Transparent Films</td><td>Stage 1-2, autolytic debridement, IV sites</td><td>Infected wounds, heavy exudate</td></tr>
+                    <tr><td>Hydrocolloids</td><td>Stage 2-3, partial thickness, autolytic debridement</td><td>Infected wounds, heavy exudate, tunneling</td></tr>
+                    <tr><td>Hydrogels</td><td>Dry wounds, autolytic debridement, painful wounds</td><td>Heavy exudate, infected wounds</td></tr>
+                    <tr><td>Foams</td><td>Moderate to heavy exudate, stages 2-4</td><td>Dry wounds, non-draining wounds</td></tr>
+                    <tr><td>Alginate/Hydrofiber</td><td>Moderate to heavy exudate, tunneling wounds</td><td>Dry wounds, third-degree burns</td></tr>
+                    <tr><td>Collagen</td><td>Chronic non-healing wounds, stalled wounds</td><td>Third-degree burns, sensitivity to bovine/porcine</td></tr>
+                </table>
+                <div class="clinical-pearl"><strong>Dressing Selection Principle:</strong> Keep moist wounds moist and dry wounds moist. The optimal moisture level promotes cellular migration and wound healing.</div>
+                <div class="knowledge-check">
+                    <h3>Knowledge Check - Module 4</h3>
+                    <div class="question">Which dressing type is most appropriate for a wound with moderate to heavy exudate and tunneling?</div>
+                    <div class="answer-options">
+                        <label class="answer-option"><input type="radio" name="q4" value="A">A) Transparent film dressing</label>
+                        <label class="answer-option"><input type="radio" name="q4" value="B">B) Hydrocolloid dressing</label>
+                        <label class="answer-option"><input type="radio" name="q4" value="C">C) Alginate or hydrofiber dressing</label>
+                        <label class="answer-option"><input type="radio" name="q4" value="D">D) Hydrogel dressing</label>
+                    </div>
+                    <button class="check-answer-btn" onclick="checkAnswer(4, 'C')">Check Answer</button>
+                    <div class="feedback" id="feedback-4"></div>
+                    <button class="continue-btn" id="continue-4" onclick="unlockNextModule(5)">Continue to Module 5</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Module 5 -->
+        <div class="module-container" id="module-5">
+            <div class="module-header locked" onclick="toggleModule(5)">
+                <div class="module-title">Module 5: Wound Infection Management (18 min)</div>
+                <div><span>🔒 Complete Module 4</span></div>
+            </div>
+            <div class="module-content" id="content-5">
+                <h2>Recognizing Wound Infection</h2>
+                <p>Wound infection occurs when bacterial burden exceeds host immune defenses and impedes healing.</p>
+                <h3>Classic Signs of Infection</h3>
+                <ul>
+                    <li><strong>Erythema:</strong> Spreading redness from wound edges</li>
+                    <li><strong>Warmth:</strong> Localized heat at wound site</li>
+                    <li><strong>Edema:</strong> Swelling of surrounding tissue</li>
+                    <li><strong>Purulent drainage:</strong> Yellow, green, or brown exudate</li>
+                    <li><strong>Malodor:</strong> Foul smell</li>
+                    <li><strong>Pain:</strong> Increasing or changing character</li>
+                </ul>
+                <h3>Biofilm Considerations</h3>
+                <p>Biofilms are communities of bacteria encased in protective extracellular polymeric substance. They are present in most chronic wounds and require aggressive debridement.</p>
+                <div class="caution-box"><strong>Clinical Warning:</strong> Signs of systemic infection include fever, elevated WBC, tachycardia, confusion in elderly, and lymphangitis. These require immediate medical attention.</div>
+                <div class="knowledge-check">
+                    <h3>Knowledge Check - Module 5</h3>
+                    <div class="question">Which of the following is NOT a classic local sign of wound infection?</div>
+                    <div class="answer-options">
+                        <label class="answer-option"><input type="radio" name="q5" value="A">A) Erythema spreading from wound edges</label>
+                        <label class="answer-option"><input type="radio" name="q5" value="B">B) Purulent drainage</label>
+                        <label class="answer-option"><input type="radio" name="q5" value="C">C) Formation of granulation tissue</label>
+                        <label class="answer-option"><input type="radio" name="q5" value="D">D) Increasing warmth at the wound site</label>
+                    </div>
+                    <button class="check-answer-btn" onclick="checkAnswer(5, 'C')">Check Answer</button>
+                    <div class="feedback" id="feedback-5"></div>
+                    <button class="continue-btn" id="continue-5" onclick="unlockNextModule(6)">Continue to Module 6</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Module 6 -->
+        <div class="module-container" id="module-6">
+            <div class="module-header locked" onclick="toggleModule(6)">
+                <div class="module-title">Module 6: Debridement Methods (18 min)</div>
+                <div><span>🔒 Complete Module 5</span></div>
+            </div>
+            <div class="module-content" id="content-6">
+                <h2>Debridement Techniques</h2>
+                <p>Debridement removes devitalized tissue, reducing bacterial burden and facilitating wound healing.</p>
+                <table>
+                    <tr><th>Method</th><th>Type</th><th>Best For</th></tr>
+                    <tr><td>Autolytic</td><td>Biological</td><td>Minimal devitalized tissue, intact immune system</td></tr>
+                    <tr><td>Enzymatic</td><td>Chemical</td><td>Patients who cannot tolerate sharp debridement</td></tr>
+                    <tr><td>Sharp/Surgical</td><td>Mechanical</td><td>Large amounts of necrotic tissue, infection</td></tr>
+                    <tr><td>Mechanical</td><td>Physical</td><td>Slough removal (wet-to-dry rarely recommended)</td></tr>
+                    <tr><td>Biosurgical (Larvae)</td><td>Biological</td><td>Large necrotic wounds, osteomyelitis</td></tr>
+                </table>
+                <h3>Contraindications to Debridement</h3>
+                <ul>
+                    <li>Dry, stable eschar on ischemic heels (do not debride)</li>
+                    <li>Uncontrolled bleeding disorders</li>
+                    <li>Exposed blood vessels, tendons without coverage</li>
+                    <li>Active infection without antibiotic coverage</li>
+                </ul>
+                <div class="knowledge-check">
+                    <h3>Knowledge Check - Module 6</h3>
+                    <div class="question">Which debridement method uses the body's own enzymes to break down devitalized tissue and is considered the most selective?</div>
+                    <div class="answer-options">
+                        <label class="answer-option"><input type="radio" name="q6" value="A">A) Sharp debridement</label>
+                        <label class="answer-option"><input type="radio" name="q6" value="B">B) Autolytic debridement</label>
+                        <label class="answer-option"><input type="radio" name="q6" value="C">C) Mechanical debridement</label>
+                        <label class="answer-option"><input type="radio" name="q6" value="D">D) Surgical debridement</label>
+                    </div>
+                    <button class="check-answer-btn" onclick="checkAnswer(6, 'B')">Check Answer</button>
+                    <div class="feedback" id="feedback-6"></div>
+                    <button class="continue-btn" id="continue-6" onclick="unlockNextModule(7)">Continue to Module 7</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Module 7 -->
+        <div class="module-container" id="module-7">
+            <div class="module-header locked" onclick="toggleModule(7)">
+                <div class="module-title">Module 7: Advanced Wound Therapies (18 min)</div>
+                <div><span>🔒 Complete Module 6</span></div>
+            </div>
+            <div class="module-content" id="content-7">
+                <h2>Negative Pressure Wound Therapy (NPWT)</h2>
+                <p>NPWT applies subatmospheric pressure to promote wound healing through multiple mechanisms.</p>
+                <h3>Benefits of NPWT</h3>
+                <ul>
+                    <li>Removes exudate and infectious materials</li>
+                    <li>Increases blood flow to wound bed</li>
+                    <li>Promotes granulation tissue formation</li>
+                    <li>Reduces edema</li>
+                    <li>Approximates wound edges</li>
+                </ul>
+                <h3>Contraindications</h3>
+                <ul>
+                    <li>Untreated osteomyelitis</li>
+                    <li>Malignancy in wound</li>
+                    <li>Exposed blood vessels or organs</li>
+                    <li>Non-enteric and unexplored fistulas</li>
+                    <li>Necrotic tissue with eschar present</li>
+                </ul>
+                <h2>Other Advanced Therapies</h2>
+                <ul>
+                    <li><strong>Hyperbaric Oxygen Therapy:</strong
