@@ -2328,16 +2328,32 @@
             return !!token;
         }
 
+        // Generate a session ID based on login timestamp
+        function getSessionId() {
+            const token = localStorage.getItem('sb-pnqoxulxdmlmbywcpbyx-auth-token');
+            if (!token) return null;
+            try {
+                const payload = JSON.parse(atob(token.split('.')[1]));
+                return payload.iat || payload.exp || Date.now();
+            } catch (e) {
+                return Date.now();
+            }
+        }
+
         // Load saved progress on page load
         window.addEventListener('load', async function() {
             // First reset all modules to locked state
             resetAllModules();
             
-            // Check if this is a fresh session (no auth token but has saved progress)
-            // If so, clear the progress to start fresh
             const saved = localStorage.getItem('pt-msk-001-progress');
-            if (saved && !isLoggedIn()) {
+            const lastSessionId = localStorage.getItem('pt-msk-001-session');
+            const currentSessionId = getSessionId();
+            
+            // Check if this is a new login session
+            if (currentSessionId && currentSessionId !== lastSessionId) {
+                // New session - reset progress to locked modules only
                 localStorage.removeItem('pt-msk-001-progress');
+                localStorage.setItem('pt-msk-001-session', currentSessionId);
                 courseProgress = {
                     currentModule: 1,
                     completedModules: [],
@@ -2348,8 +2364,8 @@
                     lastSaved: null,
                     startTime: Date.now()
                 };
-            } else {
-                // Then load any saved progress
+            } else if (saved) {
+                // Same session - load saved progress
                 loadProgress();
             }
             
@@ -3200,8 +3216,9 @@
                 await window.DrTroySupabase.signOut();
             }
             
-            // Clear course progress
+            // Clear course progress and session tracking
             localStorage.removeItem('pt-msk-001-progress');
+            localStorage.removeItem('pt-msk-001-session');
             
             // Clear any other user session data
             localStorage.removeItem('userSession');
