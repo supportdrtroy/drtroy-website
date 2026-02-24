@@ -216,9 +216,12 @@ function renderCourseCard(course) {
             '</ul></div>';
     }
 
-    var publishBtn = course.status === 'published' ?
-        '<button onclick="previewCourse(\'' + course.id + '\')" class="btn btn-secondary">👁️ Preview</button>' :
-        '<button onclick="publishCourse(\'' + course.id + '\')" class="btn btn-primary">🚀 Publish</button>';
+    // Always show Preview button for admin review
+    var previewBtn = '<button onclick="previewCourse(\'' + course.id + '\')" class="btn btn-secondary">👁️ Preview</button>';
+    
+    // Show Publish button for draft courses (in addition to Preview)
+    var publishBtn = course.status !== 'published' ?
+        '<button onclick="publishCourse(\'' + course.id + '\')" class="btn btn-primary">🚀 Publish</button>' : '';
 
     return '<div class="course-card" data-course-id="' + course.id + '">' +
         '<div class="course-card-header">' +
@@ -240,6 +243,7 @@ function renderCourseCard(course) {
         '<div class="course-actions">' +
             '<button onclick="editCourse(\'' + course.id + '\')" class="btn btn-secondary">✏️ Edit</button>' +
             '<button onclick="editCourseContent(\'' + course.id + '\')" class="btn btn-secondary">📝 Content</button>' +
+            previewBtn +
             publishBtn +
             '<button onclick="duplicateCourse(\'' + course.id + '\')" class="btn btn-secondary">📋 Duplicate</button>' +
             '<button onclick="deleteCourse(\'' + course.id + '\')" class="btn btn-danger" style="margin-left:auto;">🗑️ Delete</button>' +
