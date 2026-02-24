@@ -676,6 +676,7 @@
                     <span class="cart-count" id="cart-count">0</span>
                 </a>
                 <a href="my-account.html" id="navAccountLink" class="nav-login-link">My Account</a>
+                <a href="admin.html" id="adminNavLink" class="nav-login-link" style="display: none; background: linear-gradient(135deg, #1a365d, #2c5282); color: white; padding: 0.5rem 1rem; border-radius: 6px; font-weight: 600;">🛡️ Admin</a>
             </nav>
         </div>
     </header>
@@ -1451,7 +1452,8 @@
                 courseProgress: legacyData.courseProgress || {},
                 enrolledCourses: legacyData.enrolledCourses || [],
                 // Admin check from profile
-                superUser: profile?.is_admin === true || legacyData.superUser === true
+                superUser: profile?.is_admin === true || legacyData.superUser === true,
+                isAdmin: profile?.is_admin === true || legacyData.superUser === true
             };
 
             // Load real enrollments from Supabase
@@ -1970,7 +1972,7 @@
             
             console.log('Loading account data...');
             
-            // Check for super user status and show/hide nav
+            // Check for admin/super user status and show/hide nav
             const isSuperUser = currentAccount.superUser === true || 
                                localStorage.getItem('troyadmin') === 'true' ||
                                currentAccount.email === 'troy@drtroy.com';
@@ -1978,6 +1980,12 @@
             if (isSuperUser) {
                 currentAccount.superUser = true;
                 document.getElementById('superuser-nav').style.display = 'block';
+            }
+
+            // Show admin nav link for admin users
+            if (currentAccount.isAdmin || currentAccount.superUser || currentAccount.email === 'troy@drtroy.com') {
+                const adminNav = document.getElementById('adminNavLink');
+                if (adminNav) adminNav.style.display = 'inline-block';
             }
 
             // Ensure user has access to MSK course (until we have proper enrollment system)
