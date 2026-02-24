@@ -2852,19 +2852,19 @@
             const question = currentExamState.questions[questionIndex];
             const questionsContainer = document.getElementById('final-exam-questions');
             
-            questionsContainer.innerHTML = escapeHtml(escapeHtml)(`
+            questionsContainer.innerHTML = `
                 <div class="knowledge-check" style="margin: 20px 0;">
                     <h3>🎯 Question ${questionIndex + 1} of 20</h3>
                     <div class="question" style="font-size: 16px; margin-bottom: 20px;">
-                        ${question.question}
+                        ${escapeHtml(question.question)}
                     </div>
                     <div class="answer-options">
                         ${question.options.map((option, index) => `
                             <label class="answer-option">
                                 <input type="radio" name="exam-q${questionIndex}" value="${index}" onchange="recordExamAnswer(${questionIndex}, ${index})">
-                                ${String.fromCharCode(65 + index)}) ${option}
+                                ${String.fromCharCode(65 + index)}) ${escapeHtml(option)}
                             </label>
-                        `)).join('')}
+                        `).join('')}
                     </div>
                     <div style="margin-top: 20px; display: flex; justify-content: space-between; align-items: center;">
                         <div style="color: #666; font-size: 14px;">
@@ -3060,7 +3060,7 @@
                     header.classList.remove('completed');
                     header.classList.add('locked');
                     header.onclick = () => toggleModule(i);
-                    status.innerHTML = escapeHtml(escapeHtml)(`<span class="module-icon">🔒</span><span>Complete Module ${i-1}</span>`);
+                    status.innerHTML = `<span class="module-icon">🔒</span><span>Complete Module ${i-1}</span>`;
                 }
             }
             
