@@ -17,6 +17,7 @@ const SKIP = new Set([
   'node_modules', 'dist', '.git', 'build.js',
   'package.json', 'package-lock.json', 'validate-site.js',
   'CLAUDE.md',
+  'BANE-BRIEFING.md',
 ]);
 
 // Extensions we actively minify
