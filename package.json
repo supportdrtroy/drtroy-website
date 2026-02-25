@@ -4,7 +4,7 @@
   "description": "DrTroy Continuing Education Platform",
   "main": "index.html",
   "scripts": {
-    "build": "mkdir -p dist && cp -rv . dist/ --exclude dist --exclude .git || true"
+    "build": "mkdir -p dist && find . -maxdepth 1 ! -name 'dist' ! -name '.' ! -name '.git' -exec cp -r {} dist/ \\;"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.39.0"
