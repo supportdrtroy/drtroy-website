@@ -1,31 +1,18 @@
 {
-  "name": "drtroy-netlify-deploy",
+  "name": "drtroy-ce-platform",
   "version": "1.0.0",
-  "description": "Professional continuing education platform for PT/OT/SLP professionals.",
-  "main": "supabase-config.js",
-  "directories": {
-    "doc": "docs"
-  },
+  "description": "DrTroy Continuing Education Platform",
+  "main": "index.html",
   "scripts": {
-    "build": "node build.js"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/supportdrtroy/drtroy-website.git"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "type": "commonjs",
-  "bugs": {
-    "url": "https://github.com/supportdrtroy/drtroy-website/issues"
-  },
-  "homepage": "https://github.com/supportdrtroy/drtroy-website#readme",
-  "devDependencies": {
-    "html-minifier-terser": "^7.2.0",
-    "terser": "^5.46.0"
+    "build": "mkdir -p dist && cp -rv . dist/ --exclude dist --exclude .git || true"
   },
   "dependencies": {
-    "nodemailer": "^8.0.1"
-  }
+    "@supabase/supabase-js": "^2.39.0"
+  },
+  "devDependencies": {
+    "html-minifier-terser": "^7.2.0",
+    "terser": "^5.31.1"
+  },
+  "author": "Dr. Troy Hounshell",
+  "license": "MIT"
 }

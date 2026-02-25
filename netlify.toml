@@ -1,9 +1,9 @@
 [build]
-  command = "npm ci && mkdir -p dist && cp -r * dist/ 2>/dev/null || true"
+  command = "npm run build"
   publish = "dist"
 
 [build.environment]
-  NODE_VERSION = "18"
+  NODE_VERSION = "20"
 
 [[headers]]
   for = "/*"
@@ -11,3 +11,14 @@
     X-Frame-Options = "DENY"
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"
+    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://js.stripe.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://*.supabase.co https://api.stripe.com https://api.resend.com; frame-src https://js.stripe.com https://hooks.stripe.com;"
+
+[[redirects]]
+  from = "/admin"
+  to = "/secure-admin-access-2026.html"
+  status = 301
+
+[[redirects]]
+  from = "/courses"
+  to = "/course-catalog.html"
+  status = 301
