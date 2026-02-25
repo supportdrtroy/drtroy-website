@@ -1,5 +1,5 @@
 [build]
-  command = "mkdir -p dist && cp -r * dist/ 2>/dev/null || true"
+  command = "npm ci && mkdir -p dist && cp -r * dist/ 2>/dev/null || true"
   publish = "dist"
 
 [build.environment]
