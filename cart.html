@@ -190,6 +190,12 @@
             align-items: start;
         }
 
+        .cart-layout.single-column {
+            grid-template-columns: 1fr;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
         @media (max-width: 1024px) {
             .cart-layout {
                 grid-template-columns: 1fr;
@@ -710,15 +716,18 @@
             const container = document.getElementById('cart-items-container');
             const summary = document.getElementById('cart-summary');
             const emptyCart = document.getElementById('empty-cart');
-            
+            const layout = document.querySelector('.cart-layout');
+
             if (cartData.items.length === 0) {
                 emptyCart.style.display = 'block';
                 summary.style.display = 'none';
+                if (layout) layout.classList.add('single-column');
                 return;
             }
 
             emptyCart.style.display = 'none';
             summary.style.display = 'block';
+            if (layout) layout.classList.remove('single-column');
             
             let itemsHtml = '';
             
