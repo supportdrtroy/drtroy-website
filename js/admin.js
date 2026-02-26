@@ -42,10 +42,10 @@
                 .replace(/"/g, '&quot;')
                 .replace(/'/g, '&#x27;');
         }
-        // NOTE: Do NOT use const/let here — escapeHtml already exists as a global
-        // function from course-management.js. Redeclaring with const causes a
-        // SyntaxError that silently kills the entire script.
-        var escapeHtml = esc;
+        // Use a safe assignment for escapeHtml
+        if (typeof escapeHtml === 'undefined') {
+            window.escapeHtml = esc;
+        }
 
         async function checkAuthentication() {
             if (!window.DrTroySupabase) {
