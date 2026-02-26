@@ -19,3 +19,7 @@
   from = "/courses"
   to = "/course-catalog.html"
   status = 301
+
+[[edge_functions]]
+  function = "course-auth"
+  path = "/courses/*"

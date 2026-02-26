@@ -292,6 +292,7 @@
         }
     </style>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  <script src="../js/supabase-client.js"></script>
   <script src="../js/course-guard.js"></script>
 </head>
 <body>
@@ -745,28 +746,50 @@
         }
 
         // Update course progress in user account
-        function updateCourseProgress() {
+        async function updateCourseProgress() {
+            // Keep localStorage backup
             try {
-                const accountData = localStorage.getItem('drtroyAccount');
+                var accountData = localStorage.getItem('drtroyAccount');
                 if (accountData) {
-                    const account = JSON.parse(accountData);
-                    if (!account.courseProgress) {
-                        account.courseProgress = {};
-                    }
-                    if (!account.courseProgress['PT-MSK-001']) {
-                        account.courseProgress['PT-MSK-001'] = {};
-                    }
-                    
-                    account.courseProgress['PT-MSK-001'].quizCompleted = true;
-                    account.courseProgress['PT-MSK-001'].quizScore = document.getElementById('scoreDisplay').textContent;
-                    account.courseProgress['PT-MSK-001'].quizCompletedAt = new Date().toISOString();
-                    account.courseProgress['PT-MSK-001'].lastAccessedAt = new Date().toISOString();
-                    
+                    var account = JSON.parse(accountData);
+                    if (!account.courseProgress) account.courseProgress = {};
+                    if (!account.courseProgress['pt-msk-001']) account.courseProgress['pt-msk-001'] = {};
+                    account.courseProgress['pt-msk-001'].quizCompleted = true;
+                    account.courseProgress['pt-msk-001'].quizScore = document.getElementById('scoreDisplay').textContent;
+                    account.courseProgress['pt-msk-001'].quizCompletedAt = new Date().toISOString();
+                    account.courseProgress['pt-msk-001'].lastAccessedAt = new Date().toISOString();
                     localStorage.setItem('drtroyAccount', JSON.stringify(account));
-                    console.log('📊 Quiz completion tracked');
                 }
-            } catch (error) {
-                console.error('Error updating course progress:', error);
+            } catch (e) { console.error('localStorage error:', e); }
+
+            // Submit to database
+            try {
+                var sb = window.DrTroySupabase ? window.DrTroySupabase.getClient() : null;
+                if (!sb) return;
+                var result = await sb.auth.getSession();
+                var session = result && result.data ? result.data.session : null;
+                if (!session) return;
+
+                var scoreText = document.getElementById('scoreDisplay').textContent;
+                var scoreNum = parseInt(scoreText) || 0;
+
+                await fetch('/.netlify/functions/submit-exam-results', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + session.access_token,
+                        'X-Requested-With': 'fetch'
+                    },
+                    body: JSON.stringify({
+                        course_id: document.documentElement.getAttribute('data-course-id') || 'pt-msk-001',
+                        quiz_score: scoreNum,
+                        passing_score: 70,
+                        total_questions: quizQuestions.length,
+                        correct_answers: userAnswers.filter(function(a, i) { return a === quizQuestions[i].correct; }).length
+                    })
+                });
+            } catch (err) {
+                console.error('Error submitting exam results:', err);
             }
         }
 

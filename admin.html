@@ -1453,6 +1453,9 @@
             <button class="main-tab" onclick="switchMainTab('waitlist')">
                 📋 Waitlist
             </button>
+            <button class="main-tab" onclick="switchMainTab('authors')">
+                ✍️ Authors
+            </button>
         </div>
 
         <!-- Dashboard Tab -->
@@ -2659,6 +2662,73 @@
             </div>
         </div>
 
+        <!-- Authors Tab -->
+        <div id="authors" class="tab-content">
+            <!-- Stats Row -->
+            <div class="stats-grid" style="margin-bottom:1.5rem;">
+                <div class="stat-card">
+                    <div class="stat-number" id="authorsTotalCount">0</div>
+                    <div class="stat-label">Total Authors</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="authorsActiveCount">0</div>
+                    <div class="stat-label">Active Authors</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="authorsTotalRevenue">$0</div>
+                    <div class="stat-label">Total Author Revenue</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="authorsPendingPayouts">$0</div>
+                    <div class="stat-label">Pending Payouts</div>
+                </div>
+            </div>
+
+            <!-- Authors Table Card -->
+            <div class="card">
+                <div class="card-header" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;">
+                    <h2 class="card-title">✍️ Author Management</h2>
+                    <div style="display:flex;gap:.75rem;">
+                        <button onclick="openAddAuthorModal()" style="padding:.5rem 1.1rem;background:#059669;color:#fff;border:none;border-radius:8px;font-size:.875rem;font-weight:600;cursor:pointer;">+ Add Author</button>
+                        <button onclick="loadAuthors()" style="padding:.5rem 1.1rem;background:#1a365d;color:#fff;border:none;border-radius:8px;font-size:.875rem;font-weight:600;cursor:pointer;">↻ Refresh</button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div style="overflow-x:auto;">
+                        <table class="table" id="authors-table">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Credentials</th>
+                                    <th>Courses</th>
+                                    <th>Total Sales</th>
+                                    <th>Total Earnings</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="authors-tbody">
+                                <tr><td colspan="8" style="text-align:center;color:#94a3b8;padding:2rem;">Loading authors...</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Author Sales Analytics Card -->
+            <div class="card" style="margin-top:1.5rem;">
+                <div class="card-header">
+                    <h2 class="card-title">📊 Author Sales Analytics</h2>
+                </div>
+                <div class="card-body">
+                    <div id="author-sales-content" style="color:#94a3b8;text-align:center;padding:2rem;">
+                        Select an author above to view their sales analytics.
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
 
     <!-- ═══════════════════════════════════════════════════════════
@@ -2831,6 +2901,338 @@
             </form>
         </div>
     </div>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         AUTHOR MODAL
+    ══════════════════════════════════════════════════════════════ -->
+    <div class="modal-overlay" id="authorModal">
+        <div class="modal-box" style="max-width:600px;">
+            <button class="modal-close" onclick="closeAuthorModal()" title="Close">×</button>
+            <div class="modal-title" id="authorModalTitle">Add Author</div>
+            <input type="hidden" id="authorModalId" value="">
+
+            <div class="form-grid-2">
+                <div class="form-group">
+                    <label class="form-label">First Name *</label>
+                    <input type="text" id="authorFirstName" class="form-input" placeholder="First name" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Last Name *</label>
+                    <input type="text" id="authorLastName" class="form-input" placeholder="Last name" required>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Email *</label>
+                <input type="email" id="authorEmail" class="form-input" placeholder="email@example.com" required>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Credentials</label>
+                <input type="text" id="authorCredentials" class="form-input" placeholder="e.g. DPT, OTR/L, PhD">
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Default Revenue Share (%)</label>
+                <input type="number" id="authorRevenueShare" class="form-input" placeholder="e.g. 15" min="0" max="100" step="1">
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Status</label>
+                <select id="authorStatus" class="form-input">
+                    <option value="active">Active</option>
+                    <option value="inactive">Inactive</option>
+                </select>
+            </div>
+
+            <!-- Course Assignments (only shown when editing existing author) -->
+            <div id="authorCoursesSection" style="display:none;margin-top:1.5rem;border-top:1px solid #e2e8f0;padding-top:1.5rem;">
+                <h4 style="margin:0 0 1rem 0;color:#1e3a8a;">Assigned Courses</h4>
+                <div id="authorCoursesList" style="margin-bottom:1rem;">
+                    <p style="color:#94a3b8;">No courses assigned.</p>
+                </div>
+                <div style="display:flex;gap:.5rem;align-items:end;flex-wrap:wrap;">
+                    <div class="form-group" style="flex:1;margin:0;min-width:200px;">
+                        <label class="form-label">Add Course</label>
+                        <select id="authorAddCourseSelect" class="form-input">
+                            <option value="">Select course...</option>
+                        </select>
+                    </div>
+                    <div class="form-group" style="width:100px;margin:0;">
+                        <label class="form-label">Share %</label>
+                        <input type="number" id="authorAddCourseShare" class="form-input" value="15" min="0" max="100">
+                    </div>
+                    <button onclick="assignCourseToAuthor()" style="padding:.5rem 1rem;background:#059669;color:#fff;border:none;border-radius:8px;font-size:.875rem;cursor:pointer;white-space:nowrap;height:42px;">+ Assign</button>
+                </div>
+            </div>
+
+            <div style="display:flex;gap:1rem;justify-content:flex-end;margin-top:1.5rem;">
+                <button onclick="closeAuthorModal()" style="padding:.6rem 1.5rem;background:#e2e8f0;color:#475569;border:none;border-radius:8px;font-weight:600;cursor:pointer;">Cancel</button>
+                <button onclick="saveAuthor()" id="authorSaveBtn" style="padding:.6rem 1.5rem;background:#059669;color:#fff;border:none;border-radius:8px;font-weight:600;cursor:pointer;">Save Author</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         AUTHOR MANAGEMENT FUNCTIONS (inline, loaded before admin.js)
+    ══════════════════════════════════════════════════════════════ -->
+    <script>
+    // ═══════════════════════════════════════════════════════
+    // AUTHOR MANAGEMENT FUNCTIONS
+    // ═══════════════════════════════════════════════════════
+    var authorsList = [];
+
+    async function authorApi(action, payload) {
+        var sb = window.DrTroySupabase ? window.DrTroySupabase.getClient() : null;
+        if (!sb) throw new Error('Not authenticated');
+        var sess = await sb.auth.getSession();
+        var token = sess.data.session ? sess.data.session.access_token : null;
+        if (!token) throw new Error('Not authenticated');
+        var res = await fetch('/.netlify/functions/admin-author-management', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
+            body: JSON.stringify(Object.assign({ action: action }, payload || {}))
+        });
+        var data = await res.json();
+        if (!res.ok) throw new Error(data.error || 'Request failed');
+        return data;
+    }
+
+    async function loadAuthors() {
+        try {
+            var result = await authorApi('list-authors');
+            authorsList = result.authors || [];
+            renderAuthorsTable(authorsList);
+            // Load stats
+            var stats = await authorApi('get-author-stats');
+            document.getElementById('authorsTotalCount').textContent = stats.total_authors || 0;
+            document.getElementById('authorsActiveCount').textContent = stats.active_authors || 0;
+            document.getElementById('authorsTotalRevenue').textContent = '$' + ((stats.total_revenue || 0) / 100).toFixed(2);
+            document.getElementById('authorsPendingPayouts').textContent = '$' + ((stats.pending_payouts || 0) / 100).toFixed(2);
+        } catch (err) {
+            console.error('Error loading authors:', err);
+            if (typeof showAdminToast === 'function') showAdminToast('Error loading authors: ' + err.message, 'error');
+        }
+    }
+
+    function renderAuthorsTable(authors) {
+        var tbody = document.getElementById('authors-tbody');
+        if (!authors || authors.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;color:#94a3b8;padding:2rem;">No authors found. Click "Add Author" to create one.</td></tr>';
+            return;
+        }
+        var esc = typeof escapeHtml === 'function' ? escapeHtml : function(s) { return String(s || ''); };
+        tbody.innerHTML = authors.map(function(a) {
+            var statusColor = a.status === 'active' ? '#059669' : '#94a3b8';
+            var statusBg = a.status === 'active' ? '#ecfdf5' : '#f1f5f9';
+            return '<tr>' +
+                '<td><strong>' + esc(a.first_name + ' ' + a.last_name) + '</strong></td>' +
+                '<td>' + esc(a.email) + '</td>' +
+                '<td>' + esc(a.credentials || '—') + '</td>' +
+                '<td>' + (a.course_count || 0) + '</td>' +
+                '<td>' + (a.total_sales || 0) + '</td>' +
+                '<td>$' + ((a.total_earnings || 0) / 100).toFixed(2) + '</td>' +
+                '<td><span style="background:' + statusBg + ';color:' + statusColor + ';padding:.25rem .75rem;border-radius:20px;font-size:.8rem;font-weight:600;">' + esc(a.status) + '</span></td>' +
+                '<td>' +
+                    '<button onclick="openEditAuthorModal(\'' + a.id + '\')" style="padding:.3rem .6rem;background:#3b82f6;color:#fff;border:none;border-radius:4px;font-size:.8rem;cursor:pointer;margin-right:.25rem;" title="Edit">Edit</button>' +
+                    '<button onclick="viewAuthorSales(\'' + a.id + '\')" style="padding:.3rem .6rem;background:#8b5cf6;color:#fff;border:none;border-radius:4px;font-size:.8rem;cursor:pointer;margin-right:.25rem;" title="Sales">Sales</button>' +
+                    '<button onclick="deleteAuthor(\'' + a.id + '\',\'' + esc(a.first_name + ' ' + a.last_name) + '\')" style="padding:.3rem .6rem;background:#ef4444;color:#fff;border:none;border-radius:4px;font-size:.8rem;cursor:pointer;" title="Delete">Delete</button>' +
+                '</td>' +
+            '</tr>';
+        }).join('');
+    }
+
+    function openAddAuthorModal() {
+        document.getElementById('authorModalTitle').textContent = 'Add Author';
+        document.getElementById('authorModalId').value = '';
+        document.getElementById('authorFirstName').value = '';
+        document.getElementById('authorLastName').value = '';
+        document.getElementById('authorEmail').value = '';
+        document.getElementById('authorCredentials').value = '';
+        document.getElementById('authorRevenueShare').value = '15';
+        document.getElementById('authorStatus').value = 'active';
+        document.getElementById('authorCoursesSection').style.display = 'none';
+        document.getElementById('authorModal').classList.add('active');
+    }
+
+    async function openEditAuthorModal(authorId) {
+        try {
+            var result = await authorApi('get-author', { author_id: authorId });
+            var a = result.author;
+            document.getElementById('authorModalTitle').textContent = 'Edit Author';
+            document.getElementById('authorModalId').value = a.id;
+            document.getElementById('authorFirstName').value = a.first_name || '';
+            document.getElementById('authorLastName').value = a.last_name || '';
+            document.getElementById('authorEmail').value = a.email || '';
+            document.getElementById('authorCredentials').value = a.credentials || '';
+            document.getElementById('authorRevenueShare').value = a.default_revenue_share || 15;
+            document.getElementById('authorStatus').value = a.status || 'active';
+
+            // Show course assignments
+            document.getElementById('authorCoursesSection').style.display = 'block';
+            renderAuthorCourses(a.courses || [], authorId);
+            loadCourseOptions(a.courses || []);
+
+            document.getElementById('authorModal').classList.add('active');
+        } catch (err) {
+            if (typeof showAdminToast === 'function') showAdminToast('Error loading author: ' + err.message, 'error');
+        }
+    }
+
+    function renderAuthorCourses(courses, authorId) {
+        var container = document.getElementById('authorCoursesList');
+        if (!courses || courses.length === 0) {
+            container.innerHTML = '<p style="color:#94a3b8;font-size:.9rem;">No courses assigned.</p>';
+            return;
+        }
+        var esc = typeof escapeHtml === 'function' ? escapeHtml : function(s) { return String(s || ''); };
+        container.innerHTML = courses.map(function(c) {
+            return '<div style="display:flex;justify-content:space-between;align-items:center;padding:.5rem .75rem;background:#f9fafb;border-radius:6px;margin-bottom:.5rem;">' +
+                '<div><strong>' + esc(c.course_id) + '</strong> <span style="color:#6b7280;font-size:.85rem;">(' + (c.revenue_share || 0) + '% share, ' + esc(c.role || 'author') + ')</span></div>' +
+                '<button onclick="removeCourseFromAuthor(\'' + authorId + '\',\'' + c.id + '\')" style="padding:.2rem .5rem;background:#ef4444;color:#fff;border:none;border-radius:4px;font-size:.75rem;cursor:pointer;">Remove</button>' +
+            '</div>';
+        }).join('');
+    }
+
+    async function loadCourseOptions(existingCourses) {
+        var select = document.getElementById('authorAddCourseSelect');
+        select.innerHTML = '<option value="">Select course...</option>';
+        // Use the COURSE_CATALOG from cart.js or load from DB
+        var catalogKeys = window.COURSE_CATALOG ? Object.keys(window.COURSE_CATALOG) : [];
+        var existingIds = (existingCourses || []).map(function(c) { return c.course_id; });
+        catalogKeys.forEach(function(key) {
+            if (existingIds.indexOf(key) === -1) {
+                var opt = document.createElement('option');
+                opt.value = key;
+                opt.textContent = key + (window.COURSE_CATALOG[key] ? ' — ' + window.COURSE_CATALOG[key].title : '');
+                select.appendChild(opt);
+            }
+        });
+    }
+
+    async function assignCourseToAuthor() {
+        var authorId = document.getElementById('authorModalId').value;
+        var courseId = document.getElementById('authorAddCourseSelect').value;
+        var share = parseInt(document.getElementById('authorAddCourseShare').value) || 15;
+        if (!authorId || !courseId) { alert('Please select a course.'); return; }
+        try {
+            await authorApi('assign-course', { author_id: authorId, course_id: courseId, revenue_share: share, role: 'author' });
+            if (typeof showAdminToast === 'function') showAdminToast('Course assigned!', 'success');
+            openEditAuthorModal(authorId); // Refresh modal
+        } catch (err) {
+            if (typeof showAdminToast === 'function') showAdminToast('Error: ' + err.message, 'error');
+        }
+    }
+
+    async function removeCourseFromAuthor(authorId, courseAuthorId) {
+        if (!confirm('Remove this course assignment?')) return;
+        try {
+            await authorApi('remove-course', { course_author_id: courseAuthorId });
+            if (typeof showAdminToast === 'function') showAdminToast('Course removed.', 'success');
+            openEditAuthorModal(authorId);
+        } catch (err) {
+            if (typeof showAdminToast === 'function') showAdminToast('Error: ' + err.message, 'error');
+        }
+    }
+
+    function closeAuthorModal() {
+        document.getElementById('authorModal').classList.remove('active');
+    }
+
+    async function saveAuthor() {
+        var id = document.getElementById('authorModalId').value;
+        var payload = {
+            first_name: document.getElementById('authorFirstName').value.trim(),
+            last_name: document.getElementById('authorLastName').value.trim(),
+            email: document.getElementById('authorEmail').value.trim(),
+            credentials: document.getElementById('authorCredentials').value.trim(),
+            default_revenue_share: parseInt(document.getElementById('authorRevenueShare').value) || 15,
+            status: document.getElementById('authorStatus').value
+        };
+        if (!payload.first_name || !payload.last_name || !payload.email) {
+            alert('Please fill in first name, last name, and email.');
+            return;
+        }
+        try {
+            var btn = document.getElementById('authorSaveBtn');
+            btn.disabled = true; btn.textContent = 'Saving...';
+            if (id) {
+                payload.author_id = id;
+                await authorApi('update-author', payload);
+            } else {
+                await authorApi('create-author', payload);
+            }
+            if (typeof showAdminToast === 'function') showAdminToast('Author saved!', 'success');
+            closeAuthorModal();
+            loadAuthors();
+        } catch (err) {
+            if (typeof showAdminToast === 'function') showAdminToast('Error: ' + err.message, 'error');
+        } finally {
+            var btn = document.getElementById('authorSaveBtn');
+            btn.disabled = false; btn.textContent = 'Save Author';
+        }
+    }
+
+    async function deleteAuthor(authorId, name) {
+        if (!confirm('Delete author "' + name + '"? This will also remove all course assignments.')) return;
+        try {
+            await authorApi('delete-author', { author_id: authorId });
+            if (typeof showAdminToast === 'function') showAdminToast('Author deleted.', 'success');
+            loadAuthors();
+        } catch (err) {
+            if (typeof showAdminToast === 'function') showAdminToast('Error: ' + err.message, 'error');
+        }
+    }
+
+    async function viewAuthorSales(authorId) {
+        var container = document.getElementById('author-sales-content');
+        container.innerHTML = '<p style="color:#6b7280;">Loading sales data...</p>';
+        try {
+            var result = await authorApi('get-author-sales', { author_id: authorId });
+            var sales = result.sales || [];
+            var author = authorsList.find(function(a) { return a.id === authorId; });
+            var name = author ? (author.first_name + ' ' + author.last_name) : 'Author';
+            var esc = typeof escapeHtml === 'function' ? escapeHtml : function(s) { return String(s || ''); };
+
+            if (sales.length === 0) {
+                container.innerHTML = '<p style="color:#94a3b8;">No sales recorded for ' + esc(name) + '.</p>';
+                return;
+            }
+
+            var totalEarnings = sales.reduce(function(sum, s) { return sum + (s.author_earning || 0); }, 0);
+            var html = '<div style="margin-bottom:1rem;">' +
+                '<h3 style="margin:0 0 .5rem 0;color:#1e3a8a;">' + esc(name) + ' — Sales History</h3>' +
+                '<p style="color:#6b7280;margin:0;">Total Earnings: <strong style="color:#059669;">$' + (totalEarnings / 100).toFixed(2) + '</strong> from ' + sales.length + ' sales</p>' +
+            '</div>' +
+            '<div style="overflow-x:auto;"><table class="table"><thead><tr>' +
+                '<th>Date</th><th>Course</th><th>Sale Amount</th><th>Share %</th><th>Author Earning</th><th>Status</th>' +
+            '</tr></thead><tbody>' +
+            sales.map(function(s) {
+                var statusColor = s.payment_status === 'paid' ? '#059669' : '#f59e0b';
+                return '<tr>' +
+                    '<td>' + new Date(s.sale_date || s.created_at).toLocaleDateString() + '</td>' +
+                    '<td>' + esc(s.course_id) + '</td>' +
+                    '<td>$' + ((s.sale_amount || 0) / 100).toFixed(2) + '</td>' +
+                    '<td>' + (s.revenue_share_percent || 0) + '%</td>' +
+                    '<td style="font-weight:600;color:#059669;">$' + ((s.author_earning || 0) / 100).toFixed(2) + '</td>' +
+                    '<td><span style="color:' + statusColor + ';font-weight:600;">' + esc(s.payment_status || 'pending') + '</span></td>' +
+                '</tr>';
+            }).join('') +
+            '</tbody></table></div>';
+
+            container.innerHTML = html;
+        } catch (err) {
+            container.innerHTML = '<p style="color:#ef4444;">Error loading sales: ' + err.message + '</p>';
+        }
+    }
+
+    // Auto-load authors when tab is activated
+    var origSwitchMainTab = window.switchMainTab;
+    window.switchMainTab = function(tabId) {
+        if (typeof origSwitchMainTab === 'function') origSwitchMainTab(tabId);
+        if (tabId === 'authors') loadAuthors();
+    };
+    </script>
 
     <!-- Admin panel logic - external file -->
     <script src="js/admin.js?v=20260224d"></script>

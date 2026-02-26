@@ -1,14 +1,14 @@
 /**
- * DrTroy CE Platform — Netlify Function: update-progress
- * POST /.netlify/functions/update-progress
- * Syncs course progress from frontend to Supabase course_progress table.
- * Also updates enrollment status (not_started → in_progress → completed).
+ * DrTroy CE Platform — Netlify Function: submit-exam-results
+ * POST /.netlify/functions/submit-exam-results
+ * Submits quiz/exam scores to Supabase course_progress table.
+ * Sets quiz_score and quiz_passed flag based on passing_score threshold.
  */
 const https = require('https');
 
 const SUPABASE_HOST = 'pnqoxulxdmlmbywcpbyx.supabase.co';
 const SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
-if (!SERVICE_ROLE_KEY) { console.error('[update-progress] Missing SUPABASE_SERVICE_ROLE_KEY'); }
+if (!SERVICE_ROLE_KEY) { console.error('[submit-exam-results] Missing SUPABASE_SERVICE_ROLE_KEY'); }
 
 const ALLOWED_ORIGINS = ['https://drtroy.com', 'https://www.drtroy.com'];
 
@@ -83,75 +83,64 @@ exports.handler = async (event) => {
   let body;
   try { body = JSON.parse(event.body || '{}'); } catch { return { statusCode: 400, headers: cors, body: JSON.stringify({ error: 'Invalid JSON' }) }; }
 
-  const { courseId, progressPercent, modulesCompleted, timeSpentSeconds, quizScore } = body;
-  if (!courseId) return { statusCode: 400, headers: cors, body: JSON.stringify({ error: 'courseId required' }) };
+  const { course_id, quiz_score, passing_score, total_questions, correct_answers } = body;
+  if (!course_id) return { statusCode: 400, headers: cors, body: JSON.stringify({ error: 'course_id required' }) };
 
-  // SECURITY: Cap progress at 95% from client-side. Only complete-course function can set 100%/completed.
-  const cappedProgress = Math.min(95, Math.max(0, progressPercent || 0));
+  // Sanitize inputs
+  const safeQuizScore = Math.min(100, Math.max(0, parseInt(quiz_score) || 0));
+  const safePassingScore = parseInt(passing_score) || 70;
+  const safeTotalQuestions = Math.max(0, parseInt(total_questions) || 0);
+  const safeCorrectAnswers = Math.max(0, parseInt(correct_answers) || 0);
+  const quizPassed = safeQuizScore >= safePassingScore;
   const now = new Date().toISOString();
-  const newStatus = cappedProgress > 0 ? 'in_progress' : 'not_started';
-
-  // SECURITY: Validate time_spent_seconds is reasonable (max 24 hours per update)
-  const safeTimeSpent = Math.min(Math.max(0, timeSpentSeconds || 0), 86400);
-
-  // SECURITY: Prevent progress from going backwards (anti-manipulation)
-  // Progress can only increase unless reset by admin
 
   // Find enrollment
-  const enrollRes = await sbRest('GET', `/rest/v1/enrollments?user_id=eq.${userId}&course_id=eq.${encodeURIComponent(courseId)}&limit=1`);
+  const enrollRes = await sbRest('GET', `/rest/v1/enrollments?user_id=eq.${userId}&course_id=eq.${encodeURIComponent(course_id)}&limit=1`);
   if (!Array.isArray(enrollRes.body) || enrollRes.body.length === 0) {
     return { statusCode: 404, headers: cors, body: JSON.stringify({ error: 'Enrollment not found' }) };
   }
   const enrollment = enrollRes.body[0];
 
-  // Upsert course_progress
-  const existingRes = await sbRest('GET', `/rest/v1/course_progress?user_id=eq.${userId}&course_id=eq.${encodeURIComponent(courseId)}&limit=1`);
+  // Find or create course_progress record
+  const existingRes = await sbRest('GET', `/rest/v1/course_progress?user_id=eq.${userId}&course_id=eq.${encodeURIComponent(course_id)}&limit=1`);
   let progressRecord;
 
-  const progressData = {
-    user_id: userId,
-    course_id: courseId,
-    enrollment_id: enrollment.id,
-    status: newStatus,
-    progress_percent: cappedProgress,
-    modules_completed: modulesCompleted || null,
-    time_spent_seconds: safeTimeSpent,
+  const quizData = {
+    quiz_score: safeQuizScore,
+    quiz_passed: quizPassed,
     updated_at: now,
-    ...(quizScore !== undefined && quizScore !== null ? { quiz_score: Math.min(100, Math.max(0, parseInt(quizScore) || 0)) } : {}),
   };
 
   if (Array.isArray(existingRes.body) && existingRes.body.length > 0) {
-    // Update
+    // Update existing record
     const id = existingRes.body[0].id;
-    const existing = existingRes.body[0];
-
-    // SECURITY: Don't allow progress to go backwards
-    if (cappedProgress < (existing.progress_percent || 0) && existing.status !== 'not_started') {
-      progressData.progress_percent = existing.progress_percent;
-    }
-
-    // SECURITY: Time spent can only increase
-    if (safeTimeSpent < (existing.time_spent_seconds || 0)) {
-      progressData.time_spent_seconds = existing.time_spent_seconds;
-    }
-
-    // completed_at only set by complete-course function
-    if (!existing.started_at) {
-      progressData.started_at = now;
-    }
-    const upd = await sbRest('PATCH', `/rest/v1/course_progress?id=eq.${id}`, progressData);
+    const upd = await sbRest('PATCH', `/rest/v1/course_progress?id=eq.${id}`, quizData);
     progressRecord = Array.isArray(upd.body) ? upd.body[0] : upd.body;
   } else {
-    // Insert
-    progressData.started_at = now;
-    // completed_at only set by complete-course function
-    const ins = await sbRest('POST', '/rest/v1/course_progress', progressData);
+    // Create new record with quiz data
+    const insertData = {
+      user_id: userId,
+      course_id: course_id,
+      enrollment_id: enrollment.id,
+      status: 'in_progress',
+      progress_percent: 0,
+      started_at: now,
+      ...quizData,
+    };
+    const ins = await sbRest('POST', '/rest/v1/course_progress', insertData);
     progressRecord = Array.isArray(ins.body) ? ins.body[0] : ins.body;
   }
 
   return {
     statusCode: 200,
     headers: cors,
-    body: JSON.stringify({ success: true, progress: progressRecord })
+    body: JSON.stringify({
+      success: true,
+      quiz_score: safeQuizScore,
+      quiz_passed: quizPassed,
+      total_questions: safeTotalQuestions,
+      correct_answers: safeCorrectAnswers,
+      progress: progressRecord,
+    }),
   };
 };
