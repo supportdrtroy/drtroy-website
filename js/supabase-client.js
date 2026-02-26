@@ -124,9 +124,9 @@ async function getSession() {
 async function resetPassword(email) {
     const sb = getSupabaseClient();
     if (!sb) return { error: { message: 'Database unavailable' } };
-    return await sb.auth.resetPasswordForEmail(email, {
-        redirectTo: window.location.origin + '/my-account.html'
-    });
+    // Redirect back to whichever page initiated the reset (my-account or admin login)
+    var redirectTo = window.location.origin + window.location.pathname;
+    return await sb.auth.resetPasswordForEmail(email, { redirectTo });
 }
 
 async function updatePassword(newPassword) {

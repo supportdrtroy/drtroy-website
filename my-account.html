@@ -3322,7 +3322,7 @@
                 const sb = window.DrTroySupabase?.getClient ? window.DrTroySupabase.getClient() : null;
                 if (!sb) throw new Error('System unavailable. Please try again.');
                 const { error } = await sb.auth.resetPasswordForEmail(email, {
-                    redirectTo: window.location.origin + '/my-account.html'
+                    redirectTo: window.location.origin + window.location.pathname
                 });
                 if (error) throw error;
                 succEl.textContent = '✓ Reset link sent! Check your email and click the link to set a new password.';
@@ -3356,19 +3356,37 @@
             }
         }
 
-        // Check for password recovery token on page load
-        (function checkRecoveryToken() {
-            const hash   = window.location.hash;
-            const params = new URLSearchParams(hash.replace('#', '?'));
+        // Listen for Supabase PASSWORD_RECOVERY event (the reliable way)
+        (function listenForRecovery() {
+            var sb = window.DrTroySupabase ? window.DrTroySupabase.getClient() : null;
+            if (sb) {
+                sb.auth.onAuthStateChange(function(event) {
+                    if (event === 'PASSWORD_RECOVERY') {
+                        // Clear the hash so a page refresh doesn't re-trigger recovery mode
+                        history.replaceState(null, '', window.location.pathname);
+                        var loginCard = document.getElementById('loginRequired');
+                        if (loginCard) loginCard.style.display = 'flex';
+                        document.getElementById('loginPanel').style.display  = 'none';
+                        document.getElementById('forgotPanel').style.display = 'none';
+                        document.getElementById('resetPanel').style.display  = 'block';
+                        var loginError = document.getElementById('loginError');
+                        if (loginError) loginError.style.display = 'none';
+                    }
+                });
+            }
+
+            // Fallback: also check hash params for older email links
+            var hash   = window.location.hash;
+            var params = new URLSearchParams(hash.replace('#', '?'));
             if (params.get('type') === 'recovery') {
-                // Show the login card with the reset panel visible
-                document.addEventListener('DOMContentLoaded', () => {
-                    const loginCard = document.getElementById('loginRequired');
+                document.addEventListener('DOMContentLoaded', function() {
+                    var loginCard = document.getElementById('loginRequired');
                     if (loginCard) loginCard.style.display = 'flex';
                     document.getElementById('loginPanel').style.display  = 'none';
                     document.getElementById('forgotPanel').style.display = 'none';
                     document.getElementById('resetPanel').style.display  = 'block';
-                    document.getElementById('loginError') && (document.getElementById('loginError').style.display = 'none');
+                    var loginError = document.getElementById('loginError');
+                    if (loginError) loginError.style.display = 'none';
                 });
             }
         })();

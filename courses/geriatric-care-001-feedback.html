@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Course Feedback - Geriatric Care Across the Continuum | DrTroy CE</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+    <script src="../js/supabase-client.js"></script>
     <style>
         * { box-sizing: border-box; }
 
@@ -543,85 +545,78 @@
             });
         });
 
-        // Form submission
-        document.getElementById('feedbackForm').addEventListener('submit', function(e) {
+        // Form submission — sends to Supabase via Netlify function
+        document.getElementById('feedbackForm').addEventListener('submit', async function(e) {
             e.preventDefault();
-            
-            // Validate required fields
+
             if (!overallRatingInput.value) {
                 alert('Please provide an overall rating for the course.');
                 return;
             }
 
-            // Collect form data
-            const formData = new FormData(this);
-            const feedbackData = {
-                courseId: 'geriatric-care-001',
-                courseTitle: 'Geriatric Care Across the Continuum',
-                submittedAt: new Date().toISOString(),
-                overallRating: formData.get('overallRating'),
-                contentQuality: formData.get('contentQuality'),
-                clinicalRelevance: formData.get('clinicalRelevance'),
-                learningExpectations: formData.get('learningExpectations'),
-                valuableAspects: formData.getAll('valuableAspects'),
-                courseLength: formData.get('courseLength'),
-                preferredFormats: formData.getAll('preferredFormats'),
-                futureTopics: formData.getAll('futureTopics'),
-                improvements: formData.get('improvements'),
-                recommend: formData.get('recommend'),
-                additionalComments: formData.get('additionalComments')
+            var courseId = document.documentElement.getAttribute('data-course-id');
+            var formData = new FormData(this);
+
+            // Map form fields to API field names
+            var payload = {
+                course_id: courseId,
+                overall_rating: parseInt(formData.get('overallRating')) || 0,
+                content_quality: parseInt(formData.get('contentQuality')) || 0,
+                format_rating: parseInt(formData.get('courseLength') === 'just-right' ? 5 : formData.get('courseLength') === 'too-long' ? 2 : 3) || 3,
+                objectives_met: parseInt(formData.get('learningExpectations')) || 0,
+                practice_relevance: parseInt(formData.get('clinicalRelevance')) || 0,
+                improvements: formData.get('improvements') || formData.get('additionalComments') || '',
+                recommend: formData.get('recommend') || 'unknown'
             };
 
-            // Store feedback (in production, this would be sent to server)
-            storeFeedback(feedbackData);
-
-            // Show success message
-            document.getElementById('feedbackForm').classList.add('hidden');
-            document.getElementById('successMessage').classList.remove('hidden');
-
-            console.log('📝 Course feedback submitted:', feedbackData);
-        });
-
-        function storeFeedback(feedbackData) {
-            try {
-                // Get user account
-                const accountData = localStorage.getItem('drtroyAccount');
-                if (accountData) {
-                    const account = JSON.parse(accountData);
-                    
-                    // Store feedback in user account
-                    if (!account.courseFeedback) {
-                        account.courseFeedback = [];
+            // Get auth token
+            var sb = window.DrTroySupabase ? window.DrTroySupabase.getClient() : null;
+            var userToken = null;
+            if (sb) {
+                try {
+                    var result = await sb.auth.getSession();
+                    if (result && result.data && result.data.session) {
+                        userToken = result.data.session.access_token;
                     }
-                    
-                    account.courseFeedback.push(feedbackData);
-                    
-                    // Update course progress
-                    if (!account.courseProgress) {
-                        account.courseProgress = {};
-                    }
-                    if (!account.courseProgress['geriatric-care-001']) {
-                        account.courseProgress['geriatric-care-001'] = {};
-                    }
-                    
-                    account.courseProgress['geriatric-care-001'].feedbackSubmitted = true;
-                    account.courseProgress['geriatric-care-001'].feedbackSubmittedAt = new Date().toISOString();
-                    account.courseProgress['geriatric-care-001'].lastAccessedAt = new Date().toISOString();
-                    
-                    localStorage.setItem('drtroyAccount', JSON.stringify(account));
-                    
-                    console.log('📊 Feedback stored in user account');
-                }
-                
-                // Also store in global feedback collection for analytics
-                const globalFeedback = JSON.parse(localStorage.getItem('courseFeedback') || '[]');
-                globalFeedback.push(feedbackData);
-                localStorage.setItem('courseFeedback', JSON.stringify(globalFeedback));
-                
-            } catch (error) {
-                console.error('Error storing feedback:', error);
+                } catch (err) { /* no session */ }
             }
-        }
+
+            if (userToken) {
+                payload.user_token = userToken;
+            }
+
+            // Submit to Supabase via Netlify function
+            try {
+                var submitBtn = this.querySelector('button[type="submit"]');
+                if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = 'Submitting...'; }
+
+                var response = await fetch('/.netlify/functions/submit-course-feedback', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                if (!response.ok) {
+                    var errData = await response.json().catch(function() { return {}; });
+                    throw new Error(errData.error || 'Failed to submit feedback');
+                }
+
+                // Also keep localStorage copy as backup
+                try {
+                    var globalFeedback = JSON.parse(localStorage.getItem('courseFeedback') || '[]');
+                    globalFeedback.push(payload);
+                    localStorage.setItem('courseFeedback', JSON.stringify(globalFeedback));
+                } catch (lsErr) { /* localStorage not critical */ }
+
+                document.getElementById('feedbackForm').classList.add('hidden');
+                document.getElementById('successMessage').classList.remove('hidden');
+
+            } catch (error) {
+                console.error('Error submitting feedback:', error);
+                alert('There was a problem submitting your feedback. Please try again.');
+                if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = 'Submit Feedback'; }
+            }
+        });
     </script>
 </body>
 </html>

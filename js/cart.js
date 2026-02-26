@@ -502,47 +502,63 @@ window.showCartNotification = function(message) {
     }, 4000);
 };
 
-// Update cart icon in navigation
+// Update cart icon in navigation (hidden when not logged in)
 window.updateCartIcon = function() {
-    console.log('🔄 Updating cart icon...');
-    
     const cartIcon = document.getElementById('cart-icon');
     const cartCount = document.getElementById('cart-count');
-    
-    console.log('🎯 Cart elements found:', { cartIcon: !!cartIcon, cartCount: !!cartCount });
-    
-    if (cartIcon && cartCount) {
-        const count = window.drtroyCart.getItemCount();
-        console.log('📊 Cart count:', count);
-        
-        if (count > 0) {
-            cartCount.textContent = count;
-            cartCount.style.display = 'inline-block';
-            console.log('✅ Cart count updated and shown');
-        } else {
-            cartCount.style.display = 'none';
-            console.log('👻 Cart count hidden (empty cart)');
-        }
+
+    if (!cartIcon) return;
+
+    // Check auth state — hide cart entirely if not logged in
+    var sb = window.DrTroySupabase ? window.DrTroySupabase.getClient() : null;
+    if (sb) {
+        sb.auth.getSession().then(function(result) {
+            var session = result && result.data ? result.data.session : null;
+            if (!session) {
+                cartIcon.style.display = 'none';
+                return;
+            }
+            // User is logged in — show cart icon
+            cartIcon.style.display = '';
+            if (cartCount) {
+                var count = window.drtroyCart.getItemCount();
+                if (count > 0) {
+                    cartCount.textContent = count;
+                    cartCount.style.display = 'inline-block';
+                } else {
+                    cartCount.style.display = 'none';
+                }
+            }
+        }).catch(function() {
+            // On error, hide cart as a safe default
+            cartIcon.style.display = 'none';
+        });
     } else {
-        console.warn('⚠️ Cart icon elements not found in DOM');
+        // Supabase not loaded — hide cart
+        cartIcon.style.display = 'none';
     }
 };
 
 // Initialize cart on page load
 document.addEventListener('DOMContentLoaded', function() {
-    console.log('🚀 Cart system initializing...');
-    console.log('🛒 Global cart instance:', window.drtroyCart);
-    console.log('📦 Current cart items:', window.drtroyCart.items);
-    
+    // Hide cart icon by default until auth check completes
+    var cartIcon = document.getElementById('cart-icon');
+    if (cartIcon) cartIcon.style.display = 'none';
+
     window.updateCartIcon();
-    
+
     // Listen for cart changes
     window.drtroyCart.addListener(function() {
-        console.log('🔔 Cart changed, updating icon');
         window.updateCartIcon();
     });
-    
-    console.log('✅ Cart system initialized');
+
+    // Listen for auth state changes so cart visibility updates on login/logout
+    var sb = window.DrTroySupabase ? window.DrTroySupabase.getClient() : null;
+    if (sb) {
+        sb.auth.onAuthStateChange(function() {
+            window.updateCartIcon();
+        });
+    }
 });
 
 // Utility functions for other pages to use
