@@ -952,9 +952,27 @@
                                 </select>
                             </div>
                         </div>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 1.5rem;">
+                            <div>
+                                <label style="display: block; margin-bottom: 0.75rem; font-weight: 600; color: var(--neutral-700); font-size: 0.95rem; text-align: left;">Password</label>
+                                <input type="password" id="password" name="password" autocomplete="new-password" style="width: 100%; padding: 1rem 1.25rem; border: 2px solid var(--neutral-200); border-radius: 12px; font-size: 1rem; color: var(--neutral-800); background: white; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); font-family: inherit;" placeholder="Create password" required>
+                            </div>
+                            <div>
+                                <label style="display: block; margin-bottom: 0.75rem; font-weight: 600; color: var(--neutral-700); font-size: 0.95rem; text-align: left;">Confirm Password</label>
+                                <input type="password" id="confirm_password" name="confirm_password" autocomplete="new-password" style="width: 100%; padding: 1rem 1.25rem; border: 2px solid var(--neutral-200); border-radius: 12px; font-size: 1rem; color: var(--neutral-800); background: white; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); font-family: inherit;" placeholder="Confirm password" required>
+                            </div>
+                        </div>
+                        
+                        <!-- Math captcha for signup -->
+                        <div style="margin-bottom: 2rem; background: #f8fafc; padding: 1.25rem; border-radius: 12px; border: 1px solid var(--neutral-200);">
+                            <label style="display: block; margin-bottom: 0.75rem; font-weight: 600; color: var(--neutral-700); font-size: 0.95rem; text-align: left;">Security Verification</label>
+                            <div style="display: flex; align-items: center; gap: 1rem;">
+                                <span id="signup-captcha-question" style="font-weight: 600; color: var(--primary-navy); font-size: 1rem; white-space: nowrap;"></span>
+                                <input type="text" id="signup-captcha" placeholder="Answer" required maxlength="4" style="width: 100px; padding: 0.75rem 1rem; border: 2px solid var(--neutral-200); border-radius: 8px; font-size: 1rem; text-align: center; outline: none;">
+                            </div>
+                        </div>
+
                         <div style="margin-bottom: 2rem;">
-                            <label style="display: block; margin-bottom: 0.75rem; font-weight: 600; color: var(--neutral-700); font-size: 0.95rem; text-align: left;">Password</label>
-                            <input type="password" id="password" name="password" autocomplete="new-password" style="width: 100%; padding: 1rem 1.25rem; border: 2px solid var(--neutral-200); border-radius: 12px; font-size: 1rem; color: var(--neutral-800); background: white; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); font-family: inherit;" placeholder="Create secure password" required>
                             <p style="font-size: 0.85rem; color: var(--neutral-600); margin-top: 0.5rem; line-height: 1.5; text-align: left;">Password must be at least 8 characters with mixed case, numbers, and symbols.</p>
                         </div>
                         <button type="submit" style="display: inline-flex; align-items: center; justify-content: center; padding: 1.25rem 2rem; border-radius: 12px; text-decoration: none; font-weight: 600; font-size: 1rem; cursor: pointer; border: none; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); position: relative; overflow: hidden; width: 100%; background: linear-gradient(135deg, var(--accent-emerald) 0%, var(--accent-emerald-light) 100%); color: white; box-shadow: var(--shadow-md);">Create Free Account</button>
@@ -1123,32 +1141,56 @@
         }
 
         // Handle account creation form
+        let signupCaptchaAnswer = 0;
+
+        function generateSignupCaptcha() {
+            const a = Math.floor(Math.random() * 9) + 1;
+            const b = Math.floor(Math.random() * 9) + 1;
+            signupCaptchaAnswer = a + b;
+            const q = document.getElementById('signup-captcha-question');
+            if (q) q.textContent = `Security Quiz: ${a} + ${b} =`;
+        }
+
+        generateSignupCaptcha();
+
         document.getElementById('account-form').addEventListener('submit', async function(e) {
             e.preventDefault();
             
             const submitBtn = e.target.querySelector('button[type="submit"]');
             const originalText = submitBtn.textContent;
-            submitBtn.disabled = true;
-            submitBtn.textContent = 'Creating Account...';
             
             const formData = new FormData(e.target);
             const email = formData.get('email');
             const password = formData.get('password');
+            const confirmPassword = formData.get('confirm_password');
             const profession = formData.get('profession');
+            const captchaInput = parseInt(document.getElementById('signup-captcha').value.trim(), 10);
             
+            // Validation
+            if (captchaInput !== signupCaptchaAnswer) {
+                alert('Security answer is incorrect. Please try again.');
+                generateSignupCaptcha();
+                document.getElementById('signup-captcha').value = '';
+                return;
+            }
+
+            if (password !== confirmPassword) {
+                alert('Passwords do not match. Please try again.');
+                return;
+            }
+
             if (!email || !password || !profession) {
                 alert('Please fill in all fields.');
-                submitBtn.disabled = false;
-                submitBtn.textContent = originalText;
                 return;
             }
             
             if (password.length < 8) {
                 alert('Password must be at least 8 characters.');
-                submitBtn.disabled = false;
-                submitBtn.textContent = originalText;
                 return;
             }
+
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Creating Account...';
 
             try {
                 if (window.DrTroySupabase) {
