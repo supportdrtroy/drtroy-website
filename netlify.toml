@@ -15,6 +15,12 @@
   to = "/secure-admin-access-2026.html"
   status = 301
 
+# Block direct admin.html access — force through login gateway
+[[redirects]]
+  from = "/admin.html"
+  to = "/secure-admin-access-2026.html"
+  status = 301
+
 [[redirects]]
   from = "/courses"
   to = "/course-catalog.html"

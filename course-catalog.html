@@ -4,8 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Course Catalog | DrTroy CE</title>
-    
+
     <!-- Security headers set via netlify.toml -->
+
+    <!-- Supabase (required for auth-gated cart and nav) -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+    <script src="js/supabase-client.js?v=20260226"></script>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Source+Sans+Pro:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -732,7 +736,7 @@
     </main>
 
     <!-- Include cart system -->
-    <script src="js/cart.js"></script>
+    <script src="js/cart.js?v=20260226"></script>
     
     <script>
         // Individual sales configuration

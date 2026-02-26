@@ -399,6 +399,17 @@
                         <option value="OT" style="color:#262626;">Occupational Therapist (OT)</option>
                         <option value="COTA" style="color:#262626;">Certified OT Assistant (COTA)</option>
                     </select>
+                    <!-- Honeypot — bots fill this, humans don't see it -->
+                    <input type="text" name="_honey" id="wl-honey" style="display:none;" tabindex="-1" autocomplete="off">
+
+                    <!-- Math captcha -->
+                    <div style="display:flex;align-items:center;gap:.75rem;justify-content:center;">
+                        <span id="wl-captcha-q" style="color:rgba(255,255,255,.85);font-size:.95rem;font-weight:600;white-space:nowrap;"></span>
+                        <input type="text" id="wl-captcha" placeholder="Answer" required maxlength="4"
+                            style="width:80px;padding:.75rem 1rem;border:2px solid #cbd5e1;border-radius:8px;font-size:1rem;text-align:center;outline:none;background:white;color:#1a365d;"
+                            onfocus="this.style.borderColor='#059669'" onblur="this.style.borderColor='#cbd5e1'">
+                    </div>
+
                     <button
                         type="submit"
                         id="wl-submit"
@@ -431,6 +442,19 @@
         const SUPA_URL  = 'https://pnqoxulxdmlmbywcpbyx.supabase.co';
         const SUPA_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBucW94dWx4ZG1sbWJ5d2NwYnl4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzEzNjU3NTIsImV4cCI6MjA4Njk0MTc1Mn0.YEPrwIvINX_Q1AsbxyU0T5m5oxpV9M756yiSCzy6LTc';
 
+        // Math captcha generation
+        var wlCaptchaA = 0, wlCaptchaB = 0;
+        function generateWlCaptcha() {
+            wlCaptchaA = Math.floor(Math.random() * 10) + 1;
+            wlCaptchaB = Math.floor(Math.random() * 10) + 1;
+            var el = document.getElementById('wl-captcha-q');
+            if (el) el.textContent = 'What is ' + wlCaptchaA + ' + ' + wlCaptchaB + '?';
+        }
+        generateWlCaptcha();
+
+        // Rate limiting — max 3 submissions per 10 minutes
+        var wlSubmitTimes = [];
+
         function showSuccess() {
             document.getElementById('waitlist-form').style.display  = 'none';
             document.getElementById('signup-success').style.display = 'block';
@@ -449,6 +473,32 @@
             const disc     = document.getElementById('wl-discipline').value;
 
             if (!email || !name || !lastName) return;
+
+            // Honeypot check — if filled, silently "succeed" (bot thinks it worked)
+            if (document.getElementById('wl-honey') && document.getElementById('wl-honey').value) {
+                showSuccess();
+                return;
+            }
+
+            // Math captcha check
+            var captchaAnswer = parseInt(document.getElementById('wl-captcha').value);
+            if (captchaAnswer !== (wlCaptchaA + wlCaptchaB)) {
+                errEl.textContent = 'Incorrect answer. Please try the math question again.';
+                errEl.style.display = 'block';
+                generateWlCaptcha();
+                document.getElementById('wl-captcha').value = '';
+                return;
+            }
+
+            // Rate limit check
+            var now = Date.now();
+            wlSubmitTimes = wlSubmitTimes.filter(function(t) { return now - t < 600000; });
+            if (wlSubmitTimes.length >= 3) {
+                errEl.textContent = 'Too many attempts. Please try again in a few minutes.';
+                errEl.style.display = 'block';
+                return;
+            }
+            wlSubmitTimes.push(now);
 
             btn.disabled   = true;
             btn.textContent = 'Signing you up…';
