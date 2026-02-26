@@ -6,7 +6,11 @@
     <title>Shopping Cart | DrTroy CE</title>
     
     <!-- Security headers set via netlify.toml -->
-    
+
+    <!-- Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase-client.js"></script>
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Source+Sans+Pro:wght@300;400;500;600&display=swap" rel="stylesheet">
     
@@ -637,7 +641,7 @@
                 </a>
                 <a href="my-account.html" id="navAccountLink" class="nav-login-link">Log In</a>
             </nav>
-        </a>
+        </div>
     </header>
 
     <!-- Main Content -->
@@ -645,7 +649,7 @@
         <div class="page-header">
             <h1>Shopping Cart</h1>
             <p>Review your selected courses and packages before checkout</p>
-        </a>
+        </div>
 
         <div class="cart-layout">
             <!-- Cart Items -->
@@ -657,9 +661,9 @@
                         <h3>Your cart is empty</h3>
                         <p>Add some courses or packages to get started with your continuing education journey.</p>
                         <a href="course-catalog.html" class="btn btn-primary" style="margin-top: 2rem;">Browse Courses</a>
-                    </a>
-                </a>
-            </a>
+                    </div>
+                </div>
+            </div>
 
             <!-- Cart Summary -->
             <div class="cart-summary" id="cart-summary" style="display: none;">
@@ -668,36 +672,36 @@
                 <div class="summary-row">
                     <span>Subtotal:</span>
                     <span id="subtotal">$0.00</span>
-                </a>
+                </div>
                 
                 <div class="summary-row discount-row" id="discount-row" style="display: none;">
                     <span>New Account Discount:</span>
                     <span id="discount-amount">-$0.00</span>
-                </a>
+                </div>
                 
                 <div class="summary-row total">
                     <span>Total:</span>
                     <span id="total">$0.00</span>
-                </a>
+                </div>
 
                 <div class="discount-notice" id="discount-notice" style="display: none;">
                     <strong>New Customer Discount Applied!</strong>
                     New customers save $10 on bundles!
-                </a>
+                </div>
 
                 <a href="checkout.html?from=cart" class="btn btn-primary btn-block" id="checkout-btn">Proceed to Checkout</a>
                 
                 <button class="btn btn-secondary btn-block" onclick="clearCart()">Clear Cart</button>
-            </a>
-        </a>
+            </div>
+        </div>
 
         <div class="continue-shopping">
             <a href="course-catalog.html" class="btn btn-outline">← Continue Shopping</a>
-        </a>
+        </div>
     </main>
 
     <!-- Include cart system -->
-    <script src="js/cart.js"></script>
+    <script src="js/cart.js?v=20260226a"></script>
     
     <script>
         // Populate cart items
@@ -729,28 +733,28 @@
                             <button class="qty-btn" onclick="updateQuantityUI('${item.courseId}', ${item.quantity - 1})">−</button>
                             <span class="qty-display">${item.quantity}</span>
                             <button class="qty-btn" onclick="updateQuantityUI('${item.courseId}', ${item.quantity + 1})">+</button>
-                        </a>
+                        </div>
                     `;
                 }
                 
                 itemsHtml += `
                     <div class="cart-item">
                         <div class="item-details">
-                            <div class="item-title">${item.title}</a>
+                            <div class="item-title">${item.title}</div>
                             <div class="item-meta">
                                 ${item.credits} CCU${item.credits !== 1 ? 's' : ''} • 
                                 Course #: ${item.courseNumber || item.packageCode}
-                            </a>
+                            </div>
                             <span class="item-type ${itemTypeClass}">${itemTypeLabel}</span>
-                        </a>
+                        </div>
                         <div class="item-actions">
-                            <div class="item-price">$${(item.price * (item.quantity || 1)).toFixed(2)}</a>
+                            <div class="item-price">$${(item.price * (item.quantity || 1)).toFixed(2)}</div>
                             ${quantityControls}
                             <button class="remove-btn" onclick="removeFromCartUI('${item.type === 'course' ? item.courseId : item.packageCode}', '${item.type}')">
                                 Remove
                             </button>
-                        </a>
-                    </a>
+                        </div>
+                    </div>
                 `;
             });
             
