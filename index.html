@@ -505,44 +505,34 @@
             errEl.style.display = 'none';
 
             try {
-                // Upsert: insert new OR update existing record by email
-                const res = await fetch(SUPA_URL + '/rest/v1/waitlist', {
-                    method:  'POST',
-                    headers: {
-                        'Content-Type':  'application/json',
-                        'apikey':        SUPA_ANON,
-                        'Authorization': 'Bearer ' + SUPA_ANON,
-                        'Prefer':        'resolution=merge-duplicates,return=representation'
-                    },
+                // Route through Netlify function for server-side validation & rate limiting
+                const res = await fetch('/.netlify/functions/waitlist-signup', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
                         email:      email.toLowerCase(),
                         first_name: name     || null,
                         last_name:  lastName || null,
                         discipline: disc     || null,
-                        source:     'coming-soon'
+                        source:     'coming-soon',
+                        honeypot:   document.getElementById('wl-honey') ? document.getElementById('wl-honey').value : ''
                     })
                 });
 
                 const data = await res.json();
-                const isNew = Array.isArray(data) && data[0] && !data[0].notified_at;
 
-                if (res.ok || res.status === 201) {
+                if (res.ok && data.success) {
                     showSuccess();
-                    // Only send confirmation email for brand new signups
-                    if (isNew) {
-                        fetch('/.netlify/functions/send-waitlist-confirm', {
-                            method: 'POST',
-                            headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify({ email, firstName: name, lastName, discipline: disc })
-                        }).catch(() => {});
-                    }
+                } else if (res.status === 429) {
+                    errEl.textContent = 'Too many attempts. Please try again in a few minutes.';
+                    errEl.style.display = 'block';
                 } else {
-                    throw new Error('Server error');
+                    throw new Error(data.error || 'Server error');
                 }
             } catch(err) {
                 btn.disabled    = false;
                 btn.textContent = 'Notify Me When You Launch →';
-                errEl.textContent   = 'Something went wrong. Please try again.';
+                errEl.textContent   = err.message || 'Something went wrong. Please try again.';
                 errEl.style.display = 'block';
             }
         });

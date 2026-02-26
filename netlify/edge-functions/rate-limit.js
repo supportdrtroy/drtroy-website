@@ -11,6 +11,7 @@ const RATE_LIMITS = {
   '/.netlify/functions/create-checkout': { window: 60, max: 10 },
   '/.netlify/functions/send-referral': { window: 300, max: 5 },
   '/.netlify/functions/send-waitlist-confirm': { window: 300, max: 5 },
+  '/.netlify/functions/waitlist-signup': { window: 300, max: 5 },          // waitlist: 5/5min
   '/.netlify/functions/admin-actions': { window: 60, max: 30 },        // admin ops: 30/min
   '/.netlify/functions/send-campaign': { window: 3600, max: 5 },       // campaigns: 5/hour
   '/.netlify/functions/admin-reset-password': { window: 300, max: 10 }, // pwd resets: 10/5min
@@ -78,5 +79,6 @@ export const config = {
     "/.netlify/functions/update-progress",
     "/.netlify/functions/validate-discount",
     "/.netlify/functions/verify-certificate",
+    "/.netlify/functions/waitlist-signup",
   ],
 };
