@@ -76,7 +76,41 @@
         @keyframes slideUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
         .certificate-btn { background:var(--gold); color:white; border:none; padding:1rem 2rem; border-radius:8px; font-size:1.1rem; font-weight:600; cursor:pointer; transition:all 0.3s ease; font-family:'Inter',-apple-system,sans-serif; margin-top:1rem; }
         .certificate-btn:hover { background:var(--gold-light); transform:translateY(-2px); box-shadow:0 6px 20px rgba(5,150,105,0.4); }
-        @media(max-width:768px) { .course-container{margin:1rem;padding:1rem} .course-title{font-size:2rem} .module-title{font-size:1.1rem} .course-info{grid-template-columns:1fr} }
+        .figure-container { margin:2rem 0; text-align:center; }
+        .figure-container img { max-width:100%; height:auto; border:1px solid var(--gray-200); border-radius:8px; box-shadow:0 2px 12px rgba(0,0,0,0.08); }
+        .figure-caption { margin-top:0.75rem; font-size:0.9rem; color:var(--gray-600); font-style:italic; font-family:'Inter',-apple-system,sans-serif; }
+        .figure-number { font-weight:700; font-style:normal; color:var(--navy); }
+
+        @media(max-width:768px) {
+            .course-container { margin:0.5rem; padding:1rem; border-radius:6px; }
+            .course-header-container { padding:0.75rem 1rem; flex-wrap:wrap; gap:0.5rem; }
+            .logo img { height:44px; }
+            .course-nav { gap:0.75rem; flex-wrap:wrap; }
+            .course-nav a { font-size:12px; }
+            .logout-btn { padding:0.4rem 0.75rem; font-size:13px; }
+            .course-title { font-size:1.5rem; }
+            .course-subtitle { font-size:0.95rem; }
+            .course-info { grid-template-columns:1fr 1fr; gap:0.75rem; }
+            .module-title { font-size:1rem; }
+            .module-header { padding:1rem; }
+            .module-content { padding:1rem; }
+            .module-content h2 { font-size:1.2rem; }
+            .module-content h3 { font-size:1.05rem; }
+            .module-content p { text-align:left; }
+            .module-content ul, .module-content ol { padding-left:1.25rem; }
+            .highlight-box { padding:1rem; }
+            .knowledge-check { padding:1rem; }
+            .module-completion { flex-direction:column; gap:0.75rem; text-align:center; }
+            .complete-btn { width:100%; }
+            .progress-header { flex-direction:column; align-items:flex-start; gap:0.25rem; }
+            .figure-container img { border-radius:4px; }
+        }
+        @media(max-width:480px) {
+            .course-title { font-size:1.25rem; }
+            .course-info { grid-template-columns:1fr; }
+            .course-nav a:not(:last-child) { display:none; }
+            .module-title { font-size:0.95rem; }
+        }
         @media print { .course-header,.progress-container,.complete-btn,.certificate-section{display:none!important} .module-content{display:block!important} .module{break-inside:avoid;margin-bottom:2rem} body{background:white;font-size:11pt;line-height:1.4} .course-container{box-shadow:none;margin:0;padding:0} }
     </style>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
@@ -192,6 +226,11 @@
             <div class="module-content">
                 <h2>The Tripartite Balance System</h2>
                 <p>Human postural control is a complex, multisensory process that relies on the integration of three primary sensory modalities: the visual system, the vestibular system, and the somatosensory system. Each contributes unique information about the body's position and motion in space, and the central nervous system must continuously weigh, combine, and when necessary, suppress or substitute these inputs to maintain upright stance and purposeful movement. Dysfunction in any one system — or in the central integration mechanisms — can produce significant balance impairment.</p>
+
+                <div class="figure-container">
+                    <img src="images/balance_systems_integration.svg" alt="Three Balance Systems Integration Model showing visual, vestibular, and somatosensory contributions to postural control">
+                    <p class="figure-caption"><span class="figure-number">FIGURE 3:</span> The Three Balance Systems Integration Model. The central nervous system continuously integrates input from the visual, vestibular, and somatosensory systems to maintain upright posture and dynamic balance.</p>
+                </div>
 
                 <h3>Visual Contributions to Balance</h3>
                 <p>The visual system provides information about head position relative to the environment, the orientation of vertical and horizontal surfaces, and the movement of objects in the visual field. Visual inputs are processed by the retina, transmitted via cranial nerve II to the visual cortex, and also projected to the superior colliculi and pretectal areas for gaze stabilization. In low-frequency, slow perturbations, vision is the dominant sensory input for balance. However, visual input has a latency of approximately 200 milliseconds for corrective postural responses — significantly slower than vestibular or somatosensory inputs.</p>
