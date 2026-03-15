@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Image Generator – DrTroy</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: #f4f6f9;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+    .card {
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.1);
+      padding: 40px;
+      width: 100%;
+      max-width: 680px;
+    }
+    h1 {
+      font-size: 1.5rem;
+      color: #1a365d;
+      margin-bottom: 8px;
+    }
+    p.sub {
+      color: #666;
+      font-size: 0.9rem;
+      margin-bottom: 24px;
+    }
+    label {
+      display: block;
+      font-weight: 600;
+      color: #333;
+      margin-bottom: 8px;
+    }
+    textarea {
+      width: 100%;
+      padding: 12px;
+      border: 1.5px solid #ddd;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      resize: vertical;
+      min-height: 100px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    textarea:focus { border-color: #1a365d; }
+    .options {
+      display: flex;
+      gap: 12px;
+      margin-top: 12px;
+    }
+    select {
+      padding: 8px 12px;
+      border: 1.5px solid #ddd;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      outline: none;
+      cursor: pointer;
+    }
+    button.generate {
+      margin-top: 16px;
+      width: 100%;
+      padding: 14px;
+      background: #1a365d;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    button.generate:hover { background: #2a4a7f; }
+    button.generate:disabled { background: #999; cursor: not-allowed; }
+    .result { margin-top: 28px; display: none; }
+    .result img {
+      width: 100%;
+      border-radius: 8px;
+      border: 1px solid #eee;
+    }
+    button.download {
+      margin-top: 12px;
+      width: 100%;
+      padding: 12px;
+      background: #059669;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    button.download:hover { background: #047857; }
+    .error {
+      margin-top: 16px;
+      padding: 12px;
+      background: #fef2f2;
+      border: 1px solid #fca5a5;
+      border-radius: 8px;
+      color: #b91c1c;
+      font-size: 0.9rem;
+      display: none;
+    }
+    .spinner {
+      display: inline-block;
+      width: 18px;
+      height: 18px;
+      border: 3px solid rgba(255,255,255,0.3);
+      border-top-color: #fff;
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+      vertical-align: middle;
+      margin-right: 8px;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .examples {
+      margin-top: 16px;
+      padding: 12px;
+      background: #f8fafc;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      color: #555;
+    }
+    .examples strong { display: block; margin-bottom: 6px; color: #333; }
+    .example-chip {
+      display: inline-block;
+      background: #e8f0fe;
+      color: #1a365d;
+      padding: 4px 10px;
+      border-radius: 20px;
+      margin: 3px 3px 0 0;
+      cursor: pointer;
+      font-size: 0.8rem;
+      transition: background 0.15s;
+    }
+    .example-chip:hover { background: #c7d9f8; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>AI Image Generator</h1>
+    <p class="sub">Generate images for your CE courses using Gemini AI.</p>
+
+    <label for="prompt">Describe the image you want</label>
+    <textarea id="prompt" placeholder="e.g. Physical therapist performing shoulder mobilization on a patient, clean medical illustration style, white background"></textarea>
+
+    <div class="options">
+      <select id="ratio">
+        <option value="16:9">16:9 – Widescreen</option>
+        <option value="1:1">1:1 – Square</option>
+        <option value="4:3">4:3 – Standard</option>
+        <option value="3:4">3:4 – Portrait</option>
+      </select>
+    </div>
+
+    <div class="examples">
+      <strong>Quick prompts — click to use:</strong>
+      <span class="example-chip">Shoulder anatomy diagram</span>
+      <span class="example-chip">PT treating knee pain</span>
+      <span class="example-chip">OT hand exercises</span>
+      <span class="example-chip">Balance training on foam pad</span>
+      <span class="example-chip">Gait analysis walkway</span>
+      <span class="example-chip">Lumbar spine anatomy</span>
+    </div>
+
+    <button class="generate" id="generateBtn" onclick="generateImage()">Generate Image</button>
+
+    <div class="error" id="error"></div>
+
+    <div class="result" id="result">
+      <img id="outputImg" src="" alt="Generated image">
+      <button class="download" onclick="downloadImage()">Download Image</button>
+    </div>
+  </div>
+
+  <script>
+    // Click example chips to fill prompt
+    document.querySelectorAll('.example-chip').forEach(function(chip) {
+      chip.addEventListener('click', function() {
+        document.getElementById('prompt').value = chip.textContent + ', professional medical illustration, clean white background, high quality';
+      });
+    });
+
+    async function generateImage() {
+      var prompt = document.getElementById('prompt').value.trim();
+      var ratio = document.getElementById('ratio').value;
+      var btn = document.getElementById('generateBtn');
+      var error = document.getElementById('error');
+      var result = document.getElementById('result');
+
+      if (!prompt) {
+        error.textContent = 'Please enter a description.';
+        error.style.display = 'block';
+        return;
+      }
+
+      error.style.display = 'none';
+      result.style.display = 'none';
+      btn.disabled = true;
+      btn.innerHTML = '<span class="spinner"></span>Generating...';
+
+      try {
+        var response = await fetch('/.netlify/functions/generate-image', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ prompt: prompt, aspectRatio: ratio })
+        });
+
+        var data = await response.json();
+
+        if (!response.ok || !data.image) {
+          throw new Error(data.error || 'Image generation failed.');
+        }
+
+        document.getElementById('outputImg').src = data.image;
+        result.style.display = 'block';
+      } catch (err) {
+        error.textContent = err.message;
+        error.style.display = 'block';
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = 'Generate Image';
+      }
+    }
+
+    function downloadImage() {
+      var img = document.getElementById('outputImg');
+      var a = document.createElement('a');
+      a.href = img.src;
+      a.download = 'drtroy-image-' + Date.now() + '.png';
+      a.click();
+    }
+  </script>
+</body>
+</html>
