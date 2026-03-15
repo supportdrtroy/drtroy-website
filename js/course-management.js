@@ -619,13 +619,13 @@ function previewCourse(courseId) {
     // Check COURSE_FILE_MAP for legacy static HTML courses
     var fileId = COURSE_FILE_MAP[courseId] || COURSE_FILE_MAP[course.slug];
     if (fileId) {
-        window.open('/courses/' + fileId + '-progressive.html', '_blank');
+        window.open('/courses/' + fileId + '-progressive.html?admin-preview=1', '_blank');
         return;
     }
 
     // Try slug-based lookup
     if (course.slug) {
-        window.open('/courses/' + course.slug + '-progressive.html', '_blank');
+        window.open('/courses/' + course.slug + '-progressive.html?admin-preview=1', '_blank');
         return;
     }
 

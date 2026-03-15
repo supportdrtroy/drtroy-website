@@ -143,6 +143,9 @@
     var profileRes = await window.DrTroySupabase.getClient().from('profiles').select('is_admin').eq('id', userId).single();
     if (profileRes.data && profileRes.data.is_admin === true) {
       removeOverlay();
+      if (new URLSearchParams(window.location.search).get('admin-preview') === '1') {
+        activatePreviewMode();
+      }
       return; // Admins can access everything
     }
 
@@ -160,6 +163,55 @@
 
     /* 4. Not enrolled → redirect */
     redirectCatalog();
+  }
+
+  /* ── Admin Preview Mode ── */
+  function activatePreviewMode() {
+    function applyPreview() {
+      // Banner
+      var banner = document.createElement('div');
+      banner.id = 'admin-preview-banner';
+      banner.innerHTML = '🔍 <strong>ADMIN PREVIEW MODE</strong> — All modules expanded. Progress is not being tracked.  <a href="javascript:window.close()" style="color:#fff;margin-left:1rem;font-size:0.85rem;opacity:0.8;">✕ Close</a>';
+      banner.style.cssText = 'position:fixed;top:0;left:0;right:0;z-index:99998;background:#d97706;color:#fff;text-align:center;padding:0.6rem 1rem;font-family:sans-serif;font-size:0.9rem;box-shadow:0 2px 8px rgba(0,0,0,0.2);';
+      document.body.insertBefore(banner, document.body.firstChild);
+
+      // Push content down so banner doesn't overlap sticky header
+      var header = document.querySelector('.course-header');
+      if (header) header.style.top = banner.offsetHeight + 'px';
+
+      // Expand all modules
+      document.querySelectorAll('.module-content').forEach(function(el) {
+        el.classList.add('active');
+        el.style.display = 'block';
+      });
+
+      // Mark all module headers as open (remove completed styling interference)
+      document.querySelectorAll('.module-header').forEach(function(el) {
+        el.style.cursor = 'default';
+        el.onclick = null;
+      });
+
+      // Disable Mark Complete buttons — don't write progress in preview
+      document.querySelectorAll('.complete-btn').forEach(function(btn) {
+        btn.disabled = true;
+        btn.textContent = 'Preview Mode';
+        btn.title = 'Progress tracking disabled in admin preview';
+      });
+
+      // Hide progress bar (not meaningful in preview)
+      var progress = document.querySelector('.progress-container');
+      if (progress) progress.style.display = 'none';
+
+      // Scroll to top
+      window.scrollTo(0, 0);
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', applyPreview);
+    } else {
+      // Small delay to let page JS initialize first
+      setTimeout(applyPreview, 300);
+    }
   }
 
   /* Kick off as soon as DOM is ready */
